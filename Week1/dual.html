@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Guide to the Arabic Dual System</title>
+    <title>Lesson: The Arabic Dual System</title>
     <!-- Chosen Palette: Desert Sage - Simplified for inline CSS -->
-    <!-- Application Structure Plan: The application is designed as a focused interactive learning module. A vertical navigation menu (horizontal on mobile) allows users to select specific topics related to the Arabic dual system: Introduction, Dual Nouns, Dual Pronouns, Dual Verbs, and Quizzes. Each selection dynamically displays a corresponding content panel with detailed explanations and examples. This modular approach breaks down a complex grammatical concept into manageable, explorable sections. A dedicated quiz section, split into MCQ and Matching, provides immediate feedback, reinforcing learning through active engagement. This structure prioritizes guided exploration and self-assessment, enhancing user understanding. -->
-    <!-- Visualization & Content Choices: Report Info: The source content covers the definition, formation rules, and usage of the dual system in Arabic for nouns, pronouns, and verbs, along with quiz questions. Goal: Inform, Organize, and Assess. Viz/Presentation Method: Interactive list/detail view for core content, allowing users to select topics and view explanations. For quizzes, standard HTML form elements (radio buttons for MCQ, text inputs for Matching) are used, with JavaScript handling validation and feedback. Interactive buttons manage quiz submission and reset. Justification: This interactive, step-by-step approach is highly effective for language grammar learning, enabling users to focus on specific rules and immediately test their comprehension. The quizzes are directly integrated for self-assessment. No charts or complex visualizations are required as the data is textual and rule-based. Library/Method: Vanilla JavaScript for all interactive logic and DOM manipulation. Inline CSS provides styling for a clean, responsive design, ensuring maximum compatibility for embedding. -->
+    <!-- Application Structure Plan: This page presents the interactive guide for the Arabic Dual System. It features a vertical navigation menu (horizontal on mobile) for sections like Introduction, Dual Nouns, Dual Pronouns, Dual Verbs, and Quizzes. Each navigation item dynamically displays a corresponding content panel. A 'Back to Week Overview' button ensures easy navigation within the weekly structure. -->
+    <!-- Visualization & Content Choices: Goal: Inform, Organize, and Assess. Method: Interactive list/detail view for content, MCQ and Matching quizzes for assessment. Justification: This interactive, step-by-step approach is highly effective for language grammar learning, enabling users to focus on specific rules and immediately test their comprehension. Library/Method: Vanilla JavaScript for logic, inline CSS for styling. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: sans-serif; /* Fallback font */
             background-color: #FDFCF9;
             margin: 0;
-            padding: 20px; /* Basic padding for content */
+            padding: 20px;
             color: #57534E;
             line-height: 1.6;
         }
@@ -45,13 +45,13 @@
         .text-stone-700 { color: #44403C; }
         .text-teal-600 { color: #0D9488; }
         .arabic-text {
-            font-family: serif; /* Fallback for Amiri */
+            font-family: serif; /* Fallback for Arabic fonts */
             direction: rtl;
             font-size: 1.25rem;
             color: #57534E;
         }
         .arabic-heading {
-            font-family: serif; /* Fallback for Amiri */
+            font-family: serif; /* Fallback for Arabic fonts */
             direction: rtl;
             font-size: 3rem;
             line-height: 1.2;
@@ -100,15 +100,15 @@
             border: none;
             cursor: pointer;
             background-color: transparent;
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 500; /* font-medium */
-            color: #44403C; /* stone-700 */
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #44403C;
         }
         .nav-item:hover {
-            background-color: #E7E5E4; /* stone-200 */
+            background-color: #E7E5E4;
         }
         .nav-item.active {
-            background-color: #4A6C6F; /* primary color */
+            background-color: #4A6C6F;
             color: #FFFFFF;
             font-weight: 700;
         }
@@ -138,12 +138,12 @@
             background-color: #F8F8F8;
         }
         .quiz-option.correct {
-            background-color: #D1FAE5; /* green-100 */
-            border-color: #059669; /* green-600 */
+            background-color: #D1FAE5;
+            border-color: #059669;
         }
         .quiz-option.incorrect {
-            background-color: #FEE2E2; /* red-100 */
-            border-color: #EF4444; /* red-500 */
+            background-color: #FEE2E2;
+            border-color: #EF4444;
         }
         .quiz-option input[type="radio"] {
             margin-right: 0.5rem;
@@ -184,7 +184,7 @@
             text-align: center;
         }
         .quiz-button {
-            background-color: #4A6C6F; /* Darker primary */
+            background-color: #4A6C6F;
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
@@ -198,7 +198,7 @@
             background-color: #3B5759;
         }
         .input-match {
-            border: 1px solid #D1D5DB; /* gray-300 */
+            border: 1px solid #D1D5DB;
             padding: 0.5rem 0.75rem;
             border-radius: 0.25rem;
             width: 100%;
@@ -217,15 +217,31 @@
             flex: 2;
         }
 
-        /* Responsive adjustments */
-        @media (min-width: 768px) { /* md breakpoint */
+        .back-to-week-button {
+            display: inline-block;
+            background-color: #A3A3A3;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .back-to-week-button:hover {
+            background-color: #8C8C8C;
+        }
+
+        @media (min-width: 768px) {
             .md\:flex-row { flex-direction: row; }
             .md\:w-1\/4 { width: 25%; }
             .md\:w-3\/4 { width: 75%; }
             .md\:text-5xl { font-size: 3rem; }
             .md\:flex-col { flex-direction: column; }
         }
-        @media (max-width: 767px) { /* Mobile */
+        @media (max-width: 767px) {
             .flex-row.md\:flex-col { flex-direction: row; }
             .w-full.md\:w-1\/4 { width: 100%; }
             .w-full.md\:w-3\/4 { width: 100%; }
@@ -251,7 +267,6 @@
 
         <main class="flex flex-col md:flex-row gap-8">
 
-            <!-- Navigation -->
             <nav id="dual-system-nav" class="w-full md:w-1/4">
                 <ul class="flex flex-row md:flex-col gap-2 flex-wrap">
                     <li><button data-target="intro" class="nav-item w-full">Introduction</button></li>
@@ -262,22 +277,18 @@
                 </ul>
             </nav>
 
-            <!-- Content Panels -->
             <div id="content-panels" class="w-full md:w-3/4">
 
-                <!-- Introduction Panel -->
                 <div id="panel-intro" class="content-panel">
                     <h2 class="text-3xl font-bold text-stone-900 mb-4">Introduction to the Dual System (المُثَنَّى)</h2>
                     <p class="mb-4 text-lg text-stone-700">
-                        In Arabic, in addition to singular (for one) and plural (for three or more), there's a distinct grammatical category called the **dual** ( <strong>dual</strong> (<span class="arabic-text">المُثَنّى</span> - <em>al-muthannā</em>)
- ). The dual is used specifically to indicate **exactly two** of something. This system applies primarily to nouns, adjectives, and pronouns, and verbs also adjust their forms to agree with dual subjects.
+                        In Arabic, in addition to singular (for one) and plural (for three or more), there's a distinct grammatical category called the **dual** (<span class="arabic-text">المُثَنّى</span> - *al-muthannā*). The dual is used specifically to indicate **exactly two** of something. This system applies primarily to nouns, adjectives, and pronouns, and verbs also adjust their forms to agree with dual subjects.
                     </p>
                     <p class="text-lg text-stone-700">
                         Understanding the dual is crucial for accurate communication in Arabic, as it has specific endings that change depending on the grammatical case (nominative, accusative, genitive).
                     </p>
                 </div>
 
-                <!-- Dual Nouns Panel -->
                 <div id="panel-nouns" class="content-panel hidden">
                     <h2 class="text-3xl font-bold text-stone-900 mb-4">Dual Nouns (الأسماء المثناة)</h2>
                     <p class="mb-4 text-lg text-stone-700">
@@ -288,28 +299,28 @@
                     <p class="mb-2 text-lg text-stone-700">
                         In the nominative case (e.g., as a subject), the suffix <span class="font-bold arabic-text text-base">ـَانِ</span> ($\text{-āni}$) is added to the singular noun.
                     </p>
-<div class="space-y-4 mb-6">
-    <div class="example-box">
-        <p class="arabic-text">كِتَابٌ (book) <span class="text-stone-500">→</span> كِتَابَانِ (two books)</p>
-        <p class="transliteration">kitābun → kitābāni</p>
-    </div>
-    <div class="example-box">
-        <p class="arabic-text">مُعَلِّمٌ (teacher) <span class="text-stone-500">→</span> مُعَلِّمَانِ (two teachers)</p>
-        <p class="transliteration">muʿallimun → muʿallimāni</p>
-    </div>
-    <div class="example-box">
-        <p class="arabic-text">وَلَدٌ (boy) <span class="text-stone-500">→</span> وَلَدَانِ (two boys)</p>
-        <p class="transliteration">waladun → waladāni</p>
-    </div>
-    <div class="example-box">
-        <p class="arabic-text">طَالِبٌ (student) <span class="text-stone-500">→</span> طَالِبَانِ (two students)</p>
-        <p class="transliteration">ṭālibun → ṭālibāni</p>
-    </div>
-    <div class="example-box">
-        <p class="arabic-text">مِفْتَاحٌ (key) <span class="text-stone-500">→</span> مِفْتَاحَانِ (two keys)</p>
-        <p class="transliteration">miftaḥun → miftaḥāni</p>
-    </div>
-</div>
+                    <div class="space-y-4 mb-6">
+                        <div class="example-box">
+                            <p class="arabic-text">كِتَابٌ (book) <span class="text-stone-500">→</span> كِتَابَانِ (two books)</p>
+                            <p class="transliteration">kitābun → kitābāni</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">مُعَلِّمٌ (teacher) <span class="text-stone-500">→</span> مُعَلِّمَانِ (two teachers)</p>
+                            <p class="transliteration">muʿallimun → muʿallimāni</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">وَلَدٌ (boy) <span class="text-stone-500">→</span> وَلَدَانِ (two boys)</p>
+                            <p class="transliteration">waladun → waladāni</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">طَالِبٌ (student) <span class="text-stone-500">→</span> طَالِبَانِ (two students)</p>
+                            <p class="transliteration">ṭālibun → ṭālibāni</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">مِفْتَاحٌ (key) <span class="text-stone-500">→</span> مِفْتَاحَانِ (two keys)</p>
+                            <p class="transliteration">miftāḥun → miftāḥāni</p>
+                        </div>
+                    </div>
 
                     <h3 class="text-xl font-semibold text-stone-800 mb-2">2. Accusative Case (حالة النصب - Ḥālat an-Naṣb) & Genitive Case (حالة الجر - Ḥālat al-Jarr)</h3>
                     <p class="mb-2 text-lg text-stone-700">
@@ -329,7 +340,7 @@
                             <p class="transliteration">akaltu tuffāḥatayni</p>
                         </div>
                         <div class="example-box">
-                            <p class="arabic-text">ذَهَبْتُ إِلَى المَكْتَبَيْنِ (I went to the two offices)</p>
+                            <p class="arabic-text">ذَهَبْتُ إِلَى الْمَكْتَبَيْنِ (I went to the two offices)</p>
                             <p class="transliteration">dhahabtu ilā al-maktabayni</p>
                         </div>
                         <div class="example-box">
@@ -346,12 +357,11 @@
                         <div class="example-box">
                             <p class="arabic-text">كِتَابَا الطَّالِبِ (the two books of the student)</p>
                             <p class="transliteration">kitābā aṭ-ṭālibi</p>
-                            <p class="text-sm text-stone-600">(Original: <span class="arabic-text text-base">كِتَابَانِ</span> $\rightarrow$ Noon dropped)</p>
+                            <p class="text-sm text-stone-600">(Original: <span class="arabic-text text-base">كِتَابَانِ</span> → Noon dropped)</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Dual Pronouns Panel -->
                 <div id="panel-pronouns" class="content-panel hidden">
                     <h2 class="text-3xl font-bold text-stone-900 mb-4">Dual Pronouns (الضمائر المثناة)</h2>
                     <p class="mb-4 text-lg text-stone-700">
@@ -393,7 +403,6 @@
                     </div>
                 </div>
 
-                <!-- Dual Verbs Panel -->
                 <div id="panel-verbs" class="content-panel hidden">
                     <h2 class="text-3xl font-bold text-stone-900 mb-4">Dual Verbs (الأفعال مع المثنى)</h2>
                     <p class="mb-4 text-lg text-stone-700">
@@ -421,15 +430,6 @@
                             <p class="arabic-text">خَرَجَتَا (kharajatā)</p>
                             <p class="mt-1 font-medium">"they two (feminine) exited"</p>
                         </div>
-                        <div class="example-box">
-                            <p class="arabic-text">يَذْهَبَانِ (yadhhabāni)</p>
-                            <p class="mt-1 font-medium">"they two go"</p>
-                        </div>
-                        <div class="example-box">
-                            <p class="arabic-text">تَأْكُلَانِ (taʾkulāni)</p>
-                            <p class="mt-1 font-medium">"they two eat" or "you two eat"</p>
-                        </div>
-
                     </div>
 
                     <h3 class="text-xl font-semibold text-stone-800 mb-2">2. Present Tense (المضارع - al-Muḍāriʿ)</h3>
@@ -445,63 +445,69 @@
                             <p class="arabic-text">تَكْتُبَانِ (taktubāni)</p>
                             <p class="mt-1 font-medium">"they two (feminine) write/are writing" or "you two write/are writing"</p>
                         </div>
+                        <div class="example-box">
+                            <p class="arabic-text">يَذْهَبَانِ (yadhhabāni)</p>
+                            <p class="mt-1 font-medium">"they two (masculine) go/are going"</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">تَأْكُلَانِ (taʾkulāni)</p>
+                            <p class="mt-1 font-medium">"they two (feminine) eat/are eating" or "you two eat/are eating"</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Quizzes Panel -->
                 <div id="panel-quiz" class="content-panel hidden">
                     <h2 class="text-3xl font-bold text-stone-900 mb-4">Test Your Knowledge!</h2>
                     <p class="mb-6 text-lg text-stone-700">
                         Challenge yourself with these quizzes to reinforce your understanding of the Arabic dual system.
                     </p>
 
-                    <!-- Multiple Choice Quiz -->
                     <div class="mb-12">
                         <h3 class="text-2xl font-bold text-stone-800 mb-4">Quiz 1: Multiple Choice Questions</h3>
                         <form id="mcq-quiz" class="space-y-6">
                             <!-- Question 1 -->
                             <div class="quiz-question-container">
-                                <p>1. Which is the dual nominative form of <span class="arabic-text font-bold">مُعَلِّمٌ</span> (muʿallimun - teacher)?</p>
-                                <label class="quiz-option"><input type="radio" name="q1" value="A"> <span class="arabic-text">مُعَلِّمُونَ</span></label>
-                                <label class="quiz-option"><input type="radio" name="q1" value="B"> <span class="arabic-text">مُعَلِّمِينَ</span></label>
-                                <label class="quiz-option"><input type="radio" name="q1" value="C"> <span class="arabic-text">مُعَلِّمَانِ</span></label>
-                                <label class="quiz-option"><input type="radio" name="q1" value="D"> <span class="arabic-text">مُعَلِّمَيْنِ</span></label>
+                                <p>1. Which is the dual nominative form of <span class="arabic-text font-bold">طَالِبٌ</span> (ṭālibun - student)?</p>
+                                <label class="quiz-option"><input type="radio" name="q1" value="A"> <span class="arabic-text">طَالِبِينَ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q1" value="B"> <span class="arabic-text">طَالِبُونَ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q1" value="C"> <span class="arabic-text">طَالِبَانِ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q1" value="D"> <span class="arabic-text">طَالِبَيْنِ</span></label>
                                 <div id="feedback-q1" class="quiz-feedback"></div>
                             </div>
                             <!-- Question 2 -->
                             <div class="quiz-question-container">
-                                <p>2. What is the dual form of <span class="arabic-text font-bold">بِنْتٌ</span> (bintun - girl) in the accusative case?</p>
-                                <label class="quiz-option"><input type="radio" name="q2" value="A"> <span class="arabic-text">بِنْتَانِ</span></label>
-                                <label class="quiz-option"><input type="radio" name="q2" value="B"> <span class="arabic-text">بِنْتَيْنِ</span></label>
-                                <label class="quiz-option"><input type="radio" name="q2" value="C"> <span class="arabic-text">بَنَاتٌ</span></label>
-                                <label class="quiz-option"><input type="radio" name="q2" value="D"> <span class="arabic-text">بِنْتُهُمَا</span></label>
+                                <p>2. What is the dual form of <span class="arabic-text font-bold">تُفَّاحَةٌ</span> (tuffāḥatun - apple) in the accusative case?</p>
+                                <label class="quiz-option"><input type="radio" name="q2" value="A"> <span class="arabic-text">تُفَّاحَتَانِ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q2" value="B"> <span class="arabic-text">تُفَّاحَتَيْنِ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q2" value="C"> <span class="arabic-text">تَفَاحٌ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q2" value="D"> <span class="arabic-text">تُفَّاحَةُهُمَا</span></label>
                                 <div id="feedback-q2" class="quiz-feedback"></div>
                             </div>
                             <!-- Question 3 -->
                             <div class="quiz-question-container">
-                                <p>3. The phrase <span class="arabic-text font-bold">قَلَمَيْنِ</span> (qalamayni) could be in which cases?</p>
-                                <label class="quiz-option"><input type="radio" name="q3" value="A"> Nominative only</label>
-                                <label class="quiz-option"><input type="radio" name="q3" value="B"> Accusative and Genitive</label>
-                                <label class="quiz-option"><input type="radio" name="q3" value="C"> Genitive only</label>
-                                <label class="quiz-option"><input type="radio" name="q3" value="D"> Nominative and Accusative</label>
+                                <p>3. If you want to say "I saw two boys", which dual form of <span class="arabic-text font-bold">وَلَدٌ</span> (waladun - boy) would you use?</p>
+                                <label class="quiz-option"><input type="radio" name="q3" value="A"> <span class="arabic-text">وَلَدَانِ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q3" value="B"> <span class="arabic-text">وَلَدَيْنِ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q3" value="C"> <span class="arabic-text">أَوْلَادٌ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q3" value="D"> <span class="arabic-text">وَلَدَتَانِ</span></label>
                                 <div id="feedback-q3" class="quiz-feedback"></div>
                             </div>
                             <!-- Question 4 -->
                             <div class="quiz-question-container">
-                                <p>4. Which independent pronoun means "you two (masculine or feminine)"?</p>
-                                <label class="quiz-option"><input type="radio" name="q4" value="A"> <span class="arabic-text">هُمَا</span></label>
-                                <label class="quiz-option"><input type="radio" name="q4" value="B"> <span class="arabic-text">أَنْتُمَا</span></label>
-                                <label class="quiz-option"><input type="radio" name="q4" value="C"> <span class="arabic-text">نَحْنُ</span></label>
-                                <label class="quiz-option"><input type="radio" name="q4" value="D"> <span class="arabic-text">أَنْتُمْ</span></label>
+                                <p>4. Which past tense dual verb means "they two (masculine) went"?</p>
+                                <label class="quiz-option"><input type="radio" name="q4" value="A"> <span class="arabic-text">يَذْهَبَانِ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q4" value="B"> <span class="arabic-text">ذَهَبَا</span></label>
+                                <label class="quiz-option"><input type="radio" name="q4" value="C"> <span class="arabic-text">ذَهَبَتْ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q4" value="D"> <span class="arabic-text">ذَهَبْتُمْ</span></label>
                                 <div id="feedback-q4" class="quiz-feedback"></div>
                             </div>
                             <!-- Question 5 -->
                             <div class="quiz-question-container">
-                                <p>5. What happens to the noon (<span class="arabic-text font-bold">ن</span>) of the dual when it's in an *Idafa* construction (construct state)?</p>
-                                <label class="quiz-option"><input type="radio" name="q5" value="A"> It remains</label>
-                                <label class="quiz-option"><input type="radio" name="q5" value="B"> It doubles</label>
-                                <label class="quiz-option"><input type="radio" name="q5" value="C"> It is dropped</label>
-                                <label class="quiz-option"><input type="radio" name="q5" value="D"> It changes to a Ya (<span class="arabic-text">ي</span>)</label>
+                                <p>5. Which attached dual pronoun would complete the phrase "<span class="arabic-text font-bold">كتابـ______</span> (kitābu... - their two books)"?</p>
+                                <label class="quiz-option"><input type="radio" name="q5" value="A"> <span class="arabic-text">ـهُم</span></label>
+                                <label class="quiz-option"><input type="radio" name="q5" value="B"> <span class="arabic-text">ـهُمَا</span></label>
+                                <label class="quiz-option"><input type="radio" name="q5" value="C"> <span class="arabic-text">ـنَا</span></label>
+                                <label class="quiz-option"><input type="radio" name="q5" value="D"> <span class="arabic-text">ـكُمَا</span></label>
                                 <div id="feedback-q5" class="quiz-feedback"></div>
                             </div>
 
@@ -511,62 +517,39 @@
                         </form>
                     </div>
 
-                    <!-- Matching Quiz -->
                     <div>
                         <h3 class="text-2xl font-bold text-stone-800 mb-4">Quiz 2: Matching Questions</h3>
                         <p class="mb-4 text-lg text-stone-700">Match the singular noun to its dual form in the nominative case. Type the Arabic dual form in the input box.</p>
                         <form id="matching-quiz" class="space-y-4">
                             <!-- Match 1 -->
                             <div class="match-row">
-                                <div><span class="arabic-text font-bold">كِتَابٌ</span> (kitābun)</div>
+                                <div><span class="arabic-text font-bold">مُعَلِّمٌ</span> (muʿallimun)</div>
                                 <input type="text" id="match1" class="input-match" placeholder="Type dual here">
                                 <div id="match-feedback-1" class="quiz-feedback"></div>
-                                
                             </div>
                             <!-- Match 2 -->
                             <div class="match-row">
-                                <div><span class="arabic-text font-bold">مُدَرِّسٌ</span> (mudarrisun)</div>
+                                <div><span class="arabic-text font-bold">بِنْتٌ</span> (bintun)</div>
                                 <input type="text" id="match2" class="input-match" placeholder="Type dual here">
                                 <div id="match-feedback-2" class="quiz-feedback"></div>
                             </div>
                             <!-- Match 3 -->
                             <div class="match-row">
-                                <div><span class="arabic-text font-bold">طَالِبَةٌ</span> (ṭālibatun)</div>
+                                <div><span class="arabic-text font-bold">مِفْتَاحٌ</span> (miftāḥun)</div>
                                 <input type="text" id="match3" class="input-match" placeholder="Type dual here">
                                 <div id="match-feedback-3" class="quiz-feedback"></div>
                             </div>
                             <!-- Match 4 -->
                             <div class="match-row">
-                                <div><span class="arabic-text font-bold">قَلَمٌ</span> (qalamun)</div>
+                                <div><span class="arabic-text font-bold">صَدِيقٌ</span> (ṣadīqun)</div>
                                 <input type="text" id="match4" class="input-match" placeholder="Type dual here">
                                 <div id="match-feedback-4" class="quiz-feedback"></div>
                             </div>
                             <!-- Match 5 -->
                             <div class="match-row">
-                                <div><span class="arabic-text font-bold">بَيْتٌ</span> (baytun)</div>
+                                <div><span class="arabic-text font-bold">مَكْتَبٌ</span> (maktabun)</div>
                                 <input type="text" id="match5" class="input-match" placeholder="Type dual here">
                                 <div id="match-feedback-5" class="quiz-feedback"></div>
-                            <!-- Match 6 -->
-<div class="match-row">
-    <div><span class="arabic-text font-bold">كُرْسِيٌّ</span> (kursiyyun)</div>
-    <input type="text" id="match6" class="input-match" placeholder="Type dual here">
-    <div id="match-feedback-6" class="quiz-feedback"></div>
-</div>
-
-<!-- Match 7 -->
-<div class="match-row">
-    <div><span class="arabic-text font-bold">مِفْتَاحٌ</span> (miftaḥun)</div>
-    <input type="text" id="match7" class="input-match" placeholder="Type dual here">
-    <div id="match-feedback-7" class="quiz-feedback"></div>
-</div>
-
-<!-- Match 8 -->
-<div class="match-row">
-    <div><span class="arabic-text font-bold">كُرَةٌ</span> (kuratun)</div>
-    <input type="text" id="match8" class="input-match" placeholder="Type dual here">
-    <div id="match-feedback-8" class="quiz-feedback"></div>
-</div>
-    
                             </div>
 
                             <button type="button" id="submit-matching" class="quiz-button">Check Matching Answers</button>
@@ -578,6 +561,7 @@
 
             </div>
         </main>
+        <a href="index.html" class="back-to-week-button">← Back to Week Overview</a>
     </div>
 
     <script>
@@ -586,27 +570,23 @@
             const navItems = nav.querySelectorAll('.nav-item');
             const contentPanels = document.getElementById('content-panels').querySelectorAll('.content-panel');
 
-            // Data for MCQ Quiz
+            // Updated MCQ Answers to reflect new questions
             const mcqAnswers = {
-                q1: 'C',
-                q2: 'B',
-                q3: 'B',
-                q4: 'B',
-                q5: 'C'
+                q1: 'C', // طالب -> طالبان
+                q2: 'B', // تفاحة -> تفاحتين
+                q3: 'B', // ولد -> ولدين (accusative)
+                q4: 'B', // ذهبا
+                q5: 'B'  // ـهما
             };
 
-            // Data for Matching Quiz (Using a common normalization for user input)
-                const matchingAnswers = {
-                    match1: 'كتابان',
-                    match2: 'مدرسان',
-                    match3: 'طالبتان',
-                    match4: 'قلمان',
-                    match5: 'بيتان',
-                    match6: 'كرسيان',
-                    match7: 'مفتاحان',
-                    match8: 'كرتان'
-                };
-
+            // Updated Matching Quiz Answers to reflect new questions and examples
+            const matchingAnswers = {
+                match1: 'معلمان', // معلم
+                match2: 'بنتان',  // بنت (nominative)
+                match3: 'مفتاحان', // مفتاح
+                match4: 'صديقان', // صديق
+                match5: 'مكتبان'  // مكتب
+            };
 
             function showPanel(targetId) {
                 contentPanels.forEach(panel => {
@@ -616,7 +596,6 @@
                         panel.classList.add('hidden');
                     }
                 });
-
                 navItems.forEach(item => {
                     if (item.dataset.target === targetId) {
                         item.classList.add('active');
@@ -626,10 +605,8 @@
                 });
             }
 
-            // Initial panel display
             showPanel('intro');
 
-            // Navigation click handler
             nav.addEventListener('click', function(e) {
                 const button = e.target.closest('.nav-item');
                 if (button && button.dataset.target) {
@@ -637,7 +614,6 @@
                 }
             });
 
-            // MCQ Quiz Logic
             const mcqForm = document.getElementById('mcq-quiz');
             const submitMcqBtn = document.getElementById('submit-mcq');
             const resetMcqBtn = document.getElementById('reset-mcq');
@@ -674,7 +650,6 @@
                         feedbackDiv.classList.add('show', 'incorrect-feedback');
                     }
                 }
-
                 if (allAnswered) {
                     mcqScoreDisplay.textContent = `You scored ${score} out of 5!`;
                 } else {
@@ -693,20 +668,18 @@
                 }
             });
 
-            // Matching Quiz Logic
             const matchingForm = document.getElementById('matching-quiz');
             const submitMatchingBtn = document.getElementById('submit-matching');
             const resetMatchingBtn = document.getElementById('reset-matching');
             const matchingScoreDisplay = document.getElementById('matching-score');
 
-            // Function to normalize Arabic input (remove diacritics, extra spaces)
             function normalizeArabic(text) {
                 if (!text) return '';
-                text = text.replace(/[\u064B-\u0652\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7-\u06E8\u06EA-\u06ED]/g, ''); // Remove diacritics
-                text = text.replace(/ى/g, 'ي'); // Normalize Alef Maqsura to Ya
-                text = text.replace(/أ|إ|آ/g, 'ا'); // Normalize Alifs
-                text = text.replace(/ة/g, 'ه'); // Normalize Ta Marbuta to Ha
-                text = text.replace(/\s+/g, '').trim(); // Remove all whitespace
+                text = text.replace(/[\u064B-\u0652\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7-\u06E8\u06EA-\u06ED]/g, '');
+                text = text.replace(/ى/g, 'ي');
+                text = text.replace(/أ|إ|آ/g, 'ا');
+                text = text.replace(/ة/g, 'ه');
+                text = text.replace(/\s+/g, '').trim();
                 return text;
             }
 
@@ -721,7 +694,7 @@
                     const correctAnswer = normalizeArabic(matchingAnswers[inputId]);
 
                     feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
-                    inputField.style.borderColor = '#E7E5E4'; // Reset border color
+                    inputField.style.borderColor = '#E7E5E4';
 
                     if (!userAnswer) {
                         allAnswered = false;
@@ -732,16 +705,15 @@
 
                     if (userAnswer === correctAnswer) {
                         score++;
-                        inputField.style.borderColor = '#059669'; // Green border
+                        inputField.style.borderColor = '#059669';
                         feedbackDiv.textContent = 'Correct!';
                         feedbackDiv.classList.add('show', 'correct-feedback');
                     } else {
-                        inputField.style.borderColor = '#EF4444'; // Red border
+                        inputField.style.borderColor = '#EF4444';
                         feedbackDiv.textContent = `Incorrect. Correct: ${matchingAnswers[inputId]}`;
                         feedbackDiv.classList.add('show', 'incorrect-feedback');
                     }
                 }
-
                 if (allAnswered) {
                     matchingScoreDisplay.textContent = `You matched ${score} out of 5 correctly!`;
                 } else {
@@ -757,7 +729,7 @@
                     const inputField = document.getElementById(inputId);
                     const feedbackDiv = document.getElementById(`match-feedback-${i}`);
                     feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
-                    inputField.style.borderColor = '#D1D5DB'; // Reset border color
+                    inputField.style.borderColor = '#D1D5DB';
                 }
             });
         });
