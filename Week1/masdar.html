@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson: The Arabic Infinitive (المصدر)</title>
+    <!-- Chosen Palette: Desert Sage - Simplified for inline CSS -->
+    <!-- Application Structure Plan: This page presents the interactive guide for the Arabic Infinitive (Masdar). It features a vertical navigation menu (horizontal on mobile) for sections like Introduction, What is Masdar?, Masdar Patterns (Form I, Form II, Form III, Form V, Form VIII), Masdar & Idafa, and Quizzes. Each navigation item dynamically displays a corresponding content panel. A 'Back to Week Overview' button ensures easy navigation within the weekly structure. -->
+    <!-- Visualization & Content Choices: Goal: Inform, Organize, and Assess. Method: Interactive list/detail view for content, MCQ and Matching quizzes for assessment. Justification: This interactive, step-by-step approach is highly effective for language grammar learning, enabling users to focus on specific rules and immediately test their comprehension. Library/Method: Vanilla JavaScript for logic, inline CSS for styling. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: sans-serif; /* Fallback font */
+            background-color: #FDFCF9;
+            margin: 0;
+            padding: 20px;
+            color: #57534E;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem 1rem;
+        }
+        .text-center { text-align: center; }
+        .mb-12 { margin-bottom: 3rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mt-12 { margin-top: 3rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .text-5xl { font-size: 3rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .font-medium { font-weight: 500; }
+        .font-normal { font-weight: 400; }
+        .text-stone-900 { color: #1C1917; }
+        .text-stone-500 { color: #78716C; }
+        .text-stone-600 { color: #57534E; }
+        .text-stone-700 { color: #44403C; }
+        .text-teal-600 { color: #0D9488; }
+        .arabic-text {
+            font-family: serif;
+            direction: rtl;
+            font-size: 1.25rem;
+            color: #57534E;
+        }
+        .arabic-heading {
+            font-family: serif;
+            direction: rtl;
+            font-size: 3rem;
+            line-height: 1.2;
+            color: #4A6C6F;
+        }
+        .transliteration {
+            font-style: italic;
+            color: #78716C;
+        }
+        .example-box {
+            border-left: 4px solid #0D9488;
+            background-color: #FAFAF9;
+            padding: 1rem;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-row { flex-direction: row; }
+        .flex-wrap { flex-wrap: wrap; }
+        .justify-between { justify-content: space-between; }
+        .items-center { align-items: center; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-8 { gap: 2rem; }
+        .gap-12 { gap: 3rem; }
+        .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+        .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem; }
+
+        .w-full { width: 100%; }
+        .w-1\/4 { width: 25%; }
+        .w-3\/4 { width: 75%; }
+        .flex-grow { flex-grow: 1; }
+        .max-w-3xl { max-width: 48rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+
+        .nav-item {
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            padding: 0.75rem;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            background-color: transparent;
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #44403C;
+        }
+        .nav-item:hover {
+            background-color: #E7E5E4;
+        }
+        .nav-item.active {
+            background-color: #4A6C6F;
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        .content-panel {
+            background-color: #FFFFFF;
+            padding: 1.5rem 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E7E5E4;
+        }
+        .content-panel.hidden {
+            display: none;
+        }
+
+        .quiz-option {
+            display: block;
+            margin-bottom: 0.5rem;
+            padding: 0.75rem;
+            border: 1px solid #E7E5E4;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .quiz-option:hover {
+            background-color: #F8F8F8;
+        }
+        .quiz-option.correct {
+            background-color: #D1FAE5;
+            border-color: #059669;
+        }
+        .quiz-option.incorrect {
+            background-color: #FEE2E2;
+            border-color: #EF4444;
+        }
+        .quiz-option input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: bold;
+            display: none;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+        }
+        .quiz-feedback.show {
+            display: block;
+        }
+        .quiz-feedback.correct-feedback {
+            color: #059669;
+            background-color: #D1FAE5;
+        }
+        .quiz-feedback.incorrect-feedback {
+            color: #EF4444;
+            background-color: #FEE2E2;
+        }
+        .quiz-question-container {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #E7E5E4;
+            border-radius: 0.5rem;
+            background-color: #FFFFFF;
+        }
+        .quiz-question-container p {
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .quiz-score {
+            margin-top: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .quiz-button {
+            background-color: #4A6C6F;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        .quiz-button:hover {
+            background-color: #3B5759;
+        }
+        .input-match {
+            border: 1px solid #D1D5DB;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.25rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .match-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .match-row div {
+            flex: 1;
+        }
+        .match-row input {
+            flex: 2;
+        }
+        .pattern-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .pattern-table th, .pattern-table td {
+            border: 1px solid #D1D5DB;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .pattern-table th {
+            background-color: #F3F4F6;
+            font-weight: 600;
+            color: #4B5563;
+        }
+        .pattern-table td.arabic-text {
+            font-size: 1.1rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .back-to-week-button {
+            display: inline-block;
+            background-color: #A3A3A3;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 2rem;
+            margin-bottom: 1rem; /* Added margin for spacing */
+        }
+        .back-to-week-button:hover {
+            background-color: #8C8C8C;
+        }
+
+        @media (min-width: 768px) {
+            .md\:flex-row { flex-direction: row; }
+            .md\:w-1\/4 { width: 25%; }
+            .md\:w-3\/4 { width: 75%; }
+            .md\:text-5xl { font-size: 3rem; }
+            .md\:flex-col { flex-direction: column; }
+        }
+        @media (max-width: 767px) {
+            .flex-row.md\:flex-col { flex-direction: row; }
+            .w-full.md\:w-1\/4 { width: 100%; }
+            .w-full.md\:w-3\/4 { width: 100%; }
+            .nav-item { flex-grow: 1; text-align: center; }
+            .arabic-heading { font-size: 2.5rem; }
+            .match-row { flex-direction: column; align-items: flex-start; }
+            .match-row input { width: 100%; }
+            .match-row div { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-stone-900">Interactive Guide to the Arabic Infinitive (المصدر)</h1>
+            <p class="arabic-text text-2xl mt-2 text-stone-500">المصدر (al-Maṣdar)</p>
+            <p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600">
+                This guide explores the Arabic Infinitive, known as the "Maṣdar." It's a special type of noun that represents the *action* of a verb without referring to a specific time or doer. You'll learn about its nature, common patterns, and how it's used in sentences.
+            </p>
+        </header>
+
+        <main class="flex flex-col md:flex-row gap-8">
+
+            <nav id="masdar-nav" class="w-full md:w-1/4">
+                <ul class="flex flex-row md:flex-col gap-2 flex-wrap">
+                    <li><button data-target="intro" class="nav-item w-full">Introduction</button></li>
+                    <li><button data-target="what-is" class="nav-item w-full">What is a Maṣdar?</button></li>
+                    <li><button data-target="form1" class="nav-item w-full">Maṣdar Patterns: Form I</button></li>
+                    <li><button data-target="form2-3" class="nav-item w-full">Maṣdar Patterns: Forms II & III</button></li>
+                    <li><button data-target="form5-8" class="nav-item w-full">Maṣdar Patterns: Forms V & VIII</button></li>
+                    <li><button data-target="idafa" class="nav-item w-full">Maṣdar & Idafa (Construct State)</button></li>
+                    <li><button data-target="quiz" class="nav-item w-full">Quizzes</button></li>
+                </ul>
+            </nav>
+
+            <div id="content-panels" class="w-full md:w-3/4">
+
+                <div id="panel-intro" class="content-panel">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Introduction to the Infinitive (المصدر)</h2>
+                    <p class="mb-4 text-lg text-stone-700">
+                        In Arabic grammar, the <span class="font-bold arabic-text">المصدر</span> (*al-Maṣdar*), often translated as "infinitive" or "verbal noun," is a fascinating part of the language. Unlike regular verbs that tell you who did what and when, the Maṣdar focuses purely on the *action* itself. Think of it as the "doing" or "state of being," without being tied to a specific time (past, present, future) or a specific person performing the action.
+                    </p>
+                    <p class="text-lg text-stone-700">
+                        It's a foundational concept because many nouns and abstract ideas in Arabic come directly from these Maṣdar forms. This section will break down what the Maṣdar is and how it's formed from different verb patterns.
+                    </p>
+                </div>
+
+                <div id="panel-what-is" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">What Exactly is a Maṣdar?</h2>
+                    <p class="mb-4 text-lg text-stone-700">
+                        The Maṣdar is essentially a **verbal noun**. This means it's a noun that comes from a verb and expresses the abstract idea of that verb's action.
+                    </p>
+                    <ul class="list-disc pl-6 mb-4 text-lg text-stone-700 space-y-2">
+                        <li>It expresses an action, but has **no tense** (not past, present, or future).</li>
+                        <li>It has **no specific doer** of the action implied.</li>
+                        <li>It often translates into English using an "-ing" form, like "running," "reading," or "studying," but it functions as a noun.</li>
+                    </ul>
+                    <p class="mb-4 text-lg text-stone-700">
+                        Consider the difference: <span class="font-bold">"He runs"</span> (a verb, with a doer and a tense) vs. <span class="font-bold">"Running is good for health"</span> ("running" as a noun, the *action* itself).
+                    </p>
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Examples of Maṣdar in Use:</h3>
+                    <div class="space-y-4">
+                        <div class="example-box">
+                            <p class="arabic-text">أُحِبُّ السَّفَرَ (Uḥibbu as-safar)</p>
+                            <p class="transliteration">"I like traveling."</p>
+                            <p class="text-sm text-stone-600">(Here, <span class="arabic-text">السَّفَرَ</span> is the Maṣdar of "to travel")</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">أَدْرُسُ لِلْحُصُولِ عَلَى مَاْجِسْتِيرٍ (Adrusu lil-ḥuṣūli ʿalā mājistīrin)</p>
+                            <p class="transliteration">"I study to obtain a Master's (degree)."</p>
+                            <p class="text-sm text-stone-600">(<span class="arabic-text">الْحُصُولِ</span> is the Maṣdar of "to obtain")</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="panel-form1" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Maṣdar Patterns: Form I Verbs</h2>
+                    <p class="mb-4 text-lg text-stone-700">
+                        Form I verbs are the simplest (three root letters), but their Maṣdar forms are often **irregular** and can vary quite a lot. This means they often need to be memorized or learned through practice. There are, however, some common patterns:
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Common Form I Maṣdar Patterns:</h3>
+                    <table class="pattern-table mb-6">
+                        <thead>
+                            <tr>
+                                <th>Verb (Present Tense)</th>
+                                <th>Maṣdar</th>
+                                <th>Meaning (Maṣdar)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="arabic-text">يَأْكُلُ</td>
+                                <td class="arabic-text">أَكْلٌ</td>
+                                <td>Eating</td>
+                            </tr>
+                            <tr>
+                                <td class="arabic-text">يَعْمَلُ</td>
+                                <td class="arabic-text">عَمَلٌ</td>
+                                <td>Working</td>
+                            </tr>
+                            <tr>
+                                <td class="arabic-text">يَشْرَبُ</td>
+                                <td class="arabic-text">شُرْبٌ</td>
+                                <td>Drinking</td>
+                            </tr>
+                            <tr>
+                                <td class="arabic-text">يَحْفَظُ</td>
+                                <td class="arabic-text">حِفْظٌ</td>
+                                <td>Memorizing</td>
+                            </tr>
+                             <tr>
+                                <td class="arabic-text">يَذْهَبُ</td>
+                                <td class="arabic-text">ذَهَابٌ</td>
+                                <td>Going</td>
+                            </tr>
+                             <tr>
+                                <td class="arabic-text">يَعْرِفُ</td>
+                                <td class="arabic-text">مَعْرِفَةٌ</td>
+                                <td>Knowing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                     <h3 class="text-xl font-semibold text-stone-800 mb-2">"Feeling/Emotion" Verbs Pattern:</h3>
+                    <p class="mb-2 text-lg text-stone-700">
+                        Some Form I verbs expressing feelings or emotions often follow a pattern like <span class="font-bold arabic-text">الْفُعُول</span> (al-fuʿūl).
+                    </p>
+                    <table class="pattern-table">
+                        <thead>
+                            <tr>
+                                <th>Verb (Present Tense)</th>
+                                <th>Maṣdar</th>
+                                <th>Meaning (Maṣdar)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="arabic-text">يَشْعُرُ</td>
+                                <td class="arabic-text">الشُّعُورُ</td>
+                                <td>Feeling</td>
+                            </tr>
+                             <tr>
+                                <td class="arabic-text">يَقْبَلُ</td>
+                                <td class="arabic-text">الْقَبُولُ</td>
+                                <td>Acceptance</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                     <p class="mt-4 mb-2 text-lg text-stone-700">
+                        Another common pattern for "activity" verbs is <span class="font-bold arabic-text">الْفِعَالَة</span> (al-fiʿālah).
+                    </p>
+                    <table class="pattern-table">
+                        <thead>
+                            <tr>
+                                <th>Verb (Present Tense)</th>
+                                <th>Maṣdar</th>
+                                <th>Meaning (Maṣdar)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="arabic-text">يَدْرُسُ</td>
+                                <td class="arabic-text">دِرَاسَةٌ</td>
+                                <td>Studying</td>
+                            </tr>
+                             <tr>
+                                <td class="arabic-text">يَكْتُبُ</td>
+                                <td class="arabic-text">كِتَابَةٌ</td>
+                                <td>Writing</td>
+                            </tr>
+                             <tr>
+                                <td class="arabic-text">يَقْرَأُ</td>
+                                <td class="arabic-text">قِرَاءَةٌ</td>
+                                <td>Reading</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="panel-form2-3" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Maṣdar Patterns: Form II & III Verbs</h2>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Form II: التفعيل (At-Tafʿīl)</h3>
+                    <p class="mb-4 text-lg text-stone-700">
+                        Form II verbs are highly regular and often have a doubled middle root letter (a <span class="font-bold">shadda</span>). Their Maṣdar form is typically <span class="font-bold arabic-text">تَفْعِيل</span> (*tafʿīl*).
+                    </p>
+                    <table class="pattern-table mb-6">
+                        <thead>
+                            <tr>
+                                <th>Verb (Present Tense)</th>
+                                <th>Maṣdar</th>
+                                <th>Meaning (Maṣdar)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="arabic-text">يُدَرِّسُ</td>
+                                <td class="arabic-text">تَدْرِيسٌ</td>
+                                <td>Teaching</td>
+                            </tr>
+                            <tr>
+                                <td class="arabic-text">يُصَوِّرُ</td>
+                                <td class="arabic-text">تَصْوِيرٌ</td>
+                                <td>Photographing</td>
+                            </tr>
+                             <tr>
+                                <td class="arabic-text">يُزَوِّرُ</td>
+                                <td class="arabic-text">تَزْوِيرٌ</td>
+                                <td>Falsifying</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Form III: المفاعلة (Al-Mufāʿalah)</h3>
+                    <p class="mb-4 text-lg text-stone-700">
+                        Form III verbs often indicate shared action or reciprocity. Their common Maṣdar pattern is <span class="font-bold arabic-text">مُفَاعَلَة</span> (*mufāʿalah*). Some have an alternative pattern <span class="font-bold arabic-text">فِعَال</span> (*fiʿāl*).
+                    </p>
+                    <table class="pattern-table">
+                        <thead>
+                            <tr>
+                                <th>Verb (Present Tense)</th>
+                                <th>Maṣdar</th>
+                                <th>Meaning (Maṣdar)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="arabic-text">يُشَاهِدُ</td>
+                                <td class="arabic-text">مُشَاهَدَةٌ</td>
+                                <td>Watching</td>
+                            </tr>
+                            <tr>
+                                <td class="arabic-text">يُحَاضِرُ</td>
+                                <td class="arabic-text">مُحَاضَرَةٌ</td>
+                                <td>Lecturing</td>
+                            </tr>
+                             <tr>
+                                <td class="arabic-text">يُسَافِرُ</td>
+                                <td class="arabic-text">سَفَرٌ / مُسَافَرَةٌ</td>
+                                <td>Traveling</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="panel-form5-8" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Maṣdar Patterns: Form V & VIII Verbs</h2>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Form V: التفعّل (At-Tafaʿʿul)</h3>
+                    <p class="mb-4 text-lg text-stone-700">
+                        Form V verbs usually indicate a reflexive or passive action, often starting with <span class="font-bold arabic-text">تَـ</span> and having a <span class="font-bold">shadda</span>. Their Maṣdar form often mirrors the verb's structure.
+                    </p>
+                    <table class="pattern-table mb-6">
+                        <thead>
+                            <tr>
+                                <th>Verb (Present Tense)</th>
+                                <th>Maṣdar</th>
+                                <th>Meaning (Maṣdar)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="arabic-text">يَتَخَرَّجُ</td>
+                                <td class="arabic-text">تَخَرُّجٌ</td>
+                                <td>Graduating</td>
+                            </tr>
+                            <tr>
+                                <td class="arabic-text">يَتَذَكَّرُ</td>
+                                <td class="arabic-text">تَذَكُّرٌ</td>
+                                <td>Remembering</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Form VIII: الافتعال (Al-Iftiʿāl)</h3>
+                    <p class="mb-4 text-lg text-stone-700">
+                        Form VIII verbs are characterized by the addition of a <span class="font-bold arabic-text">ت</span> (*tāʾ*) between the second and third root consonants. Their Maṣdar pattern is typically <span class="font-bold arabic-text">اِفْتِعَال</span> (*iftiʿāl*).
+                    </p>
+                    <table class="pattern-table">
+                        <thead>
+                            <tr>
+                                <th>Verb (Present Tense)</th>
+                                <th>Maṣdar</th>
+                                <th>Meaning (Maṣdar)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="arabic-text">يَجْتَمِعُ</td>
+                                <td class="arabic-text">اِجْتِمَاعٌ</td>
+                                <td>Meeting/Gathering</td>
+                            </tr>
+                            <tr>
+                                <td class="arabic-text">يَمْتَحِنُ</td>
+                                <td class="arabic-text">اِمْتِحَانٌ</td>
+                                <td>Examining/Testing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="panel-idafa" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Maṣdar and Idafa (Construct State)</h2>
+                    <p class="mb-4 text-lg text-stone-700">
+                        The Maṣdar, despite being derived from a verb, behaves grammatically like a regular noun. This means it can be the subject, object, or predicate of a sentence. A very common and important use of the Maṣdar is within the <span class="font-bold">Idafa</span> (إِضَافَة - *construct state*) construction.
+                    </p>
+                    <p class="mb-4 text-lg text-stone-700">
+                        When the action expressed by the Maṣdar is carried out *on an object*, the Maṣdar *must* be the **first term** of an Idafa. The noun that follows it is then the "object" of the Masdar's action.
+                    </p>
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Examples:</h3>
+                    <div class="space-y-4">
+                        <div class="example-box">
+                            <p class="arabic-text">كِتَابَةُ الْوَاجِبِ (kitābatul-wājibi)</p>
+                            <p class="transliteration">"writing the homework" (lit. "the writing of the homework")</p>
+                            <p class="text-sm text-stone-600">(<span class="arabic-text">كتابة</span> is Maṣdar, <span class="arabic-text">الواجب</span> is the object of the action)</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">مُشَاهَدَةُ التِّلْفِزْيُونِ (mushāhadatut-tilfiziyūn)</p>
+                            <p class="transliteration">"watching television" (lit. "the watching of the television")</p>
+                            <p class="text-sm text-stone-600">(<span class="arabic-text">مشاهدة</span> is Maṣdar, <span class="arabic-text">التلفزيون</span> is the object of the action)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="panel-quiz" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Test Your Knowledge!</h2>
+                    <p class="mb-6 text-lg text-stone-700">
+                        Challenge yourself with these quizzes to reinforce your understanding of the Arabic Infinitive (Maṣdar).
+                    </p>
+
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-bold text-stone-800 mb-4">Quiz 1: Multiple Choice Questions</h3>
+                        <form id="mcq-quiz" class="space-y-6">
+                            <div class="quiz-question-container">
+                                <p>1. What is the primary function of <span class="arabic-text font-bold">المصدر</span> (Maṣdar) in Arabic?</p>
+                                <label class="quiz-option"><input type="radio" name="q1" value="A"> To indicate past tense actions</label>
+                                <label class="quiz-option"><input type="radio" name="q1" value="B"> To describe adjectives</label>
+                                <label class="quiz-option"><input type="radio" name="q1" value="C"> To express the abstract idea of an action without tense</label>
+                                <label class="quiz-option"><input type="radio" name="q1" value="D"> To form plural nouns</label>
+                                <div id="feedback-q1" class="quiz-feedback"></div>
+                            </div>
+                            <div class="quiz-question-container">
+                                <p>2. Which of the following Maṣdar patterns is generally *variable* and less predictable?</p>
+                                <label class="quiz-option"><input type="radio" name="q2" value="A"> Form II (<span class="arabic-text">التفعيل</span>)</label>
+                                <label class="quiz-option"><input type="radio" name="q2" value="B"> Form I</label>
+                                <label class="quiz-option"><input type="radio" name="q2" value="C"> Form VIII (<span class="arabic-text">الافتعال</span>)</label>
+                                <label class="quiz-option"><input type="radio" name="q2" value="D"> Form III (<span class="arabic-text">المفاعلة</span>)</label>
+                                <div id="feedback-q2" class="quiz-feedback"></div>
+                            </div>
+                            <div class="quiz-question-container">
+                                <p>3. The Maṣdar <span class="arabic-text font-bold">التدريس</span> (at-tadrīs - teaching) comes from which verb form, known for its two syllables and a doubled consonant?</p>
+                                <label class="quiz-option"><input type="radio" name="q3" value="A"> Form I</label>
+                                <label class="quiz-option"><input type="radio" name="q3" value="B"> Form III</label>
+                                <label class="quiz-option"><input type="radio" name="q3" value="C"> Form V</label>
+                                <label class="quiz-option"><input type="radio" name="q3" value="D"> Form II</label>
+                                <div id="feedback-q3" class="quiz-feedback"></div>
+                            </div>
+                            <div class="quiz-question-container">
+                                <p>4. When <span class="arabic-text font-bold">المصدر</span> (Maṣdar) is used to express an action carried out on an object (like "writing *the homework*"), it often functions as the first term in what grammatical construction?</p>
+                                <label class="quiz-option"><input type="radio" name="q4" value="A"> Dualization</label>
+                                <label class="quiz-option"><input type="radio" name="q4" value="B"> Pluralization</label>
+                                <label class="quiz-option"><input type="radio" name="q4" value="C"> Idafa (Construct State)</label>
+                                <label class="quiz-option"><input type="radio" name="q4" value="D"> Adjectival phrase</label>
+                                <div id="feedback-q4" class="quiz-feedback"></div>
+                            </div>
+                            <div class="quiz-question-container">
+                                <p>5. Which Maṣdar form typically adds a <span class="arabic-text font-bold">ت</span> (tāʾ) between its second and third root consonants, as seen in <span class="arabic-text">الاجتماع</span> (al-ijtimāʿ - meeting)?</p>
+                                <label class="quiz-option"><input type="radio" name="q5" value="A"> Form III</label>
+                                <label class="quiz-option"><input type="radio" name="q5" value="B"> Form V</label>
+                                <label class="quiz-option"><input type="radio" name="q5" value="C"> Form VIII</label>
+                                <label class="quiz-option"><input type="radio" name="q5" value="D"> Form II</label>
+                                <div id="feedback-q5" class="quiz-feedback"></div>
+                            </div>
+
+                            <button type="button" id="submit-mcq" class="quiz-button">Check MCQ Answers</button>
+                            <button type="button" id="reset-mcq" class="quiz-button bg-stone-500 hover:bg-stone-600">Reset MCQ Quiz</button>
+                            <div id="mcq-score" class="quiz-score"></div>
+                        </form>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-stone-800 mb-4">Quiz 2: Matching Questions</h3>
+                        <p class="mb-4 text-lg text-stone-700">Match the verb to its corresponding Maṣdar (Infinitive) form. Type the Arabic Maṣdar form in the input box.</p>
+                        <form id="matching-quiz" class="space-y-4">
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">يَأْكُلُ</span> (yaʾkulu - he eats)</div>
+                                <input type="text" id="match1" class="input-match" placeholder="Type Maṣdar here">
+                                <div id="match-feedback-1" class="quiz-feedback"></div>
+                            </div>
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">يَعْمَلُ</span> (yaʿmalu - he works)</div>
+                                <input type="text" id="match2" class="input-match" placeholder="Type Maṣdar here">
+                                <div id="match-feedback-2" class="quiz-feedback"></div>
+                            </div>
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">يَدْرُسُ</span> (yadrusu - he studies)</div>
+                                <input type="text" id="match3" class="input-match" placeholder="Type Maṣdar here">
+                                <div id="match-feedback-3" class="quiz-feedback"></div>
+                            </div>
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">يُصَوِّرُ</span> (yuṣawwiru - he photographs)</div>
+                                <input type="text" id="match4" class="input-match" placeholder="Type Maṣdar here">
+                                <div id="match-feedback-4" class="quiz-feedback"></div>
+                            </div>
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">يُشَاهِدُ</span> (yushāhidu - he watches)</div>
+                                <input type="text" id="match5" class="input-match" placeholder="Type Maṣdar here">
+                                <div id="match-feedback-5" class="quiz-feedback"></div>
+                            </div>
+
+                            <button type="button" id="submit-matching" class="quiz-button">Check Matching Answers</button>
+                            <button type="button" id="reset-matching" class="quiz-button bg-stone-500 hover:bg-stone-600">Reset Matching Quiz</button>
+                            <div id="matching-score" class="quiz-score"></div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+        <a href="index.html" class="back-to-week-button">← Back to Week Overview</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.getElementById('masdar-nav');
+            const navItems = nav.querySelectorAll('.nav-item');
+            const contentPanels = document.getElementById('content-panels').querySelectorAll('.content-panel');
+
+            const mcqAnswers = {
+                q1: 'C', q2: 'B', q3: 'D', q4: 'C', q5: 'C'
+            };
+
+            const matchingAnswers = {
+                match1: 'اكل', match2: 'عمل', match3: 'دراسة', match4: 'تصوير', match5: 'مشاهدة'
+            };
+
+            function showPanel(targetId) {
+                contentPanels.forEach(panel => {
+                    if (panel.id === `panel-${targetId}`) {
+                        panel.classList.remove('hidden');
+                    } else {
+                        panel.classList.add('hidden');
+                    }
+                });
+                navItems.forEach(item => {
+                    if (item.dataset.target === targetId) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            showPanel('intro');
+
+            nav.addEventListener('click', function(e) {
+                const button = e.target.closest('.nav-item');
+                if (button && button.dataset.target) {
+                    showPanel(button.dataset.target);
+                }
+            });
+
+            const mcqForm = document.getElementById('mcq-quiz');
+            const submitMcqBtn = document.getElementById('submit-mcq');
+            const resetMcqBtn = document.getElementById('reset-mcq');
+            const mcqScoreDisplay = document.getElementById('mcq-score');
+
+            submitMcqBtn.addEventListener('click', function() {
+                let score = 0;
+                let allAnswered = true;
+                for (let i = 1; i <= 5; i++) {
+                    const questionName = `q${i}`;
+                    const selectedOption = mcqForm.querySelector(`input[name="${questionName}"]:checked`);
+                    const feedbackDiv = document.getElementById(`feedback-q${i}`);
+                    const options = mcqForm.querySelectorAll(`input[name="${questionName}"]`);
+
+                    feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
+                    options.forEach(opt => opt.closest('.quiz-option').classList.remove('correct', 'incorrect'));
+
+                    if (!selectedOption) {
+                        allAnswered = false;
+                        feedbackDiv.textContent = 'Please select an answer.';
+                        feedbackDiv.classList.add('show', 'incorrect-feedback');
+                        continue;
+                    }
+
+                    if (selectedOption.value === mcqAnswers[questionName]) {
+                        score++;
+                        selectedOption.closest('.quiz-option').classList.add('correct');
+                        feedbackDiv.textContent = 'Correct!';
+                        feedbackDiv.classList.add('show', 'correct-feedback');
+                    } else {
+                        selectedOption.closest('.quiz-option').classList.add('incorrect');
+                        mcqForm.querySelector(`input[name="${questionName}"][value="${mcqAnswers[questionName]}"]`).closest('.quiz-option').classList.add('correct');
+                        feedbackDiv.textContent = 'Incorrect. The correct answer is ' + mcqAnswers[questionName] + '.';
+                        feedbackDiv.classList.add('show', 'incorrect-feedback');
+                    }
+                }
+                if (allAnswered) {
+                    mcqScoreDisplay.textContent = `You scored ${score} out of 5!`;
+                } else {
+                    mcqScoreDisplay.textContent = 'Please answer all questions before submitting.';
+                }
+            });
+
+            resetMcqBtn.addEventListener('click', function() {
+                mcqForm.reset();
+                mcqScoreDisplay.textContent = '';
+                for (let i = 1; i <= 5; i++) {
+                    const feedbackDiv = document.getElementById(`feedback-q${i}`);
+                    feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
+                    const options = mcqForm.querySelectorAll(`input[name="q${i}"]`);
+                    options.forEach(opt => opt.closest('.quiz-option').classList.remove('correct', 'incorrect'));
+                }
+            });
+
+            const matchingForm = document.getElementById('matching-quiz');
+            const submitMatchingBtn = document.getElementById('submit-matching');
+            const resetMatchingBtn = document.getElementById('reset-matching');
+            const matchingScoreDisplay = document.getElementById('matching-score');
+
+            function normalizeArabic(text) {
+                if (!text) return '';
+                text = text.replace(/[\u064B-\u0652\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7-\u06ED]/g, '');
+                text = text.replace(/ى/g, 'ي');
+                text = text.replace(/أ|إ|آ/g, 'ا');
+                text = text.replace(/ة/g, 'ه');
+                text = text.replace(/\s+/g, '').trim();
+                return text;
+            }
+
+            submitMatchingBtn.addEventListener('click', function() {
+                let score = 0;
+                let allAnswered = true;
+                for (let i = 1; i <= 5; i++) {
+                    const inputId = `match${i}`;
+                    const inputField = document.getElementById(inputId);
+                    const feedbackDiv = document.getElementById(`match-feedback-${i}`);
+                    const userAnswer = normalizeArabic(inputField.value);
+                    const correctAnswer = normalizeArabic(matchingAnswers[inputId]);
+
+                    feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
+                    inputField.style.borderColor = '#E7E5E4';
+
+                    if (!userAnswer) {
+                        allAnswered = false;
+                        feedbackDiv.textContent = 'Please provide an answer.';
+                        feedbackDiv.classList.add('show', 'incorrect-feedback');
+                        continue;
+                    }
+
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        inputField.style.borderColor = '#059669';
+                        feedbackDiv.textContent = 'Correct!';
+                        feedbackDiv.classList.add('show', 'correct-feedback');
+                    } else {
+                        inputField.style.borderColor = '#EF4444';
+                        feedbackDiv.textContent = `Incorrect. Correct: ${matchingAnswers[inputId]}`;
+                        feedbackDiv.classList.add('show', 'incorrect-feedback');
+                    }
+                }
+                if (allAnswered) {
+                    matchingScoreDisplay.textContent = `You matched ${score} out of 5 correctly!`;
+                } else {
+                    matchingScoreDisplay.textContent = 'Please answer all questions before submitting.';
+                }
+            });
+
+            resetMatchingBtn.addEventListener('click', function() {
+                matchingForm.reset();
+                matchingScoreDisplay.textContent = '';
+                for (let i = 1; i <= 5; i++) {
+                    const inputId = `match${i}`;
+                    const inputField = document.getElementById(inputId);
+                    const feedbackDiv = document.getElementById(`match-feedback-${i}`);
+                    feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
+                    inputField.style.borderColor = '#D1D5DB';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
