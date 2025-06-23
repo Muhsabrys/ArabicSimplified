@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide to the Arabic Dual System</title>
+    <!-- Chosen Palette: Desert Sage - Simplified for inline CSS -->
+    <!-- Application Structure Plan: The application is designed as a focused interactive learning module. A vertical navigation menu (horizontal on mobile) allows users to select specific topics related to the Arabic dual system: Introduction, Dual Nouns, Dual Pronouns, Dual Verbs, and Quizzes. Each selection dynamically displays a corresponding content panel with detailed explanations and examples. This modular approach breaks down a complex grammatical concept into manageable, explorable sections. A dedicated quiz section, split into MCQ and Matching, provides immediate feedback, reinforcing learning through active engagement. This structure prioritizes guided exploration and self-assessment, enhancing user understanding. -->
+    <!-- Visualization & Content Choices: Report Info: The source content covers the definition, formation rules, and usage of the dual system in Arabic for nouns, pronouns, and verbs, along with quiz questions. Goal: Inform, Organize, and Assess. Viz/Presentation Method: Interactive list/detail view for core content, allowing users to select topics and view explanations. For quizzes, standard HTML form elements (radio buttons for MCQ, text inputs for Matching) are used, with JavaScript handling validation and feedback. Interactive buttons manage quiz submission and reset. Justification: This interactive, step-by-step approach is highly effective for language grammar learning, enabling users to focus on specific rules and immediately test their comprehension. The quizzes are directly integrated for self-assessment. No charts or complex visualizations are required as the data is textual and rule-based. Library/Method: Vanilla JavaScript for all interactive logic and DOM manipulation. Inline CSS provides styling for a clean, responsive design, ensuring maximum compatibility for embedding. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: sans-serif; /* Fallback font */
+            background-color: #FDFCF9;
+            margin: 0;
+            padding: 20px; /* Basic padding for content */
+            color: #57534E;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem 1rem;
+        }
+        .text-center { text-align: center; }
+        .mb-12 { margin-bottom: 3rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mt-12 { margin-top: 3rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .text-5xl { font-size: 3rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .font-medium { font-weight: 500; }
+        .font-normal { font-weight: 400; }
+        .text-stone-900 { color: #1C1917; }
+        .text-stone-500 { color: #78716C; }
+        .text-stone-600 { color: #57534E; }
+        .text-stone-700 { color: #44403C; }
+        .text-teal-600 { color: #0D9488; }
+        .arabic-text {
+            font-family: serif; /* Fallback for Amiri */
+            direction: rtl;
+            font-size: 1.25rem;
+            color: #57534E;
+        }
+        .arabic-heading {
+            font-family: serif; /* Fallback for Amiri */
+            direction: rtl;
+            font-size: 3rem;
+            line-height: 1.2;
+            color: #4A6C6F;
+        }
+        .transliteration {
+            font-style: italic;
+            color: #78716C;
+        }
+        .example-box {
+            border-left: 4px solid #0D9488;
+            background-color: #FAFAF9;
+            padding: 1rem;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        /* Flex and Grid equivalents */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-row { flex-direction: row; }
+        .flex-wrap { flex-wrap: wrap; }
+        .justify-between { justify-content: space-between; }
+        .items-center { align-items: center; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-8 { gap: 2rem; }
+        .gap-12 { gap: 3rem; }
+        .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+        .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem; }
+
+        /* Widths */
+        .w-full { width: 100%; }
+        .w-1\/4 { width: 25%; }
+        .w-3\/4 { width: 75%; }
+        .flex-grow { flex-grow: 1; }
+        .max-w-3xl { max-width: 48rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+
+        /* Navigation and Content Panel Styles */
+        .nav-item {
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            padding: 0.75rem;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            background-color: transparent;
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 500; /* font-medium */
+            color: #44403C; /* stone-700 */
+        }
+        .nav-item:hover {
+            background-color: #E7E5E4; /* stone-200 */
+        }
+        .nav-item.active {
+            background-color: #4A6C6F; /* primary color */
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        .content-panel {
+            background-color: #FFFFFF;
+            padding: 1.5rem 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #E7E5E4;
+        }
+        .content-panel.hidden {
+            display: none;
+        }
+
+        /* Quiz Specific Styles */
+        .quiz-option {
+            display: block;
+            margin-bottom: 0.5rem;
+            padding: 0.75rem;
+            border: 1px solid #E7E5E4;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .quiz-option:hover {
+            background-color: #F8F8F8;
+        }
+        .quiz-option.correct {
+            background-color: #D1FAE5; /* green-100 */
+            border-color: #059669; /* green-600 */
+        }
+        .quiz-option.incorrect {
+            background-color: #FEE2E2; /* red-100 */
+            border-color: #EF4444; /* red-500 */
+        }
+        .quiz-option input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: bold;
+            display: none;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+        }
+        .quiz-feedback.show {
+            display: block;
+        }
+        .quiz-feedback.correct-feedback {
+            color: #059669;
+            background-color: #D1FAE5;
+        }
+        .quiz-feedback.incorrect-feedback {
+            color: #EF4444;
+            background-color: #FEE2E2;
+        }
+        .quiz-question-container {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #E7E5E4;
+            border-radius: 0.5rem;
+            background-color: #FFFFFF;
+        }
+        .quiz-question-container p {
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .quiz-score {
+            margin-top: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .quiz-button {
+            background-color: #4A6C6F; /* Darker primary */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        .quiz-button:hover {
+            background-color: #3B5759;
+        }
+        .input-match {
+            border: 1px solid #D1D5DB; /* gray-300 */
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.25rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .match-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .match-row div {
+            flex: 1;
+        }
+        .match-row input {
+            flex: 2;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) { /* md breakpoint */
+            .md\:flex-row { flex-direction: row; }
+            .md\:w-1\/4 { width: 25%; }
+            .md\:w-3\/4 { width: 75%; }
+            .md\:text-5xl { font-size: 3rem; }
+            .md\:flex-col { flex-direction: column; }
+        }
+        @media (max-width: 767px) { /* Mobile */
+            .flex-row.md\:flex-col { flex-direction: row; }
+            .w-full.md\:w-1\/4 { width: 100%; }
+            .w-full.md\:w-3\/4 { width: 100%; }
+            .nav-item { flex-grow: 1; text-align: center; }
+            .arabic-heading { font-size: 2.5rem; }
+            .match-row { flex-direction: column; align-items: flex-start; }
+            .match-row input { width: 100%; }
+            .match-row div { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-stone-900">Interactive Guide to the Arabic Dual System</h1>
+            <p class="arabic-text text-2xl mt-2 text-stone-500">المُثَنَّى (al-muthannā)</p>
+            <p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600">
+                This guide explores the Arabic dual system, which is used to refer to exactly two of something. You'll learn about its formation for nouns, pronouns, and verbs, and can test your understanding with interactive quizzes.
+            </p>
+        </header>
+
+        <main class="flex flex-col md:flex-row gap-8">
+
+            <!-- Navigation -->
+            <nav id="dual-system-nav" class="w-full md:w-1/4">
+                <ul class="flex flex-row md:flex-col gap-2 flex-wrap">
+                    <li><button data-target="intro" class="nav-item w-full">Introduction</button></li>
+                    <li><button data-target="nouns" class="nav-item w-full">Dual Nouns</button></li>
+                    <li><button data-target="pronouns" class="nav-item w-full">Dual Pronouns</button></li>
+                    <li><button data-target="verbs" class="nav-item w-full">Dual Verbs</button></li>
+                    <li><button data-target="quiz" class="nav-item w-full">Quizzes</button></li>
+                </ul>
+            </nav>
+
+            <!-- Content Panels -->
+            <div id="content-panels" class="w-full md:w-3/4">
+
+                <!-- Introduction Panel -->
+                <div id="panel-intro" class="content-panel">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Introduction to the Dual System (المُثَنَّى)</h2>
+                    <p class="mb-4 text-lg text-stone-700">
+                        In Arabic, in addition to singular (for one) and plural (for three or more), there's a distinct grammatical category called the **dual** ($\text{المُثَنَّى}$ - *al-muthannā*). The dual is used specifically to indicate **exactly two** of something. This system applies primarily to nouns, adjectives, and pronouns, and verbs also adjust their forms to agree with dual subjects.
+                    </p>
+                    <p class="text-lg text-stone-700">
+                        Understanding the dual is crucial for accurate communication in Arabic, as it has specific endings that change depending on the grammatical case (nominative, accusative, genitive).
+                    </p>
+                </div>
+
+                <!-- Dual Nouns Panel -->
+                <div id="panel-nouns" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Dual Nouns (الأسماء المثناة)</h2>
+                    <p class="mb-4 text-lg text-stone-700">
+                        To form the dual of a noun, specific suffixes are added to the singular form. These suffixes change based on the grammatical case of the noun in the sentence:
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">1. Nominative Case (حالة الرفع - Ḥālat ar-Rafʿ)</h3>
+                    <p class="mb-2 text-lg text-stone-700">
+                        In the nominative case (e.g., as a subject), the suffix <span class="font-bold arabic-text text-base">ـَانِ</span> ($\text{-āni}$) is added to the singular noun.
+                    </p>
+                    <div class="space-y-4 mb-6">
+                        <div class="example-box">
+                            <p class="arabic-text">كِتَابٌ (book) <span class="text-stone-500">→</span> كِتَابَانِ (two books)</p>
+                            <p class="transliteration">kitābun → kitābāni</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">مُعَلِّمٌ (teacher) <span class="text-stone-500">→</span> مُعَلِّمَانِ (two teachers)</p>
+                            <p class="transliteration">muʿallimun → muʿallimāni</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">2. Accusative Case (حالة النصب - Ḥālat an-Naṣb) & Genitive Case (حالة الجر - Ḥālat al-Jarr)</h3>
+                    <p class="mb-2 text-lg text-stone-700">
+                        In both the accusative case (e.g., as a direct object) and the genitive case (e.g., after a preposition), the suffix <span class="font-bold arabic-text text-base">ـَيْنِ</span> ($\text{-ayni}$) is added to the singular noun.
+                    </p>
+                    <div class="space-y-4 mb-6">
+                        <div class="example-box">
+                            <p class="arabic-text">رَأَيْتُ كِتَابَيْنِ (I saw two books)</p>
+                            <p class="transliteration">Raʾaytu kitābayni</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">مَرَرْتُ بِمُعَلِّمَيْنِ (I passed by two teachers)</p>
+                            <p class="transliteration">Marartu bi-muʿallimayni</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">Important Rule: Dropping the Noon (ن)</h3>
+                    <p class="mb-2 text-lg text-stone-700">
+                        When a dual noun is followed directly by another noun in an <span class="font-bold">Idafa</span> (construct state) construction, the final Noon (<span class="arabic-text text-base">ن</span>) of the dual suffix is dropped.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="example-box">
+                            <p class="arabic-text">كِتَابَا الطَّالِبِ (the two books of the student)</p>
+                            <p class="transliteration">kitābā aṭ-ṭālibi</p>
+                            <p class="text-sm text-stone-600">(Original: <span class="arabic-text text-base">كِتَابَانِ</span> $\rightarrow$ Noon dropped)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dual Pronouns Panel -->
+                <div id="panel-pronouns" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Dual Pronouns (الضمائر المثناة)</h2>
+                    <p class="mb-4 text-lg text-stone-700">
+                        Arabic has specific pronouns for the dual, both independent and attached.
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">1. Independent Dual Pronouns</h3>
+                    <p class="mb-2 text-lg text-stone-700">
+                        These pronouns stand alone and refer to two individuals (they two, you two).
+                    </p>
+                    <div class="space-y-4 mb-6">
+                        <div class="example-box">
+                            <p class="arabic-text">هُمَا (humā)</p>
+                            <p class="mt-1 font-medium">"they two" (for both masculine and feminine)</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">أَنْتُمَا (antumā)</p>
+                            <p class="mt-1 font-medium">"you two" (for both masculine and feminine)</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">2. Attached Dual Pronouns</h3>
+                    <p class="mb-2 text-lg text-stone-700">
+                        These suffixes attach to nouns, verbs, or prepositions to indicate possession, object, or subject respectively.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="example-box">
+                            <p class="arabic-text">كِتَابُهُمَا (kitābuhumā)</p>
+                            <p class="mt-1 font-medium">"their (two) book"</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">رَأَيْتُهُمَا (raʾaytuhumā)</p>
+                            <p class="mt-1 font-medium">"I saw them (two)"</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">لَهُمَا (lahumā)</p>
+                            <p class="mt-1 font-medium">"for them (two)"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dual Verbs Panel -->
+                <div id="panel-verbs" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Dual Verbs (الأفعال مع المثنى)</h2>
+                    <p class="mb-4 text-lg text-stone-700">
+                        Verbs in Arabic change their form to agree with a dual subject. This involves specific prefixes and suffixes.
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">1. Past Tense (الماضي - al-Māḍī)</h3>
+                    <p class="mb-2 text-lg text-stone-700">
+                        For dual subjects, the suffix <span class="font-bold arabic-text text-base">ـَا</span> ($\text{-ā}$) is added to the verb root.
+                    </p>
+                    <div class="space-y-4 mb-6">
+                        <div class="example-box">
+                            <p class="arabic-text">كَتَبَا (katabā)</p>
+                            <p class="mt-1 font-medium">"they two (masculine) wrote"</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">كَتَبَتَا (katabatā)</p>
+                            <p class="mt-1 font-medium">"they two (feminine) wrote"</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-stone-800 mb-2">2. Present Tense (المضارع - al-Muḍāriʿ)</h3>
+                    <p class="mb-2 text-lg text-stone-700">
+                        For dual subjects, the prefix <span class="font-bold arabic-text text-base">يَـ</span> ($\text{ya-}$) or <span class="font-bold arabic-text text-base">تَـ</span> ($\text{ta-}$) and the suffix <span class="font-bold arabic-text text-base">ـَانِ</span> ($\text{-āni}$) are used.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="example-box">
+                            <p class="arabic-text">يَكْتُبَانِ (yaktubāni)</p>
+                            <p class="mt-1 font-medium">"they two (masculine) write/are writing"</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">تَكْتُبَانِ (taktubāni)</p>
+                            <p class="mt-1 font-medium">"they two (feminine) write/are writing" or "you two write/are writing"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quizzes Panel -->
+                <div id="panel-quiz" class="content-panel hidden">
+                    <h2 class="text-3xl font-bold text-stone-900 mb-4">Test Your Knowledge!</h2>
+                    <p class="mb-6 text-lg text-stone-700">
+                        Challenge yourself with these quizzes to reinforce your understanding of the Arabic dual system.
+                    </p>
+
+                    <!-- Multiple Choice Quiz -->
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-bold text-stone-800 mb-4">Quiz 1: Multiple Choice Questions</h3>
+                        <form id="mcq-quiz" class="space-y-6">
+                            <!-- Question 1 -->
+                            <div class="quiz-question-container">
+                                <p>1. Which is the dual nominative form of <span class="arabic-text font-bold">مُعَلِّمٌ</span> (muʿallimun - teacher)?</p>
+                                <label class="quiz-option"><input type="radio" name="q1" value="A"> <span class="arabic-text">مُعَلِّمُونَ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q1" value="B"> <span class="arabic-text">مُعَلِّمِينَ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q1" value="C"> <span class="arabic-text">مُعَلِّمَانِ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q1" value="D"> <span class="arabic-text">مُعَلِّمَيْنِ</span></label>
+                                <div id="feedback-q1" class="quiz-feedback"></div>
+                            </div>
+                            <!-- Question 2 -->
+                            <div class="quiz-question-container">
+                                <p>2. What is the dual form of <span class="arabic-text font-bold">بِنْتٌ</span> (bintun - girl) in the accusative case?</p>
+                                <label class="quiz-option"><input type="radio" name="q2" value="A"> <span class="arabic-text">بِنْتَانِ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q2" value="B"> <span class="arabic-text">بِنْتَيْنِ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q2" value="C"> <span class="arabic-text">بَنَاتٌ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q2" value="D"> <span class="arabic-text">بِنْتُهُمَا</span></label>
+                                <div id="feedback-q2" class="quiz-feedback"></div>
+                            </div>
+                            <!-- Question 3 -->
+                            <div class="quiz-question-container">
+                                <p>3. The phrase <span class="arabic-text font-bold">قَلَمَيْنِ</span> (qalamayni) could be in which cases?</p>
+                                <label class="quiz-option"><input type="radio" name="q3" value="A"> Nominative only</label>
+                                <label class="quiz-option"><input type="radio" name="q3" value="B"> Accusative and Genitive</label>
+                                <label class="quiz-option"><input type="radio" name="q3" value="C"> Genitive only</label>
+                                <label class="quiz-option"><input type="radio" name="q3" value="D"> Nominative and Accusative</label>
+                                <div id="feedback-q3" class="quiz-feedback"></div>
+                            </div>
+                            <!-- Question 4 -->
+                            <div class="quiz-question-container">
+                                <p>4. Which independent pronoun means "you two (masculine or feminine)"?</p>
+                                <label class="quiz-option"><input type="radio" name="q4" value="A"> <span class="arabic-text">هُمَا</span></label>
+                                <label class="quiz-option"><input type="radio" name="q4" value="B"> <span class="arabic-text">أَنْتُمَا</span></label>
+                                <label class="quiz-option"><input type="radio" name="q4" value="C"> <span class="arabic-text">نَحْنُ</span></label>
+                                <label class="quiz-option"><input type="radio" name="q4" value="D"> <span class="arabic-text">أَنْتُمْ</span></label>
+                                <div id="feedback-q4" class="quiz-feedback"></div>
+                            </div>
+                            <!-- Question 5 -->
+                            <div class="quiz-question-container">
+                                <p>5. What happens to the noon (<span class="arabic-text font-bold">ن</span>) of the dual when it's in an *Idafa* construction (construct state)?</p>
+                                <label class="quiz-option"><input type="radio" name="q5" value="A"> It remains</label>
+                                <label class="quiz-option"><input type="radio" name="q5" value="B"> It doubles</label>
+                                <label class="quiz-option"><input type="radio" name="q5" value="C"> It is dropped</label>
+                                <label class="quiz-option"><input type="radio" name="q5" value="D"> It changes to a Ya (<span class="arabic-text">ي</span>)</label>
+                                <div id="feedback-q5" class="quiz-feedback"></div>
+                            </div>
+
+                            <button type="button" id="submit-mcq" class="quiz-button">Check MCQ Answers</button>
+                            <button type="button" id="reset-mcq" class="quiz-button bg-stone-500 hover:bg-stone-600">Reset MCQ Quiz</button>
+                            <div id="mcq-score" class="quiz-score"></div>
+                        </form>
+                    </div>
+
+                    <!-- Matching Quiz -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-stone-800 mb-4">Quiz 2: Matching Questions</h3>
+                        <p class="mb-4 text-lg text-stone-700">Match the singular noun to its dual form in the nominative case. Type the Arabic dual form in the input box.</p>
+                        <form id="matching-quiz" class="space-y-4">
+                            <!-- Match 1 -->
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">كِتَابٌ</span> (kitābun)</div>
+                                <input type="text" id="match1" class="input-match" placeholder="Type dual here">
+                                <div id="match-feedback-1" class="quiz-feedback"></div>
+                            </div>
+                            <!-- Match 2 -->
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">مُدَرِّسٌ</span> (mudarrisun)</div>
+                                <input type="text" id="match2" class="input-match" placeholder="Type dual here">
+                                <div id="match-feedback-2" class="quiz-feedback"></div>
+                            </div>
+                            <!-- Match 3 -->
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">طَالِبَةٌ</span> (ṭālibatun)</div>
+                                <input type="text" id="match3" class="input-match" placeholder="Type dual here">
+                                <div id="match-feedback-3" class="quiz-feedback"></div>
+                            </div>
+                            <!-- Match 4 -->
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">قَلَمٌ</span> (qalamun)</div>
+                                <input type="text" id="match4" class="input-match" placeholder="Type dual here">
+                                <div id="match-feedback-4" class="quiz-feedback"></div>
+                            </div>
+                            <!-- Match 5 -->
+                            <div class="match-row">
+                                <div><span class="arabic-text font-bold">بَيْتٌ</span> (baytun)</div>
+                                <input type="text" id="match5" class="input-match" placeholder="Type dual here">
+                                <div id="match-feedback-5" class="quiz-feedback"></div>
+                            </div>
+
+                            <button type="button" id="submit-matching" class="quiz-button">Check Matching Answers</button>
+                            <button type="button" id="reset-matching" class="quiz-button bg-stone-500 hover:bg-stone-600">Reset Matching Quiz</button>
+                            <div id="matching-score" class="quiz-score"></div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.getElementById('dual-system-nav');
+            const navItems = nav.querySelectorAll('.nav-item');
+            const contentPanels = document.getElementById('content-panels').querySelectorAll('.content-panel');
+
+            // Data for MCQ Quiz
+            const mcqAnswers = {
+                q1: 'C',
+                q2: 'B',
+                q3: 'B',
+                q4: 'B',
+                q5: 'C'
+            };
+
+            // Data for Matching Quiz (Using a common normalization for user input)
+            const matchingAnswers = {
+                match1: 'كتابان', // كتاب
+                match2: 'مدرسان', // مدرس
+                match3: 'طالبتان', // طالبة
+                match4: 'قلمان', // قلم
+                match5: 'بيتان' // بيت
+            };
+
+            function showPanel(targetId) {
+                contentPanels.forEach(panel => {
+                    if (panel.id === `panel-${targetId}`) {
+                        panel.classList.remove('hidden');
+                    } else {
+                        panel.classList.add('hidden');
+                    }
+                });
+
+                navItems.forEach(item => {
+                    if (item.dataset.target === targetId) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            // Initial panel display
+            showPanel('intro');
+
+            // Navigation click handler
+            nav.addEventListener('click', function(e) {
+                const button = e.target.closest('.nav-item');
+                if (button && button.dataset.target) {
+                    showPanel(button.dataset.target);
+                }
+            });
+
+            // MCQ Quiz Logic
+            const mcqForm = document.getElementById('mcq-quiz');
+            const submitMcqBtn = document.getElementById('submit-mcq');
+            const resetMcqBtn = document.getElementById('reset-mcq');
+            const mcqScoreDisplay = document.getElementById('mcq-score');
+
+            submitMcqBtn.addEventListener('click', function() {
+                let score = 0;
+                let allAnswered = true;
+                for (let i = 1; i <= 5; i++) {
+                    const questionName = `q${i}`;
+                    const selectedOption = mcqForm.querySelector(`input[name="${questionName}"]:checked`);
+                    const feedbackDiv = document.getElementById(`feedback-q${i}`);
+                    const options = mcqForm.querySelectorAll(`input[name="${questionName}"]`);
+
+                    feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
+                    options.forEach(opt => opt.closest('.quiz-option').classList.remove('correct', 'incorrect'));
+
+                    if (!selectedOption) {
+                        allAnswered = false;
+                        feedbackDiv.textContent = 'Please select an answer.';
+                        feedbackDiv.classList.add('show', 'incorrect-feedback');
+                        continue;
+                    }
+
+                    if (selectedOption.value === mcqAnswers[questionName]) {
+                        score++;
+                        selectedOption.closest('.quiz-option').classList.add('correct');
+                        feedbackDiv.textContent = 'Correct!';
+                        feedbackDiv.classList.add('show', 'correct-feedback');
+                    } else {
+                        selectedOption.closest('.quiz-option').classList.add('incorrect');
+                        mcqForm.querySelector(`input[name="${questionName}"][value="${mcqAnswers[questionName]}"]`).closest('.quiz-option').classList.add('correct');
+                        feedbackDiv.textContent = 'Incorrect. The correct answer is ' + mcqAnswers[questionName] + '.';
+                        feedbackDiv.classList.add('show', 'incorrect-feedback');
+                    }
+                }
+
+                if (allAnswered) {
+                    mcqScoreDisplay.textContent = `You scored ${score} out of 5!`;
+                } else {
+                    mcqScoreDisplay.textContent = 'Please answer all questions before submitting.';
+                }
+            });
+
+            resetMcqBtn.addEventListener('click', function() {
+                mcqForm.reset();
+                mcqScoreDisplay.textContent = '';
+                for (let i = 1; i <= 5; i++) {
+                    const feedbackDiv = document.getElementById(`feedback-q${i}`);
+                    feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
+                    const options = mcqForm.querySelectorAll(`input[name="q${i}"]`);
+                    options.forEach(opt => opt.closest('.quiz-option').classList.remove('correct', 'incorrect'));
+                }
+            });
+
+            // Matching Quiz Logic
+            const matchingForm = document.getElementById('matching-quiz');
+            const submitMatchingBtn = document.getElementById('submit-matching');
+            const resetMatchingBtn = document.getElementById('reset-matching');
+            const matchingScoreDisplay = document.getElementById('matching-score');
+
+            // Function to normalize Arabic input (remove diacritics, extra spaces)
+            function normalizeArabic(text) {
+                if (!text) return '';
+                text = text.replace(/[\u064B-\u0652\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7-\u06E8\u06EA-\u06ED]/g, ''); // Remove diacritics
+                text = text.replace(/ى/g, 'ي'); // Normalize Alef Maqsura to Ya
+                text = text.replace(/أ|إ|آ/g, 'ا'); // Normalize Alifs
+                text = text.replace(/ة/g, 'ه'); // Normalize Ta Marbuta to Ha
+                text = text.replace(/\s+/g, '').trim(); // Remove all whitespace
+                return text;
+            }
+
+            submitMatchingBtn.addEventListener('click', function() {
+                let score = 0;
+                let allAnswered = true;
+                for (let i = 1; i <= 5; i++) {
+                    const inputId = `match${i}`;
+                    const inputField = document.getElementById(inputId);
+                    const feedbackDiv = document.getElementById(`match-feedback-${i}`);
+                    const userAnswer = normalizeArabic(inputField.value);
+                    const correctAnswer = normalizeArabic(matchingAnswers[inputId]);
+
+                    feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
+                    inputField.style.borderColor = '#E7E5E4'; // Reset border color
+
+                    if (!userAnswer) {
+                        allAnswered = false;
+                        feedbackDiv.textContent = 'Please provide an answer.';
+                        feedbackDiv.classList.add('show', 'incorrect-feedback');
+                        continue;
+                    }
+
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        inputField.style.borderColor = '#059669'; // Green border
+                        feedbackDiv.textContent = 'Correct!';
+                        feedbackDiv.classList.add('show', 'correct-feedback');
+                    } else {
+                        inputField.style.borderColor = '#EF4444'; // Red border
+                        feedbackDiv.textContent = `Incorrect. Correct: ${matchingAnswers[inputId]}`;
+                        feedbackDiv.classList.add('show', 'incorrect-feedback');
+                    }
+                }
+
+                if (allAnswered) {
+                    matchingScoreDisplay.textContent = `You matched ${score} out of 5 correctly!`;
+                } else {
+                    matchingScoreDisplay.textContent = 'Please answer all questions before submitting.';
+                }
+            });
+
+            resetMatchingBtn.addEventListener('click', function() {
+                matchingForm.reset();
+                matchingScoreDisplay.textContent = '';
+                for (let i = 1; i <= 5; i++) {
+                    const inputId = `match${i}`;
+                    const inputField = document.getElementById(inputId);
+                    const feedbackDiv = document.getElementById(`match-feedback-${i}`);
+                    feedbackDiv.classList.remove('show', 'correct-feedback', 'incorrect-feedback');
+                    inputField.style.borderColor = '#D1D5DB'; // Reset border color
+                }
+            });
+        });
+    </script>
+</body>
+</html>
