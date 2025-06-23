@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Guide to Arabic Prepositions</title>
+    <title>Welcome to Arabic Grammar Insights</title>
     <!-- Chosen Palette: Desert Sage - Simplified for inline CSS -->
-    <!-- Application Structure Plan: The application is structured as an interactive explorer to facilitate focused learning. It features a main navigation list (a sidebar on desktop, a top bar on mobile) of all prepositions. Clicking a preposition dynamically updates a central content panel with its specific details (meaning, usage, examples). This task-oriented design allows users to study one concept at a time, which is more effective for language learning than a long, scrollable document. A separate, collapsible accordion section for "Key Characteristics" groups general rules, making them accessible without cluttering the main learning area. This structure was chosen to transform a static report into an engaging, user-driven educational tool. -->
-    <!-- Visualization & Content Choices: Report Info: The source is a textual summary of 8 Arabic prepositions, their meanings, examples, and general grammatical rules. Goal: Inform & Organize. Viz/Presentation Method: The core of the app is an interactive list/detail view. A vertical button navigation controls which preposition's detail card is shown. Each card clearly structures the information with distinct typography for Arabic, transliteration, and translation. General rules are presented in an accordion for progressive disclosure. Interaction: User clicks on a preposition name to display its information. Accordion headers can be clicked to reveal/hide content. Justification: This approach is ideal for exploring a defined set of categorical, text-based data. It encourages active user engagement over passive reading. Standard charts (Bar, Line) are irrelevant as there is no quantitative data. Library/Method: Vanilla JavaScript for interaction logic and DOM manipulation. Inline CSS for styling. -->
+    <!-- Application Structure Plan: This is the main landing page, designed to welcome students and provide clear navigation to individual grammar modules. It features a prominent welcome message, a brief introduction to the learning platform, and dedicated interactive buttons for each available module. The structure is linear and intuitive, aiming to guide new users to specific learning content. This design prioritizes ease of access and clear signposting for different grammatical topics. -->
+    <!-- Visualization & Content Choices: Report Info: This page serves as an entry point to a collection of Arabic grammar guides. Goal: Inform and Navigate. Viz/Presentation Method: Textual introduction with a clear heading. Interactive buttons serve as navigation elements, linking to the sub-modules. Justification: A simple, direct approach is most effective for a landing page, minimizing cognitive load and immediately directing users to the content. No complex visualizations are needed. Library/Method: Pure HTML for structure, inline CSS for styling, and standard hyperlinks for navigation. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -14,175 +14,61 @@
             background-color: #FDFCF9;
             margin: 0;
             padding: 20px; /* Basic padding for content */
-            color: #57534E; /* stone-800 equivalent */
+            color: #57534E;
+            line-height: 1.6;
         }
         .container {
-            max-width: 1200px;
+            max-width: 900px; /* Slightly narrower for a welcoming page */
             margin-left: auto;
             margin-right: auto;
-            padding-left: 1rem; /* px-4 sm:px-6 lg:px-8 equivalent */
-            padding-right: 1rem;
-            padding-top: 3rem; /* py-12 equivalent */
-            padding-bottom: 3rem;
+            padding: 2rem 1rem;
+            text-align: center;
         }
-        .text-center { text-align: center; }
+        .mb-8 { margin-bottom: 2rem; }
         .mb-12 { margin-bottom: 3rem; }
-        .mt-2 { margin-top: 0.5rem; }
         .mt-4 { margin-top: 1rem; }
-        .mt-6 { margin-top: 1.5rem; }
-        .mt-16 { margin-top: 4rem; }
         .text-4xl { font-size: 2.25rem; }
         .text-5xl { font-size: 3rem; }
         .text-2xl { font-size: 1.5rem; }
         .text-lg { font-size: 1.125rem; }
-        .text-xl { font-size: 1.25rem; }
-        .text-3xl { font-size: 1.875rem; }
         .font-bold { font-weight: 700; }
         .font-semibold { font-weight: 600; }
-        .font-medium { font-weight: 500; }
-        .font-normal { font-weight: 400; }
         .text-stone-900 { color: #1C1917; }
         .text-stone-500 { color: #78716C; }
         .text-stone-600 { color: #57534E; }
-        .text-stone-700 { color: #44403C; }
-        .text-stone-800 { color: #292524; }
-        .text-white { color: #FFFFFF; }
         .arabic-text {
-            font-family: serif; /* Fallback for Amiri */
+            font-family: serif; /* Fallback for Arabic fonts */
             direction: rtl;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             color: #57534E;
         }
-        .arabic-heading {
-            font-family: serif; /* Fallback for Amiri */
-            direction: rtl;
-            font-size: 3.5rem;
-            line-height: 1.2;
-            color: #4A6C6F;
-        }
-        .transliteration {
-            font-style: italic;
-            color: #78716C;
-        }
-
-        /* Flex and Grid equivalents */
-        .flex { display: flex; }
-        .flex-col { flex-direction: column; }
-        .flex-row { flex-direction: row; }
-        .flex-wrap { flex-wrap: wrap; }
-        .justify-between { justify-content: space-between; }
-        .items-center { align-items: center; }
-        .gap-2 { gap: 0.5rem; }
-        .gap-8 { gap: 2rem; }
-        .gap-12 { gap: 3rem; }
-        .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.75rem; }
-        .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
-
-        /* Widths */
-        .w-full { width: 100%; }
-        .w-1\/4 { width: 25%; }
-        .w-3\/4 { width: 75%; }
-        .flex-grow { flex-grow: 1; }
-        .max-w-3xl { max-width: 48rem; }
-        .max-w-4xl { max-width: 56rem; }
-        .mx-auto { margin-left: auto; margin-right: auto; }
-
-        /* Panel and Nav Item Styles */
-        .nav-item {
+        
+        /* Module Buttons */
+        .module-button {
+            display: inline-block;
+            background-color: #4A6C6F; /* Primary color */
+            color: white;
+            padding: 1rem 2rem;
             border-radius: 0.5rem;
-            transition-property: background-color, color;
-            transition-duration: 0.2s;
-            transition-timing-function: ease-in-out;
-            padding: 0.75rem; /* p-3 */
-            text-align: left;
-            border: none;
-            cursor: pointer;
-            background-color: transparent;
-        }
-        .nav-item:hover {
-            background-color: #E7E5E4; /* stone-200 */
-        }
-        .nav-item.active {
-            background-color: #4A6C6F; /* primary color */
-            color: #FFFFFF;
-            font-weight: 700;
-        }
-        .nav-item.active .arabic-text-nav {
-            color: #FFFFFF;
-        }
-
-        .preposition-panel {
-            background-color: #FFFFFF;
-            padding: 1.5rem; /* p-6 */
-            border-radius: 0.75rem; /* rounded-xl */
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
-            border: 1px solid #E7E5E4; /* border-stone-200 */
-        }
-        .preposition-panel.hidden {
-            display: none;
-        }
-
-        .border-l-4 { border-left-width: 4px; }
-        .border-teal-600 { border-color: #0D9488; } /* Teal color */
-        .bg-stone-50 { background-color: #FAFAF9; }
-        .p-4 { padding: 1rem; }
-        .rounded-r-lg { border-top-right-radius: 0.5rem; border-bottom-right-radius: 0.5rem; }
-
-        /* Accordion styles */
-        .accordion-container {
-            max-width: 56rem;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 3rem; /* Adjusted for better spacing */
-        }
-        .accordion-button {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem; /* p-5 */
-            text-align: left;
+            text-decoration: none;
+            font-size: 1.25rem; /* text-xl */
             font-weight: 600;
-            font-size: 1.25rem;
-            color: #292524; /* stone-800 */
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            transition-property: background-color;
-            transition-duration: 0.2s;
-            transition-timing-function: ease-in-out;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            margin: 0.5rem; /* For spacing between buttons */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .accordion-button:hover {
-            background-color: #FAFAF9; /* stone-50 */
+        .module-button:hover {
+            background-color: #3B5759; /* Slightly darker on hover */
+            transform: translateY(-2px); /* Slight lift effect */
         }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out;
+        .module-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .accordion-content.open {
-            max-height: 500px; /* Sufficiently large to show content */
-        }
-        .accordion-icon {
-            transition: transform 0.3s ease-in-out;
-        }
-        .accordion-button.open .accordion-icon {
-            transform: rotate(180deg);
-        }
-        .border { border-width: 1px; border-style: solid; }
-        .border-stone-200 { border-color: #E7E5E4; }
-        .rounded-lg { border-radius: 0.5rem; }
-        .p-5 { padding: 1.25rem; }
-        .border-t { border-top-width: 1px; }
-        .leading-relaxed { line-height: 1.625; }
 
         /* Responsive adjustments */
         @media (min-width: 768px) { /* md breakpoint */
-            .md\:flex-row { flex-direction: row; }
-            .md\:w-1\/4 { width: 25%; }
-            .md\:w-3\/4 { width: 75%; }
             .md\:text-5xl { font-size: 3rem; }
-            .md\:flex-col { flex-direction: column; }
         }
     </style>
 </head>
@@ -190,296 +76,31 @@
 
     <div class="container">
 
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-stone-900">Interactive Guide to Arabic Prepositions</h1>
-            <p class="arabic-text text-2xl mt-2 text-stone-500">حُرُوفُ الْجَرِّ (ḥurūf al-jarr)</p>
-            <p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600">
-                This guide provides an interactive way to explore the most common prepositions in Arabic. Select a preposition from the list to learn about its meaning, usage, and see it in action with examples.
-            </p>
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-stone-900">أَهْلاً وَسَهْلاً!</h1>
+            <p class="arabic-text text-2xl mt-2 text-stone-500">Welcome to Arabic Grammar Insights</p>
         </header>
 
-        <main class="flex flex-col md:flex-row gap-8 lg:gap-12">
+        <main>
+            <p class="mb-8 text-lg text-stone-600">
+                Are you eager to dive deeper into the beauty and logic of Arabic grammar? You've come to the right place! This platform is designed to make complex Arabic concepts easy to understand and fun to explore. Whether you're a beginner or looking to solidify your knowledge, our interactive guides are here to help.
+            </p>
+            <p class="mb-12 text-lg text-stone-600">
+                Start your journey by selecting a topic below:
+            </p>
 
-            <!-- Navigation -->
-            <nav id="preposition-nav" class="w-full md:w-1/4">
-                <ul class="flex flex-row md:flex-col gap-2 flex-wrap">
-                    <li class="flex-grow"><button data-target="fi" class="nav-item w-full text-left p-3 rounded-lg flex justify-between items-center"><span class="font-semibold text-lg">fī</span> <span class="arabic-text-nav text-xl text-stone-500">في</span></button></li>
-                    <li class="flex-grow"><button data-target="ila" class="nav-item w-full text-left p-3 rounded-lg flex justify-between items-center"><span class="font-semibold text-lg">ilā</span> <span class="arabic-text-nav text-xl text-stone-500">إِلَى</span></button></li>
-                    <li class="flex-grow"><button data-target="min" class="nav-item w-full text-left p-3 rounded-lg flex justify-between items-center"><span class="font-semibold text-lg">min</span> <span class="arabic-text-nav text-xl text-stone-500">مِنْ</span></button></li>
-                    <li class="flex-grow"><button data-target="ala" class="nav-item w-full text-left p-3 rounded-lg flex justify-between items-center"><span class="font-semibold text-lg">ʿalā</span> <span class="arabic-text-nav text-xl text-stone-500">عَلَى</span></button></li>
-                    <li class="flex-grow"><button data-target="li" class="nav-item w-full text-left p-3 rounded-lg flex justify-between items-center"><span class="font-semibold text-lg">li</span> <span class="arabic-text-nav text-xl text-stone-500">لِـ</span></button></li>
-                    <li class="flex-grow"><button data-target="bi" class="nav-item w-full text-left p-3 rounded-lg flex justify-between items-center"><span class="font-semibold text-lg">bi</span> <span class="arabic-text-nav text-xl text-stone-500">بِـ</span></button></li>
-                    <li class="flex-grow"><button data-target="ka" class="nav-item w-full text-left p-3 rounded-lg flex justify-between items-center"><span class="font-semibold text-lg">ka</span> <span class="arabic-text-nav text-xl text-stone-500">كَـ</span></button></li>
-                    <li class="flex-grow"><button data-target="an" class="nav-item w-full text-left p-3 rounded-lg flex justify-between items-center"><span class="font-semibold text-lg">ʿan</span> <span class="arabic-text-nav text-xl text-stone-500">عَنْ</span></button></li>
-                </ul>
-            </nav>
-
-            <!-- Content Panels -->
-            <div id="content-panels" class="w-full md:w-3/4">
-
-                <!-- Panel for fi -->
-                <div id="panel-fi" class="preposition-panel">
-                    <h2 class="arabic-heading">في</h2>
-                    <p class="text-2xl font-bold">fī <span class="font-normal text-stone-500 ml-2">"in," "at," "on"</span></p>
-                    <p class="mt-4 text-lg text-stone-700">Indicates location (inside, at, on), time (during), or a general context.</p>
-                    <div class="mt-6 space-y-4">
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">أَنَا فِي الْبَيْتِ</p>
-                            <p class="transliteration">Anā fī al-bayti</p>
-                            <p class="mt-1 font-medium">"I am in the house."</p>
-                        </div>
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">فِي الصَّبَاحِ</p>
-                            <p class="transliteration">Fī aṣ-ṣabāḥi</p>
-                            <p class="mt-1 font-medium">"In the morning."</p>
-                        </div>
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">فِي هَذَا الْكِتَابِ</p>
-                            <p class="transliteration">Fī hādhā al-kitābi</p>
-                            <p class="mt-1 font-medium">"In this book."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel for ila -->
-                <div id="panel-ila" class="preposition-panel hidden">
-                    <h2 class="arabic-heading">إِلَى</h2>
-                    <p class="text-2xl font-bold">ilā <span class="font-normal text-stone-500 ml-2">"to," "towards," "until"</span></p>
-                    <p class="mt-4 text-lg text-stone-700">Indicates direction, a destination, or a limit in time or space.</p>
-                     <div class="mt-6 space-y-4">
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">أَذْهَبُ إِلَى الْمَدْرَسَةِ</p>
-                            <p class="transliteration">Adhhabu ilā al-madrasati</p>
-                            <p class="mt-1 font-medium">"I go to the school."</p>
-                        </div>
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">مِنَ الصَّبَاحِ إِلَى الْمَسَاءِ</p>
-                            <p class="transliteration">Mina aṣ-ṣabāḥi ilā al-masāʾi</p>
-                            <p class="mt-1 font-medium">"From morning until evening."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel for min -->
-                <div id="panel-min" class="preposition-panel hidden">
-                    <h2 class="arabic-heading">مِنْ</h2>
-                    <p class="text-2xl font-bold">min <span class="font-normal text-stone-500 ml-2">"from," "of," "some"</span></p>
-                    <p class="mt-4 text-lg text-stone-700">Indicates origin, source, being part of a whole, or cause.</p>
-                     <div class="mt-6 space-y-4">
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">جِئْتُ مِنَ السُّوقِ</p>
-                            <p class="transliteration">Jiʾtu mina as-sūqi</p>
-                            <p class="mt-1 font-medium">"I came from the market."</p>
-                        </div>
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">كَأْسٌ مِنَ الْمَاءِ</p>
-                            <p class="transliteration">Kaʾsun mina al-māʾi</p>
-                            <p class="mt-1 font-medium">"A glass of water."</p>
-                        </div>
-                         <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">بَعْضٌ مِنَ الطُّلَّابِ</p>
-                            <p class="transliteration">Baʿḍun mina aṭ-ṭullābi</p>
-                            <p class="mt-1 font-medium">"Some of the students."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel for ala -->
-                <div id="panel-ala" class="preposition-panel hidden">
-                    <h2 class="arabic-heading">عَلَى</h2>
-                    <p class="text-2xl font-bold">ʿalā <span class="font-normal text-stone-500 ml-2">"on," "upon," "over," "against"</span></p>
-                    <p class="mt-4 text-lg text-stone-700">Indicates position (on top of), obligation, or sometimes opposition.</p>
-                     <div class="mt-6 space-y-4">
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">الْكِتَابُ عَلَى الطَّاوِلَةِ</p>
-                            <p class="transliteration">Al-kitābu ʿalā aṭ-ṭāwilati</p>
-                            <p class="mt-1 font-medium">"The book is on the table."</p>
-                        </div>
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">وَاجِبٌ عَلَيْهِ</p>
-                            <p class="transliteration">Wājibun ʿalayhi</p>
-                            <p class="mt-1 font-medium">"It is an obligation upon him."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel for li -->
-                <div id="panel-li" class="preposition-panel hidden">
-                    <h2 class="arabic-heading">لِـ</h2>
-                    <p class="text-2xl font-bold">li- / la- <span class="font-normal text-stone-500 ml-2">"for," "to," "belonging to"</span></p>
-                    <p class="mt-4 text-lg text-stone-700">Indicates possession, purpose, or an indirect object. It attaches directly to the following word.</p>
-                     <div class="mt-6 space-y-4">
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">هَذَا لِي</p>
-                            <p class="transliteration">Hādhā lī</p>
-                            <p class="mt-1 font-medium">"This is for me / This belongs to me."</p>
-                        </div>
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">قُلْتُ لَهُ</p>
-                            <p class="transliteration">Qultu lahu</p>
-                            <p class="mt-1 font-medium">"I said to him."</p>
-                        </div>
-                    </div>
-                </div>
-
-                 <!-- Panel for bi -->
-                <div id="panel-bi" class="preposition-panel hidden">
-                    <h2 class="arabic-heading">بِـ</h2>
-                    <p class="text-2xl font-bold">bi- <span class="font-normal text-stone-500 ml-2">"with," "by means of," "in"</span></p>
-                    <p class="mt-4 text-lg text-stone-700">Indicates means, accompaniment, reason, or location/time. It attaches directly to the following word.</p>
-                     <div class="mt-6 space-y-4">
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">كَتَبْتُ بِالْقَلَمِ</p>
-                            <p class="transliteration">Katabtu bil-qalami</p>
-                            <p class="mt-1 font-medium">"I wrote with the pen."</p>
-                        </div>
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">بِاسْمِ اللهِ</p>
-                            <p class="transliteration">Bi-ismi Allāhi</p>
-                            <p class="mt-1 font-medium">"In the name of God."</p>
-                        </div>
-                         <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">سَافَرْتُ بِالْقِطَارِ</p>
-                            <p class="transliteration">Sāfartu bil-qiṭāri</p>
-                            <p class="mt-1 font-medium">"I traveled by train."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel for ka -->
-                <div id="panel-ka" class="preposition-panel hidden">
-                    <h2 class="arabic-heading">كَـ</h2>
-                    <p class="text-2xl font-bold">ka- <span class="font-normal text-stone-500 ml-2">"like," "as"</span></p>
-                    <p class="mt-4 text-lg text-stone-700">Indicates resemblance or comparison. It attaches directly to the following word.</p>
-                     <div class="mt-6 space-y-4">
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">أَنْتَ كَالْأَسَدِ</p>
-                            <p class="transliteration">Anta kal-asadi</p>
-                            <p class="mt-1 font-medium">"You are like a lion."</p>
-                        </div>
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">كَمَا قُلْتُ</p>
-                            <p class="transliteration">Kamā qultu</p>
-                            <p class="mt-1 font-medium">"As I said."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel for an -->
-                <div id="panel-an" class="preposition-panel hidden">
-                    <h2 class="arabic-heading">عَنْ</h2>
-                    <p class="text-2xl font-bold">ʿan <span class="font-normal text-stone-500 ml-2">"about," "from," "away from"</span></p>
-                    <p class="mt-4 text-lg text-stone-700">Indicates separation, the topic of discussion, or distance.</p>
-                     <div class="mt-6 space-y-4">
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">تَكَلَّمْتُ عَنِ الْقِصَّةِ</p>
-                            <p class="transliteration">Takallamtu ʿani al-qiṣṣati</p>
-                            <p class="mt-1 font-medium">"I spoke about the story."</p>
-                        </div>
-                        <div class="border-l-4 border-teal-600 bg-stone-50 p-4 rounded-r-lg">
-                            <p class="arabic-text">اِبْتَعَدَ عَنِ الْخَطَرِ</p>
-                            <p class="transliteration">Ibtataʿada ʿani al-khaṭari</p>
-                            <p class="mt-1 font-medium">"He moved away from the danger."</p>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="dual-system/" class="module-button">
+                    The Dual System (المثنى)
+                </a>
+                <a href="masdar/" class="module-button">
+                    The Infinitive (المصدر)
+                </a>
+                <!-- Add more links to future modules here -->
             </div>
         </main>
 
-        <!-- Key Characteristics Section -->
-        <section class="mt-16">
-            <h3 class="text-3xl font-bold text-center text-stone-900 mb-8">Key Characteristics</h3>
-            <div id="accordion-container" class="max-w-4xl mx-auto space-y-3">
-                <div class="border border-stone-200 rounded-lg">
-                    <button class="accordion-button w-full flex justify-between items-center p-5 text-left font-semibold text-xl text-stone-800" data-target="accordion-1">
-                        <span>Case Marking (Genitive Case)</span>
-                        <span class="accordion-icon">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </button>
-                    <div id="accordion-1" class="accordion-content">
-                        <div class="p-5 border-t border-stone-200 text-stone-700 leading-relaxed">
-                            A core rule of Arabic grammar is that any noun or pronoun that follows a preposition must be in the genitive case (majrūr - مَجْرُور). This is often indicated by a kasra (i) vowel ending on definite nouns.
-                        </div>
-                    </div>
-                </div>
-                 <div class="border border-stone-200 rounded-lg">
-                    <button class="accordion-button w-full flex justify-between items-center p-5 text-left font-semibold text-xl text-stone-800" data-target="accordion-2">
-                        <span>Pronoun Attachment</span>
-                         <span class="accordion-icon">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </button>
-                    <div id="accordion-2" class="accordion-content">
-                         <div class="p-5 border-t border-stone-200 text-stone-700 leading-relaxed">
-                            Prepositions can attach directly to pronoun suffixes to form a single word. For example, <span class="font-semibold">إِلَى (ilā) + هُ (hu)</span> becomes <span class="font-semibold arabic-text text-base">إِلَيْهِ</span> (ilayhi), meaning "to him". Similarly, <span class="font-semibold">فِي (fī) + هَا (hā)</span> becomes <span class="font-semibold arabic-text text-base">فِيهَا</span> (fīhā), meaning "in her".
-                        </div>
-                    </div>
-                </div>
-                 <div class="border border-stone-200 rounded-lg">
-                    <button class="accordion-button w-full flex justify-between items-center p-5 text-left font-semibold text-xl text-stone-800" data-target="accordion-3">
-                        <span>Verb-Preposition Combinations</span>
-                         <span class="accordion-icon">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </span>
-                    </button>
-                    <div id="accordion-3" class="accordion-content">
-                         <div class="p-5 border-t border-stone-200 text-stone-700 leading-relaxed">
-                            Similar to phrasal verbs in English, many Arabic verbs are paired with specific prepositions to achieve their intended meaning. For instance, the verb <span class="font-semibold arabic-text text-base">بَحَثَ</span> (baḥatha) means "to discuss," but when paired with <span class="font-semibold">عَنْ</span> (ʿan), the phrase <span class="font-semibold arabic-text text-base">بَحَثَ عَنْ</span> (baḥatha ʿan) means "to search for." Learning these combinations is key to fluency.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const nav = document.getElementById('preposition-nav');
-            const navItems = nav.querySelectorAll('.nav-item');
-            const contentPanels = document.getElementById('content-panels').querySelectorAll('.preposition-panel');
-
-            function showPanel(targetId) {
-                contentPanels.forEach(panel => {
-                    if (panel.id === `panel-${targetId}`) {
-                        panel.classList.remove('hidden');
-                    } else {
-                        panel.classList.add('hidden');
-                    }
-                });
-                
-                navItems.forEach(item => {
-                    if(item.dataset.target === targetId) {
-                        item.classList.add('active');
-                    } else {
-                        item.classList.remove('active');
-                    }
-                });
-            }
-
-            nav.addEventListener('click', function(e) {
-                const button = e.target.closest('.nav-item');
-                if (button && button.dataset.target) {
-                    showPanel(button.dataset.target);
-                }
-            });
-
-            const accordionContainer = document.getElementById('accordion-container');
-            accordionContainer.addEventListener('click', function(e) {
-                const button = e.target.closest('.accordion-button');
-                if (button) {
-                    const targetId = button.dataset.target;
-                    const content = document.getElementById(targetId);
-                    
-                    button.classList.toggle('open');
-                    content.classList.toggle('open');
-                }
-            });
-
-            showPanel('fi');
-        });
-    </script>
 </body>
 </html>
