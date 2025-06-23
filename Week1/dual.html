@@ -323,6 +323,18 @@
                             <p class="arabic-text">مَرَرْتُ بِمُعَلِّمَيْنِ (I passed by two teachers)</p>
                             <p class="transliteration">Marartu bi-muʿallimayni</p>
                         </div>
+                        <div class="example-box">
+                            <p class="arabic-text">أَكَلْتُ تُفَّاحَتَيْنِ (I ate two apples)</p>
+                            <p class="transliteration">akaltu tuffāḥatayni</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">ذَهَبْتُ إِلَى المَكْتَبَيْنِ (I went to the two offices)</p>
+                            <p class="transliteration">dhahabtu ilā al-maktabayni</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">مَرَرْتُ بِصَدِيقَيْنِ (I passed by two friends)</p>
+                            <p class="transliteration">marartu bi-ṣadīqayni</p>
+                        </div>
                     </div>
 
                     <h3 class="text-xl font-semibold text-stone-800 mb-2">Important Rule: Dropping the Noon (ن)</h3>
@@ -400,6 +412,23 @@
                             <p class="arabic-text">كَتَبَتَا (katabatā)</p>
                             <p class="mt-1 font-medium">"they two (feminine) wrote"</p>
                         </div>
+                        <div class="example-box">
+                            <p class="arabic-text">ذَهَبَا (dhahabā)</p>
+                            <p class="mt-1 font-medium">"they two (masculine) went"</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">خَرَجَتَا (kharajatā)</p>
+                            <p class="mt-1 font-medium">"they two (feminine) exited"</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">يَذْهَبَانِ (yadhhabāni)</p>
+                            <p class="mt-1 font-medium">"they two go"</p>
+                        </div>
+                        <div class="example-box">
+                            <p class="arabic-text">تَأْكُلَانِ (taʾkulāni)</p>
+                            <p class="mt-1 font-medium">"they two eat" or "you two eat"</p>
+                        </div>
+
                     </div>
 
                     <h3 class="text-xl font-semibold text-stone-800 mb-2">2. Present Tense (المضارع - al-Muḍāriʿ)</h3>
@@ -491,6 +520,7 @@
                                 <div><span class="arabic-text font-bold">كِتَابٌ</span> (kitābun)</div>
                                 <input type="text" id="match1" class="input-match" placeholder="Type dual here">
                                 <div id="match-feedback-1" class="quiz-feedback"></div>
+                                
                             </div>
                             <!-- Match 2 -->
                             <div class="match-row">
@@ -515,6 +545,27 @@
                                 <div><span class="arabic-text font-bold">بَيْتٌ</span> (baytun)</div>
                                 <input type="text" id="match5" class="input-match" placeholder="Type dual here">
                                 <div id="match-feedback-5" class="quiz-feedback"></div>
+                            <!-- Match 6 -->
+<div class="match-row">
+    <div><span class="arabic-text font-bold">كُرْسِيٌّ</span> (kursiyyun)</div>
+    <input type="text" id="match6" class="input-match" placeholder="Type dual here">
+    <div id="match-feedback-6" class="quiz-feedback"></div>
+</div>
+
+<!-- Match 7 -->
+<div class="match-row">
+    <div><span class="arabic-text font-bold">مِفْتَاحٌ</span> (miftaḥun)</div>
+    <input type="text" id="match7" class="input-match" placeholder="Type dual here">
+    <div id="match-feedback-7" class="quiz-feedback"></div>
+</div>
+
+<!-- Match 8 -->
+<div class="match-row">
+    <div><span class="arabic-text font-bold">كُرَةٌ</span> (kuratun)</div>
+    <input type="text" id="match8" class="input-match" placeholder="Type dual here">
+    <div id="match-feedback-8" class="quiz-feedback"></div>
+</div>
+    
                             </div>
 
                             <button type="button" id="submit-matching" class="quiz-button">Check Matching Answers</button>
@@ -550,6 +601,9 @@
                 match3: 'طالبتان', // طالبة
                 match4: 'قلمان', // قلم
                 match5: 'بيتان' // بيت
+                matchingAnswers.match6 = 'كرسيان';
+                matchingAnswers.match7 = 'مفتاحان';
+                matchingAnswers.match8 = 'كرتان';
             };
 
             function showPanel(targetId) {
