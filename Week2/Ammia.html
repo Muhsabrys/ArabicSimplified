@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSA vs. Egyptian Arabic: Key Differences</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            background-color: #fefcbf; /* Light yellow for active tab */
+            border-left: 4px solid #f59e0b; /* Orange border for active tab */
+            font-weight: bold;
+        }
+        .scrollable-content {
+            max-height: calc(100vh - 200px); /* Adjust based on header/footer if any */
+            overflow-y: auto;
+        }
+        /* Custom scrollbar for better aesthetics */
+        .scrollable-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .scrollable-content::-webkit-scrollbar-track {
+            background: #e5e7eb;
+            border-radius: 10px;
+        }
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+        .scrollable-content::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+        .quiz-option {
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #fff;
+            transition: all 0.2s ease-in-out;
+            margin-bottom: 8px;
+        }
+        .quiz-option:hover {
+            background-color: #f3f4f6;
+        }
+        .quiz-option.selected {
+            background-color: #bfdbfe; /* Light blue for selected option */
+            border-color: #3b82f6;
+        }
+        .quiz-option.correct {
+            background-color: #d1fae5; /* Light green for correct answer */
+            border-color: #10b981;
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2; /* Light red for incorrect answer */
+            border-color: #ef4444;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: bold;
+        }
+        .result-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+        }
+        .result-message.success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .result-message.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 shadow-lg rounded-b-lg">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-extrabold mb-2">MSA vs. Egyptian Arabic</h1>
+            <p class="text-xl font-light">Understanding the Key Linguistic Differences for Beginners</p>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex flex-1 container mx-auto my-8 p-4 bg-white shadow-xl rounded-lg overflow-hidden">
+        <!-- Tab Navigation (Left Sidebar) -->
+        <nav class="w-1/4 pr-4 border-r border-gray-200 flex flex-col">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Linguistic Aspects</h2>
+            <button class="tab-button active p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('introduction')">
+                <i class="fas fa-info-circle mr-2 text-gray-500"></i> Introduction
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('pronunciation')">
+                <i class="fas fa-volume-up mr-2 text-blue-500"></i> Pronunciation Differences
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('demonstratives')">
+                <i class="fas fa-map-marker-alt mr-2 text-green-500"></i> Demonstratives
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('pronouns')">
+                <i class="fas fa-users mr-2 text-purple-500"></i> Personal & Object Pronouns
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('relative-pronouns')">
+                <i class="fas fa-link mr-2 text-red-500"></i> Relative Pronouns
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('present-tense')">
+                <i class="fas fa-redo-alt mr-2 text-teal-500"></i> Present Tense Conjugation
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('future-tense')">
+                <i class="fas fa-forward mr-2 text-indigo-500"></i> Future Tense Formation
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('past-tense')">
+                <i class="fas fa-backward mr-2 text-pink-500"></i> Past Tense Formation
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('negation')">
+                <i class="fas fa-ban mr-2 text-yellow-600"></i> Negation Patterns
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('question-words')">
+                <i class="fas fa-question-circle mr-2 text-cyan-500"></i> Question Words
+            </button>
+            <button class="tab-button p-3 mb-2 text-left rounded-lg transition-colors duration-200 ease-in-out hover:bg-yellow-50 hover:border-l-4 hover:border-orange-400" onclick="openTab('common-expressions')">
+                <i class="fas fa-comments mr-2 text-orange-500"></i> Common Expressions
+            </button>
+        </nav>
+
+        <!-- Tab Content (Right Main Area) -->
+        <div class="w-3/4 pl-4 scrollable-content">
+
+            <!-- Introduction -->
+            <div class="tab-content active" id="introduction">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">Welcome, Beginner Arabic Learner!</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    It's great you're diving into Arabic! Understanding the differences between Modern Standard Arabic (MSA) and Egyptian Arabic is a fantastic step, as it will help you navigate both formal contexts and everyday conversations in Egypt.
+                </p>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Modern Standard Arabic (MSA) is the formal, written Arabic used in media, literature, and formal speeches across the Arab world. Egyptian Arabic (Masri) is the most widely spoken and understood colloquial dialect, primarily used for daily communication in Egypt. While they share a common root, they diverge significantly in pronunciation, grammar, and vocabulary.
+                </p>
+                <p class="text-gray-700 mb-6 leading-relaxed">
+                    Use the tabs on the left to explore the key linguistic differences. Each section includes a detailed explanation, a comparison table, and a short quiz to test your understanding!
+                </p>
+            </div>
+
+            <!-- 1. Pronunciation Differences -->
+            <div class="tab-content" id="pronunciation">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">1. Pronunciation Differences</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Egyptian Arabic exhibits several notable phonetic shifts compared to MSA, especially concerning specific letters.
+                </p>
+
+                <table class="min-w-full bg-white rounded-lg shadow-sm mb-6 text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tl-lg">Letter</th>
+                            <th class="py-3 px-4 bg-yellow-100">Modern Standard Arabic (MSA)</th>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tr-lg">Egyptian Arabic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold text-center">ث (thāʾ)</td>
+                            <td class="py-2 px-4">
+                                <p>Voiceless interdental fricative, like "th" in "thin" or "three."</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: ثلج (thalj - snow)</li>
+                                    <li>Example: ثلاث (thalāth - three)</li>
+                                    <li>Example: مثلث (muthallath - triangle)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Generally pronounced as س (sīn).</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: تلج (talg - snow)</li>
+                                    <li>Example: تلاتة (talāta - three)</li>
+                                    <li>Example: مثلث (musallas - triangle)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-center">ظ (ẓāʾ)</td>
+                            <td class="py-2 px-4">
+                                <p>Voiced interdental fricative, like "th" in "that" or "they" (emphatic counterpart of ذ).</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: ظريف (ẓarīf - charming/nice)</li>
+                                    <li>Example: عظيم (ʿaẓīm - great/magnificent)</li>
+                                    <li>Example: ظهر (ẓahr - back/noon)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Generally pronounced as ز (zāy). Often 'z' but can be 'ẓ' in educated speech. For 'ẓahr', it's commonly ضهر (ḍahr) with a heavy 'd' sound.</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: ظريف (zarīf - charming/nice)</li>
+                                    <li>Example: عظيم (ʿazīm - great/magnificent)</li>
+                                    <li>Example: ضهر (ḍahr - back/noon)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-center">ذ (dhāl)</td>
+                            <td class="py-2 px-4">
+                                <p>Voiced interdental fricative, like "th" in "this" or "then."</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: ذهب (dhahab - gold)</li>
+                                    <li>Example: لذيذ (ladheedh – delicious)</li>
+                                    <li>Example: أستاذ (ustādh - professor/teacher)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Generally pronounced as د (dāl) or ز (zāy).</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: دهب (dahab - gold)</li>
+                                    <li>Example: لذيذ (lazeez – delicious)</li>
+                                    <li>Example: أستاذ (ustāz - professor/teacher)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-center">ق (qāf)</td>
+                            <td class="py-2 px-4">
+                                <p>Voiceless uvular stop, a guttural 'k' sound made further back in the throat.</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: قلب (qalb - heart)</li>
+                                    <li>Example: قوي (qawī - strong)</li>
+                                    <li>Example: قام (qām - he stood up)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Generally pronounced as a glottal stop (ʾalif hamza ء), similar to the sound between the syllables in "uh-oh."</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: قلب (ʾalb - heart)</li>
+                                    <li>Example: قوي (ʾawī - strong)</li>
+                                    <li>Example: قام (ʾām - he stood up)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-center">ج (jīm)</td>
+                            <td class="py-2 px-4">
+                                <p>Voiced palato-alveolar affricate, like "j" in "jump" or "gin."</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: جمل (jamal - camel)</li>
+                                    <li>Example: جديد (jadīd - new)</li>
+                                    <li>Example: جامد (jāmed - solid)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Generally pronounced as a hard g (like in "go" or "game").</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: جمل (gamal - camel)</li>
+                                    <li>Example: جديد (gidīd - new)</li>
+                                    <li>Example: جامِد (gamed - solid)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-center">Tanween</td>
+                            <td class="py-2 px-4">
+                                <p>The "n" sound added to the end of indefinite nouns (e.g., -an, -in, -un).</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: كتابًا (kitāban - a book, accusative indefinite)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Almost entirely absent.</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: كتاب (kitāb - a book)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-center">Hamza (ء)</td>
+                            <td class="py-2 px-4">
+                                <p>Used in various positions.</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: سماء (samāʾ - sky)</li>
+                                    <li>Example: بدأ (badaʾa - he began)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Often simplified or dropped, especially in the middle or at the end of words.</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: سما (sama - sky)</li>
+                                    <li>Example: بدأ (badaʾ or badā - he began)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-2xl font-semibold mb-3 text-orange-600">Quiz: Pronunciation Differences</h3>
+                <div id="quiz-pronunciation" class="bg-blue-50 p-4 rounded-lg shadow-md mb-6">
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">1. How is the letter ث (thāʾ) generally pronounced in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="1" data-answer="a" onclick="selectOption(this)">a) Like 'th' in 'thin'</div>
+                            <div class="quiz-option" data-question="1" data-answer="b" onclick="selectOption(this)">b) Like 's' in 'see' (س)</div>
+                            <div class="quiz-option" data-question="1" data-answer="c" onclick="selectOption(this)">c) Like 'z' in 'zebra' (ز)</div>
+                            <div class="quiz-option" data-question="1" data-answer="d" onclick="selectOption(this)">d) Like 'k' in 'cat' (ك)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">2. What is the typical pronunciation of ق (qāf) in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="2" data-answer="a" onclick="selectOption(this)">a) A hard 'g' sound</div>
+                            <div class="quiz-option" data-question="2" data-answer="b" onclick="selectOption(this)">b) A glottal stop (ء)</div>
+                            <div class="quiz-option" data-question="2" data-answer="c" onclick="selectOption(this)">c) A guttural 'k' sound</div>
+                            <div class="quiz-option" data-question="2" data-answer="d" onclick="selectOption(this)">d) Like 'j' in 'jump'</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">3. How is ج (jīm) commonly pronounced in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="3" data-answer="a" onclick="selectOption(this)">a) Like 'j' in 'jump'</div>
+                            <div class="quiz-option" data-question="3" data-answer="b" onclick="selectOption(this)">b) Like 'sh' in 'she'</div>
+                            <div class="quiz-option" data-question="3" data-answer="c" onclick="selectOption(this)">c) Like 'g' in 'go'</div>
+                            <div class="quiz-option" data-question="3" data-answer="d" onclick="selectOption(this)">d) Like 'ch' in 'chair'</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">4. Which of the following is true about Tanween (nunation) in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="4" data-answer="a" onclick="selectOption(this)">a) It is used more frequently than in MSA.</div>
+                            <div class="quiz-option" data-question="4" data-answer="b" onclick="selectOption(this)">b) It is completely absent.</div>
+                            <div class="quiz-option" data-question="4" data-answer="c" onclick="selectOption(this)">c) It is only used for feminine nouns.</div>
+                            <div class="quiz-option" data-question="4" data-answer="d" onclick="selectOption(this)">d) It is generally absent.</div>
+                        </div>
+                    </div>
+                    <div id="quiz-pronunciation-result" class="result-message hidden"></div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2 transition-colors duration-200" onclick="submitQuiz('pronunciation', ['b', 'b', 'c', 'd'])">Submit Quiz</button>
+                    <button class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200" onclick="resetQuiz('pronunciation')">Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- 2. Demonstratives (This, That) -->
+            <div class="tab-content" id="demonstratives">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">2. Demonstratives (This, That)</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Demonstratives vary significantly, especially in number and gender, between MSA and Egyptian Arabic. Egyptian Arabic has a much simpler system.
+                </p>
+
+                <table class="min-w-full bg-white rounded-lg shadow-sm mb-6 text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tl-lg">Category</th>
+                            <th class="py-3 px-4 bg-yellow-100">Modern Standard Arabic (MSA)</th>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tr-lg">Egyptian Arabic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">Near (This/These)</td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>هذا (hādhā) - This (masculine singular)</li>
+                                    <li>هذه (hādhīhi) - This (feminine singular)</li>
+                                    <li>هذان (hādhān) - These (masculine dual)</li>
+                                    <li>هاتان (hātān) - These (feminine dual)</li>
+                                    <li>هؤلاء (hāʾulāʾi) - These (human plural)</li>
+                                    <li>هذه (hādhīhi) - These (non-human plural)</li>
+                                    <li class="mt-2">Example: هذا كتابٌ. (Hādhā kitābun - This is a book.)</li>
+                                    <li>Example: هؤلاء طلابٌ. (Hāʾulāʾi ṭullābun - These are students.)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>ده (da) - This (masculine singular)</li>
+                                    <li>دي (di) - This (feminine singular)</li>
+                                    <li>دول (dōl) - These (plural - all genders, human & non-human)</li>
+                                    <li class="mt-2">Example: ده كتاب. (Da kitāb - This is a book.)</li>
+                                    <li>Example: دول طلبة. (Dōl ṭalaba - These are students.)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Far (That/Those)</td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>ذلك (dhālika) - That (masculine singular)</li>
+                                    <li>تلك (tilka) - That (feminine singular)</li>
+                                    <li>ذانك (dhānika) - Those (masculine dual)</li>
+                                    <li>تانك (tānika) - Those (feminine dual)</li>
+                                    <li>أولئك (ʾulāʾika) - Those (human plural)</li>
+                                    <li>تلك (tilka) - Those (non-human plural)</li>
+                                    <li class="mt-2">Example: ذلك الرجل. (Dhālika ar-rajulu - That man.)</li>
+                                    <li>Example: أولئك النساء. (ʾUlāʾika an-nisāʾu - Those women.)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>Egyptian Arabic typically uses the same simplified forms for 'that'/'those' as for 'this'/'these', relying on context.</li>
+                                    <li>Often followed by the object itself without explicit 'that' if the object is far.</li>
+                                    <li class="mt-2">Example: ده كتاب. (Da kitāb - That is a book. - same as 'this')</li>
+                                    <li>Example: دول طلبة. (Dōl ṭalaba - Those are students. - same as 'these')</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-2xl font-semibold mb-3 text-orange-600">Quiz: Demonstratives</h3>
+                <div id="quiz-demonstratives" class="bg-blue-50 p-4 rounded-lg shadow-md mb-6">
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">1. Which MSA demonstrative is used for "This (feminine singular)"?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="1" data-answer="a" onclick="selectOption(this)">a) هذا (hādhā)</div>
+                            <div class="quiz-option" data-question="1" data-answer="b" onclick="selectOption(this)">b) هذه (hādhīhi)</div>
+                            <div class="quiz-option" data-question="1" data-answer="c" onclick="selectOption(this)">c) تلك (tilka)</div>
+                            <div class="quiz-option" data-question="1" data-answer="d" onclick="selectOption(this)">d) دول (dōl)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">2. How would you say "These (plural)" in Egyptian Arabic for both human and non-human nouns?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="2" data-answer="a" onclick="selectOption(this)">a) هؤلاء (hāʾulāʾi)</div>
+                            <div class="quiz-option" data-question="2" data-answer="b" onclick="selectOption(this)">b) هاتان (hātān)</div>
+                            <div class="quiz-option" data-question="2" data-answer="c" onclick="selectOption(this)">c) دول (dōl)</div>
+                            <div class="quiz-option" data-question="2" data-answer="d" onclick="selectOption(this)">d) ذانك (dhānika)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">3. What is the Egyptian Arabic equivalent for "This (masculine singular)"?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="3" data-answer="a" onclick="selectOption(this)">a) دي (di)</div>
+                            <div class="quiz-option" data-question="3" data-answer="b" onclick="selectOption(this)">b) ذلك (dhālika)</div>
+                            <div class="quiz-option" data-question="3" data-answer="c" onclick="selectOption(this)">c) ده (da)</div>
+                            <div class="quiz-option" data-question="3" data-answer="d" onclick="selectOption(this)">d) هذا (hādhā)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">4. Which type of dual demonstrative forms (e.g., هذان, هاتان) are generally absent in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="4" data-answer="a" onclick="selectOption(this)">a) Singular</div>
+                            <div class="quiz-option" data-question="4" data-answer="b" onclick="selectOption(this)">b) Plural</div>
+                            <div class="quiz-option" data-question="4" data-answer="c" onclick="selectOption(this)">c) Dual</div>
+                            <div class="quiz-option" data-question="4" data-answer="d" onclick="selectOption(this)">d) All demonstratives</div>
+                        </div>
+                    </div>
+                    <div id="quiz-demonstratives-result" class="result-message hidden"></div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2 transition-colors duration-200" onclick="submitQuiz('demonstratives', ['b', 'c', 'c', 'c'])">Submit Quiz</button>
+                    <button class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200" onclick="resetQuiz('demonstratives')">Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- 3. Personal and Object Pronouns -->
+            <div class="tab-content" id="pronouns">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">3. Personal and Object Pronouns</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    The forms of personal and object pronouns are generally similar, but Egyptian Arabic features some phonetic changes and simplifications, particularly in plural forms.
+                </p>
+
+                <table class="min-w-full bg-white rounded-lg shadow-sm mb-6 text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tl-lg">Category</th>
+                            <th class="py-3 px-4 bg-yellow-100">Modern Standard Arabic (MSA)</th>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tr-lg">Egyptian Arabic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">Personal (Subject) Pronouns</td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>أنا (anā) - I</li>
+                                    <li>أنتَ (anta) - You (masculine singular)</li>
+                                    <li>أنتِ (anti) - You (feminine singular)</li>
+                                    <li>هو (huwa) - He</li>
+                                    <li>هي (hiya) - She</li>
+                                    <li>نحن (naḥnu) - We</li>
+                                    <li>أنتم (antum) - You (masculine plural)</li>
+                                    <li>أنتن (antunna) - You (feminine plural)</li>
+                                    <li>هم (hum) - They (masculine plural)</li>
+                                    <li>هن (hunna) - They (feminine plural)</li>
+                                    <li class="mt-2">Example: أنا أذهب. (Anā adhhab - I go.)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>أنا (ana) - I</li>
+                                    <li>إنتَ (inta) - You (masculine singular)</li>
+                                    <li>إنتِ (inti) - You (feminine singular)</li>
+                                    <li>هو (howa) - He</li>
+                                    <li>هي (heya) - She</li>
+                                    <li>إحنا (eḥna) - We</li>
+                                    <li>إنتوا (intu) - You (plural - both genders)</li>
+                                    <li>هُمَّ (homma) - They (plural - both genders)</li>
+                                    <li class="mt-2">Example: أنا باروح. (Ana barūḥ - I go.)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Attached Object Pronouns (Suffixes)</td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>-ني (-nī) - me</li>
+                                    <li>-كَ (-ka) - you (masc. sg.)</li>
+                                    <li>-كِ (-ki) - you (fem. sg.)</li>
+                                    <li>-هُ (-hu) - him</li>
+                                    <li>-ها (-hā) - her</li>
+                                    <li>-نا (-nā) - us</li>
+                                    <li>-كم (-kum) - you (masc. pl.)</li>
+                                    <li>-كن (-kunna) - you (fem. pl.)</li>
+                                    <li>-هم (-hum) - them (masc. pl.)</li>
+                                    <li>-هن (-hunna) - them (fem. pl.)</li>
+                                    <li class="mt-2">Example: كتابك. (Kitābuka - Your (masc.) book.)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>-ني (-ni) - me</li>
+                                    <li>-ك (-ak) - you (masc. sg.)</li>
+                                    <li>-ك (-ik) - you (fem. sg.)</li>
+                                    <li>-ه (-oh/uh) - him</li>
+                                    <li>-ها (-ha) - her</li>
+                                    <li>-نا (-na) - us</li>
+                                    <li>-كُم (-kum) - you (pl. - both genders)</li>
+                                    <li>-هُم (-hom) - them (pl. - both genders)</li>
+                                    <li class="mt-2">Example: كتابك. (Kitābak - Your (masc.) book.)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-2xl font-semibold mb-3 text-orange-600">Quiz: Personal & Object Pronouns</h3>
+                <div id="quiz-pronouns" class="bg-blue-50 p-4 rounded-lg shadow-md mb-6">
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">1. What is the Egyptian Arabic subject pronoun for "We"?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="1" data-answer="a" onclick="selectOption(this)">a) نحن (naḥnu)</div>
+                            <div class="quiz-option" data-question="1" data-answer="b" onclick="selectOption(this)">b) إحنا (eḥna)</div>
+                            <div class="quiz-option" data-question="1" data-answer="c" onclick="selectOption(this)">c) إنتوا (intu)</div>
+                            <div class="quiz-option" data-question="1" data-answer="d" onclick="selectOption(this)">d) هو (howa)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">2. In MSA, how do you say "You (feminine plural)" as a subject pronoun?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="2" data-answer="a" onclick="selectOption(this)">a) أنتم (antum)</div>
+                            <div class="quiz-option" data-question="2" data-answer="b" onclick="selectOption(this)">b) أنتِ (anti)</div>
+                            <div class="quiz-option" data-question="2" data-answer="c" onclick="selectOption(this)">c) أنتن (antunna)</div>
+                            <div class="quiz-option" data-question="2" data-answer="d" onclick="selectOption(this)">d) إنتوا (intu)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">3. The Egyptian Arabic attached object pronoun for "him" is:</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="3" data-answer="a" onclick="selectOption(this)">a) -هُ (-hu)</div>
+                            <div class="quiz-option" data-question="3" data-answer="b" onclick="selectOption(this)">b) -ها (-ha)</div>
+                            <div class="quiz-option" data-question="3" data-answer="c" onclick="selectOption(this)">c) -ه (-oh/uh)</div>
+                            <div class="quiz-option" data-question="3" data-answer="d" onclick="selectOption(this)">d) -ني (-ni)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">4. Which MSA attached pronoun has a distinct masculine and feminine plural form, unlike Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="4" data-answer="a" onclick="selectOption(this)">a) -نا (us)</div>
+                            <div class="quiz-option" data-question="4" data-answer="b" onclick="selectOption(this)">b) -كم (you pl. masc.) and -كن (you pl. fem.)</div>
+                            <div class="quiz-option" data-question="4" data-answer="c" onclick="selectOption(this)">c) -هم (them masc.) and -هن (them fem.)</div>
+                            <div class="quiz-option" data-question="4" data-answer="d" onclick="selectOption(this)">d) Both b and c</div>
+                        </div>
+                    </div>
+                    <div id="quiz-pronouns-result" class="result-message hidden"></div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2 transition-colors duration-200" onclick="submitQuiz('pronouns', ['b', 'c', 'c', 'd'])">Submit Quiz</button>
+                    <button class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200" onclick="resetQuiz('pronouns')">Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- 4. Relative Pronouns (Who, That, Which) -->
+            <div class="tab-content" id="relative-pronouns">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">4. Relative Pronouns (Who, That, Which)</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    This is a significant simplification in Egyptian Arabic, which uses a single, invariant form.
+                </p>
+
+                <table class="min-w-full bg-white rounded-lg shadow-sm mb-6 text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tl-lg">Category</th>
+                            <th class="py-3 px-4 bg-yellow-100">Modern Standard Arabic (MSA)</th>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tr-lg">Egyptian Arabic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">Forms</td>
+                            <td class="py-2 px-4">
+                                <p>Agree in gender and number with their antecedent.</p>
+                                <ul class="list-disc list-inside">
+                                    <li>الذي (alladhī) - who, which, that (masculine singular)</li>
+                                    <li>التي (allatī) - who, which, that (feminine singular)</li>
+                                    <li>اللذان (alladhān) - who, which, that (masculine dual)</li>
+                                    <li>اللتان (allatān) - who, which, that (feminine dual)</li>
+                                    <li>الذين (alladhīna) - who, which, that (masculine plural)</li>
+                                    <li>اللاتي / اللواتي (allātī / allawātī) - who, which, that (feminine plural)</li>
+                                    <li class="mt-2">Example: هذا هو الرجل الذي رأيته. (Hādhā huwa ar-rajulu alladhī raʾaytuhu - This is the man whom I saw.)</li>
+                                    <li>Example: هذه هي السيارة التي اشتريتها. (Hādhīhi hiya as-sayyāratu allatī ishtaraytuhā - This is the car which I bought.)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>A single, invariant form for all genders, numbers, and cases.</p>
+                                <ul class="list-disc list-inside">
+                                    <li>اللي (illi) - who, which, that (all forms)</li>
+                                    <li class="mt-2">Example: ده الراجل اللي شفته. (Da er-rāgil illi shoftoh - This is the man whom I saw.)</li>
+                                    <li>Example: دي العربية اللي اشتريتها. (Di el-ʿarabeya illi eshtarētaha - This is the car which I bought.)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-2xl font-semibold mb-3 text-orange-600">Quiz: Relative Pronouns</h3>
+                <div id="quiz-relative-pronouns" class="bg-blue-50 p-4 rounded-lg shadow-md mb-6">
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">1. Which MSA relative pronoun is used for "feminine singular"?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="1" data-answer="a" onclick="selectOption(this)">a) الذي (alladhī)</div>
+                            <div class="quiz-option" data-question="1" data-answer="b" onclick="selectOption(this)">b) التي (allatī)</div>
+                            <div class="quiz-option" data-question="1" data-answer="c" onclick="selectOption(this)">c) الذين (alladhīna)</div>
+                            <div class="quiz-option" data-question="1" data-answer="d" onclick="selectOption(this)">d) اللي (illi)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">2. What is the single, invariant relative pronoun used in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="2" data-answer="a" onclick="selectOption(this)">a) الذي (alladhī)</div>
+                            <div class="quiz-option" data-question="2" data-answer="b" onclick="selectOption(this)">b) الذين (alladhīna)</div>
+                            <div class="quiz-option" data-question="2" data-answer="c" onclick="selectOption(this)">c) اللي (illi)</div>
+                            <div class="quiz-option" data-question="2" data-answer="d" onclick="selectOption(this)">d) اللذان (alladhān)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">3. In MSA, relative pronouns agree with their antecedent in:</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="3" data-answer="a" onclick="selectOption(this)">a) Gender only</div>
+                            <div class="quiz-option" data-question="3" data-answer="b" onclick="selectOption(this)">b) Number only</div>
+                            <div class="quiz-option" data-question="3" data-answer="c" onclick="selectOption(this)">c) Gender and number</div>
+                            <div class="quiz-option" data-question="3" data-answer="d" onclick="selectOption(this)">d) Case only</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">4. Which of these MSA forms are replaced by اللي (illi) in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="4" data-answer="a" onclick="selectOption(this)">a) الذي (alladhī)</div>
+                            <div class="quiz-option" data-question="4" data-answer="b" onclick="selectOption(this)">b) التي (allatī)</div>
+                            <div class="quiz-option" data-question="4" data-answer="c" onclick="selectOption(this)">c) الذين (alladhīna)</div>
+                            <div class="quiz-option" data-question="4" data-answer="d" onclick="selectOption(this)">d) All of the above</div>
+                        </div>
+                    </div>
+                    <div id="quiz-relative-pronouns-result" class="result-message hidden"></div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2 transition-colors duration-200" onclick="submitQuiz('relative-pronouns', ['b', 'c', 'c', 'd'])">Submit Quiz</button>
+                    <button class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200" onclick="resetQuiz('relative-pronouns')">Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- 5. Verb Conjugation in the Present Tense -->
+            <div class="tab-content" id="present-tense">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">5. Verb Conjugation in the Present Tense</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Egyptian Arabic often drops the initial "a" for the first person singular and uses a specific prefix (`ب-`) unique to the dialect to indicate continuous or habitual action. MSA uses specific prefixes and suffixes, and distinct moods.
+                </p>
+
+                <table class="min-w-full bg-white rounded-lg shadow-sm mb-6 text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tl-lg">Aspect</th>
+                            <th class="py-3 px-4 bg-yellow-100">Modern Standard Arabic (MSA)</th>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tr-lg">Egyptian Arabic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">General Structure</td>
+                            <td class="py-2 px-4">
+                                <p>Uses specific prefixes and suffixes for persons, and distinct moods (indicative, subjunctive, jussive).</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Prefixes: أ- (a- for I), ت- (ta- for you/she), ي- (ya- for he/they), ن- (na- for we)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Uses the specific prefix ب- (ba-/bi-) for all persons to indicate continuous or habitual action. Moods are largely absent.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Example: To Go</td>
+                            <td class="py-2 px-4">
+                                <p> MSA (يذهب):</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>أذهب (adhhab - I go)</li>
+                                    <li>تذهب (tadhhab - you (masc. sg.) go / she goes)</li>
+                                    <li>يذهب (yadhhab - he goes)</li>
+                                    <li>تذهبون (tadhhabūna - you (masc. pl.) go)</li>
+                                    <li>يذهبون (yadhhabūna - they (masc. pl.) go)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p> Egyptian (يروح):</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>أنا باروح (ana barūḥ - I go/I am going)</li>
+                                    <li>إنتَ بتروح (inta betrūḥ - you (masc. sg.) go/are going)</li>
+                                    <li>هو بيروح (howa beyrūḥ - he goes/is going)</li>
+                                    <li>إحنا بنروح (eḥna benrūḥ - we go/are going)</li>
+                                    <li>هم بيروحوا (hom beyrūḥu - they go/are going)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Example Sentence</td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>أنا أكتبُ رسالةً. (Anā aktubu risālatan - I am writing a letter.)</li>
+                                    <li>هي تدرسُ العربية. (Hiya tadrusu al-ʿArabiyyah - She is studying Arabic.)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>أنا باكتب جواب. (Ana bakteb gawāb - I am writing a letter.)</li>
+                                    <li>هي بتدرس عربي. (Heya betderes ʿarabi - She is studying Arabic.)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-2xl font-semibold mb-3 text-orange-600">Quiz: Present Tense Conjugation</h3>
+                <div id="quiz-present-tense" class="bg-blue-50 p-4 rounded-lg shadow-md mb-6">
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">1. What is the common prefix used in Egyptian Arabic present tense verbs to indicate continuous or habitual action?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="1" data-answer="a" onclick="selectOption(this)">a) سـ (sa-)</div>
+                            <div class="quiz-option" data-question="1" data-answer="b" onclick="selectOption(this)">b) بـ (ba-/bi-)</div>
+                            <div class="quiz-option" data-question="1" data-answer="c" onclick="selectOption(this)">c) أ- (a-)</div>
+                            <div class="quiz-option" data-question="1" data-answer="d" onclick="selectOption(this)">d) هـ (ha-)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">2. How is "I go" expressed in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="2" data-answer="a" onclick="selectOption(this)">a) أذهب (adhhab)</div>
+                            <div class="quiz-option" data-question="2" data-answer="b" onclick="selectOption(this)">b) أنا باروح (ana barūḥ)</div>
+                            <div class="quiz-option" data-question="2" data-answer="c" onclick="selectOption(this)">c) سوف أذهب (sawfa adhhab)</div>
+                            <div class="quiz-option" data-question="2" data-answer="d" onclick="selectOption(this)">d) ذهبتُ (dhahabtu)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">3. MSA present tense verbs have distinct "moods." Are these moods largely present or absent in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="3" data-answer="a" onclick="selectOption(this)">a) Present</div>
+                            <div class="quiz-option" data-question="3" data-answer="b" onclick="selectOption(this)">b) Partially present</div>
+                            <div class="quiz-option" data-question="3" data-answer="c" onclick="selectOption(this)">c) Largely absent</div>
+                            <div class="quiz-option" data-question="3" data-answer="d" onclick="selectOption(this)">d) Only for plural verbs</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">4. Which prefix is NOT typically used for present tense verbs in MSA?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="4" data-answer="a" onclick="selectOption(this)">a) أ-</div>
+                            <div class="quiz-option" data-question="4" data-answer="b" onclick="selectOption(this)">b) ي-</div>
+                            <div class="quiz-option" data-question="4" data-answer="c" onclick="selectOption(this)">c) ب-</div>
+                            <div class="quiz-option" data-question="4" data-answer="d" onclick="selectOption(this)">d) ن-</div>
+                        </div>
+                    </div>
+                    <div id="quiz-present-tense-result" class="result-message hidden"></div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2 transition-colors duration-200" onclick="submitQuiz('present-tense', ['b', 'b', 'c', 'c'])">Submit Quiz</button>
+                    <button class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200" onclick="resetQuiz('present-tense')">Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- 6. Future Tense Formation -->
+            <div class="tab-content" id="future-tense">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">6. Future Tense Formation</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Egyptian Arabic uses a distinct prefix for the future tense, differing from MSA's approach.
+                </p>
+
+                <table class="min-w-full bg-white rounded-lg shadow-sm mb-6 text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tl-lg">Aspect</th>
+                            <th class="py-3 px-4 bg-yellow-100">Modern Standard Arabic (MSA)</th>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tr-lg">Egyptian Arabic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">Formation</td>
+                            <td class="py-2 px-4">
+                                <p>Formed by adding the prefix سـ (sa-) or the particle سوف (sawfa) before the present tense verb.</p>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Formed by adding the prefix هـ (ha-) or حـ (ḥa-) (less common) before the present tense verb.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Example: I will go</td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>سأذهب (sa-adhhab)</li>
+                                    <li>سوف أذهب (sawfa adhhab)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>هاروح (harūḥ)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Example: We will see</td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>سوف نرى. (Sawfa narā)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>هانشوف. (Hanṣūf)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-2xl font-semibold mb-3 text-orange-600">Quiz: Future Tense Formation</h3>
+                <div id="quiz-future-tense" class="bg-blue-50 p-4 rounded-lg shadow-md mb-6">
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">1. What is the primary prefix used for future tense in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="1" data-answer="a" onclick="selectOption(this)">a) سـ (sa-)</div>
+                            <div class="quiz-option" data-question="1" data-answer="b" onclick="selectOption(this)">b) بـ (ba-)</div>
+                            <div class="quiz-option" data-question="1" data-answer="c" onclick="selectOption(this)">c) هـ (ha-)</div>
+                            <div class="quiz-option" data-question="1" data-answer="d" onclick="selectOption(this)">d) لم (lam)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">2. How is "I will write" typically expressed in MSA?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="2" data-answer="a" onclick="selectOption(this)">a) هاكتب (hakteb)</div>
+                            <div class="quiz-option" data-question="2" data-answer="b" onclick="selectOption(this)">b) سأكتب (sa-aktub)</div>
+                            <div class="quiz-option" data-question="2" data-answer="c" onclick="selectOption(this)">c) أنا باكتب (ana bakteb)</div>
+                            <div class="quiz-option" data-question="2" data-answer="d" onclick="selectOption(this)">d) كتبتُ (katabtu)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">3. What is the Egyptian Arabic equivalent of MSA's "سوف نرى" (We will see)?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="3" data-answer="a" onclick="selectOption(this)">a) نرى (narā)</div>
+                            <div class="quiz-option" data-question="3" data-answer="b" onclick="selectOption(this)">b) هانشوف (hanṣūf)</div>
+                            <div class="quiz-option" data-question="3" data-answer="c" onclick="selectOption(this)">c) سوف نرى (sawfa narā)</div>
+                            <div class="quiz-option" data-question="3" data-answer="d" onclick="selectOption(this)">d) بنشوف (benṣūf)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">4. Which of the following is NOT used to form the future tense in MSA?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="4" data-answer="a" onclick="selectOption(this)">a) سـ (sa-)</div>
+                            <div class="quiz-option" data-question="4" data-answer="b" onclick="selectOption(this)">b) سوف (sawfa)</div>
+                            <div class="quiz-option" data-question="4" data-answer="c" onclick="selectOption(this)">c) بـ (ba-)</div>
+                            <div class="quiz-option" data-question="4" data-answer="d" onclick="selectOption(this)">d) Both a and b are used</div>
+                        </div>
+                    </div>
+                    <div id="quiz-future-tense-result" class="result-message hidden"></div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2 transition-colors duration-200" onclick="submitQuiz('future-tense', ['c', 'b', 'b', 'c'])">Submit Quiz</button>
+                    <button class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200" onclick="resetQuiz('future-tense')">Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- 7. Past Tense Formation -->
+            <div class="tab-content" id="past-tense">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">7. Past Tense Formation</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    The core conjugations for the past tense are generally similar between MSA and Egyptian Arabic, but pronunciation differences significantly affect the sound of the conjugated verbs.
+                </p>
+
+                <table class="min-w-full bg-white rounded-lg shadow-sm mb-6 text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tl-lg">Aspect</th>
+                            <th class="py-3 px-4 bg-yellow-100">Modern Standard Arabic (MSA)</th>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tr-lg">Egyptian Arabic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">Formation</td>
+                            <td class="py-2 px-4">
+                                <p>Formed by adding specific suffixes to the verb root.</p>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Generally very similar to MSA in terms of suffixes, but with Egyptian phonetic shifts (e.g., Qaf to glottal stop).</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Example: To Go</td>
+                            <td class="py-2 px-4">
+                                <p>MSA (ذهب):</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>ذهبتُ (dhahabtu - I went)</li>
+                                    <li>ذهبتَ (dhahabta - you (masc. sg.) went)</li>
+                                    <li>ذهبَ (dhahaba - he went)</li>
+                                    <li>ذهبوا (dhahabū - they (masc. pl.) went)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Egyptian (راح):</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>روحت (roḥt - I went)</li>
+                                    <li>روحت (roḥt - you (masc. sg.) went)</li>
+                                    <li>راح (rāḥ - he went)</li>
+                                    <li>راحوا (rāḥu - they went)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Example Sentence</td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>كتبتُ رسالة. (Katabtu risālah - I wrote a letter.)</li>
+                                    <li>قرأَ الكتاب. (Qaraʾa al-kitāb - He read the book.)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>كتبت جواب. (Katabt gawāb - I wrote a letter.)</li>
+                                    <li>قرا الكتاب. (ʾara el-kitāb - He read the book.)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-2xl font-semibold mb-3 text-orange-600">Quiz: Past Tense Formation</h3>
+                <div id="quiz-past-tense" class="bg-blue-50 p-4 rounded-lg shadow-md mb-6">
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">1. How is "I went" expressed in MSA?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="1" data-answer="a" onclick="selectOption(this)">a) روحت (roḥt)</div>
+                            <div class="quiz-option" data-question="1" data-answer="b" onclick="selectOption(this)">b) أذهب (adhhab)</div>
+                            <div class="quiz-option" data-question="1" data-answer="c" onclick="selectOption(this)">c) ذهبتُ (dhahabtu)</div>
+                            <div class="quiz-option" data-question="1" data-answer="d" onclick="selectOption(this)">d) هاروح (harūḥ)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">2. What is the Egyptian Arabic equivalent of MSA's "قرأَ الكتاب" (He read the book)?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="2" data-answer="a" onclick="selectOption(this)">a) هو بيكتب الكتاب (howa biyiktib el-kitāb)</div>
+                            <div class="quiz-option" data-question="2" data-answer="b" onclick="selectOption(this)">b) قرا الكتاب (ʾara el-kitāb)</div>
+                            <div class="quiz-option" data-question="2" data-answer="c" onclick="selectOption(this)">c) سيكتب الكتاب (sa-yaktub el-kitāb)</div>
+                            <div class="quiz-option" data-question="2" data-answer="d" onclick="selectOption(this)">d) يقرأ الكتاب (yaqraʾ el-kitāb)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">3. What is the main difference in past tense conjugation between MSA and Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="3" data-answer="a" onclick="selectOption(this)">a) Completely different suffixes.</div>
+                            <div class="quiz-option" data-question="3" data-answer="b" onclick="selectOption(this)">b) Presence of moods in Egyptian Arabic.</div>
+                            <div class="quiz-option" data-question="3" data-answer="c" onclick="selectOption(this)">c) Phonetic shifts affecting the sound of similar conjugations.</div>
+                            <div class="quiz-option" data-question="3" data-answer="d" onclick="selectOption(this)">d) Egyptian Arabic uses prefixes instead of suffixes.</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">4. Which suffix indicates "I" in MSA past tense verbs?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="4" data-answer="a" onclick="selectOption(this)">a) -نا (-nā)</div>
+                            <div class="quiz-option" data-question="4" data-answer="b" onclick="selectOption(this)">b) -تُ (-tu)</div>
+                            <div class="quiz-option" data-question="4" data-answer="c" onclick="selectOption(this)">c) -ا (-a)</div>
+                            <div class="quiz-option" data-question="4" data-answer="d" onclick="selectOption(this)">d) -وا (-ū)</div>
+                        </div>
+                    </div>
+                    <div id="quiz-past-tense-result" class="result-message hidden"></div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2 transition-colors duration-200" onclick="submitQuiz('past-tense', ['c', 'b', 'c', 'b'])">Submit Quiz</button>
+                    <button class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200" onclick="resetQuiz('past-tense')">Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- 8. Negation Patterns Across Different Tenses -->
+            <div class="tab-content" id="negation">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">8. Negation Patterns Across Different Tenses</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Egyptian Arabic uses a distinctive circumfix (`ma...sh`) for verb negation, which is a key differentiator from MSA's varied negation particles.
+                </p>
+
+                <table class="min-w-full bg-white rounded-lg shadow-sm mb-6 text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tl-lg">Aspect</th>
+                            <th class="py-3 px-4 bg-yellow-100">Modern Standard Arabic (MSA)</th>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tr-lg">Egyptian Arabic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">Verbs (Present/Past/Future)</td>
+                            <td class="py-2 px-4">
+                                <p>Uses various particles depending on tense and context (لا, ما, لم, لن).</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example (Present): لا أذهب. (Lā adhhab - I do not go.)</li>
+                                    <li>Example (Past): ما ذهبتُ. (Mā dhahabtu - I did not go.)</li>
+                                    <li>Example (Future): لن أذهبَ. (Lan adhhab - I will not go.)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Uses the circumfix ما...ش (ma...sh) around the verb.</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example (Present): أنا ماباكُلش. (Ana mabakolsh - I don't eat.)</li>
+                                    <li>Example (Past): ماروحتش. (Māroḥtish - I didn't go.)</li>
+                                    <li>Example (Future): مش هاروح. (Mesh harūḥ - I won't go.) (Often 'mesh' replaces 'ma...sh' for future)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Nominal/Adjectival/Equational</td>
+                            <td class="py-2 px-4">
+                                <p>Uses ليس (laysa) for nouns, adjectives, and equational sentences.</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: أنا لستُ طالبًا. (Anā lastu ṭāliban - I am not a student.)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <p>Uses مش (mish) before the word.</p>
+                                <ul class="list-disc list-inside mt-2">
+                                    <li>Example: أنا مش طالب. (Ana mish ṭālib - I am not a student.)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-2xl font-semibold mb-3 text-orange-600">Quiz: Negation Patterns</h3>
+                <div id="quiz-negation" class="bg-blue-50 p-4 rounded-lg shadow-md mb-6">
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">1. What is the common circumfix used for verb negation in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="1" data-answer="a" onclick="selectOption(this)">a) لا...ـ</div>
+                            <div class="quiz-option" data-question="1" data-answer="b" onclick="selectOption(this)">b) ما...ش</div>
+                            <div class="quiz-option" data-question="1" data-answer="c" onclick="selectOption(this)">c) لم...ـ</div>
+                            <div class="quiz-option" data-question="1" data-answer="d" onclick="selectOption(this)">d) لن...ـ</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">2. How would you negate the phrase "I eat" (أنا آكلُ) in Egyptian Arabic?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="2" data-answer="a" onclick="selectOption(this)">a) لا آكلُ (lā ākol)</div>
+                            <div class="quiz-option" data-question="2" data-answer="b" onclick="selectOption(this)">b) لن آكلَ (lan ākol)</div>
+                            <div class="quiz-option" data-question="2" data-answer="c" onclick="selectOption(this)">c) أنا ماباكُلش (ana mabakolsh)</div>
+                            <div class="quiz-option" data-question="2" data-answer="d" onclick="selectOption(this)">d) ما أكلتُ (mā akaltu)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">3. For negating nouns or adjectives in Egyptian Arabic, which word is used?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="3" data-answer="a" onclick="selectOption(this)">a) لا (lā)</div>
+                            <div class="quiz-option" data-question="3" data-answer="b" onclick="selectOption(this)">b) ليس (laysa)</div>
+                            <div class="quiz-option" data-question="3" data-answer="c" onclick="selectOption(this)">c) لم (lam)</div>
+                            <div class="quiz-option" data-question="3" data-answer="d" onclick="selectOption(this)">d) مش (mish)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">4. Which MSA particle is used to negate a completed past action?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="4" data-answer="a" onclick="selectOption(this)">a) لا (lā)</div>
+                            <div class="quiz-option" data-question="4" data-answer="b" onclick="selectOption(this)">b) ما (mā)</div>
+                            <div class="quiz-option" data-question="4" data-answer="c" onclick="selectOption(this)">c) لم (lam)</div>
+                            <div class="quiz-option" data-question="4" data-answer="d" onclick="selectOption(this)">d) لن (lan)</div>
+                        </div>
+                    </div>
+                    <div id="quiz-negation-result" class="result-message hidden"></div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2 transition-colors duration-200" onclick="submitQuiz('negation', ['b', 'c', 'd', 'b'])">Submit Quiz</button>
+                    <button class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200" onclick="resetQuiz('negation')">Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- 9. Question Words -->
+            <div class="tab-content" id="question-words">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">9. Question Words</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Many question words are simplified or have different forms in Egyptian Arabic compared to MSA.
+                </p>
+
+                <table class="min-w-full bg-white rounded-lg shadow-sm mb-6 text-gray-800">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tl-lg">Meaning</th>
+                            <th class="py-3 px-4 bg-yellow-100">Modern Standard Arabic (MSA)</th>
+                            <th class="py-3 px-4 bg-yellow-100 rounded-tr-lg">Egyptian Arabic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">How?</td>
+                            <td class="py-2 px-4">كيف (kayfa)</td>
+                            <td class="py-2 px-4">إزاي (ezzāy)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Where?</td>
+                            <td class="py-2 px-4">أين (ayna)</td>
+                            <td class="py-2 px-4">فين (fēn)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">When?</td>
+                            <td class="py-2 px-4">متى (matā)</td>
+                            <td class="py-2 px-4">إمتى (imta)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">What?</td>
+                            <td class="py-2 px-4">ماذا (mādhā) - for verbs<br>ما (mā) - for nouns/non-verbs</td>
+                            <td class="py-2 px-4">إيه (ʾēh) - for both verbs and nouns</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Who?</td>
+                            <td class="py-2 px-4">من (man)</td>
+                            <td class="py-2 px-4">مين (mīn)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">How many/much?</td>
+                            <td class="py-2 px-4">كم (kam)</td>
+                            <td class="py-2 px-4">كام (kām)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Why?</td>
+                            <td class="py-2 px-4">لماذا (limādhā)</td>
+                            <td class="py-2 px-4">ليه (lēh)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Is it? (Yes/No)</td>
+                            <td class="py-2 px-4">هل (hal)</td>
+                            <td class="py-2 px-4">Usually replaced by intonation or sometimes "هو"</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Example Sentence</td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>كيف حالك؟ (Kayfa ḥāluk? - How are you?)</li>
+                                    <li>أين بيتك؟ (Ayna baytuka? - Where is your house?)</li>
+                                    <li>ماذا تفعل؟ (Mādhā tafʿal? - What are you doing?)</li>
+                                </ul>
+                            </td>
+                            <td class="py-2 px-4">
+                                <ul class="list-disc list-inside">
+                                    <li>إزيك؟ (Ezzayak? - How are you?)</li>
+                                    <li>بيتك فين؟ (Bētakk fēn? - Where is your house?)</li>
+                                    <li>بتعمل إيه؟ (Btiʿmil ʾēh? - What are you doing?)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-2xl font-semibold mb-3 text-orange-600">Quiz: Question Words</h3>
+                <div id="quiz-question-words" class="bg-blue-50 p-4 rounded-lg shadow-md mb-6">
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">1. What is the Egyptian Arabic equivalent for "Where?"</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="1" data-answer="a" onclick="selectOption(this)">a) أين (ayna)</div>
+                            <div class="quiz-option" data-question="1" data-answer="b" onclick="selectOption(this)">b) متى (matā)</div>
+                            <div class="quiz-option" data-question="1" data-answer="c" onclick="selectOption(this)">c) فين (fēn)</div>
+                            <div class="quiz-option" data-question="1" data-answer="d" onclick="selectOption(this)">d) إمتى (imta)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">2. In Egyptian Arabic, "What?" (for both verbs and nouns) is expressed as:</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="2" data-answer="a" onclick="selectOption(this)">a) ماذا (mādhā)</div>
+                            <div class="quiz-option" data-question="2" data-answer="b" onclick="selectOption(this)">b) ما (mā)</div>
+                            <div class="quiz-option" data-question="2" data-answer="c" onclick="selectOption(this)">c) إيه (ʾēh)</div>
+                            <div class="quiz-option" data-question="2" data-answer="d" onclick="selectOption(this)">d) كيف (kayfa)</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">3. How is the MSA particle هل (hal) usually replaced in Egyptian Arabic for Yes/No questions?</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="3" data-answer="a" onclick="selectOption(this)">a) By adding 'ما' at the beginning</div>
+                            <div class="quiz-option" data-question="3" data-answer="b" onclick="selectOption(this)">b) By intonation or sometimes 'هو'</div>
+                            <div class="quiz-option" data-question="3" data-answer="c" onclick="selectOption(this)">c) By adding 'هل' at the end</div>
+                            <div class="quiz-option" data-question="3" data-answer="d" onclick="selectOption(this)">d) By using 'ليه'</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-medium mb-2">4. Which Egyptian Arabic question word means "Why?"</p>
+                        <div class="flex flex-col">
+                            <div class="quiz-option" data-question="4" data-answer="a" onclick="selectOption(this)">a) فين (fēn)</div>
+                            <div class="quiz-option" data-question="4" data-answer="b" onclick="selectOption(this)">b) إزاي (ezzāy)</div>
+                            <div class="quiz-option" data-question="4" data-answer="c" onclick="selectOption(this)">c) ليه (lēh)</div>
+                            <div class="quiz-option" data-question="4" data-answer="d" onclick="selectOption(this)">d) مين (mīn)</div>
+                        </div>
+                    </div>
+                    <div id="quiz-question-words-result" class="result-message hidden"></div>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-2 transition-colors duration-200" onclick="submitQuiz('question-words', ['c', 'c', 'b', 'c'])">Submit Quiz</button>
+                    <button class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200" onclick="resetQuiz('question-words')">Reset Quiz</button>
+                </div>
+            </div>
+
+            <!-- Common Egyptian Expressions -->
+            <div class="tab-content" id="common-expressions">
+                <h2 class="text-3xl font-bold mb-4 text-blue-700">50 Common Egyptian Arabic Expressions</h2>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    Here's a list of everyday expressions in Egyptian Arabic, with English meanings and notes on how they differ from MSA where relevant. Practice these to sound more natural in Egyptian conversations!
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-gray-800">
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">1. إزيك؟ (Ezzayak?)</strong> - How are you?</p>
+                        <p class="text-sm text-gray-500">(MSA: كيف حالك؟ - Kayfa ḥāluk?)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">2. تمام (Tamām)</strong> - Good, fine, perfect.</p>
+                        <p class="text-sm text-gray-500">(MSA: جيد/ممتاز - Jayyid/Mumtāz)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">3. حمد الله على السلامة (Ḥamdillāh ʿala s-salāma)</strong> - Thank God for your safety. (Said upon someone's return from a trip, illness, etc.)</p>
+                        <p class="text-sm text-gray-500">(MSA equivalent: السلامة عليك - As-salāmatu ʿalayk)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">4. الله يسلمك (Allāh yisallimak)</strong> - Reply to Hamdillah ʿala s-salāma.</p>
+                        <p class="text-sm text-gray-500">(MSA: الله يسلمك - Allāh yusallimuk)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">5. معلش (Maʿlēsh)</strong> - Never mind, it's okay, sorry. (Informal.)</p>
+                        <p class="text-sm text-gray-500">(MSA: لا بأس - Lā baʾs)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">6. مبروك (Mabrūk)</strong> - Congratulations!</p>
+                        <p class="text-sm text-gray-500">(MSA: مبروك - Mabrūk)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">7. الله يبارك فيك (Allāh yibārik fīk)</strong> - Reply to Mabrūk.</p>
+                        <p class="text-sm text-gray-500">(MSA: الله يبارك فيك - Allāh yubārik fīk)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">8. إن شاء الله (In shāʾ Allāh)</strong> - God willing, hopefully.</p>
+                        <p class="text-sm text-gray-500">(MSA: إن شاء الله - In shāʾ Allāh)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">9. يلا بينا (Yalla bīna)</strong> - Let's go!</p>
+                        <p class="text-sm text-gray-500">(MSA: هيا بنا - Hayyā binā)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">10. تمام كده؟ (Tamām kida?)</strong> - Is that right/okay?</p>
+                        <p class="text-sm text-gray-500">(MSA: هل هذا صحيح؟ - Hal hādhā ṣaḥīḥ?)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">11. خلاص (Khalāṣ)</strong> - Done, finished, enough.</p>
+                        <p class="text-sm text-gray-500">(MSA: انتهى - Intahā)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">12. بجد؟ (Bigad?)</strong> - Really? Seriously?</p>
+                        <p class="text-sm text-gray-500">(MSA: حقًا؟ - Ḥaqqan?)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">13. أكيد (ʾAkīd)</strong> - Certainly, surely.</p>
+                        <p class="text-sm text-gray-500">(MSA: بالتأكيد - Bi-t-taʾkīd)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">14. متشكر (Mitshakkir)</strong> - Thank you. (More casual than shukran, for masculine speaker.)</p>
+                        <p class="text-sm text-gray-500">(MSA: شاكر - Shākir)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">15. مش مشكلة (Mish mushkila)</strong> - No problem.</p>
+                        <p class="text-sm text-gray-500">(MSA: لا مشكلة - Lā mushkila)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">16. لا مؤاخذة (La muʾākhza)</strong> - Excuse me, pardon me (for minor things, e.g., bumping into someone).</p>
+                        <p class="text-sm text-gray-500">(MSA: عفواً - ʿAfwan)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">17. صباح الخير (Sabāḥ el-khēr)</strong> - Good morning.</p>
+                        <p class="text-sm text-gray-500">(MSA: صباح الخير - Sabāḥ al-khayr)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">18. مساء الخير (Masāʾ el-khēr)</strong> - Good evening.</p>
+                        <p class="text-sm text-gray-500">(MSA: مساء الخير - Masāʾ al-khayr)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">19. تصبح على خير (Tisbaḥ ʿala khēr)</strong> - Good night (to a man).</p>
+                        <p class="text-sm text-gray-500">(MSA: تصبح على خير - Tuṣbiḥ ʿalā khayr)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">20. نايم (Nāyim)</strong> - Asleep.</p>
+                        <p class="text-sm text-gray-500">(MSA: نائم - Nāʾim)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">21. صاحي (Ṣāḥi)</strong> - Awake.</p>
+                        <p class="text-sm text-gray-500">(MSA: صاحٍ - Ṣāḥin)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">22. بكام ده؟ (Bikām da?)</strong> - How much is this?</p>
+                        <p class="text-sm text-gray-500">(MSA: بكم هذا؟ - Bikam hādhā?)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">23. ربنا يخليك (Rabbena yikhallīk)</strong> - May God keep you safe/bless you. (Common expression of gratitude or affection.)</p>
+                        <p class="text-sm text-gray-500">(MSA: بارك الله فيك - Bāraka Allāh fīk)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">24. يا عم (Ya ʿamm)</strong> - Hey, man / dude (addressing a male informally). (Literally: "O uncle.")</p>
+                        <p class="text-sm text-gray-500">(No direct MSA equivalent for this usage.)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">25. يا ساتر (Ya sāter!)</strong> - Oh my God! (Expression of shock or surprise.)</p>
+                        <p class="text-sm text-gray-500">(MSA: يا ساتر - Yā sātir)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">26. بالهنا والشفا (Bi-l-hana wa-sh-shifa)</strong> - Bon appétit / Enjoy your meal. (Lit: "With health and healing.")</p>
+                        <p class="text-sm text-gray-500">(MSA: شهية طيبة - Shahiyyah ṭayyibah)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">27. مفيش مشكلة (Māfīsh mushkila)</strong> - There is no problem.</p>
+                        <p class="text-sm text-gray-500">(MSA: لا توجد مشكلة - Lā tūjadu mushkila)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">28. تعالى (Taʿāla)</strong> - Come here (to a male).</p>
+                        <p class="text-sm text-gray-500">(MSA: تعال - Taʿāl)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">29. تعالي (Taʿālī)</strong> - Come here (to a female).</p>
+                        <p class="text-sm text-gray-500">(MSA: تعالي - Taʿālī)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">30. استنى (Istanna)</strong> - Wait (to a male).</p>
+                        <p class="text-sm text-gray-500">(MSA: انتظر - Intaẓir)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">31. أنا آسف (Ana ʾāsif)</strong> - I'm sorry.</p>
+                        <p class="text-sm text-gray-500">(MSA: أنا آسف - Anā ʾāsif)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">32. فوق! (Fōʾ!)</strong> - Wake up! / Upstairs! (Depending on context.)</p>
+                        <p class="text-sm text-gray-500">(MSA: استيقظ! - Istayqiẓ!)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">33. تحت (Taḥt)</strong> - Downstairs / Under.</p>
+                        <p class="text-sm text-gray-500">(MSA: تحت - Taḥt)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">34. هنا (Hena)</strong> - Here.</p>
+                        <p class="text-sm text-gray-500">(MSA: هنا - Hunā)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">35. هناك (Henāk)</strong> - There.</p>
+                        <p class="text-sm text-gray-500">(MSA: هناك - Hunāka)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">36. أنا جعان (Ana gaʿān)</strong> - I'm hungry (masculine).</p>
+                        <p class="text-sm text-gray-500">(MSA: أنا جائع - Anā jāʾiʿ)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">37. أنا عطشان (Ana ʿaṭshān)</strong> - I'm thirsty (masculine).</p>
+                        <p class="text-sm text-gray-500">(MSA: أنا عطشان - Anā ʿaṭshān)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">38. عايز إيه؟ (ʿAyiz ʾēh?)</strong> - What do you want? (to a male).</p>
+                        <p class="text-sm text-gray-500">(MSA: ماذا تريد؟ - Mādhā turīd?)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">39. مش عايز (Mish ʿayiz)</strong> - I don't want (masculine).</p>
+                        <p class="text-sm text-gray-500">(MSA: لا أريد - Lā urīd)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">40. ممكن (Mumkin)</strong> - Possible / May I? / Can I?</p>
+                        <p class="text-sm text-gray-500">(MSA: ممكن - Mumkin)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">41. بعد إذنك (Baʿd ʾiznak)</strong> - With your permission / Excuse me (when leaving or interrupting).</p>
+                        <p class="text-sm text-gray-500">(MSA: بعد إذنك - Baʿda ʾidhnika)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">42. مفيش (Māfīsh)</strong> - There isn't any / Nothing.</p>
+                        <p class="text-sm text-gray-500">(MSA: لا يوجد - Lā yūjadu)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">43. يا ريت (Yā rēt)</strong> - I wish / If only.</p>
+                        <p class="text-sm text-gray-500">(MSA: يا ليت - Yā layta)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">44. تسلم إيدك (Tislam ʾīdak)</strong> - Thank you (Lit: "May your hand be safe/blessed," often said when someone serves you food or helps with manual work).</p>
+                        <p class="text-sm text-gray-500">(No direct MSA equivalent)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">45. زي الفل (Zayy el-full)</strong> - Excellent, perfect. (Lit: "Like jasmine.")</p>
+                        <p class="text-sm text-gray-500">(MSA: ممتاز - Mumtāz)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">46. ربنا معاك (Rabbena maʿāk)</strong> - God be with you.</p>
+                        <p class="text-sm text-gray-500">(MSA: الله معك - Allāh maʿak)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">47. بالتوفيق (Bi-t-tawfīq)</strong> - Good luck.</p>
+                        <p class="text-sm text-gray-500">(MSA: بالتوفيق - Bi-t-tawfīq)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">48. كده (Kida)</strong> - Like this / So.</p>
+                        <p class="text-sm text-gray-500">(MSA: هكذا - Hākadhā)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">49. طبعاً (Ṭabʿan)</strong> - Of course.</p>
+                        <p class="text-sm text-gray-500">(MSA: طبعاً - Ṭabʿan)</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <p><strong class="text-blue-600">50. دلوقتي (Dilwaʾti)</strong> - Now.</p>
+                        <p class="text-sm text-gray-500">(MSA: الآن - Al-ʾān)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Store selected options for each quiz
+        const selectedOptions = {};
+
+        /**
+         * Opens a specific tab and hides others.
+         * @param {string} tabId - The ID of the tab content to display.
+         */
+        function openTab(tabId) {
+            // Get all tab content elements
+            const tabContents = document.querySelectorAll('.tab-content');
+            // Hide all tab contents
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Get all tab button elements
+            const tabButtons = document.querySelectorAll('.tab-button');
+            // Deactivate all tab buttons
+            tabButtons.forEach(button => button.classList.remove('active'));
+
+            // Show the selected tab content and activate its button
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-button[onclick*="${tabId}"]`).classList.add('active');
+
+            // Reset scroll to top of the content area when tab changes
+            document.querySelector('.scrollable-content').scrollTop = 0;
+        }
+
+        /**
+         * Selects an option for a quiz question.
+         * @param {HTMLElement} element - The clicked quiz option element.
+         */
+        function selectOption(element) {
+            const questionId = element.dataset.question;
+            const quizId = element.closest('[id^="quiz-"]').id;
+
+            // Deselect previous options for this question
+            const siblings = element.parentNode.querySelectorAll('.quiz-option');
+            siblings.forEach(sibling => {
+                if (sibling.dataset.question === questionId) {
+                    sibling.classList.remove('selected');
+                }
+            });
+
+            // Select the current option
+            element.classList.add('selected');
+
+            // Store the selected answer
+            if (!selectedOptions[quizId]) {
+                selectedOptions[quizId] = {};
+            }
+            selectedOptions[quizId][questionId] = element.dataset.answer;
+        }
+
+        /**
+         * Submits a quiz, checks answers, and displays results.
+         * @param {string} quizId - The ID of the quiz div.
+         * @param {Array<string>} correctAnswers - An array of correct answers for each question (e.g., ['a', 'b', 'c', 'd']).
+         */
+        function submitQuiz(quizId, correctAnswers) {
+            const quizDiv = document.getElementById(quizId);
+            const quizOptions = quizDiv.querySelectorAll('.quiz-option');
+            const resultDiv = document.getElementById(`${quizId}-result`);
+
+            let score = 0;
+            let allAnswered = true;
+
+            // Clear previous results and styling
+            quizOptions.forEach(option => {
+                option.classList.remove('correct', 'incorrect', 'selected');
+            });
+
+            // Check answers
+            for (let i = 0; i < correctAnswers.length; i++) {
+                const questionNumber = String(i + 1);
+                const userAnswer = selectedOptions[quizId] ? selectedOptions[quizId][questionNumber] : undefined;
+                const correctAnswer = correctAnswers[i];
+
+                if (userAnswer === undefined) {
+                    allAnswered = false;
+                    break; // Exit if any question is unanswered
+                }
+
+                const optionsForQuestion = quizDiv.querySelectorAll(`.quiz-option[data-question="${questionNumber}"]`);
+
+                optionsForQuestion.forEach(option => {
+                    if (option.dataset.answer === correctAnswer) {
+                        option.classList.add('correct'); // Mark correct answer
+                    }
+                    if (option.dataset.answer === userAnswer && userAnswer !== correctAnswer) {
+                        option.classList.add('incorrect'); // Mark incorrect user answer
+                    }
+                });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                }
+            }
+
+            // Display results
+            resultDiv.classList.remove('hidden', 'success', 'error');
+            if (!allAnswered) {
+                resultDiv.classList.add('error');
+                resultDiv.innerHTML = `<p class="font-bold">Please answer all questions before submitting.</p>`;
+            } else {
+                if (score === correctAnswers.length) {
+                    resultDiv.classList.add('success');
+                    resultDiv.innerHTML = `<p class="font-bold">🎉 Congratulations! You got all ${score} questions correct!</p>`;
+                } else {
+                    resultDiv.classList.add('error');
+                    resultDiv.innerHTML = `<p class="font-bold">You scored ${score} out of ${correctAnswers.length}. Keep practicing!</p>`;
+                }
+            }
+        }
+
+        /**
+         * Resets a quiz to its initial state.
+         * @param {string} quizId - The ID of the quiz div.
+         */
+        function resetQuiz(quizId) {
+            const quizDiv = document.getElementById(quizId);
+            const quizOptions = quizDiv.querySelectorAll('.quiz-option');
+            const resultDiv = document.getElementById(`${quizId}-result`);
+
+            quizOptions.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+
+            resultDiv.classList.add('hidden');
+            resultDiv.innerHTML = '';
+            if (selectedOptions[quizId]) {
+                delete selectedOptions[quizId];
+            }
+        }
+
+        // Initialize by opening the introduction tab
+        document.addEventListener('DOMContentLoaded', () => {
+            openTab('introduction');
+        });
+    </script>
+</body>
+</html>
