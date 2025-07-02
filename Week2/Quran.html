@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نادي القرآن الكريم - مدرسة اللغة العربية بكلية ميدلبوري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Base styles for body and fonts */
+        body {
+            font-family: 'Amiri', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a202c;
+            min-height: 100vh;
+        }
+        .inter-font {
+            font-family: 'Inter', sans-serif;
+        }
+        .container {
+            max-width: 1000px;
+        }
+        h1, h2, h3 {
+            font-family: 'Amiri', serif;
+            font-weight: 700;
+        }
+        .section-heading {
+            border-bottom: 3px solid #4299e1;
+            padding-bottom: 0.75rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(45deg, #4299e1, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .table-header {
+            background: linear-gradient(135deg, #4299e1, #667eea);
+            color: white;
+        }
+        .table-row:nth-child(odd) {
+            background-color: #f7fafc;
+        }
+        .table-row:hover {
+            background-color: #e2e8f0;
+            transform: translateX(5px);
+            transition: all 0.3s ease;
+        }
+        iframe {
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Enhanced tab styles */
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .tab-button {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #4a5568;
+            border: none;
+            border-radius: 1rem;
+            cursor: pointer;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 1);
+            color: #2d3748;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .tab-button.active-tab-button {
+            background: linear-gradient(135deg, #4299e1, #667eea);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(66, 153, 225, 0.4);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Quiz styles */
+        .quiz-container {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .quiz-question {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid transparent;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(10px);
+        }
+        .quiz-option.selected {
+            border-color: #48bb78;
+            background: rgba(72, 187, 120, 0.3);
+        }
+        .quiz-option.correct {
+            border-color: #48bb78;
+            background: rgba(72, 187, 120, 0.4);
+        }
+        .quiz-option.incorrect {
+            border-color: #f56565;
+            background: rgba(245, 101, 101, 0.4);
+        }
+        .quiz-result {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Info cards */
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #4299e1;
+            transition: transform 0.3s ease;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-box {
+            background: linear-gradient(135deg, #4299e1, #667eea);
+            color: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 1rem;
+            box-shadow: 0 8px 15px rgba(66, 153, 225, 0.3);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="container mx-auto bg-white shadow-2xl rounded-2xl p-6 md:p-10 mb-8" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
+
+        <!-- Enhanced Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4" style="background: linear-gradient(45deg, #4299e1, #667eea); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">نادي القرآن الكريم</h1>
+            <p class="text-2xl md:text-3xl text-gray-700 mb-2">مدرسة اللغة العربية بكلية ميدلبوري</p>
+            <p class="text-base text-gray-600 inter-font">(The Qur'an Club - Middlebury College Arabic School)</p>
+            <div class="mt-6 text-6xl">📖✨🕌</div>
+        </header>
+
+        <!-- Enhanced Tab Buttons Navigation -->
+        <nav class="tab-buttons">
+            <button class="tab-button active-tab-button" data-tab="intro-tab">المقدمة 📚<span class="text-sm inter-font mr-2">(Intro)</span></button>
+            <button class="tab-button" data-tab="vocabulary-tab">المفردات 🗣️<span class="text-sm inter-font mr-2">(Vocabulary)</span></button>
+            <button class="tab-button" data-tab="quiz-tab">اختبار المفردات 🧠<span class="text-sm inter-font mr-2">(Quiz)</span></button>
+            <button class="tab-button" data-tab="info-tab">معلومات عامة ℹ️<span class="text-sm inter-font mr-2">(General Info)</span></button>
+            <button class="tab-button" data-tab="quran-embed-tab">تلاوة 🎧<span class="text-sm inter-font mr-2">(Recitation)</span></button>
+        </nav>
+
+        <!-- Tab Content: Enhanced Intro -->
+        <div id="intro-tab" class="tab-content active">
+            <section class="mb-10">
+                <h2 class="text-4xl md:text-5xl section-heading mb-6">
+                    <span>مقدمة عن النادي</span>
+                    <span role="img" aria-label="books emoji">📚</span>
+                </h2>
+                
+                <div class="info-card">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-3">🎯 هدفنا الأساسي</h3>
+                    <p class="text-lg leading-relaxed">
+                        نادي القرآن الكريم هو مساحة مقدسة للطلاب المهتمين بتعلم وفهم كتاب الله العزيز. نسعى لبناء جسر قوي بين الطلاب والقرآن الكريم من خلال منهج شامل يتضمن دراسة أحكام التجويد، وفهم التفسير، وحفظ الآيات الكريمة.
+                        <span class="text-sm text-gray-600 inter-font block mt-2">(The Qur'an Club is a sacred space for students interested in learning and understanding the Noble Book of Allah. We strive to build a strong bridge between students and the Holy Qur'an through a comprehensive approach that includes studying Tajweed rules, understanding interpretation, and memorizing noble verses.)</span>
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="text-2xl font-bold text-green-700 mb-3">🎵 التجويد والتلاوة</h3>
+                    <p class="text-lg leading-relaxed">
+                        نركز بشكل خاص على تعليم علم التجويد، وهو العلم الذي يهتم بإعطاء كل حرف حقه ومستحقه من الصفات والمخارج الصحيحة. هذا العلم النبيل يضمن تلاوة صحيحة وجميلة للقرآن الكريم، كما كان يتلوه النبي محمد صلى الله عليه وسلم والصحابة الكرام.
+                        <span class="text-sm text-gray-600 inter-font block mt-2">(We focus particularly on teaching the science of Tajweed, which deals with giving each letter its proper rights and characteristics from correct articulation points. This noble science ensures correct and beautiful recitation of the Holy Qur'an, as it was recited by Prophet Muhammad ﷺ and the noble Companions.)</span>
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="text-2xl font-bold text-purple-700 mb-3">👥 التعلم الجماعي</h3>
+                    <p class="text-lg leading-relaxed">
+                        نؤمن بقوة التعلم الجماعي والتشارك في الخير. لذلك نخصص أوقاتاً منتظمة للممارسة الجماعية، حيث يستطيع الطلاب تطبيق ما تعلموه، وتبادل الخبرات والمعرفة، والتشجيع المتبادل في بيئة إسلامية داعمة ومحفزة للنمو الروحي والعلمي.
+                        <span class="text-sm text-gray-600 inter-font block mt-2">(We believe in the power of group learning and sharing in goodness. Therefore, we dedicate regular times for group practice, where students can apply what they've learned, exchange experiences and knowledge, and provide mutual encouragement in a supportive Islamic environment that fosters spiritual and academic growth.)</span>
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Enhanced Vocabulary Section -->
+        <div id="vocabulary-tab" class="tab-content">
+            <section class="mb-10">
+                <h2 class="text-4xl md:text-5xl section-heading mb-6">
+                    <span>المفردات التي درسناها</span>
+                    <span role="img" aria-label="speaking emoji">🗣️</span>
+                </h2>
+                <p class="text-base text-gray-600 inter-font mb-6">(Vocabulary We Studied)</p>
+                <div class="overflow-x-auto rounded-xl shadow-lg">
+                    <table class="min-w-full bg-white rounded-xl">
+                        <thead>
+                            <tr>
+                                <th class="py-4 px-6 text-right table-header rounded-tr-xl text-lg">الكلمة</th>
+                                <th class="py-4 px-6 text-right table-header text-lg">التعريف بالعربية</th>
+                                <th class="py-4 px-6 text-left table-header rounded-tl-xl text-lg">English Definition</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">القرآن</td>
+                                <td class="py-4 px-6 border-b border-gray-200">كتاب الله المُنزَّل على خاتم الأنبياء محمد ﷺ بواسطة جبريل عليه السلام</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">The Book of Allah revealed to the final Prophet Muhammad ﷺ through Angel Gabriel</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">سورة</td>
+                                <td class="py-4 px-6 border-b border-gray-200">مجموعة من الآيات المترابطة في القرآن، تبدأ عادة بالبسملة</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">A connected group of verses in the Qur'an, usually beginning with the Basmala</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">آية</td>
+                                <td class="py-4 px-6 border-b border-gray-200">جملة أو مجموعة جمل من كلام الله عز وجل، وهي أصغر وحدة في التقسيم القرآني</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">A sentence or group of sentences from the words of Allah, the smallest unit in Quranic division</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">تلاوة</td>
+                                <td class="py-4 px-6 border-b border-gray-200">قراءة القرآن بصوت واضح وأحكام صحيحة مع التدبر والخشوع</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">Recitation of the Qur'an with clear voice, correct rules, contemplation and reverence</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">تفسير</td>
+                                <td class="py-4 px-6 border-b border-gray-200">علم شرح معاني آيات القرآن وبيان أسباب النزول والأحكام المستنبطة</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">The science of explaining Quranic meanings, revelation circumstances, and derived rulings</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">حفظ</td>
+                                <td class="py-4 px-6 border-b border-gray-200">استظهار آيات القرآن وحفظها في الصدر دون الحاجة للمصحف</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">Memorizing Quranic verses by heart without needing the written text</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">تجويد</td>
+                                <td class="py-4 px-6 border-b border-gray-200">علم إعطاء كل حرف حقه ومستحقه من المخارج والصفات عند التلاوة</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">The science of giving each letter its proper articulation and characteristics during recitation</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">نزول</td>
+                                <td class="py-4 px-6 border-b border-gray-200">الوقت والمكان والظروف التي نزلت فيها الآيات أو السور</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">The time, place, and circumstances in which verses or chapters were revealed</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">مكيّة</td>
+                                <td class="py-4 px-6 border-b border-gray-200">السورة التي نزلت قبل هجرة النبي ﷺ من مكة إلى المدينة</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">A chapter revealed before the Prophet's ﷺ migration from Mecca to Medina</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">مدنيّة</td>
+                                <td class="py-4 px-6 border-b border-gray-200">السورة التي نزلت بعد هجرة النبي ﷺ إلى المدينة المنورة</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">A chapter revealed after the Prophet's ﷺ migration to Medina</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">الصحابة</td>
+                                <td class="py-4 px-6 border-b border-gray-200">أصحاب النبي ﷺ الذين آمنوا به ولقوه وحفظوا القرآن ونقلوه للأجيال</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">Companions of the Prophet ﷺ who believed, met him, and transmitted the Qur'an to future generations</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 border-b border-gray-200 font-bold text-blue-800">الحروف المقطعة</td>
+                                <td class="py-4 px-6 border-b border-gray-200">حروف في مطالع بعض السور (مثل الم، حم) معناها من علم الله المستأثر</td>
+                                <td class="py-4 px-6 border-b border-gray-200 inter-font">Disjointed letters at the beginning of some chapters (like Alif-Lam-Meem), their meaning known only to Allah</td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="py-4 px-6 font-bold text-blue-800">الذكر</td>
+                                <td class="py-4 px-6">اسم من أسماء القرآن الكريم، يدل على أنه تذكرة وموعظة للناس</td>
+                                <td class="py-4 px-6 inter-font">One of the names of the Holy Qur'an, indicating it is a reminder and admonition for people</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- NEW: Vocabulary Quiz Tab -->
+        <div id="quiz-tab" class="tab-content">
+            <section class="mb-10">
+                <h2 class="text-4xl md:text-5xl section-heading mb-6">
+                    <span>اختبار المفردات</span>
+                    <span role="img" aria-label="brain emoji">🧠</span>
+                </h2>
+                <p class="text-base text-gray-600 inter-font mb-6">(Vocabulary Quiz)</p>
+                
+                <div class="quiz-container">
+                    <div id="quiz-start" class="text-center">
+                        <h3 class="text-3xl font-bold mb-4">🎯 اختبر معلوماتك في مفردات القرآن</h3>
+                        <p class="text-lg mb-6 inter-font">Test your knowledge of Quranic vocabulary!</p>
+                        <p class="text-base mb-8">سنقوم بطرح 10 أسئلة عليك حول المفردات التي درسناها. حاول الإجابة على جميع الأسئلة!</p>
+                        <button id="start-quiz-btn" class="bg-white text-purple-700 px-8 py-4 rounded-lg font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">🚀 ابدأ الاختبار</button>
+                    </div>
+                    
+                    <div id="quiz-questions" class="hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-xl font-bold">السؤال <span id="current-question">1</span> من 10</span>
+                            <span class="text-lg">النتيجة: <span id="score">0</span>/10</span>
+                        </div>
+                        
+                        <div id="question-container" class="quiz-question">
+                            <!-- Questions will be inserted here -->
+                        </div>
+                        
+                        <div class="text-center">
+                            <button id="next-question-btn" class="bg-white text-purple-700 px-6 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all duration-300 hidden">السؤال التالي ⬅️</button>
+                        </div>
+                    </div>
+                    
+                    <div id="quiz-results" class="quiz-result hidden">
+                        <h3 class="text-3xl font-bold mb-4">🎉 انتهى الاختبار!</h3>
+                        <p class="text-2xl mb-4">نتيجتك النهائية: <span id="final-score" class="font-bold text-yellow-300"></span></p>
+                        <p id="quiz-message" class="text-lg mb-6"></p>
+                        <button id="restart-quiz-btn" class="bg-white text-purple-700 px-6 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all duration-300">🔄 إعادة الاختبار</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Enhanced General Info -->
+        <div id="info-tab" class="tab-content">
+            <section class="mb-10">
+                <h2 class="text-4xl md:text-5xl section-heading mb-6">
+                    <span>معلومات عامة عن القرآن الكريم</span>
+                    <span role="img" aria-label="information emoji">ℹ️</span>
+                </h2>
+                <p class="text-base text-gray-600 inter-font mb-6">(General Information about the Holy Qur'an)</p>
+                
+                <!-- Statistics Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                    <div class="stat-box">
+                        <div class="text-4xl mb-2">📚</div>
+                        <div class="text-3xl font-bold">114</div>
+                        <div class="text-lg">سورة</div>
+                        <div class="text-sm inter-font">Chapters</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-4xl mb-2">📖</div>
+                        <div class="text-3xl font-bold">6,236</div>
+                        <div class="text-lg">آية</div>
+                        <div class="text-sm inter-font">Verses</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-4xl mb-2">🔢</div>
+                        <div class="text-3xl font-bold">30</div>
+                        <div class="text-lg">جزء</div>
+                        <div class="text-sm inter-font">Parts (Juz')</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-4xl mb-2">📊</div>
+                        <div class="text-3xl font-bold">60</div>
+                        <div class="text-lg">حزب</div>
+                        <div class="text-sm inter-font">Sections (Hizb)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-4xl mb-2">⏱️</div>
+                        <div class="text-3xl font-bold">23</div>
+                        <div class="text-lg">سنة</div>
+                        <div class="text-sm inter-font">Years of Revelation</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-4xl mb-2">🌍</div>
+                        <div class="text-3xl font-bold">1.8B+</div>
+                        <div class="text-lg">مؤمن</div>
+                        <div class="text-sm inter-font">Muslims Worldwide</div>
+                    </div>
+                </div>
+
+                <!-- Detailed Information -->
+                <div class="space-y-6">
+                    <div class="info-card">
+                        <h3 class="text-2xl font-bold text-blue-700 mb-3 flex items-center gap-2">
+                            <span>🕌</span> السور المكية والمدنية
+                        </h3>
+                        <p class="text-lg leading-relaxed">
+                            ينقسم القرآن الكريم إلى سور مكية (86 سورة) نزلت قبل الهجرة النبوية، وسور مدنية (28 سورة) نزلت بعد الهجرة. السور المكية تركز عادة على العقيدة والإيمان، بينما المدنية تركز على الأحكام والتشريعات.
+                            <span class="text-sm text-gray-600 inter-font block mt-2">(The Qur'an is divided into Meccan chapters (86) revealed before the Prophet's migration, and Medinan chapters (28) revealed after migration. Meccan chapters usually focus on creed and faith, while Medinan chapters focus on laws and legislation.)</span>
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3 class="text-2xl font-bold text-blue-700 mb-3 flex items-center gap-2">
+                            <span>⏳</span> تواريخ النزول
+                        </h3>
+                        <p class="text-lg leading-relaxed">
+                            بدأ نزول القرآن الكريم على النبي محمد ﷺ في شهر رمضان من عام 610 ميلادية، عندما نزل عليه الوحي وهو في غار حراء. استمر نزول القرآن على مدار 23 عامًا، واكتمل بوفاة النبي ﷺ في عام 632 ميلادية.
+                            <span class="text-sm text-gray-600 inter-font block mt-2">(The revelation of the Holy Qur'an to Prophet Muhammad ﷺ began in the month of Ramadan in 610 CE, when the revelation descended upon him in the Cave of Hira. The revelation continued for 23 years, concluding with the passing of the Prophet ﷺ in 632 CE.)</span>
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3 class="text-2xl font-bold text-blue-700 mb-3 flex items-center gap-2">
+                            <span>✨</span> مكانة القرآن بين الكتب السماوية
+                        </h3>
+                        <p class="text-lg leading-relaxed">
+                            يعتبر القرآن الكريم آخر الكتب السماوية التي أنزلها الله على رسله، وهو مصدق لما سبقه من الكتب كالتوراة (التي أنزلت على موسى عليه السلام) والإنجيل (الذي أنزل على عيسى عليه السلام)، ومهيمن عليها. يتميز القرآن بأنه محفوظ بحفظ الله من أي تحريف أو تبديل.
+                            <span class="text-sm text-gray-600 inter-font block mt-2">(The Holy Qur'an is considered the last of the divine books revealed by Allah to His messengers. It confirms previous scriptures like the Torah (revealed to Moses) and the Gospel (revealed to Jesus), and supersedes them. The Qur'an is unique in that it is preserved by Allah from any alteration or distortion.)</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab Content: Embedded Quran.com -->
+        <div id="quran-embed-tab" class="tab-content">
+            <section>
+                <h2 class="text-4xl md:text-5xl section-heading mb-6">
+                    <span>تلاوة سورة الفاتحة</span>
+                    <span role="img" aria-label="headphones emoji">🎧</span>
+                </h2>
+                <p class="text-base text-gray-600 inter-font mb-4">(Recitation of Surah Al-Fatihah)</p>
+                <div class="relative overflow-hidden rounded-xl shadow-md" style="padding-top: 56.25%;"> <!-- 16:9 Aspect Ratio -->
+                    <iframe class="absolute top-0 left-0 w-full h-full" src="https://quran.com/al-fatihah" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <script>
+        // JavaScript for tab functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            // Function to show a specific tab
+            function showTab(tabId) {
+                // Hide all tab contents
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Deactivate all tab buttons
+                tabButtons.forEach(button => {
+                    button.classList.remove('active-tab-button');
+                });
+
+                // Show the selected tab content
+                const selectedTabContent = document.getElementById(tabId);
+                if (selectedTabContent) {
+                    selectedTabContent.classList.add('active');
+                }
+
+                // Activate the corresponding tab button
+                const selectedTabButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+                if (selectedTabButton) {
+                    selectedTabButton.classList.add('active-tab-button');
+                }
+            }
+
+            // Add click event listeners to tab buttons
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab; // Get the data-tab attribute value
+                    showTab(tabId);
+                });
+            });
+
+            // Show the first tab by default on page load
+            showTab('intro-tab');
+
+
+            // --- Quiz Functionality ---
+            const quizQuestions = [
+                {
+                    question: "ما معنى كلمة 'القرآن'؟",
+                    englishQuestion: "What does the word 'القرآن' (Al-Qur'an) mean?",
+                    options: [
+                        "كتاب شعر",
+                        "كتاب الله المُنزَّل",
+                        "قصص تاريخية",
+                        "مجموعة أقوال"
+                    ],
+                    englishOptions: [
+                        "Book of poetry",
+                        "The Book of Allah revealed",
+                        "Historical stories",
+                        "Collection of sayings"
+                    ],
+                    correctAnswer: "كتاب الله المُنزَّل"
+                },
+                {
+                    question: "ما هي 'السورة' في القرآن؟",
+                    englishQuestion: "What is a 'سورة' (Surah) in the Qur'an?",
+                    options: [
+                        "جملة واحدة",
+                        "مجموعة آيات",
+                        "اسم نبي",
+                        "نوع من الصلاة"
+                    ],
+                    englishOptions: [
+                        "A single sentence",
+                        "A group of verses",
+                        "A prophet's name",
+                        "A type of prayer"
+                    ],
+                    correctAnswer: "مجموعة آيات"
+                },
+                {
+                    question: "ماذا تعني 'آية'؟",
+                    englishQuestion: "What does 'آية' (Ayah) mean?",
+                    options: [
+                        "كلمة طويلة",
+                        "جملة أو أكثر من كلام الله",
+                        "عنوان كتاب",
+                        "نوع من الطعام"
+                    ],
+                    englishOptions: [
+                        "A long word",
+                        "A sentence or more from Allah's words",
+                        "A book title",
+                        "A type of food"
+                    ],
+                    correctAnswer: "جملة أو أكثر من كلام الله"
+                },
+                {
+                    question: "ما هو 'التجويد'؟",
+                    englishQuestion: "What is 'تجويد' (Tajweed)?",
+                    options: [
+                        "فن الرسم",
+                        "قراءة القرآن بأحكام وصوت جميل",
+                        "كتابة الشعر",
+                        "نوع من الموسيقى"
+                    ],
+                    englishOptions: [
+                        "Art of drawing",
+                        "Reciting the Qur'an with proper pronunciation and beauty",
+                        "Writing poetry",
+                        "A type of music"
+                    ],
+                    correctAnswer: "قراءة القرآن بأحكام وصوت جميل"
+                },
+                {
+                    question: "متى نزلت السور 'المكية'؟",
+                    englishQuestion: "When were 'مكيّة' (Meccan) Surahs revealed?",
+                    options: [
+                        "بعد الهجرة",
+                        "قبل الهجرة",
+                        "في أي وقت",
+                        "في المدينة فقط"
+                    ],
+                    englishOptions: [
+                        "After the Hijra",
+                        "Before the Hijra",
+                        "Anytime",
+                        "Only in Medina"
+                    ],
+                    correctAnswer: "قبل الهجرة"
+                },
+                {
+                    question: "من هم 'الصحابة'؟",
+                    englishQuestion: "Who are 'الصحابة' (The Companions)?",
+                    options: [
+                        "ملوك قدماء",
+                        "أصحاب النبي الذين نقلوا القرآن",
+                        "علماء فلك",
+                        "تجار كبار"
+                    ],
+                    englishOptions: [
+                        "Ancient kings",
+                        "Companions of the Prophet who transmitted the Qur’an",
+                        "Astronomers",
+                        "Big merchants"
+                    ],
+                    correctAnswer: "أصحاب النبي الذين نقلوا القرآن"
+                },
+                {
+                    question: "ما معنى 'حفظ' القرآن؟",
+                    englishQuestion: "What does 'حفظ' (Hifz) of the Qur'an mean?",
+                    options: [
+                        "كتابته",
+                        "تذكّر الآيات دون قراءة",
+                        "تزيينه",
+                        "بيعه"
+                    ],
+                    englishOptions: [
+                        "Writing it down",
+                        "Memorizing verses without reading",
+                        "Decorating it",
+                        "Selling it"
+                    ],
+                    correctAnswer: "تذكّر الآيات دون قراءة"
+                },
+                {
+                    question: "ما هو 'التفسير'؟",
+                    englishQuestion: "What is 'تفسير' (Tafsir)?",
+                    options: [
+                        "الغناء",
+                        "شرح معنى آيات القرآن",
+                        "بناء المساجد",
+                        "الطبخ"
+                    ],
+                    englishOptions: [
+                        "Singing",
+                        "Explanation of the meanings of Qur’anic verses",
+                        "Building mosques",
+                        "Cooking"
+                    ],
+                    correctAnswer: "شرح معنى آيات القرآن"
+                },
+                {
+                    question: "ما هو الاسم الآخر للقرآن الذي يعني 'التذكير'؟",
+                    englishQuestion: "What is another name for the Qur'an that means 'reminder'?",
+                    options: [
+                        "الفرقان",
+                        "الذكر",
+                        "الكتاب",
+                        "التنزيل"
+                    ],
+                    englishOptions: [
+                        "Al-Furqan",
+                        "Al-Dhikr",
+                        "Al-Kitab",
+                        "Al-Tanzil"
+                    ],
+                    correctAnswer: "الذكر"
+                },
+                {
+                    question: "ماذا تعني 'مدنيّة'؟",
+                    englishQuestion: "What does 'مدنيّة' (Medinan) mean?",
+                    options: [
+                        "سورة نزلت قبل الهجرة",
+                        "سورة نزلت بعد الهجرة",
+                        "سورة طويلة",
+                        "سورة قصيرة"
+                    ],
+                    englishOptions: [
+                        "A chapter revealed before the Hijra",
+                        "A chapter revealed after the Hijra",
+                        "A long chapter",
+                        "A short chapter"
+                    ],
+                    correctAnswer: "سورة نزلت بعد الهجرة"
+                }
+            ];
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let selectedAnswer = null;
+            let currentQuestionData = null;
+
+            const quizStartDiv = document.getElementById('quiz-start');
+            const quizQuestionsDiv = document.getElementById('quiz-questions');
+            const quizResultsDiv = document.getElementById('quiz-results');
+            const startQuizBtn = document.getElementById('start-quiz-btn');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const restartQuizBtn = document.getElementById('restart-quiz-btn');
+            const currentQuestionSpan = document.getElementById('current-question');
+            const scoreSpan = document.getElementById('score');
+            const questionContainer = document.getElementById('question-container');
+            const finalScoreSpan = document.getElementById('final-score');
+            const quizMessageP = document.getElementById('quiz-message');
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            function startQuiz() {
+                shuffleArray(quizQuestions); // Shuffle questions at the start of each quiz
+                currentQuestionIndex = 0;
+                score = 0;
+                selectedAnswer = null;
+                quizStartDiv.classList.add('hidden');
+                quizResultsDiv.classList.add('hidden');
+                quizQuestionsDiv.classList.remove('hidden');
+                displayQuestion();
+            }
+
+            function displayQuestion() {
+                currentQuestionData = quizQuestions[currentQuestionIndex];
+                if (!currentQuestionData) {
+                    showResults();
+                    return;
+                }
+
+                currentQuestionSpan.textContent = currentQuestionIndex + 1;
+                scoreSpan.textContent = score;
+                questionContainer.innerHTML = `
+                    <p class="text-xl md:text-2xl font-bold mb-4">${currentQuestionData.question}</p>
+                    <p class="text-base text-gray-300 inter-font mb-4">${currentQuestionData.englishQuestion}</p>
+                    <div id="options-container">
+                        ${currentQuestionData.options.map((option, index) => `
+                            <div class="quiz-option" data-answer="${option}">${option} <span class="text-sm inter-font block mt-1">(${currentQuestionData.englishOptions[index]})</span></div>
+                        `).join('')}
+                    </div>
+                `;
+
+                const options = questionContainer.querySelectorAll('.quiz-option');
+                options.forEach(option => {
+                    option.addEventListener('click', (e) => selectOption(e.target, e.target.dataset.answer));
+                });
+
+                nextQuestionBtn.classList.add('hidden'); // Hide next button until an option is selected
+                selectedAnswer = null; // Reset selected answer for new question
+            }
+
+            function selectOption(element, answer) {
+                // Remove 'selected' from all options
+                questionContainer.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                // Add 'selected' to the clicked option
+                element.classList.add('selected');
+                selectedAnswer = answer;
+                nextQuestionBtn.classList.remove('hidden'); // Show next button
+            }
+
+            function checkAnswer() {
+                if (selectedAnswer === null) return; // No answer selected
+
+                const options = questionContainer.querySelectorAll('.quiz-option');
+                options.forEach(option => {
+                    if (option.dataset.answer === currentQuestionData.correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (option.classList.contains('selected')) {
+                        option.classList.add('incorrect');
+                    }
+                    option.style.pointerEvents = 'none'; // Disable further clicks
+                });
+
+                if (selectedAnswer === currentQuestionData.correctAnswer) {
+                    score++;
+                    scoreSpan.textContent = score;
+                }
+            }
+
+            function nextQuestion() {
+                checkAnswer(); // Check answer before moving to next question
+                setTimeout(() => { // Give a brief moment to see correct/incorrect feedback
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < quizQuestions.length) {
+                        displayQuestion();
+                    } else {
+                        showResults();
+                    }
+                }, 700); // Short delay
+            }
+
+            function showResults() {
+                quizQuestionsDiv.classList.add('hidden');
+                quizResultsDiv.classList.remove('hidden');
+                finalScoreSpan.textContent = `${score}/${quizQuestions.length}`;
+
+                let message = "";
+                if (score === quizQuestions.length) {
+                    message = "مذهل! لقد أجبت على جميع الأسئلة بشكل صحيح. أنت خبير في مفردات القرآن! ✨";
+                    quizMessageP.classList.add('text-yellow-300');
+                } else if (score >= quizQuestions.length / 2) {
+                    message = "عمل رائع! لقد قمت بعمل جيد. يمكنك دائمًا المراجعة والتحسين. 👍";
+                    quizMessageP.classList.add('text-green-300');
+                } else {
+                    message = "لا بأس! استمر في التعلم والممارسة. كل خطوة مهمة. 📚";
+                    quizMessageP.classList.add('text-red-300');
+                }
+                quizMessageP.textContent = message;
+            }
+
+            // Event Listeners for Quiz Buttons
+            startQuizBtn.addEventListener('click', startQuiz);
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+            restartQuizBtn.addEventListener('click', startQuiz);
+        });
+    </script>
+</body>
+</html>
