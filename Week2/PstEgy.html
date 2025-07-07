@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستكشف الأفعال المصرية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral Harmony -->
+    <!-- Application Structure Plan: The application is designed as an interactive "Conjugation Explorer". The structure consists of a main header, an introductory paragraph, two sets of primary controls (verb selectors and pronoun selectors), and a dynamic display card. The user first selects a verb, then a pronoun. The display card updates instantly to show only the relevant information: the conjugated verb, an example sentence, and its translation. This task-oriented design was chosen over a static table to promote active learning and reduce cognitive load by focusing the user's attention on a single piece of data at a time. The flow is intuitive: select verb -> select pronoun -> see result. -->
+    <!-- Visualization & Content Choices: Report Info: Table of 5 verbs, 8 pronouns, and their past-tense conjugations. -> Goal: Organize, Inform, Compare. -> Viz/Presentation Method: Interactive display card updated via button clicks. This is a form of a structured diagram (HTML/CSS) rather than a data chart. -> Interaction: User clicks on verb and pronoun buttons to filter and display the specific conjugation. Active states on buttons provide immediate feedback. -> Justification: This method is more engaging and less overwhelming than a large table. It breaks the information into digestible, user-selected chunks, which is superior for language learning and memorization. -> Library/Method: Vanilla JS for state management and DOM manipulation. Tailwind CSS for styling. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Kufi Arabic', sans-serif;
+        }
+        .active-verb, .active-pronoun {
+            background-color: #14b8a6 !important; /* teal-500 */
+            color: white !important;
+            transform: scale(1.05);
+            box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
+        }
+        .control-button {
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+
+        <header class="text-center mb-6">
+            <h1 class="text-3xl md:text-5xl font-bold text-teal-700 mb-2">أفعال في الماضي</h1>
+            <p class="text-md md:text-lg text-stone-600 max-w-2xl mx-auto">
+              أكثر الافعال المصرية شيوعا - في الماضي.
+            </p>
+        </header>
+
+        <main>
+            <section id="verb-selection" class="mb-8">
+                <h2 class="text-2xl font-semibold text-center mb-4 text-stone-700">١. اختر الفعل</h2>
+                <div id="verb-buttons" class="flex flex-wrap justify-center gap-3 md:gap-4">
+                    <!-- Verb buttons will be injected here by JS -->
+                </div>
+            </section>
+
+            <section id="pronoun-selection" class="mb-8">
+                <h2 class="text-2xl font-semibold text-center mb-4 text-stone-700">٢. اختر الضمير</h2>
+                <div id="pronoun-buttons" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 justify-center gap-3 md:gap-4">
+                    <!-- Pronoun buttons will be injected here by JS -->
+                </div>
+            </section>
+
+            <section id="display-area" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 min-h-[250px] flex flex-col justify-center items-center text-center">
+                <div id="conjugation-result" class="w-full">
+                    <p id="display-conjugation" class="text-4xl md:text-5xl font-bold text-teal-600 mb-4"></p>
+                    <p id="display-example" class="text-xl md:text-2xl text-stone-700 font-semibold mb-2"></p>
+                    <p id="display-translation" class="text-lg md:text-xl text-stone-500" dir="ltr"></p>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <script>
+        const verbData = {
+            "راح": {
+                "infinitive_en": "To Go",
+                "conjugations": {
+                    "هو": { "conjugation": "راح", "example": "هو راح السوق.", "translation": "He went to the market." },
+                    "هي": { "conjugation": "راحت", "example": "هي راحت الشغل.", "translation": "She went to work." },
+                    "أنا": { "conjugation": "رحت", "example": "أنا رحت إمبارح.", "translation": "I went yesterday." },
+                    "إنت": { "conjugation": "رحت", "example": "إنت رحت فين؟", "translation": "Where did you go? (m.)" },
+                    "إنتي": { "conjugation": "رحتي", "example": "إنتي رحتي فين؟", "translation": "Where did you go? (f.)" },
+                    "إحنا": { "conjugation": "رحنا", "example": "إحنا رحنا السينما.", "translation": "We went to the cinema." },
+                    "إنتو": { "conjugation": "رحتوا", "example": "إنتو رحتوا المدرسة؟", "translation": "Did you go to school? (pl.)" },
+                    "هم": { "conjugation": "راحوا", "example": "هم راحوا البيت.", "translation": "They went home." }
+                }
+            },
+            "شاف": {
+                "infinitive_en": "To See",
+                "conjugations": {
+                    "هو": { "conjugation": "شاف", "example": "هو شاف الفيلم.", "translation": "He saw the movie." },
+                    "هي": { "conjugation": "شافت", "example": "هي شافت القطة.", "translation": "She saw the cat." },
+                    "أنا": { "conjugation": "شفت", "example": "أنا شفتك هناك.", "translation": "I saw you there." },
+                    "إنت": { "conjugation": "شفت", "example": "إنت شفت ده؟", "translation": "Did you see this? (m.)" },
+                    "إنتي": { "conjugation": "شفتي", "example": "إنتي شفتي ده؟", "translation": "Did you see this? (f.)" },
+                    "إحنا": { "conjugation": "شفنا", "example": "إحنا شفنا الماتش.", "translation": "We saw the match." },
+                    "إنتو": { "conjugation": "شفتوا", "example": "إنتو شفتوا الممثل؟", "translation": "Did you see the actor? (pl.)" },
+                    "هم": { "conjugation": "شافوا", "example": "هم شافوا العربية.", "translation": "They saw the car." }
+                }
+            },
+            "قال": {
+                "infinitive_en": "To Say",
+                "conjugations": {
+                    "هو": { "conjugation": "قال", "example": "هو قال الحقيقة.", "translation": "He said the truth." },
+                    "هي": { "conjugation": "قالت", "example": "هي قالت لأ.", "translation": "She said no." },
+                    "أنا": { "conjugation": "قلت", "example": "أنا قلت كده.", "translation": "I said so." },
+                    "إنت": { "conjugation": "قلت", "example": "إنت قلت إيه؟", "translation": "What did you say? (m.)" },
+                    "إنتي": { "conjugation": "قلتي", "example": "إنتي قلتي إيه؟", "translation": "What did you say? (f.)" },
+                    "إحنا": { "conjugation": "قلنا", "example": "إحنا قلنا الحقيقة.", "translation": "We said the truth." },
+                    "إنتو": { "conjugation": "قلتوا", "example": "إنتو قلتوا كده؟", "translation": "Did you say so? (pl.)" },
+                    "هم": { "conjugation": "قالوا", "example": "هم قالوا كلام حلو.", "translation": "They said nice words." }
+                }
+            },
+            "عمل": {
+                "infinitive_en": "To Do/Make",
+                "conjugations": {
+                    "هو": { "conjugation": "عمل", "example": "هو عمل الواجب.", "translation": "He did the homework." },
+                    "هي": { "conjugation": "عملت", "example": "هي عملت الأكل.", "translation": "She made the food." },
+                    "أنا": { "conjugation": "عملت", "example": "أنا عملت كل حاجة.", "translation": "I did everything." },
+                    "إنت": { "conjugation": "عملت", "example": "إنت عملت إيه؟", "translation": "What did you do? (m.)" },
+                    "إنتي": { "conjugation": "عملتي", "example": "إنتي عملتي إيه؟", "translation": "What did you do? (f.)" },
+                    "إحنا": { "conjugation": "عملنا", "example": "إحنا عملنا كل حاجة.", "translation": "We did everything." },
+                    "إنتو": { "conjugation": "عملتوا", "example": "إنتو عملتوا إيه؟", "translation": "What did you do? (pl.)" },
+                    "هم": { "conjugation": "عملوا", "example": "هم عملوا شغلهم.", "translation": "They did their work." }
+                }
+            },
+            "أكل": {
+                "infinitive_en": "To Eat",
+                "conjugations": {
+                    "هو": { "conjugation": "أكل", "example": "هو أكل التفاحة.", "translation": "He ate the apple." },
+                    "هي": { "conjugation": "أكلت", "example": "هي أكلت الرز.", "translation": "She ate the rice." },
+                    "أنا": { "conjugation": "أكلت", "example": "أنا أكلت كتير.", "translation": "I ate a lot." },
+                    "إنت": { "conjugation": "أكلت", "example": "إنت أكلت خلاص؟", "translation": "Have you finished eating? (m.)" },
+                    "إنتي": { "conjugation": "أكلتي", "example": "إنتي أكلتي خلاص؟", "translation": "Have you finished eating? (f.)" },
+                    "إحنا": { "conjugation": "أكلنا", "example": "إحنا أكلنا سمك.", "translation": "We ate fish." },
+                    "إنتو": { "conjugation": "أكلتوا", "example": "إنتو أكلتوا كويس؟", "translation": "Did you eat well? (pl.)" },
+                    "هم": { "conjugation": "أكلوا", "example": "هم أكلوا الفاكهة.", "translation": "They ate the fruit." }
+                }
+            },
+            "شرب": {
+                "infinitive_en": "To Drink",
+                "conjugations": {
+                    "هو": { "conjugation": "شرب", "example": "هو شرب الماية.", "translation": "He drank the water." },
+                    "هي": { "conjugation": "شربت", "example": "هي شربت العصير.", "translation": "She drank the juice." },
+                    "أنا": { "conjugation": "شربت", "example": "أنا شربت قهوة.", "translation": "I drank coffee." },
+                    "إنت": { "conjugation": "شربت", "example": "إنت شربت إيه؟", "translation": "What did you drink? (m.)" },
+                    "إنتي": { "conjugation": "شربتي", "example": "إنتي شربتي إيه؟", "translation": "What did you drink? (f.)" },
+                    "إحنا": { "conjugation": "شربنا", "example": "إحنا شربنا شاي.", "translation": "We drank tea." },
+                    "إنتو": { "conjugation": "شربتوا", "example": "إنتو شربتوا لبن؟", "translation": "Did you drink milk? (pl.)" },
+                    "هم": { "conjugation": "شربوا", "example": "هم شربوا بيبسي.", "translation": "They drank Pepsi." }
+                }
+            },
+            "كتب": {
+                "infinitive_en": "To Write",
+                "conjugations": {
+                    "هو": { "conjugation": "كتب", "example": "هو كتب جواب.", "translation": "He wrote a letter." },
+                    "هي": { "conjugation": "كتبت", "example": "هي كتبت رسالة.", "translation": "She wrote a message." },
+                    "أنا": { "conjugation": "كتبت", "example": "أنا كتبت الدرس.", "translation": "I wrote the lesson." },
+                    "إنت": { "conjugation": "كتبت", "example": "إنت كتبت إيه؟", "translation": "What did you write? (m.)" },
+                    "إنتي": { "conjugation": "كتبتي", "example": "إنتي كتبتي إيه؟", "translation": "What did you write? (f.)" },
+                    "إحنا": { "conjugation": "كتبنا", "example": "إحنا كتبنا كل حاجة.", "translation": "We wrote everything." },
+                    "إنتو": { "conjugation": "كتبتوا", "example": "إنتو كتبتوا الواجب؟", "translation": "Did you write the homework? (pl.)" },
+                    "هم": { "conjugation": "كتبوا", "example": "هم كتبوا أسماءهم.", "translation": "They wrote their names." }
+                }
+            },
+            "فهم": {
+                "infinitive_en": "To Understand",
+                "conjugations": {
+                    "هو": { "conjugation": "فهم", "example": "هو فهم الشرح.", "translation": "He understood the explanation." },
+                    "هي": { "conjugation": "فهمت", "example": "هي فهمت الدرس.", "translation": "She understood the lesson." },
+                    "أنا": { "conjugation": "فهمت", "example": "أنا فهمت كلامك.", "translation": "I understood your words." },
+                    "إنت": { "conjugation": "فهمت", "example": "إنت فهمت ولا لأ؟", "translation": "Did you understand or not? (m.)" },
+                    "إنتي": { "conjugation": "فهمتي", "example": "إنتي فهمتي ولا لأ؟", "translation": "Did you understand or not? (f.)" },
+                    "إحنا": { "conjugation": "فهمنا", "example": "إحنا فهمنا كل حاجة.", "translation": "We understood everything." },
+                    "إنتو": { "conjugation": "فهمتوا", "example": "إنتو فهمتوا السؤال؟", "translation": "Did you understand the question? (pl.)" },
+                    "هم": { "conjugation": "فهموا", "example": "هم فهموا الموقف.", "translation": "They understood the situation." }
+                }
+            },
+            "قعد": {
+                "infinitive_en": "To Sit/Stay",
+                "conjugations": {
+                    "هو": { "conjugation": "قعد", "example": "هو قعد على الكرسي.", "translation": "He sat on the chair." },
+                    "هي": { "conjugation": "قعدت", "example": "هي قعدت في البيت.", "translation": "She stayed at home." },
+                    "أنا": { "conjugation": "قعدت", "example": "أنا قعدت كتير.", "translation": "I sat/stayed a lot." },
+                    "إنت": { "conjugation": "قعدت", "example": "إنت قعدت فين؟", "translation": "Where did you sit/stay? (m.)" },
+                    "إنتي": { "conjugation": "قعدتي", "example": "إنتي قعدتي فين؟", "translation": "Where did you sit/stay? (f.)" },
+                    "إحنا": { "conjugation": "قعدنا", "example": "إحنا قعدنا مع بعض.", "translation": "We sat together." },
+                    "إنتو": { "conjugation": "قعدتوا", "example": "إنتو قعدتوا هنا؟", "translation": "Did you sit/stay here? (pl.)" },
+                    "هم": { "conjugation": "قعدوا", "example": "هم قعدوا في القهوة.", "translation": "They sat in the cafe." }
+                }
+            },
+            "جاب": {
+                "infinitive_en": "To Bring",
+                "conjugations": {
+                    "هو": { "conjugation": "جاب", "example": "هو جاب الكتاب.", "translation": "He brought the book." },
+                    "هي": { "conjugation": "جابت", "example": "هي جابت الأكل.", "translation": "She brought the food." },
+                    "أنا": { "conjugation": "جبت", "example": "أنا جبت هدية.", "translation": "I brought a gift." },
+                    "إنت": { "conjugation": "جبت", "example": "إنت جبت إيه؟", "translation": "What did you bring? (m.)" },
+                    "إنتي": { "conjugation": "جبتي", "example": "إنتي جبتي إيه؟", "translation": "What did you bring? (f.)" },
+                    "إحنا": { "conjugation": "جبنا", "example": "إحنا جبنا كل حاجة.", "translation": "We brought everything." },
+                    "إنتو": { "conjugation": "جبتوا", "example": "إنتو جبتوا العصير؟", "translation": "Did you bring the juice? (pl.)" },
+                    "هم": { "conjugation": "جابوا", "example": "هم جابوا صحابهم.", "translation": "They brought their friends." }
+                }
+            }
+        };
+
+        let selectedVerb = Object.keys(verbData)[0];
+        let selectedPronoun = Object.keys(verbData[selectedVerb].conjugations)[0];
+
+        const verbButtonsContainer = document.getElementById('verb-buttons');
+        const pronounButtonsContainer = document.getElementById('pronoun-buttons');
+        
+        const displayConjugation = document.getElementById('display-conjugation');
+        const displayExample = document.getElementById('display-example');
+        const displayTranslation = document.getElementById('display-translation');
+
+        function createButtons() {
+            verbButtonsContainer.innerHTML = ''; // Clear existing buttons
+            Object.keys(verbData).forEach(verb => {
+                const button = document.createElement('button');
+                button.className = 'control-button text-lg font-semibold py-2 px-5 bg-white text-teal-700 rounded-full shadow-md hover:bg-stone-100';
+                button.textContent = verb;
+                button.dataset.verb = verb;
+                verbButtonsContainer.appendChild(button);
+                button.addEventListener('click', () => {
+                    selectedVerb = verb;
+                    updateDisplay();
+                });
+            });
+
+            pronounButtonsContainer.innerHTML = ''; // Clear existing buttons
+            const pronouns = ["هو", "هي", "أنا", "إنت", "إنتي", "إحنا", "إنتو", "هم"];
+            pronouns.forEach(pronoun => {
+                const button = document.createElement('button');
+                button.className = 'control-button text-lg font-semibold py-2 px-4 bg-white text-teal-700 rounded-full shadow-md hover:bg-stone-100';
+                button.textContent = pronoun;
+                button.dataset.pronoun = pronoun;
+                pronounButtonsContainer.appendChild(button);
+                button.addEventListener('click', () => {
+                    selectedPronoun = pronoun;
+                    updateDisplay();
+                });
+            });
+        }
+        
+        function updateDisplay() {
+            const data = verbData[selectedVerb].conjugations[selectedPronoun];
+
+            displayConjugation.textContent = data.conjugation;
+            displayExample.textContent = data.example;
+            displayTranslation.textContent = data.translation;
+            
+            document.querySelectorAll('[data-verb]').forEach(btn => {
+                btn.classList.toggle('active-verb', btn.dataset.verb === selectedVerb);
+            });
+            
+            document.querySelectorAll('[data-pronoun]').forEach(btn => {
+                btn.classList.toggle('active-pronoun', btn.dataset.pronoun === selectedPronoun);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createButtons();
+            updateDisplay();
+        });
+    </script>
+</body>
+</html>
