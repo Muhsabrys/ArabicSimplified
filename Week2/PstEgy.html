@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مستكشف الأفعال المصرية</title>
+    <title> الأفعال المصرية </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutral Harmony -->
-    <!-- Application Structure Plan: The application is designed as an interactive "Conjugation Explorer". The structure consists of a main header, an introductory paragraph, two sets of primary controls (verb selectors and pronoun selectors), and a dynamic display card. The user first selects a verb, then a pronoun. The display card updates instantly to show only the relevant information: the conjugated verb, an example sentence, and its translation. This task-oriented design was chosen over a static table to promote active learning and reduce cognitive load by focusing the user's attention on a single piece of data at a time. The flow is intuitive: select verb -> select pronoun -> see result. -->
-    <!-- Visualization & Content Choices: Report Info: Table of 5 verbs, 8 pronouns, and their past-tense conjugations. -> Goal: Organize, Inform, Compare. -> Viz/Presentation Method: Interactive display card updated via button clicks. This is a form of a structured diagram (HTML/CSS) rather than a data chart. -> Interaction: User clicks on verb and pronoun buttons to filter and display the specific conjugation. Active states on buttons provide immediate feedback. -> Justification: This method is more engaging and less overwhelming than a large table. It breaks the information into digestible, user-selected chunks, which is superior for language learning and memorization. -> Library/Method: Vanilla JS for state management and DOM manipulation. Tailwind CSS for styling. -->
+    <!-- Application Structure Plan: The application is designed as an interactive "Conjugation Explorer" followed by "Interactive Quizzes". The main structure includes a header, an introductory paragraph for the explorer, two primary control sections (verb and pronoun selectors), a dynamic conjugation display card, and then a dedicated quiz section. The quiz section is further divided into three distinct quiz types, each with its own set of questions, input fields, and control buttons (Check, Show Answers, Reset). This structure allows users to first explore conjugations freely and then test their knowledge directly within the same page, promoting a seamless learning and assessment experience. The flow is exploration -> self-assessment. -->
+    <!-- Visualization & Content Choices: Report Info: Table of 10 verbs, 8 pronouns, and their past-tense conjugations. -> Goal: Organize, Inform, Compare (Explorer); Assess, Reinforce (Quizzes). -> Viz/Presentation Method: Interactive display card (structured HTML/CSS) for exploration. For quizzes, interactive forms with text inputs and dynamic feedback (HTML/CSS/JS). -> Interaction: Explorer uses button clicks to filter and display data. Quizzes use text input, "Check Answers" for validation, "Show Answers" for revelation, and "Reset" for re-attempt. -> Justification: The interactive explorer makes learning verbs engaging by focusing on one conjugation at a time. Integrating quizzes directly provides immediate practice and self-assessment, reinforcing learning. The different quiz types target various aspects of verb knowledge (conjugation recall, usage in context, translation). -> Library/Method: Vanilla JS for state management and DOM manipulation. Tailwind CSS for styling. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -25,6 +25,22 @@
         .control-button {
             transition: all 0.2s ease-in-out;
         }
+        .quiz-input {
+            border: 1px solid #d1d5db; /* gray-300 */
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 250px;
+            text-align: center;
+        }
+        .correct-answer {
+            color: #059669; /* green-600 */
+            font-weight: 600;
+        }
+        .incorrect-answer {
+            color: #dc2626; /* red-600 */
+            font-weight: 600;
+        }
     </style>
 </head>
 <body class="bg-stone-50 text-stone-800">
@@ -32,9 +48,9 @@
     <div class="container mx-auto p-4 md:p-8 max-w-4xl">
 
         <header class="text-center mb-6">
-            <h1 class="text-3xl md:text-5xl font-bold text-teal-700 mb-2">أفعال في الماضي</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-teal-700 mb-2"> الأفعال المصرية</h1>
             <p class="text-md md:text-lg text-stone-600 max-w-2xl mx-auto">
-              أكثر الافعال المصرية شيوعا - في الماضي.
+                تصريف الأفعال المصرية في الماضي
             </p>
         </header>
 
@@ -53,12 +69,62 @@
                 </div>
             </section>
 
-            <section id="display-area" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 min-h-[250px] flex flex-col justify-center items-center text-center">
+            <section id="display-area" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 min-h-[250px] flex flex-col justify-center items-center text-center mb-12">
                 <div id="conjugation-result" class="w-full">
                     <p id="display-conjugation" class="text-4xl md:text-5xl font-bold text-teal-600 mb-4"></p>
                     <p id="display-example" class="text-xl md:text-2xl text-stone-700 font-semibold mb-2"></p>
                     <p id="display-translation" class="text-lg md:text-xl text-stone-500" dir="ltr"></p>
                 </div>
+            </section>
+
+            <section id="quizzes" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center text-teal-700 mb-6">اختبر معلوماتك!</h2>
+                <p class="text-md text-stone-600 text-center mb-8 max-w-2xl mx-auto">
+                    استخدم الاختبارات التالية لتقييم فهمك لتصريفات الأفعال. اكتب إجابتك في الفراغ ثم اضغط "تحقق" للحصول على التغذية الراجعة.
+                </p>
+
+                <!-- Quiz Type 1: Conjugation Match -->
+                <div class="mb-10 p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">اختبار ١: مطابقة التصريف</h3>
+                    <p class="text-stone-600 mb-4">أكمل التصريف الصحيح للفعل في زمن الماضي مع الضمير المعطى.</p>
+                    <div id="quiz1-questions">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button id="quiz1-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                        <button id="quiz1-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+                        <button id="quiz1-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Type 2: Fill in the Blank (Example Sentence) -->
+                <div class="mb-10 p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">اختبار ٢: أكمل الفراغ في الجملة</h3>
+                    <p class="text-stone-600 mb-4">أكمل الجملة بالفعل المصرف الصحيح في زمن الماضي.</p>
+                    <div id="quiz2-questions">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button id="quiz2-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                        <button id="quiz2-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+                        <button id="quiz2-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Type 3: Translation -->
+                <div class="p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">اختبار ٣: الترجمة</h3>
+                    <p class="text-stone-600 mb-4">اكتب التصريف الصحيح للفعل في زمن الماضي باللغة العربية المصرية، بناءً على المعنى الإنجليزي.</p>
+                    <div id="quiz3-questions">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button id="quiz3-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                        <button id="quiz3-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+                        <button id="quiz3-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                    </div>
+                </div>
+
             </section>
         </main>
 
@@ -209,7 +275,7 @@
         const displayTranslation = document.getElementById('display-translation');
 
         function createButtons() {
-            verbButtonsContainer.innerHTML = ''; // Clear existing buttons
+            verbButtonsContainer.innerHTML = '';
             Object.keys(verbData).forEach(verb => {
                 const button = document.createElement('button');
                 button.className = 'control-button text-lg font-semibold py-2 px-5 bg-white text-teal-700 rounded-full shadow-md hover:bg-stone-100';
@@ -222,7 +288,7 @@
                 });
             });
 
-            pronounButtonsContainer.innerHTML = ''; // Clear existing buttons
+            pronounButtonsContainer.innerHTML = '';
             const pronouns = ["هو", "هي", "أنا", "إنت", "إنتي", "إحنا", "إنتو", "هم"];
             pronouns.forEach(pronoun => {
                 const button = document.createElement('button');
@@ -253,9 +319,134 @@
             });
         }
 
+        // Quiz Data
+        const quizQuestions = {
+            quiz1: [ // Conjugation Match
+                { verb: "شرب", pronoun: "إحنا", answer: "شربنا" },
+                { verb: "كتب", pronoun: "هي", answer: "كتبت" },
+                { verb: "فهم", pronoun: "إنت", answer: "فهمت" },
+                { verb: "قعد", pronoun: "هم", answer: "قعدوا" },
+                { verb: "جاب", pronoun: "أنا", answer: "جبت" }
+            ],
+            quiz2: [ // Fill in the Blank (Example Sentence)
+                { sentence: "أنا __________ قهوة.", verb: "شرب", pronoun: "أنا", answer: "شربت" },
+                { sentence: "هي __________ رسالة.", verb: "كتب", pronoun: "هي", answer: "كتبت" },
+                { sentence: "هم __________ الموقف.", verb: "فهم", pronoun: "هم", answer: "فهموا" },
+                { sentence: "إنتو __________ هنا؟", verb: "قعد", pronoun: "إنتو", answer: "قعدتوا" },
+                { sentence: "هو __________ الكتاب.", verb: "جاب", pronoun: "هو", answer: "جاب" }
+            ],
+            quiz3: [ // Translation
+                { english: "To Drink (She)", verb: "شرب", pronoun: "هي", answer: "شربت" },
+                { english: "To Write (We)", verb: "كتب", pronoun: "إحنا", answer: "كتبنا" },
+                { english: "To Understand (He)", verb: "فهم", pronoun: "هو", answer: "فهم" },
+                { english: "To Sit/Stay (You - F.S.)", verb: "قعد", pronoun: "إنتي", answer: "قعدتي" },
+                { english: "To Bring (They)", verb: "جاب", pronoun: "هم", answer: "جابوا" }
+            ]
+        };
+
+        function generateQuiz(quizId, questions, containerId, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ''; // Clear previous questions
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'mb-4 flex flex-col sm:flex-row items-center justify-between gap-3';
+                let questionText = '';
+                if (type === 'conjugation-match') {
+                    questionText = `<span class="text-lg font-medium text-stone-700"> ${index + 1}. الفعل: ${q.verb} (To ${verbData[q.verb].infinitive_en}) - الضمير: ${q.pronoun} </span>`;
+                } else if (type === 'fill-in-blank') {
+                    questionText = `<span class="text-lg font-medium text-stone-700"> ${index + 1}. ${q.sentence.replace('__________', '_____')} </span>`;
+                } else if (type === 'translation') {
+                    questionText = `<span class="text-lg font-medium text-stone-700" dir="ltr"> ${index + 1}. ${q.english}: </span>`;
+                }
+
+                questionDiv.innerHTML = `
+                    ${questionText}
+                    <input type="text" class="quiz-input" data-question-index="${index}" placeholder="اكتب الإجابة هنا">
+                    <span class="quiz-feedback text-sm mt-1 sm:mt-0" data-feedback-index="${index}"></span>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkQuizAnswers(quizId) {
+            const inputs = document.querySelectorAll(`#${quizId}-questions .quiz-input`);
+            inputs.forEach(input => {
+                const index = parseInt(input.dataset.questionIndex);
+                const userAnswer = input.value.trim();
+                let correctAnswer;
+
+                if (quizId === 'quiz1') {
+                    correctAnswer = quizQuestions.quiz1[index].answer;
+                } else if (quizId === 'quiz2') {
+                    correctAnswer = quizQuestions.quiz2[index].answer;
+                } else if (quizId === 'quiz3') {
+                    correctAnswer = quizQuestions.quiz3[index].answer;
+                }
+
+                const feedbackSpan = document.querySelector(`#${quizId}-questions .quiz-feedback[data-feedback-index="${index}"]`);
+
+                if (userAnswer === correctAnswer) {
+                    feedbackSpan.textContent = 'صحيح! ✅';
+                    feedbackSpan.className = 'quiz-feedback text-sm mt-1 sm:mt-0 correct-answer';
+                } else {
+                    feedbackSpan.textContent = 'خطأ ❌';
+                    feedbackSpan.className = 'quiz-feedback text-sm mt-1 sm:mt-0 incorrect-answer';
+                }
+            });
+        }
+
+        function showQuizAnswers(quizId) {
+            const inputs = document.querySelectorAll(`#${quizId}-questions .quiz-input`);
+            inputs.forEach(input => {
+                const index = parseInt(input.dataset.questionIndex);
+                let correctAnswer;
+
+                if (quizId === 'quiz1') {
+                    correctAnswer = quizQuestions.quiz1[index].answer;
+                } else if (quizId === 'quiz2') {
+                    correctAnswer = quizQuestions.quiz2[index].answer;
+                } else if (quizId === 'quiz3') {
+                    correctAnswer = quizQuestions.quiz3[index].answer;
+                }
+                
+                input.value = correctAnswer;
+                const feedbackSpan = document.querySelector(`#${quizId}-questions .quiz-feedback[data-feedback-index="${index}"]`);
+                feedbackSpan.textContent = `الإجابة: ${correctAnswer}`;
+                feedbackSpan.className = 'quiz-feedback text-sm mt-1 sm:mt-0 text-blue-600 font-semibold';
+            });
+        }
+
+        function resetQuiz(quizId) {
+            const inputs = document.querySelectorAll(`#${quizId}-questions .quiz-input`);
+            inputs.forEach(input => {
+                input.value = '';
+                const feedbackSpan = document.querySelector(`#${quizId}-questions .quiz-feedback[data-feedback-index="${index}"]`);
+                feedbackSpan.textContent = '';
+                feedbackSpan.className = 'quiz-feedback text-sm mt-1 sm:mt-0';
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             createButtons();
             updateDisplay();
+
+            // Generate Quizzes
+            generateQuiz('quiz1', quizQuestions.quiz1, 'quiz1-questions', 'conjugation-match');
+            generateQuiz('quiz2', quizQuestions.quiz2, 'quiz2-questions', 'fill-in-blank');
+            generateQuiz('quiz3', quizQuestions.quiz3, 'quiz3-questions', 'translation');
+
+            // Attach Event Listeners for Quizzes
+            document.getElementById('quiz1-check').addEventListener('click', () => checkQuizAnswers('quiz1'));
+            document.getElementById('quiz1-show-answers').addEventListener('click', () => showQuizAnswers('quiz1'));
+            document.getElementById('quiz1-reset').addEventListener('click', () => resetQuiz('quiz1'));
+
+            document.getElementById('quiz2-check').addEventListener('click', () => checkQuizAnswers('quiz2'));
+            document.getElementById('quiz2-show-answers').addEventListener('click', () => showQuizAnswers('quiz2'));
+            document.getElementById('quiz2-reset').addEventListener('click', () => resetQuiz('quiz2'));
+
+            document.getElementById('quiz3-check').addEventListener('click', () => checkQuizAnswers('quiz3'));
+            document.getElementById('quiz3-show-answers').addEventListener('click', () => showQuizAnswers('quiz3'));
+            document.getElementById('quiz3-reset').addEventListener('click', () => resetQuiz('quiz3'));
         });
     </script>
 </body>
