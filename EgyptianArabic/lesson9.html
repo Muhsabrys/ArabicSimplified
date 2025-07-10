@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درس اللغة العربية المصرية 🇪🇬</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to right, #fceabb, #f8b500); /* Warm gradient background */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for longer content */
+            padding: 20px 0;
+        }
+        .container {
+            max-width: 900px;
+            width: 95%;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            font-weight: 700;
+        }
+        .section-card {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+        }
+        input[type="text"] { /* Specific styling for text inputs */
+            border: 1px solid #ccc;
+            padding: 8px; /* Slightly reduced padding */
+            border-radius: 8px;
+            width: 120px; /* Fixed width to prevent wrapping */
+            box-sizing: border-box;
+            margin: 0 5px; /* Reduced margin to minimize space */
+            font-size: 1rem;
+            text-align: right; /* For Arabic input */
+            display: inline-block; /* Ensure it stays inline */
+            vertical-align: middle; /* Align with surrounding text */
+        }
+        textarea { /* Textarea for potential future use, separate from text inputs */
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            text-align: right; /* For Arabic input */
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .correct {
+            border: 2px solid #27ae60;
+            background-color: #e6ffe6;
+        }
+        .incorrect {
+            border: 2px solid #e74c3c;
+            background-color: #ffe6e6;
+        }
+        .answer-feedback {
+            margin-top: 5px;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: right;
+            font-size: 1rem;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .radio-option input[type="radio"] {
+            margin-left: 10px; /* Space between radio and text */
+            margin-right: 0;
+            cursor: pointer;
+        }
+        .radio-option label {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+        /* Removed loading spinner and message box specific to Gemini */
+        .message-box {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none; /* Hidden by default */
+        }
+        .message-box.show {
+            display: block;
+        }
+        /* Adjusting the paragraph containing the input to be a flex container */
+        .exercise-sentence {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping if content is too long, but input will try to stay inline */
+            align-items: center;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .exercise-sentence span {
+            white-space: nowrap; /* Keep parts of the sentence together */
+        }
+        .exercise-sentence input {
+            flex-shrink: 0; /* Prevent input from shrinking too much */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl text-center mb-8">درس اللغة العربية المصرية 🇪�📚</h1>
+
+        <!-- Message Box for alerts -->
+        <div id="messageBox" class="message-box"></div>
+
+        <!-- مفردات الدرس التاسع - Vocabulary Section -->
+        <div class="section-card">
+            <h2 class="text-2xl mb-4 text-right">مفردات الدرس التاسع 🗣️</h2>
+            <p class="text-lg text-right mb-4">أهلاً بكم في درس اليوم! هيا بنا نتعلم كلمات جديدة ومفيدة في العامية المصرية.</p>
+        </div>
+
+        <!-- تمرين ١: كمل الجُمل باستخدام الفعلين "قدر" و "رجع". -->
+        <div class="section-card">
+            <h2 class="text-2xl mb-4 text-right">تمرين ١: أكمل الجمل ✍️</h2>
+            <p class="text-lg text-right mb-6">أكمل الجمل التالية باستخدام الفعلين "قدر" (استطاع) و "رجع" (عاد) بالشكل الصحيح.</p>
+
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>1. أنا (</span><input type="text" id="ex1_1" class="text-right" placeholder="اكتب هنا"><span>) أشرب القهوة قبل الفطار.</span></p>
+                <div id="feedback_ex1_1" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>2. الطلبة (</span><input type="text" id="ex1_2" class="text-right" placeholder="اكتب هنا"><span>) يكتبوا واجباتهم على الكمبيوتر بدون مشاكل.</span></p>
+                <div id="feedback_ex1_2" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>3. صاحبتنا كانت عايزة تروح معانا السينما بس (</span><input type="text" id="ex1_3" class="text-right" placeholder="اكتب هنا"><span>) عشان بنتها كانت عيانة.</span></p>
+                <div id="feedback_ex1_3" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>4. إنت طالب جديد هنا؟ إحنا (</span><input type="text" id="ex1_4" class="text-right" placeholder="اكتب هنا"><span>) نساعدك!</span></p>
+                <div id="feedback_ex1_4" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>5. إمتى (</span><input type="text" id="ex1_5" class="text-right" placeholder="اكتب هنا"><span>) من شُغلكم النهاردة؟</span></p>
+                <div id="feedback_ex1_5" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>6. الإسبوع اللي فات (</span><input type="text" id="ex1_6" class="text-right" placeholder="اكتب هنا"><span>) أخرج من البيت عشان التلج.</span></p>
+                <div id="feedback_ex1_6" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>7. كل يوم مراتي بتخرج من البيت حوالي الساعة ٧ الصبح و (</span><input type="text" id="ex1_7" class="text-right" placeholder="اكتب هنا"><span>) قبل الساعة ٨ بالليل.</span></p>
+                <div id="feedback_ex1_7" class="answer-feedback"></div>
+            </div>
+            <button onclick="checkExercise1()" class="mt-4">تحقق من الإجابات لتمرين ١ ✅</button>
+        </div>
+
+        <!-- تمرين ٢: المفردات الجديدة (بالمصري) -->
+        <div class="section-card">
+            <h2 class="text-2xl mb-4 text-right">تمرين ٢: المفردات الجديدة (بالمصري) 📖</h2>
+            <p class="text-lg text-right mb-6">املأ الفراغات بالكلمة المصرية الصحيحة من المفردات الجديدة.</p>
+
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>1. كان عمي الله يرحمه (</span><input type="text" id="ex2_1" class="text-right" placeholder="اكتب هنا"><span>) حوالي ٣٠ سجارة كل يوم.</span></p>
+                <div id="feedback_ex2_1" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>2. كان فيه مُحاضرة بكرة بالليل، بس أنا مش عارف إي هو (</span><input type="text" id="ex2_2" class="text-right" placeholder="اكتب هنا"><span>) المحاضرة.</span></p>
+                <div id="feedback_ex2_2" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>3. الكتاب ده صعب وأنا مش قادر أقراه، عايز أقرأ كتاب (</span><input type="text" id="ex2_3" class="text-right" placeholder="اكتب هنا"><span>) .</span></p>
+                <div id="feedback_ex2_3" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>4. كل يوم بعد ما (بنرجع) من الشغل، أنا وجوزي الساعة 6 (</span><input type="text" id="ex2_4" class="text-right" placeholder="اكتب هنا"><span>) في الصالة في بيتنا وبنقرا (</span><input type="text" id="ex2_5" class="text-right" placeholder="اكتب هنا"><span>) وبنتكلم عن يومنا او بنشوف الأخبار أو البرامج في التليفزيون وبعدين بناكل العشا.</span></p>
+                <div id="feedback_ex2_4" class="answer-feedback"></div>
+                <div id="feedback_ex2_5" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>5. بنت عمي سَحر دكتورة متخصصة في أمراض (</span><input type="text" id="ex2_6" class="text-right" placeholder="اكتب هنا"><span>).</span></p>
+                <div id="feedback_ex2_6" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>6. كل يوم بأصحّي ولادي الساعة ٦ الصبح وباكل الفطار معاهم وبعد كده (</span><input type="text" id="ex2_7" class="text-right" placeholder="اكتب هنا"><span>) من البيت (</span><input type="text" id="ex2_8" class="text-right" placeholder="اكتب هنا"><span>) الساعة 7 صباحا وبيروحوا المدرسة. ويوم الجمعة مفيش مدارس الحمد لله عشان كده (</span><input type="text" id="ex2_9" class="text-right" placeholder="اكتب هنا"><span>) يومنا الساعة 8 صباحا والساعة 2 بنروح كلنا المطعم ناكل الفطار والمطعم (</span><input type="text" id="ex2_10" class="text-right" placeholder="اكتب هنا"><span>) عند ولادي هو "بيتزا هات".</span></p>
+                <div id="feedback_ex2_7" class="answer-feedback"></div>
+                <div id="feedback_ex2_8" class="answer-feedback"></div>
+                <div id="feedback_ex2_9" class="answer-feedback"></div>
+                <div id="feedback_ex2_10" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>7. ماينفعش/ مانقدرش ندخل النادي ده عشان ده نادي (</span><input type="text" id="ex2_11" class="text-right" placeholder="اكتب هنا"><span>) ، مش لكل الناس.</span></p>
+                <div id="feedback_ex2_11" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>8. بعد ما أتخرج من الجامعة، نفسي أشتغل في الحكومة (</span><input type="text" id="ex2_12" class="text-right" placeholder="اكتب هنا"><span>) في شركة أمريكية في الخليج.</span></p>
+                <div id="feedback_ex2_12" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>9. أنا (</span><input type="text" id="ex2_13" class="text-right" placeholder="اكتب هنا"><span>) أدرس عربي في الخريف اللي فات، ودلوقتي بقيت أقدر أقرأ وأكتب وأتكلم! الموضوع حلو فعلاً!</span></p>
+                <div id="feedback_ex2_13" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="exercise-sentence"><span>10. من هواياتي المفضلة إني ألعب (</span><input type="text" id="ex2_14" class="text-right" placeholder="اكتب هنا"><span>) بعد الشغل مع زمايلي في الشغل.</span></p>
+                <div id="feedback_ex2_14" class="answer-feedback"></div>
+            </div>
+            <div class="mb-4">
+                <p class="text-right mb-2">11. في المستقبل عايز أسافر كل بلاد العالم.</p>
+            </div>
+            <button onclick="checkExercise2()" class="mt-4">تحقق من الإجابات لتمرين ٢ ✅</button>
+        </div>
+
+        <!-- Vocabulary Table -->
+        <div class="section-card">
+            <h2 class="text-2xl mb-4 text-right">المفردات والمعاني 📚</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المعنى بالإنجليزية</th>
+                            <th>الكلمة</th>
+                            <th>المعنى بالإنجليزية</th>
+                            <th>الكلمة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>We return</td><td>بنرجع</td><td>I can't</td><td>مابقدرش</td></tr>
+                        <tr><td>We sit</td><td>بنقعد</td><td>They could</td><td>قدروا</td></tr>
+                        <tr><td>Newspapers</td><td>الجرايد</td><td>I couldn't</td><td>ماقدرتش</td></tr>
+                        <tr><td>Eyes</td><td>العيون</td><td>We can</td><td>نقدر</td></tr>
+                        <tr><td>leave (go down)</td><td>بينزلوا</td><td>You (pl.) returned</td><td>رجعتم</td></tr>
+                        <tr><td>Around</td><td>حوالي</td><td>She returns</td><td>بترجع</td></tr>
+                        <tr><td>It begins</td><td>بيبدأ</td><td>He smokes</td><td>بيدخن</td></tr>
+                        <tr><td>Favorite</td><td>المفضل</td><td>Topic</td><td>موضوع</td></tr>
+                        <tr><td>Private</td><td>خاص</td><td>Easier</td><td>أسهل</td></tr>
+                        <tr><td>Or</td><td>أو</td><td>I started</td><td>بدأت</td></tr>
+                        <tr><td>Chess</td><td>شطرنج</td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Phrases Table -->
+        <div class="section-card">
+            <h2 class="text-2xl mb-4 text-right">مصطلحات شائعة 💬</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الترجمة الإنجليزية</th>
+                            <th>المصطلح المصري</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>I can't say no (I can't refuse a request)</td><td>ماقدرش أقول لأ</td></tr>
+                        <tr><td>As much as I can (To the best of my ability)</td><td>على قد ما أقدر</td></tr>
+                        <tr><td>It's not worth it (The issue is minor)</td><td>الموضوع مش مستاهل</td></tr>
+                        <tr><td>It's a long story (The topic is complicated)</td><td>الموضوع يطول شرحه</td></tr>
+                        <tr><td>Let's put that aside (Let's drop the topic for now)</td><td>خلّي الموضوع على جنب</td></tr>
+                        <tr><td>He went back on his word (He changed his mind)</td><td>رجع في كلامه</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- New section for Common Expressions Questions -->
+        <div class="section-card">
+            <h2 class="text-2xl mb-4 text-right">اختبر فهمك للمصطلحات الشائعة 🤔</h2>
+            <p class="text-lg text-right mb-6">اختر المصطلح المصري الذي يناسب المعنى الإنجليزي.</p>
+
+            <div class="mb-6">
+                <p class="text-right mb-3">1. ما هو المصطلح المصري الذي يعني "I can't say no (I can't refuse a request)"؟</p>
+                <div class="radio-option">
+                    <input type="radio" id="exp_q1_a" name="exp_q1" value="a">
+                    <label for="exp_q1_a">أ) الموضوع مش مستاهل</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="exp_q1_b" name="exp_q1" value="b">
+                    <label for="exp_q1_b">ب) ماقدرش أقول لأ</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="exp_q1_c" name="exp_q1" value="c">
+                    <label for="exp_q1_c">ج) على قد ما أقدر</label>
+                </div>
+                <div id="feedback_exp_q1" class="answer-feedback"></div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-right mb-3">2. إذا كان "The issue is minor"، فماذا نقول بالمصري؟</p>
+                <div class="radio-option">
+                    <input type="radio" id="exp_q2_a" name="exp_q2" value="a">
+                    <label for="exp_q2_a">أ) الموضوع يطول شرحه</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="exp_q2_b" name="exp_q2" value="b">
+                    <label for="exp_q2_b">ب) رجع في كلامه</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="exp_q2_c" name="exp_q2" value="c">
+                    <label for="exp_q2_c">ج) الموضوع مش مستاهل</label>
+                </div>
+                <div id="feedback_exp_q2" class="answer-feedback"></div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-right mb-3">3. ما هو المصطلح الذي يعني "He went back on his word (He changed his mind)"؟</p>
+                <div class="radio-option">
+                    <input type="radio" id="exp_q3_a" name="exp_q3" value="a">
+                    <label for="exp_q3_a">أ) خلّي الموضوع على جنب</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="exp_q3_b" name="exp_q3" value="b">
+                    <label for="exp_q3_b">ب) رجع في كلامه</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="exp_q3_c" name="exp_q3" value="c">
+                    <label for="exp_q3_c">ج) على قد ما أقدر</label>
+                </div>
+                <div id="feedback_exp_q3" class="answer-feedback"></div>
+            </div>
+
+            <button onclick="checkExpressionsQuestions()" class="mt-4">تحقق من الإجابات للمصطلحات الشائعة ✅</button>
+        </div>
+        <!-- End of New section for Common Expressions Questions -->
+
+
+        <!-- اختر الإجابة الصحيحة لكل سؤال: - Multiple Choice Questions -->
+        <div class="section-card">
+            <h2 class="text-2xl mb-4 text-right">اختر الإجابة الصحيحة 🤔</h2>
+            <p class="text-lg text-right mb-6">اختر الإجابة الأنسب لكل سؤال من الاختيارات المتاحة.</p>
+
+            <div class="mb-6">
+                <p class="text-right mb-3">1. إمبارح كنت عايز أروح الشغل بدري بس ________ عشان كان فيه زحمة كتير.</p>
+                <div class="radio-option">
+                    <input type="radio" id="q1_a" name="q1" value="a">
+                    <label for="q1_a">أ) بقدرش</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q1_b" name="q1" value="b">
+                    <label for="q1_b">ب) ماقدرتش</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q1_c" name="q1" value="c">
+                    <label for="q1_c">ج) نقدر</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q1_d" name="q1" value="d">
+                    <label for="q1_d">د) رجعت</label>
+                </div>
+                <div id="feedback_q1" class="answer-feedback"></div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-right mb-3">2. كل يوم بعد ما ________ من الجامعة، بحب أشرب كوباية شاي.</p>
+                <div class="radio-option">
+                    <input type="radio" id="q2_a" name="q2" value="a">
+                    <label for="q2_a">أ) برجع</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q2_b" name="q2" value="b">
+                    <label for="q2_b">ب) بقدر</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q2_c" name="q2" value="c">
+                    <label for="q2_c">ج) بيدخن</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q2_d" name="q2" value="d">
+                    <label for="q2_d">د) بنقعد</label>
+                </div>
+                <div id="feedback_q2" class="answer-feedback"></div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-right mb-3">3. إيه ________ الفيلم اللي اتفرجت عليه إمبارح؟</p>
+                <div class="radio-option">
+                    <input type="radio" id="q3_a" name="q3" value="a">
+                    <label for="q3_a">أ) أسهل</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q3_b" name="q3" value="b">
+                    <label for="q3_b">ب) المفضل</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q3_c" name="q3" value="c">
+                    <label for="q3_c">ج) موضوع</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q3_d" name="q3" value="d">
+                    <label for="q3_d">د) خاص</label>
+                </div>
+                <div id="feedback_q3" class="answer-feedback"></div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-right mb-3">4. أنا مابعرفش ألعب ________، بس نفسي أتعلمه.</p>
+                <div class="radio-option">
+                    <input type="radio" id="q4_a" name="q4" value="a">
+                    <label for="q4_a">أ) جرايد</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q4_b" name="q4" value="b">
+                    <label for="q4_b">ب) عيون</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q4_c" name="q4" value="c">
+                    <label for="q4_c">ج) شطرنج</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q4_d" name="q4" value="d">
+                    <label for="q4_d">د) موضوع</label>
+                </div>
+                <div id="feedback_q4" class="answer-feedback"></div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-right mb-3">5. الوقت ________ للسفر من القاهرة للإسكندرية هو ساعتين بالعربية.</p>
+                <div class="radio-option">
+                    <input type="radio" id="q5_a" name="q5" value="a">
+                    <label for="q5_a">أ) حوالي</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q5_b" name="q5" value="b">
+                    <label for="q5_b">ب) بيبدأ</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q5_c" name="q5" value="c">
+                    <label for="q5_c">ج) بينزلوا</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q5_d" name="q5" value="d">
+                    <label for="q5_d">د) بترجع</label>
+                </div>
+                <div id="feedback_q5" class="answer-feedback"></div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-right mb-3">6. صاحبي كان ________ سجاير كتير زمان، بس الحمد لله بطل دلوقتي.</p>
+                <div class="radio-option">
+                    <input type="radio" id="q6_a" name="q6" value="a">
+                    <label for="q6_a">أ) بيرجع</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q6_b" name="q6" value="b">
+                    <label for="q6_b">ب) بيدخن</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q6_c" name="q6" value="c">
+                    <label for="q6_c">ج) بيقعد</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="q6_d" name="q6" value="d">
+                    <label for="q6_d">د) بيبدأ</label>
+                </div>
+                <div id="feedback_q6" class="answer-feedback"></div>
+            </div>
+
+            <button onclick="checkMultipleChoice()" class="mt-4">تحقق من الإجابات للاختيار من متعدد ✅</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to display messages in a custom message box instead of alert()
+        function showMessage(message, type = 'info') {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.className = 'message-box show'; // Reset classes and show
+            if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-700', 'border-red-400');
+            } else if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-700', 'border-green-400');
+            } else {
+                messageBox.classList.add('bg-yellow-100', 'text-yellow-700', 'border-yellow-400');
+            }
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 5000); // Hide after 5 seconds
+        }
+
+        // Helper function to normalize text for comparison
+        function normalizeText(text) {
+            return text.replace(/\s+/g, ' ').trim().toLowerCase();
+        }
+
+        // Exercise 1: Check answers
+        function checkExercise1() {
+            const answers = {
+                'ex1_1': 'مابقدرش',
+                'ex1_2': 'قدروا',
+                'ex1_3': 'ماقدرتش',
+                'ex1_4': 'نقدر',
+                'ex1_5': 'رجعتم',
+                'ex1_6': 'ماقدرتش',
+                'ex1_7': 'بترجع'
+            };
+
+            let allCorrect = true;
+            for (const id in answers) {
+                const inputElement = document.getElementById(id);
+                const feedbackElement = document.getElementById(`feedback_${id}`);
+                const userAnswer = normalizeText(inputElement.value);
+                const correctAnswer = normalizeText(answers[id]);
+
+                if (userAnswer === correctAnswer) {
+                    inputElement.classList.remove('incorrect');
+                    inputElement.classList.add('correct');
+                    feedbackElement.textContent = 'صحيح! ✅';
+                    feedbackElement.style.color = '#27ae60';
+                } else {
+                    inputElement.classList.remove('correct');
+                    inputElement.classList.add('incorrect');
+                    feedbackElement.textContent = `خطأ. الإجابة الصحيحة هي: ${answers[id]} ❌`;
+                    feedbackElement.style.color = '#e74c3c';
+                    allCorrect = false;
+                }
+            }
+            if (allCorrect) {
+                showMessage('أحسنت! جميع إجابات تمرين ١ صحيحة! 🎉', 'success');
+            } else {
+                showMessage('هناك بعض الأخطاء في تمرين ١. حاول مرة أخرى! 🤔', 'info');
+            }
+        }
+
+        // Exercise 2: Check answers
+        function checkExercise2() {
+            const answers = {
+                'ex2_1': 'بيدخن',
+                'ex2_2': 'موضوع',
+                'ex2_3': 'أسهل',
+                'ex2_4': 'بنقعد', // Part of Q4
+                'ex2_5': 'الجرايد', // Part of Q4
+                'ex2_6': 'العيون',
+                'ex2_7': 'بينزلوا', // Part of Q6
+                'ex2_8': 'حوالي', // Part of Q6
+                'ex2_9': 'بيبدأ', // Part of Q6
+                'ex2_10': 'المفضل', // Part of Q6
+                'ex2_11': 'خاص',
+                'ex2_12': 'أو',
+                'ex2_13': 'بدأت',
+                'ex2_14': 'شطرنج'
+            };
+
+            let allCorrect = true;
+            for (const id in answers) {
+                const inputElement = document.getElementById(id);
+                const feedbackElement = document.getElementById(`feedback_${id}`);
+                if (!inputElement) continue; // Skip if element doesn't exist (e.g., for combined questions)
+
+                const userAnswer = normalizeText(inputElement.value);
+                const correctAnswer = normalizeText(answers[id]);
+
+                if (userAnswer === correctAnswer) {
+                    inputElement.classList.remove('incorrect');
+                    inputElement.classList.add('correct');
+                    feedbackElement.textContent = 'صحيح! ✅';
+                    feedbackElement.style.color = '#27ae60';
+                } else {
+                    inputElement.classList.remove('correct');
+                    inputElement.classList.add('incorrect');
+                    feedbackElement.textContent = `خطأ. الإجابة الصحيحة هي: ${answers[id]} ❌`;
+                    feedbackElement.style.color = '#e74c3c';
+                    allCorrect = false;
+                }
+            }
+            if (allCorrect) {
+                showMessage('عمل رائع! جميع إجابات تمرين ٢ صحيحة! 🌟', 'success');
+            } else {
+                showMessage('هناك بعض الأخطاء في تمرين ٢. راجع إجاباتك! 🤔', 'info');
+            }
+        }
+
+        // Common Expressions Questions: Check answers
+        function checkExpressionsQuestions() {
+            const correctAnswers = {
+                'exp_q1': 'b',
+                'exp_q2': 'c',
+                'exp_q3': 'b'
+            };
+
+            let allCorrect = true;
+            for (const qNum in correctAnswers) {
+                const selectedOption = document.querySelector(`input[name="${qNum}"]:checked`);
+                const feedbackElement = document.getElementById(`feedback_${qNum}`);
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[qNum]) {
+                        feedbackElement.textContent = 'إجابة صحيحة! ✅';
+                        feedbackElement.style.color = '#27ae60';
+                    } else {
+                        feedbackElement.textContent = `إجابة خاطئة. الإجابة الصحيحة هي: ${correctAnswers[qNum].toUpperCase()} ❌`;
+                        feedbackElement.style.color = '#e74c3c';
+                        allCorrect = false;
+                    }
+                } else {
+                    feedbackElement.textContent = 'الرجاء اختيار إجابة. ⚠️';
+                    feedbackElement.style.color = '#f39c12';
+                    allCorrect = false;
+                }
+            }
+            if (allCorrect) {
+                showMessage('أحسنت! جميع إجابات المصطلحات الشائعة صحيحة! 🥳', 'success');
+            } else {
+                showMessage('هناك بعض الأخطاء في أسئلة المصطلحات الشائعة. حاول مجدداً! 🧐', 'info');
+            }
+        }
+
+
+        // Multiple Choice: Check answers (existing function)
+        function checkMultipleChoice() {
+            const correctAnswers = {
+                'q1': 'b',
+                'q2': 'a',
+                'q3': 'c',
+                'q4': 'c',
+                'q5': 'a',
+                'q6': 'b'
+            };
+
+            let allCorrect = true;
+            for (const qNum in correctAnswers) {
+                const selectedOption = document.querySelector(`input[name="${qNum}"]:checked`);
+                const feedbackElement = document.getElementById(`feedback_${qNum}`);
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[qNum]) {
+                        feedbackElement.textContent = 'إجابة صحيحة! ✅';
+                        feedbackElement.style.color = '#27ae60';
+                    } else {
+                        feedbackElement.textContent = `إجابة خاطئة. الإجابة الصحيحة هي: ${correctAnswers[qNum].toUpperCase()} ❌`;
+                        feedbackElement.style.color = '#e74c3c';
+                        allCorrect = false;
+                    }
+                } else {
+                    feedbackElement.textContent = 'الرجاء اختيار إجابة. ⚠️';
+                    feedbackElement.style.color = '#f39c12';
+                    allCorrect = false;
+                }
+            }
+            if (allCorrect) {
+                showMessage('ممتاز! جميع إجابات الاختيار من متعدد صحيحة! 🥳', 'success');
+            } else {
+                showMessage('هناك بعض الأخطاء في الاختيار من متعدد. حاول مجدداً! 🧐', 'info');
+            }
+        }
+    </script>
+</body>
+</html>
+�
