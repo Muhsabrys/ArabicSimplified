@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1: Foundations of Arabic Grammar</title>
+    <!-- Chosen Palette: Desert Sage - Simplified for inline CSS -->
+    <!-- Application Structure Plan: This page serves as the overview for Week 1. It provides a brief introduction to the week's topics and then presents a list of interactive buttons, each linking to a specific lesson HTML file within the same 'week1/' directory (Ammia.html and Egyptian2.html). A 'Back to Course Home' button allows easy navigation back to the main site. This hierarchical structure allows users to easily navigate the lessons for a given week. -->
+    <!-- Visualization & Content Choices: Goal: Inform and Navigate. Method: Textual overview with interactive buttons for individual lessons. Justification: A clean, list-based navigation is ideal for a module overview, clearly presenting available lessons. Library/Method: Pure HTML for structure, inline CSS for styling, standard hyperlinks for navigation. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: sans-serif; /* Fallback font */
+            background-color: #FDFCF9;
+            margin: 0;
+            padding: 20px; /* Basic padding for content */
+            color: #57534E;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-12 { margin-bottom: 3rem; }
+        .mt-4 { margin-top: 1rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .text-5xl { font-size: 3rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-lg { font-size: 1.125rem; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .text-stone-900 { color: #1C1917; }
+        .text-stone-500 { color: #78716C; }
+        .text-stone-600 { color: #57534E; }
+        .arabic-text {
+            font-family: serif; /* Fallback for Arabic fonts */
+            direction: rtl;
+            font-size: 1.5rem;
+            color: #57534E;
+        }
+        
+        /* Lesson Buttons */
+        .lesson-button {
+            display: block; /* Make them block level for stacking */
+            background-color: #7B9B9E; /* A slightly softer primary color */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            margin-bottom: 1rem; /* Space between buttons */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 500px; /* Constrain width for readability */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .lesson-button:hover {
+            background-color: #6A8688; /* Slightly darker on hover */
+            transform: translateY(-2px);
+        }
+        .lesson-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-block;
+            background-color: #A3A3A3; /* Gray color for back button */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 2rem;
+        }
+        .back-button:hover {
+            background-color: #8C8C8C;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) { /* md breakpoint */
+            .md\:text-5xl { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-stone-900">Week 1: Foundations of Arabic Grammar</h1>
+            <p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600">
+                Welcome to Week 1! This week, we'll start building your understanding of fundamental Arabic grammar concepts. Click on each lesson below to begin.
+            </p>
+        </header>
+
+        <main>
+            <div class="space-y-4">
+                <a href="BeforeWantAfter.html" class="lesson-button">
+                    قبل ما + بعد ما + عايز + زي
+                </a>
+                <a href="XXXXX.html" class="lesson-button">
+                    Placeholder
+                </a>
+                <a href="XXXXX.html" class="lesson-button">
+                    Placeholder
+                </a>
+            </div>
+            <a href="../" class="back-button">← Back to Course Home</a>
+        </main>
+
+    </div>
+
+</body>
+</html>
