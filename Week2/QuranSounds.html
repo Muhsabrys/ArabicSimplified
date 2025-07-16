@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qur'anic Arabic Articulation (Makharij al-Huruf)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #334155; /* Dark slate gray text */
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .quranic-text {
+            font-family: 'Scheherazade New', serif; /* A font suitable for Arabic */
+            font-size: 1.5rem;
+            direction: rtl; /* Right-to-left for Arabic */
+            text-align: right;
+            line-height: 2.5rem;
+            background-color: #f8fafc; /* Lighter background for examples */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        /* Custom colors for highlighting letters */
+        .highlight-red { color: #ef4444; font-weight: bold; } /* Red-500 */
+        .highlight-blue { color: #3b82f6; font-weight: bold; } /* Blue-500 */
+        .highlight-green { color: #22c55e; font-weight: bold; } /* Green-500 */
+        .highlight-purple { color: #a855f7; font-weight: bold; } /* Purple-500 */
+        .highlight-orange { color: #f97316; font-weight: bold; } /* Orange-500 */
+        .highlight-teal { color: #14b8a6; font-weight: bold; } /* Teal-500 */
+        .highlight-indigo { color: #6366f1; font-weight: bold; } /* Indigo-500 */
+        .highlight-pink { color: #ec4899; font-weight: bold; } /* Pink-500 */
+        .highlight-yellow { color: #eab308; font-weight: bold; } /* Yellow-500 */
+
+        /* Tab styling */
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            background-color: #e2e8f0; /* Slate-200 */
+            color: #475569; /* Slate-600 */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-right: 0.25rem;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-button:hover {
+            background-color: #cbd5e1; /* Slate-300 */
+        }
+        .tab-button.active-tab {
+            background-color: #ffffff;
+            color: #1e293b; /* Slate-900 */
+            border-bottom: 2px solid #3b82f6; /* Blue-500 */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .tab-content {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0.75rem;
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+            padding-top: 1.5rem;
+        }
+
+        /* Accordion styling */
+        .accordion-item {
+            margin-bottom: 0.75rem;
+            border: 1px solid #e2e8f0; /* Slate-200 */
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .accordion-header {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background-color: #f8fafc; /* Slate-50 */
+            color: #1e293b; /* Slate-900 */
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #e2e8f0; /* Slate-200 */
+        }
+        .accordion-header.active-accordion {
+            background-color: #dbeafe; /* Blue-100 */
+            color: #1d4ed8; /* Blue-700 */
+        }
+        .accordion-content {
+            padding: 0 1.5rem;
+            background-color: #ffffff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 500px; /* Adjust as needed for content */
+            padding: 1.5rem;
+            transition: max-height 0.5s ease-in, padding 0.5s ease-in;
+        }
+        .accordion-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active-accordion::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+    </style>
+    <!-- Optional: Google Font for Arabic text (Scheherazade New) -->
+    <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-extrabold text-gray-800 mb-4">
+                Makharij al-Huruf (مخارج الحروف)
+            </h1>
+            <p class="text-xl text-gray-600">
+                Understanding the Places of Articulation in Qur'anic Arabic
+            </p>
+        </header>
+
+        <!-- Introduction -->
+        <section class="section-card">
+            <h2 class="text-3xl font-semibold text-gray-700 mb-4">Introduction</h2>
+            <p class="text-lg leading-relaxed text-gray-600">
+                In Tajweed, <strong class="text-blue-600">Makharij al-Huruf</strong> (مخارج الحروف) are the exact points of articulation for each Arabic letter. Mastering these ensures precise pronunciation, preserving the Qur'an's meaning and beauty.
+            </p>
+            <p class="text-lg leading-relaxed text-gray-600 mt-4">
+                There are five main articulation areas, leading to 17 specific points for the 29 Arabic letters. Explore them below:
+            </p>
+        </section>
+
+        <!-- Tab Navigation -->
+        <div class="flex flex-wrap border-b border-gray-200 mb-6">
+            <button class="tab-button active-tab" data-tab="jawf">Al-Jawf</button>
+            <button class="tab-button" data-tab="halq">Al-Halq</button>
+            <button class="tab-button" data-tab="khayshum">Al-Khayshum</button>
+            <button class="tab-button" data-tab="lisan">Al-Lisan</button>
+            <button class="tab-button" data-tab="shafataan">Ash-Shafataan</button>
+        </div>
+
+        <!-- Tab Content Containers -->
+        <div id="jawf" class="tab-content active-content section-card">
+            <h2 class="text-3xl font-semibold text-gray-700 mb-4">1. Al-Jawf (الجوف) - The Empty Space / Oral Cavity</h2>
+            <p class="text-lg leading-relaxed text-gray-600">
+                Al-Jawf is the empty space of the mouth and throat. It's the articulation point for the three long vowel letters (الحروف المدية - Huruf al-Madd), pronounced with a prolonged, airy sound without specific contact points.
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-600 mt-4">
+                <li><strong class="text-purple-600">Alif (ا)</strong>: Preceded by a Fathah (َ).</li>
+                <li><strong class="text-purple-600">Waw (و)</strong>: Preceded by a Dhammah (ُ).</li>
+                <li><strong class="text-purple-600">Ya (ي)</strong>: Preceded by a Kasrah (ِ).</li>
+            </ul>
+            <div class="quranic-text">
+                <p>
+                    قَالَ إِنِّي أَنَا رَبُّكَ فَاخْلَعْ نَعْلَيْكَ ۖ إِنِّي بِالْوَادِ الْمُقَدَّسِ <span class="highlight-red">طُوًى</span>
+                    <br><small class="text-gray-500">(Surah Taha, 20:12) - Long Waw</small>
+                </p>
+                <p>
+                    ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ
+                    <br><small class="text-gray-500">(Surah Al-Baqarah, 2:2) - Long Ya</small>
+                </p>
+                <p>
+                    وَهُوَ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ فِي سِتَّةِ أَيَّامٍ
+                    <br><small class="text-gray-500">(Surah Hud, 11:7) - Long Alif</small>
+                </p>
+            </div>
+        </div>
+
+        <div id="halq" class="tab-content section-card hidden">
+            <h2 class="text-3xl font-semibold text-gray-700 mb-4">2. Al-Halq (الحلق) - The Throat</h2>
+            <p class="text-lg leading-relaxed text-gray-600">
+                The throat has three articulation points for six "Throat Letters" (الحروف الحلقية - Huruf al-Halq).
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-600 mt-4">
+                <li><strong class="text-green-600">Deepest throat (أقصى الحلق):</strong> <span class="highlight-green">ء</span> (Hamzah) and <span class="highlight-green">ه</span> (Ha).</li>
+                <li><strong class="text-green-600">Middle throat (وسط الحلق):</strong> <span class="highlight-teal">ع</span> (Ain) and <span class="highlight-teal">ح</span> (Hha).</li>
+                <li><strong class="text-green-600">Closest throat (أدنى الحلق):</strong> <span class="highlight-indigo">غ</span> (Ghain) and <span class="highlight-indigo">خ</span> (Kha).</li>
+            </ul>
+            <div class="quranic-text">
+                <p>
+                    الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ
+                    <br><small class="text-gray-500">(Surah Al-Fatiha, 1:2) - Hha (<span class="highlight-teal">ح</span>)</small>
+                </p>
+                <p>
+                    إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ
+                    <br><small class="text-gray-500">(Surah Al-Qadr, 97:1) - Ha (<span class="highlight-green">ه</span>)</small>
+                </p>
+                <p>
+                    غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ
+                    <br><small class="text-gray-500">(Surah Al-Fatiha, 1:7) - Ghain (<span class="highlight-indigo">غ</span>)</small>
+                </p>
+            </div>
+        </div>
+
+        <div id="khayshum" class="tab-content section-card hidden">
+            <h2 class="text-3xl font-semibold text-gray-700 mb-4">3. Al-Khayshum (الخيشوم) - The Nasal Cavity</h2>
+            <p class="text-lg leading-relaxed text-gray-600">
+                Al-Khayshum is the nasal cavity, producing the <strong class="text-orange-600">Ghunnah</strong> (غنة). This nasal sound accompanies <span class="highlight-orange">ن</span> (Noon) and <span class="highlight-orange">م</span> (Meem) with Shaddah (ّ) or in Tajweed rules like Ikhfa, Idgham, and Iqlaab. It's a two-count sound.
+            </p>
+            <div class="quranic-text">
+                <p>
+                    ثُمَّ إِنَّكُمْ أَيُّهَا الضَّالُّونَ الْمُكَذِّبُونَ
+                    <br><small class="text-gray-500">(Surah Al-Waqi'ah, 56:51) - Noon with Shaddah (<span class="highlight-red">إِنَّكُمْ</span>)</small>
+                </p>
+                <p>
+                    وَلَمَّا جَاءَ أَمْرُنَا نَجَّيْنَا هُودًا وَالَّذِينَ آمَنُوا مَعَهُ
+                    <br><small class="text-gray-500">(Surah Hud, 11:58) - Meem with Shaddah (<span class="highlight-red">وَلَمَّا</span>)</small>
+                </p>
+            </div>
+        </div>
+
+        <div id="lisan" class="tab-content section-card hidden">
+            <h2 class="text-3xl font-semibold text-gray-700 mb-4">4. Al-Lisan (اللسان) - The Tongue</h2>
+            <p class="text-lg leading-relaxed text-gray-600">
+                The tongue is the most complex articulation area, producing 18 letters from 10 points. It's divided into four main sections:
+            </p>
+
+            <!-- Accordion for Aqsal Lisan -->
+            <div class="accordion-item">
+                <button class="accordion-header">A. Aqsal Lisan (أقصى اللسان) - Deepest Part of the Tongue</button>
+                <div class="accordion-content">
+                    <p class="text-lg leading-relaxed text-gray-600 mb-3">
+                        The furthest part of the tongue towards the throat.
+                    </p>
+                    <ul class="list-disc list-inside text-lg text-gray-600 mt-2">
+                        <li><strong class="text-blue-600">ق (Qaf):</strong> Deepest tongue with soft palate.</li>
+                        <li><strong class="text-blue-600">ك (Kaf):</strong> Slightly forward from Qaf, with hard palate.</li>
+                    </ul>
+                    <div class="quranic-text">
+                        <p>
+                            قُلْ هُوَ اللَّهُ أَحَدٌ
+                            <br><small class="text-gray-500">(Surah Al-Ikhlas, 112:1) - Qaf (<span class="highlight-blue">ق</span>)</small>
+                        </p>
+                        <p>
+                            إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ
+                            <br><small class="text-gray-500">(Surah Al-Fatiha, 1:5) - Kaf (<span class="highlight-blue">ك</span>)</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion for Wasatul Lisan -->
+            <div class="accordion-item">
+                <button class="accordion-header">B. Wasatul Lisan (وسط اللسان) - Middle Part of the Tongue</button>
+                <div class="accordion-content">
+                    <p class="text-lg leading-relaxed text-gray-600 mb-3">
+                        The middle of the tongue articulates with the middle of the hard palate.
+                    </p>
+                    <ul class="list-disc list-inside text-lg text-gray-600 mt-2">
+                        <li><strong class="text-red-600">ج (Jeem), ش (Sheen), ي (Ya - non-madd):</strong> Share this point.</li>
+                    </ul>
+                    <div class="quranic-text">
+                        <p>
+                            وَلَا تَقْرَبُوا الزِّنَا ۖ إِنَّهُ كَانَ فَاحِشَةً وَسَاءَ سَبِيلًا
+                            <br><small class="text-gray-500">(Surah Al-Isra, 17:32) - Sheen (<span class="highlight-red">ش</span>)</small>
+                        </p>
+                        <p>
+                            وَقَالُوا اتَّخَذَ الرَّحْمَٰنُ وَلَدًا ۗ سُبْحَانَهُ ۚ بَلْ عِبَادٌ مُّكْرَمُونَ
+                            <br><small class="text-gray-500">(Surah Al-Anbiya, 21:26) - Jeem (<span class="highlight-red">ج</span>)</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion for Haafatayn al-Lisan -->
+            <div class="accordion-item">
+                <button class="accordion-header">C. Haafatayn al-Lisan (حافتا اللسان) - Sides of the Tongue</button>
+                <div class="accordion-content">
+                    <p class="text-lg leading-relaxed text-gray-600 mb-3">
+                        The sides of the tongue articulate with the upper molars.
+                    </p>
+                    <ul class="list-disc list-inside text-lg text-gray-600 mt-2">
+                        <li><strong class="text-green-600">ض (Dhaad):</strong> Either or both sides of the tongue with upper molars (unique, challenging).</li>
+                        <li><strong class="text-green-600">ل (Lam):</strong> Sides of the tongue, touching upper front teeth gums.</li>
+                    </ul>
+                    <div class="quranic-text">
+                        <p>
+                            وَلَا الضَّالِّينَ
+                            <br><small class="text-gray-500">(Surah Al-Fatiha, 1:7) - Dhaad (<span class="highlight-green">ض</span>)</small>
+                        </p>
+                        <p>
+                            اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ
+                            <br><small class="text-gray-500">(Surah Al-Baqarah, 2:255) - Lam (<span class="highlight-green">ل</span>)</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion for Tarf al-Lisan -->
+            <div class="accordion-item">
+                <button class="accordion-header">D. Tarf al-Lisan (طرف اللسان) - Tip of the Tongue</button>
+                <div class="accordion-content">
+                    <p class="text-lg leading-relaxed text-gray-600 mb-3">
+                        The tip of the tongue is responsible for the largest group of letters, articulating with various parts of the upper gums and teeth.
+                    </p>
+                    <ul class="list-disc list-inside text-lg text-gray-600 mt-2">
+                        <li><strong class="text-purple-600">ن (Noon):</strong> Tip with gum line of upper front teeth, with nasalization.</li>
+                        <li><strong class="text-purple-600">ر (Ra):</strong> Slightly behind Noon, tip with upper gum, slight trill.</li>
+                        <li><strong class="text-pink-600">ط (Tta), د (Dal), ت (Ta):</strong> Tip touching base of upper front teeth.</li>
+                        <li><strong class="text-yellow-600">ص (Saad), ز (Zay), س (Seen):</strong> Tip near space between upper and lower front teeth (sibilant).</li>
+                        <li><strong class="text-orange-600">ظ (Dhaa), ذ (Dhal), ث (Tha):</strong> Tip touching tips of upper front teeth (interdental).</li>
+                    </ul>
+                    <div class="quranic-text">
+                        <p>
+                            إِنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ
+                            <br><small class="text-gray-500">(Surah Al-Baqarah, 2:20) - Dal (<span class="highlight-pink">د</span>)</small>
+                        </p>
+                        <p>
+                            الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ
+                            <br><small class="text-gray-500">(Surah An-Nas, 114:5) - Noon (<span class="highlight-purple">ن</span>)</small>
+                        </p>
+                        <p>
+                            ثُمَّ سَوَّاهُ وَنَفَخَ فِيهِ مِن رُّوحِهِ
+                            <br><small class="text-gray-500">(Surah As-Sajdah, 32:9) - Tha (<span class="highlight-orange">ث</span>)</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="shafataan" class="tab-content section-card hidden">
+            <h2 class="text-3xl font-semibold text-gray-700 mb-4">5. Ash-Shafataan (الشفاة) - The Two Lips</h2>
+            <p class="text-lg leading-relaxed text-gray-600">
+                The lips articulate four letters from two points.
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-600 mt-4">
+                <li><strong class="text-blue-600">م (Meem) and ب (Ba):</strong> Both lips together. Meem includes Ghunnah.</li>
+                <li><strong class="text-blue-600">و (Waw - non-madd):</strong> Lips rounded, not fully closed.</li>
+                <li><strong class="text-blue-600">ف (Fa):</strong> Upper incisors on inner lower lip.</li>
+            </ul>
+            <div class="quranic-text">
+                <p>
+                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                    <br><small class="text-gray-500">(Surah Al-Fatiha, 1:1) - Ba (<span class="highlight-purple">ب</span>) and Meem (<span class="highlight-purple">م</span>)</small>
+                </p>
+                <p>
+                    وَأَنَّهُ هُوَ أَضْحَكَ وَأَبْكَىٰ
+                    <br><small class="text-gray-500">(Surah An-Najm, 53:43) - Waw (<span class="highlight-purple">و</span>)</small>
+                </p>
+                <p>
+                    فَإِنَّ مَعَ الْعُسْرِ يُسْرًا
+                    <br><small class="text-gray-500">(Surah Al-Inshirah, 94:5) - Fa (<span class="highlight-purple">ف</span>)</small>
+                </p>
+            </div>
+        </div>
+
+        <footer class="text-center mt-10 pb-5 text-gray-500 text-sm">
+            <p>&copy; 2025 Qur'anic Articulation Guide. All rights reserved.</p>
+            <p>For educational purposes only. Always refer to a qualified Tajweed teacher for correct pronunciation.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Deactivate all tabs and hide all content
+                    tabButtons.forEach(btn => btn.classList.remove('active-tab'));
+                    tabContents.forEach(content => content.classList.add('hidden'));
+
+                    // Activate clicked tab and show its content
+                    button.classList.add('active-tab');
+                    const targetTabId = button.dataset.tab;
+                    document.getElementById(targetTabId).classList.remove('hidden');
+                });
+            });
+
+            // Accordion functionality for Al-Lisan sub-sections
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const isActive = header.classList.contains('active-accordion');
+
+                    // Close all other accordions
+                    accordionHeaders.forEach(h => {
+                        if (h !== header) {
+                            h.classList.remove('active-accordion');
+                            h.nextElementSibling.classList.remove('open');
+                            h.nextElementSibling.style.maxHeight = null;
+                            h.nextElementSibling.style.padding = '0 1.5rem'; // Reset padding
+                        }
+                    });
+
+                    // Toggle current accordion
+                    if (isActive) {
+                        header.classList.remove('active-accordion');
+                        content.classList.remove('open');
+                        content.style.maxHeight = null;
+                        content.style.padding = '0 1.5rem'; // Reset padding
+                    } else {
+                        header.classList.add('active-accordion');
+                        content.classList.add('open');
+                        content.style.maxHeight = content.scrollHeight + 'px'; // Set max-height to content height
+                        content.style.padding = '1.5rem'; // Apply padding
+                    }
+                });
+            });
+
+            // Open the first accordion item in Al-Lisan by default if Al-Lisan tab is active
+            // This ensures content is visible when the tab is first clicked
+            const lisanTabButton = document.querySelector('.tab-button[data-tab="lisan"]');
+            if (lisanTabButton && lisanTabButton.classList.contains('active-tab')) {
+                const firstLisanAccordionHeader = document.querySelector('#lisan .accordion-header');
+                if (firstLisanAccordionHeader) {
+                    firstLisanAccordionHeader.click(); // Simulate a click to open it
+                }
+            }
+        });
+    </script>
+</body>
+</html>
