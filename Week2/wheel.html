@@ -6,10 +6,11 @@
     <title>عجلة المضارع المرفوع</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Updated font to include Times New Roman -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Times+New+Roman&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Amiri', 'Inter', sans-serif; /* Prioritize Amiri for Arabic */
+            font-family: 'Times New Roman', serif; /* Prioritize Times New Roman */
             background-color: #f0f4f8;
             display: flex;
             justify-content: center;
@@ -31,6 +32,9 @@
             width: 600px;
             text-align: center;
         }
+        h1, p {
+            font-family: 'Amiri', 'Times New Roman', serif; /* Keep Amiri for Arabic titles/descriptions */
+        }
         canvas {
             border: 5px solid #4CAF50;
             border-radius: 50%;
@@ -48,6 +52,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-family: 'Times New Roman', serif; /* Apply Times New Roman to button */
         }
         #spinButton:hover {
             background-color: #45a049;
@@ -73,12 +78,21 @@
             font-weight: bold;
             line-height: 1.6;
             text-align: center;
+            font-family: 'Times New Roman', serif; /* Apply Times New Roman to question display */
         }
         .question-category {
             font-size: 1.1rem;
             color: #1b5e20;
             margin-bottom: 8px;
             text-decoration: underline;
+        }
+        .english-translation {
+            font-size: 1rem; /* Smaller font size for translation */
+            color: #555; /* Slightly darker grey for contrast */
+            margin-top: 10px; /* Space between Arabic and English */
+            font-weight: normal; /* Normal weight for translation */
+            direction: ltr; /* Ensure left-to-right for English */
+            text-align: center;
         }
         .pointer {
             position: absolute;
@@ -136,7 +150,7 @@
             { text: "وصف الأشخاص", color: "#00BCD4", category: "describingPeople" } // Cyan
         ];
 
-        // Questions categorized for المضارع المرفوع practice
+        // Questions categorized for المضارع المرفوع practice (Arabic)
         const questions = {
             dailyRoutine: [
                 "ماذا تفعل كل صباح قبل الذهاب إلى المدرسة؟",
@@ -170,14 +184,14 @@
             ],
             feelingsEmotions: [
                 "ماذا تفعل عندما تشعر بالسعادة؟ 😊",
-                "كيف تتصرف عندما تكون غاضباً؟ 😠",
+                "كيف تتصرف عندما تكون غاضباً؟ �",
                 "ماذا تقول عندما تشعر بالحزن؟ 😢",
                 "كيف تعبر عن مشاعرك تجاه أصدقائك؟ ❤️",
                 "ماذا تفعل لتشعر بالراحة عندما تكون متوتراً؟ 🧘‍♀️",
                 "ماذا يفعل طفلك الصغير عندما يشعر بالجوع؟ 🍼",
                 "كيف يعبر صديقك عن فرحته عندما ينجح؟ 🎉",
                 "ماذا يفعل الممثل عندما يؤدي دورًا حزينًا؟ 🎭",
-                "كيف تتفاعل والدتك عندما تشعر بالقلق عليك؟ �",
+                "كيف تتفاعل والدتك عندما تشعر بالقلق عليك؟ 😟",
                 "ماذا يفعل الكاتب عندما يصف مشاعر شخصياته؟ ✍️"
             ],
             helpCooperation: [
@@ -191,6 +205,64 @@
                 "ما هي الصفات التي تحبها في أصدقائك؟",
                 "كيف تتفاعل مع الأشخاص المختلفين؟",
                 "ماذا تفعل عندما تقابل شخصاً جديداً؟",
+            ]
+        };
+
+        // English translations for the questions
+        const englishQuestions = {
+            dailyRoutine: [
+                "What do you do every morning before going to school?",
+                "How do you usually spend your afternoon?",
+                "What activities do you do in the evening?",
+                "Describe your daily routine on the weekend.",
+                "What do you do to prepare for a new day?",
+                "What does your father or mother do early in the morning?",
+                "How does your brother or sister spend their free time in the afternoon?",
+                "What does your favorite teacher do at school every day?",
+                "What does the doctor do when he wakes up in the morning?",
+                "How do your grandfather or grandmother usually spend their day?"
+            ],
+            hobbiesActivities: [
+                "What do you like to do in your free time?",
+                "Where do you go to practice your favorite hobby?",
+                "What sport do you play or watch?",
+                "How do you get better at your hobbies like music or drawing?",
+                "What do you do when you feel bored?",
+                "What does your best friend like to do on the weekend?",
+                "How does your family spend time together during holidays?",
+                "What hobby does someone in your family practice?",
+            ],
+            schoolStudy: [
+                "How do you prepare for exams?",
+                "What is your favorite class and why do you like it?",
+                "How do you help your classmates with their studies?",
+                "What do you do when you don't understand a lesson?",
+                "What does your classmate do when he solves his homework?",
+                "How do students prepare for final exams?",
+            ],
+            feelingsEmotions: [
+                "What do you do when you feel happy? 😊",
+                "How do you act when you are angry? 😠",
+                "What do you say when you feel sad? 😢",
+                "How do you express your feelings towards your friends? ❤️",
+                "What do you do to feel comfortable when you are stressed? 🧘‍♀️",
+                "What does your little child do when he feels hungry? 🍼",
+                "How does your friend express his joy when he succeeds? 🎉",
+                "What does the actor do when performing a sad role? 🎭",
+                "How does your mother react when she feels worried about you? 😟",
+                "What does the writer do when describing his characters' feelings? ✍️"
+            ],
+            helpCooperation: [
+                "How do you help your family at home?",
+                "What do you do to help your classmates?",
+                "What do you do when someone asks you for help?",
+                "How does your brother help his sister with her schoolwork?",
+            ],
+            describingPeople: [
+                "Describe someone you know, what do they usually do?",
+                "What qualities do you like in your friends?",
+                "How do you interact with different people?",
+                "What do you do when you meet someone new?",
             ]
         };
 
@@ -257,7 +329,7 @@
             if (isSpinning) return; // Prevent multiple spins
             isSpinning = true;
             spinButton.disabled = true; // Disable button during spin
-            questionDisplay.innerHTML = '<p>العجلة تدور...</p>'; // Show spinning message
+            questionDisplay.innerHTML = '<p>العجلة تدور...</p><p class="english-translation">Spinning the wheel...</p>'; // Show spinning message with translation
 
             // Generate a random number of full rotations (3-5) plus an extra angle
             const minRotations = 3;
@@ -297,25 +369,13 @@
 
         /**
          * Determines the winning segment after the wheel stops spinning
-         * and displays a random question from that category.
+         * and displays a random question from that category with its English translation.
          */
         function determineWinner() {
             // Normalize the current rotation to be between 0 and 2*PI
             const normalizedRotation = (currentRotation % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
 
             // Adjust for the pointer's position (it's at the top, so 90 degrees or PI/2 radians from the right edge)
-            // The wheel rotates clockwise, so we need to subtract from 2*PI to get the angle relative to the top.
-            // Or, more simply, consider the angle relative to the right (0 radians) and adjust for the pointer.
-            // If the pointer is at the top (PI/2), then the segment under the pointer is at `(2*PI - normalizedRotation + PI/2) % (2*PI)`
-            // Let's simplify: the angle under the pointer is `(PI/2 - normalizedRotation + 2*PI) % (2 * Math.PI)`.
-            // We need to find which segment this angle falls into.
-
-            // The pointer is at the top (angle PI/2).
-            // We need to find the segment that is at PI/2 after the wheel stops.
-            // The segments are drawn starting from 0 (right).
-            // So, the angle of the segment under the pointer is `(2 * Math.PI - normalizedRotation + Math.PI / 2) % (2 * Math.PI)`.
-            // This is the angle from the right edge, going counter-clockwise.
-            // To match our clockwise segment drawing, we can use:
             let angleAtPointer = (Math.PI / 2 - normalizedRotation + 2 * Math.PI) % (2 * Math.PI);
 
             // Find the winning segment index
@@ -337,16 +397,20 @@
             const winningCategory = segments[winningSegmentIndex].category;
             const winningCategoryText = segments[winningSegmentIndex].text; // Get the Arabic text for the category
             const categoryQuestions = questions[winningCategory];
+            const englishCategoryQuestions = englishQuestions[winningCategory]; // Get English questions for the category
 
             if (categoryQuestions && categoryQuestions.length > 0) {
                 const randomIndex = Math.floor(Math.random() * categoryQuestions.length);
                 const selectedQuestion = categoryQuestions[randomIndex];
+                const selectedEnglishTranslation = englishCategoryQuestions[randomIndex]; // Get corresponding English translation
+
                 questionDisplay.innerHTML = `
                     <p class="question-category">الفئة: ${winningCategoryText}</p>
                     <p>${selectedQuestion}</p>
+                    <p class="english-translation">${selectedEnglishTranslation}</p>
                 `;
             } else {
-                questionDisplay.innerHTML = '<p>Pass!</p>';
+                questionDisplay.innerHTML = '<p>Pass!</p><p class="english-translation">Pass!</p>';
             }
         }
 
