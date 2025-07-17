@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Vocabulary Quiz</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem; /* Add some padding for smaller screens */
+            box-sizing: border-box;
+        }
+        .game-container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 800px; /* Increased max-width for leaderboard */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+        }
+        .question-box {
+            background-color: #4f46e5; /* Indigo */
+            color: #ffffff;
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 1.5rem;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            word-break: break-word; /* Ensure long words wrap */
+        }
+        .answer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .answer-button {
+            background-color: #818cf8; /* Light indigo */
+            color: #ffffff;
+            padding: 1.25rem 1rem;
+            border-radius: 10px;
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            outline: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            word-break: break-word; /* Ensure long options wrap */
+        }
+        .answer-button:hover {
+            background-color: #6366f1; /* Darker indigo on hover */
+            transform: translateY(-2px);
+        }
+        .answer-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .answer-button.correct {
+            background-color: #10b981; /* Green */
+        }
+        .answer-button.incorrect {
+            background-color: #ef4444; /* Red */
+        }
+        .feedback-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 2rem;
+            font-weight: bold;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+            white-space: nowrap; /* Prevent text from wrapping */
+        }
+        .feedback-message.show {
+            opacity: 1;
+        }
+        .score-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4f46e5;
+            margin-top: 1rem;
+        }
+        .button-primary {
+            background-color: #14b8a6; /* Teal */
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            outline: none;
+            margin-top: 1.5rem;
+        }
+        .button-primary:hover {
+            background-color: #0d9488; /* Darker teal on hover */
+            transform: translateY(-2px);
+        }
+        .button-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .button-secondary {
+            background-color: #6b7280; /* Gray */
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border: none;
+            outline: none;
+        }
+        .button-secondary:hover {
+            background-color: #4b5563; /* Darker gray on hover */
+        }
+        .game-over-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            background-color: #edf2f7;
+            border-radius: 15px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .game-over-screen h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4f46e5;
+        }
+        .game-over-screen p {
+            font-size: 1.5rem;
+            color: #374151;
+        }
+        .leaderboard {
+            margin-top: 2rem;
+            background-color: #f8fafc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .leaderboard h3 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #4f46e5;
+            margin-bottom: 1rem;
+        }
+        .leaderboard-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.125rem;
+            color: #374151;
+        }
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+        .leaderboard-item .rank {
+            font-weight: 700;
+            color: #4f46e5;
+            width: 30px;
+            text-align: left;
+        }
+        .leaderboard-item .name {
+            flex-grow: 1;
+            text-align: left;
+            margin-left: 1rem;
+        }
+        .leaderboard-item .score {
+            font-weight: 700;
+            color: #10b981;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 100; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 1.5rem;
+                gap: 1rem;
+            }
+            .question-box {
+                font-size: 1.75rem;
+                padding: 1.5rem 1rem;
+                min-height: 100px;
+            }
+            .answer-button {
+                font-size: 1rem;
+                padding: 1rem 0.75rem;
+                min-height: 70px;
+            }
+            .feedback-message {
+                font-size: 1.5rem;
+                padding: 15px 30px;
+            }
+            .score-display {
+                font-size: 1.25rem;
+            }
+            .button-primary {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+            .game-over-screen h2 {
+                font-size: 2rem;
+            }
+            .game-over-screen p {
+                font-size: 1.25rem;
+            }
+            .leaderboard h3 {
+                font-size: 1.5rem;
+            }
+            .leaderboard-item {
+                font-size: 1rem;
+                padding: 0.5rem 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="game" class="game-container">
+        <!-- Start/Join Screen -->
+        <div id="start-screen" class="flex flex-col items-center gap-6">
+            <h1 class="text-5xl font-extrabold text-indigo-700 mb-4">Arabic Vocabulary Quiz</h1>
+            <p class="text-xl text-gray-700">Test your knowledge of common Arabic words!</p>
+
+            <div class="w-full max-w-sm flex flex-col gap-4">
+                <input type="text" id="player-name-input" placeholder="Enter your name" class="p-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button id="create-game-button" class="button-primary">Create New Game</button>
+                <div class="flex items-center justify-center gap-2 text-gray-500">
+                    <span class="h-px bg-gray-300 flex-grow"></span>
+                    OR
+                    <span class="h-px bg-gray-300 flex-grow"></span>
+                </div>
+                <input type="text" id="session-code-input" placeholder="Enter session code" class="p-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button id="join-game-button" class="button-primary">Join Game</button>
+            </div>
+        </div>
+
+        <!-- Host Screen (visible only to host after creating/joining) -->
+        <div id="host-screen" class="hidden flex flex-col items-center gap-6">
+            <h2 class="text-3xl font-bold text-indigo-700">Host Controls</h2>
+            <p class="text-xl text-gray-700">Share this code with your students:</p>
+            <p id="host-session-code" class="text-4xl font-extrabold text-teal-600 bg-teal-50 px-6 py-3 rounded-lg border-2 border-teal-300 select-all"></p>
+            <p class="text-lg text-gray-600">Waiting for players...</p>
+            <button id="start-quiz-button" class="button-primary hidden">Start Quiz</button>
+            <div class="leaderboard w-full">
+                <h3>Players in Session</h3>
+                <ul id="host-player-list" class="leaderboard-list">
+                    <!-- Players will be listed here -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quiz Screen (for both host and students during gameplay) -->
+        <div id="quiz-screen" class="hidden">
+            <p class="text-lg font-semibold text-gray-600 mb-2">Session Code: <span id="current-session-code" class="text-indigo-600 font-bold"></span></p>
+            <div id="question-display" class="question-box"></div>
+            <div id="answer-options" class="answer-grid">
+                <!-- Answer buttons will be inserted here by JavaScript -->
+            </div>
+            <div id="score-display" class="score-display">Your Score: 0</div>
+            <div id="host-controls" class="flex justify-center gap-4 mt-4 hidden">
+                <button id="next-question-button" class="button-primary">Next Question</button>
+                <button id="end-game-button" class="button-secondary">End Game</button>
+            </div>
+            <div class="leaderboard w-full">
+                <h3>Leaderboard</h3>
+                <ul id="leaderboard-list" class="leaderboard-list">
+                    <!-- Leaderboard items will be inserted here by JavaScript -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="hidden game-over-screen">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <div class="leaderboard w-full">
+                <h3>Final Leaderboard</h3>
+                <ul id="final-leaderboard-list" class="leaderboard-list">
+                    <!-- Final leaderboard will be inserted here -->
+                </ul>
+            </div>
+            <button id="restart-game-button" class="button-primary">Play Again</button>
+        </div>
+
+        <!-- Feedback Message -->
+        <div id="feedback-message" class="feedback-message"></div>
+
+        <!-- Custom Alert Modal -->
+        <div id="custom-alert-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <p id="alert-message" class="text-lg font-semibold text-gray-800"></p>
+                <button id="alert-ok-button" class="button-primary mt-4">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, collection, query, orderBy, getDocs, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase configuration and initialization
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app, db, auth;
+        let userId = null; // Will store the authenticated user's ID
+        let currentSessionId = null;
+        let isHost = false;
+        let playerRef = null; // Reference to the current player's document in Firestore
+        let sessionRef = null; // Reference to the current session document in Firestore
+        let unsubscribeSession = null; // To unsubscribe from session changes
+        let unsubscribePlayers = null; // To unsubscribe from players changes
+
+        // Quiz questions data
+        const questions = [
+            { arabicWord: "مباراة", correctAnswer: "match, game (sports)", options: ["match, game (sports)", "mosque", "salary", "to come"] },
+            { arabicWord: "مباريات", correctAnswer: "matches, games (sports)", options: ["matches, games (sports)", "mosmosques", "quickly", "to pray"] },
+            { arabicWord: "جامع", correctAnswer: "mosque", options: ["mosque", "salary", "rest period, break", "to stay up late"] },
+            { arabicWord: "جوامع", correctAnswer: "mosques", options: ["mosques", "coming to, arrival", "frankly, honestly", "usually"] },
+            { arabicWord: "يجيء إلى", correctAnswer: "to come", options: ["to come", "staying up late", "to become", "ritual prayer"] },
+            { arabicWord: "المجيء الى", correctAnswer: "coming to, arrival (maSdar)", options: ["coming to, arrival (maSdar)", "salary", "to wake up", "matches, games (sports)"] },
+            { arabicWord: "مرتب", correctAnswer: "salary", options: ["salary", "mosque", "quickly", "to come"] },
+            { arabicWord: "استراحة", correctAnswer: "rest period, break", options: ["rest period, break", "match, game (sports)", "staying up late", "to pray"] },
+            { arabicWord: "بسرعة", correctAnswer: "quickly, in a hurry", options: ["quickly, in a hurry", "to become", "ritual prayer", "usually"] },
+            { arabicWord: "يسهر", correctAnswer: "to stay up late", options: ["to stay up late", "coming to, arrival", "frankly, honestly", "salary"] },
+            { arabicWord: "السهر", correctAnswer: "staying up late, (maSdar)", options: ["staying up late, (maSdar)", "to wake up", "to pray", "rest period, break"] },
+            { arabicWord: "يصبح", correctAnswer: "to become", options: ["to become", "match, game (sports)", "mosque", "quickly"] },
+            { arabicWord: "يصحو", correctAnswer: "to wake up", options: ["to wake up", "to come", "staying up late", "salary"] },
+            { arabicWord: "بصراحة", correctAnswer: "frankly, honestly", options: ["frankly, honestly", "matches, games (sports)", "to become", "to stay up late"] },
+            { arabicWord: "الصلاة", correctAnswer: "(ritual) prayer", options: ["(ritual) prayer", "mosques", "coming to, arrival", "usually"] },
+            { arabicWord: "يصلي", correctAnswer: "to pray, do ritual prayers", options: ["to pray, do ritual prayers", "rest period, break", "quickly", "to wake up"] },
+            { arabicWord: "عادة", correctAnswer: "usually", options: ["usually", "match, game (sports)", "salary", "to come"] }
+        ];
+
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const hostScreen = document.getElementById('host-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+
+        const playerNameInput = document.getElementById('player-name-input');
+        const createGameButton = document.getElementById('create-game-button');
+        const sessionCodeInput = document.getElementById('session-code-input');
+        const joinGameButton = document.getElementById('join-game-button');
+
+        const hostSessionCodeDisplay = document.getElementById('host-session-code');
+        const hostPlayerList = document.getElementById('host-player-list');
+        const startQuizButton = document.getElementById('start-quiz-button');
+
+        const currentSessionCodeDisplay = document.getElementById('current-session-code');
+        const questionDisplay = document.getElementById('question-display');
+        const answerOptionsContainer = document.getElementById('answer-options');
+        const scoreDisplay = document.getElementById('score-display');
+        const hostControls = document.getElementById('host-controls');
+        const nextQuestionButton = document.getElementById('next-question-button');
+        const endGameButton = document.getElementById('end-game-button');
+        const leaderboardList = document.getElementById('leaderboard-list');
+
+        const finalScoreDisplay = document.getElementById('final-score');
+        const finalLeaderboardList = document.getElementById('final-leaderboard-list');
+        const restartGameButton = document.getElementById('restart-game-button');
+
+        const feedbackMessage = document.getElementById('feedback-message');
+
+        const customAlertModal = document.getElementById('custom-alert-modal');
+        const alertMessage = document.getElementById('alert-message');
+        const alertOkButton = document.getElementById('alert-ok-button');
+        const closeAlertButton = document.querySelector('#custom-alert-modal .close-button');
+
+        // --- Utility Functions ---
+
+        // Custom alert function
+        function showAlert(message) {
+            alertMessage.textContent = message;
+            customAlertModal.style.display = 'flex'; // Show modal
+        }
+
+        // Close alert modal
+        function closeAlert() {
+            customAlertModal.style.display = 'none'; // Hide modal
+        }
+        alertOkButton.addEventListener('click', closeAlert);
+        closeAlertButton.addEventListener('click', closeAlert);
+
+        // Function to shuffle an array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        // Function to show feedback message (Correct/Incorrect)
+        function showFeedback(message, type) {
+            feedbackMessage.textContent = message;
+            if (type === 'correct') {
+                feedbackMessage.style.backgroundColor = 'rgba(16, 185, 129, 0.9)'; // Green
+            } else {
+                feedbackMessage.style.backgroundColor = 'rgba(239, 68, 68, 0.9)'; // Red
+            }
+            feedbackMessage.classList.add('show');
+            setTimeout(() => {
+                feedbackMessage.classList.remove('show');
+            }, 1500);
+        }
+
+        // Function to switch screens
+        function showScreen(screenId) {
+            startScreen.classList.add('hidden');
+            hostScreen.classList.add('hidden');
+            quizScreen.classList.add('hidden');
+            gameOverScreen.classList.add('hidden');
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        // --- Firebase Initialization and Auth ---
+        function initializeFirebase() {
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Firebase Auth Ready. User ID:", userId);
+                        // If a session was previously joined/created, try to re-establish connection
+                        if (currentSessionId) {
+                            await joinSession(currentSessionId, playerNameInput.value, true); // Rejoin silently
+                        }
+                    } else {
+                        // Sign in anonymously if no user is logged in
+                        if (!initialAuthToken) { // Only sign in anonymously if no custom token is provided
+                            await signInAnonymously(auth);
+                        }
+                        console.log("Signed in anonymously or waiting for custom token.");
+                    }
+                });
+
+                // Use custom token if available
+                if (initialAuthToken) {
+                    signInWithCustomToken(auth, initialAuthToken)
+                        .then(() => console.log("Signed in with custom token."))
+                        .catch((error) => console.error("Error signing in with custom token:", error));
+                }
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                showAlert("Failed to initialize the game. Please try again later.");
+            }
+        }
+
+        // --- Session Management ---
+
+        // Generates a random 6-character alphanumeric session code
+        function generateSessionCode() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        // Creates a new game session in Firestore
+        async function createGameSession() {
+            const playerName = playerNameInput.value.trim();
+            if (!playerName) {
+                showAlert("Please enter your name to create a game.");
+                return;
+            }
+            if (!userId) {
+                showAlert("Authentication not ready. Please wait a moment and try again.");
+                return;
+            }
+
+            const newSessionId = generateSessionCode();
+            sessionRef = doc(db, `artifacts/${appId}/public/data/sessions`, newSessionId);
+            currentSessionId = newSessionId;
+            isHost = true;
+
+            try {
+                // Shuffle questions for this specific session
+                const sessionQuestions = shuffleArray([...questions]);
+
+                await setDoc(sessionRef, {
+                    hostId: userId,
+                    currentQuestionIndex: -1, // -1 means game not started
+                    status: 'waiting', // 'waiting', 'playing', 'finished'
+                    questions: sessionQuestions, // Store shuffled questions for the session
+                    createdAt: new Date()
+                });
+                console.log("Session created:", newSessionId);
+
+                // Add host as the first player
+                playerRef = doc(db, `artifacts/${appId}/public/data/sessions/${newSessionId}/players`, userId);
+                await setDoc(playerRef, {
+                    name: playerName,
+                    score: 0,
+                    hasAnsweredCurrentQuestion: false,
+                    lastAnswer: null,
+                    joinedAt: new Date()
+                });
+                console.log("Host player added:", playerName);
+
+                hostSessionCodeDisplay.textContent = newSessionId;
+                currentSessionCodeDisplay.textContent = newSessionId; // Also update on quiz screen
+                showScreen('host-screen');
+                listenToSessionChanges(newSessionId);
+                listenToPlayersInSession(newSessionId);
+
+            } catch (error) {
+                console.error("Error creating session:", error);
+                showAlert("Failed to create game session. Please try again.");
+            }
+        }
+
+        // Joins an existing game session
+        async function joinSession(sessionId, playerName, silentRejoin = false) {
+            if (!silentRejoin && !playerName) {
+                showAlert("Please enter your name to join a game.");
+                return;
+            }
+            if (!userId) {
+                showAlert("Authentication not ready. Please wait a moment and try again.");
+                return;
+            }
+
+            const sessionDocRef = doc(db, `artifacts/${appId}/public/data/sessions`, sessionId);
+            try {
+                const sessionDoc = await getDoc(sessionDocRef);
+                if (!sessionDoc.exists()) {
+                    showAlert("Session not found. Please check the code.");
+                    return;
+                }
+
+                const sessionData = sessionDoc.data();
+                if (sessionData.status === 'finished') {
+                    showAlert("This game session has already ended.");
+                    return;
+                }
+
+                currentSessionId = sessionId;
+                isHost = (sessionData.hostId === userId); // Determine if current user is host
+                sessionRef = sessionDocRef;
+
+                playerRef = doc(db, `artifacts/${appId}/public/data/sessions/${sessionId}/players`, userId);
+                const playerDoc = await getDoc(playerRef);
+
+                if (!playerDoc.exists()) {
+                    // Only add new player if not rejoining silently and player doesn't exist
+                    if (!silentRejoin) {
+                        await setDoc(playerRef, {
+                            name: playerName,
+                            score: 0,
+                            hasAnsweredCurrentQuestion: false,
+                            lastAnswer: null,
+                            joinedAt: new Date()
+                        });
+                        console.log("Joined session as player:", playerName);
+                    }
+                } else {
+                    // Update player name if it changed (only if not silent rejoin)
+                    if (!silentRejoin && playerDoc.data().name !== playerName) {
+                        await updateDoc(playerRef, { name: playerName });
+                    }
+                    console.log("Rejoined session as player:", playerDoc.data().name);
+                }
+
+                currentSessionCodeDisplay.textContent = sessionId; // Update on quiz screen
+                listenToSessionChanges(sessionId);
+                listenToPlayersInSession(sessionId);
+
+                // If joining a game already in progress, show quiz screen
+                if (sessionData.status === 'playing') {
+                    showScreen('quiz-screen');
+                } else if (isHost) {
+                    showScreen('host-screen');
+                } else {
+                    // Students joining a waiting game stay on host screen view
+                    showScreen('host-screen');
+                    hostSessionCodeDisplay.textContent = sessionId; // Show code for students too
+                    startQuizButton.classList.add('hidden'); // Students can't start the quiz
+                }
+
+            } catch (error) {
+                console.error("Error joining session:", error);
+                showAlert("Failed to join game session. Please try again.");
+            }
+        }
+
+        // --- Real-time Listeners ---
+
+        // Listens for changes in the session document (e.g., current question, status)
+        function listenToSessionChanges(sessionId) {
+            if (unsubscribeSession) unsubscribeSession(); // Unsubscribe from previous listener
+
+            sessionRef = doc(db, `artifacts/${appId}/public/data/sessions`, sessionId);
+            unsubscribeSession = onSnapshot(sessionRef, (docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    const sessionData = docSnapshot.data();
+                    console.log("Session data updated:", sessionData);
+
+                    // Update UI based on session status
+                    if (sessionData.status === 'waiting') {
+                        if (isHost) {
+                            showScreen('host-screen');
+                            // Only show start button if there's at least one player besides host (or just host)
+                            // This will be handled by player listener
+                        } else {
+                            showScreen('host-screen'); // Students see host screen while waiting
+                        }
+                    } else if (sessionData.status === 'playing') {
+                        showScreen('quiz-screen');
+                        loadQuestion(sessionData.currentQuestionIndex, sessionData.questions);
+                        if (isHost) {
+                            hostControls.classList.remove('hidden');
+                        } else {
+                            hostControls.classList.add('hidden');
+                        }
+                    } else if (sessionData.status === 'finished') {
+                        endGame(sessionData.questions.length);
+                    }
+                } else {
+                    console.log("Session document no longer exists.");
+                    showAlert("The game session has ended or was deleted.");
+                    showScreen('start-screen'); // Go back to start screen
+                    cleanupSession();
+                }
+            }, (error) => {
+                console.error("Error listening to session changes:", error);
+                showAlert("Lost connection to the game. Please try rejoining.");
+            });
+        }
+
+        // Listens for changes in players within the current session (for leaderboard)
+        function listenToPlayersInSession(sessionId) {
+            if (unsubscribePlayers) unsubscribePlayers(); // Unsubscribe from previous listener
+
+            const playersCollectionRef = collection(db, `artifacts/${appId}/public/data/sessions/${sessionId}/players`);
+            // Note: orderBy is commented out as per instructions, sorting will be done client-side
+            const q = query(playersCollectionRef /*, orderBy('score', 'desc')*/);
+
+            unsubscribePlayers = onSnapshot(q, (snapshot) => {
+                const players = [];
+                snapshot.forEach(doc => {
+                    players.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Sort players by score (descending) and then by name (ascending)
+                players.sort((a, b) => {
+                    if (b.score !== a.score) {
+                        return b.score - a.score;
+                    }
+                    return a.name.localeCompare(b.name);
+                });
+
+                updateLeaderboard(players);
+                if (isHost && players.length > 0) { // Enable start button if there's at least one player (including host)
+                    startQuizButton.classList.remove('hidden');
+                }
+            }, (error) => {
+                console.error("Error listening to players:", error);
+            });
+        }
+
+        // --- Game Logic ---
+
+        // Loads and displays the current question
+        async function loadQuestion(questionIndex, sessionQuestions) {
+            // Hide next button and reset button styles
+            nextQuestionButton.classList.add('hidden');
+            answerOptionsContainer.querySelectorAll('.answer-button').forEach(button => {
+                button.classList.remove('correct', 'incorrect');
+                button.disabled = false; // Re-enable buttons for new question
+            });
+
+            if (questionIndex >= 0 && questionIndex < sessionQuestions.length) {
+                const currentQuestion = sessionQuestions[questionIndex];
+                questionDisplay.textContent = currentQuestion.arabicWord;
+                answerOptionsContainer.innerHTML = ''; // Clear previous options
+
+                // Shuffle options for the current question
+                const shuffledOptions = shuffleArray([...currentQuestion.options]);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('answer-button', 'button-primary'); // Use primary button style
+                    button.addEventListener('click', () => submitAnswer(button, option, currentQuestion.correctAnswer, questionIndex));
+                    answerOptionsContainer.appendChild(button);
+                });
+
+                // Update player's 'hasAnsweredCurrentQuestion' status to false for the new question
+                if (playerRef) {
+                    await updateDoc(playerRef, { hasAnsweredCurrentQuestion: false });
+                }
+                scoreDisplay.textContent = `Your Score: ${ (await getDoc(playerRef)).data().score || 0}`;
+
+            } else {
+                // This case should be handled by session status 'finished'
+                console.warn("Attempted to load invalid question index or no more questions.");
+            }
+        }
+
+        // Submits a player's answer to Firestore
+        async function submitAnswer(selectedButton, selectedOption, correctAnswer, questionIndex) {
+            // Disable all answer buttons after a selection
+            answerOptionsContainer.querySelectorAll('.answer-button').forEach(button => {
+                button.disabled = true;
+            });
+
+            const isCorrect = (selectedOption === correctAnswer);
+
+            if (isCorrect) {
+                selectedButton.classList.add('correct');
+                showFeedback('Correct!', 'correct');
+            } else {
+                selectedButton.classList.add('incorrect');
+                // Highlight the correct answer
+                answerOptionsContainer.querySelectorAll('.answer-button').forEach(button => {
+                    if (button.textContent === correctAnswer) {
+                        button.classList.add('correct');
+                    }
+                });
+                showFeedback('Incorrect!', 'incorrect');
+            }
+
+            if (playerRef) {
+                try {
+                    // Update player's score and answer status in Firestore
+                    await updateDoc(playerRef, {
+                        score: isCorrect ? (await getDoc(playerRef)).data().score + 1 : (await getDoc(playerRef)).data().score,
+                        hasAnsweredCurrentQuestion: true,
+                        lastAnswer: {
+                            questionIndex: questionIndex,
+                            selectedOption: selectedOption,
+                            isCorrect: isCorrect,
+                            timestamp: new Date()
+                        }
+                    });
+                    console.log("Answer submitted to Firestore.");
+                    // Score display will be updated by the player listener
+                } catch (error) {
+                    console.error("Error updating player answer:", error);
+                    showAlert("Failed to submit answer. Please check your connection.");
+                }
+            }
+
+            if (isHost) {
+                nextQuestionButton.classList.remove('hidden'); // Host can advance after any answer
+            }
+        }
+
+        // Updates the leaderboard display
+        function updateLeaderboard(players) {
+            const currentLeaderboard = document.getElementById(quizScreen.classList.contains('hidden') ? 'host-player-list' : 'leaderboard-list');
+            const finalLeaderboard = document.getElementById('final-leaderboard-list');
+
+            if (!currentLeaderboard && !finalLeaderboard) return;
+
+            const targetLeaderboard = quizScreen.classList.contains('hidden') ? currentLeaderboard : leaderboardList; // Use quizScreen's leaderboard if active
+
+            if (targetLeaderboard) {
+                targetLeaderboard.innerHTML = ''; // Clear existing list
+                players.forEach((player, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('leaderboard-item');
+                    listItem.innerHTML = `
+                        <span class="rank">${index + 1}.</span>
+                        <span class="name">${player.name} ${player.id === userId ? '(You)' : ''}</span>
+                        <span class="score">${player.score}</span>
+                    `;
+                    targetLeaderboard.appendChild(listItem);
+                });
+            }
+
+            // Also update the final leaderboard if game over screen is active
+            if (!gameOverScreen.classList.contains('hidden') && finalLeaderboard) {
+                finalLeaderboard.innerHTML = '';
+                players.forEach((player, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('leaderboard-item');
+                    listItem.innerHTML = `
+                        <span class="rank">${index + 1}.</span>
+                        <span class="name">${player.name} ${player.id === userId ? '(You)' : ''}</span>
+                        <span class="score">${player.score}</span>
+                    `;
+                    finalLeaderboard.appendChild(listItem);
+                });
+            }
+        }
+
+        // Host starts the quiz
+        async function startQuiz() {
+            if (!sessionRef) {
+                showAlert("No active session. Please create or join a game.");
+                return;
+            }
+            try {
+                await updateDoc(sessionRef, {
+                    status: 'playing',
+                    currentQuestionIndex: 0 // Start with the first question
+                });
+                console.log("Quiz started.");
+            } catch (error) {
+                console.error("Error starting quiz:", error);
+                showAlert("Failed to start quiz. Please try again.");
+            }
+        }
+
+        // Host advances to the next question
+        async function nextQuestion() {
+            if (!sessionRef) return;
+            try {
+                const sessionDoc = await getDoc(sessionRef);
+                if (sessionDoc.exists()) {
+                    const sessionData = sessionDoc.data();
+                    const nextIndex = sessionData.currentQuestionIndex + 1;
+
+                    if (nextIndex < sessionData.questions.length) {
+                        await updateDoc(sessionRef, {
+                            currentQuestionIndex: nextIndex
+                        });
+                        console.log("Moved to next question:", nextIndex);
+                    } else {
+                        // All questions answered, end the game
+                        await updateDoc(sessionRef, { status: 'finished' });
+                        console.log("All questions answered. Game ending.");
+                    }
+                }
+            } catch (error) {
+                console.error("Error advancing question:", error);
+                showAlert("Failed to advance question. Please try again.");
+            }
+        }
+
+        // Host ends the game
+        async function endGameHost() {
+            if (!sessionRef) return;
+            try {
+                await updateDoc(sessionRef, { status: 'finished' });
+                console.log("Game ended by host.");
+            } catch (error) {
+                console.error("Error ending game:", error);
+                showAlert("Failed to end game. Please try again.");
+            }
+        }
+
+        // Handles game over state for all players
+        function endGame(totalQuestions) {
+            showScreen('game-over-screen');
+            finalScoreDisplay.textContent = `You scored ${ (playerRef ? (getDoc(playerRef).then(doc => doc.data().score)) : 0) } out of ${totalQuestions} questions!`;
+            // Leaderboard will be updated by the listener
+            cleanupSession(); // Clean up listeners after game ends
+        }
+
+        // Restarts the game (for host and players)
+        function restartGame() {
+            cleanupSession();
+            showScreen('start-screen');
+            playerNameInput.value = '';
+            sessionCodeInput.value = '';
+            isHost = false;
+            currentSessionId = null;
+            playerRef = null;
+            sessionRef = null;
+            // Re-initialize firebase to ensure fresh state if needed, though onAuthStateChanged should handle it
+            // initializeFirebase(); // Might cause double auth, better to rely on existing auth
+        }
+
+        // Cleans up Firestore listeners
+        function cleanupSession() {
+            if (unsubscribeSession) {
+                unsubscribeSession();
+                unsubscribeSession = null;
+            }
+            if (unsubscribePlayers) {
+                unsubscribePlayers();
+                unsubscribePlayers = null;
+            }
+            console.log("Firestore listeners unsubscribed.");
+        }
+
+        // --- Event Listeners ---
+        createGameButton.addEventListener('click', createGameSession);
+        joinGameButton.addEventListener('click', () => {
+            const code = sessionCodeInput.value.trim().toUpperCase();
+            const name = playerNameInput.value.trim();
+            if (code) {
+                joinSession(code, name);
+            } else {
+                showAlert("Please enter a session code to join.");
+            }
+        });
+        startQuizButton.addEventListener('click', startQuiz);
+        nextQuestionButton.addEventListener('click', nextQuestion);
+        endGameButton.addEventListener('click', endGameHost);
+        restartGameButton.addEventListener('click', restartGame);
+
+        // Initialize Firebase when the window loads
+        window.onload = initializeFirebase;
+    </script>
+</body>
+</html>
