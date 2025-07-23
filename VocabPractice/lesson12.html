@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفردات الكتاب: الدرس الثاني عشر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Kufi Arabic', sans-serif;
+        }
+        .control-button {
+            transition: all 0.2s ease-in-out;
+            background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: none;
+            cursor: pointer;
+        }
+        .control-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .quiz-input {
+            border: 1px solid #d1d5db; /* gray-300 */
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 250px;
+            text-align: center; /* Center align input text */
+            direction: rtl; /* Default direction for Arabic input */
+        }
+        .quiz-input[data-lang="en"] {
+            direction: ltr;
+            text-align: left;
+        }
+        .correct-answer {
+            color: #059669; /* green-600 */
+            font-weight: 600;
+        }
+        .incorrect-answer {
+            color: #dc2626; /* red-600 */
+            font-weight: 600;
+        }
+        .vocab-table th, .vocab-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb; /* gray-200 */
+            text-align: right;
+        }
+        .vocab-table th {
+            background-color: #f3f4f6; /* gray-100 */
+            font-weight: 600;
+            color: #374151; /* gray-700 */
+        }
+        .vocab-table tr:last-child td {
+            border-bottom: none;
+        }
+        .vocab-table tbody tr:hover {
+            background-color: #f9fafb; /* gray-50 */
+        }
+        /* Flashcard styles */
+        .flashcard-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .flashcard {
+            width: 280px;
+            height: 180px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .flashcard-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+        .flashcard-front {
+            background-color: #e0f2f7; /* Light Teal */
+            color: #264653;
+        }
+        .flashcard-back {
+            background-color: #2a9d8f; /* Darker Teal */
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 1.1rem;
+            direction: ltr; /* Ensure English text is LTR */
+        }
+        .flashcard-type {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: #6b7280; /* gray-500 */
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+        }
+        .flashcard-back .flashcard-type {
+            color: #e5e7eb; /* light gray */
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        .mcq-option {
+            background-color: #f0f9ff; /* blue-50 */
+            border: 1px solid #bfdbfe; /* blue-200 */
+            color: #1e40af; /* blue-800 */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-align: center;
+            font-weight: 600;
+        }
+        .mcq-option:hover {
+            background-color: #e0f2fe; /* blue-100 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .mcq-option.selected {
+            background-color: #93c5fd; /* blue-300 */
+            border-color: #2563eb; /* blue-600 */
+            color: white;
+        }
+        .mcq-option.correct {
+            background-color: #d1fae5; /* green-100 */
+            border-color: #34d399; /* green-400 */
+            color: #065f46; /* green-800 */
+        }
+        .mcq-option.incorrect {
+            background-color: #fee2e2; /* red-100 */
+            border-color: #ef4444; /* red-500 */
+            color: #991b1b; /* red-800 */
+        }
+        /* Drag and Drop Specific Styles */
+        .drop-zone {
+            display: inline-block;
+            min-width: 100px; /* Adjust as needed */
+            height: 40px;
+            border: 2px dashed #9ca3af; /* gray-400 */
+            border-radius: 0.5rem;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 36px;
+            color: #6b7280; /* gray-500 */
+            font-weight: 500;
+            margin: 0 0.5rem;
+            background-color: #f9fafb; /* gray-50 */
+            transition: all 0.2s ease-in-out;
+            overflow: hidden; /* Hide overflow content */
+            white-space: nowrap; /* Prevent word wrap */
+            padding: 0 0.5rem;
+        }
+        .drop-zone.hover {
+            background-color: #e0f2fe; /* blue-100 */
+            border-color: #2563eb; /* blue-600 */
+        }
+        .draggable-word {
+            background-color: #dbeafe; /* blue-100 */
+            color: #1e40af; /* blue-800 */
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: grab;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            display: inline-block; /* For proper spacing in flex container */
+        }
+        .draggable-word:hover {
+            background-color: #bfdbfe; /* blue-200 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .draggable-word.dragging {
+            opacity: 0.6;
+            cursor: grabbing;
+        }
+        .drop-zone .filled-word {
+            display: block;
+            background-color: #93c5fd; /* blue-300 */
+            color: white;
+            padding: 0 0.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            line-height: 30px; /* Adjust to match drop-zone height */
+            margin: 2px; /* Small margin to make it visually distinct from border */
+        }
+        .drop-zone.correct-drop .filled-word {
+            background-color: #34d399; /* green-400 */
+        }
+        .drop-zone.incorrect-drop .filled-word {
+            background-color: #ef4444; /* red-500 */
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        <header class="text-center mb-6">
+            <h1 class="text-3xl md:text-5xl font-bold text-teal-700 mb-2">مفردات الكتاب: الدرس التاسع</h1>
+            <p class="text-md md:text-lg text-stone-600 max-w-2xl mx-auto">
+                تعلم مفردات الدرس التاسع ثم تدرب عليها.
+            </p>
+        </header>
+
+        <main>
+            <section id="vocabulary-introduction" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-12">
+                <h2 class="text-2xl font-semibold text-center mb-6 text-stone-700">١. الكلمات في سياقها</h2>
+                <div class="overflow-x-auto">
+                    <table id="vocab-table" class="min-w-full vocab-table rounded-lg overflow-hidden">
+                        <thead>
+                            <tr>
+                                <th class="py-3 px-4 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">الكلمة العربية</th>
+                                <th class="py-3 px-4 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">معنى الكلمة (الإنجليزية)</th>
+                                <th class="py-3 px-4 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">الجملة السياقية (العربية)</th>
+                                <th class="py-3 px-4 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">ترجمة الجملة (الإنجليزية)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Vocabulary rows will be injected here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="flashcards-section" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-12">
+                <h2 class="text-2xl font-semibold text-center mb-6 text-stone-700">٢. بطاقات المفردات</h2>
+                <p class="text-md text-stone-600 text-center mb-8 max-w-2xl mx-auto">
+                    انقر على البطاقة لتقليبها ورؤية المعنى أو التصريف.
+                </p>
+
+                <h3 class="text-xl font-semibold text-stone-700 mb-4 text-center">المفردات الأساسية</h3>
+                <div id="word-flashcards-container" class="flashcard-container">
+                    <!-- Word flashcards will be injected here -->
+                </div>
+
+                <h3 class="text-xl font-semibold text-stone-700 mb-4 text-center mt-8">تصريفات الأفعال والجمع</h3>
+                <div id="derivation-flashcards-container" class="flashcard-container">
+                    <!-- Derivation flashcards will be injected here -->
+                </div>
+            </section>
+
+            <section id="quizzes" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center text-teal-700 mb-6">اختبر معلوماتك!</h2>
+                <p class="text-md text-stone-600 text-center mb-8 max-w-2xl mx-auto">
+                    استخدم الاختبارات التالية لتقييم فهمك للمفردات. اكتب إجابتك في الفراغ ثم اضغط "تحقق" للحصول على التغذية الراجعة.
+                </p>
+
+                <!-- Quiz Type 1: Fill in the Blank (Arabic Sentence Completion) -->
+                <div class="mb-10 p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">النشاط ٣: أكمل الفراغ في الجملة (بالعربية)</h3>
+                    <p class="text-stone-600 mb-4">أكمل الجملة بالكلمة العربية الصحيحة من المفردات التي تعلمتها.</p>
+                    <div id="quiz1-questions">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-4 mt-6">
+                        <button id="quiz1-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                        <button id="quiz1-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+                        <button id="quiz1-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Type 2: English to Arabic Word Translation -->
+                <div class="mb-10 p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">النشاط ٤: الترجمة (الإنجليزية إلى العربية)</h3>
+                    <p class="text-stone-600 mb-4">اكتب الكلمة العربية الصحيحة بناءً على المعنى الإنجليزي.</p>
+                    <div id="quiz2-questions">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-4 mt-6">
+                        <button id="quiz2-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                        <button id="quiz2-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+                        <button id="quiz2-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Type 3: Contextual Word Choice (Drag and Drop) -->
+                <div class="mb-10 p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">النشاط ٥: اختيار الكلمة في السياق (اسحب وأفلت)</h3>
+                    <p class="text-stone-600 mb-4">اسحب الكلمة العربية الأنسب من البنك وضعها في الفراغ الصحيح لإكمال الجملة.</p>
+                    <div id="dragdrop-activity" class="grid gap-6">
+                        <div id="dragdrop-sentences" class="space-y-6">
+                            <!-- Sentences with drop zones will be injected here -->
+                        </div>
+                        <div class="flex flex-wrap gap-3 justify-center mt-8" id="dragdrop-word-bank">
+                            <!-- Draggable words will be injected here -->
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-4 mt-6">
+                            <button onclick="checkDragDropAnswers()" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                            <button onclick="resetDragDropActivity()" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Type 4: Multiple Choice Questions -->
+                <div class="p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">النشاط ٦: أسئلة اختيار من متعدد</h3>
+                    <p class="text-stone-600 mb-4">اختر الإجابة الصحيحة من الخيارات المعطاة.</p>
+                    <div id="mcq-questions">
+                        <!-- MCQ questions will be injected here -->
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-4 mt-6">
+                        <button id="mcq-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                        <button id="mcq-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+                        <button id="mcq-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Vocabulary Data for the Table
+        const vocabulary = [
+            { word_ar: "آخِر", translation_en: "last, final", sentence_ar: "قرأت الصفحة <b>الآخِرة</b> من الكتاب.", sentence_en: "I read the <b>last</b> page of the book." },
+            { word_ar: "أَخَذَ", translation_en: "to take", sentence_ar: "<b>أَخَذَ</b> الطالب الكتاب من المكتبة.", sentence_en: "The student <b>took</b> the book from the library." },
+            { word_ar: "إجازة/ات", translation_en: "holiday/s, vacation/s", sentence_ar: "سأسافر في <b>إجازة</b> الصيف.", sentence_en: "I will travel on summer <b>vacation</b>." },
+            { word_ar: "بِالإضافة إلى", translation_en: "in addition to", sentence_ar: "أحب القراءة <b>بِالإضافة إلى</b> الكتابة.", sentence_en: "I like reading <b>in addition to</b> writing." },
+            { word_ar: "تَغَيَّبَ عن", translation_en: "to be absent from", sentence_ar: "<b>تَغَيَّبَ</b> الطالب عن الدرس اليوم.", sentence_en: "The student was <b>absent from</b> the lesson today." },
+            { word_ar: "جَميعاً", translation_en: "all together, all of us/them", sentence_ar: "ذهبنا إلى الحديقة <b>جَميعاً</b>.", sentence_en: "We all went to the park <b>together</b>." },
+            { word_ar: "زار", translation_en: "to visit", sentence_ar: "<b>زار</b> صديقي مدينتي الأسبوع الماضي.", sentence_en: "My friend <b>visited</b> my city last week." },
+            { word_ar: "طَبْعاً", translation_en: "of course, naturally", sentence_ar: "هل ستأتي؟ <b>طَبْعاً</b>!", sentence_en: "Will you come? <b>Of course</b>!" },
+            { word_ar: "عَلِمَ ب", translation_en: "to learn of, to know about", sentence_ar: "<b>عَلِمْتُ ب</b> الخبر من التلفاز.", sentence_en: "I <b>learned of</b> the news from TV." },
+            { word_ar: "عُطلة", translation_en: "holiday, day off", sentence_ar: "لدينا <b>عُطلة</b> يوم الجمعة.", sentence_en: "We have a <b>holiday</b> on Friday." },
+            { word_ar: "عُيَّنْتُ", translation_en: "I was appointed", sentence_ar: "<b>عُيَّنْتُ</b> مديراً جديداً للشركة.", sentence_en: "I <b>was appointed</b> a new manager for the company." },
+            { word_ar: "قادِم", translation_en: "coming, next", sentence_ar: "سأراك الأسبوع <b>القادِم</b>.", sentence_en: "I will see you next week." },
+            { word_ar: "قرَّرَ", translation_en: "to decide", sentence_ar: "<b>قرَّرَ</b> السفر إلى الخارج.", sentence_en: "He <b>decided</b> to travel abroad." },
+            { word_ar: "قَرار", translation_en: "decision", sentence_ar: "هذا <b>قَرار</b> مهم.", sentence_en: "This is an important <b>decision</b>." },
+            { word_ar: "قَضى", translation_en: "to spend (time)", sentence_ar: "<b>قَضَيْتُ</b> وقتاً ممتعاً في الحديقة.", sentence_en: "I <b>spent</b> a fun time in the park." },
+            { word_ar: "لم يُسافِر", translation_en: "he did not travel (Jussive negation)", sentence_ar: "<b>لم يُسافِر</b> بسبب الطقس السيئ.", sentence_en: "He <b>did not travel</b> due to bad weather." },
+            { word_ar: "ما سافر", translation_en: "he did not travel (Past negation)", sentence_ar: "<b>ما سافر</b> إلى أي مكان هذا العام.", sentence_en: "He <b>did not travel</b> anywhere this year." },
+            { word_ar: "مَوت", translation_en: "death", sentence_ar: "خبر <b>مَوت</b> صديقه أحزنه.", sentence_en: "The news of his friend's <b>death</b> saddened him." },
+            { word_ar: "مُدير", translation_en: "manager, director", sentence_ar: "تحدثت مع <b>المُدير</b> حول المشروع.", sentence_en: "I spoke with the <b>manager</b> about the project." },
+            { word_ar: "مُقارَن", translation_en: "comparative", sentence_ar: "هذا دراسة <b>مُقارَنة</b> بين لغتين.", sentence_en: "This is a <b>comparative</b> study between two languages." },
+            { word_ar: "مِنْحة", translation_en: "grant, scholarship", sentence_ar: "حصلت على <b>مِنْحة</b> دراسية.", sentence_en: "I received a study <b>scholarship</b>." },
+            { word_ar: "هُنا", translation_en: "here", sentence_ar: "اجلس <b>هُنا</b> من فضلك.", sentence_en: "Sit <b>here</b>, please." },
+            { word_ar: "هُناك", translation_en: "there", sentence_ar: "بيتي <b>هُناك</b>.", sentence_en: "My house is <b>there</b>." },
+            { word_ar: "وَفاة", translation_en: "demise, death", sentence_ar: "أعلنت الجامعة عن <b>وَفاة</b> الأستاذ.", sentence_en: "The university announced the <b>demise</b> of the professor." }
+        ];
+
+        // Flashcard Data
+        const flashcards = [
+            // Individual words
+            { front_ar: "آخِر", back_en: "last, final", type: "كلمة" },
+            { front_ar: "أَخَذَ", back_en: "to take", type: "كلمة" },
+            { front_ar: "إجازة", back_en: "holiday, vacation", type: "كلمة" },
+            { front_ar: "بِالإضافة إلى", back_en: "in addition to", type: "عبارة" },
+            { front_ar: "تَغَيَّبَ عن", back_en: "to be absent from", type: "فعل" },
+            { front_ar: "جَميعاً", back_en: "all together", type: "كلمة" },
+            { front_ar: "زار", back_en: "to visit", type: "فعل" },
+            { front_ar: "طَبْعاً", back_en: "of course", type: "كلمة" },
+            { front_ar: "عَلِمَ ب", back_en: "to learn of, know about", type: "فعل" },
+            { front_ar: "عُطلة", back_en: "holiday, day off", type: "كلمة" },
+            { front_ar: "عُيَّنْتُ", back_en: "I was appointed", type: "فعل" },
+            { front_ar: "قادِم", back_en: "coming, next", type: "صفة" },
+            { front_ar: "قرَّرَ", back_en: "to decide", type: "فعل" },
+            { front_ar: "قَرار", back_en: "decision", type: "كلمة" },
+            { front_ar: "قَضى", back_en: "to spend (time)", type: "فعل" },
+            { front_ar: "لم يُسافِر", back_en: "he did not travel (Jussive)", type: "فعل" },
+            { front_ar: "ما سافر", back_en: "he did not travel (Past)", type: "فعل" },
+            { front_ar: "مَوت", back_en: "death", type: "كلمة" },
+            { front_ar: "مُدير", back_en: "manager, director", type: "كلمة" },
+            { front_ar: "مُقارَن", back_en: "comparative", type: "صفة" },
+            { front_ar: "مِنْحة", back_en: "grant, scholarship", type: "كلمة" },
+            { front_ar: "هُنا", back_en: "here", type: "كلمة" },
+            { front_ar: "هُناك", back_en: "there", type: "كلمة" },
+            { front_ar: "وَفاة", back_en: "demise, death", type: "كلمة" },
+
+            // Derivations (Verb Forms, Masdars, Plurals)
+            { front_ar: "أَخَذَ / يَأْخُذُ / أَخْذ", back_en: "to take / he takes / taking (masdar)", type: "تصريف" },
+            { front_ar: "إجازات", back_en: "holidays, vacations (plural of إجازة)", type: "جمع" },
+            { front_ar: "تَغَيَّبَ / يَتَغَيَّبُ / تَغَيُّب", back_en: "to be absent / he is absent / absence (masdar)", type: "تصريف" },
+            { front_ar: "زَارَ / يَزُورُ / زِيَارَة", back_en: "to visit / he visits / visiting (masdar)", type: "تصريف" },
+            { front_ar: "عَلِمَ / يَعْلَمُ / عِلْم", back_en: "to learn / he learns / knowledge (masdar)", type: "تصريف" },
+            { front_ar: "عُطَل", back_en: "holidays, days off (plural of عُطلة)", type: "جمع" },
+            { front_ar: "قرَّرَ / يُقَرِّرُ / تَقْرِير", back_en: "to decide / he decides / decision-making (masdar)", type: "تصريف" },
+            { front_ar: "قَرَارات", back_en: "decisions (plural of قَرار)", type: "جمع" },
+            { front_ar: "قَضَى / يَقْضِي / قَضَاء", back_en: "to spend (time) / he spends / spending (masdar)", type: "تصريف" },
+            { front_ar: "مُدَراء", back_en: "managers, directors (plural of مُدير)", type: "جمع" },
+            { front_ar: "مِنَح", back_en: "grants, scholarships (plural of مِنْحة)", type: "جمع" },
+            { front_ar: "وَفَيَات", back_en: "demises, deaths (plural of وَفاة)", type: "جمع" }
+        ];
+
+        // Quiz Data
+        const quizQuestions = {
+            quiz1: [ // Fill in the Blank (Arabic Sentence Completion)
+                { sentence_base: "قرأت الصفحة الـ __________ من الكتاب.", answer_ar: "آخِرة", hint_en: "last" },
+                { sentence_base: "__________ الطالب القلم من الطاولة.", answer_ar: "أَخَذَ", hint_en: "took" },
+                { sentence_base: "سأذهب في __________ طويلة الصيف القادم.", answer_ar: "إجازة", hint_en: "vacation" },
+                { sentence_base: "أحب كرة القدم __________ كرة السلة.", answer_ar: "بِالإضافة إلى", hint_en: "in addition to" },
+                { sentence_base: "__________ الطالب عن المدرسة اليوم.", answer_ar: "تَغَيَّبَ", hint_en: "was absent from" },
+                { sentence_base: "ذهبنا إلى السينما __________.", answer_ar: "جَميعاً", hint_en: "all together" },
+                { sentence_base: "__________ عمي جدتي الأسبوع الماضي.", answer_ar: "زار", hint_en: "visited" },
+                { sentence_base: "هل ستساعدني؟ __________!", answer_ar: "طَبْعاً", hint_en: "Of course" },
+                { sentence_base: "__________ بوفاة جاري من الجريدة.", answer_ar: "عَلِمْتُ", hint_en: "I learned of" },
+                { sentence_base: "لدينا __________ رسمية يوم الأحد.", answer_ar: "عُطلة", hint_en: "holiday" },
+                { sentence_base: "__________ رئيساً جديداً للقسم.", answer_ar: "عُيَّنْتُ", hint_en: "I was appointed" },
+                { sentence_base: "القطار __________ سيصل بعد قليل.", answer_ar: "القادِم", hint_en: "coming (next)" },
+                { sentence_base: "__________ أن أدرس الطب.", answer_ar: "قرَّرتُ", hint_en: "I decided" },
+                { sentence_base: "اتخذت الشركة __________ مهماً.", answer_ar: "قَراراً", hint_en: "decision" },
+                { sentence_base: "__________ العطلة في الشاطئ.", answer_ar: "قَضَيْتُ", hint_en: "I spent" },
+                { sentence_base: "__________ إلى الخارج بسبب المرض.", answer_ar: "لم يُسافِر", hint_en: "he did not travel (Jussive)" },
+                { sentence_base: "__________ إلى أي دولة هذا العام.", answer_ar: "ما سافر", hint_en: "he did not travel (Past)" },
+                { sentence_base: "كان خبر __________ الملك محزناً.", answer_ar: "مَوت", hint_en: "death" },
+                { sentence_base: "تحدثت مع __________ الشركة.", answer_ar: "مُدير", hint_en: "manager" },
+                { sentence_base: "هذه دراسة __________ بين اللغتين.", answer_ar: "مُقارَنة", hint_en: "comparative" },
+                { sentence_base: "حصلت على __________ دراسية كاملة.", answer_ar: "مِنْحة", hint_en: "scholarship" },
+                { sentence_base: "المقهى __________ على يمينك.", answer_ar: "هُنا", hint_en: "here" },
+                { sentence_base: "الجامعة __________ بعيدة عن المدينة.", answer_ar: "هُناك", hint_en: "there" },
+                { sentence_base: "أعلنت الصحيفة عن __________ الفنان.", answer_ar: "وَفاة", hint_en: "demise" }
+            ],
+            quiz2: [ // English to Arabic Word Translation
+                { en_word: "last, final", answer_ar: "آخِر" },
+                { en_word: "to take", answer_ar: "أَخَذَ" },
+                { en_word: "holiday, vacation", answer_ar: "إجازة" },
+                { en_word: "in addition to", answer_ar: "بِالإضافة إلى" },
+                { en_word: "to be absent from", answer_ar: "تَغَيَّبَ عن" },
+                { en_word: "all together", answer_ar: "جَميعاً" },
+                { en_word: "to visit", answer_ar: "زار" },
+                { en_word: "of course", answer_ar: "طَبْعاً" },
+                { en_word: "to learn of, know about", answer_ar: "عَلِمَ ب" },
+                { en_word: "holiday, day off", answer_ar: "عُطلة" },
+                { en_word: "I was appointed", answer_ar: "عُيَّنْتُ" },
+                { en_word: "coming, next", answer_ar: "قادِم" },
+                { en_word: "to decide", answer_ar: "قرَّرَ" },
+                { en_word: "decision", answer_ar: "قَرار" },
+                { en_word: "to spend (time)", answer_ar: "قَضى" },
+                { en_word: "he did not travel (Jussive)", answer_ar: "لم يُسافِر" },
+                { en_word: "he did not travel (Past)", answer_ar: "ما سافر" },
+                { en_word: "death", answer_ar: "مَوت" },
+                { en_word: "manager, director", answer_ar: "مُدير" },
+                { en_word: "comparative", answer_ar: "مُقارَن" },
+                { en_word: "grant, scholarship", answer_ar: "مِنْحة" },
+                { en_word: "here", answer_ar: "هُنا" },
+                { en_word: "there", answer_ar: "هُناك" },
+                { en_word: "demise, death", answer_ar: "وَفاة" }
+            ],
+            quiz3_dragdrop: [ // Contextual Word Choice (Drag and Drop)
+                { sentence_parts: ["قرأت الصفحة الـ ", " من الكتاب."], answer_ar: "آخِرة" },
+                { sentence_parts: ["__________ الطالب القلم من الطاولة."], answer_ar: "أَخَذَ" },
+                { sentence_parts: ["سأذهب في ", " طويلة الصيف القادم."], answer_ar: "إجازة" },
+                { sentence_parts: ["أحب كرة القدم ", " كرة السلة."], answer_ar: "بِالإضافة إلى" },
+                { sentence_parts: ["__________ الطالب عن المدرسة اليوم."], answer_ar: "تَغَيَّبَ" },
+                { sentence_parts: ["ذهبنا إلى السينما ", "."], answer_ar: "جَميعاً" },
+                { sentence_parts: ["__________ عمي جدتي الأسبوع الماضي."], answer_ar: "زار" },
+                { sentence_parts: ["هل ستساعدني؟ ", "!"], answer_ar: "طَبْعاً" },
+                { sentence_parts: ["__________ بوفاة جاري من الجريدة."], answer_ar: "عَلِمْتُ" },
+                { sentence_parts: ["لدينا ", " رسمية يوم الأحد."], answer_ar: "عُطلة" },
+                { sentence_parts: ["__________ رئيساً جديداً للقسم."], answer_ar: "عُيَّنْتُ" },
+                { sentence_parts: ["القطار ", " سيصل بعد قليل."], answer_ar: "القادِم" },
+                { sentence_parts: ["__________ أن أدرس الطب."], answer_ar: "قرَّرتُ" },
+                { sentence_parts: ["اتخذت الشركة ", " مهماً."], answer_ar: "قَراراً" },
+                { sentence_parts: ["__________ العطلة في الشاطئ."], answer_ar: "قَضَيْتُ" },
+                { sentence_parts: ["__________ إلى الخارج بسبب المرض."], answer_ar: "لم يُسافِر" },
+                { sentence_parts: ["__________ إلى أي دولة هذا العام."], answer_ar: "ما سافر" },
+                { sentence_parts: ["كان خبر ", " الملك محزناً."], answer_ar: "مَوت" },
+                { sentence_parts: ["تحدثت مع ", " الشركة."], answer_ar: "مُدير" },
+                { sentence_parts: ["هذه دراسة ", " بين اللغتين."], answer_ar: "مُقارَنة" },
+                { sentence_parts: ["حصلت على ", " دراسية كاملة."], answer_ar: "مِنْحة" },
+                { sentence_parts: ["المقهى ", " على يمينك."], answer_ar: "هُنا" },
+                { sentence_parts: ["الجامعة ", " بعيدة عن المدينة."], answer_ar: "هُناك" },
+                { sentence_parts: ["أعلنت الصحيفة عن ", " الفنان."], answer_ar: "وَفاة" }
+            ]
+        };
+
+        const mcqQuestions = [
+            {
+                question_ar: "أي كلمة تعني 'to take'؟",
+                options_ar: ["زار", "أَخَذَ", "قرَّرَ", "قَضى"],
+                correct_answer_ar: "أَخَذَ",
+                hint_en: "Which word means 'to take'?"
+            },
+            {
+                question_ar: "ما هو جمع كلمة 'إجازة'؟",
+                options_ar: ["إجازات", "أجوزة", "إجاز", "جوازات"],
+                correct_answer_ar: "إجازات",
+                hint_en: "What is the plural of 'vacation'?"
+            },
+            {
+                question_ar: "ما معنى 'جَميعاً'؟",
+                options_ar: ["sometimes", "alone", "all together", "never"],
+                correct_answer_ar: "all together",
+                hint_en: "What does 'جَميعاً' mean?"
+            },
+            {
+                question_ar: "أي كلمة تعني 'of course'؟",
+                options_ar: ["أبداً", "ربما", "طَبْعاً", "نادراً"],
+                correct_answer_ar: "طَبْعاً",
+                hint_en: "Which word means 'of course'?"
+            },
+            {
+                question_ar: "إذا كنت 'مديراً'، فما هو دورك؟",
+                options_ar: ["طالب", "معلم", "موظف", "مسؤول"],
+                correct_answer_ar: "مسؤول", // manager/director is a responsible person
+                hint_en: "If you are a 'manager', what is your role?"
+            },
+            {
+                question_ar: "عندما تذهب في 'عُطلة'، ماذا تفعل؟",
+                options_ar: ["تدرس", "تعمل", "تستريح", "تطبخ"],
+                correct_answer_ar: "تستريح",
+                hint_en: "When you go on a 'holiday', what do you do?"
+            },
+            {
+                question_ar: "ماذا تعني 'مِنْحة'؟",
+                options_ar: ["A loan", "A gift or scholarship", "A debt", "A job"],
+                correct_answer_ar: "A gift or scholarship",
+                hint_en: "What does 'مِنْحة' mean?"
+            },
+            {
+                question_ar: "أي كلمة تستخدم لوصف دراسة تقارن شيئين؟",
+                options_ar: ["فردية", "مُقارَنة", "خاصة", "عامة"],
+                correct_answer_ar: "مُقارَنة",
+                hint_en: "Which word is used to describe a study that compares two things?"
+            },
+            {
+                question_ar: "ما هو عكس كلمة 'هُنا'؟",
+                options_ar: ["أمام", "خلف", "هُناك", "فوق"],
+                correct_answer_ar: "هُناك",
+                hint_en: "What is the opposite of 'here'?"
+            },
+            {
+                question_ar: "أي من هذه الكلمات تعبر عن عدم السفر في الماضي؟",
+                options_ar: ["سافر", "يسافر", "لم يُسافِر", "سيسافر"],
+                correct_answer_ar: "لم يُسافِر",
+                hint_en: "Which of these words expresses not traveling in the past (Jussive negation)?"
+            },
+            {
+                question_ar: "ماذا يعني 'قَرار'؟",
+                options_ar: ["A question", "A decision", "An idea", "A problem"],
+                correct_answer_ar: "A decision",
+                hint_en: "What does 'قَرار' mean?"
+            },
+            {
+                question_ar: "إذا 'تَغَيَّبَ' الطالب عن الدرس، فماذا يعني ذلك؟",
+                options_ar: ["حضر", "تأخر", "غاب", "فهم"],
+                correct_answer_ar: "غاب",
+                hint_en: "If the student 'تَغَيَّبَ' from the lesson, what does that mean?"
+            }
+        ];
+
+
+        // Function to shuffle an array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // --- Vocabulary Table Population ---
+        function populateVocabularyTable() {
+            const tbody = document.querySelector("#vocab-table tbody");
+            tbody.innerHTML = ''; // Clear existing rows
+            vocabulary.forEach(item => {
+                const row = `
+                    <tr>
+                        <td>${item.word_ar}</td>
+                        <td dir="ltr" lang="en">${item.translation_en}</td>
+                        <td>${item.sentence_ar}</td>
+                        <td dir="ltr" lang="en">${item.sentence_en}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // --- Flashcards ---
+        function createFlashcard(item) {
+            const flashcard = document.createElement('div');
+            flashcard.className = 'flashcard';
+            flashcard.innerHTML = `
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">
+                        <span class="flashcard-type">${item.type}</span>
+                        ${item.front_ar}
+                    </div>
+                    <div class="flashcard-back">
+                        <span class="flashcard-type">${item.type}</span>
+                        ${item.back_en}
+                    </div>
+                </div>
+            `;
+            flashcard.addEventListener('click', () => {
+                flashcard.classList.toggle('flipped');
+            });
+            return flashcard;
+        }
+
+        function populateFlashcards() {
+            const wordFlashcardsContainer = document.getElementById('word-flashcards-container');
+            const derivationFlashcardsContainer = document.getElementById('derivation-flashcards-container');
+            wordFlashcardsContainer.innerHTML = '';
+            derivationFlashcardsContainer.innerHTML = '';
+
+            shuffleArray(flashcards); // Shuffle all flashcards
+
+            flashcards.forEach(item => {
+                if (item.type === "كلمة" || item.type === "عبارة" || item.type === "صفة") {
+                    wordFlashcardsContainer.appendChild(createFlashcard(item));
+                } else {
+                    derivationFlashcardsContainer.appendChild(createFlashcard(item));
+                }
+            });
+        }
+
+        // --- Quiz 1: Fill in the Blank (Arabic Sentence Completion) ---
+        function generateQuiz1Questions() {
+            const container = document.getElementById('quiz1-questions');
+            container.innerHTML = '';
+            shuffleArray(quizQuestions.quiz1);
+            quizQuestions.quiz1.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'mb-4';
+                questionDiv.innerHTML = `
+                    <p class="text-lg mb-2"><span class="font-semibold">${index + 1}.</span> ${q.sentence_base.replace('__________', `<input type="text" class="quiz-input" id="quiz1-q${index}" data-answer="${q.answer_ar}" dir="rtl">`)}</p>
+                    <div id="quiz1-feedback-${index}" class="text-sm mt-1"></div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkQuiz1Answers() {
+            quizQuestions.quiz1.forEach((q, index) => {
+                const input = document.getElementById(`quiz1-q${index}`);
+                const feedbackDiv = document.getElementById(`quiz1-feedback-${index}`);
+                const userAnswer = input.value.trim();
+                const correctAnswer = q.answer_ar.trim();
+
+                if (userAnswer === correctAnswer) {
+                    feedbackDiv.className = 'text-sm mt-1 correct-answer';
+                    feedbackDiv.textContent = 'صحيح!';
+                } else {
+                    feedbackDiv.className = 'text-sm mt-1 incorrect-answer';
+                    feedbackDiv.textContent = `خطأ. الإجابة الصحيحة هي: ${correctAnswer}`;
+                }
+            });
+        }
+
+        function showQuiz1Answers() {
+            quizQuestions.quiz1.forEach((q, index) => {
+                const input = document.getElementById(`quiz1-q${index}`);
+                const feedbackDiv = document.getElementById(`quiz1-feedback-${index}`);
+                input.value = q.answer_ar;
+                feedbackDiv.className = 'text-sm mt-1 correct-answer';
+                feedbackDiv.textContent = `الإجابة الصحيحة هي: ${q.answer_ar}`;
+            });
+        }
+
+        function resetQuiz1() {
+            generateQuiz1Questions(); // Regenerate to clear inputs and feedback
+        }
+
+        // --- Quiz 2: English to Arabic Word Translation ---
+        function generateQuiz2Questions() {
+            const container = document.getElementById('quiz2-questions');
+            container.innerHTML = '';
+            shuffleArray(quizQuestions.quiz2);
+            quizQuestions.quiz2.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'mb-4';
+                questionDiv.innerHTML = `
+                    <p class="text-lg mb-2" dir="ltr" lang="en"><span class="font-semibold">${index + 1}.</span> Translate: "${q.en_word}"</p>
+                    <input type="text" class="quiz-input" id="quiz2-q${index}" data-answer="${q.answer_ar}" dir="rtl">
+                    <div id="quiz2-feedback-${index}" class="text-sm mt-1"></div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkQuiz2Answers() {
+            quizQuestions.quiz2.forEach((q, index) => {
+                const input = document.getElementById(`quiz2-q${index}`);
+                const feedbackDiv = document.getElementById(`quiz2-feedback-${index}`);
+                const userAnswer = input.value.trim();
+                const correctAnswer = q.answer_ar.trim();
+
+                if (userAnswer === correctAnswer) {
+                    feedbackDiv.className = 'text-sm mt-1 correct-answer';
+                    feedbackDiv.textContent = 'صحيح!';
+                } else {
+                    feedbackDiv.className = 'text-sm mt-1 incorrect-answer';
+                    feedbackDiv.textContent = `خطأ. الإجابة الصحيحة هي: ${correctAnswer}`;
+                }
+            });
+        }
+
+        function showQuiz2Answers() {
+            quizQuestions.quiz2.forEach((q, index) => {
+                const input = document.getElementById(`quiz2-q${index}`);
+                const feedbackDiv = document.getElementById(`quiz2-feedback-${index}`);
+                input.value = q.answer_ar;
+                feedbackDiv.className = 'text-sm mt-1 correct-answer';
+                feedbackDiv.textContent = `الإجابة الصحيحة هي: ${q.answer_ar}`;
+            });
+        }
+
+        function resetQuiz2() {
+            generateQuiz2Questions(); // Regenerate to clear inputs and feedback
+        }
+
+        // --- Quiz 3: Contextual Word Choice (Drag and Drop) ---
+        let draggedItem = null;
+
+        function setupDragDropListeners() {
+            const draggables = document.querySelectorAll('.draggable-word');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', (e) => {
+                    draggedItem = draggable;
+                    e.dataTransfer.setData('text/plain', draggable.dataset.word);
+                    setTimeout(() => draggable.classList.add('dragging'), 0);
+                });
+                draggable.addEventListener('dragend', () => {
+                    draggedItem.classList.remove('dragging');
+                    draggedItem = null;
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault(); // Allow drop
+                    zone.classList.add('hover');
+                });
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('hover');
+                });
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('hover');
+                    if (zone.children.length === 0) { // Only allow dropping if zone is empty
+                        const word = e.dataTransfer.getData('text/plain');
+                        const filledWord = document.createElement('span');
+                        filledWord.className = 'filled-word';
+                        filledWord.textContent = word;
+                        filledWord.dataset.word = word; // Store the word in dataset for checking
+                        zone.appendChild(filledWord);
+                        draggedItem.style.display = 'none'; // Hide the original draggable
+                    }
+                });
+            });
+        }
+
+        function generateDragDropActivity() {
+            const sentencesContainer = document.getElementById('dragdrop-sentences');
+            const wordBankContainer = document.getElementById('dragdrop-word-bank');
+            sentencesContainer.innerHTML = '';
+            wordBankContainer.innerHTML = '';
+
+            shuffleArray(quizQuestions.quiz3_dragdrop);
+
+            const wordsForBank = [];
+            quizQuestions.quiz3_dragdrop.forEach((q, index) => {
+                const sentenceDiv = document.createElement('div');
+                sentenceDiv.className = 'bg-stone-50 p-4 rounded-lg shadow-sm flex flex-wrap items-center justify-end text-lg'; // Added flex and justify-end
+                sentenceDiv.dir = "rtl"; // Ensure RTL for the sentence container
+
+                // Add pre-blank text
+                if (q.sentence_parts[0]) {
+                    const preBlankSpan = document.createElement('span');
+                    preBlankSpan.textContent = q.sentence_parts[0];
+                    sentenceDiv.appendChild(preBlankSpan);
+                }
+
+                // Add drop zone
+                const dropZone = document.createElement('div');
+                dropZone.className = 'drop-zone';
+                dropZone.dataset.correctAnswer = q.answer_ar;
+                dropZone.id = `drop-zone-${index}`;
+                sentenceDiv.appendChild(dropZone);
+
+                // Add post-blank text
+                if (q.sentence_parts[1]) {
+                    const postBlankSpan = document.createElement('span');
+                    postBlankSpan.textContent = q.sentence_parts[1];
+                    sentenceDiv.appendChild(postBlankSpan);
+                }
+
+                sentencesContainer.appendChild(sentenceDiv);
+                wordsForBank.push(q.answer_ar);
+            });
+
+            shuffleArray(wordsForBank);
+            wordsForBank.forEach(word => {
+                const draggableWord = document.createElement('div');
+                draggableWord.className = 'draggable-word';
+                draggableWord.setAttribute('draggable', 'true');
+                draggableWord.dataset.word = word;
+                draggableWord.textContent = word;
+                wordBankContainer.appendChild(draggableWord);
+            });
+
+            setupDragDropListeners();
+        }
+
+        function checkDragDropAnswers() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+            dropZones.forEach(zone => {
+                const filledWord = zone.querySelector('.filled-word');
+                if (filledWord) {
+                    const userAnswer = filledWord.dataset.word;
+                    const correctAnswer = zone.dataset.correctAnswer;
+                    if (userAnswer === correctAnswer) {
+                        zone.classList.remove('incorrect-drop');
+                        zone.classList.add('correct-drop');
+                    } else {
+                        zone.classList.remove('correct-drop');
+                        zone.classList.add('incorrect-drop');
+                    }
+                } else {
+                    zone.classList.remove('correct-drop', 'incorrect-drop');
+                }
+            });
+        }
+
+        function resetDragDropActivity() {
+            generateDragDropActivity();
+        }
+
+        // --- Quiz 4: Multiple Choice Questions ---
+        function generateMcqQuestions() {
+            const container = document.getElementById('mcq-questions');
+            container.innerHTML = '';
+            shuffleArray(mcqQuestions);
+            mcqQuestions.forEach((q, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'mb-6 p-4 border border-stone-100 rounded-lg bg-stone-50';
+                questionDiv.innerHTML = `
+                    <p class="text-lg font-semibold mb-3">${qIndex + 1}. ${q.question_ar}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="mcq-options-${qIndex}">
+                        <!-- Options will be injected here -->
+                    </div>
+                    <div id="mcq-feedback-${qIndex}" class="text-sm mt-3"></div>
+                `;
+                container.appendChild(questionDiv);
+
+                const optionsContainer = document.getElementById(`mcq-options-${qIndex}`);
+                const shuffledOptions = [...q.options_ar];
+                shuffleArray(shuffledOptions);
+
+                shuffledOptions.forEach((option, oIndex) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'mcq-option';
+                    optionDiv.textContent = option;
+                    optionDiv.dataset.questionIndex = qIndex;
+                    optionDiv.dataset.option = option;
+                    optionDiv.addEventListener('click', () => selectMcqOption(qIndex, optionDiv));
+                    optionsContainer.appendChild(optionDiv);
+                });
+            });
+        }
+
+        function selectMcqOption(qIndex, selectedOptionDiv) {
+            const optionsContainer = document.getElementById(`mcq-options-${qIndex}`);
+            // Deselect all options for this question
+            Array.from(optionsContainer.children).forEach(optionDiv => {
+                optionDiv.classList.remove('selected', 'correct', 'incorrect');
+            });
+            // Select the clicked option
+            selectedOptionDiv.classList.add('selected');
+        }
+
+        function checkMcqAnswers() {
+            mcqQuestions.forEach((q, qIndex) => {
+                const optionsContainer = document.getElementById(`mcq-options-${qIndex}`);
+                const feedbackDiv = document.getElementById(`mcq-feedback-${qIndex}`);
+                const selectedOption = optionsContainer.querySelector('.mcq-option.selected');
+
+                if (selectedOption) {
+                    const userAnswer = selectedOption.dataset.option;
+                    const correctAnswer = q.correct_answer_ar;
+
+                    if (userAnswer === correctAnswer) {
+                        selectedOption.classList.remove('incorrect');
+                        selectedOption.classList.add('correct');
+                        feedbackDiv.className = 'text-sm mt-3 correct-answer';
+                        feedbackDiv.textContent = 'صحيح!';
+                    } else {
+                        selectedOption.classList.remove('correct');
+                        selectedOption.classList.add('incorrect');
+                        feedbackDiv.className = 'text-sm mt-3 incorrect-answer';
+                        feedbackDiv.textContent = `خطأ. الإجابة الصحيحة هي: ${correctAnswer}`;
+                        // Also highlight the correct answer if it's not the one selected
+                        Array.from(optionsContainer.children).forEach(optionDiv => {
+                            if (optionDiv.dataset.option === correctAnswer) {
+                                optionDiv.classList.add('correct');
+                            }
+                        });
+                    }
+                } else {
+                    feedbackDiv.className = 'text-sm mt-3 incorrect-answer';
+                    feedbackDiv.textContent = 'الرجاء اختيار إجابة.';
+                }
+            });
+        }
+
+        function showMcqAnswers() {
+            mcqQuestions.forEach((q, qIndex) => {
+                const optionsContainer = document.getElementById(`mcq-options-${qIndex}`);
+                const feedbackDiv = document.getElementById(`mcq-feedback-${qIndex}`);
+                Array.from(optionsContainer.children).forEach(optionDiv => {
+                    optionDiv.classList.remove('selected', 'incorrect');
+                    if (optionDiv.dataset.option === q.correct_answer_ar) {
+                        optionDiv.classList.add('correct');
+                    } else {
+                        optionDiv.classList.remove('correct');
+                    }
+                });
+                feedbackDiv.className = 'text-sm mt-3 correct-answer';
+                feedbackDiv.textContent = `الإجابة الصحيحة هي: ${q.correct_answer_ar}`;
+            });
+        }
+
+        function resetMcq() {
+            generateMcqQuestions(); // Regenerate to clear selections and feedback
+        }
+
+        // --- Event Listeners and Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            populateVocabularyTable();
+            populateFlashcards();
+            generateQuiz1Questions();
+            generateQuiz2Questions();
+            generateDragDropActivity();
+            generateMcqQuestions();
+
+            document.getElementById('quiz1-check').addEventListener('click', checkQuiz1Answers);
+            document.getElementById('quiz1-show-answers').addEventListener('click', showQuiz1Answers);
+            document.getElementById('quiz1-reset').addEventListener('click', resetQuiz1);
+
+            document.getElementById('quiz2-check').addEventListener('click', checkQuiz2Answers);
+            document.getElementById('quiz2-show-answers').addEventListener('click', showQuiz2Answers);
+            document.getElementById('quiz2-reset').addEventListener('click', resetQuiz2);
+
+            // Drag and Drop buttons are handled by inline onclick for simplicity
+            // checkDragDropAnswers() and resetDragDropActivity() are global functions
+
+            document.getElementById('mcq-check').addEventListener('click', checkMcqAnswers);
+            document.getElementById('mcq-show-answers').addEventListener('click', showMcqAnswers);
+            document.getElementById('mcq-reset').addEventListener('click', resetMcq);
+        });
+    </script>
+</body>
+</html>
