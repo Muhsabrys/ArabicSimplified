@@ -129,36 +129,6 @@
             color: #e5e7eb; /* light gray */
             background-color: rgba(0, 0, 0, 0.3);
         }
-        .mcq-option {
-            background-color: #f0f9ff; /* blue-50 */
-            border: 1px solid #bfdbfe; /* blue-200 */
-            color: #1e40af; /* blue-800 */
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            text-align: center;
-            font-weight: 600;
-        }
-        .mcq-option:hover {
-            background-color: #e0f2fe; /* blue-100 */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .mcq-option.selected {
-            background-color: #93c5fd; /* blue-300 */
-            border-color: #2563eb; /* blue-600 */
-            color: white;
-        }
-        .mcq-option.correct {
-            background-color: #d1fae5; /* green-100 */
-            border-color: #34d399; /* green-400 */
-            color: #065f46; /* green-800 */
-        }
-        .mcq-option.incorrect {
-            background-color: #fee2e2; /* red-100 */
-            border-color: #ef4444; /* red-500 */
-            color: #991b1b; /* red-800 */
-        }
     </style>
 </head>
 <body class="bg-stone-50 text-stone-800">
@@ -242,20 +212,6 @@
                         <button id="quiz2-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
                     </div>
                 </div>
-
-                <!-- Quiz Type 3: Multiple Choice Questions -->
-                <div class="mb-10 p-6 border border-stone-200 rounded-xl">
-                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">النشاط ٣: اختر الإجابة الصحيحة</h3>
-                    <p class="text-stone-600 mb-4">اختر الكلمة العربية التي تطابق المعنى الإنجليزي.</p>
-                    <div id="mcq-questions">
-                        <!-- Questions will be injected here -->
-                    </div>
-                    <div class="flex flex-wrap justify-center gap-4 mt-6">
-                        <button id="mcq-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
-                        <button id="mcq-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
-                        <button id="mcq-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
-                    </div>
-                </div>
             </section>
         </main>
 
@@ -335,7 +291,7 @@
             { sentence_ar: "افعل ____ أمرتك.", correct_answer_ar: "كما", hint_en: "Do as I commanded you." },
             { sentence_ar: "لقد ____ بالجامعة العام الماضي.", correct_answer_ar: "التحق", hint_en: "He joined the university last year." },
             { sentence_ar: "كتاب القواعد هذا ____ هذاك.", correct_answer_ar: "مثل", hint_en: "This grammar book is like that one." },
-            { sentence_ar: "في العام ____ سافرت إلى مصر.", correct_answer_ar: "الماضي", hint_en: "In the past year, I traveled to Egypt." },
+            { sentence_ar: "في العام ____ سافرت.", correct_answer_ar: "الماضي", hint_en: "In the past year, I traveled." },
             { sentence_ar: "____ في الامتحان بتقدير ممتاز.", correct_answer_ar: "نجحت", hint_en: "I succeeded in the exam with an excellent grade." }
         ];
 
@@ -365,49 +321,6 @@
             { question_en: "I succeeded in", correct_answer_ar: "نجحت في" },
         ];
 
-        // Quiz 3: Multiple Choice Questions
-        const mcqQuestions = [
-            {
-                question_en: "What is the plural of 'أم' (mother)?",
-                options_ar: ["أمهات", "آباء", "أمهاتون", "امهات"],
-                correct_answer_ar: "أمهات"
-            },
-            {
-                question_en: "What does 'الماضي/ة' mean?",
-                options_ar: ["Next", "Future", "Past, last", "Now"],
-                correct_answer_ar: "Past, last"
-            },
-            {
-                question_en: "What is the English translation of 'حكومة'?",
-                options_ar: ["King", "Country", "Government", "Army"],
-                correct_answer_ar: "Government"
-            },
-            {
-                question_en: "Choose the correct verb for 'he wants to'.",
-                options_ar: ["أراد أن", "يريد أن", "التحق ب-", "يساعد"],
-                correct_answer_ar: "يريد أن"
-            },
-            {
-                question_en: "What does 'بفضل' mean?",
-                options_ar: ["Because of", "Thanks to", "As a result of", "In the beginning"],
-                correct_answer_ar: "Thanks to"
-            },
-            {
-                question_en: "What is the Masdar (verbal noun) of 'يذاكر'?",
-                options_ar: ["ذاكرة", "تذكير", "المذاكرة", "مذاكر"],
-                correct_answer_ar: "المذاكرة"
-            },
-            {
-                question_en: "Which word means 'international'?",
-                options_ar: ["دولة", "رئيس", "دولي/ة", "حكومة"],
-                correct_answer_ar: "دولي/ة"
-            },
-             {
-                question_en: "Choose the correct translation for 'I succeeded in'.",
-                options_ar: ["نجح في", "ينجح في", "نجحت في", "ينجح"],
-                correct_answer_ar: "نجحت في"
-            }
-        ];
 
         // --- General Helper Functions ---
         
@@ -591,106 +504,12 @@
             });
         }
 
-        // --- Quiz 3: Multiple Choice Questions ---
-        function renderMCQ() {
-            const mcqContainer = document.getElementById('mcq-questions');
-            mcqContainer.innerHTML = '';
-            shuffleArray([...mcqQuestions]).forEach((q, qIndex) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'mb-6 p-6 border border-stone-200 rounded-xl bg-stone-50';
-                questionDiv.innerHTML = `
-                    <p class="text-lg font-semibold mb-4 text-left" dir="ltr">${qIndex + 1}. ${q.question_en}</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        ${shuffleArray([...q.options_ar]).map((option, oIndex) => `
-                            <button type="button" class="mcq-option" data-question-index="${qIndex}" data-option="${option}">
-                                ${option}
-                            </button>
-                        `).join('')}
-                    </div>
-                    <div class="feedback mt-4 text-center" data-question-index="${qIndex}"></div>
-                `;
-                mcqContainer.appendChild(questionDiv);
-            });
-
-            // Add event listeners for option selection
-            mcqContainer.querySelectorAll('.mcq-option').forEach(button => {
-                button.addEventListener('click', function() {
-                    const qIndex = this.dataset.question-index;
-                    // Deselect any previously selected option for this question
-                    mcqContainer.querySelectorAll(`.mcq-option[data-question-index="${qIndex}"]`).forEach(btn => {
-                        btn.classList.remove('selected');
-                    });
-                    // Select the current option
-                    this.classList.add('selected');
-                });
-            });
-        }
-
-        function checkMCQAnswers() {
-            mcqQuestions.forEach((q, qIndex) => {
-                const selectedButton = document.querySelector(`.mcq-option[data-question-index="${qIndex}"].selected`);
-                const feedbackDiv = document.querySelector(`#mcq-questions .feedback[data-question-index="${qIndex}"]`);
-
-                // Clear previous feedback and styling
-                document.querySelectorAll(`.mcq-option[data-question-index="${qIndex}"]`).forEach(btn => {
-                    btn.classList.remove('correct', 'incorrect', 'selected');
-                });
-                feedbackDiv.innerHTML = '';
-
-                if (selectedButton) {
-                    const userAnswer = selectedButton.dataset.option;
-                    const correctAnswer = q.correct_answer_ar;
-
-                    if (userAnswer === correctAnswer) {
-                        selectedButton.classList.add('correct');
-                        feedbackDiv.innerHTML = '<span class="correct-answer">صحيح!</span>';
-                    } else {
-                        selectedButton.classList.add('incorrect');
-                        feedbackDiv.innerHTML = `<span class="incorrect-answer">خطأ. الإجابة الصحيحة: ${correctAnswer}</span>`;
-                        // Highlight the correct answer if incorrect
-                        document.querySelector(`.mcq-option[data-question-index="${qIndex}"][data-option="${correctAnswer}"]`).classList.add('correct');
-                    }
-                } else {
-                    feedbackDiv.innerHTML = '<span class="incorrect-answer">الرجاء اختيار إجابة.</span>';
-                }
-            });
-        }
-
-        function showMCQAnswers() {
-            mcqQuestions.forEach((q, qIndex) => {
-                // Clear all previous selections and feedback
-                document.querySelectorAll(`.mcq-option[data-question-index="${qIndex}"]`).forEach(btn => {
-                    btn.classList.remove('selected', 'correct', 'incorrect');
-                });
-                document.querySelector(`#mcq-questions .feedback[data-question-index="${qIndex}"]`).innerHTML = '';
-
-                // Highlight the correct answer
-                const correctAnswer = q.correct_answer_ar;
-                const correctButton = document.querySelector(`.mcq-option[data-question-index="${qIndex}"][data-option="${correctAnswer}"]`);
-                if (correctButton) {
-                    correctButton.classList.add('correct');
-                }
-            });
-        }
-
-        function resetMCQ() {
-            document.querySelectorAll('.mcq-option').forEach(button => {
-                button.classList.remove('selected', 'correct', 'incorrect');
-            });
-            document.querySelectorAll('.feedback').forEach(feedbackDiv => {
-                feedbackDiv.innerHTML = '';
-            });
-            renderMCQ(); // Re-render to shuffle questions/options
-        }
-
-
         // --- Event Listeners for Quiz Buttons ---
         document.addEventListener('DOMContentLoaded', () => {
             populateVocabularyTable();
             populateFlashcards();
             renderQuiz1();
             renderQuiz2();
-            renderMCQ();
 
             // Quiz 1 Buttons
             document.getElementById('quiz1-check').addEventListener('click', checkQuiz1Answers);
@@ -701,11 +520,6 @@
             document.getElementById('quiz2-check').addEventListener('click', checkQuiz2Answers);
             document.getElementById('quiz2-show-answers').addEventListener('click', showQuiz2Answers);
             document.getElementById('quiz2-reset').addEventListener('click', resetQuiz2);
-
-            // MCQ Buttons
-            document.getElementById('mcq-check').addEventListener('click', checkMCQAnswers);
-            document.getElementById('mcq-show-answers').addEventListener('click', showMCQAnswers);
-            document.getElementById('mcq-reset').addEventListener('click', resetMCQ);
         });
     </script>
 </body>
