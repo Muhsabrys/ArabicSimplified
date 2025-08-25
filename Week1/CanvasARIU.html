@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Interactive Arabic Content Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            box-sizing: border-box;
+            direction: rtl; /* Sets default direction for the whole page */
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #334155;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        .form-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            background-color: #f9fafb;
+        }
+        .form-section h2 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: #4f46e5;
+            border-bottom: 2px solid #e0e7ff;
+            padding-bottom: 0.75rem;
+            font-size: 1.6rem;
+            text-align: right;
+        }
+        .input-item {
+            background-color: #eef2ff;
+            border: 1px solid #c7d2fe;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .input-item label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #1e40af;
+        }
+        .input-item input[type="text"],
+        .input-item input[type="url"],
+        .input-item textarea {
+            width: calc(100% - 20px);
+            padding: 0.75rem 10px;
+            margin-bottom: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.375rem;
+            font-size: 1.15rem;
+            box-sizing: border-box;
+            text-align: right; /* Right align input text */
+        }
+        .input-item textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            justify-content: flex-end;
+        }
+        .add-btn, .remove-btn {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .add-btn:hover { background-color: #059669; }
+        .remove-btn { background-color: #ef4444; }
+        .remove-btn:hover { background-color: #dc2626; }
+        .generate-btn, .copy-btn {
+            background-color: #4f46e5;
+            color: #ffffff;
+            padding: 0.85rem 1.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .generate-btn:hover, .copy-btn:hover {
+            background-color: #4338ca;
+        }
+        #output-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            display: none;
+            text-align: right;
+        }
+        #output-html {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.375rem;
+            padding: 10px;
+            font-family: monospace;
+            background-color: #f0f4f8;
+            resize: vertical;
+            margin-bottom: 1rem;
+            direction: ltr; /* Keeps HTML code readable */
+            text-align: left;
+        }
+        .instructions {
+            background-color: #ecfdf5;
+            border-right: 4px solid #34d399; /* Right-aligned border */
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: #065f46;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        .instructions p {
+            margin: 0;
+        }
+        .fa-trash-can {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        .fa-trash-can:hover {
+            color: #dc2626;
+        }
+        /* New style for the generated Canvas header */
+        .generated-header {
+            background: linear-gradient(135deg, #10b981 0%, #4f46e5 100%);
+            color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* New style for the content boxes */
+        .generated-content-box {
+            background-color: #f7f9fd;
+            border: 1px solid #dbeafe;
+            border-radius: 0.6rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .generated-content-box h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #93c5fd;
+            padding-bottom: 0.5rem;
+            text-align: right;
+        }
+        .generated-content-item {
+            border: 1px solid #e0e7ff;
+            background-color: #eff6ff;
+            border-right: 4px solid #3b82f6; /* Accent border */
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .generated-content-item p {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #334155;
+            text-align: right;
+        }
+        .generated-content-item strong {
+            display: block;
+            font-size: 1.2rem;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+        .generated-content-item .link-icon {
+            color: #3b82f6;
+            font-size: 1.25rem;
+            text-decoration: none;
+            transition: color 0.2s;
+            margin-top: 0.75rem;
+            display: inline-block;
+        }
+        .generated-content-item .link-icon:hover {
+            color: #1e40af;
+        }
+        .note-box {
+            background-color: #fef3c7;
+            border-right: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: #78350f;
+            font-size: 1rem;
+            text-align: right;
+        }
+        .qa-box {
+            background-color: #e6fffa;
+            border-right: 4px solid #38b2ac;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            color: #2c525f;
+            line-height: 1.6;
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            text-align: right;
+        }
+        .qa-box a {
+            color: #38b2ac;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .qa-box a:hover {
+            color: #238a8a;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            .form-section h2 { font-size: 1.4rem; }
+            .input-item input, .input-item textarea { font-size: 1rem; }
+            .generate-btn, .copy-btn { font-size: 1.1rem; padding: 0.75rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Canvas Interactive Arabic Content Generator</h1>
+        <div class="instructions">
+            <p>Use the **+ Add Entry** button to add new content blocks. You can add a **Title**, a **Description**, and an optional **Hyperlink**. The trash icon lets you remove entries. Fill out the content and click "Generate HTML".</p>
+        </div>
+        <div class="form-section">
+            <h2>ماذا سندرس اليوم في الصف؟</h2>
+            <div id="section1-inputs"></div>
+            <div class="action-buttons">
+                <button type="button" class="add-btn" onclick="addEntry('section1')">+ إضافة محتوى</button>
+            </div>
+        </div>
+        <div class="form-section">
+            <h2>ماذا ستدرسون اليوم في البيت؟</h2>
+            <div id="section2-inputs"></div>
+            <div class="action-buttons">
+                <button type="button" class="add-btn" onclick="addEntry('section2')">+ إضافة محتوى</button>
+            </div>
+        </div>
+        <div class="form-section">
+            <h2>ما هي الواجبات؟</h2>
+            <div id="section3-inputs"></div>
+            <div class="action-buttons">
+                <button type="button" class="add-btn" onclick="addEntry('section3')">+ إضافة محتوى</button>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="generate-btn" onclick="generateCanvasHtml()">توليد الكود HTML</button>
+        </div>
+        <div id="output-section">
+            <h2>كود HTML جاهز (لصق في كانفاس)</h2>
+            <textarea id="output-html" readonly></textarea>
+            <button class="copy-btn" onclick="copyHtmlToClipboard()">نسخ الكود</button>
+        </div>
+    </div>
+    <script>
+        let entryCounters = { section1: 0, section2: 0, section3: 0 };
+        function addEntry(sectionId) {
+            entryCounters[sectionId]++;
+            const entryIndex = entryCounters[sectionId];
+            const container = document.getElementById(sectionId + '-inputs');
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'input-item';
+            entryDiv.id = `${sectionId}-item-${entryIndex}`;
+            entryDiv.innerHTML = `
+                <i class="fa-solid fa-trash-can" onclick="removeEntry('${sectionId}-item-${entryIndex}')"></i>
+                <label for="${sectionId}-title-${entryIndex}">العنوان:</label>
+                <input type="text" id="${sectionId}-title-${entryIndex}" placeholder="عنوان اختياري">
+                <label for="${sectionId}-desc-${entryIndex}">الوصف:</label>
+                <textarea id="${sectionId}-desc-${entryIndex}" placeholder="اكتب الوصف أو قائمة. استخدم أسطر جديدة للتنسيق."></textarea>
+                <label for="${sectionId}-link-${entryIndex}">رابط (اختياري):</label>
+                <input type="url" id="${sectionId}-link-${entryIndex}" placeholder="مثال: https://canvas.instructure.com/assignments">
+            `;
+            container.appendChild(entryDiv);
+        }
+        function removeEntry(itemId) {
+            const item = document.getElementById(itemId);
+            if (item) {
+                item.remove();
+            }
+        }
+        function generateCanvasHtml() {
+            let generatedHtml = `
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<div style="max-width: 90%; margin: 2rem auto; padding: 1.5rem; background-color: #ffffff; border-radius: 1rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); font-family: 'Cairo', sans-serif; box-sizing: border-box; direction: rtl; text-align: right;">
+    <div style="background: linear-gradient(135deg, #10b981 0%, #4f46e5 100%); color: #ffffff; padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 2rem; text-align: center; font-weight: 700; font-size: 1.8rem; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+        محتوى هذا الأسبوع
+    </div>
+    <div style="font-size: 1.2rem; color: #334155; line-height: 1.8;">`;
+            const processSection = (title, sectionId) => {
+                const entries = document.querySelectorAll(`#${sectionId}-inputs .input-item`);
+                if (entries.length > 0) {
+                    generatedHtml += `
+    <div style="margin-bottom: 2.5rem;">
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: #1e40af; margin-top: 0; margin-bottom: 1rem; border-bottom: 2px solid #93c5fd; padding-bottom: 0.5rem;">${title}</h3>`;
+                    entries.forEach((entry, index) => {
+                        const titleInput = entry.querySelector('input[type="text"]').value.trim();
+                        const descInput = entry.querySelector('textarea').value.trim();
+                        const linkInput = entry.querySelector('input[type="url"]').value.trim();
+                        const formattedDesc = descInput.replace(/\n/g, '<br>');
+                        if (titleInput || formattedDesc || linkInput) {
+                            generatedHtml += `
+        <div style="background-color: #eff6ff; border-right: 4px solid #3b82f6; padding: 1.25rem; border-radius: 0.5rem; margin-bottom: 1rem; color: #334155; line-height: 1.8; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);">`;
+                            if (titleInput) {
+                                generatedHtml += `<p style="font-weight: 700; color: #1e3a8a; margin: 0 0 0.5rem; font-size: 1.2rem;">${titleInput}</p>`;
+                            }
+                            if (formattedDesc) {
+                                generatedHtml += `<p style="margin: 0 0 0.75rem;">${formattedDesc}</p>`;
+                            }
+                            if (linkInput) {
+                                generatedHtml += `<a href="${linkInput}" style="color: #3b82f6; text-decoration: none; font-size: 1.25rem; transition: color 0.2s;" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>`;
+                            }
+                            generatedHtml += `
+        </div>`;
+                        }
+                    });
+                    generatedHtml += `
+    </div>`;
+                }
+            };
+            processSection("ماذا سندرس اليوم في الصف؟", "section1");
+            processSection("ماذا ستدرسون اليوم في البيت؟", "section2");
+            processSection("ما هي الواجبات؟", "section3");
+            generatedHtml += `
+    <div style="background-color: #e6fffa; border-right: 4px solid #38b2ac; padding: 1.5rem; border-radius: 0.5rem; color: #2c525f; line-height: 1.6; font-size: 1.2rem; margin-top: 2rem; text-align: right;">
+        <p style="font-size: 1.3rem; font-weight: bold; color: #238a8a; margin: 0 0 0.75rem;">
+            هل لديك أسئلة؟
+        </p>
+        <p style="margin: 0 0 1rem;">
+            لا تترددوا في ترك أسئلتكم هنا إذا كان هناك شيء لا تفهمونه من دراستكم. 
+            <br>
+            <a href="https://docs.google.com/document/d/133bY5-XFgq_5Uxz4TDEAD2DAV5wx1pIbQ_5U7BtDrGs/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+                انقروا هنا لإضافة أسئلتكم.
+            </a>
+        </p>
+        <p style="font-size: 1rem; color: #4a5568; margin: 0;">
+            يرجى حذف سؤالك بمجرد أن يتم الإجابة عليه في الصف.
+        </p>
+    </div>
+</div>
+            `;
+            document.getElementById('output-html').value = generatedHtml;
+            document.getElementById('output-section').style.display = 'block';
+        }
+        function copyHtmlToClipboard() {
+            const outputTextarea = document.getElementById('output-html');
+            outputTextarea.select();
+            document.execCommand('copy');
+            alert('تم نسخ الكود!');
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            addEntry('section1');
+            addEntry('section2');
+            addEntry('section3');
+        });
+    </script>
+</body>
+</html>
