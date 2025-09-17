@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Interactive Guide to Linear Regression</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 384px;
+            }
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center my-12">
+            <h1 class="text-4xl md:text-6xl font-bold text-[#003f5c] text-shadow">A Visual Guide to Linear Regression</h1>
+            <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">Uncover how we can use data to find trends and make predictions by finding the "best fitting" straight line.</p>
+        </header>
+
+        <main class="space-y-12">
+            
+            <section id="what-is-regression" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4">What is Regression?</h2>
+                <p class="text-slate-600 mb-6">At its heart, regression is a statistical tool for exploring the relationship between variables. We use it to predict a continuous outcome (like a price or temperature) based on one or more input variables. Think of it as teaching a computer to make an educated guess based on past data.</p>
+                <div class="bg-slate-100 rounded-lg p-6 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 text-center">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-4xl">🏡</span>
+                        <div>
+                            <p class="font-semibold text-[#003f5c]">INPUT</p>
+                            <p class="text-slate-700">Size of a House</p>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold text-[#7a5195] animate-pulse">→</div>
+                    <div class="flex items-center space-x-2">
+                         <span class="text-4xl">💰</span>
+                        <div>
+                            <p class="font-semibold text-[#003f5c]">PREDICTED OUTPUT</p>
+                            <p class="text-slate-700">Estimated Price</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="best-fit-line" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4">The Goal: Finding the Best Fit Line</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold text-[#374c80] mb-2">1. Start with Data Points</h3>
+                        <p class="text-slate-600 mb-4">Imagine we have data showing the relationship between hours studied and exam scores. When we plot this data, each point represents one student's result. Our goal is to see if there's a trend.</p>
+                        <div class="chart-container h-64 sm:h-80 md:h-96">
+                            <canvas id="scatterPlot"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-[#374c80] mb-2">2. Draw the Line of Best Fit</h3>
+                        <p class="text-slate-600 mb-4">Linear regression draws a single straight line through the data that best captures the underlying relationship. This line doesn't need to touch every point; instead, it represents the general trend, allowing us to make predictions for new data.</p>
+                        <div class="chart-container h-64 sm:h-80 md:h-96">
+                            <canvas id="lineFitPlot"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="how-it-works" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4">How Do We Find the "Best" Line?</h2>
+                <p class="text-slate-600 mb-6">The "best" line is the one that minimizes the total error. We measure this error by looking at the **residuals**—the vertical distance between each actual data point and the prediction line. The line that results in the smallest sum of these squared distances is our winner. This is called the **Least Squares Method**.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold text-[#7a5195] text-center mb-2">Visualizing the Errors (Residuals)</h3>
+                        <p class="text-slate-600 text-center mb-4">The red lines show the error for each point. Squaring them ensures larger errors are penalized more heavily.</p>
+                        <div class="chart-container h-80 sm:h-96">
+                             <canvas id="residualsPlot"></canvas>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="text-xl font-semibold text-[#7a5195] text-center mb-2">Sum of Squared Errors</h3>
+                        <p class="text-slate-600 text-center mb-4">The algorithm adjusts the line's slope and intercept to make the total area of the squared errors as small as possible.</p>
+                        <div class="chart-container h-80 sm:h-96">
+                            <canvas id="errorBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="equation" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4">The Equation of the Line</h2>
+                <p class="text-slate-600 mb-6">The best-fit line is defined by a simple mathematical equation. Understanding its components allows us to interpret what the model has learned from the data.</p>
+                 <div class="bg-slate-100 rounded-lg p-6 text-center">
+                    <p class="text-2xl md:text-4xl font-mono tracking-wider">
+                        <span class="text-[#ef5675]">y</span> = <span class="text-[#bc5090]">β₀</span> + <span class="text-[#ff764a]">β₁</span><span class="text-[#003f5c]">x</span>
+                    </p>
+                </div>
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="bg-slate-50 p-4 rounded-lg">
+                        <p class="text-lg font-semibold text-[#bc5090]">Intercept (β₀)</p>
+                        <p class="text-sm text-slate-600">This is the starting point of the line—the predicted value of y when x is 0.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg">
+                        <p class="text-lg font-semibold text-[#ff764a]">Slope (β₁)</p>
+                        <p class="text-sm text-slate-600">This represents the strength and direction of the relationship. It tells us how much y increases for every one-unit increase in x.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg">
+                        <p class="text-lg font-semibold text-[#003f5c]">Variables (x, y)</p>
+                        <p class="text-sm text-slate-600">`x` is our input (independent variable), and `y` is the outcome we are trying to predict (dependent variable).</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="evaluation" class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-[#003f5c] mb-4">Is the Model Any Good?</h2>
+                <p class="text-slate-600 mb-6">After building a model, we must evaluate its performance. Two key metrics help us understand how well our line fits the data and how accurate its predictions are.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center">
+                        <h3 class="text-xl font-semibold text-[#bc5090] mb-2">R-Squared (R²)</h3>
+                        <p class="text-slate-600 mb-4">This metric tells us what percentage of the variation in our outcome variable can be explained by our input variable. A value of 1.0 would mean a perfect fit.</p>
+                        <div class="chart-container h-64 sm:h-80">
+                            <canvas id="rSquaredDonut"></canvas>
+                        </div>
+                    </div>
+                    <div class="text-center bg-slate-100 p-8 rounded-lg">
+                        <h3 class="text-xl font-semibold text-[#bc5090] mb-2">Root Mean Squared Error (RMSE)</h3>
+                        <p class="text-slate-600 mb-4">This tells us, on average, how far our predictions are from the actual values, measured in the original units of the outcome variable (e.g., exam points).</p>
+                        <div class="text-6xl font-bold text-[#ef5675]">
+                            5.25
+                        </div>
+                         <p class="text-slate-600 mt-2">Average Prediction Error</p>
+                    </div>
+                </div>
+            </section>
+            
+            <footer class="text-center mt-12 py-8 border-t border-slate-200">
+                <p class="text-slate-500">Infographic generated to visually explain the core concepts of Linear Regression.</p>
+            </footer>
+
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = {
+                labels: [1, 2, 2.5, 3, 4, 4.5, 5, 5.5, 6, 7, 8, 8.5, 9, 10],
+                points: [15, 22, 28, 25, 35, 41, 44, 48, 52, 58, 65, 68, 72, 78]
+            };
+            
+            const scatterData = data.labels.map((label, i) => ({ x: label, y: data.points[i] }));
+            const regressionLine = (x) => 6.84 * x + 10.53;
+            
+            const lineData = data.labels.map(x => ({ x: x, y: regressionLine(x) }));
+            const residuals = data.points.map((y, i) => Math.abs(y - regressionLine(data.labels[i])));
+            const squaredErrors = residuals.map(r => r*r);
+
+            const tooltipTitleCallback = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            new Chart(document.getElementById('scatterPlot'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Student Data (Hours Studied vs. Score)',
+                        data: scatterData,
+                        backgroundColor: '#ef5675'
+                    }]
+                },
+                options: { ...tooltipTitleCallback, maintainAspectRatio: false, scales: { x: { title: { display: true, text: 'Hours Studied' }}, y: { title: { display: true, text: 'Exam Score' }}} }
+            });
+
+            new Chart(document.getElementById('lineFitPlot'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Student Data',
+                        data: scatterData,
+                        backgroundColor: '#ef5675'
+                    }, {
+                        label: 'Line of Best Fit',
+                        data: lineData,
+                        borderColor: '#003f5c',
+                        backgroundColor: '#003f5c',
+                        type: 'line',
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                options: { ...tooltipTitleCallback, maintainAspectRatio: false, scales: { x: { title: { display: true, text: 'Hours Studied' }}, y: { title: { display: true, text: 'Exam Score' }}} }
+            });
+            
+            const verticalLinePlugin = {
+                id: 'verticalLinePlugin',
+                afterDraw: (chart) => {
+                    const ctx = chart.ctx;
+                    const meta = chart.getDatasetMeta(0);
+                    const lineMeta = chart.getDatasetMeta(1);
+            
+                    meta.data.forEach((element, index) => {
+                        const lineElement = lineMeta.data.find(lineEl => lineEl.$context.parsed.x === element.x);
+                        if (lineElement) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = '#ff764a';
+                            ctx.lineWidth = 2;
+                            ctx.moveTo(element.x, element.y);
+                            ctx.lineTo(lineElement.x, lineElement.y);
+                            ctx.stroke();
+                        }
+                    });
+                }
+            };
+            
+            new Chart(document.getElementById('residualsPlot'), {
+                 type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Student Data',
+                        data: scatterData,
+                        backgroundColor: '#ef5675',
+                        borderColor: '#ef5675'
+                    }, {
+                        label: 'Prediction',
+                        data: lineData,
+                        borderColor: '#003f5c',
+                        backgroundColor: '#003f5c',
+                        type: 'line',
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                options: { ...tooltipTitleCallback, maintainAspectRatio: false, scales: { x: { title: { display: true, text: 'Hours Studied' }}, y: { title: { display: true, text: 'Exam Score' }}}, plugins: { legend: { display: false }}},
+                plugins: [verticalLinePlugin]
+            });
+
+            new Chart(document.getElementById('errorBarChart'), {
+                type: 'bar',
+                data: {
+                    labels: data.labels.map((_, i) => `Point ${i + 1}`),
+                    datasets: [{
+                        label: 'Squared Error',
+                        data: squaredErrors,
+                        backgroundColor: '#7a5195',
+                        borderColor: '#7a5195',
+                        borderWidth: 1
+                    }]
+                },
+                options: { ...tooltipTitleCallback, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { title: { display: true, text: 'Squared Error Value' }}, y: { ticks: { display: false }}}, plugins: { legend: { display: false }} }
+            });
+            
+            new Chart(document.getElementById('rSquaredDonut'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Variance Explained by Model', 'Unexplained Variance'],
+                    datasets: [{
+                        data: [87, 13],
+                        backgroundColor: ['#bc5090', '#f0f0f0'],
+                        borderColor: ['#bc5090', '#f0f0f0'],
+                        borderWidth: 1,
+                        circumference: 180,
+                        rotation: 270,
+                    }]
+                },
+                options: { ...tooltipTitleCallback, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { display: false }, tooltip: { enabled: false }}},
+                plugins: [{
+                    id: 'doughnutText',
+                    afterDraw: chart => {
+                        let ctx = chart.ctx;
+                        let cx = chart.width / 2;
+                        let cy = chart.height / 2 + 30;
+                        ctx.save();
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.font = 'bold 48px Inter';
+                        ctx.fillStyle = '#bc5090';
+                        ctx.fillText('0.87', cx, cy - 20);
+                        ctx.font = '20px Inter';
+                        ctx.fillStyle = '#374c80';
+                        ctx.fillText('R²', cx, cy + 20);
+                        ctx.restore();
+                    }
+                }]
+            });
+        });
+    </script>
+</body>
+</html>
