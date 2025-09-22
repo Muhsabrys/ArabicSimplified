@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Polynomial Regression & Regularization — From Basics to Mastery</title>
+
+  <!-- Tailwind + Chart.js + MathJax -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Tailwind config (optional)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            indigo: {
+              650: '#4b56e3'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+    // MathJax (TeX)
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['\\[','\\]'], ['$$','$$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    .card { background:white; border-radius:0.8rem; box-shadow:0 14px 36px rgba(2,6,23,.08); }
+    .math { background:#f8fafc; border-left:4px solid #4f46e5; padding:.75rem 1rem; border-radius:.25rem; }
+    .pill { border:1px solid #e5e7eb; padding:.25rem .5rem; border-radius:999px; font-size:.72rem; }
+    .kbd { background:#111827; color:white; padding:0 .35rem; border-radius:.25rem; font-size:.75rem; }
+    .copy-btn { font-size:.75rem; }
+    .section-title { scroll-margin-top: 6rem; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- NAV -->
+  <nav class="bg-indigo-700 text-white sticky top-0 z-40 shadow">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <h1 class="font-extrabold tracking-tight">ML — Poly Regression & Regularization</h1>
+      <div class="hidden md:flex gap-4 text-sm opacity-95">
+        <a href="#pipeline" class="hover:underline">Pipeline</a>
+        <a href="#concepts" class="hover:underline">Concepts</a>
+        <a href="#lab" class="hover:underline">Interactive Lab</a>
+        <a href="#cases" class="hover:underline">Cases</a>
+        <a href="#code" class="hover:underline">Code</a>
+        <a href="#quiz" class="hover:underline">Quiz</a>
+        <a href="#cheatsheet" class="hover:underline">Cheat Sheet</a>
+      </div>
+      <div class="flex gap-2 text-xs">
+        <span class="pill bg-white/10 border-white/20">Plain first</span>
+        <span class="pill bg-white/10 border-white/20">Math when needed</span>
+        <span class="pill bg-white/10 border-white/20">Hands-on</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white">
+    <div class="max-w-5xl mx-auto px-4 py-10 text-center">
+      <h2 class="text-3xl md:text-5xl font-extrabold">Polynomial Regression & Regularization</h2>
+      <p class="mt-3 text-lg md:text-xl opacity-95">All the key ideas, math, and practice—organized, visual, and interactive.</p>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 md:px-6 py-10 space-y-12">
+
+    <!-- PIPELINE -->
+    <section id="pipeline" class="card p-6 md:p-8 section-title">
+      <h3 class="text-2xl font-bold mb-4">The Pipeline — Where this section fits</h3>
+      <div class="grid md:grid-cols-5 gap-4 text-sm">
+        <div class="bg-indigo-50 rounded-lg p-4">
+          <div class="font-semibold text-indigo-700">1) Data Prep</div>
+          <ul class="list-disc pl-5 mt-1 space-y-1">
+            <li>Clean, split (train/val/test)</li>
+            <li>Scale features (important for regularization)</li>
+          </ul>
+        </div>
+        <div class="bg-purple-50 rounded-lg p-4">
+          <div class="font-semibold text-purple-700">2) Features</div>
+          <ul class="list-disc pl-5 mt-1 space-y-1">
+            <li>Add polynomial terms \(x^2,x^3,\dots\)</li>
+            <li>Try interactions if multivariate</li>
+          </ul>
+        </div>
+        <div class="bg-pink-50 rounded-lg p-4">
+          <div class="font-semibold text-pink-700">3) Train</div>
+          <ul class="list-disc pl-5 mt-1 space-y-1">
+            <li>Fit \(\beta\) by minimizing loss</li>
+            <li>Use Ridge/Lasso/Elastic Net</li>
+          </ul>
+        </div>
+        <div class="bg-teal-50 rounded-lg p-4">
+          <div class="font-semibold text-teal-700">4) Validate</div>
+          <ul class="list-disc pl-5 mt-1 space-y-1">
+            <li>Tune degree & \(\lambda\)</li>
+            <li>Check learning curves</li>
+          </ul>
+        </div>
+        <div class="bg-amber-50 rounded-lg p-4">
+          <div class="font-semibold text-amber-700">5) Deploy</div>
+          <ul class="list-disc pl-5 mt-1 space-y-1">
+            <li>Use on new inputs</li>
+            <li>Monitor drift & retrain</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCEPTS & EQUATIONS -->
+    <section id="concepts" class="card p-6 md:p-8 section-title">
+      <h3 class="text-2xl font-bold mb-4">Core Concepts (with gentle math)</h3>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+        <div class="bg-gray-50 rounded-lg p-4">
+          <h4 class="font-semibold">Model family</h4>
+          <p class="text-sm mt-2">
+            Polynomial regression keeps the model <em>linear in parameters</em> but augments inputs with powers:
+          </p>
+          <div class="math mt-3">\( \hat y = \beta_0 + \beta_1 x + \beta_2 x^2 + \dots + \beta_d x^d \)</div>
+          <p class="text-sm mt-2">We choose degree \(d\) and estimate coefficients \(\beta\).</p>
+        </div>
+
+        <div class="bg-gray-50 rounded-lg p-4">
+          <h4 class="font-semibold">Loss and fit</h4>
+          <div class="math mt-3">
+            \[
+              \text{MSE}(\beta)=\frac{1}{n}\sum_{i=1}^n (y_i - \hat y_i)^2
+            \]
+          </div>
+          <p class="text-sm mt-2">Minimize MSE to find the best \(\beta\). Closed-form exists for plain least squares;
+            regularization modifies it.</p>
+        </div>
+
+        <div class="bg-gray-50 rounded-lg p-4">
+          <h4 class="font-semibold">Regularization (adds restraint)</h4>
+          <div class="math mt-3">
+            \[
+              \min_\beta \frac{1}{n}\|y-X\beta\|_2^2
+              + \lambda\Big[(1-\alpha)\tfrac{1}{2}\|\beta\|_2^2 + \alpha\|\beta\|_1\Big]
+            \]
+          </div>
+          <p class="text-sm mt-2">Ridge: \(\alpha=0\). Lasso: \(\alpha=1\). Elastic Net: \(0&lt;\alpha&lt;1\).
+            (Intercept \(\beta_0\) is typically not penalized.)</p>
+        </div>
+      </div>
+
+      <details class="mt-5">
+        <summary class="font-semibold cursor-pointer">Show normal equation (Ridge) & learning-curve intuition</summary>
+        <div class="grid lg:grid-cols-2 gap-6 mt-4">
+          <div class="math">
+            Ridge closed-form:
+            \[
+              \hat\beta = (X^\top X + \lambda I)^{-1}X^\top y
+            \]
+            (No penalty on bias \(\beta_0\): use \(I\) with top-left 0.)
+          </div>
+          <div class="math">
+            Learning curves:
+            <br>
+            Underfit → both train/val errors high and similar.<br>
+            Overfit → train very low, val much higher.<br>
+            Best zone → low validation error at smallest feasible degree.
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- INTERACTIVE LAB -->
+    <section id="lab" class="card p-6 md:p-8 section-title">
+      <h3 class="text-2xl font-bold mb-2">Interactive Lab</h3>
+      <p class="text-sm text-gray-600 mb-6">Adjust degree and Elastic-Net regularization. We fit with **coordinate descent** (L1/L2), show train/test MSE, coefficients, residuals, and a learning curve.</p>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+        <!-- Controls -->
+        <div class="space-y-4">
+          <div class="card p-4">
+            <label class="block text-sm font-semibold mb-1" for="deg">Polynomial degree</label>
+            <input id="deg" type="range" min="1" max="12" value="5" class="w-full" />
+            <div class="flex justify-between text-xs mt-1"><span>1</span><span>12</span></div>
+            <p class="text-xs mt-2 text-gray-600">Higher degree can capture more curvature but risks overfitting.</p>
+          </div>
+
+          <div class="card p-4">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm font-semibold mb-1" for="lambda">Penalty λ</label>
+                <input id="lambda" type="range" min="0" max="2" step="0.02" value="0.4" class="w-full" />
+                <div class="flex justify-between text-xs mt-1"><span>0</span><span>2</span></div>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-1" for="alpha">Mix α</label>
+                <input id="alpha" type="range" min="0" max="1" step="0.05" value="0.3" class="w-full" />
+                <div class="flex justify-between text-xs mt-1"><span>Ridge</span><span>Lasso</span></div>
+              </div>
+            </div>
+            <p class="text-xs mt-2 text-gray-600">α=0 Ridge, α=1 Lasso. Elastic Net blends both.</p>
+            <label class="mt-3 inline-flex items-center gap-2 text-sm">
+              <input id="standardize" type="checkbox" checked /> Standardize features (recommended)
+            </label>
+          </div>
+
+          <div class="card p-4">
+            <button id="resetData" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded px-3 py-2 font-semibold">Reset data</button>
+            <p class="text-xs text-gray-500 mt-2">New noise & new train/test split.</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div class="card p-3">
+              <div class="text-xs text-gray-500">Train MSE</div>
+              <div id="mseTrain" class="font-semibold">—</div>
+            </div>
+            <div class="card p-3">
+              <div class="text-xs text-gray-500">Test MSE</div>
+              <div id="mseTest" class="font-semibold">—</div>
+            </div>
+          </div>
+
+          <div class="card p-3">
+            <div class="text-xs text-gray-500">‖β‖₂ (size)</div>
+            <div id="betaNorm" class="font-semibold">—</div>
+          </div>
+        </div>
+
+        <!-- Fit chart + residuals -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="card p-3">
+            <h4 class="font-semibold mb-1">Fit (Train/Test points + model curve)</h4>
+            <canvas id="fitChart" height="220"></canvas>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="card p-3">
+              <h4 class="font-semibold mb-1">Learning curve (MSE vs degree)</h4>
+              <canvas id="lcChart" height="160"></canvas>
+            </div>
+            <div class="card p-3">
+              <h4 class="font-semibold mb-1">Residuals (Test)</h4>
+              <canvas id="residChart" height="160"></canvas>
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="card p-3">
+              <h4 class="font-semibold mb-1">Coefficients</h4>
+              <canvas id="coefChart" height="160"></canvas>
+            </div>
+            <div class="card p-3">
+              <h4 class="font-semibold mb-1">Prediction vs Truth (Test)</h4>
+              <canvas id="pvTChart" height="160"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <details class="mt-6">
+        <summary class="font-semibold">Show formulas used in the lab</summary>
+        <div class="mt-3 space-y-3 text-sm">
+          <div class="math">
+            Model: \( \hat y = \sum_{j=0}^d \beta_j x^j \)
+          </div>
+          <div class="math">
+            Elastic Net objective (no penalty on \(\beta_0\)):
+            \[
+            \tfrac{1}{n}\|y-X\beta\|_2^2 + \lambda\big((1-\alpha)\tfrac{1}{2}\|\beta_{1:}\|_2^2 + \alpha\|\beta_{1:}\|_1\big)
+            \]
+          </div>
+          <div class="math">
+            Coordinate descent update (standardized \(X\), centering \(y\)):
+            \[
+              \beta_j \leftarrow \frac{ \mathrm{soft}\!\left( \tfrac{1}{n}\sum_i X_{ij}\big(y_i - \hat y_{-j,i}\big),\ \lambda\alpha \right) }
+            { \tfrac{1}{n}\sum_i X_{ij}^2 + \lambda(1-\alpha) }
+            ,\quad \text{soft}(z,\gamma)=\mathrm{sign}(z)\max(|z|-\gamma,0)
+            \]
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- CASES -->
+    <section id="cases" class="card p-6 md:p-8 section-title">
+      <h3 class="text-2xl font-bold mb-4">Applications & What to Expect</h3>
+      <div class="grid lg:grid-cols-3 gap-6 text-sm">
+        <div class="bg-indigo-50 rounded-lg p-4">
+          <div class="font-semibold text-indigo-700">Housing prices (regression)</div>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Features: size, rooms, age, location encodings</li>
+            <li>Add: size², interactions (size×age)</li>
+            <li>Use: Ridge (default), Elastic Net if many features</li>
+          </ul>
+        </div>
+        <div class="bg-purple-50 rounded-lg p-4">
+          <div class="font-semibold text-purple-700">E-commerce spend</div>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Features: time on site, sessions, recency</li>
+            <li>Polynomial on time-based signals</li>
+            <li>Try Lasso if only a few features matter</li>
+          </ul>
+        </div>
+        <div class="bg-pink-50 rounded-lg p-4">
+          <div class="font-semibold text-pink-700">NLP sentiment (linear classifier)</div>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Features: n-grams (1–3), TF-IDF</li>
+            <li>High-dimensional → Elastic Net</li>
+            <li>Standardize / normalize carefully</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 mt-6">
+        <div class="bg-gray-50 rounded-lg p-4">
+          <h4 class="font-semibold mb-2">Pitfalls</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Too-high degree with tiny datasets → wild oscillations</li>
+            <li>Forgetting to hold out validation/test data</li>
+            <li>Not standardizing features before Elastic Net/Lasso</li>
+            <li>Over-penalizing → underfit (flat predictions)</li>
+          </ul>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <h4 class="font-semibold mb-2">Checklists</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Plot train & test MSE vs degree, pick the smallest degree near the test minimum</li>
+            <li>Increase \(\lambda\) only if the test error worsens with degree</li>
+            <li>Prefer Ridge by default; switch to Elastic Net when features are many/correlated</li>
+            <li>Report final metrics on untouched test set</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CODE RECIPES -->
+    <section id="code" class="card p-6 md:p-8 section-title">
+      <h3 class="text-2xl font-bold mb-4">Code Recipes (Python / scikit-learn)</h3>
+
+      <div class="grid lg:grid-cols-2 gap-6 text-sm">
+        <div class="bg-white rounded-lg border p-4 relative">
+          <button class="copy-btn absolute right-3 top-3 text-indigo-700" data-copy="#code1">Copy</button>
+<pre id="code1" class="overflow-auto text-xs leading-5"><code># Ridge with polynomial features
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import train_test_split, GridSearchCV
+import numpy as np
+
+# synthetic example
+rng = np.random.RandomState(0)
+x = np.linspace(-1, 1, 120)
+y = 1 + 2*x - 0.5*x**2 + np.sin(3*x)*0.2 + rng.normal(0, 0.25, size=x.size)
+
+X = x.reshape(-1, 1)
+Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=42)
+
+pipe = make_pipeline(PolynomialFeatures(include_bias=False),
+                     StandardScaler(with_mean=False), # keep sparse-ish columns compatible
+                     Ridge())
+
+param_grid = {
+  "polynomialfeatures__degree": [1,2,3,4,5,6,7,8],
+  "ridge__alpha": np.logspace(-3, 2, 12),
+}
+gs = GridSearchCV(pipe, param_grid, scoring="neg_mean_squared_error", cv=5)
+gs.fit(Xtr, ytr)
+print(gs.best_params_, "MSE(test)=", np.mean((gs.predict(Xte)-yte)**2))</code></pre>
+        </div>
+
+        <div class="bg-white rounded-lg border p-4 relative">
+          <button class="copy-btn absolute right-3 top-3 text-indigo-700" data-copy="#code2">Copy</button>
+<pre id="code2" class="overflow-auto text-xs leading-5"><code># Elastic Net (Ridge ↔ Lasso) with polynomial features
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import ElasticNet
+from sklearn.model_selection import GridSearchCV
+import numpy as np
+
+pipe = make_pipeline(PolynomialFeatures(include_bias=False),
+                     StandardScaler(with_mean=False),
+                     ElasticNet(max_iter=5000))
+
+param_grid = {
+  "polynomialfeatures__degree": [2,3,4,5,6],
+  "elasticnet__alpha": np.logspace(-4, 0, 9),  # λ strength
+  "elasticnet__l1_ratio": [0.0, 0.25, 0.5, 0.75, 1.0],  # 0=Ridge, 1=Lasso
+}
+gs = GridSearchCV(pipe, param_grid, scoring="neg_mean_squared_error", cv=5, n_jobs=-1)
+gs.fit(Xtr, ytr)
+print(gs.best_params_)</code></pre>
+        </div>
+
+        <div class="bg-white rounded-lg border p-4 relative lg:col-span-2">
+          <button class="copy-btn absolute right-3 top-3 text-indigo-700" data-copy="#code3">Copy</button>
+<pre id="code3" class="overflow-auto text-xs leading-5"><code># Learning curve: test MSE vs degree
+import numpy as np
+from sklearn.metrics import mean_squared_error
+
+degrees = range(1, 13)
+mse_tr, mse_te = [], []
+for d in degrees:
+    pipe.set_params(polynomialfeatures__degree=d)
+    pipe.fit(Xtr, ytr)
+    yhat_tr = pipe.predict(Xtr)
+    yhat_te = pipe.predict(Xte)
+    mse_tr.append(mean_squared_error(ytr, yhat_tr))
+    mse_te.append(mean_squared_error(yte, yhat_te))
+
+print(list(zip(degrees, mse_tr, mse_te)))</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="card p-6 md:p-8 section-title">
+      <h3 class="text-2xl font-bold mb-4">Quick Self-Check</h3>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div class="bg-gray-50 rounded-lg p-4">
+          <ol class="list-decimal pl-5 space-y-2">
+            <li>You see train MSE ↓ with degree, but test MSE ↓ then ↑. What do you change first?</li>
+            <li>With many correlated features, Lasso picks one and drops others unpredictably. What’s a safer choice?</li>
+            <li>Why standardize features for Elastic Net?</li>
+            <li>When does increasing \(\lambda\) help? When does it hurt?</li>
+          </ol>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <details class="mb-2"><summary class="font-semibold">Answers</summary>
+            <ul class="list-disc pl-5 space-y-1 mt-2">
+              <li>Pick the smallest degree near the test MSE minimum; consider slight \(\lambda\) ↑.</li>
+              <li>Elastic Net (blend of L1+L2) or Ridge if you don’t need sparsity.</li>
+              <li>To put coefficients on the same scale so the penalty treats features fairly.</li>
+              <li>Helps when overfitting (variance high); hurts when you already underfit (bias high).</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHEAT SHEET -->
+    <section id="cheatsheet" class="card p-6 md:p-8 section-title">
+      <h3 class="text-2xl font-bold mb-3">Cheat Sheet</h3>
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <div class="bg-indigo-50 p-4 rounded">
+          Degree sets shape; \(\lambda\) sets restraint; \(\alpha\) sets sparsity.
+        </div>
+        <div class="bg-purple-50 p-4 rounded">
+          Fit the pattern; avoid the noise. Tune on validation; report on test.
+        </div>
+        <div class="bg-pink-50 p-4 rounded">
+          Default to Ridge; use Elastic Net for high-dimensional or correlated features.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="text-center text-xs text-gray-500 py-10">
+    Built for focused mastery — polynomial features, bias-variance, and regularization done right.
+  </footer>
+
+  <!-- INTERACTIVE SCRIPTS -->
+  <script>
+    // ---------- Utilities ----------
+    function linspace(a, b, n) {
+      const step = (b - a) / (n - 1);
+      return Array.from({length:n}, (_, i) => a + i*step);
+    }
+    // RNG
+    let seed = 1337;
+    function rand() { seed = (1664525*seed + 1013904223) >>> 0; return seed / 0x100000000; }
+    function normal(std=1) { // Box-Muller
+      let u = 0, v = 0; while(u===0) u = rand(); while(v===0) v = rand();
+      return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)*std;
+    }
+
+    // Design matrix with bias (x^0,...,x^d)
+    function design(x, degree) {
+      return x.map(xi => Array.from({length: degree+1}, (_, j) => (j===0?1:Math.pow(xi, j))));
+    }
+
+    // Standardization (exclude bias col 0)
+    function standardize(X, y, standardize=true) {
+      const n = X.length, p = X[0].length;
+      const means = Array(p).fill(0), stds = Array(p).fill(1);
+      // column means (exclude bias)
+      for (let j=1;j<p;j++){
+        let s=0; for(let i=0;i<n;i++) s+=X[i][j];
+        means[j]=s/n;
+      }
+      // subtract means
+      const Xc = X.map(row => row.slice());
+      for (let i=0;i<n;i++) for(let j=1;j<p;j++) Xc[i][j] = standardize? (X[i][j]-means[j]) : X[i][j];
+      // column stds (exclude bias)
+      for (let j=1;j<p;j++){
+        let s=0; for(let i=0;i<n;i++){ const v = Xc[i][j]; s+=v*v; }
+        stds[j] = standardize? Math.sqrt(s/n) || 1 : 1;
+      }
+      for (let i=0;i<n;i++) for (let j=1;j<p;j++) Xc[i][j] = Xc[i][j]/stds[j];
+      // center y for convenience; keep ymean for intercept
+      let ymean = y.reduce((a,b)=>a+b,0)/n;
+      const yc = y.map(v => v - ymean);
+      return {Xc, yc, ymean, means, stds};
+    }
+
+    // Predict using beta and unstandardized basis (we'll evaluate on standardized transform internally)
+    function predictFromStd(x, degree, means, stds, beta, ymean) {
+      // build standardized features like training
+      const n = x.length, p = degree+1;
+      const X = design(x, degree);
+      // apply means/stds to cols 1..p-1
+      for (let i=0;i<n;i++){
+        for (let j=1;j<p;j++){
+          X[i][j] = (X[i][j]-means[j])/stds[j];
+        }
+      }
+      // yhat_centered = X * beta (note: beta[0] acts as bias in standardized space)
+      const yhat_c = X.map(row => row.reduce((s,v, j)=> s + v*beta[j], 0));
+      // intercept handling: add back ymean
+      const yhat = yhat_c.map(v => v + ymean);
+      return yhat;
+    }
+
+    // Soft threshold
+    const soft = (z,g)=> Math.sign(z)*Math.max(Math.abs(z)-g,0);
+
+    // Coordinate Descent for Elastic Net (penalty on beta[1:] only), standardized X columns and centered y
+    function elasticNetCD(Xc, yc, lambda, alpha, maxIter=200, tol=1e-6) {
+      const n = Xc.length, p = Xc[0].length;
+      let beta = Array(p).fill(0);
+      // Precompute norms
+      const colNorm2 = Array(p).fill(0);
+      for (let j=0;j<p;j++){
+        let s=0; for (let i=0;i<n;i++) s += Xc[i][j]*Xc[i][j];
+        colNorm2[j] = s/n;
+      }
+      const l1 = lambda*alpha;
+      const l2 = lambda*(1-alpha);
+
+      for (let it=0; it<maxIter; it++){
+        let maxChange = 0;
+
+        // j=0 (intercept in standardized space) — do NOT penalize
+        // Here column 0 is constant 1, but we already centered y, so intercept stays near 0.
+        // We'll still update it as unpenalized coordinate:
+        {
+          let rpart = 0;
+          for (let i=0;i<n;i++){
+            let pred_i = 0;
+            for (let j=0;j<p;j++) if (j!==0) pred_i += Xc[i][j]*beta[j];
+            rpart += (yc[i] - pred_i) * Xc[i][0]; // Xc[i][0] is 1
+          }
+          const newb0 = rpart / (n*colNorm2[0] || n); // colNorm2[0] equals 1
+          maxChange = Math.max(maxChange, Math.abs(newb0 - beta[0]));
+          beta[0] = newb0;
+        }
+
+        // j>=1 penalized
+        for (let j=1;j<p;j++){
+          // compute partial residual correlation
+          let zj = 0;
+          for (let i=0;i<n;i++){
+            // r_i = y_i - (sum_k X_ik beta_k) + X_ij beta_j
+            let pred_i = 0;
+            for (let k=0;k<p;k++) pred_i += Xc[i][k]*beta[k];
+            const rij = yc[i] - pred_i + Xc[i][j]*beta[j];
+            zj += Xc[i][j]*rij;
+          }
+          zj /= n;
+          const denom = colNorm2[j] + l2;
+          const newbj = soft(zj, l1) / (denom || 1);
+          maxChange = Math.max(maxChange, Math.abs(newbj - beta[j]));
+          beta[j] = newbj;
+        }
+        if (maxChange < tol) break;
+      }
+      return beta;
+    }
+
+    function mse(y, yhat){
+      let s=0; for(let i=0;i<y.length;i++){ const d=y[i]-yhat[i]; s+=d*d; } return s/y.length;
+    }
+
+    // ---------- Data ----------
+    function makeData(n=120){
+      const x = linspace(-1, 1, n);
+      const y = x.map(xi => 1 + 2*xi - 0.5*xi*xi + Math.sin(3*xi)*0.25 + normal(0.22));
+      // split
+      const idx = [...x.keys()].sort(()=> rand()-0.5);
+      const cut = Math.floor(0.7*n);
+      const tr = idx.slice(0,cut), te=idx.slice(cut);
+      return {
+        xTrain: tr.map(i=>x[i]),
+        yTrain: tr.map(i=>y[i]),
+        xTest:  te.map(i=>x[i]),
+        yTest:  te.map(i=>y[i])
+      };
+    }
+
+    // ---------- DOM & Charts ----------
+    const els = {
+      deg: document.getElementById('deg'),
+      lambda: document.getElementById('lambda'),
+      alpha: document.getElementById('alpha'),
+      standardize: document.getElementById('standardize'),
+      resetData: document.getElementById('resetData'),
+      mseTrain: document.getElementById('mseTrain'),
+      mseTest: document.getElementById('mseTest'),
+      betaNorm: document.getElementById('betaNorm'),
+    };
+
+    const ctxFit = document.getElementById('fitChart').getContext('2d');
+    const ctxLC  = document.getElementById('lcChart').getContext('2d');
+    const ctxResid = document.getElementById('residChart').getContext('2d');
+    const ctxCoef = document.getElementById('coefChart').getContext('2d');
+    const ctxPvT = document.getElementById('pvTChart').getContext('2d');
+
+    let chartFit, chartLC, chartResid, chartCoef, chartPvT;
+    let data = makeData();
+    const xPlot = linspace(-1.05, 1.05, 401);
+
+    function updateAll(){
+      const degree = parseInt(els.deg.value,10);
+      const lambda = parseFloat(els.lambda.value);
+      const alpha  = parseFloat(els.alpha.value);
+      const std    = els.standardize.checked;
+
+      // Design & standardize (train)
+      const Xtr = design(data.xTrain, degree);
+      const {Xc, yc, ymean, means, stds} = standardize(Xtr, data.yTrain, std);
+
+      // Fit elastic net by CD
+      const beta = elasticNetCD(Xc, yc, lambda, alpha, 400, 1e-7);
+
+      // Predictions
+      const yhatTrain = predictFromStd(data.xTrain, degree, means, stds, beta, ymean);
+      const yhatTest  = predictFromStd(data.xTest, degree, means, stds, beta, ymean);
+      const yhatPlot  = predictFromStd(xPlot, degree, means, stds, beta, ymean);
+
+      // Metrics
+      const mtr = mse(data.yTrain, yhatTrain).toFixed(4);
+      const mte = mse(data.yTest,  yhatTest ).toFixed(4);
+      els.mseTrain.textContent = mtr;
+      els.mseTest.textContent  = mte;
+      const bnorm = Math.sqrt(beta.slice(1).reduce((s,b)=>s+b*b,0));
+      els.betaNorm.textContent = `≈ ${bnorm.toFixed(3)}  (penalized part only)`;
+
+      // Fit chart
+      const dsTrain = data.xTrain.map((x,i)=>({x, y:data.yTrain[i]}));
+      const dsTest  = data.xTest.map((x,i)=>({x, y:data.yTest[i]}));
+      const dsLine  = xPlot.map((x,i)=>({x, y:yhatPlot[i]}));
+
+      const fitConfig = {
+        type: 'scatter',
+        data: {
+          datasets: [
+            { label:'Train', data: dsTrain, backgroundColor:'#4f46e5', pointRadius:3 },
+            { label:'Test',  data: dsTest,  backgroundColor:'#ef4444', pointRadius:3 },
+            { label:'Fit',   data: dsLine,  type:'line', borderColor:'#111827', pointRadius:0, borderWidth:2, tension:.2 }
+          ]
+        },
+        options: {
+          animation:false, maintainAspectRatio:false,
+          scales: { x:{type:'linear', min:-1.1,max:1.1,title:{display:true,text:'x'}}, y:{title:{display:true,text:'y'}} },
+          plugins: { legend:{position:'bottom'} }
+        }
+      };
+      if (!chartFit) chartFit = new Chart(ctxFit, fitConfig); else { chartFit.data = fitConfig.data; chartFit.update(); }
+
+      // Learning curve across degrees @ current (lambda, alpha)
+      const degrees = [...Array(12).keys()].map(i=>i+1);
+      const trErr=[], teErr=[];
+      for (const d of degrees){
+        const Xd = design(data.xTrain, d);
+        const stdd = standardize(Xd, data.yTrain, std);
+        const b = elasticNetCD(stdd.Xc, stdd.yc, lambda, alpha, 200, 1e-6);
+        const ytr = predictFromStd(data.xTrain, d, stdd.means, stdd.stds, b, stdd.ymean);
+        const yte = predictFromStd(data.xTest,  d, stdd.means, stdd.stds, b, stdd.ymean);
+        trErr.push(mse(data.yTrain, ytr));
+        teErr.push(mse(data.yTest,  yte));
+      }
+      const lcConfig = {
+        type:'line',
+        data: { labels: degrees,
+          datasets:[
+            {label:'Train MSE', data:trErr, borderColor:'#36A2EB', fill:false, tension:.3},
+            {label:'Test MSE',  data:teErr, borderColor:'#FFCE56', fill:false, tension:.3}
+          ]
+        },
+        options:{ animation:false, maintainAspectRatio:false,
+          scales:{ x:{title:{display:true,text:'Degree'}}, y:{title:{display:true,text:'MSE'}} },
+          plugins:{ legend:{position:'bottom'} }
+        }
+      };
+      if (!chartLC) chartLC = new Chart(ctxLC, lcConfig); else { chartLC.data = lcConfig.data; chartLC.update(); }
+
+      // Residuals (Test)
+      const res = data.yTest.map((v,i)=> v - yhatTest[i]);
+      const residConfig = {
+        type:'bar',
+        data:{ labels: data.xTest.map(v=>v.toFixed(2)),
+          datasets:[{label:'Residual (y - ŷ)', data: res, backgroundColor:'#8b5cf6'}]
+        },
+        options:{ animation:false, maintainAspectRatio:false,
+          scales:{ x:{ticks:{display:false}}, y:{title:{display:true,text:'Residual'}}},
+          plugins:{ legend:{display:false}}
+        }
+      };
+      if (!chartResid) chartResid = new Chart(ctxResid, residConfig); else { chartResid.data = residConfig.data; chartResid.update(); }
+
+      // Coefficients
+      const labels = Array.from({length:degree+1}, (_,j)=> j===0 ? 'β0' : `β${j}`);
+      const coefConfig = {
+        type:'bar',
+        data:{ labels, datasets:[{label:'β', data: beta, backgroundColor:'#10b981'}]},
+        options:{ animation:false, maintainAspectRatio:false,
+          scales:{ y:{title:{display:true,text:'Value'}} }, plugins:{ legend:{display:false} }
+        }
+      };
+      if (!chartCoef) chartCoef = new Chart(ctxCoef, coefConfig); else { chartCoef.data = coefConfig.data; chartCoef.update(); }
+
+      // Prediction vs Truth (Test)
+      const pvTConfig = {
+        type:'scatter',
+        data:{ datasets:[
+          {label:'Test points', data: data.yTest.map((y,i)=>({x:y, y:yhatTest[i]})), backgroundColor:'#f59e0b', pointRadius:3},
+          {label:'Ideal y=ŷ', data: [{x:-3,y:-3},{x:3,y:3}], type:'line', borderColor:'#111827', pointRadius:0, borderWidth:1}
+        ]},
+        options:{ animation:false, maintainAspectRatio:false,
+          scales:{ x:{title:{display:true,text:'True y'}}, y:{title:{display:true,text:'Predicted ŷ'}} },
+          plugins:{ legend:{position:'bottom'} }
+        }
+      };
+      if (!chartPvT) chartPvT = new Chart(ctxPvT, pvTConfig); else { chartPvT.data = pvTConfig.data; chartPvT.update(); }
+    }
+
+    // Events
+    els.deg.addEventListener('input', updateAll);
+    els.lambda.addEventListener('input', updateAll);
+    els.alpha.addEventListener('input', updateAll);
+    els.standardize.addEventListener('change', updateAll);
+    els.resetData.addEventListener('click', ()=>{ data = makeData(); updateAll(); });
+
+    // Copy buttons
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const sel = btn.getAttribute('data-copy');
+        const el = document.querySelector(sel);
+        if (!el) return;
+        const text = el.innerText;
+        navigator.clipboard.writeText(text).then(()=>{
+          const old = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(()=> btn.textContent = old, 1200);
+        });
+      });
+    });
+
+    // Initial draw
+    updateAll();
+  </script>
+</body>
+</html>
