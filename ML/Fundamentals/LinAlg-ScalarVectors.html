@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Vector Projections</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral -->
+    <!-- Application Structure Plan: The application is designed in three thematic sections to create a pedagogical user flow. 1) 'Core Concepts' introduces the definitions side-by-side for clear comparison. 2) The 'Interactive Explorer' is the centerpiece, allowing users to manipulate vectors on a canvas and see the calculations update in real-time. This transforms passive reading into active learning, connecting the visual representation directly to the underlying math. 3) 'Real-World Applications' contextualizes the knowledge, explaining why projections are useful. This structure (What -> How -> Why) is chosen to be more intuitive and engaging than a simple linear document. -->
+    <!-- Visualization & Content Choices: Report Info: Definitions -> Goal: Compare -> Viz: Side-by-side cards (HTML/Tailwind) -> Interaction: None -> Justification: Easy comparison of concepts. Report Info: Numerical Example & Formulas -> Goal: Explore & Understand -> Viz: Interactive Scatter Plot (Chart.js/Canvas) -> Interaction: Drag vector heads to change values, real-time calculation updates -> Justification: Makes abstract formulas tangible and intuitive. Report Info: Use Cases -> Goal: Inform -> Viz: Tabbed content sections (HTML/Tailwind) -> Interaction: Click tabs to reveal content -> Justification: Organizes text-heavy content cleanly. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #EAEAEA;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07);
+        }
+        .tab {
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .tab.active {
+            background-color: #A37F5D;
+            color: #FFFFFF;
+        }
+        .tab:not(.active) {
+            background-color: #F3F0EC;
+            color: #6B7280;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        canvas {
+            cursor: pointer;
+        }
+        .math {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #F3F0EC;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="app-container p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#A37F5D] mb-2">Scalar & Vector Projections</h1>
+            <p class="text-lg text-gray-600">An Interactive Exploration</p>
+        </header>
+
+        <main>
+            <section id="concepts" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-2">Core Concepts</h2>
+                <p class="text-center text-gray-500 max-w-3xl mx-auto mb-8">
+                    Projections help us understand how much of one vector "points" in the direction of another. Imagine shining a light from directly above a vector; its projection is the shadow it casts on another vector. Let's break down the two types.
+                </p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="card p-6">
+                        <h3 class="text-2xl font-semibold mb-3 text-[#A37F5D]">Scalar Projection</h3>
+                        <p class="mb-4">This tells you the <strong>length</strong> of the shadow. It's a single number (a scalar) that represents the magnitude of the component of vector <span class="math">u</span> that lies in the direction of vector <span class="math">v</span>. This value can be negative if the shadow points in the opposite direction.</p>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="font-mono text-center text-sm">proj<sub>v</sub>u = <span class="math">(u · v) / ||v||</span></p>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-2xl font-semibold mb-3 text-[#A37F5D]">Vector Projection</h3>
+                        <p class="mb-4">This gives you the <strong>shadow itself</strong>. It's a new vector that has the length of the scalar projection and points in the same direction as vector <span class="math">v</span>. It represents the actual vector component of <span class="math">u</span> along <span class="math">v</span>.</p>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="font-mono text-center text-sm">proj<sub>v</sub>u = <span class="math">((u · v) / ||v||²) * v</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="interactive" class="mb-16 card p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center mb-2">Interactive Explorer</h2>
+                <p class="text-center text-gray-500 max-w-3xl mx-auto mb-8">
+                    Click and drag the heads of vector <strong class="text-blue-600">u</strong> and vector <strong class="text-red-600">v</strong> to see how the projection changes. The chart and the calculations below will update in real-time, giving you a live demonstration of the formulas.
+                </p>
+                <div class="grid lg:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container">
+                        <canvas id="projectionChart"></canvas>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-semibold text-lg">Vector Values:</p>
+                            <p>Vector <span class="math text-blue-600 font-bold">u</span> = &lt;<span id="u_x_val">4.00</span>, <span id="u_y_val">2.00</span>&gt;</p>
+                            <p>Vector <span class="math text-red-600 font-bold">v</span> = &lt;<span id="v_x_val">3.00</span>, <span id="v_y_val">0.00</span>&gt;</p>
+                        </div>
+                        <div class="border-t pt-4">
+                             <p class="font-semibold text-lg">Live Calculations:</p>
+                            <p>Dot Product <span class="math">u · v</span> = <span id="dot_prod_val" class="font-bold">12.00</span></p>
+                            <p>Magnitude <span class="math">||v||</span> = <span id="mag_v_val" class="font-bold">3.00</span></p>
+                        </div>
+                         <div class="border-t pt-4 bg-[#A37F5D]/10 p-4 rounded-lg">
+                             <p class="font-semibold text-xl text-[#A37F5D]">Projection Results:</p>
+                            <p class="text-lg">Scalar Projection = <span id="scalar_proj_val" class="font-bold">4.00</span></p>
+                            <p class="text-lg">Vector Projection = &lt;<span id="vector_proj_x_val" class="font-bold">4.00</span>, <span id="vector_proj_y_val" class="font-bold">0.00</span>&gt;</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="applications">
+                <h2 class="text-3xl font-bold text-center mb-2">Real-World Applications</h2>
+                <p class="text-center text-gray-500 max-w-3xl mx-auto mb-8">
+                    Projections aren't just an abstract concept; they are a fundamental tool in physics, computer graphics, and especially machine learning. Here's a brief look at where they make a significant impact.
+                </p>
+                <div class="card p-6 md:p-8">
+                    <div class="flex justify-center space-x-2 md:space-x-4 mb-6" id="tabs-container">
+                        <button class="tab active" data-tab="ml">Machine Learning</button>
+                        <button class="tab" data-tab="nlp">Natural Language Processing</button>
+                        <button class="tab" data-tab="graphics">Graphics</button>
+                    </div>
+                    <div id="tab-content">
+                        <div id="ml-content" class="tab-pane">
+                            <h4 class="text-xl font-semibold mb-2">Dimensionality Reduction (PCA)</h4>
+                            <p>Perhaps the most vital application in machine learning is Principal Component Analysis (PCA). In datasets with many features (high dimensions), PCA uses vector projections to find new, lower-dimensional axes (principal components) that capture the most significant information or variance in the data. By projecting the original data onto a few of these principal components, we can dramatically reduce the complexity of the data while losing minimal information, making models faster and often more accurate.</p>
+                        </div>
+                        <div id="nlp-content" class="tab-pane hidden">
+                             <h4 class="text-xl font-semibold mb-2">Measuring Word Similarity</h4>
+                             <p>In NLP, words are often converted into vectors, called **word embeddings**, that capture their meaning. Words with similar meanings are located closer to each other in this vector space. Vector projections, via the **cosine similarity** metric, are used to measure how "similar" two words are.</p>
+                             <div class="bg-gray-50 p-4 rounded-lg mt-4">
+                                 <h5 class="text-lg font-semibold mb-2">NLP Pipeline Walkthrough: Finding "Closest" Words</h5>
+                                 <ol class="list-decimal list-inside space-y-2">
+                                     <li><strong>Vectorize Words:</strong> An algorithm like Word2Vec converts words like "King", "Queen", and "Man" into numerical vectors based on their usage context.</li>
+                                     <li><strong>Calculate Cosine Similarity:</strong> We compute the cosine of the angle between two word vectors. A result of **1** means the vectors are perfectly aligned (identical meaning), while **0** means they are unrelated. This is mathematically a scalar projection of one unit vector onto another.</li>
+                                     <li><strong>Rank and Find:</strong> By calculating the similarity of a target word vector to all other word vectors in a vocabulary, we can find and rank the most similar words.</li>
+                                 </ol>
+                             </div>
+                             <div class="bg-gray-50 p-4 rounded-lg mt-4">
+                                 <h5 class="text-lg font-semibold mb-2">Conceptual Code</h5>
+                                 <pre class="font-mono text-xs bg-gray-100 p-2 rounded-md overflow-x-auto">
+function cosineSimilarity(vectorA, vectorB) {
+  let dotProduct = 0;
+  let magnitudeA = 0;
+  let magnitudeB = 0;
+  for (let i = 0; i < vectorA.length; i++) {
+    dotProduct += vectorA[i] * vectorB[i];
+    magnitudeA += vectorA[i] * vectorA[i];
+    magnitudeB += vectorB[i] * vectorB[i];
+  }
+  magnitudeA = Math.sqrt(magnitudeA);
+  magnitudeB = Math.sqrt(magnitudeB);
+  
+  if (magnitudeA === 0 || magnitudeB === 0) return 0;
+  
+  return dotProduct / (magnitudeA * magnitudeB);
+}</pre>
+                             </div>
+                             <div class="chart-container mt-6">
+                                <canvas id="nlpChart"></canvas>
+                             </div>
+                             <p class="text-sm text-center text-gray-500 mt-2">Visualization of word vectors in a 2D space. The proximity of words represents their semantic similarity.</p>
+                        </div>
+                        <div id="graphics-content" class="tab-pane hidden">
+                             <h4 class="text-xl font-semibold mb-2">3D Lighting and Shadows</h4>
+                             <p>In computer graphics, creating realistic lighting and shadows relies heavily on projections. The dot product (the core of projection math) is used to determine how much light from a source hits a surface. If the surface normal vector and the light vector point in similar directions, the surface is brightly lit. Projections are also used to calculate the shape and position of shadows by projecting the vertices of a 3D object onto a 2D plane from the perspective of a light source.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-16 text-gray-500 text-sm">
+            <p>Interactive Visualization by Gemini</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('projectionChart').getContext('2d');
+            const nlpCtx = document.getElementById('nlpChart').getContext('2d');
+            
+            let u = { x: 4, y: 2 };
+            let v = { x: 3, y: 0 };
+            let projection = { x: 0, y: 0 };
+
+            let dragging = null;
+            const handleRadius = 10;
+            const axisLimit = 10;
+            
+            const chartConfig = {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Vector u',
+                            data: [{x: 0, y: 0}, u],
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            backgroundColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 3,
+                            pointRadius: [0, handleRadius / 2],
+                            pointHoverRadius: [0, handleRadius / 1.5],
+                            pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                            showLine: true,
+                            fill: false,
+                        },
+                        {
+                            label: 'Vector v',
+                            data: [{x: 0, y: 0}, v],
+                            borderColor: 'rgba(239, 68, 68, 1)',
+                            backgroundColor: 'rgba(239, 68, 68, 1)',
+                            borderWidth: 3,
+                            pointRadius: [0, handleRadius / 2],
+                            pointHoverRadius: [0, handleRadius / 1.5],
+                            pointBackgroundColor: 'rgba(239, 68, 68, 1)',
+                            showLine: true,
+                            fill: false,
+                        },
+                        {
+                            label: 'Projection of u onto v',
+                            data: [{x: 0, y: 0}, projection],
+                            borderColor: 'rgba(163, 127, 93, 1)',
+                            backgroundColor: 'rgba(163, 127, 93, 1)',
+                            borderWidth: 4,
+                            pointRadius: 0,
+                            showLine: true,
+                            fill: false,
+                        },
+                         {
+                            label: 'Projection Line',
+                            data: [],
+                            borderColor: 'rgba(163, 127, 93, 0.3)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            pointRadius: 0,
+                            showLine: true,
+                            fill: false,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -axisLimit,
+                            max: axisLimit,
+                            grid: {
+                                zeroLineColor: '#888',
+                                zeroLineWidth: 2
+                            }
+                        },
+                        y: {
+                            min: -axisLimit,
+                            max: axisLimit,
+                            grid: {
+                                zeroLineColor: '#888',
+                                zeroLineWidth: 2
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 0
+                    }
+                }
+            };
+            
+            const projectionChart = new Chart(ctx, chartConfig);
+            
+            const u_x_val = document.getElementById('u_x_val');
+            const u_y_val = document.getElementById('u_y_val');
+            const v_x_val = document.getElementById('v_x_val');
+            const v_y_val = document.getElementById('v_y_val');
+            const dot_prod_val = document.getElementById('dot_prod_val');
+            const mag_v_val = document.getElementById('mag_v_val');
+            const scalar_proj_val = document.getElementById('scalar_proj_val');
+            const vector_proj_x_val = document.getElementById('vector_proj_x_val');
+            const vector_proj_y_val = document.getElementById('vector_proj_y_val');
+            
+            function updateCalculations() {
+                const dotProduct = u.x * v.x + u.y * v.y;
+                const magV = Math.sqrt(v.x * v.x + v.y * v.y);
+                const scalarProjection = magV === 0 ? 0 : dotProduct / magV;
+                const magVSquared = v.x * v.x + v.y * v.y;
+                
+                if (magVSquared === 0) {
+                    projection.x = 0;
+                    projection.y = 0;
+                } else {
+                    const scale = dotProduct / magVSquared;
+                    projection.x = v.x * scale;
+                    projection.y = v.y * scale;
+                }
+                
+                u_x_val.textContent = u.x.toFixed(2);
+                u_y_val.textContent = u.y.toFixed(2);
+                v_x_val.textContent = v.x.toFixed(2);
+                v_y_val.textContent = v.y.toFixed(2);
+                dot_prod_val.textContent = dotProduct.toFixed(2);
+                mag_v_val.textContent = magV.toFixed(2);
+                scalar_proj_val.textContent = scalarProjection.toFixed(2);
+                vector_proj_x_val.textContent = projection.x.toFixed(2);
+                vector_proj_y_val.textContent = projection.y.toFixed(2);
+
+                const projectionLineScale = 20;
+                projectionChart.data.datasets[3].data = [
+                    {x: -v.x * projectionLineScale, y: -v.y * projectionLineScale},
+                    {x: v.x * projectionLineScale, y: v.y * projectionLineScale}
+                ];
+
+                projectionChart.update();
+            }
+
+            const canvas = document.getElementById('projectionChart');
+            
+            function getMousePos(evt) {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = projectionChart.chartArea.width / (projectionChart.scales.x.max - projectionChart.scales.x.min);
+                const scaleY = projectionChart.chartArea.height / (projectionChart.scales.y.max - projectionChart.scales.y.min);
+
+                const x = (evt.clientX - rect.left - projectionChart.chartArea.left) / scaleX + projectionChart.scales.x.min;
+                const y = (projectionChart.chartArea.bottom - (evt.clientY - rect.top)) / scaleY + projectionChart.scales.y.min;
+                
+                return { x, y };
+            }
+            
+            function getTouchPos(evt) {
+                const rect = canvas.getBoundingClientRect();
+                 const touch = evt.touches[0] || evt.changedTouches[0];
+                
+                const xPixel = touch.clientX - rect.left;
+                const yPixel = touch.clientY - rect.top;
+
+                const x = projectionChart.scales.x.getValueForPixel(xPixel);
+                const y = projectionChart.scales.y.getValueForPixel(yPixel);
+
+                return {x, y};
+            }
+            
+            function startDrag(pos) {
+                 const distToU = Math.hypot(pos.x - u.x, pos.y - u.y);
+                 const distToV = Math.hypot(pos.x - v.x, pos.y - v.y);
+                 const pixelRadius = handleRadius / projectionChart.chartArea.width * (axisLimit*2);
+
+                 if (distToU < pixelRadius) {
+                     dragging = 'u';
+                 } else if (distToV < pixelRadius) {
+                     dragging = 'v';
+                 } else {
+                     dragging = null;
+                 }
+            }
+
+            function onDrag(pos) {
+                 if (dragging) {
+                     const targetVec = dragging === 'u' ? u : v;
+                     targetVec.x = Math.max(-axisLimit, Math.min(axisLimit, pos.x));
+                     targetVec.y = Math.max(-axisLimit, Math.min(axisLimit, pos.y));
+                     updateCalculations();
+                 }
+            }
+
+            canvas.addEventListener('mousedown', (e) => {
+                const pos = getMousePos(e);
+                startDrag(pos);
+            });
+            
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const pos = getTouchPos(e);
+                startDrag(pos);
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                 if (dragging) {
+                    const pos = getMousePos(e);
+                    onDrag(pos);
+                 }
+            });
+            
+             window.addEventListener('touchmove', (e) => {
+                 if (dragging) {
+                    e.preventDefault();
+                    const pos = getTouchPos(e);
+                    onDrag(pos);
+                 }
+            });
+
+            window.addEventListener('mouseup', () => {
+                dragging = null;
+            });
+
+            window.addEventListener('touchend', () => {
+                dragging = null;
+            });
+            
+            const tabsContainer = document.getElementById('tabs-container');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('tab')) {
+                    tabsContainer.querySelector('.active').classList.remove('active');
+                    e.target.classList.add('active');
+
+                    tabPanes.forEach(pane => pane.classList.add('hidden'));
+                    const targetPaneId = e.target.dataset.tab + '-content';
+                    document.getElementById(targetPaneId).classList.remove('hidden');
+                }
+            });
+
+            updateCalculations();
+
+            const nlpWords = [
+                { word: 'Man', x: 2, y: 3 },
+                { word: 'Woman', x: -1, y: 2 },
+                { word: 'King', x: 4, y: 5 },
+                { word: 'Queen', x: 1, y: 4 },
+                { word: 'Boy', x: 1, y: 2.5 },
+                { word: 'Girl', x: -1.5, y: 1.5 },
+                { word: 'Apple', x: -4, y: -2 },
+                { word: 'Banana', x: -3.5, y: -2.5 }
+            ];
+
+            const nlpChart = new Chart(nlpCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Word Vectors',
+                        data: nlpWords,
+                        backgroundColor: '#A37F5D',
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw.word;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -5,
+                            max: 5,
+                            grid: { display: false, drawBorder: false },
+                            ticks: { display: false }
+                        },
+                        y: {
+                            min: -3,
+                            max: 6,
+                            grid: { display: false, drawBorder: false },
+                            ticks: { display: false }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 20,
+                            bottom: 10
+                        }
+                    }
+                },
+            });
+        });
+    </script>
+
+</body>
+</html>
