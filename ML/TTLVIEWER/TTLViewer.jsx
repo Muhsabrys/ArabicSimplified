@@ -360,4 +360,4 @@ const App = () => {
 window.App = App;
 
 // Default export for bundlers (optional)
-export default App;
+window.App = App;
