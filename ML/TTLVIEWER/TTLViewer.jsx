@@ -1,558 +1,363 @@
-import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+/* global React, ReactDOM */
 
-// --- Icons from lucide-react (Assumed to be available) ---
-const UploadCloud = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14.5V14a2.98 2.98 0 0 1 0-5.96 5.996 5.996 0 0 1 10.322-2.399 5.861 5.861 0 0 1 4.717 5.257A4.99 4.99 0 0 1 19 19H4" /><path d="m10 14-3 3-3-3" /><path d="M7 17v-7" /></svg>;
-const Search = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>;
-const Zap = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L16.2 11.7H7.8L12 2Z" /><path d="M10.8 13L15 22l-4.2-9H6.6l4.2-9Z" /></svg>;
-const Code = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16 18 4-4-4-4" /><path d="m8 6-4 4 4 4" /><path d="M14 4l-4 16" /></svg>;
-const GitGraph = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="5" cy="6" r="3" /><path d="M5 9v6" /><circle cx="5" cy="18" r="3" /><circle cx="19" cy="6" r="3" /><path d="M12 18h7" /><path d="m15 21-3-3 3-3" /><path d="M5 6h.01" /><path d="M19 6h.01" /></svg>;
-const FileText = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.414A2 2 0 0 0 18.586 6L14 1.414A2 2 0 0 0 12.586 1H7a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /></svg>
-const X = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>;
+// Keep your imports for local dev bundlers; they no-op on the CDN setup
+// import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+const { useState, useCallback, useMemo, useRef, useEffect } = React;
 
-// NOTE FOR GITHUB PAGES / RUNTIME:
-// This component relies on the D3.js library being available globally.
-// In your index.html file on GitHub Pages, you MUST include this script tag:
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+// ---------------- Icons ----------------
+const UploadCloud = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M4 14.5V14a2.98 2.98 0 0 1 0-5.96 5.996 5.996 0 0 1 10.322-2.399 5.861 5.861 0 0 1 4.717 5.257A4.99 4.99 0 0 1 19 19H4"/><path d="m10 14-3 3-3-3"/><path d="M7 17v-7"/></svg>;
+const Search      = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>;
+const Zap         = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M12 2L16.2 11.7H7.8L12 2Z"/><path d="M10.8 13L15 22l-4.2-9H6.6l4.2-9Z"/></svg>;
+const Code        = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="m16 18 4-4-4-4"/><path d="m8 6-4 4 4 4"/><path d="M14 4l-4 16"/></svg>;
+const GitGraph    = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="5" cy="6" r="3"/><path d="M5 9v6"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="6" r="3"/><path d="M12 18h7"/><path d="m15 21-3-3 3-3"/></svg>;
+const FileText    = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.414A2 2 0 0 0 18.586 6L14 1.414A2 2 0 0 0 12.586 1H7a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>;
+const X           = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>;
 
-
-// --- Utility Functions ---
-
-/**
- * A highly simplified, illustrative TTL parser.
- * NOTE: For production use, you must use a robust library like N3.js or rdflib.js
- * to handle prefixes, blank nodes, literals, and complex Turtle syntax correctly.
- * This function is for UI demonstration purposes only.
- * @param {string} content - The content of the TTL file.
- * @returns {Array<Object>} An array of {s, p, o} triple objects.
- */
+// ---------------- TTL parsing ----------------
 const simplifiedParseTTL = (content) => {
-    // 1. Split lines, filter out comments and empty lines, and remove trailing dots.
-    const lines = content.split('\n')
-        .map(line => line.trim())
-        .filter(line => line.length > 0 && !line.startsWith('#') && !line.startsWith('@'));
+  const lines = content.split('\n')
+    .map(l => l.trim())
+    .filter(l => l && !l.startsWith('#') && !l.startsWith('@'));
 
-    const parsedTriples = [];
-    let currentSubject = null;
+  const out = [];
+  let currentSubject = null;
+  const tidy = (x) => x.replace(/[;,]+$/,'').trim();
 
-    lines.forEach((line) => {
-        try {
-            // Remove the final dot if present, as it usually ends a triple/segment
-            let cleanLine = line.endsWith('.') ? line.slice(0, -1).trim() : line.trim();
+  for (const raw of lines) {
+    let line = raw.endsWith('.') ? raw.slice(0,-1).trim() : raw.trim();
+    if (!line) continue;
+    const tokens = line.split(/\s+/).filter(Boolean);
 
-            // Handle semicolon continuation (very basic)
-            if (cleanLine.endsWith(';')) {
-                cleanLine = cleanLine.slice(0, -1).trim();
-            }
-
-            // Simple tokenization: split by whitespace
-            const tokens = cleanLine.split(/\s+/).filter(token => token.length > 0);
-
-            if (tokens.length === 0) return;
-
-            if (tokens.length >= 3) {
-                // New triple starts (or is a complete triple)
-                currentSubject = tokens[0];
-                const predicate = tokens[1];
-                const object = tokens.slice(2).join(' '); // Object can contain spaces
-
-                parsedTriples.push({
-                    id: Math.random().toString(36).substring(2, 9),
-                    s: currentSubject,
-                    p: predicate,
-                    o: object
-                });
-            } else if (currentSubject && tokens.length >= 2) {
-                // Continuation using predicate and object (p o .)
-                const predicate = tokens[0];
-                const object = tokens.slice(1).join(' ');
-
-                parsedTriples.push({
-                    id: Math.random().toString(36).substring(2, 9),
-                    s: currentSubject,
-                    p: predicate,
-                    o: object
-                });
-            } else {
-                // Reset subject if line seems incomplete or malformed
-                currentSubject = null;
-            }
-
-        } catch (e) {
-            console.error("Parsing error on line:", line, e);
-        }
-    });
-
-    // Limit to 500 triples for performance in a demo environment
-    return parsedTriples.slice(0, 500);
+    if (tokens.length >= 3) {
+      currentSubject = tidy(tokens[0]);
+      const p = tidy(tokens[1]);
+      const o = tidy(tokens.slice(2).join(' '));
+      out.push({ id: Math.random().toString(36).slice(2,9), s: currentSubject, p, o });
+    } else if (currentSubject && tokens.length >= 2) {
+      const p = tidy(tokens[0]);
+      const o = tidy(tokens.slice(1).join(' '));
+      out.push({ id: Math.random().toString(36).slice(2,9), s: currentSubject, p, o });
+    } else {
+      currentSubject = null;
+    }
+  }
+  return out.slice(0, 500);
 };
 
-// --- Custom Components ---
-
+// ---------------- UI parts ----------------
 const TripleRow = ({ triple }) => (
-    <div className="grid grid-cols-12 gap-2 p-2 text-xs border-b border-gray-700 hover:bg-gray-800 transition-colors">
-        <div className="col-span-4 overflow-x-auto font-medium text-blue-300">
-            {triple.s}
-        </div>
-        <div className="col-span-3 overflow-x-auto text-yellow-300">
-            {triple.p}
-        </div>
-        <div className="col-span-5 overflow-x-auto text-green-300">
-            {triple.o}
-        </div>
-    </div>
+  <div className="grid grid-cols-12 gap-2 p-2 text-xs border-b border-gray-700 hover:bg-gray-800 transition-colors">
+    <div className="col-span-4 overflow-x-auto font-medium text-blue-300">{triple.s}</div>
+    <div className="col-span-3 overflow-x-auto text-yellow-300">{triple.p}</div>
+    <div className="col-span-5 overflow-x-auto text-green-300">{triple.o}</div>
+  </div>
 );
 
+// Treat CURIEs as nodes, not only <IRI>
 const NodeLinkVisualization = ({ triples }) => {
-    const svgRef = useRef(null);
-    
-    // Logic to prepare D3 data structure
-    const { nodes, links } = useMemo(() => {
-        const nodeMap = new Map();
-        const links = [];
-        let index = 0;
+  const svgRef = useRef(null);
 
-        const getNode = (uri) => {
-            if (!nodeMap.has(uri)) {
-                nodeMap.set(uri, { id: uri, index: index++ });
-            }
-            return nodeMap.get(uri);
-        };
-
-        triples.forEach(t => {
-            const subjectUri = t.s;
-            // Simple heuristic: if object is a URI (starts with <) treat it as a node
-            const objectUriMatch = t.o.match(/^<([^>]+)>/);
-            const objectNodeUri = objectUriMatch ? objectUriMatch[1] : t.o;
-            
-            const sourceNode = getNode(subjectUri);
-            
-            // Only create a link if the object looks like a URI/Node
-            if (objectUriMatch) {
-                const targetNode = getNode(objectNodeUri);
-                links.push({
-                    source: sourceNode.id,
-                    target: targetNode.id,
-                    label: t.p
-                });
-            }
-        });
-
-        const finalNodes = Array.from(nodeMap.values());
-        
-        return { nodes: finalNodes, links };
-    }, [triples]);
-
-    // D3 Drawing Logic
-    useEffect(() => {
-        // Check for global D3 object availability
-        if (typeof window.d3 === 'undefined' || nodes.length === 0 || !svgRef.current) return;
-
-        const d3 = window.d3; 
-        const svg = d3.select(svgRef.current);
-        const parent = svgRef.current.parentElement;
-        const width = parent.clientWidth;
-        const height = 500;
-
-        // Set up SVG dimensions and clear previous content
-        svg.attr("viewBox", `0 0 ${width} ${height}`)
-           .style("width", "100%")
-           .style("height", "500px");
-           
-        svg.selectAll("*").remove(); 
-        
-        // Setup simulation
-        const simulation = d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id(d => d.id).distance(100))
-            .force("charge", d3.forceManyBody().strength(-300))
-            .force("center", d3.forceCenter(width / 2, height / 2));
-
-        // Links
-        const link = svg.append("g")
-            .attr("stroke", "#999")
-            .attr("stroke-opacity", 0.6)
-            .selectAll("line")
-            .data(links)
-            .join("line")
-            .attr("stroke-width", 2);
-            
-        // Link Labels (mid-point text)
-        const linkLabel = svg.append("g")
-            .attr("class", "link-labels")
-            .selectAll("text")
-            .data(links)
-            .join("text")
-            .text(d => d.label)
-            .attr("fill", "#bbb")
-            .attr("font-size", 10)
-            .attr("text-anchor", "middle");
-
-        // Nodes
-        const node = svg.append("g")
-            .attr("stroke", "#fff")
-            .attr("stroke-width", 1.5)
-            .selectAll("circle")
-            .data(nodes)
-            .join("circle")
-            .attr("r", 6)
-            .attr("fill", "#6366f1") // Indigo-500
-            .call(drag(simulation));
-
-        // Node Labels
-        const label = svg.append("g")
-            .attr("class", "node-labels")
-            .selectAll("text")
-            .data(nodes)
-            .join("text")
-            .text(d => d.id.substring(0, 20) + (d.id.length > 20 ? '...' : ''))
-            .attr("x", 8)
-            .attr("y", ".31em")
-            .attr("fill", "#fff")
-            .attr("font-size", 10);
-            
-        // Tick function to update positions
-        simulation.on("tick", () => {
-            link.attr("x1", d => d.source.x)
-                .attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
-
-            node.attr("cx", d => d.x)
-                .attr("cy", d => d.y);
-                
-            label.attr("transform", d => `translate(${d.x},${d.y})`);
-            
-            linkLabel.attr("x", d => (d.source.x + d.target.x) / 2)
-                     .attr("y", d => (d.source.y + d.target.y) / 2);
-        });
-        
-        // Drag handler function
-        function drag(simulation) {
-            function dragstarted(event) {
-                if (!event.active) simulation.alphaTarget(0.3).restart();
-                event.subject.fx = event.subject.x;
-                event.subject.fy = event.subject.y;
-            }
-
-            function dragged(event) {
-                event.subject.fx = event.x;
-                event.subject.fy = event.y;
-            }
-
-            function dragended(event) {
-                if (!event.active) simulation.alphaTarget(0);
-                event.subject.fx = null;
-                event.subject.fy = null;
-            }
-
-            return d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended);
-        }
-
-        // Cleanup on unmount
-        return () => {
-            simulation.stop();
-        };
-
-    }, [nodes, links]); // Redraw when nodes or links change
-
-    return (
-        <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white flex items-center">
-                <GitGraph className="w-5 h-5 mr-2 text-indigo-400" />
-                RDF Graph Visualization (Force-Directed)
-            </h3>
-            
-            {nodes.length > 0 ? (
-                <div className="bg-gray-900 border border-gray-700 rounded-xl shadow-lg overflow-hidden">
-                    {/* The SVG element will be attached here */}
-                    <svg ref={svgRef} className="w-full h-[500px]"></svg>
-                    <p className="text-xs text-center p-2 text-gray-500 italic">
-                        Try dragging the nodes to see the force simulation in action.
-                    </p>
-                </div>
-            ) : (
-                <div className="p-4 text-center text-gray-500 italic">
-                    Graph data is ready, but a global 'd3' library variable is required for rendering.
-                </div>
-            )}
-        </div>
-    );
-};
-
-// --- Main Application Component ---
-const App = () => {
-    const [triples, setTriples] = useState([]);
-    const [originalContent, setOriginalContent] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [activeTab, setActiveTab] = useState('triples'); // 'triples', 'sparql', 'visualize'
-    const [sparqlQuery, setSparqlQuery] = useState('SELECT ?s ?p ?o WHERE {\n  ?s ?p ?o .\n} LIMIT 100');
-    const [sparqlMessage, setSparqlMessage] = useState(null);
-
-    // Debounced search term handler
-    const debouncedSetSearchTerm = useRef(
-        (value) => {
-            if (value !== searchTerm) setSearchTerm(value);
-        }
-    ).current;
-
-    const handleFileUpload = useCallback(async (event) => {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        if (!file.name.endsWith('.ttl')) {
-            setError("Please upload a file with the .ttl extension.");
-            setTriples([]);
-            return;
-        }
-
-        setLoading(true);
-        setError(null);
-        setTriples([]);
-        setOriginalContent('');
-        setSparqlMessage(null); // Clear any old messages
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const content = e.target.result;
-            setOriginalContent(content);
-
-            try {
-                // Use the simplified parser for demonstration
-                const parsed = simplifiedParseTTL(content);
-                setTriples(parsed);
-                setError(null);
-                setActiveTab('triples');
-            } catch (err) {
-                setError("Parsing failed. Ensure the file is valid Turtle syntax.");
-                console.error("TTL Parsing Error:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        reader.onerror = () => {
-            setError("Error reading file.");
-            setLoading(false);
-        };
-        reader.readAsText(file);
-    }, []);
-
-    const filteredTriples = useMemo(() => {
-        if (!searchTerm) return triples;
-        const lowerCaseSearch = searchTerm.toLowerCase();
-
-        return triples.filter(triple =>
-            triple.s.toLowerCase().includes(lowerCaseSearch) ||
-            triple.p.toLowerCase().includes(lowerCaseSearch) ||
-            triple.o.toLowerCase().includes(lowerCaseSearch)
-        );
-    }, [triples, searchTerm]);
-
-    const handleSparqlExecute = () => {
-        // In a real application, this would use a SPARQL library (like sparqler)
-        // or a local RDF store (like N3.js store) to execute the query against the loaded triples.
-        console.log("Executing SPARQL Query:", sparqlQuery);
-        setSparqlMessage({
-            type: 'info',
-            text: 'SPARQL Query execution simulated. Check the browser console for the query text. A real app would display results here.'
-        });
+  const { nodes, links } = useMemo(() => {
+    const nodeMap = new Map();
+    const links = [];
+    let idx = 0;
+    const getNode = (id) => {
+      if (!nodeMap.has(id)) nodeMap.set(id, { id, index: idx++ });
+      return nodeMap.get(id);
     };
 
+    const looksLikeIRI   = (x) => /^<[^>]+>$/.test(x);
+    const looksLikeCURIE = (x) => /^[A-Za-z_][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$/.test(x);
 
-    const TabButton = ({ id, label, icon: Icon }) => (
-        <button
-            className={`flex items-center px-4 py-2 text-sm font-medium rounded-t-lg transition-all ${
-                activeTab === id
-                    ? 'bg-gray-800 text-indigo-400 border-b-2 border-indigo-500'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-700'
-            }`}
-            onClick={() => setActiveTab(id)}
-        >
-            <Icon className="w-4 h-4 mr-2" />
-            {label}
-        </button>
-    );
-    
-    const MessageBox = ({ message, onClose }) => {
-        if (!message) return null;
-        const color = message.type === 'error' ? 'bg-red-900/50 text-red-300' : 'bg-indigo-900/50 text-indigo-300';
-        
-        return (
-            <div className={`flex justify-between items-center p-3 rounded-lg ${color}`}>
-                <p className="text-sm">{message.text}</p>
-                <button 
-                    onClick={onClose} 
-                    className="p-1 rounded-full hover:bg-white/10 transition-colors"
-                    aria-label="Close message"
-                >
-                    <X className="w-4 h-4" />
-                </button>
-            </div>
-        );
+    for (const t of triples) {
+      const s = t.s;
+      const o = t.o.replace(/[,;]+$/,'').trim();
+      getNode(s);
+      if (looksLikeIRI(o) || looksLikeCURIE(o)) {
+        getNode(o);
+        links.push({ source: s, target: o, label: t.p });
+      }
     }
+    return { nodes: Array.from(nodeMap.values()), links };
+  }, [triples]);
 
-    return (
-        <div className="min-h-screen bg-gray-900 font-sans text-white p-4 sm:p-8">
-            <style>
-                {`
-                /* Custom scrollbar for dark theme */
-                ::-webkit-scrollbar {
-                    width: 8px;
-                    height: 8px;
-                }
-                ::-webkit-scrollbar-thumb {
-                    background: #4B5563; /* Gray-600 */
-                    border-radius: 4px;
-                }
-                ::-webkit-scrollbar-thumb:hover {
-                    background: #6B7280; /* Gray-500 */
-                }
-                ::-webkit-scrollbar-track {
-                    background: #1F2937; /* Gray-800 */
-                    border-radius: 4px;
-                }
-                input[type="file"] {
-                    display: none;
-                }
-                `}
-            </style>
+  useEffect(() => {
+    if (!window.d3 || !svgRef.current) return;
+    const d3 = window.d3;
 
-            <header className="mb-8 border-b border-gray-700 pb-4">
-                <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500 flex items-center">
-                    <Zap className="w-7 h-7 mr-3" />
-                    TTL RDF Viewer
-                </h1>
-                <p className="text-gray-400 mt-1">A responsive tool for parsing, searching, and visualizing Turtle data.</p>
-            </header>
+    const svg = d3.select(svgRef.current);
+    const parent = svgRef.current.parentElement;
+    const width  = parent.clientWidth;
+    const height = 500;
 
-            {/* File Upload Area */}
-            <div className="mb-8 p-6 bg-gray-800 rounded-xl shadow-2xl border border-gray-700">
-                <label htmlFor="ttl-upload" className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-indigo-600 rounded-lg cursor-pointer hover:border-indigo-400 transition-colors">
-                    <UploadCloud className="w-10 h-10 text-indigo-400 mb-3" />
-                    <p className="mb-2 text-sm text-gray-400">
-                        <span className="font-semibold text-indigo-300">Click to upload</span> or drag and drop
-                    </p>
-                    <p className="text-xs text-gray-500">TTL (Turtle RDF) files only</p>
-                </label>
-                <input
-                    id="ttl-upload"
-                    type="file"
-                    accept=".ttl"
-                    onChange={handleFileUpload}
-                />
+    svg.attr('viewBox', `0 0 ${width} ${height}`).style('width','100%').style('height','500px');
+    svg.selectAll('*').remove();
 
-                {loading && (
-                    <div className="mt-4 text-center text-indigo-400 font-medium">
-                        Loading and Parsing TTL file...
-                    </div>
-                )}
-                {error && (
-                    <div className="mt-4 p-3 bg-red-900/50 text-red-300 rounded-lg">
-                        Error: {error}
-                    </div>
-                )}
-                {triples.length > 0 && !loading && (
-                    <div className="mt-4 text-center text-green-400">
-                        Successfully loaded and parsed {triples.length.toLocaleString()} triples.
-                    </div>
-                )}
-            </div>
+    const sim = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).id(d => d.id).distance(90))
+      .force('charge', d3.forceManyBody().strength(-260))
+      .force('center', d3.forceCenter(width/2, height/2))
+      .alpha(1).restart();
 
-            {/* Main Content Area */}
-            {triples.length > 0 && (
-                <div className="bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
-                    {/* Tabs */}
-                    <div className="flex border-b border-gray-700 px-4">
-                        <TabButton id="triples" label="Triples View" icon={FileText} />
-                        <TabButton id="sparql" label="SPARQL Query" icon={Code} />
-                        <TabButton id="visualize" label="Visualization" icon={GitGraph} />
-                    </div>
+    const link = svg.append('g').attr('stroke','#889').attr('stroke-opacity',0.6)
+      .selectAll('line').data(links).join('line').attr('stroke-width',1.5);
 
-                    <div className="p-6">
-                        {/* Tab Content: Triples View */}
-                        {activeTab === 'triples' && (
-                            <div className="space-y-6">
-                                {/* Search Bar */}
-                                <div className="relative">
-                                    <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                    <input
-                                        type="text"
-                                        placeholder="Search Subject, Predicate, or Object..."
-                                        className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition-shadow text-white"
-                                        onChange={(e) => debouncedSetSearchTerm(e.target.value)}
-                                    />
-                                </div>
+    const linkLabel = svg.append('g')
+      .selectAll('text').data(links).join('text')
+      .text(d => d.label).attr('fill','#bbb').attr('font-size',10).attr('text-anchor','middle');
 
-                                {/* Triples Table Header */}
-                                <div className="grid grid-cols-12 gap-2 p-3 bg-indigo-900/30 font-bold text-sm rounded-lg border-b border-indigo-600">
-                                    <div className="col-span-4 text-indigo-300">Subject</div>
-                                    <div className="col-span-3 text-yellow-300">Predicate</div>
-                                    <div className="col-span-5 text-green-300">Object</div>
-                                </div>
+    const node = svg.append('g').attr('stroke','#fff').attr('stroke-width',1)
+      .selectAll('circle').data(nodes).join('circle')
+      .attr('r',6).attr('fill','#6366f1')
+      .call(d3.drag()
+        .on('start', (event) => { if (!event.active) sim.alphaTarget(0.3).restart(); event.subject.fx = event.subject.x; event.subject.fy = event.subject.y; })
+        .on('drag',  (event) => { event.subject.fx = event.x; event.subject.fy = event.y; })
+        .on('end',   (event) => { if (!event.active) sim.alphaTarget(0); event.subject.fx = null; event.subject.fy = null; })
+      );
 
-                                {/* Triples List */}
-                                <div className="h-96 overflow-y-auto border border-gray-700 rounded-lg">
-                                    {filteredTriples.length > 0 ? (
-                                        filteredTriples.map(triple => (
-                                            <TripleRow key={triple.id} triple={triple} />
-                                        ))
-                                    ) : (
-                                        <div className="p-4 text-center text-gray-500">
-                                            {searchTerm ? 'No triples match your search criteria.' : 'No triples loaded.'}
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="text-sm text-gray-400">
-                                    Displaying {filteredTriples.length.toLocaleString()} of {triples.length.toLocaleString()} total triples.
-                                </div>
-                            </div>
-                        )}
+    const label = svg.append('g')
+      .selectAll('text').data(nodes).join('text')
+      .text(d => d.id.length > 28 ? d.id.slice(0,28)+'…' : d.id)
+      .attr('x',8).attr('y','.31em').attr('fill','#fff').attr('font-size',10);
 
-                        {/* Tab Content: SPARQL Editor */}
-                        {activeTab === 'sparql' && (
-                            <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-white">SPARQL Query Interface</h3>
-                                <p className="text-sm text-gray-400">
-                                    Enter your SPARQL query below. The execution is currently simulated.
-                                </p>
-                                <textarea
-                                    className="w-full h-64 p-4 font-mono text-sm bg-gray-900 border border-gray-700 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-white resize-none"
-                                    value={sparqlQuery}
-                                    onChange={(e) => setSparqlQuery(e.target.value)}
-                                    placeholder="Enter SPARQL query here..."
-                                />
-                                <button
-                                    onClick={handleSparqlExecute}
-                                    className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-500 transition-colors flex items-center"
-                                >
-                                    <Zap className="w-5 h-5 mr-2" />
-                                    Execute Query (Simulated)
-                                </button>
-                                <MessageBox message={sparqlMessage} onClose={() => setSparqlMessage(null)} />
-                            </div>
-                        )}
+    sim.on('tick', () => {
+      link.attr('x1', d => d.source.x).attr('y1', d => d.source.y).attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+      node.attr('cx', d => d.x).attr('cy', d => d.y);
+      label.attr('transform', d => `translate(${d.x},${d.y})`);
+      linkLabel.attr('x', d => (d.source.x + d.target.x)/2).attr('y', d => (d.source.y + d.target.y)/2);
+    });
 
-                        {/* Tab Content: Visualization */}
-                        {activeTab === 'visualize' && (
-                            <NodeLinkVisualization triples={triples} />
-                        )}
-                    </div>
-                </div>
-            )}
+    return () => sim.stop();
+  }, [nodes, links]);
 
-            {/* Placeholder for no file loaded */}
-            {triples.length === 0 && !loading && !error && (
-                <div className="p-12 text-center text-gray-400 bg-gray-800 rounded-xl border border-gray-700">
-                    <FileText className="w-12 h-12 mx-auto mb-4 text-indigo-500" />
-                    <p className="text-lg font-medium">No TTL file loaded.</p>
-                    <p className="text-sm">Upload a .ttl file to view the RDF triples and explore the data.</p>
-                </div>
-            )}
-        </div>
-    );
+  return (
+    <div className="space-y-4">
+      <h3 className="text-lg font-semibold text-white flex items-center">
+        <GitGraph className="w-5 h-5 mr-2 text-indigo-400" />
+        RDF Graph Visualization (Force-Directed)
+      </h3>
+      <div className="bg-gray-900 border border-gray-700 rounded-xl shadow-lg overflow-hidden">
+        <svg ref={svgRef} className="w-full h-[500px]"></svg>
+        <p className="text-xs text-center p-2 text-gray-500 italic">Drag nodes to move them.</p>
+      </div>
+    </div>
+  );
 };
 
+// ---------------- Tiny SPARQL evaluator ----------------
+const runBasicSelectAll = (triples, q) => {
+  const m = q.match(/select\s+(\?\w+)\s+(\?\w+)\s+(\?\w+)\s+where\s*\{\s*\?\w+\s+\?\w+\s+\?\w+\s*\.\s*\}\s*(limit\s+(\d+))?/i);
+  if (!m) return { cols: [], rows: [], error: 'Supported form: SELECT ?s ?p ?o WHERE { ?s ?p ?o . } with optional LIMIT' };
+  const limit = m[5] ? parseInt(m[5], 10) : 100;
+  const rows = triples.slice(0, limit).map(t => ({ s: t.s, p: t.p, o: t.o }));
+  return { cols: ['s','p','o'], rows };
+};
+
+// ---------------- Main App ----------------
+const App = () => {
+  const [triples, setTriples] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('triples');
+  const [sparqlQuery, setSparqlQuery] = useState('SELECT ?s ?p ?o WHERE {\n  ?s ?p ?o .\n} LIMIT 100');
+  const [sparqlMessage, setSparqlMessage] = useState(null);
+  const [sparqlRows, setSparqlRows] = useState([]);
+
+  const debouncedSetSearchTerm = useRef((v) => { if (v !== searchTerm) setSearchTerm(v); }).current;
+
+  const handleFileUpload = useCallback((event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!file.name.endsWith('.ttl')) {
+      setError('Upload a .ttl file.');
+      setTriples([]);
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    setTriples([]);
+    setSparqlMessage(null);
+    setSparqlRows([]);
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const parsed = simplifiedParseTTL(e.target.result);
+        setTriples(parsed);
+        setActiveTab('triples');
+      } catch (err) {
+        setError('Parsing failed. Check TTL syntax.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    reader.onerror = () => { setError('File read failed.'); setLoading(false); };
+    reader.readAsText(file);
+  }, []);
+
+  const filteredTriples = useMemo(() => {
+    if (!searchTerm) return triples;
+    const q = searchTerm.toLowerCase();
+    return triples.filter(t => t.s.toLowerCase().includes(q) || t.p.toLowerCase().includes(q) || t.o.toLowerCase().includes(q));
+  }, [triples, searchTerm]);
+
+  const handleSparqlExecute = () => {
+    const { rows, error } = runBasicSelectAll(triples, sparqlQuery);
+    if (error) {
+      setSparqlMessage({ type: 'error', text: error });
+      setSparqlRows([]);
+      return;
+    }
+    setSparqlMessage({ type: 'info', text: `Returned ${rows.length} rows.` });
+    setSparqlRows(rows);
+  };
+
+  const TabButton = ({ id, label, icon: Icon }) => (
+    <button
+      className={`flex items-center px-4 py-2 text-sm font-medium rounded-t-lg transition-all ${
+        activeTab === id ? 'bg-gray-800 text-indigo-400 border-b-2 border-indigo-500' : 'text-gray-400 hover:text-white hover:bg-gray-700'
+      }`}
+      onClick={() => setActiveTab(id)}
+    >
+      <Icon className="w-4 h-4 mr-2" />
+      {label}
+    </button>
+  );
+
+  const MessageBox = ({ message, onClose }) => {
+    if (!message) return null;
+    const color = message.type === 'error' ? 'bg-red-900/50 text-red-300' : 'bg-indigo-900/50 text-indigo-300';
+    return (
+      <div className={`flex justify-between items-center p-3 rounded-lg ${color}`}>
+        <p className="text-sm">{message.text}</p>
+        <button onClick={onClose} className="p-1 rounded-full hover:bg-white/10 transition-colors" aria-label="Close message">
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-900 font-sans text-white p-4 sm:p-8">
+      <style>{`input[type="file"]{display:none}`}</style>
+
+      <header className="mb-8 border-b border-gray-700 pb-4">
+        <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500 flex items-center">
+          <Zap className="w-7 h-7 mr-3" /> TTL RDF Viewer
+        </h1>
+        <p className="text-gray-400 mt-1">Parse, search, query, and visualize Turtle data.</p>
+      </header>
+
+      <div className="mb-8 p-6 bg-gray-800 rounded-xl shadow-2xl border border-gray-700">
+        <label htmlFor="ttl-upload" className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-indigo-600 rounded-lg cursor-pointer hover:border-indigo-400 transition-colors">
+          <UploadCloud className="w-10 h-10 text-indigo-400 mb-3" />
+          <p className="mb-2 text-sm text-gray-400"><span className="font-semibold text-indigo-300">Click to upload</span> or drag and drop</p>
+          <p className="text-xs text-gray-500">TTL (Turtle RDF) files only</p>
+        </label>
+        <input id="ttl-upload" type="file" accept=".ttl" onChange={handleFileUpload} />
+
+        {loading && <div className="mt-4 text-center text-indigo-400 font-medium">TTL parse in progress…</div>}
+        {error &&   <div className="mt-4 p-3 bg-red-900/50 text-red-300 rounded-lg">Error: {error}</div>}
+        {triples.length > 0 && !loading && (
+          <div className="mt-4 text-center text-green-400">Successfully loaded and parsed {triples.length.toLocaleString()} triples.</div>
+        )}
+      </div>
+
+      {triples.length > 0 && (
+        <div className="bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
+          <div className="flex border-b border-gray-700 px-4">
+            <TabButton id="triples"   label="Triples View"   icon={FileText} />
+            <TabButton id="sparql"    label="SPARQL Query"   icon={Code} />
+            <TabButton id="visualize" label="Visualization"  icon={GitGraph} />
+          </div>
+
+          <div className="p-6">
+            {activeTab === 'triples' && (
+              <div className="space-y-6">
+                <div className="relative">
+                  <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search Subject, Predicate, or Object..."
+                    className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition-shadow text-white"
+                    onChange={(e) => debouncedSetSearchTerm(e.target.value)}
+                  />
+                </div>
+
+                <div className="grid grid-cols-12 gap-2 p-3 bg-indigo-900/30 font-bold text-sm rounded-lg border-b border-indigo-600">
+                  <div className="col-span-4 text-indigo-300">Subject</div>
+                  <div className="col-span-3 text-yellow-300">Predicate</div>
+                  <div className="col-span-5 text-green-300">Object</div>
+                </div>
+
+                <div className="h-96 overflow-y-auto border border-gray-700 rounded-lg">
+                  {filteredTriples.length > 0 ? (
+                    filteredTriples.map(triple => <TripleRow key={triple.id} triple={triple} />)
+                  ) : (
+                    <div className="p-4 text-center text-gray-500">No triples match the query.</div>
+                  )}
+                </div>
+                <div className="text-sm text-gray-400">Displaying {filteredTriples.length.toLocaleString()} of {triples.length.toLocaleString()} total triples.</div>
+              </div>
+            )}
+
+            {activeTab === 'sparql' && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-white">SPARQL Query Interface</h3>
+                <p className="text-sm text-gray-400">Supported form: <code className="bg-gray-900 px-1 rounded">SELECT ?s ?p ?o WHERE &#123; ?s ?p ?o . &#125; LIMIT N</code></p>
+
+                <textarea
+                  className="w-full h-64 p-4 font-mono text-sm bg-gray-900 border border-gray-700 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-white resize-none"
+                  value={sparqlQuery}
+                  onChange={(e) => setSparqlQuery(e.target.value)}
+                  placeholder="Enter SPARQL query here..."
+                />
+                <button onClick={handleSparqlExecute} className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-500 transition-colors flex items-center">
+                  <Zap className="w-5 h-5 mr-2" /> Execute Query
+                </button>
+                <MessageBox message={sparqlMessage} onClose={() => setSparqlMessage(null)} />
+
+                {sparqlRows.length > 0 && (
+                  <div className="mt-4 overflow-x-auto border border-gray-700 rounded-lg">
+                    <table className="w-full text-sm">
+                      <thead className="bg-gray-800 text-gray-300">
+                        <tr><th className="text-left px-3 py-2">s</th><th className="text-left px-3 py-2">p</th><th className="text-left px-3 py-2">o</th></tr>
+                      </thead>
+                      <tbody>
+                        {sparqlRows.map((r,i)=>(
+                          <tr key={i} className="border-t border-gray-700">
+                            <td className="px-3 py-2 text-blue-300">{r.s}</td>
+                            <td className="px-3 py-2 text-yellow-300">{r.p}</td>
+                            <td className="px-3 py-2 text-green-300">{r.o}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {activeTab === 'visualize' && <NodeLinkVisualization triples={triples} />}
+          </div>
+        </div>
+      )}
+
+      {triples.length === 0 && !loading && !error && (
+        <div className="p-12 text-center text-gray-400 bg-gray-800 rounded-xl border border-gray-700">
+          <FileText className="w-12 h-12 mx-auto mb-4 text-indigo-500" />
+          <p className="text-lg font-medium">No TTL file loaded.</p>
+          <p className="text-sm">Upload a .ttl file to view RDF triples and the graph.</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Expose App for index.html loader
+window.App = App;
+
+// Default export for bundlers (optional)
 export default App;
