@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TTL RDF Viewer</title>
-
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- D3.js (global) -->
@@ -12,43 +11,19 @@
     <!-- React 18 UMD -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
-    <!-- Babel to transpile JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
     <meta name="color-scheme" content="dark light">
     <style>
       body { background:#0f172a; margin:0; font-family:sans-serif }
-      .warning { background: #fff7d6; color: #9a6700; padding: 1em; margin-bottom: 1em; border-radius: 4px; }
       .errormsg { background: #fee2e2; color: #991b1b; padding: 1em; border-radius: 4px; margin-top: 1em; }
     </style>
   </head>
   <body>
     <div id="root"></div>
     <div id="error" class="errormsg" style="display:none;"></div>
-
     <noscript>
       <div class="errormsg">JavaScript is required to use the TTL RDF Viewer.</div>
     </noscript>
-
-    <script>
-      // Show warning if loaded via file://
-      if (window.location.protocol === "file:") {
-        const warning = document.createElement("div");
-        warning.className = "warning";
-        warning.innerHTML = `
-          <strong>Warning:</strong> This page must be run from a local web server.<br>
-          Please start a local server in this directory, for example:<br>
-          <code>python -m http.server</code>
-          <br>and then open <code>http://localhost:8000/index.html</code> in your browser.
-        `;
-        document.body.insertBefore(warning, document.body.firstChild);
-      }
-    </script>
-
-    <!-- Load JSX app -->
-    <script type="text/babel" src="TTLViewer.jsx"></script>
-
-    <!-- Mount once App is defined -->
+    <script src="TTLViewer.js"></script>
     <script>
       (function waitAndMount(attempt) {
         attempt = attempt || 0;
