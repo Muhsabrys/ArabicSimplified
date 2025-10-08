@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Foundations: Comprehensive Study Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 80rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .quiz-option, .category-option {
+            transition: background-color 0.15s, border-color 0.15s;
+        }
+        .quiz-option:hover, .category-option:hover {
+            background-color: #e5e7eb;
+            cursor: pointer;
+        }
+        /* Flashcard specific CSS for 3D flip effect */
+        .flashcard-container {
+            perspective: 1000px;
+            height: 250px; /* Increased height for more content */
+        }
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 3px solid;
+            overflow-y: auto; /* Allows scrolling if text is too long */
+        }
+        .flashcard-front {
+            background-color: #f3e8ff; /* Light Violet */
+            border-color: #a78bfa;
+            color: #4c1d95;
+            font-size: 1.125rem;
+        }
+        .flashcard-back {
+            background-color: #ecfdf5; /* Light Green */
+            border-color: #34d399;
+            color: #065f46;
+            transform: rotateY(180deg);
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .quiz-explanation {
+            border-left: 4px solid;
+            padding-left: 1rem;
+            margin-top: 0.75rem;
+        }
+        .correct-answer {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+        .incorrect-answer {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div id="app" class="container mx-auto space-y-12">
+        
+        <!-- Header -->
+        <header class="text-center py-8 mb-8 card bg-blue-800 text-white shadow-xl">
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">Comprehensive ML Fundamentals Toolkit</h1>
+            <p class="mt-2 text-blue-300 text-lg">Expanded Practice: 40 Flashcards, 15 Categories, 30 T/F, 30 MCQs</p>
+        </header>
+
+        <!-- 1. Flashcards Section (40 Key Definitions) -->
+        <section id="flashcards" class="card">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 flex items-center">
+                <i class="fas fa-layer-group mr-3"></i> 1. Flashcards (40 Terms)
+            </h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Flashcard Q1: Labeled Training Set (Original) -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q1" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is a **labeled training set**?</div>
+                        <div class="flashcard-face flashcard-back">A dataset where all training examples include the desired solution (the label). Essential for **Supervised Learning**.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q2: Hyperparameter (Original) -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q2" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the difference between a **model parameter** and a **hyperparameter**?</div>
+                        <div class="flashcard-face flashcard-back">**Parameter** (e.g., $m$ and $b$ in Linear Regression) is learned by the algorithm; **Hyperparameter** (e.g., Learning Rate) is set manually before training.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q3: Instance-Based Learning (Original) -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q3" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">How does an **Instance-Based** learning algorithm make predictions?</div>
+                        <div class="flashcard-face flashcard-back">It memorizes the training examples and uses a **similarity measure** to compare new instances to existing ones (e.g., k-Nearest Neighbors).</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q4: Out-of-Core Learning (Original) -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q4" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is **Out-of-Core** learning, and when is it used?</div>
+                        <div class="flashcard-face flashcard-back">A type of **Online Learning** used when the entire dataset is too large to fit in the computer's main memory (RAM). Data is loaded in chunks.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q5: Generalization Error (Original) -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q5" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the **Generalization Error**?</div>
+                        <div class="flashcard-face flashcard-back">The error rate on new, unseen cases (the **Test Set**). It measures how well the model generalizes from the training data to real-world data.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q6: Supervised Learning -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q6" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">Name the two most common **Supervised Learning** tasks.</div>
+                        <div class="flashcard-face flashcard-back">**Classification** (predicting a category) and **Regression** (predicting a continuous value).</div>
+                    </div>
+                </div>
+                
+                <!-- Flashcard Q7: Unsupervised Learning Tasks -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q7" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">Name four common **Unsupervised Learning** tasks.</div>
+                        <div class="flashcard-face flashcard-back">Clustering, Visualization, Dimensionality Reduction, and Association Rule Learning.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q8: Reinforcement Learning -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q8" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What are the three main components of a **Reinforcement Learning** system?</div>
+                        <div class="flashcard-face flashcard-back">**Agent** (the learner), **Environment**, and the **Policy** (the strategy the agent uses).</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q9: Batch Learning -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q9" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is a key disadvantage of **Batch Learning**?</div>
+                        <div class="flashcard-face flashcard-back">It requires vast computational resources and time to train, and retraining must occur on the entire dataset when new data arrives.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q10: Model-Based Learning Goal -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q10" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the primary goal of a **Model-Based** learning algorithm?</div>
+                        <div class="flashcard-face flashcard-back">To search for the optimal values for model **parameters** that minimize a **cost function**.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q11: Utility Function -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q11" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">In Reinforcement Learning, what is the **Utility Function** (or Reward Function)?</div>
+                        <div class="flashcard-face flashcard-back">It measures how good the action of the agent was. The policy must be learned to maximize the expected reward over time.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q12: Underfitting -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q12" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What happens when a model is **Underfitting** the training data?</div>
+                        <div class="flashcard-face flashcard-back">The model is too simple to capture the underlying structure, resulting in poor performance on both training and test data.</div>
+                    </div>
+                </div>
+                
+                <!-- Flashcard Q13: Data Snooping -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q13" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the problem known as **Data Snooping**?</div>
+                        <div class="flashcard-face flashcard-back">Tuning hyperparameters based on the test set, which leads to the test set error being too optimistic (the model overfits the test set).</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q14: Validation Set Purpose -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q14" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the role of the **Validation Set** in the holdout method?</div>
+                        <div class="flashcard-face flashcard-back">It is used to evaluate candidate models and select the best hyperparameters without touching the final Test Set.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q15: Feature Engineering -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q15" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What does **Feature Engineering** involve?</div>
+                        <div class="flashcard-face flashcard-back">Selecting the most useful features, transforming features, and creating new features by combining existing ones.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q16: Bad Data Examples -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q16" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">Name two problems related to **Bad Training Data**.</div>
+                        <div class="flashcard-face flashcard-back">Insufficient quantity of training data and non-representative training data (**Sampling Bias**).</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q17: Unsupervised Example -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q17" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What type of ML is **Association Rule Learning**?</div>
+                        <div class="flashcard-face flashcard-back">Unsupervised Learning (e.g., finding that people who buy product A also tend to buy product B).</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q18: Overfitting Cause -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q18" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is a key cause of **Overfitting**?</div>
+                        <div class="flashcard-face flashcard-back">The model is too complex relative to the amount or noise of the training data, learning the "noise" and not just the signal.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q19: Semi-Supervised Learning -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q19" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">Describe **Semi-Supervised Learning**.</div>
+                        <div class="flashcard-face flashcard-back">Algorithms that handle partially labeled data, often by clustering the unlabeled data first and then using the few labels to refine the clusters.</div>
+                    </div>
+                </div>
+                
+                <!-- Flashcard Q20: Cost Function Role -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q20" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the role of the **Cost Function**?</div>
+                        <div class="flashcard-face flashcard-back">Measures how far the model's prediction is from the desired output. The goal of training is to minimize this value.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q21: Online Learning Update -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q21" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">How do **Online Learning** systems update their model?</div>
+                        <div class="flashcard-face flashcard-back">They train the model incrementally, either individually or in small groups (mini-batches), allowing it to adapt to new data instantly.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q22: Instance-Based vs Model-Based -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q22" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the main difference in how **Instance-Based** vs. **Model-Based** systems generalize?</div>
+                        <div class="flashcard-face flashcard-back">Instance-based generalizes by comparing new data to memorized instances. Model-based generalizes by finding optimal parameters for an explicit model.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q23: Overfitting Solution -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q23" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">Name three solutions for **Overfitting**.</div>
+                        <div class="flashcard-face flashcard-back">Simplify the model, use more training data, or reduce the noise in the data (e.g., regularization).</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q24: Dimensionality Reduction Example -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q24" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is **Principal Component Analysis (PCA)**?</div>
+                        <div class="flashcard-face flashcard-back">A technique for **Dimensionality Reduction** that projects the data onto a lower-dimensional subspace while preserving variance.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q25: Spam Filter Task -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q25" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What type of ML problem is a **Spam Filter**?</div>
+                        <div class="flashcard-face flashcard-back">Supervised Learning, specifically **Binary Classification** (Spam or Not Spam).</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q26: Online Learning Data Use -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q26" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What happens to old data in a production **Online Learning** system?</div>
+                        <div class="flashcard-face flashcard-back">The old data can often be discarded after a training step, saving massive amounts of storage space.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q27: Training Set Use -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q27" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the sole purpose of the **Training Set**?</div>
+                        <div class="flashcard-face flashcard-back">To train the model by finding the optimal parameters that minimize the cost function on this data.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q28: Train-Dev Set -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q28" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">When is a **Train-Dev Set** needed?</div>
+                        <div class="flashcard-face flashcard-back">When there is a significant mismatch between the training data and the validation/test data (e.g., training on clean data, testing on noisy data).</div>
+                    </div>
+                </div>
+                
+                <!-- Flashcard Q29: Poor Feature Quality -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q29" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the "Garbage In, Garbage Out" challenge in ML?</div>
+                        <div class="flashcard-face flashcard-back">The model will only be as good as the data it is trained on. Poor quality features (missing, noisy, irrelevant) lead to poor performance.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q30: Non-Representative Data -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q30" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-back">Training with a set that is too small to generalize is called **Sampling Noise**. What is training with a biased sample called?</div>
+                        <div class="flashcard-face flashcard-front">What is the difference between **Sampling Noise** and **Sampling Bias**?</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q31: Policy in RL -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q31" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">In Reinforcement Learning, what is the **Policy**?</div>
+                        <div class="flashcard-face flashcard-back">It is the strategy that the agent uses to decide what actions to take in a given situation. It's the "brain" of the agent.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q32: Model-Based Strategy -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q32" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the most common strategy Model-Based algorithms use to succeed?</div>
+                        <div class="flashcard-face flashcard-back">Iteratively adjusting the parameters to minimize the cost function using an algorithm like **Gradient Descent**.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q33: Visualization Task -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q33" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">Why is **Visualization** considered an Unsupervised Task?</div>
+                        <div class="flashcard-face flashcard-back">It's a way to present complex data in a 2D or 3D plot to allow a human observer to spot patterns, and it requires no labels.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q34: Policy in RL -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q34" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the ML challenge related to **Extrapolating** beyond the training data?</div>
+                        <div class="flashcard-face flashcard-back">The model may perform poorly when asked to predict values far outside the range it was trained on, which is a key danger of non-representative data.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q35: Policy in RL -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q35" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What type of ML is used for **Creating a chatbot**?</div>
+                        <div class="flashcard-face flashcard-back">Typically a mixture of Supervised Learning (for classification of intent) and sometimes Reinforcement Learning (to optimize conversation flow).</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q36: Scaling up ML -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q36" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is a technique for handling noise/outliers in data for Instance-Based Learning?</div>
+                        <div class="flashcard-face flashcard-back">Instead of using the nearest neighbor (k=1), use k-Nearest Neighbors with a larger k, so the prediction is based on the majority vote or average of k neighbors.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q37: Learning Rate -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q37" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the **Learning Rate** hyperparameter?</div>
+                        <div class="flashcard-face flashcard-back">It controls the size of the steps taken by the optimization algorithm (e.g., Gradient Descent) when adjusting model parameters.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q38: Ensemble Learning -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q38" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the idea behind **Ensemble Learning**?</div>
+                        <div class="flashcard-face flashcard-back">Combining the predictions of several different models (e.g., using a consensus) to achieve better performance than any single model alone.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q39: Data Mismatch -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q39" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">What is the issue of **Data Mismatch**?</div>
+                        <div class="flashcard-face flashcard-back">The training data is drawn from a different distribution than the validation/test data, leading to poor generalization despite good training performance.</div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Q40: Data Snooping Danger -->
+                <div class="flashcard-container">
+                    <div class="flashcard" id="fc-q40" onclick="this.classList.toggle('is-flipped')">
+                        <div class="flashcard-face flashcard-front">Why is using the Test Set for hyperparameter tuning a bad idea?</div>
+                        <div class="flashcard-face flashcard-back">It violates the principle that the test set should be a final, unbiased measure of the model's true generalization error.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Categorization Section (15 Task Types) -->
+        <section id="categorization" class="card">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 flex items-center">
+                <i class="fas fa-th-list mr-3"></i> 2. Categorization: Task Type (15 Questions)
+            </h2>
+            <p class="text-gray-600 mb-6">Choose the **Task Type** (Classification, Regression, Clustering, or Reinforcement Learning) best suited for each scenario.</p>
+            <form id="categorization-form" class="space-y-4">
+                
+                <!-- Cat Q1: Robot Walk (RL) (Original) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q1-container">
+                    <p class="font-semibold mb-3">1. Allowing a robot to **walk in various unknown terrains** by rewarding successful steps.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q1" value="RL" class="mr-2"> Reinforcement Learning</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q1" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q1" value="Reg" class="mr-2"> Regression</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q2: News Articles (Class) (Original) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q2-container">
+                    <p class="font-semibold mb-3">2. Automatically classifying news articles into **Sports, Politics, or Business** categories.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q2" value="Reg" class="mr-2"> Regression</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q2" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q2" value="Clust" class="mr-2"> Clustering</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q3: Segmenting Customers (Clust) (Original) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q3-container">
+                    <p class="font-semibold mb-3">3. Segmenting your customers into **multiple groups** based on their shopping habits (no pre-defined groups).</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q3" value="Reg" class="mr-2"> Regression</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q3" value="Clust" class="mr-2"> Clustering</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q3" value="Class" class="mr-2"> Classification</label>
+                    </div>
+                </div>
+                
+                <!-- Cat Q4: Predicting Price (Reg) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q4-container">
+                    <p class="font-semibold mb-3">4. Forecasting a company's **revenue next year** based on performance metrics.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q4" value="RL" class="mr-2"> Reinforcement Learning</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q4" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q4" value="Reg" class="mr-2"> Regression</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q5: Credit Card Fraud (Class) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q5-container">
+                    <p class="font-semibold mb-3">5. Detecting credit card fraud by labeling transactions as **Fraudulent or Legitimate**.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q5" value="Clust" class="mr-2"> Clustering</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q5" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q5" value="Reg" class="mr-2"> Regression</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q6: Recommending Products (Assoc Rule) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q6-container">
+                    <p class="font-semibold mb-3">6. Finding co-occurring items in shopping baskets to recommend products (e.g., people who buy X also buy Y).</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q6" value="Reg" class="mr-2"> Regression</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q6" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q6" value="Unsup" class="mr-2"> Unsupervised (Association Rule Learning)</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q7: Speech Command (Class) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q7-container">
+                    <p class="font-semibold mb-3">7. Making an app react to voice commands by classifying the sound input into pre-defined commands.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q7" value="RL" class="mr-2"> Reinforcement Learning</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q7" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q7" value="Reg" class="mr-2"> Regression</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q8: Simplifying Data (Dim Red) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q8-container">
+                    <p class="font-semibold mb-3">8. Reducing a complex, high-dimensional dataset down to 2 dimensions for visualization.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q8" value="Reg" class="mr-2"> Regression</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q8" value="DimRed" class="mr-2"> Unsupervised (Dimensionality Reduction)</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q8" value="Class" class="mr-2"> Classification</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q9: Image Classification (Class) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q9-container">
+                    <p class="font-semibold mb-3">9. Analyzing images on a production line to automatically classify them as **Defective or Non-defective**.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q9" value="Clust" class="mr-2"> Clustering</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q9" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q9" value="Reg" class="mr-2"> Regression</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q10: Game Bot (RL) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q10-container">
+                    <p class="font-semibold mb-3">10. Building an intelligent bot for a game that learns optimal moves through repeated play and feedback.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q10" value="RL" class="mr-2"> Reinforcement Learning</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q10" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q10" value="Reg" class="mr-2"> Regression</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q11: Summarizing Documents (Unsup) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q11-container">
+                    <p class="font-semibold mb-3">11. Automatically summarizing long documents without needing a human-written summary for training.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q11" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q11" value="Unsup" class="mr-2"> Unsupervised Learning</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q11" value="Reg" class="mr-2"> Regression</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q12: Time Series Forecasting (Reg) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q12-container">
+                    <p class="font-semibold mb-3">12. Predicting tomorrow's temperature in degrees Celsius based on historical data.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q12" value="Reg" class="mr-2"> Regression</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q12" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q12" value="RL" class="mr-2"> Reinforcement Learning</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q13: Tumors in Scans (Class) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q13-container">
+                    <p class="font-semibold mb-3">13. Detecting tumors in brain scans where doctors have pre-labeled many scans with tumor locations.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q13" value="Clust" class="mr-2"> Clustering</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q13" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q13" value="Reg" class="mr-2"> Regression</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q14: Anomaly Detection (Unsup) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q14-container">
+                    <p class="font-semibold mb-3">14. Identifying unusual machine logs that deviate from the normal operating pattern.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q14" value="Reg" class="mr-2"> Regression</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q14" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q14" value="Unsup" class="mr-2"> Unsupervised (Anomaly Detection)</label>
+                    </div>
+                </div>
+
+                <!-- Cat Q15: Document Retrieval (Unsup) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="cat-q15-container">
+                    <p class="font-semibold mb-3">15. Using an algorithm to organize a library of documents based on latent topics within the text.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q15" value="Unsup" class="mr-2"> Unsupervised (Topic Modeling)</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q15" value="Class" class="mr-2"> Classification</label>
+                        <label class="category-option p-2 rounded-lg border border-gray-300"><input type="radio" name="cat_q15" value="Reg" class="mr-2"> Regression</label>
+                    </div>
+                </div>
+
+                <button type="button" onclick="checkCategorization()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+                    Check Categorization
+                </button>
+                <div id="categorization-results" class="mt-4 p-4 text-center text-lg font-semibold hidden rounded-lg"></div>
+            </form>
+        </section>
+
+        <!-- 3. True or False Section (30 Statements) -->
+        <section id="true-false" class="card">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 flex items-center">
+                <i class="fas fa-check-double mr-3"></i> 3. True or False (30 Statements)
+            </h2>
+            <form id="tf-form" class="space-y-4">
+                
+                <!-- T/F Q1: Spam detection (Original) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q1-container">
+                    <p class="font-semibold mb-3">1. The problem of spam detection is typically framed as a Supervised Learning problem.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q1" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q1" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q1-exp">True. Spam filters are trained on labeled examples (Spam/Not Spam), making it a supervised classification task.</p>
+                </div>
+
+                <!-- T/F Q2: Overfitting (Original) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q2-container">
+                    <p class="font-semibold mb-3">2. If a model performs great on the training data but poorly on the test set, it is suffering from **Underfitting**.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q2" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q2" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q2-exp">False. This scenario describes **Overfitting**, where the model learns the noise in the training data too well and fails to generalize.</p>
+                </div>
+
+                <!-- T/F Q3: Validation Set (Original) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q3-container">
+                    <p class="font-semibold mb-3">3. The primary purpose of the **Validation Set** is to tune hyperparameters and select the best model.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q3" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q3" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q3-exp">True. The validation set is used for the holdout validation process to prevent overfitting the test set.</p>
+                </div>
+                
+                <!-- T/F Q4: Regression -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q4-container">
+                    <p class="font-semibold mb-3">4. Regression is the task of predicting a discrete, categorical value.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q4" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q4" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q4-exp">False. Regression predicts a **continuous** value. Classification predicts a discrete, categorical value.</p>
+                </div>
+
+                <!-- T/F Q5: Batch Learning -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q5-container">
+                    <p class="font-semibold mb-3">5. Batch learning systems must be trained using all available data at once.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q5" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q5" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q5-exp">True. Batch learning involves a single, resource-intensive training step using all data.</p>
+                </div>
+
+                <!-- T/F Q6: Instance-Based Learning -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q6-container">
+                    <p class="font-semibold mb-3">6. An Instance-Based learning algorithm attempts to explicitly find the optimal parameters of a function.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q6" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q6" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q6-exp">False. This is the goal of **Model-Based** learning. Instance-Based learning relies on similarity measures.</p>
+                </div>
+
+                <!-- T/F Q7: Data Snooping -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q7-container">
+                    <p class="font-semibold mb-3">7. If you tune hyperparameters using the test set, you risk a phenomenon called Data Snooping.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q7" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q7" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q7-exp">True. Data Snooping leads to an overly optimistic estimate of the generalization error because the model has indirectly "seen" the test data.</p>
+                </div>
+
+                <!-- T/F Q8: Underfitting Solution -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q8-container">
+                    <p class="font-semibold mb-3">8. A good solution to underfitting is to use a less constrained model with more parameters.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q8" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q8" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q8-exp">True. Underfitting means the model is too simple. A more powerful (more complex) model is needed.</p>
+                </div>
+
+                <!-- T/F Q9: Online Learning Data -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q9-container">
+                    <p class="font-semibold mb-3">9. Online learning models are often used when data must be processed sequentially as it arrives.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q9" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q9" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q9-exp">True. This is ideal for continuous data streams like stock prices or customer clicks.</p>
+                </div>
+
+                <!-- T/F Q10: Feature Scaling -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q10-container">
+                    <p class="font-semibold mb-3">10. Feature Scaling (e.g., Normalization) is a key challenge when working with Instance-Based Learning models.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q10" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q10" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q10-exp">True. Instance-Based Learning relies on similarity/distance measures, which are heavily affected by feature scales.</p>
+                </div>
+
+                <!-- T/F Q11: Clustering is Supervised -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q11-container">
+                    <p class="font-semibold mb-3">11. Clustering is an example of a Supervised Learning task.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q11" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q11" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q11-exp">False. Clustering is an **Unsupervised** Learning task because the data has no labels.</p>
+                </div>
+
+                <!-- T/F Q12: Out-of-Core definition -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q12-container">
+                    <p class="font-semibold mb-3">12. Out-of-core learning is a technique used only for very small datasets.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q12" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q12" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q12-exp">False. It is used when the dataset is **too large** to fit into the computer's main memory (RAM).</p>
+                </div>
+
+                <!-- T/F Q13: Model Parameter -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q13-container">
+                    <p class="font-semibold mb-3">13. A Model Parameter is determined by the training algorithm itself, not set manually.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q13" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q13" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q13-exp">True. Model parameters (like weights) are the outcome of the learning process, unlike hyperparameters (like learning rate).</p>
+                </div>
+
+                <!-- T/F Q14: Sampling Bias -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q14-container">
+                    <p class="font-semibold mb-3">14. Using a training set that is not representative of the real-world data is known as **Sampling Bias**.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q14" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q14" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q14-exp">True. This bias leads to poor generalization because the model learns patterns that don't reflect reality.</p>
+                </div>
+
+                <!-- T/F Q15: Generalization Error -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q15-container">
+                    <p class="font-semibold mb-3">15. The Generalization Error is typically measured on the Training Set.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q15" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q15" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q15-exp">False. It is measured on the **Test Set** (or out-of-sample data).</p>
+                </div>
+
+                <!-- T/F Q16: Data Mismatch -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q16-container">
+                    <p class="font-semibold mb-3">16. If the training data distribution differs significantly from the test data distribution, you should consider using a **train-dev set**.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q16" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q16" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q16-exp">True. The train-dev set helps diagnose if the high generalization error is due to overfitting or data mismatch.</p>
+                </div>
+                
+                <!-- T/F Q17: Ensemble Learning -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q17-container">
+                    <p class="font-semibold mb-3">17. Ensemble methods combine multiple models to create a more robust final prediction.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q17" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q17" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q17-exp">True. Ensemble Learning is a powerful technique for boosting performance, especially by reducing variance (overfitting).</p>
+                </div>
+
+                <!-- T/F Q18: Policy in RL -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q18-container">
+                    <p class="font-semibold mb-3">18. In Reinforcement Learning, the **Agent** is the environment that provides rewards and penalties.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q18" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q18" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q18-exp">False. The Agent is the **learning system**. The **Environment** provides the rewards/penalties.</p>
+                </div>
+
+                <!-- T/F Q19: Insufficient Data -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q19-container">
+                    <p class="font-semibold mb-3">19. For simple problems, most ML algorithms need millions of data points to perform well.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q19" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q19" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q19-exp">False. For simple problems, only thousands of data points may be sufficient. Millions are typically needed for complex problems like image recognition.</p>
+                </div>
+
+                <!-- T/F Q20: Semi-Supervised -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q20-container">
+                    <p class="font-semibold mb-3">20. Google Photos' face grouping feature is a prime example of pure Supervised Learning.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q20" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q20" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q20-exp">False. Face grouping uses **Clustering** (Unsupervised) to group faces, then asks for a name label (Supervised). This makes it **Semi-Supervised**.</p>
+                </div>
+
+                <!-- T/F Q21: Feature Engineering -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q21-container">
+                    <p class="font-semibold mb-3">21. Feature Engineering is about automatically selecting the best features; it rarely involves human intervention.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q21" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q21" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q21-exp">False. Feature Engineering requires considerable **human expertise** to select, combine, and create new features.</p>
+                </div>
+
+                <!-- T/F Q22: Outlier Impact -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q22-container">
+                    <p class="font-semibold mb-3">22. Outliers generally have a negligible impact on most ML models.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q22" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q22" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q22-exp">False. Outliers can severely damage model performance, especially in models sensitive to distance like Linear Regression and kNN.</p>
+                </div>
+
+                <!-- T/F Q23: Overfitting Solution 2 -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q23-container">
+                    <p class="font-semibold mb-3">23. Applying regularization (constraining the model) is a common strategy to combat overfitting.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q23" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q23" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q23-exp">True. By constraining the model, we reduce its complexity, forcing it to focus on general patterns rather than noise.</p>
+                </div>
+
+                <!-- T/F Q24: Extrapolation -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q24-container">
+                    <p class="font-semibold mb-3">24. It is generally safe to rely on an ML model to extrapolate (predict outside its training range).</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q24" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q24" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q24-exp">False. Extrapolation is notoriously unreliable and should be avoided, as the model has no data to validate its prediction in that range.</p>
+                </div>
+
+                <!-- T/F Q25: Policy vs Agent -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q25-container">
+                    <p class="font-semibold mb-3">25. The Policy in RL is the strategy for the agent to maximize the utility function.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q25" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q25" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q25-exp">True. The Policy dictates the agent's actions based on the current state, aiming for the maximum cumulative reward.</p>
+                </div>
+
+                <!-- T/F Q26: Online vs Batch retraining -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q26-container">
+                    <p class="font-semibold mb-3">26. Unlike batch learning, online learning requires retraining on all previous data every time new data is introduced.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q26" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q26" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q26-exp">False. Online learning's strength is that it learns incrementally, often discarding old data immediately, thus avoiding full retraining.</p>
+                </div>
+
+                <!-- T/F Q27: Training Error vs Generalization Error -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q27-container">
+                    <p class="font-semibold mb-3">27. A high training error always indicates that the model is overfitting.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q27" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q27" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q27-exp">False. A high training error usually indicates **underfitting** (the model isn't even learning the training data well). Overfitting has low training error but high test error.</p>
+                </div>
+
+                <!-- T/F Q28: Scaling ML -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q28-container">
+                    <p class="font-semibold mb-3">28. The main difficulty in scaling up ML is the exponential increase in the cost of collecting more data.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q28" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q28" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q28-exp">False. While collecting data is hard, the main scaling difficulty is the **computational complexity** of training the model on huge datasets (solved partially by Online/Out-of-Core learning).</p>
+                </div>
+
+                <!-- T/F Q29: Garbage In, Garbage Out -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q29-container">
+                    <p class="font-semibold mb-3">29. If your model performs poorly, adding more features is always the first and best solution.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q29" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q29" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf-q29-exp">False. Adding poor or irrelevant features can make things worse (Garbage In, Garbage Out). Improving existing features (Feature Engineering) or increasing data size is often better.</p>
+                </div>
+
+                <!-- T/F Q30: Visualization -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="tf-q30-container">
+                    <p class="font-semibold mb-3">30. The goal of Visualization techniques is to transform data into a clear 2D or 3D representation for human interpretation.</p>
+                    <div class="flex gap-4">
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q30" value="True" class="mr-2"> True</label>
+                        <label class="quiz-option p-2 rounded-lg border border-gray-300 w-1/4 text-center"><input type="radio" name="tf_q30" value="False" class="mr-2"> False</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="tf_q30-exp">True. Visualization, an Unsupervised task, is primarily for human insight into the data's structure.</p>
+                </div>
+
+
+                <button type="button" onclick="checkTFQuiz()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+                    Check True/False
+                </button>
+                <div id="tf-results" class="mt-4 p-4 text-center text-lg font-semibold hidden rounded-lg"></div>
+            </form>
+        </section>
+
+        <!-- 4. Multiple Choice Questions (30 MCQs) -->
+        <section id="mcqs" class="card">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 flex items-center">
+                <i class="fas fa-list-ol mr-3"></i> 4. Multiple Choice Questions (30 Questions)
+            </h2>
+            <form id="mcq-form" class="space-y-6">
+                
+                <!-- MCQ Q1: Supervised Tasks (Original) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q1-container">
+                    <p class="font-semibold text-gray-900 mb-3">1. Which of the following is NOT one of the two most common Supervised Learning tasks?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q1" value="a" class="mr-2"> Classification</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q1" value="b" class="mr-2"> Regression</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q1" value="c" class="mr-2"> **Clustering**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q1" value="d" class="mr-2"> Both A and B</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q1-exp">Explanation: Clustering is a prominent Unsupervised Learning task, while Classification and Regression are the two main Supervised tasks.</p>
+                </div>
+
+                <!-- MCQ Q2: Model-Based Learning (Original) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q2-container">
+                    <p class="font-semibold text-gray-900 mb-3">2. What is the primary goal of a **Model-Based** learning algorithm?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q2" value="a" class="mr-2"> Memorizing every training instance to ensure high accuracy.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q2" value="b" class="mr-2"> Utilizing the entire dataset for every prediction.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q2" value="c" class="mr-2"> **Searching for the optimal values for model parameters that minimize a cost function.**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q2" value="d" class="mr-2"> Defining new features without human intervention.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q2-exp">Explanation: Model-based learning, like Linear Regression, is about finding the optimal parameters (weights/slopes) that fit the data best according to a cost function.</p>
+                </div>
+
+                <!-- MCQ Q3: Underfitting Solution (Original) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q3-container">
+                    <p class="font-semibold text-gray-900 mb-3">3. If your model is suffering from **Underfitting**, which is the BEST general solution to try?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q3" value="a" class="mr-2"> Use a simpler model with fewer parameters.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q3" value="b" class="mr-2"> **Select a more powerful model with more parameters (e.g., polynomial).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q3" value="c" class="mr-2"> Increase the amount of training data.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q3" value="d" class="mr-2"> Decrease the learning rate hyperparameter.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q3-exp">Explanation: Underfitting means the model is too simple for the data. Using a more complex or powerful model (like adding polynomial features) allows it to capture more complex patterns.</p>
+                </div>
+                
+                <!-- MCQ Q4: Hyperparameter Definition -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q4-container">
+                    <p class="font-semibold text-gray-900 mb-3">4. Which of the following best describes a **hyperparameter**?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q4" value="a" class="mr-2"> A value that is learned from the training data, such as a weight.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q4" value="b" class="mr-2"> The error rate of the model on the test set.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q4" value="c" class="mr-2"> The final prediction made by the model.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q4" value="d" class="mr-2"> **A parameter of the learning algorithm, set prior to the training process.**</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q4-exp">Explanation: Hyperparameters (like the learning rate or regularization strength) are external settings that control the learning process, distinct from model parameters (like weights/biases) which are learned.</p>
+                </div>
+
+                <!-- MCQ Q5: Overfitting Solution 2 -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q5-container">
+                    <p class="font-semibold text-gray-900 mb-3">5. Which technique is most effective at preventing a model from **overfitting**?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q5" value="a" class="mr-2"> Training the model for fewer epochs.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q5" value="b" class="mr-2"> **Applying regularization to constrain the model.**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q5" value="c" class="mr-2"> Increasing the model complexity.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q5" value="d" class="mr-2"> Using the test set for hyperparameter tuning.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q5-exp">Explanation: Regularization (like L1/L2 constraints) is a standard method to simplify the model and reduce overfitting, forcing it to generalize better.</p>
+                </div>
+
+                <!-- MCQ Q6: Online Learning Benefit -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q6-container">
+                    <p class="font-semibold text-gray-900 mb-3">6. What is a key advantage of **Online Learning** over Batch Learning?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q6" value="a" class="mr-2"> It is guaranteed to find the global optimum.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q6" value="b" class="mr-2"> **It allows the system to adapt to new data quickly and process massive datasets that won't fit in RAM.**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q6" value="c" class="mr-2"> It does not require any hyperparameters.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q6" value="d" class="mr-2"> It requires full retraining on old data every time new data arrives.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q6-exp">Explanation: Online learning processes data incrementally (adaptability) and can handle data that is too large for memory (out-of-core).</p>
+                </div>
+
+                <!-- MCQ Q7: Unsupervised Clustering -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q7-container">
+                    <p class="font-semibold text-gray-900 mb-3">7. Which type of Unsupervised Learning is most appropriate for grouping similar data points without any prior knowledge of group labels?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q7" value="a" class="mr-2"> Regression</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q7" value="b" class="mr-2"> **Clustering**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q7" value="c" class="mr-2"> Classification</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q7" value="d" class="mr-2"> Reinforcement Learning</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q7-exp">Explanation: Clustering algorithms discover inherent groupings in the data without relying on pre-existing labels.</p>
+                </div>
+
+                <!-- MCQ Q8: Data Snooping Result -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q8-container">
+                    <p class="font-semibold text-gray-900 mb-3">8. If you repeatedly tune your model's hyperparameters using the **Test Set**, the final generalization error estimate will likely be:</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q8" value="a" class="mr-2"> Highly accurate and unbiased.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q8" value="b" class="mr-2"> **Optimistic (lower than the true error).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q8" value="c" class="mr-2"> Pessimistic (higher than the true error).</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q8" value="d" class="mr-2"> Equal to the training error.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q8-exp">Explanation: This is Data Snooping. By tuning to the Test Set, the model effectively overfits it, resulting in an error estimate that is better than the model's true performance on completely new data.</p>
+                </div>
+
+                <!-- MCQ Q9: Instance-Based Example -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q9-container">
+                    <p class="font-semibold text-gray-900 mb-3">9. An algorithm that uses a **similarity measure** (like distance) to make predictions by comparing a new instance to memorized training data is called:</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q9" value="a" class="mr-2"> Model-Based Learning</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q9" value="b" class="mr-2"> **Instance-Based Learning**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q9" value="c" class="mr-2"> Batch Learning</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q9" value="d" class="mr-2"> Reinforcement Learning</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q9-exp">Explanation: Instance-Based Learning, like kNN, keeps all instances and generalizes only when a prediction is needed.</p>
+                </div>
+
+                <!-- MCQ Q10: Extrapolation Danger -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q10-container">
+                    <p class="font-semibold text-gray-900 mb-3">10. Predicting a house price far outside the range of prices seen in the training data is an example of **extrapolation**. Why is this dangerous?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q10" value="a" class="mr-2"> It only works with Instance-Based Learning models.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q10" value="b" class="mr-2"> **The model cannot guarantee the learned relationship still holds true outside the boundaries of the training data.**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q10" value="c" class="mr-2"> It requires the use of the Test Set, leading to Data Snooping.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q10" value="d" class="mr-2"> Extrapolation only occurs with supervised classification tasks.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q10-exp">Explanation: Extrapolation assumes the patterns learned within the training range continue indefinitely, which is often false in the real world.</p>
+                </div>
+
+                <!-- MCQ Q11: Clustering vs Classification -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q11-container">
+                    <p class="font-semibold text-gray-900 mb-3">11. What is the key distinction between **Clustering** and **Classification**?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q11" value="a" class="mr-2"> Clustering is Model-Based; Classification is Instance-Based.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q11" value="b" class="mr-2"> Clustering predicts continuous values; Classification predicts discrete values.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q11" value="c" class="mr-2"> **Clustering is Unsupervised (no labels); Classification is Supervised (labeled data).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q11" value="d" class="mr-2"> Classification is always used for image recognition.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q11-exp">Explanation: This is the fundamental difference: Classification uses labels to map inputs to outputs (S), while Clustering finds patterns in unlabeled data (U).</p>
+                </div>
+
+                <!-- MCQ Q12: Underfitting Fix -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q12-container">
+                    <p class="font-semibold text-gray-900 mb-3">12. Which of the following is NOT a strategy to fix an **Underfitting** model?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q12" value="a" class="mr-2"> Select a more complex model (e.g., non-linear).</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q12" value="b" class="mr-2"> Improve feature engineering by adding better features.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q12" value="c" class="mr-2"> **Decrease the size of the training dataset.**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q12" value="d" class="mr-2"> Decrease the regularization hyperparameter.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q12-exp">Explanation: Decreasing data size would likely make the model less capable and could exacerbate underfitting (or lead to overfitting if the data is too small). The other options help increase model complexity or provide more signal.</p>
+                </div>
+
+                <!-- MCQ Q13: Reinforcement Learning Goal -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q13-container">
+                    <p class="font-semibold text-gray-900 mb-3">13. In Reinforcement Learning, the learning system is called the **Agent**. What does it learn to maximize?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q13" value="a" class="mr-2"> The cost function.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q13" value="b" class="mr-2"> The generalization error.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q13" value="c" class="mr-2"> **The reward (utility function).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q13" value="d" class="mr-2"> The amount of training data.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q13-exp">Explanation: The agent learns a Policy that guides its actions to achieve the highest cumulative reward in the environment.</p>
+                </div>
+
+                <!-- MCQ Q14: Validation Set Use -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q14-container">
+                    <p class="font-semibold text-gray-900 mb-3">14. When practicing **Holdout Validation**, what is the primary purpose of the **Validation Set**?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q14" value="a" class="mr-2"> To train the model's parameters.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q14" value="b" class="mr-2"> **To compare and select the best model from multiple candidates (hyperparameter tuning).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q14" value="c" class="mr-2"> To provide the final, unbiased error estimate.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q14" value="d" class="mr-2"> To correct errors in the training data.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q14-exp">Explanation: The Validation Set is the "development" set, used for internal model selection and hyperparameter tuning before the final Test Set.</p>
+                </div>
+
+                <!-- MCQ Q15: Non-Representative Data -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q15-container">
+                    <p class="font-semibold text-gray-900 mb-3">15. The main challenge of training with **non-representative data** is:</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q15" value="a" class="mr-2"> The model will underfit.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q15" value="b" class="mr-2"> The training process will take too long.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q15" value="c" class="mr-2"> **The model will generalize poorly to new cases (Sampling Bias).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q15" value="d" class="mr-2"> Only Instance-Based models can be used.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q15-exp">Explanation: Sampling bias (non-representative data) is a core problem leading to poor generalization, as the model learns irrelevant patterns.</p>
+                </div>
+                
+                <!-- 15 more MCQs to reach 30 total -->
+
+                <!-- MCQ Q16: Batch Learning Disadvantage -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q16-container">
+                    <p class="font-semibold text-gray-900 mb-3">16. What is the major drawback of **Batch Learning** when new data needs to be added?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q16" value="a" class="mr-2"> It overfits more easily than Online Learning.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q16" value="b" class="mr-2"> It must be entirely retrained on the full, combined dataset.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q16" value="c" class="mr-2"> It cannot be used with a Test Set.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q16" value="d" class="mr-2"> It is prone to "Catastrophic Forgetting."</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q16-exp">Explanation: Batch learning's key drawback is the need for full retraining, a time- and resource-intensive process. Catastrophic forgetting is an issue for Online Learning.</p>
+                </div>
+
+                <!-- MCQ Q17: Clustering Purpose -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q17-container">
+                    <p class="font-semibold text-gray-900 mb-3">17. Which unsupervised task is typically used to simplify datasets for better human understanding?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q17" value="a" class="mr-2"> Association Rule Learning</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q17" value="b" class="mr-2"> Regression</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q17" value="c" class="mr-2"> **Visualization and Dimensionality Reduction**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q17" value="d" class="mr-2"> Classification</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q17-exp">Explanation: Both Visualization and Dimensionality Reduction aim to present or reduce data complexity for human inspection.</p>
+                </div>
+
+                <!-- MCQ Q18: Overfitting Solution 3 -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q18-container">
+                    <p class="font-semibold text-gray-900 mb-3">18. To address a problem where the model is performing poorly due to high variance (overfitting), you could:</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q18" value="a" class="mr-2"> Decrease the amount of training data.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q18" value="b" class="mr-2"> **Gather more training data or reduce the number of features.**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q18" value="c" class="mr-2"> Switch from a Model-Based to an Instance-Based algorithm.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q18" value="d" class="mr-2"> Increase the complexity of the model.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q18-exp">Explanation: Overfitting means the model is learning noise. More data or simplifying the model (fewer features) forces it to learn only the main patterns.</p>
+                </div>
+
+                <!-- MCQ Q19: Reinforcement Learning Scenario -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q19-container">
+                    <p class="font-semibold text-gray-900 mb-3">19. Which Machine Learning approach is defined by an **Agent** observing an **Environment**, selecting and performing **Actions**, and receiving **Rewards**?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q19" value="a" class="mr-2"> Semi-Supervised Learning</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q19" value="b" class="mr-2"> Model-Based Learning</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q19" value="c" class="mr-2"> Supervised Learning</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q19" value="d" class="mr-2"> **Reinforcement Learning**</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q19-exp">Explanation: This describes the core mechanism of Reinforcement Learning, where the Agent learns the optimal Policy through interaction.</p>
+                </div>
+
+                <!-- MCQ Q20: Bad Data - Garbage In -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q20-container">
+                    <p class="font-semibold text-gray-900 mb-3">20. Which challenge in Machine Learning is captured by the phrase "Garbage In, Garbage Out"?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q20" value="a" class="mr-2"> Underfitting the training data.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q20" value="b" class="mr-2"> Data Snooping on the test set.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q20" value="c" class="mr-2"> **Poor quality of training data (missing, noisy, irrelevant features).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q20" value="d" class="mr-2"> Catastrophic forgetting in online learning.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q20-exp">Explanation: This phrase emphasizes that a model's performance is fundamentally limited by the quality and relevance of its input data.</p>
+                </div>
+
+                <!-- MCQ Q21: Training Set Size -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q21-container">
+                    <p class="font-semibold text-gray-900 mb-3">21. To solve a complex problem like large-scale image classification, an algorithm typically needs:</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q21" value="a" class="mr-2"> Only a few hundred labeled instances.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q21" value="b" class="mr-2"> **Hundreds of thousands to millions of labeled instances.**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q21" value="c" class="mr-2"> Data that only fits in the main memory (RAM).</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q21" value="d" class="mr-2"> Only unlabeled data.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q21-exp">Explanation: Complex models for high-dimensional data (like images) require massive amounts of labeled data to learn meaningful generalizations.</p>
+                </div>
+
+                <!-- MCQ Q22: Semi-Supervised Method -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q22-container">
+                    <p class="font-semibold text-gray-900 mb-3">22. What is a common technique used in **Semi-Supervised Learning**?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q22" value="a" class="mr-2"> Training only on the Test Set.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q22" value="b" class="mr-2"> **Clustering the unlabeled data first, then propagating the few available labels to the entire cluster.**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q22" value="c" class="mr-2"> Reducing the model's complexity to prevent overfitting.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q22" value="d" class="mr-2"> Using a continuous output value.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q22-exp">Explanation: This "label propagation" or "self-training" approach is central to Semi-Supervised methods like self-training models or deep generative models.</p>
+                </div>
+
+                <!-- MCQ Q23: Overfitting Reduction Method -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q23-container">
+                    <p class="font-semibold text-gray-900 mb-3">23. Which action would generally **reduce** the complexity of a model, thereby addressing overfitting?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q23" value="a" class="mr-2"> Adding polynomial features to a Linear Regression model.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q23" value="b" class="mr-2"> **Increasing the regularization strength (e.g., higher $\lambda$).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q23" value="c" class="mr-2"> Increasing the number of hidden layers in a neural network.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q23" value="d" class="mr-2"> Using a smaller validation set.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q23-exp">Explanation: Increasing regularization strength penalizes large parameter values, effectively simplifying the model and reducing its capacity to overfit.</p>
+                </div>
+
+                <!-- MCQ Q24: Generalization Error Definition -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q24-container">
+                    <p class="font-semibold text-gray-900 mb-3">24. What is the alternative term for the **Generalization Error**?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q24" value="a" class="mr-2"> The training error.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q24" value="b" class="mr-2"> The cost function value.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q24" value="c" class="mr-2"> **The out-of-sample error.**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q24" value="d" class="mr-2"> The policy reward.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q24-exp">Explanation: Generalization error specifically refers to the error on data the model has not seen before, hence "out-of-sample" error.</p>
+                </div>
+
+                <!-- MCQ Q25: Out-of-Core Trigger -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q25-container">
+                    <p class="font-semibold text-gray-900 mb-3">25. When would you absolutely need to use an **Out-of-Core** learning technique?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q25" value="a" class="mr-2"> When the model is suffering from underfitting.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q25" value="b" class="mr-2"> **When the training data size (e.g., 5TB) exceeds the main memory capacity (e.g., 64GB).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q25" value="c" class="mr-2"> When you want to use the k-Nearest Neighbors algorithm.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q25" value="d" class="mr-2"> When you need to predict a discrete category.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q25-exp">Explanation: Out-of-core learning is specifically designed for datasets too large to fit in RAM, relying on feeding the data in chunks (Online Learning).</p>
+                </div>
+
+                <!-- MCQ Q26: Sampling Bias Mitigation -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q26-container">
+                    <p class="font-semibold text-gray-900 mb-3">26. Which action is the most direct way to mitigate the challenge of **Sampling Bias**?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q26" value="a" class="mr-2"> Apply L2 regularization.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q26" value="b" class="mr-2"> **Ensure the training set is large and reflective of the entire population (e.g., Stratified Sampling).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q26" value="c" class="mr-2"> Use a simpler model.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q26" value="d" class="mr-2"> Switch to an Instance-Based algorithm.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q26-exp">Explanation: Sampling Bias is a data quality issue; it is solved by improving the sampling method and ensuring representation of all important subgroups.</p>
+                </div>
+
+                <!-- MCQ Q27: Training vs Generalization -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q27-container">
+                    <p class="font-semibold text-gray-900 mb-3">27. If a model has a training error of 1% and a test error of 15%, the model most likely suffers from:</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q27" value="a" class="mr-2"> Underfitting</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q27" value="b" class="mr-2"> **Overfitting**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q27" value="c" class="mr-2"> High Bias</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q27" value="d" class="mr-2"> Catastrophic Forgetting</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q27-exp">Explanation: A large gap between low training error and high test error is the classic sign of **overfitting** (high variance).</p>
+                </div>
+
+                <!-- MCQ Q28: Feature Engineering Role -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q28-container">
+                    <p class="font-semibold text-gray-900 mb-3">28. Which of the following is considered part of the **Feature Engineering** process?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q28" value="a" class="mr-2"> Setting the learning rate.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q28" value="b" class="mr-2"> Choosing the optimal model parameters.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q28" value="c" class="mr-2"> **Transforming a categorical feature into a numerical one (e.g., One-Hot Encoding).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q28" value="d" class="mr-2"> Dividing the data into training and test sets.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q28-exp">Explanation: Feature Engineering is the art of transforming raw data into features that best represent the underlying problem to the model.</p>
+                </div>
+
+                <!-- MCQ Q29: Policy (RL) -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q29-container">
+                    <p class="font-semibold text-gray-900 mb-3">29. What component in Reinforcement Learning dictates how the agent should behave in a given situation?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q29" value="a" class="mr-2"> The Environment</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q29" value="b" class="mr-2"> The Reward Function</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q29" value="c" class="mr-2"> **The Policy**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q29" value="d" class="mr-2"> The Cost Function</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q29-exp">Explanation: The Policy is the agent's strategy or algorithm for choosing actions.</p>
+                </div>
+
+                <!-- MCQ Q30: Supervised vs Unsupervised -->
+                <div class="p-4 border border-gray-200 rounded-lg" id="mcq-q30-container">
+                    <p class="font-semibold text-gray-900 mb-3">30. What is the key difference that separates **Supervised** and **Unsupervised** learning?</p>
+                    <div class="space-y-2">
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q30" value="a" class="mr-2"> Whether the model is trained offline or online.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q30" value="b" class="mr-2"> **The presence or absence of labeled output data (y).**</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q30" value="c" class="mr-2"> Whether the task is Classification or Regression.</label>
+                        <label class="block quiz-option p-2 rounded-lg cursor-pointer transition duration-150 border border-gray-300"><input type="radio" name="mcq_q30" value="d" class="mr-2"> Whether the model is Instance-Based or Model-Based.</label>
+                    </div>
+                    <p class="text-sm text-gray-700 quiz-explanation hidden" id="mcq_q30-exp">Explanation: The presence of labels (target values) is the single defining characteristic dividing supervised from unsupervised learning.</p>
+                </div>
+
+                <button type="button" onclick="checkMCQQuiz()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+                    Check Multiple Choice
+                </button>
+                <div id="mcq-results" class="mt-4 p-4 text-center text-lg font-semibold hidden rounded-lg"></div>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        const quizAnswers = {
+            categorization: {
+                cat_q1: 'RL',
+                cat_q2: 'Class',
+                cat_q3: 'Clust',
+                cat_q4: 'Reg',
+                cat_q5: 'Class',
+                cat_q6: 'Unsup',
+                cat_q7: 'Class',
+                cat_q8: 'DimRed',
+                cat_q9: 'Class',
+                cat_q10: 'RL',
+                cat_q11: 'Unsup',
+                cat_q12: 'Reg',
+                cat_q13: 'Class',
+                cat_q14: 'Unsup',
+                cat_q15: 'Unsup'
+            },
+            tf: {
+                tf_q1: 'True',
+                tf_q2: 'False',
+                tf_q3: 'True',
+                tf_q4: 'False',
+                tf_q5: 'True',
+                tf_q6: 'False',
+                tf_q7: 'True',
+                tf_q8: 'True',
+                tf_q9: 'True',
+                tf_q10: 'True',
+                tf_q11: 'False',
+                tf_q12: 'False',
+                tf_q13: 'True',
+                tf_q14: 'True',
+                tf_q15: 'False',
+                tf_q16: 'True',
+                tf_q17: 'True',
+                tf_q18: 'False',
+                tf_q19: 'False',
+                tf_q20: 'False',
+                tf_q21: 'False',
+                tf_q22: 'False',
+                tf_q23: 'True',
+                tf_q24: 'False',
+                tf_q25: 'True',
+                tf_q26: 'False',
+                tf_q27: 'False',
+                tf_q28: 'False',
+                tf_q29: 'False',
+                tf_q30: 'True'
+            },
+            mcq: {
+                mcq_q1: 'c',
+                mcq_q2: 'c',
+                mcq_q3: 'b',
+                mcq_q4: 'd',
+                mcq_q5: 'b',
+                mcq_q6: 'b',
+                mcq_q7: 'b',
+                mcq_q8: 'b',
+                mcq_q9: 'b',
+                mcq_q10: 'b',
+                mcq_q11: 'c',
+                mcq_q12: 'c',
+                mcq_q13: 'c',
+                mcq_q14: 'b',
+                mcq_q15: 'c',
+                mcq_q16: 'b',
+                mcq_q17: 'c',
+                mcq_q18: 'b',
+                mcq_q19: 'd',
+                mcq_q20: 'c',
+                mcq_q21: 'b',
+                mcq_q22: 'b',
+                mcq_q23: 'b',
+                mcq_q24: 'c',
+                mcq_q25: 'b',
+                mcq_q26: 'b',
+                mcq_q27: 'b',
+                mcq_q28: 'c',
+                mcq_q29: 'c',
+                mcq_q30: 'b'
+            }
+        };
+
+        // Utility function to safely get the parent element for styling
+        function getQuestionContainer(inputElement) {
+            let current = inputElement.parentElement;
+            while (current && !current.id.endsWith('-container')) {
+                current = current.parentElement;
+            }
+            return current;
+        }
+
+        function checkQuiz(quizType, formId, resultsId) {
+            const form = document.getElementById(formId);
+            const resultsDiv = document.getElementById(resultsId);
+            let score = 0;
+            let totalQuestions = 0;
+            
+            // Reset results and explanations
+            resultsDiv.classList.add('hidden');
+            resultsDiv.className = 'mt-4 p-4 text-center text-lg font-semibold rounded-lg';
+            
+            // Iterate through all questions for the given quiz type
+            for (const q in quizAnswers[quizType]) {
+                totalQuestions++;
+                const questionContainer = document.getElementById(`${q}-container`);
+                const selected = form.querySelector(`input[name="${q}"]:checked`);
+                const correctValue = quizAnswers[quizType][q];
+
+                // Hide all explanations first
+                const explanation = document.getElementById(`${q}-exp`);
+                if (explanation) explanation.classList.add('hidden');
+
+                // Reset option styles for this question
+                form.querySelectorAll(`input[name="${q}"]`).forEach(input => {
+                    const label = input.parentElement;
+                    label.classList.remove('correct-answer', 'incorrect-answer', 'border-red-500', 'border-green-500', 'border-yellow-500', 'bg-yellow-100');
+                    label.classList.add('border-gray-300');
+                });
+
+                if (selected) {
+                    if (selected.value === correctValue) {
+                        score++;
+                        selected.parentElement.classList.add('correct-answer', 'border-green-500');
+                    } else {
+                        selected.parentElement.classList.add('incorrect-answer', 'border-red-500');
+                        // Highlight correct answer
+                        const correctLabel = form.querySelector(`input[name="${q}"][value="${correctValue}"]`).parentElement;
+                        correctLabel.classList.add('correct-answer', 'border-green-500');
+                    }
+                    
+                    if (explanation) {
+                        explanation.classList.remove('hidden');
+                        explanation.style.borderColor = '#10b981'; /* Green border for explanation */
+                    }
+                } else {
+                    // If not answered, hint the correct answer
+                    const correctLabel = form.querySelector(`input[name="${q}"][value="${correctValue}"]`).parentElement;
+                    correctLabel.classList.add('bg-yellow-100', 'border-yellow-500');
+                    
+                    if (explanation) {
+                        explanation.classList.remove('hidden');
+                        explanation.style.borderColor = '#fbbf24'; /* Yellow border for hint */
+                    }
+                }
+            }
+
+            resultsDiv.textContent = `You scored ${score} out of ${totalQuestions}!`;
+            resultsDiv.classList.remove('hidden');
+            if (score === totalQuestions) {
+                resultsDiv.classList.add('bg-green-100', 'text-green-800');
+            } else if (score > totalQuestions / 2) {
+                resultsDiv.classList.add('bg-yellow-100', 'text-yellow-800');
+            } else {
+                resultsDiv.classList.add('bg-red-100', 'text-red-800');
+            }
+        }
+
+        function checkCategorization() {
+            checkQuiz('categorization', 'categorization-form', 'categorization-results');
+        }
+
+        function checkTFQuiz() {
+            checkQuiz('tf', 'tf-form', 'tf-results');
+        }
+        
+        function checkMCQQuiz() {
+            checkQuiz('mcq', 'mcq-form', 'mcq-results');
+        }
+    </script>
+</body>
+</html>
