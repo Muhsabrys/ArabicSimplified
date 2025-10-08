@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: ML Project Workflow Study Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the flashcard flip effect */
+        .flashcard-container {
+            perspective: 1000px;
+            height: 200px; /* Fixed height for consistent look */
+        }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flashcard-container.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .flashcard-front {
+            background-color: #374151; /* Gray-700 */
+            color: #F9FAFB;
+        }
+        .flashcard-back {
+            background-color: #FBBF24; /* Amber-400 */
+            color: #1F2937;
+            transform: rotateY(180deg);
+        }
+        .quiz-answer {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        .quiz-answer.show {
+            max-height: 1000px; /* Sufficient height to show content */
+            opacity: 1;
+            padding-top: 0.5rem;
+        }
+    </style>
+    <script>
+        // Data derived from 22.txt (Chapter 2)
+        const flashcardData = [
+            // Flashcards (40 Key Terminologies)
+            { term: 'End-to-End ML Project', definition: 'Full workflow from problem framing to deployment.' },
+            { term: 'Data Pipeline', definition: 'Sequence of data processing components.' },
+            { term: 'Supervised Learning', definition: 'Model trained on labeled data.' },
+            { term: 'Regression', definition: 'Predicts continuous numeric values.' },
+            { term: 'RMSE (Root Mean Square Error)', definition: 'Common regression performance measure emphasizing large errors.' },
+            { term: 'MAE (Mean Absolute Error)', definition: 'Average absolute difference between predicted and actual values.' },
+            { term: 'ℓ₂ Norm', definition: 'Euclidean distance (used in RMSE).' },
+            { term: 'ℓ₁ Norm', definition: 'Manhattan distance (used in MAE).' },
+            { term: 'Signal-to-Noise Ratio', definition: 'Strength of signal relative to noise in data.' },
+            { term: 'Frame the Problem', definition: 'Define business goals and ML problem type.' },
+            { term: 'Feature Matrix (X)', definition: 'All input variables used for prediction.' },
+            { term: 'Label Vector (y)', definition: 'Desired output or target variable.' },
+            { term: 'Exploratory Data Analysis (EDA)', definition: 'Analyzing data to discover patterns and insights.' },
+            { term: 'Data Visualization', definition: 'Graphical representation of data insights.' },
+            { term: 'Correlation Matrix', definition: 'Table showing relationships between features.' },
+            { term: 'Stratified Sampling', definition: 'Sampling that ensures representative subsets of the population.' },
+            { term: 'Missing Data Imputation', definition: 'Filling in missing values (e.g., mean, median, zero).' },
+            { term: 'Categorical Feature Encoding', definition: 'Converting text/categories to numerical values (e.g., One-Hot Encoding).' },
+            { term: 'Feature Scaling', definition: 'Bringing all numerical features to a similar scale (Normalization or Standardization).' },
+            { term: 'Normalization (Min-Max)', definition: 'Scaling values to a fixed range (0 to 1), sensitive to outliers.' },
+            { term: 'Standardization (Z-Score)', definition: 'Scaling to zero mean and unit variance, less affected by outliers.' },
+            { term: 'Data Leakage', definition: 'When test set information influences training phase unfairly.' },
+            { term: 'Training Set', definition: 'Data used to train the model.' },
+            { term: 'Test Set', definition: 'Held-out data used for final performance evaluation.' },
+            { term: 'Baseline Model', definition: 'Simple, quick model (e.g., mean prediction) to compare against.' },
+            { term: 'Training Error', definition: 'Error measured on the training set.' },
+            { term: 'Generalization Error', definition: 'Error on unseen data (ideally, test set error).' },
+            { term: 'Overfitting', definition: 'Model performs well on training data but poorly on test data.' },
+            { term: 'Cross-Validation', definition: 'Evaluating by splitting data into multiple training/validation folds.' },
+            { term: 'Hyperparameter Tuning', definition: 'Optimizing settings (e.g., tree depth, n_estimators).' },
+            { term: 'Grid Search', definition: 'Systematically searching predefined hyperparameter combinations.' },
+            { term: 'Randomized Search', definition: 'Sampling random hyperparameter combinations from a range.' },
+            { term: 'Ensemble Learning', definition: 'Combining predictions from multiple models.' },
+            { term: 'Model Persistence', definition: 'Saving pipeline/model with `joblib` or `pickle`.' },
+            { term: 'Deployment', definition: 'Integrating trained model into a production system.' },
+            { term: 'Monitoring / Concept Drift', definition: 'Tracking model input/output changes over time.' },
+            { term: 'Data Drift', definition: 'Change in feature distribution.' },
+            { term: 'Concept Drift', definition: 'Change in relationship between inputs and target.' },
+            { term: 'Reproducibility', definition: 'Ability to repeat same results with same code + data.' },
+            { term: 'Version Control', definition: 'Managing data & model versions for traceability.' },
+            { term: 'Scikit-Learn Estimator', definition: 'Any object implementing `.fit()` and `.predict()`.' },
+            { term: 'Evaluation Metric', definition: 'Quantitative performance measure (RMSE, R²).' },
+            { term: 'Re-training Cycle', definition: 'Updating model periodically with new data.' }
+        ];
+
+        const trueFalseData = [
+            // True / False (Section 2)
+            { question: 'RMSE is generally preferred over MAE as a regression metric because it penalizes large errors more heavily.', answer: 'True' },
+            { question: 'The ℓ₁ norm is also known as Euclidean distance.', answer: 'False' },
+            { question: 'The first step in an ML project is cleaning the data.', answer: 'False' },
+            { question: 'Stratified sampling is used to ensure test data is perfectly uniform.', answer: 'False' },
+            { question: 'If you have a categorical feature with many values, One-Hot Encoding is always the best choice.', answer: 'False' },
+            { question: 'Normalization scales features to a range of 0 to 1 and is sensitive to outliers.', answer: 'True' },
+            { question: 'Standardization is generally less affected by outliers than Normalization.', answer: 'True' },
+            { question: 'Data leakage can lead to overly optimistic performance estimates.', answer: 'True' },
+            { question: 'The Test Set should be touched multiple times during the model development process.', answer: 'False' },
+            { question: 'A simple baseline model (e.g., predicting the mean) should be used as a final production model.', answer: 'False' },
+            { question: 'Overfitting is characterized by low training error and high generalization error.', answer: 'True' },
+            { question: 'Cross-validation helps reduce the risk of overfitting the validation set.', answer: 'True' },
+            { question: 'Hyperparameter tuning finds the optimal model parameters (weights).', answer: 'False' },
+            { question: 'Grid search is generally more computationally efficient than randomized search.', answer: 'False' },
+            { question: 'Ensemble methods often perform worse than single, highly-tuned models.', answer: 'False' },
+            { question: 'The `joblib` library is used in Python for data version control.', answer: 'False' },
+            { question: 'Concept drift occurs when the feature distribution changes, but the relationship with the target remains the same.', answer: 'False' },
+            { question: 'Data drift is a change in the relationship between input features and the target variable.', answer: 'False' },
+            { question: 'Reproducibility is essential for debugging and model governance.', answer: 'True' },
+            { question: 'A Scikit-Learn Estimator must implement the `.transform()` method.', answer: 'False' },
+        ];
+
+        const multipleChoiceData = [
+            // Multiple-Choice Questions (Section 🎯)
+            { question: 'Which metric is most sensitive to large prediction errors in regression?', options: ['MAE', 'RMSE', 'ℓ₁ Norm', 'R²'], answer: 'B) RMSE' },
+            { question: 'What is the absolute first step in an ML project?', options: ['Get Data', 'Explore Data', 'Frame the Problem', 'Feature Scaling'], answer: 'C) Frame the Problem' },
+            { question: 'The matrix X contains:', options: ['The target variable', 'All input features', 'Only categorical features', 'The model weights'], answer: 'B) All input features' },
+            { question: 'What technique ensures the training and test sets have similar proportions of certain attributes (e.g., income categories)?', options: ['Random Sampling', 'Simple Sampling', 'Stratified Sampling', 'Cluster Sampling'], answer: 'C) Stratified Sampling' },
+            { question: 'Which imputation method is often used to fill missing numerical values?', options: ['Mode', 'Mean or Median', 'One-Hot Encoding', 'Standardization'], answer: 'B) Mean or Median' },
+            { question: 'Which scaling method transforms features to have zero mean and unit variance?', options: ['Normalization (Min-Max)', 'Standardization (Z-Score)', 'Log Scaling', 'Binning'], answer: 'B) Standardization (Z-Score)' },
+            { question: 'When is the best time to split the data into training and test sets?', options: ['After Feature Scaling', 'After Imputation', 'Before EDA', 'Before Training'], answer: 'C) Before EDA' },
+            { question: 'The model performs poorly on the Test Set but perfectly on the Training Set. This is known as:', options: ['Underfitting', 'Normalization', 'Overfitting', 'Data Leakage'], answer: 'C) Overfitting' },
+            { question: 'Which technique involves using several training/validation set splits and averaging the results?', options: ['Holdout Validation', 'Cross-Validation', 'Batch Learning', 'Model Persistence'], answer: 'B) Cross-Validation' },
+            { question: 'Which search method explores a pre-defined grid of hyperparameter values?', options: ['Randomized Search', 'Grid Search', 'Bayesian Optimization', 'Exhaustive Search'], answer: 'B) Grid Search' },
+            { question: 'Combining the output of multiple trained models to improve performance is called:', options: ['Cross-Validation', 'Hyperparameter Tuning', 'Ensemble Learning', 'Model Persistence'], answer: 'C) Ensemble Learning' },
+            { question: 'What term describes a change in the statistical properties of the target variable, making the model\'s predictions less reliable?', options: ['Data Drift', 'Concept Drift', 'Imputation Drift', 'Sampling Bias'], answer: 'B) Concept Drift' },
+            { question: 'The primary purpose of Model Persistence (e.g., using joblib) is:', options: ['To scale features', 'To prevent overfitting', 'To save the trained model for later deployment', 'To track model versions'], answer: 'C) To save the trained model for later deployment' },
+            { question: 'Which is a key component of reproducibility in ML?', options: ['Using a powerful GPU', 'Removing all outliers', 'Version controlling the code AND data', 'Using only one evaluation metric'], answer: 'C) Version controlling the code AND data' },
+            { question: 'What is the role of a Baseline Model?', options: ['To be the final deployed model', 'To set a minimum performance target for more complex models', 'To select the hyperparameters', 'To scale the data'], answer: 'B) To set a minimum performance target for more complex models' }
+        ];
+
+        const categorizationData = [
+            { question: 'Calculate the ℓ₂ norm (Euclidean distance)', category: 'RMSE' },
+            { question: 'Calculate the ℓ₁ norm (Manhattan distance)', category: 'MAE' },
+            { question: 'Define business objectives and target metric', category: 'Frame the Problem' },
+            { question: 'Plotting histograms of feature distributions', category: 'Exploratory Data Analysis (EDA)' },
+            { question: 'Splitting data to ensure all income groups are represented equally', category: 'Stratified Sampling' },
+            { question: 'Replacing `NaN` values with the average feature value', category: 'Missing Data Imputation' },
+            { question: 'Converting "California", "Texas", "Florida" into three columns (1s and 0s)', category: 'One-Hot Encoding (Categorical Feature Encoding)' },
+            { question: 'Scaling all feature values between 0 and 1', category: 'Normalization (Min-Max Scaling)' },
+            { question: 'Saving the final trained model object to disk', category: 'Model Persistence' },
+            { question: 'Evaluating a model on data that was NOT used in any training or tuning step', category: 'Test Set Evaluation' },
+            { question: 'The model learns the noise in the training data', category: 'Overfitting' },
+            { question: 'Change in the relationship between temperature and ice cream sales over time', category: 'Concept Drift' },
+        ];
+
+
+        // Helper to render all sections
+        window.onload = () => {
+            // FIX: Dynamically inject the counts into the section headers
+            document.getElementById('flashcard-title').innerHTML = `🧠 Flashcards: Key Terminologies (${flashcardData.length} Terms)`;
+            document.getElementById('tf-title').innerHTML = `✅ True / False Quizzes (${trueFalseData.length} Questions)`;
+            document.getElementById('mcq-title').innerHTML = `🎯 Multiple-Choice Quizzes (${multipleChoiceData.length} Questions)`;
+            document.getElementById('categorization-title').innerHTML = `🗂️ Categorization Questions (${categorizationData.length} Items)`;
+
+            renderFlashcards();
+            renderTrueFalse();
+            renderMultipleChoice();
+            renderCategorization();
+        };
+
+        // --- Core Functions ---
+
+        function toggleAnswer(button, type) {
+            const container = button.closest(type === 'mcq' ? '.mcq-item' : '.quiz-item');
+            const answerElement = container.querySelector('.quiz-answer');
+            const isShowing = answerElement.classList.contains('show');
+
+            // Toggle visibility
+            answerElement.classList.toggle('show');
+
+            // Change button text
+            button.textContent = isShowing ? (type === 'cat' ? 'Show Category' : 'Show Answer') : 'Hide Answer';
+            button.classList.toggle('bg-amber-600', isShowing);
+            button.classList.toggle('bg-red-600', !isShowing);
+            button.classList.toggle('hover:bg-amber-700', isShowing);
+            button.classList.toggle('hover:bg-red-700', !isShowing);
+        }
+
+        function toggleFlashcard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // --- Rendering Functions ---
+
+        function renderFlashcards() {
+            const container = document.getElementById('flashcard-container');
+            flashcardData.forEach((item, index) => {
+                const cardHtml = `
+                    <div class="flashcard-container cursor-pointer" onclick="toggleFlashcard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span class="text-xl font-bold p-2 text-center">
+                                    ${index + 1}. ${item.term}
+                                </span>
+                            </div>
+                            <div class="flashcard-back">
+                                <span class="text-lg font-semibold p-2 text-center">
+                                    ${item.definition}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                const div = document.createElement('div');
+                div.className = 'w-full';
+                container.appendChild(div).innerHTML = cardHtml;
+            });
+        }
+
+        function renderTrueFalse() {
+            const container = document.getElementById('tf-quiz-container');
+            trueFalseData.forEach((item, index) => {
+                const itemHtml = `
+                    <div class="quiz-item p-4 bg-gray-700 rounded-lg shadow-xl mb-4">
+                        <p class="text-lg font-semibold text-gray-100">${index + 1}. ${item.question}</p>
+                        <button onclick="toggleAnswer(this, 'tf')" class="mt-3 px-4 py-1.5 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition duration-150">
+                            Show Answer
+                        </button>
+                        <div class="quiz-answer bg-gray-800 p-3 rounded-lg mt-2 text-xl font-bold">
+                            <span class="text-amber-400">Answer:</span> <span class="${item.answer === 'True' ? 'text-green-500' : 'text-red-500'}">${item.answer}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+
+        function renderMultipleChoice() {
+            const container = document.getElementById('mcq-quiz-container');
+            multipleChoiceData.forEach((item, index) => {
+                const optionsHtml = item.options ? item.options.map((opt, i) => {
+                    const label = String.fromCharCode(65 + i); // A, B, C, D
+                    return `<li class="text-gray-300 ml-4">${label}) ${opt}</li>`;
+                }).join('') : '';
+
+                const itemHtml = `
+                    <div class="mcq-item p-4 bg-gray-700 rounded-lg shadow-xl mb-4">
+                        <p class="text-lg font-semibold text-gray-100">${index + 1}. ${item.question}</p>
+                        ${optionsHtml ? `<ul class="list-none my-2 space-y-1">${optionsHtml}</ul>` : `<p class="italic text-sm text-gray-400 mt-1">Simple Q&A/Fill-in-the-Blank format.</p>`}
+                        <button onclick="toggleAnswer(this, 'mcq')" class="mt-3 px-4 py-1.5 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition duration-150">
+                            Show Answer
+                        </button>
+                        <div class="quiz-answer bg-gray-800 p-3 rounded-lg mt-2 text-xl font-bold">
+                            <span class="text-amber-400">Answer:</span> <span class="text-white">${item.answer}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+
+        function renderCategorization() {
+            const container = document.getElementById('cat-quiz-container');
+            categorizationData.forEach((item, index) => {
+                const itemHtml = `
+                    <div class="quiz-item p-4 bg-gray-700 rounded-lg shadow-xl mb-4">
+                        <p class="text-lg font-semibold text-gray-100">${index + 1}. Classify: <span class="text-blue-300 font-normal">${item.question}</span></p>
+                        <button onclick="toggleAnswer(this, 'cat')" class="mt-3 px-4 py-1.5 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition duration-150">
+                            Show Category
+                        </button>
+                        <div class="quiz-answer bg-gray-800 p-3 rounded-lg mt-2 text-xl font-bold">
+                            <span class="text-amber-400">Category:</span> <span class="text-white">${item.category}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-50 font-sans p-4" style="font-family: 'Inter', sans-serif;">
+
+    <div class="max-w-7xl mx-auto py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 mb-2">
+                Chapter 2: ML Project Workflow
+            </h1>
+            <p class="text-gray-400 text-xl">Interactive Flashcards and Quizzes covering the End-to-End process.</p>
+        </header>
+
+        <!-- Flashcards Section -->
+        <section class="mb-16 p-6 bg-gray-800 rounded-xl shadow-2xl">
+            <h2 id="flashcard-title" class="text-3xl font-bold mb-6 text-amber-400 border-b border-gray-700 pb-3">
+                🧠 Flashcards: Key Terminologies
+            </h2>
+            <div id="flashcard-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Flashcards will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- True/False Quiz Section -->
+        <section class="mb-16 p-6 bg-gray-800 rounded-xl shadow-2xl">
+            <h2 id="tf-title" class="text-3xl font-bold mb-6 text-amber-400 border-b border-gray-700 pb-3">
+                ✅ True / False Quizzes
+            </h2>
+            <div id="tf-quiz-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- T/F Questions will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Multiple Choice Quiz Section -->
+        <section class="mb-16 p-6 bg-gray-800 rounded-xl shadow-2xl">
+            <h2 id="mcq-title" class="text-3xl font-bold mb-6 text-amber-400 border-b border-gray-700 pb-3">
+                🎯 Multiple-Choice Quizzes
+            </h2>
+            <div id="mcq-quiz-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- MCQ Questions will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Categorization Quiz Section -->
+        <section class="p-6 bg-gray-800 rounded-xl shadow-2xl">
+            <h2 id="categorization-title" class="text-3xl font-bold mb-6 text-amber-400 border-b border-gray-700 pb-3">
+                🗂️ Categorization Questions
+            </h2>
+            <div id="cat-quiz-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Categorization Questions will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 text-gray-500">
+            <p>Data compiled and presented interactively. Click cards and buttons to reveal answers.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
