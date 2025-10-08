@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Machine Learning Study Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the flashcard flip effect */
+        .flashcard-container {
+            perspective: 1000px;
+            height: 200px; /* Fixed height for consistent look */
+        }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flashcard-container.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .flashcard-front {
+            background-color: #374151; /* Gray-700 */
+            color: #F9FAFB;
+        }
+        .flashcard-back {
+            background-color: #10B981; /* Emerald-500 */
+            color: #1F2937;
+            transform: rotateY(180deg);
+        }
+        .quiz-answer {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        .quiz-answer.show {
+            max-height: 100px; /* Sufficient height to show content */
+            opacity: 1;
+            padding-top: 0.5rem;
+        }
+    </style>
+    <script>
+        // Data derived from t.txt
+        const flashcardData = [
+            // Flashcards (40 Terminologies)
+            { term: 'Machine Learning', definition: 'Programming computers to learn from data without explicit instructions.' },
+            { term: 'Training Set', definition: 'Dataset used to teach the model.' },
+            { term: 'Training Instance', definition: 'A single example (row) from the training set.' },
+            { term: 'Label', definition: 'Desired output in supervised learning.' },
+            { term: 'Feature / Attribute', definition: 'An input variable describing data; feature = attribute + value.' },
+            { term: 'Predictor', definition: 'Feature used to predict a label.' },
+            { term: 'Supervised Learning', definition: 'Model trained on labeled data.' },
+            { term: 'Unsupervised Learning', definition: 'Model trained on unlabeled data.' },
+            { term: 'Semisupervised Learning', definition: 'Combination of labeled and unlabeled data.' },
+            { term: 'Reinforcement Learning', definition: 'Agent learns by reward / penalty from environment.' },
+            { term: 'Regression', definition: 'Predicting continuous numeric values.' },
+            { term: 'Classification', definition: 'Predicting categories or classes.' },
+            { term: 'Clustering', definition: 'Grouping similar instances without labels.' },
+            { term: 'Anomaly Detection', definition: 'Identifying data that differ from normal patterns.' },
+            { term: 'Dimensionality Reduction', definition: 'Compressing data while preserving information.' },
+            { term: 'Feature Engineering', definition: 'Creating, selecting, or transforming features.' },
+            { term: 'Overfitting', definition: 'Model fits training data too closely, failing on new data.' },
+            { term: 'Underfitting', definition: 'Model too simple to capture true patterns.' },
+            { term: 'Regularization', definition: 'Adding constraints to reduce overfitting.' },
+            { term: 'Hyperparameter', definition: 'Algorithm parameter set before training.' },
+            { term: 'Model Parameter', definition: 'Learned internal variable (e.g., θ₀, θ₁).' },
+            { term: 'Accuracy', definition: 'Ratio of correctly classified instances.' },
+            { term: 'Generalization', definition: 'Model’s ability to work on unseen data.' },
+            { term: 'Test Set', definition: 'Held-out data for evaluating performance.' },
+            { term: 'Validation Set', definition: 'Subset used for hyperparameter tuning.' },
+            { term: 'Train-Dev Set', definition: 'Subset used to detect data mismatch.' },
+            { term: 'Holdout Validation', definition: 'Reserving part of training data for model selection.' },
+            { term: 'Cross-Validation', definition: 'Rotating validation across data splits.' },
+            { term: 'Batch Learning', definition: 'Model trained on all data at once.' },
+            { term: 'Online Learning', definition: 'Incremental training as new data arrives.' },
+            { term: 'Out-of-Core Learning', definition: 'Training on chunks that don’t fit in memory.' },
+            { term: 'Learning Rate', definition: 'Controls how quickly online learning adapts.' },
+            { term: 'Sampling Bias', definition: 'Non-representative data selection.' },
+            { term: 'Nonresponse Bias', definition: 'Bias from missing survey responses.' },
+            { term: 'Noise', definition: 'Random error in data.' },
+            { term: 'Feature Extraction', definition: 'Combining correlated features into one.' },
+            { term: 'Policy', definition: 'Strategy for choosing actions in RL.' },
+            { term: 'Reward', definition: 'Positive signal guiding learning in RL.' },
+            { term: 'Cost Function', definition: 'Measures how bad model predictions are.' },
+            { term: 'No Free Lunch Theorem', definition: 'No single algorithm works best for all problems.' },
+
+            // Complete Terminology / Flashcard List (Set 2) - Filtering for unique or clearer definitions
+            { term: 'Instance / Sample', definition: 'One record (row) in the training data.' },
+            { term: 'Attribute / Feature', definition: 'Input variable describing data; feature = attribute + value.' },
+            { term: 'Task (T)', definition: 'The objective the system must perform.' },
+            { term: 'Experience (E)', definition: 'Data or interactions used to improve performance.' },
+            { term: 'Performance (P)', definition: 'Quantitative measure of success (e.g., accuracy).' },
+            { term: 'Spam Filter Example', definition: 'T = classify emails, E = training emails, P = accuracy.' },
+            { term: 'Data Mining', definition: 'Discovering patterns and correlations in large datasets.' },
+            { term: 'Batch Learning (Offline)', definition: 'Trained once on all data, then deployed statically.' },
+            { term: 'Online Learning (Incremental)', definition: 'Continuously updates model as new data arrives.' },
+            { term: 'Mini-Batch', definition: 'Small chunk of data used in one update step.' },
+            { term: 'Out-of-Core Learning', definition: 'Training on data larger than memory using sequential loading.' },
+            { term: 'Instance-Based Learning', definition: 'Predicts by comparing new inputs to stored instances (e.g., k-NN).' },
+            { term: 'Model-Based Learning', definition: 'Learns model parameters to generalize (e.g., Linear Regression).' },
+            { term: 'Model Parameter (θ)', definition: 'Adjustable value optimized during training.' },
+            { term: 'Novelty Detection', definition: 'Detect truly new patterns not in training data.' },
+            { term: 'Feature Selection', definition: 'Keeping only the most relevant features.' },
+            { term: 'Association Rule Learning', definition: 'Finds co-occurrence relationships (“people who buy X also buy Y”).' },
+            { term: 'Regression to the Mean', definition: 'Statistical term: extreme values tend to revert toward average.' },
+            { term: 'Linear Regression', definition: 'Models output as linear combination of inputs (θ₀ + θ₁ × x).' },
+            { term: 'k-Nearest Neighbors (k-NN)', definition: 'Predict output by averaging labels of k closest samples.' },
+            { term: 'Training', definition: 'Adjusting parameters to minimize cost.' },
+            { term: 'Inference', definition: 'Using trained model to predict unseen data.' },
+            { term: 'Hyperparameter Tuning', definition: 'Searching for best hyperparameter values.' },
+            { term: 'Generalization Error', definition: 'Error rate on unseen data.' },
+            { term: 'Data Mismatch', definition: 'Training vs production data differ in nature.' },
+            { term: 'Noise / Outlier', definition: 'Irregular data point deviating from normal pattern.' },
+            { term: '“Garbage In, Garbage Out”', definition: 'Poor features → poor model, regardless of algorithm.' },
+            { term: 'Holdout Validation', definition: 'Reserving part of training set for model selection.' },
+            { term: 'Regularization Hyperparameter (λ)', definition: 'Controls how much complexity is penalized.' },
+            { term: 'Representation Learning', definition: 'Automatically discovering useful features (e.g., neural nets).' },
+            { term: 'Utility Function', definition: 'Measures goodness of model (alternative to cost function).' },
+            { term: 'Neural Networks', definition: 'Layered computational models for pattern learning.' },
+            { term: 'CNN (Convolutional Neural Network)', definition: 'Processes grid-like data (e.g., images).' },
+            { term: 'RNN (Recurrent Neural Network)', definition: 'Processes sequential data (e.g., text, speech).' },
+            { term: 'Transformer', definition: 'Sequence model using self-attention mechanism.' },
+            { term: 'Recommender System', definition: 'Predicts user preferences based on history.' },
+            { term: 'AlphaGo', definition: 'Example of reinforcement learning beating human Go champion.' },
+            { term: 'Evaluation Metric', definition: 'Numeric indicator of performance (accuracy, RMSE, etc.).' },
+        ];
+
+        const trueFalseData = [
+            // True / False (Section 1)
+            { question: 'Machine Learning requires explicit rule-based programming.', answer: 'False' },
+            { question: 'The spam filter is an example of supervised learning.', answer: 'True' },
+            { question: 'Regression predicts categorical outputs.', answer: 'False' },
+            { question: 'Unsupervised learning requires labeled data.', answer: 'False' },
+            { question: 'Reinforcement Learning uses a teacher to supply labels.', answer: 'False' },
+            { question: 'Semisupervised learning uses both labeled and unlabeled data.', answer: 'True' },
+            { question: 'Batch learning cannot learn from new data until retrained.', answer: 'True' },
+            { question: 'Online learning can update incrementally as new data arrives.', answer: 'True' },
+            { question: 'Anomaly detection identifies rare or abnormal cases.', answer: 'True' },
+            { question: 'Feature engineering is unnecessary when using ML.', answer: 'False' },
+            { question: 'Overfitting occurs when a model fits noise in the training data.', answer: 'True' },
+            { question: 'Regularization increases model complexity.', answer: 'False' },
+            { question: 'Underfitting means the model is too simple.', answer: 'True' },
+            { question: 'Cross-validation helps estimate generalization error.', answer: 'True' },
+            { question: 'The validation set is used to train the model.', answer: 'False' },
+            { question: 'Sampling bias occurs when data do not represent real-world cases.', answer: 'True' },
+            { question: 'Instance-based learning builds a model of the data.', answer: 'False' },
+            { question: 'Model-based learning uses mathematical functions for prediction.', answer: 'True' },
+            { question: 'k-Nearest Neighbors is instance-based.', answer: 'True' },
+            { question: 'Linear Regression is model-based.', answer: 'True' },
+            { question: 'Hyperparameters are learned automatically.', answer: 'False' },
+            { question: 'The cost function measures model error.', answer: 'True' },
+            { question: 'A high learning rate causes faster but possibly unstable learning.', answer: 'True' },
+            { question: '“Garbage in, garbage out” refers to irrelevant features.', answer: 'True' },
+            { question: 'The No Free Lunch Theorem says one algorithm always wins.', answer: 'False' },
+            { question: 'Poor-quality data can harm model performance.', answer: 'True' },
+            { question: 'Feature extraction merges correlated attributes.', answer: 'True' },
+            { question: 'Data mismatch occurs when training and production data differ.', answer: 'True' },
+            { question: 'Generalization error = training error.', answer: 'False' },
+            { question: 'The test set helps estimate performance on unseen data.', answer: 'True' },
+            // True / False (Section 2 - Complete Set)
+            { question: 'Machine Learning gives computers ability to learn without explicit programming', answer: 'True' },
+            { question: 'Downloading large data automatically means a machine has learned', answer: 'False' },
+            { question: 'Spam filters are early successful ML applications', answer: 'True' },
+            { question: 'Traditional spam filters adapt automatically to new spam words', answer: 'False' },
+            { question: 'ML is especially useful for problems with no clear algorithmic solution', answer: 'True' },
+            { question: 'Supervised learning uses labeled data', answer: 'True' },
+            { question: 'Regression predicts continuous values', answer: 'True' },
+            { question: 'Classification predicts discrete categories', answer: 'True' },
+            { question: 'Unsupervised learning requires labels', answer: 'False' },
+            { question: 'Clustering is an unsupervised technique', answer: 'True' },
+            { question: 'Dimensionality reduction simplifies data while preserving structure', answer: 'True' },
+            { question: 'Anomaly detection needs labeled anomalies during training', answer: 'False' },
+            { question: 'Semisupervised learning combines labeled and unlabeled data', answer: 'True' },
+            { question: 'Reinforcement Learning uses a reward signal to guide learning', answer: 'True' },
+            { question: 'Batch learning = offline learning', answer: 'True' },
+            { question: 'Online learning updates incrementally as new data arrives', answer: 'True' },
+            { question: 'High learning rate causes forgetting of old data', answer: 'True' },
+            { question: 'Instance-based learning memorizes examples', answer: 'True' },
+            { question: 'Model-based learning builds abstract representation', answer: 'True' },
+            { question: 'Overfitting means poor performance on training data', answer: 'False' },
+            { question: 'Regularization reduces model complexity', answer: 'True' },
+            { question: 'Underfitting occurs when model too simple', answer: 'True' },
+            { question: 'Sampling bias occurs when training data is not representative', answer: 'True' },
+            { question: 'More data can help reduce overfitting', answer: 'True' },
+            { question: 'Poor-quality data improves generalization', answer: 'False' },
+            { question: 'Feature engineering involves selecting and creating useful features', answer: 'True' },
+            { question: 'Hyperparameters are learned during training', answer: 'False' },
+            { question: 'Validation set is used for model selection', answer: 'True' },
+            { question: 'Test set is used to tune hyperparameters', answer: 'False' },
+            { question: 'Data mismatch can be checked using a train-dev set', answer: 'True' },
+            { question: 'No Free Lunch theorem states some models are always better', answer: 'False' },
+            { question: 'Feature = attribute + its value', answer: 'True' },
+            { question: 'Anomaly detection and novelty detection are identical', answer: 'False' },
+            { question: 'Too small training set → sampling noise', answer: 'True' },
+            { question: 'Cross-validation helps reduce variance in evaluation', answer: 'True' },
+        ];
+
+        const multipleChoiceData = [
+            // Multiple-Choice Questions (Section 🎯)
+            { question: 'Who defined ML as “the field of study that gives computers the ability to learn without being explicitly programmed”?', options: ['Tom Mitchell', 'Arthur Samuel', 'Andrew Ng', 'Geoff Hinton'], answer: 'B) Arthur Samuel' },
+            { question: 'Which is NOT a supervised-learning algorithm?', options: ['Linear Regression', 'Decision Tree', 'K-Means', 'SVM'], answer: 'C) K-Means' },
+            { question: 'Which algorithm can perform both regression and classification?', options: ['Linear Regression', 'Logistic Regression', 'Decision Tree', 'Random Forest'], answer: 'B) Logistic Regression' },
+            { question: 'Unsupervised learning algorithms include:', options: ['PCA', 'K-Means', 't-SNE', 'All of the above'], answer: 'D) All of the above' },
+            { question: 'In Reinforcement Learning, the agent learns through:', options: ['Explicit labels', 'Rewards and penalties', 'Human corrections', 'Feature engineering'], answer: 'B) Rewards and penalties' },
+            { question: 'Batch learning is also called:', options: ['Offline learning', 'Online learning', 'Incremental learning', 'Reinforcement'], answer: 'A) Offline learning' },
+            { question: 'What does online learning use to adapt quickly?', options: ['Epochs', 'Mini-batches', 'Learning rate', 'Validation set'], answer: 'C) Learning rate' },
+            { question: 'Out-of-core learning is used when:', options: ['Data is tiny', 'Model is nonlinear', 'Data does not fit memory', 'All data is labeled'], answer: 'C) Data does not fit memory' },
+            { question: 'The main goal of dimensionality reduction is:', options: ['Increase noise', 'Simplify data', 'Add new features', 'Overfit model'], answer: 'B) Simplify data' },
+            { question: 'Anomaly detection algorithms include:', options: ['One-Class SVM', 'Isolation Forest', 'Both A and B', 'K-Means'], answer: 'C) Both A and B' },
+            { question: 'Which is an example of semisupervised learning?', options: ['Autoencoder', 'Google Photos face grouping', 'Spam filter', 'AlphaGo'], answer: 'B) Google Photos face grouping' },
+            { question: 'Which model predicts continuous values?', options: ['Regression', 'Classification', 'Clustering', 'RL'], answer: 'A) Regression' },
+            { question: 'Feature engineering helps prevent:', options: ['Sampling bias', 'Irrelevant features', 'Noise', 'None'], answer: 'B) Irrelevant features' },
+            { question: 'What reduces overfitting?', options: ['Adding noise', 'Regularization', 'Removing features randomly', 'Increasing variance'], answer: 'B) Regularization' },
+            { question: 'A hyperparameter is:', options: ['Learned from data', 'Set before training', 'Equal to θ₁', 'Irrelevant'], answer: 'B) Set before training' },
+            { question: 'The No Free Lunch theorem implies:', options: ['Linear models always best', 'No one model works for all tasks', 'Neural nets win always', 'Data is free'], answer: 'B) No one model works for all tasks' },
+            { question: 'What is the main cause of sampling bias?', options: ['Too much data', 'Incorrect sampling method', 'Noise', 'Underfitting'], answer: 'B) Incorrect sampling method' },
+            { question: 'What is feature extraction?', options: ['Merging correlated features', 'Adding noise', 'Deleting features', 'Sampling new data'], answer: 'A) Merging correlated features' },
+            { question: 'Which dataset split detects data mismatch?', options: ['Train-dev', 'Validation', 'Test', 'Training'], answer: 'A) Train-dev' },
+            { question: 'Generalization error is measured on:', options: ['Training set', 'Test set', 'Validation set', 'None'], answer: 'B) Test set' },
+            // Q21-Q30 from Section 🎯 are treated as simple Q&A because they lack formal options.
+            { question: 'What happens when a model fits noise instead of signal?', answer: 'Overfitting' },
+            { question: 'The performance measure in spam classification example is:', answer: 'Accuracy' },
+            { question: 'Which of these uses reward signals to learn?', answer: 'Reinforcement Learning' },
+            { question: '“Garbage in, garbage out” means:', answer: 'Irrelevant features lead to poor results.' },
+            { question: 'Which type of data causes poor generalization?', answer: 'Nonrepresentative training data.' },
+            { question: 'When model is too simple to capture structure:', answer: 'Underfitting' },
+            { question: 'To detect sampling bias you must:', answer: 'Ensure training data represents target cases.' },
+            { question: 'Outliers should usually be:', answer: 'Removed or corrected.' },
+            { question: 'Holdout validation prevents:', answer: 'Overfitting to test set.' },
+            { question: 'Cross-validation drawback:', answer: 'Higher training time.' },
+            
+            // Multiple-Choice Questions (Section IV - A)
+            { question: 'Which statement best defines Machine Learning?', options: ['Programming computers to follow fixed rules', 'Giving computers the ability to learn from data without explicit programming', 'Copying human intelligence directly into code', 'Building databases for future queries'], answer: 'B) Giving computers the ability to learn from data without explicit programming' },
+            { question: 'Who defined Machine Learning as “the field of study that gives computers the ability to learn without being explicitly programmed”?', options: ['Tom Mitchell', 'Arthur Samuel (1959)', 'Andrew Ng', 'Alan Turing'], answer: 'B) Arthur Samuel (1959)' },
+            { question: 'According to Tom Mitchell (1997), a computer program learns when…', options: ['its code base grows', 'its performance P on task T improves with experience E', 'it downloads more data', 'it increases processing speed'], answer: 'B) its performance P on task T improves with experience E' },
+            { question: 'In the spam-filter example, which of the following represents “experience E”?', options: ['New emails received', 'Training data containing spam and ham examples', 'Accuracy score', 'Program code'], answer: 'B) Training data containing spam and ham examples' },
+            { question: 'In Tom Mitchell’s notation (T,E,P), the performance measure P in spam filtering can be:', options: ['F1 score', 'Accuracy (ratio of correctly classified emails)', 'Confusion matrix', 'A rule list length'], answer: 'B) Accuracy (ratio of correctly classified emails)' },
+            { question: 'Which of these tasks would *not* be considered Machine Learning?', options: ['Spam filtering', 'Speech recognition', 'Downloading Wikipedia', 'Credit-card fraud detection'], answer: 'C) Downloading Wikipedia' },
+
+            // Multiple-Choice Questions (Section IV - B)
+            { question: 'Traditional programming for spam detection fails mainly because:', options: ['Email formats never change', 'Hard-coded rules are hard to maintain', 'It uses supervised data', 'It adapts automatically'], answer: 'B) Hard-coded rules are hard to maintain' },
+            { question: 'Machine Learning adapts automatically to new patterns such as spammers replacing “4U” with “For U.” This illustrates:', options: ['Manual rule tuning', 'Automatic adaptation', 'Online regularization', 'Deep learning'], answer: 'B) Automatic adaptation' },
+            { question: 'Which of the following is *not* an advantage of Machine Learning?', options: ['Simplifies code for complex tasks', 'Adapts to data drift', 'Extracts hidden patterns', 'Guarantees perfect predictions'], answer: 'D) Guarantees perfect predictions' },
+            { question: 'Applying ML to uncover hidden structures in large datasets is known as:', options: ['Data wrangling', 'Data mining', 'Feature extraction', 'Regularization'], answer: 'B) Data mining' },
+
+            // Multiple-Choice Questions (Section IV - C)
+            { question: 'Detecting tumors in brain scans is an example of:', options: ['Regression', 'Semantic segmentation', 'Classification', 'Reinforcement Learning'], answer: 'B) Semantic segmentation' },
+            { question: 'Forecasting company revenue based on metrics is a:', options: ['Regression task', 'Classification task', 'Clustering task', 'Dimensionality reduction task'], answer: 'A) Regression task' },
+            { question: 'Grouping customers by purchasing patterns is called:', options: ['Regression', 'Clustering', 'Regularization', 'Feature selection'], answer: 'B) Clustering' },
+            { question: 'Recognizing voice commands uses:', options: ['CNNs only', 'RNNs, CNNs, or Transformers', 'K-Means', 'Random Forest'], answer: 'B) RNNs, CNNs, or Transformers' },
+            { question: 'Designing a bot that learns to play a game best fits:', options: ['Supervised learning', 'Reinforcement Learning', 'Unsupervised learning', 'Online learning'], answer: 'B) Reinforcement Learning' },
+
+            // Multiple-Choice Questions (Section IV - D)
+            { question: 'The four supervision-based categories are:', options: ['Labeled, Unlabeled, Mixed, Reward', 'Supervised, Unsupervised, Semisupervised, Reinforcement Learning', 'Regression, Classification, Clustering, Reinforcement', 'Batch, Online, Instance-based, Model-based'], answer: 'B) Supervised, Unsupervised, Semisupervised, Reinforcement Learning' },
+            { question: 'A system that learns from labeled examples is:', options: ['Supervised', 'Unsupervised', 'Semisupervised', 'Reinforcement'], answer: 'A) Supervised' },
+            { question: 'Predicting car price from mileage and brand is a:', options: ['Classification problem', 'Regression problem', 'Clustering problem', 'Dimensionality-reduction problem'], answer: 'B) Regression problem' },
+            { question: 'Which algorithm is both usable for classification and regression?', options: ['Logistic Regression', 'PCA', 'Apriori', 'Isolation Forest'], answer: 'A) Logistic Regression' },
+            { question: 'Unsupervised algorithms include all except:', options: ['K-Means', 't-SNE', 'Random Forest', 'DBSCAN'], answer: 'C) Random Forest' },
+            { question: 'In dimensionality reduction, merging correlated features into one is known as:', options: ['Feature extraction', 'Feature selection', 'Regularization', 'Clustering'], answer: 'A) Feature extraction' },
+            { question: 'Detecting abnormal credit-card transactions is:', options: ['Anomaly detection', 'Association-rule learning', 'Regression', 'Reinforcement Learning'], answer: 'A) Anomaly detection' },
+            { question: 'Association-rule learning is used to:', options: ['Predict continuous variables', 'Discover relations between attributes (e.g., “chips → steak”)', 'Reduce data dimensions', 'Classify text documents'], answer: 'B) Discover relations between attributes (e.g., “chips → steak”)' },
+            { question: 'In semisupervised learning, the unlabeled data helps:', options: ['Slow down learning', 'Improve classification boundaries', 'Increase overfitting', 'Eliminate features'], answer: 'B) Improve classification boundaries' },
+            { question: 'A photo-tagging system that clusters faces first and then assigns names exemplifies:', options: ['Supervised learning', 'Semisupervised learning', 'Reinforcement learning', 'Online learning'], answer: 'B) Semisupervised learning' },
+            { question: 'In Reinforcement Learning, “policy” means:', options: ['Rulebook for data cleaning', 'Strategy mapping situations to actions', 'Parameter tuning function', 'Reward schedule'], answer: 'B) Strategy mapping situations to actions' },
+            { question: 'Batch learning is also called:', options: ['Offline learning', 'Incremental learning', 'Reinforcement learning', 'Adaptive learning'], answer: 'A) Offline learning' },
+            { question: 'Out-of-core learning refers to:', options: ['Running ML on a GPU', 'Training on datasets larger than memory', 'Cross-validation', 'Ensemble averaging'], answer: 'B) Training on datasets larger than memory' },
+            { question: 'The key tuning variable controlling how fast an online learner adapts is called:', options: ['Adaptation coefficient', 'Learning rate', 'Regularization strength', 'Momentum'], answer: 'B) Learning rate' },
+            { question: 'In instance-based learning, predictions rely on:', options: ['A fitted model', 'Similarity to memorized instances', 'Reinforcement signals', 'Weight decay'], answer: 'B) Similarity to memorized instances' },
+            { question: 'Model-based learning generalizes by:', options: ['Memorization', 'Building a parameterized predictive model', 'Searching nearest neighbors', 'Manual labeling'], answer: 'B) Building a parameterized predictive model' },
+            { question: 'The equation life_satisfaction = θ₀ + θ₁ × GDP_per_capita is an example of:', options: ['Polynomial regression', 'Linear Regression', 'Clustering', 'Reinforcement policy'], answer: 'B) Linear Regression' },
+            { question: 'In Linear Regression, model training finds parameters that:', options: ['Maximize cost', 'Minimize cost', 'Randomize slope', 'Remove labels'], answer: 'B) Minimize cost' },
+            { question: 'In k-Nearest Neighbors regression, k represents:', options: ['The number of clusters', 'The number of nearest training instances used for prediction', 'A regularization parameter', 'A learning rate'], answer: 'B) The number of nearest training instances used for prediction' },
+            { question: 'Regularization primarily combats:', options: ['Underfitting', 'Overfitting', 'Sampling bias', 'Data imbalance'], answer: 'B) Overfitting' },
+            { question: 'The variable controlling strength of regularization is a:', options: ['Model parameter', 'Hyperparameter', 'Loss value', 'Bias term'], answer: 'B) Hyperparameter' },
+            { question: 'Underfitting occurs when:', options: ['Model too simple', 'Model too complex', 'Training set small', 'Test set large'], answer: 'A) Model too simple' },
+            { question: 'A good practice to evaluate generalization is to split data into:', options: ['Training / Validation / Test', 'Input / Output / Reward', 'Small / Medium / Large', 'Old / New'], answer: 'A) Training / Validation / Test' },
+            { question: 'The portion of data used to choose hyperparameters is the:', options: ['Training set', 'Validation set', 'Test set', 'Reward set'], answer: 'B) Validation set' },
+            { question: 'Repeated cross-validation helps because:', options: ['It provides a more accurate performance estimate', 'It uses fewer examples', 'It increases bias', 'It fixes data mismatch'], answer: 'A) It provides a more accurate performance estimate' },
+            { question: 'When training data and production data differ, the issue is:', options: ['Overfitting', 'Data mismatch', 'Underfitting', 'Regularization'], answer: 'B) Data mismatch' },
+            { question: 'The No Free Lunch theorem implies:', options: ['Neural networks outperform all models', 'There is no universally best algorithm', 'Linear models always generalize best', 'Bigger data is unnecessary'], answer: 'B) There is no universally best algorithm' },
+        ];
+
+        const categorizationData = [
+            { question: 'Linear Regression, SVM, Random Forest', category: 'Supervised Learning' },
+            { question: 'PCA, t-SNE, LLE', category: 'Unsupervised Learning' },
+            { question: 'Google Photos label suggestion', category: 'Semisupervised Learning' },
+            { question: 'AlphaGo agent learning from game rewards', category: 'Reinforcement Learning' },
+            { question: 'Spam Filter', category: 'Supervised Classification' },
+            { question: 'Forecast stock price', category: 'Regression Task' },
+            { question: 'Group customers by purchases', category: 'Clustering' },
+            { question: 'Detect fraud transactions', category: 'Anomaly Detection' },
+            { question: 'Reduce dataset dimensions', category: 'Dimensionality Reduction' },
+            { question: 'Chatbot dialogue', category: 'NLP Application' },
+            { question: 'Image classification with CNNs', category: 'Supervised Computer Vision' },
+            { question: 'Predict revenue next year', category: 'Regression' },
+            { question: 'Bot learns to maximize score', category: 'Reinforcement Learning' },
+            { question: 'Text summarization', category: 'NLP / Supervised Sequence Task' },
+            { question: 'Discover relations between purchases', category: 'Association Rule Learning' },
+        ];
+        
+        // Helper to render all sections
+        window.onload = () => {
+            renderFlashcards();
+            renderTrueFalse();
+            renderMultipleChoice();
+            renderCategorization();
+        };
+
+        // --- Core Functions ---
+
+        function toggleAnswer(button, type) {
+            const container = button.closest(type === 'mcq' ? '.mcq-item' : '.quiz-item');
+            const answerElement = container.querySelector('.quiz-answer');
+            const isShowing = answerElement.classList.contains('show');
+
+            // Toggle visibility
+            answerElement.classList.toggle('show');
+
+            // Change button text
+            button.textContent = isShowing ? 'Show Answer' : 'Hide Answer';
+            button.classList.toggle('bg-emerald-600', isShowing);
+            button.classList.toggle('bg-red-600', !isShowing);
+            button.classList.toggle('hover:bg-emerald-700', isShowing);
+            button.classList.toggle('hover:bg-red-700', !isShowing);
+        }
+
+        function toggleFlashcard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // --- Rendering Functions ---
+
+        function renderFlashcards() {
+            const container = document.getElementById('flashcard-container');
+            flashcardData.forEach((item, index) => {
+                const cardHtml = `
+                    <div class="flashcard-container cursor-pointer" onclick="toggleFlashcard(this)">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span class="text-xl font-bold p-2 text-center">
+                                    ${index + 1}. ${item.term}
+                                </span>
+                            </div>
+                            <div class="flashcard-back">
+                                <span class="text-lg font-semibold p-2 text-center">
+                                    ${item.definition}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                const div = document.createElement('div');
+                div.className = 'w-full';
+                div.innerHTML = cardHtml;
+                container.appendChild(div);
+            });
+        }
+
+        function renderTrueFalse() {
+            const container = document.getElementById('tf-quiz-container');
+            trueFalseData.forEach((item, index) => {
+                const itemHtml = `
+                    <div class="quiz-item p-4 bg-gray-700 rounded-lg shadow-xl mb-4">
+                        <p class="text-lg font-semibold text-gray-100">${index + 1}. ${item.question}</p>
+                        <button onclick="toggleAnswer(this, 'tf')" class="mt-3 px-4 py-1.5 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition duration-150">
+                            Show Answer
+                        </button>
+                        <div class="quiz-answer bg-gray-800 p-3 rounded-lg mt-2 text-xl font-bold">
+                            <span class="text-emerald-400">Answer:</span> <span class="${item.answer === 'True' ? 'text-green-500' : 'text-red-500'}">${item.answer}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+
+        function renderMultipleChoice() {
+            const container = document.getElementById('mcq-quiz-container');
+            multipleChoiceData.forEach((item, index) => {
+                const optionsHtml = item.options ? item.options.map((opt, i) => {
+                    const label = String.fromCharCode(65 + i); // A, B, C, D
+                    return `<li class="text-gray-300 ml-4">${label}) ${opt}</li>`;
+                }).join('') : '';
+
+                const itemHtml = `
+                    <div class="mcq-item p-4 bg-gray-700 rounded-lg shadow-xl mb-4">
+                        <p class="text-lg font-semibold text-gray-100">${index + 1}. ${item.question}</p>
+                        ${optionsHtml ? `<ul class="list-none my-2 space-y-1">${optionsHtml}</ul>` : `<p class="italic text-sm text-gray-400 mt-1">Simple Q&A/Fill-in-the-Blank format.</p>`}
+                        <button onclick="toggleAnswer(this, 'mcq')" class="mt-3 px-4 py-1.5 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition duration-150">
+                            Show Answer
+                        </button>
+                        <div class="quiz-answer bg-gray-800 p-3 rounded-lg mt-2 text-xl font-bold">
+                            <span class="text-emerald-400">Answer:</span> <span class="text-white">${item.answer}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+
+        function renderCategorization() {
+            const container = document.getElementById('cat-quiz-container');
+            categorizationData.forEach((item, index) => {
+                const itemHtml = `
+                    <div class="quiz-item p-4 bg-gray-700 rounded-lg shadow-xl mb-4">
+                        <p class="text-lg font-semibold text-gray-100">${index + 1}. Classify: <span class="text-blue-300 font-normal">${item.question}</span></p>
+                        <button onclick="toggleAnswer(this, 'cat')" class="mt-3 px-4 py-1.5 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition duration-150">
+                            Show Category
+                        </button>
+                        <div class="quiz-answer bg-gray-800 p-3 rounded-lg mt-2 text-xl font-bold">
+                            <span class="text-emerald-400">Category:</span> <span class="text-white">${item.category}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-50 font-sans p-4" style="font-family: 'Inter', sans-serif;">
+
+    <div class="max-w-7xl mx-auto py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 mb-2">
+                ML Fundamentals Study Guide
+            </h1>
+            <p class="text-gray-400 text-xl">Interactive Flashcards and Quizzes from your provided data.</p>
+        </header>
+
+        <!-- Flashcards Section -->
+        <section class="mb-16 p-6 bg-gray-800 rounded-xl shadow-2xl">
+            <h2 class="text-3xl font-bold mb-6 text-emerald-400 border-b border-gray-700 pb-3">
+                🧠 Flashcards: Key Terminologies (${flashcardData.length} Terms)
+            </h2>
+            <div id="flashcard-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Flashcards will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- True/False Quiz Section -->
+        <section class="mb-16 p-6 bg-gray-800 rounded-xl shadow-2xl">
+            <h2 class="text-3xl font-bold mb-6 text-emerald-400 border-b border-gray-700 pb-3">
+                ✅ True / False Quizzes (${trueFalseData.length} Questions)
+            </h2>
+            <div id="tf-quiz-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- T/F Questions will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Multiple Choice Quiz Section -->
+        <section class="mb-16 p-6 bg-gray-800 rounded-xl shadow-2xl">
+            <h2 class="text-3xl font-bold mb-6 text-emerald-400 border-b border-gray-700 pb-3">
+                🎯 Multiple-Choice Quizzes (${multipleChoiceData.length} Questions)
+            </h2>
+            <div id="mcq-quiz-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- MCQ Questions will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Categorization Quiz Section -->
+        <section class="p-6 bg-gray-800 rounded-xl shadow-2xl">
+            <h2 class="text-3xl font-bold mb-6 text-emerald-400 border-b border-gray-700 pb-3">
+                🗂️ Categorization Questions (${categorizationData.length} Items)
+            </h2>
+            <div id="cat-quiz-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Categorization Questions will be injected here by JavaScript -->
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 text-gray-500">
+            <p>Data compiled and presented interactively. Click cards and buttons to reveal answers.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
