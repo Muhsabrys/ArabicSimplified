@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Subjunctive Present Tense (Al-Mansub)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+    .arabic-text { font-family: 'Noto Sans Arabic', sans-serif; direction: rtl; }
+    .rtl-box { text-align: right; }
+    .nav-link { transition: color .3s, border-color .3s; }
+    .nav-link.active { color:#0369a1; border-bottom-color:#0369a1; }
+    .highlight-change { color:#dc2626; font-weight:700; }
+    .strike-noon { text-decoration: line-through; color:#ef4444; }
+
+    .case-cell{ padding:1rem; border-radius:.5rem; margin-bottom:.75rem; transition:transform .2s; }
+    .case-cell:hover{ transform: translateY(-2px); }
+    .pronoun-btn.selected{ background:#0369a1 !important; color:white !important; }
+    code.kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:#f3f4f6; padding:.1rem .35rem; border-radius:.35rem; }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+  <!-- Header / Nav -->
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-3">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+        <h1 class="text-xl md:text-2xl font-bold text-sky-800">Al-Mansub (The Subjunctive Present)</h1>
+        <ul class="flex flex-wrap justify-center gap-4 md:gap-6">
+          <li><a href="#cases" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">Verb Cases</a></li>
+          <li><a href="#particles" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">Particles</a></li>
+          <li><a href="#rules" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">Conjugation</a></li>
+          <li><a href="#equivalence" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">Equivalence</a></li>
+          <li><a href="#explorer" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">Explorer</a></li>
+          <li><a href="#practice" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">Practice</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mx-auto px-6 py-8">
+
+    <!-- I. Cases -->
+    <section id="cases" class="mb-16">
+      <h2 class="text-3xl font-bold text-sky-900 mb-4">I. Three States of the Present Tense Verb</h2>
+      <p class="text-lg text-stone-600 mb-8 max-w-4xl">
+        The non-past verb (<span class="arabic-text font-bold">المضارع</span>) appears in three grammatical cases, each triggered by specific preceding particles.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Marfu' -->
+        <div class="case-cell bg-green-50 border-l-4 border-green-600 shadow-md">
+          <h3 class="text-xl font-bold text-green-700 mb-2 arabic-text">المرفوع (Al-Marfu')</h3>
+          <p class="text-sm font-semibold">Indicative</p>
+          <p class="text-sm mt-2">Default state; ongoing/habitual or general statements.</p>
+          <p class="text-sm mt-1">Markers: <strong>Damma</strong> (<span class="arabic-text">ـُ</span>) or <strong>retention of Nūn</strong>.</p>
+          <div class="arabic-text text-2xl font-bold mt-3 rtl-box text-green-800">
+            يَشْرَبُ / يَلْعَبُونَ
+          </div>
+        </div>
+
+        <!-- Mansub -->
+        <div class="case-cell bg-sky-50 border-l-4 border-sky-600 shadow-md">
+          <h3 class="text-xl font-bold text-sky-700 mb-2 arabic-text">المنصوب (Al-Mansub)</h3>
+          <p class="text-sm font-semibold">Subjunctive</p>
+          <p class="text-sm mt-2">After certain particles (e.g., <strong class="arabic-text">أنْ</strong>, <strong class="arabic-text">لَنْ</strong>, <strong class="arabic-text">كَيْ</strong>), often purpose or negative future.</p>
+          <p class="text-sm mt-1">Markers: <strong>Fatḥa</strong> (<span class="arabic-text">ـَ</span>) or <strong>deletion of Nūn</strong>.</p>
+          <div class="arabic-text text-2xl font-bold mt-3 rtl-box text-sky-800">
+            أَنْ يَشْرَبَ / لَنْ يَلْعَبُوا
+          </div>
+        </div>
+
+        <!-- Majzum -->
+        <div class="case-cell bg-amber-50 border-l-4 border-amber-600 shadow-md">
+          <h3 class="text-xl font-bold text-amber-700 mb-2 arabic-text">المجزوم (Al-Majzūm)</h3>
+          <p class="text-sm font-semibold">Jussive</p>
+          <p class="text-sm mt-2">After jussive particles (e.g., <strong class="arabic-text">لَمْ</strong>), used for past negation or prohibitions with <span class="arabic-text">لا</span> الناهية.</p>
+          <p class="text-sm mt-1">Markers: <strong>Sukūn</strong> (<span class="arabic-text">ـْ</span>) or <strong>deletion of Nūn</strong>.</p>
+          <div class="arabic-text text-2xl font-bold mt-3 rtl-box text-amber-800">
+            لَمْ يَشْرَبْ / لا تَلْعَبُوا
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- II. Particles -->
+    <section id="particles" class="mb-16">
+      <h2 class="text-3xl font-bold text-sky-900 mb-4">II. Main Subjunctive Particles (<span class="arabic-text font-bold">أدوات النصب</span>)</h2>
+      <p class="text-lg text-stone-600 mb-8 max-w-4xl">
+        These particles precede the Present Tense verb and put it in the <strong>Subjunctive</strong> (<span class="arabic-text">المنصوب</span>) case.
+      </p>
+
+      <div class="space-y-4">
+        <!-- أنْ -->
+        <div class="bg-white p-4 rounded-lg shadow-md border-r-4 border-fuchsia-600 flex flex-col md:flex-row justify-between items-start gap-3">
+          <div class="w-full md:w-1/3">
+            <p class="text-2xl font-bold text-fuchsia-700 arabic-text">أَنْ</p>
+            <p class="text-sm text-stone-600">(that / to) – <strong>Masdariyya</strong></p>
+          </div>
+          <div class="w-full md:w-2/3 md:text-right rtl-box">
+            <p class="text-sm text-stone-500 mb-1">Primary linker between two verbs.</p>
+            <p class="text-xl font-mono text-fuchsia-900 arabic-text">أُرِيدُ أَنْ أَذْهَبَ.</p>
+          </div>
+        </div>
+
+        <!-- لن -->
+        <div class="bg-white p-4 rounded-lg shadow-md border-r-4 border-fuchsia-600 flex flex-col md:flex-row justify-between items-start gap-3">
+          <div class="w-full md:w-1/3">
+            <p class="text-2xl font-bold text-fuchsia-700 arabic-text">لَنْ</p>
+            <p class="text-sm text-stone-600">(will not)</p>
+          </div>
+          <div class="w-full md:w-2/3 md:text-right rtl-box">
+            <p class="text-sm text-stone-500 mb-1">Emphatic negation of future actions.</p>
+            <p class="text-xl font-mono text-fuchsia-900 arabic-text">لَنْ أُسَافِرَ غَدًا.</p>
+          </div>
+        </div>
+
+        <!-- كي -->
+        <div class="bg-white p-4 rounded-lg shadow-md border-r-4 border-fuchsia-600 flex flex-col md:flex-row justify-between items-start gap-3">
+          <div class="w-full md:w-1/3">
+            <p class="text-2xl font-bold text-fuchsia-700 arabic-text">كَيْ</p>
+            <p class="text-sm text-stone-600">(in order to)</p>
+          </div>
+          <div class="w-full md:w-2/3 md:text-right rtl-box">
+            <p class="text-sm text-stone-500 mb-1">Expresses purpose.</p>
+            <p class="text-xl font-mono text-fuchsia-900 arabic-text">أَدْرُسُ كَيْ أَنْجَحَ.</p>
+          </div>
+        </div>
+
+        <!-- لام التعليل -->
+        <div class="bg-white p-4 rounded-lg shadow-md border-r-4 border-fuchsia-600 flex flex-col md:flex-row justify-between items-start gap-3">
+          <div class="w-full md:w-1/3">
+            <p class="text-2xl font-bold text-fuchsia-700 arabic-text">لامُ التَّعليل (لِـ)</p>
+            <p class="text-sm text-stone-600">(for / in order to)</p>
+          </div>
+          <div class="w-full md:w-2/3 md:text-right rtl-box">
+            <p class="text-sm text-stone-500 mb-1">Also purpose; takes <span class="arabic-text">المصدر</span> after nouns, or may precede a verb (then the verb is usually منصوب: لِأَتَعَلَّمَ).</p>
+            <p class="text-xl font-mono text-fuchsia-900 arabic-text">جِئْتُ لِأَتَعَلَّمَ.</p>
+          </div>
+        </div>
+
+        <!-- حتى -->
+        <div class="bg-white p-4 rounded-lg shadow-md border-r-4 border-fuchsia-600 flex flex-col md:flex-row justify-between items-start gap-3">
+          <div class="w-full md:w-1/3">
+            <p class="text-2xl font-bold text-fuchsia-700 arabic-text">حَتّى</p>
+            <p class="text-sm text-stone-600">(until / so that)</p>
+          </div>
+          <div class="w-full md:w-2/3 md:text-right rtl-box">
+            <p class="text-sm text-stone-500 mb-1">Marks an end-point or goal; verb after it is often منصوب when indicating purpose.</p>
+            <p class="text-xl font-mono text-fuchsia-900 arabic-text">سَأَنْتَظِرُ حَتّى يَعُودَ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- III. Structures -->
+    <section id="overview" class="mb-16">
+      <h2 class="text-3xl font-bold text-sky-900 mb-4">III. Subordinate Verb Forms & Structures</h2>
+      <p class="text-lg text-stone-600 mb-8 max-w-4xl">
+        Two common ways to express subordinate actions (similar to English “to do / doing”):
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg border-l-4 border-sky-600">
+          <h3 class="text-xl font-bold text-sky-700 mb-2">Structure A: <span class="arabic-text">أنْ + المضارع (منصوب)</span></h3>
+          <p class="mb-4">Very common with matrix verbs like “want, can, like, refuse”.</p>
+          <div class="arabic-text text-xl bg-sky-50 p-3 rounded-md rtl-box">
+            أُرِيدُ أَنْ أَذْهَبَ.
+          </div>
+          
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg border-l-4 border-teal-600">
+          <h3 class="text-xl font-bold text-teal-700 mb-2">Structure B: <span class="arabic-text">المصدر</span> (Masdar)</h3>
+          <p class="mb-4">
+            The verbal noun can replace a whole clause. With purpose, it can follow <span class="arabic-text">لِـ</span> (e.g., <span class="arabic-text">لِلنَّجاحِ</span>).
+          </p>
+          <div class="space-y-2 arabic-text text-xl">
+            <div class="bg-teal-50 p-3 rounded-md rtl-box">أُرِيدُ <strong>الذَّهَابَ</strong>.</div>
+            <div class="bg-teal-50 p-3 rounded-md rtl-box">أَدْرُسُ <strong>لِلنَّجَاحِ</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IV. Conjugation Rules -->
+    <section id="rules" class="mb-16">
+      <h2 class="text-3xl font-bold text-sky-900 mb-4">IV. Conjugation Rules: How the Verb Changes</h2>
+      <p class="text-lg text-stone-600 mb-8 max-w-4xl">
+        The Subjunctive replaces the Indicative ending.
+      </p>
+
+      <div class="space-y-6">
+        <!-- Rule 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-teal-500">
+          <h3 class="text-xl font-bold mb-2">Rule 1: Standard Verbs (final vowel)</h3>
+          <p class="mb-4">Singular forms: final <span class="arabic-text">ـُ</span> → <strong class="arabic-text">ـَ</strong>.</p>
+          <div class="flex flex-col sm:flex-row items-center justify-around bg-stone-50 p-4 rounded-md arabic-text">
+            <div class="text-center rtl-box">
+              <p class="text-sm text-stone-500">Indicative (Marfu')</p>
+              <p class="text-3xl font-mono text-green-700">يَكْتُب<span class="highlight-change">ُ</span></p>
+            </div>
+            <div class="text-4xl text-stone-400 mx-8 hidden sm:block">→</div>
+            <div class="text-center rtl-box mt-4 sm:mt-0">
+              <p class="text-sm text-stone-500">Subjunctive (Mansub)</p>
+              <p class="text-3xl font-mono text-sky-700">لَنْ يَكْتُب<span class="highlight-change">َ</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rule 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
+          <h3 class="text-xl font-bold mb-2">Rule 2: The Five Verbs (حذف النون)</h3>
+          <p class="mb-4">Dual, masculine plural, 2nd person feminine singular in -ينَ: delete the final Nūn.</p>
+          <div class="flex flex-col sm:flex-row items-center justify-around bg-stone-50 p-4 rounded-md arabic-text">
+            <div class="text-center rtl-box">
+              <p class="text-sm text-stone-500">Indicative (Marfu')</p>
+              <p class="text-3xl font-mono text-green-700">يَكْتُبُونَ</p>
+            </div>
+            <div class="text-4xl text-stone-400 mx-8 hidden sm:block">→</div>
+            <div class="text-center rtl-box mt-4 sm:mt-0">
+              <p class="text-sm text-stone-500">Subjunctive (Mansub)</p>
+              <p class="text-3xl font-mono text-sky-700">لَنْ يَكْتُبُوا</p>
+              <p class="text-sm text-red-600">The Nūn is removed.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rule 3 -->
+        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-slate-500">
+          <h3 class="text-xl font-bold mb-2">Rule 3: Plural Feminine (نون النسوة)</h3>
+          <p class="mb-4">Forms with <span class="arabic-text">نون النسوة</span> are <strong>indeclinable (مبني)</strong>—no change across cases.</p>
+          <div class="flex flex-col sm:flex-row items-center justify-around bg-stone-50 p-4 rounded-md arabic-text">
+            <div class="text-center rtl-box">
+              <p class="text-sm text-stone-500">Indicative (Marfu')</p>
+              <p class="text-3xl font-mono text-green-700">يَكْتُبْنَ</p>
+            </div>
+            <div class="text-4xl text-stone-400 mx-8 hidden sm:block">→</div>
+            <div class="text-center rtl-box mt-4 sm:mt-0">
+              <p class="text-sm text-stone-500">Subjunctive (Mansub)</p>
+              <p class="text-3xl font-mono text-sky-700">لَنْ يَكْتُبْنَ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- V. Equivalence -->
+    <section id="equivalence" class="mb-16">
+      <h2 class="text-3xl font-bold text-sky-900 mb-4">V. Infinitive/Subjunctive Equivalence</h2>
+      <p class="text-lg text-stone-600 mb-8 max-w-4xl">
+        <span class="arabic-text">أنْ + المضارع المنصوب</span> often alternates with the <span class="arabic-text">المصدر</span>. With purpose, <span class="arabic-text">لِـ</span> can introduce the Masdar (e.g., <span class="arabic-text">لِلنَّجاحِ</span>).
+      </p>
+
+      <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+        <h3 class="text-xl font-bold mb-4 text-teal-700">Interactive Equivalence Explorer</h3>
+        <p class="text-sm text-stone-500 mb-4">Click any example to toggle between Masdar and Mansub forms.</p>
+        <div id="equivalence-examples" class="space-y-4"></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-bold mb-3 text-sky-700">Verbs that commonly take subordinate actions</h3>
+          <p class="text-sm text-stone-600 mb-4">Similar to English “want to / can / like to …”.</p>
+          <ul class="list-disc list-inside grid grid-cols-2 arabic-text text-xl rtl-box">
+            <li>أراد</li><li>استطاع</li><li>يحبّ</li><li>يمكن</li><li>رفض</li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-1 bg-amber-50 p-6 rounded-lg shadow-md border-2 border-amber-600">
+          <h3 class="text-xl font-bold mb-3 text-red-700">CRITICAL EXCEPTION: Verbs of Beginning</h3>
+          <p class="text-sm text-stone-600 mb-4">
+            Do <strong>not</strong> use <span class="arabic-text">أنْ</span> or <span class="arabic-text">لِـ</span> after verbs of beginning/continuation (e.g., <span class="arabic-text">بدأ</span>, <span class="arabic-text">أخذ</span>, <span class="arabic-text">ظلّ</span>).
+          </p>
+          <div class="arabic-text text-lg font-bold rtl-box">
+            بدأنا <span class="highlight-change">نَدْرُسُ</span> اللغةَ العربيةَ.
+          </div>
+          <p class="text-sm text-stone-500 mt-2">The subordinate verb remains Indicative (مرفوع).</p>
+        </div>
+      </div>
+
+
+    <!-- VI. Conjugation Explorer -->
+    <section id="explorer" class="mb-16">
+      <h2 class="text-3xl font-bold text-sky-900 mb-4">VI. Conjugation Explorer: <span class="arabic-text font-bold">يَكْتُب</span></h2>
+      <p class="text-lg text-stone-600 mb-8 max-w-4xl">
+        Select a pronoun to compare Indicative (Marfu') vs. Subjunctive (Mansub).
+      </p>
+
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <div id="pronoun-grid" class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-3 mb-6"></div>
+        <div id="conjugation-display" class="bg-sky-50 p-6 rounded-lg text-center min-h-[150px] flex items-center justify-center">
+          <p class="text-stone-500">Please select a pronoun above.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VII. Practice -->
+    <section id="practice" class="mb-16">
+      <h2 class="text-3xl font-bold text-sky-900 mb-4">VII. Practical Application Quiz</h2>
+      <p class="text-lg text-stone-600 mb-8 max-w-4xl">
+        Add <span class="arabic-text font-bold">لَنْ</span> and give the correct <strong>Mansub</strong> verb form.
+      </p>
+
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <div id="practice-container"></div>
+        <div class="mt-4 text-center">
+          <button id="next-question-btn" class="bg-sky-700 text-white px-6 py-2 rounded-lg hover:bg-sky-800 transition-colors">Next Question</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white mt-12 py-4 border-t">
+    <div class="container mx-auto px-6 text-center text-sm text-stone-500">
+      <p>Interactive tool for learning the Subjunctive Present Tense (Al-Mansub).</p>
+    </div>
+  </footer>
+
+  <script>
+    // --- Data Definitions (corrected & normalized) ---
+    const conjugationData = {
+      'هُوَ':      { marfu: 'يَكْتُبُ',   mansub: 'يَكْتُبَ',  rule: 'Damma → Fatha.' },
+      'هِيَ':      { marfu: 'تَكْتُبُ',   mansub: 'تَكْتُبَ',  rule: 'Damma → Fatha.' },
+      'أَنْتَ':    { marfu: 'تَكْتُبُ',   mansub: 'تَكْتُبَ',  rule: 'Damma → Fatha.' },
+      'أَنَا':     { marfu: 'أَكْتُبُ',   mansub: 'أَكْتُبَ',  rule: 'Damma → Fatha.' },
+      'نَحْنُ':    { marfu: 'نَكْتُبُ',   mansub: 'نَكْتُبَ',  rule: 'Damma → Fatha.' },
+      'هُمَا (M)': { marfu: 'يَكْتُبَانِ', mansub: 'يَكْتُبَا', rule: 'Delete final Nūn (Five Verbs).' },
+      'هُمَا (F)': { marfu: 'تَكْتُبَانِ', mansub: 'تَكْتُبَا', rule: 'Delete final Nūn (Five Verbs).' },
+      'أَنْتُمَا': { marfu: 'تَكْتُبَانِ', mansub: 'تَكْتُبَا', rule: 'Delete final Nūn (Five Verbs).' },
+      'هُمْ':      { marfu: 'يَكْتُبُونَ', mansub: 'يَكْتُبُوا', rule: 'Delete final Nūn (Five Verbs).' },
+      'أَنْتُمْ':  { marfu: 'تَكْتُبُونَ', mansub: 'تَكْتُبُوا', rule: 'Delete final Nūn (Five Verbs).' },
+      'أَنْتِ':    { marfu: 'تَكْتُبِينَ', mansub: 'تَكْتُبِي',  rule: 'Delete final Nūn (Five Verbs).' },
+      'هُنَّ':     { marfu: 'يَكْتُبْنَ',  mansub: 'يَكْتُبْنَ', rule: 'Mabni (no change).' },
+      'أَنْتُنَّ': { marfu: 'تَكْتُبْنَ',  mansub: 'تَكْتُبْنَ', rule: 'Mabni (no change).' },
+    };
+
+    const practiceQuestions = [
+      { sentence: 'الطالبُ يَقْرَأُ الكتابَ.',    answer: 'يَقْرَأَ',  verbOnly: 'يَقْرَأُ' },
+      { sentence: 'العاملانِ يَعْمَلانِ بجدٍّ.',  answer: 'يَعْمَلَا', verbOnly: 'يَعْمَلانِ' },
+      { sentence: 'أنتِ تُسَافِرِينَ كثيرًا.',     answer: 'تُسَافِرِي', verbOnly: 'تُسَافِرِينَ' },
+      { sentence: 'المهندسونَ يَبْنُونَ الجسرَ.', answer: 'يَبْنُوا',  verbOnly: 'يَبْنُونَ' },
+      { sentence: 'الممرِّضاتُ يُسَاعِدْنَ المرضى.', answer: 'يُسَاعِدْنَ', verbOnly: 'يُسَاعِدْنَ' },
+    ];
+
+    // Masdar vs Mansub examples (corrected)
+    const equivalenceExamples = [
+      { masdar: 'أُرِيدُ الذَّهَابَ إِلَى الحَدِيقَةِ.',         mansub: 'أُرِيدُ أَنْ أَذْهَبَ إِلَى الحَدِيقَةِ.', key: 'go' },
+      { masdar: 'لَا أُحِبُّ دُخُولَ المُسْتَشْفَيَاتِ.',        mansub: 'لَا أُحِبُّ أَنْ أَدْخُلَ المُسْتَشْفَيَاتِ.', key: 'enter' },
+      { masdar: 'يُمْكِنُنَا السَّهَرَ لمُشَاهَدَةِ التِّلِفِزْيُونِ.', mansub: 'يُمْكِنُنَا أَنْ نَسْهَرَ لِنُشَاهِدَ التِّلِفِزْيُونَ.', key: 'stay up' },
+      { masdar: 'نَسْتَطِيعُ الخُرُوجَ مَعَ أَصْدِقَائِنَا.',   mansub: 'نَسْتَطِيعُ أَنْ نَخْرُجَ مَعَ أَصْدِقَائِنَا.', key: 'go out' },
+      { masdar: 'أَدْرُسُ لِلنَّجَاحِ.',                          mansub: 'أَدْرُسُ كَيْ أَنْجَحَ.', key: 'purpose' },
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- Explorer ---
+      const pronounGrid = document.getElementById('pronoun-grid');
+      const display = document.getElementById('conjugation-display');
+
+      Object.keys(conjugationData).forEach(pronoun => {
+        const btn = document.createElement('button');
+        btn.textContent = pronoun;
+        btn.className = 'pronoun-btn p-3 bg-stone-100 hover:bg-sky-600 hover:text-white rounded-md transition-colors arabic-text';
+        btn.onclick = () => {
+          updateDisplay(pronoun);
+          document.querySelectorAll('.pronoun-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        };
+        pronounGrid.appendChild(btn);
+      });
+
+      function updateDisplay(pronoun) {
+        const data = conjugationData[pronoun];
+        display.innerHTML = `
+          <div class="w-full">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+              <div>
+                <h4 class="text-lg font-bold text-stone-600">Pronoun: <span class="arabic-text">${pronoun}</span></h4>
+              </div>
+              <div>
+                <h4 class="text-lg font-bold text-green-700">Indicative (Marfu')</h4>
+                <p class="text-3xl font-mono text-green-700 py-2 arabic-text">${data.marfu}</p>
+              </div>
+              <div>
+                <h4 class="text-lg font-bold text-sky-700">Subjunctive (Mansub)</h4>
+                <p class="text-3xl font-mono text-sky-700 py-2 arabic-text">لَنْ ${data.mansub}</p>
+              </div>
+            </div>
+            <p class="mt-4 text-sm text-stone-700 bg-stone-100 rounded-full py-1 px-3 inline-block">Rule: ${data.rule}</p>
+          </div>
+        `;
+      }
+
+      // --- Equivalence Explorer ---
+      const equivalenceEl = document.getElementById('equivalence-examples');
+      equivalenceExamples.forEach((ex, index) => {
+        const container = document.createElement('div');
+        container.className = 'p-4 rounded-lg shadow-sm cursor-pointer border border-stone-200 hover:border-sky-500 transition-colors bg-white';
+        container.setAttribute('data-state', 'masdar');
+        container.setAttribute('data-index', index);
+
+        container.innerHTML = `
+          <p class="text-xs text-stone-500 mb-1">Click to toggle view (Masdar is often more formal)</p>
+          <div class="flex justify-between items-center arabic-text rtl-box">
+            <p class="text-xl font-bold text-teal-700 transition-colors" data-type="content">${ex.masdar}</p>
+            <span class="text-lg font-bold text-stone-400">Masdar</span>
+          </div>
+        `;
+
+        container.addEventListener('click', () => {
+          const state = container.getAttribute('data-state');
+          const contentEl = container.querySelector('[data-type="content"]');
+          const labelEl = container.querySelector('span');
+
+          if (state === 'masdar') {
+            contentEl.textContent = ex.mansub;
+            contentEl.classList.remove('text-teal-700');
+            contentEl.classList.add('text-sky-700');
+            labelEl.textContent = 'Mansub';
+            container.setAttribute('data-state', 'mansub');
+          } else {
+            contentEl.textContent = ex.masdar;
+            contentEl.classList.remove('text-sky-700');
+            contentEl.classList.add('text-teal-700');
+            labelEl.textContent = 'Masdar';
+            container.setAttribute('data-state', 'masdar');
+          }
+        });
+
+        equivalenceEl.appendChild(container);
+      });
+
+      // --- Practice Quiz ---
+      const practiceContainer = document.getElementById('practice-container');
+      const nextBtn = document.getElementById('next-question-btn');
+      let currentQuestionIndex = 0;
+
+      function loadQuestion() {
+        const q = practiceQuestions[currentQuestionIndex];
+        practiceContainer.innerHTML = `
+          <p class="text-lg mb-2 text-stone-700">Original (Indicative): <span class="font-bold arabic-text">${q.sentence}</span></p>
+          <div class="flex flex-col sm:flex-row items-center gap-4 mt-4">
+            <label for="practice-input" class="text-lg arabic-text font-bold">لَنْ</label>
+            <input type="text" id="practice-input" class="text-xl text-center font-mono flex-grow p-2 border-2 border-stone-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none arabic-text" dir="rtl" autocomplete="off" placeholder="${q.verbOnly} → ?">
+            <button id="check-answer-btn" class="w-full sm:w-auto bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">Check</button>
+          </div>
+          <div id="feedback" class="mt-3 min-h-6 text-center"></div>
+        `;
+
+        document.getElementById('check-answer-btn').addEventListener('click', () => {
+          const userInput = document.getElementById('practice-input').value.trim();
+          const feedbackEl = document.getElementById('feedback');
+          if (userInput === q.answer) {
+            feedbackEl.innerHTML = '<span class="text-green-600 font-bold">Correct! The verb is now Mansub.</span>';
+            document.getElementById('practice-input').classList.add('border-green-500');
+            document.getElementById('practice-input').classList.remove('border-red-500');
+          } else {
+            feedbackEl.innerHTML = `<span class="text-red-600 font-bold">Try again. Correct form of <span class="arabic-text">${q.verbOnly}</span> is <span class="arabic-text">${q.answer}</span>.</span>`;
+            document.getElementById('practice-input').classList.add('border-red-500');
+            document.getElementById('practice-input').classList.remove('border-green-500');
+          }
+        });
+      }
+
+      nextBtn.addEventListener('click', () => {
+        currentQuestionIndex = (currentQuestionIndex + 1) % practiceQuestions.length;
+        loadQuestion();
+      });
+
+      loadQuestion();
+
+      // --- ScrollSpy for nav ---
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('main section');
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const top = section.offsetTop;
+          if (window.scrollY >= top - 150) current = section.getAttribute('id');
+        });
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === current) link.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
