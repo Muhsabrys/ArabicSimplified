@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Machine Learning Evaluation: A Visual Guide to Core Concepts</title>
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+
+  <!-- Load MathJax (use defer instead of async) -->
+  <script id="MathJax-script" defer 
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Tailwind and Chart.js -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    .chart-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; height: 350px; max-height: 40vh; }
+    .nav-link.active { background-color: #4f46e5; color: white; }
+    .tab-button.active { border-color: #4f46e5; color: #4f46e5; background-color: #eef2ff; }
+    .hidden { display: none; }
+    #hyperparameterGrid > div { transition: all 0.1s ease; cursor: pointer; }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+    <title>Machine Learning Evaluation: A Visual Guide to Core Concepts</title>
+    <!-- Chosen Palette: Warm Neutrals with Slate Blue -->
+    <!-- Application Structure Plan: The application is designed as a single-page app with a persistent left-hand navigation sidebar and a main content display area. This structure provides non-linear access, allowing users to jump directly to any concept. Within the main area, each concept is presented in a card with a tabbed interface ("Concept," "Visualization," "Analogy & Pitfalls"). The content has been re-sequenced to reflect a logical learning path: Model Fit -> Bias-Variance Tradeoff -> Regularization -> Tuning. This architecture breaks down complex information into digestible, focused chunks, enhancing user experience and learning efficiency over a simple linear document. -->
+    <!-- Visualization & Content Choices: Each concept from the report is paired with an interactive visualization using Chart.js to achieve a specific learning goal. For example, 'Overfitting' uses toggleable chart lines to compare fits (Goal: Compare). 'Bias-Variance' shows the tradeoff curve based on complexity (Goal: Change). The 'Confusion Matrix' acts as a calculator, updating metrics in real-time as users input values (Goal: Inform/Explore). All visualizations are built with Chart.js on Canvas, adhering to the requirements. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 40vh; }
+        .nav-link.active { background-color: #4f46e5; color: white; }
+        .tab-button.active { border-color: #4f46e5; color: #4f46e5; background-color: #eef2ff; }
+        .hidden { display: none; }
+        /* Style for the grid in the hyperparameter section */
+        #hyperparameterGrid > div { transition: all 0.1s ease; cursor: pointer; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-white shadow-md p-4 space-y-2 sticky top-0 h-screen overflow-y-auto z-10">
+            <h1 class="text-lg font-bold text-indigo-600 mb-4">🧠 ML Evaluation Concepts</h1>
+            <nav id="sidebar-nav" class="space-y-1">
+                <a href="#model-fit" class="nav-link block px-4 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">1. Model Fit</a>
+                <a href="#bias-variance" class="nav-link block px-4 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">2. Bias–Variance</a>
+                <a href="#regularization" class="nav-link block px-4 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">3. Regularization</a>
+                <a href="#alpha" class="nav-link block px-4 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">4. Alpha (&lambda;)</a>
+                <a href="#learning-rate" class="nav-link block px-4 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">5. Learning Rate (&eta;)</a>
+                <a href="#confusion-matrix" class="nav-link block px-4 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">6. Confusion Matrix</a>
+                <a href="#class-imbalance" class="nav-link block px-4 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">7. Class Imbalance</a>
+                <a href="#hyperparameter-tuning" class="nav-link block px-4 py-2 rounded-md font-medium text-slate-600 hover:bg-slate-100">8. Hyperparameter Tuning</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 sm:p-8 lg:p-12">
+            <div id="content-area" class="space-y-12">
+
+                <!-- Section 1: Model Fit (Overfitting vs Underfitting) -->
+                <section id="model-fit" class="content-section bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">1. Model Fit: Overfitting vs. Underfitting</h2>
+                    <p class="mb-4 text-slate-600">This section explores how closely a model learns the training data and how well it generalizes to unseen data, which is fundamental to successful machine learning.</p>
+                    <div class="tabs">
+                        <div class="tab-buttons border-b mb-4">
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Concept</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Visualization</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Analogy & Pitfalls</button>
+                        </div>
+                        <div class="tab-content">
+                            <div class="prose max-w-none">
+                                <p>Model fit describes how well a machine learning model captures the underlying pattern in the training data and how well it generalizes to unseen data.</p>
+                                <table class="w-full text-left border-collapse">
+                                    <thead><tr><th class="border p-2">Term</th><th class="border p-2">What This Means</th></tr></thead>
+                                    <tbody>
+                                        <tr><td class="border p-2"><strong>Underfitting</strong></td><td class="border p-2">Model is too simple and fails to capture the underlying pattern in the data. Poor performance on both training and test data.</td></tr>
+                                        <tr><td class="border p-2"><strong>Good Fit</strong></td><td class="border p-2">Model captures the true pattern without memorizing noise. Good performance on both training and test data.</td></tr>
+                                        <tr><td class="border p-2"><strong>Overfitting</strong></td><td class="border p-2">Model is too complex and memorizes training data including noise. Excellent training performance but poor test performance.</td></tr>
+                                    </tbody>
+                                </table>
+                                <p class="text-sm mt-2">Visualization Key: Training Data Points (Scatter), Model Prediction (Line).</p>
+                            </div>
+                            <div class="hidden">
+                                <div class="chart-container"><canvas id="modelFitChart"></canvas></div>
+                                <div class="text-center mt-4 space-x-2">
+                                    <label class="inline-flex items-center"><input type="checkbox" id="underfitToggle" class="form-checkbox" checked> Underfit</label>
+                                    <label class="inline-flex items-center"><input type="checkbox" id="goodFitToggle" class="form-checkbox" checked> Good Fit</label>
+                                    <label class="inline-flex items-center"><input type="checkbox" id="overfitToggle" class="form-checkbox" checked> Overfit</label>
+                                </div>
+                            </div>
+                            <div class="prose max-w-none hidden">
+                                <h4>Real-World Analogy</h4>
+                                <ul>
+                                    <li><strong>Underfitting:</strong> Like studying only the chapter titles for an exam - you miss all the important details.</li>
+                                    <li><strong>Overfitting:</strong> Like memorizing every word in the textbook without understanding - you fail when questions are worded differently.</li>
+                                </ul>
+                                <h4>Common Pitfalls</h4>
+                                <ul>
+                                    <li>⚠️ Focusing only on **training accuracy** - always evaluate on held-out test data.</li>
+                                    <li>⚠️ Using too complex models for simple problems - start simple and add complexity only if needed.</li>
+                                    <li>⚠️ Not using enough training data - more data helps prevent overfitting.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Bias-Variance Tradeoff -->
+                <section id="bias-variance" class="content-section bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">2. Bias–Variance Tradeoff</h2>
+                    <p class="mb-4 text-slate-600">This is the core problem of model complexity, defining the tension between simple models (high bias, low variance) and complex models (low bias, high variance).</p>
+                    <div class="tabs">
+                        <div class="tab-buttons border-b mb-4">
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Concept</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Visualization</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Analogy & Pitfalls</button>
+                        </div>
+                        <div class="tab-content">
+                             <div class="prose max-w-none">
+                                <p>The unavoidable tension in model complexity: you must balance <strong>Bias</strong> (error from overly simple assumptions) and <strong>Variance</strong> (error from being too sensitive to the training data).</p>
+                                <ul>
+                                    <li><strong>Bias:</strong> Error from overly simplistic assumptions. High bias means your model consistently misses the true pattern (underfitting).</li>
+                                    <li><strong>Variance:</strong> Error from sensitivity to small fluctuations in training data. High variance means your model changes dramatically with different training sets (overfitting).</li>
+                                </ul>
+                                <p>The tradeoff implies that as model complexity increases, bias decreases, but variance increases. The optimal solution minimizes total error ($\text{Total Error} = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}$).</p>
+                             </div>
+                             <div class="hidden">
+                                <p class="text-center mb-4">Move the slider to see how increasing **Model Complexity** affects Bias, Variance, and Total Error.</p>
+                                <div class="chart-container"><canvas id="biasVarianceChart"></canvas></div>
+                                <div class="text-center mt-4">
+                                    <label for="complexitySlider" class="block font-semibold">Model Complexity</label>
+                                    <input type="range" id="complexitySlider" min="0" max="100" value="50" class="w-64">
+                                </div>
+                             </div>
+                             <div class="prose max-w-none hidden">
+                                <h4>Target Practice Analogy</h4>
+                                <ul>
+                                    <li><strong>High Bias, Low Variance:</strong> Arrows consistently hit the same spot, but it's far from the bullseye (systematic error).</li>
+                                    <li><strong>Low Bias, High Variance:</strong> Arrows are scattered all around the bullseye (inconsistent).</li>
+                                    <li><strong>Low Bias, Low Variance:</strong> Arrows consistently hit near the bullseye (ideal!).</li>
+                                </ul>
+                                <h4>Common Pitfalls</h4>
+                                <ul>
+                                    <li>⚠️ Believing you can eliminate both - there's always a tradeoff, focus on **minimizing total error**.</li>
+                                    <li>⚠️ Not considering the problem context - some applications tolerate high bias, others high variance.</li>
+                                </ul>
+                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Regularization -->
+                <section id="regularization" class="content-section bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">3. Regularization: Ridge (L2), Lasso (L1), and Elastic Net</h2>
+                     <p class="mb-4 text-slate-600">Regularization is the primary method for controlling the Bias–Variance tradeoff by penalizing overly large model coefficients to enforce simplicity.</p>
+                     <div class="tabs">
+                        <div class="tab-buttons border-b mb-4">
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Concept</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Visualization</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Analogy & Pitfalls</button>
+                        </div>
+                        <div class="tab-content">
+                            <div class="prose max-w-none">
+                                <p>Regularization is a technique that adds a penalty for model complexity to prevent overfitting by constraining coefficient values.</p>
+                                <table class="w-full text-left border-collapse">
+                                    <thead><tr><th class="border p-2">Method</th><th class="border p-2">Penalty</th><th class="border p-2">Effect</th></tr></thead>
+                                    <tbody>
+                                        <tr><td class="border p-2"><strong>Ridge (L2)</strong></td><td class="border p-2">Sum of squares of coefficients ($\sum \beta_i^2$).</td><td class="border p-2">Shrinks all coefficients toward zero, keeping all features.</td></tr>
+                                        <tr><td class="border p-2"><strong>Lasso (L1)</strong></td><td class="border p-2">Sum of absolute values of coefficients ($\sum |\beta_i|$).</td><td class="border p-2">Can shrink coefficients to exactly zero, performing **feature selection**.</td></tr>
+                                        <tr><td class="border p-2"><strong>Elastic Net</strong></td><td class="border p-2">Combines L1 and L2 penalties.</td><td class="border p-2">Gets benefits of both L1 (selection) and L2 (grouping effect).</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="hidden">
+                               <p class="text-center mb-4">See how different regularization types affect the magnitude of model coefficients.</p>
+                               <div class="chart-container"><canvas id="regularizationChart"></canvas></div>
+                                <div class="text-center mt-4 space-x-2">
+                                    <button id="noRegBtn" class="px-4 py-2 bg-slate-200 rounded">No Regularization</button>
+                                    <button id="ridgeBtn" class="px-4 py-2 bg-blue-500 text-white rounded">Apply Ridge (L2)</button>
+                                    <button id="lassoBtn" class="px-4 py-2 bg-green-500 text-white rounded">Apply Lasso (L1)</button>
+                                </div>
+                            </div>
+                             <div class="prose max-w-none hidden">
+                                <h4>Real-World Analogy (Budget Constraint)</h4>
+                                <ul>
+                                    <li><strong>Ridge:</strong> You can spend on all categories, but each purchase gets more expensive (encouraging moderation across all features).</li>
+                                    <li><strong>Lasso:</strong> You must cut some categories entirely to stay under budget (forcing feature selection).</li>
+                                </ul>
+                                <h4>Common Pitfalls</h4>
+                                <ul>
+                                    <li>⚠️ Not **scaling features** before regularization - features with larger scales get penalized more.</li>
+                                    <li>⚠️ Using Lasso when you need all features - it might eliminate important ones.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Alpha (lambda) -->
+                <section id="alpha" class="content-section bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">4. The Regularization Parameter: Alpha ($\lambda$)</h2>
+                     <p class="mb-4 text-slate-600">The Alpha ($\lambda$) value is the hyperparameter that dictates the strength of the regularization penalty applied in the previous methods.</p>
+                     <div class="tabs">
+                        <div class="tab-buttons border-b mb-4">
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Concept</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Visualization</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Analogy & Pitfalls</button>
+                        </div>
+                        <div class="tab-content">
+                            <div class="prose max-w-none">
+                                <p>Alpha ($\lambda$), controls the strength of the regularization penalty.</p>
+                                <ul>
+                                    <li>$\lambda = 0$ <strong>(Zero Alpha):</strong> No regularization. The model can easily overfit.</li>
+                                    <li><strong>Higher $\lambda$ (High Alpha):</strong> Strong penalty. Coefficients are severely pushed toward zero, which can lead to **underfitting** by oversimplifying the model.</li>
+                                </ul>
+                            </div>
+                            <div class="hidden">
+                               <p class="text-center mb-4">Use the slider to increase $\lambda$ and observe the shrinking of coefficients.</p>
+                               <div class="chart-container"><canvas id="alphaChart"></canvas></div>
+                                <div class="text-center mt-4">
+                                    <label for="alphaSlider" class="block font-semibold">Alpha ($\lambda$): <span id="alphaValue">0</span></label>
+                                    <input type="range" id="alphaSlider" min="0" max="100" value="0" class="w-64">
+                                </div>
+                            </div>
+                            <div class="prose max-w-none hidden">
+                                <h4>Real-World Analogy</h4>
+                                <p>Alpha is like the volume dial for caution. If you turn the dial up high (high $\lambda$), the model becomes extremely cautious and doesn't trust any input variable, leading to a very simple, potentially underfit result.</p>
+                                <h4>Common Pitfalls</h4>
+                                <ul>
+                                    <li>⚠️ Setting $\lambda$ too high - creates **underfitting** by oversimplifying the model.</li>
+                                    <li>⚠️ Confusing $\lambda$ with model parameters - $\lambda$ is a **hyperparameter** tuned *before* training.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5: Learning Rate (eta) -->
+                <section id="learning-rate" class="content-section bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">5. Learning Rate ($\eta$)</h2>
+                     <p class="mb-4 text-slate-600">The Learning Rate ($\eta$) is a critical hyperparameter that dictates the step size taken during the optimization process (e.g., Gradient Descent).</p>
+                     <div class="tabs">
+                        <div class="tab-buttons border-b mb-4">
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Concept</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Visualization</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Analogy & Pitfalls</button>
+                        </div>
+                        <div class="tab-content">
+                            <div class="prose max-w-none">
+                                <p>The learning rate ($\eta$) controls how big of a step we take when updating model parameters during training (gradient descent).</p>
+                                <ul>
+                                    <li><strong>Too Low $\eta$:</strong> Learning is very slow, may take forever to converge, can get stuck in local minima.</li>
+                                    <li><strong>Just Right $\eta$:</strong> Steady progress toward the optimal solution with efficient convergence.</li>
+                                    <li><strong>Too High $\eta$:</strong> Takes large jumps that overshoot the minimum, training becomes unstable, may diverge entirely.</li>
+                                </ul>
+                                <p>The value of $\eta$ shown in the visualization is $0.31$ for the 'Good $\eta$' case.</p>
+                            </div>
+                            <div class="hidden">
+                               <p class="text-center mb-4">Click the buttons to see how different $\eta$ values affect the optimization path towards the minimum loss.</p>
+                               <div class="chart-container"><canvas id="learningRateChart"></canvas></div>
+                                <div class="text-center mt-4 space-x-2">
+                                    <button id="lowLRBtn" class="px-4 py-2 bg-yellow-500 text-white rounded">Low $\eta$</button>
+                                    <button id="goodLRBtn" class="px-4 py-2 bg-green-500 text-white rounded">Good $\eta$</button>
+                                    <button id="highLRBtn" class="px-4 py-2 bg-red-500 text-white rounded">High $\eta$</button>
+                                </div>
+                            </div>
+                            <div class="prose max-w-none hidden">
+                                <h4>Hiking Down a Mountain Analogy</h4>
+                                <ul>
+                                    <li><strong>Low $\eta$:</strong> Taking tiny baby steps - very safe but you'll be hiking forever.</li>
+                                    <li><strong>High $\eta$:</strong> Taking giant leaps - you might jump over the valley or tumble down the mountain.</li>
+                                </ul>
+                                <h4>Common Pitfalls</h4>
+                                <ul>
+                                    <li>⚠️ Using the same learning rate throughout training - consider learning rate schedules that decrease over time.</li>
+                                    <li>⚠️ Not monitoring training loss - if loss increases or oscillates wildly, learning rate is too high.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6: Confusion Matrix -->
+                <section id="confusion-matrix" class="content-section bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">6. Confusion Matrix: Precision, Recall, Accuracy, F1</h2>
+                    <p class="mb-4 text-slate-600">For classification tasks, the Confusion Matrix is the foundational tool for evaluation, breaking down predictions into four categories to calculate key performance metrics.</p>
+                    <div class="tabs">
+                        <div class="tab-buttons border-b mb-4">
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Concept</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Interactive Calculator</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Analogy & Pitfalls</button>
+                        </div>
+                        <div class="tab-content">
+                             <div class="prose max-w-none">
+                                <table class="w-full text-left border-collapse">
+                                    <thead><tr><th class="border p-2">Term</th><th class="border p-2">Definition</th></tr></thead>
+                                    <tbody>
+                                        <tr><td class="border p-2"><strong>True Positive (TP)</strong></td><td class="border p-2">Correctly predicted positive class.</td></tr>
+                                        <tr><td class="border p-2"><strong>True Negative (TN)</strong></td><td class="border p-2">Correctly predicted negative class.</td></tr>
+                                        <tr><td class="border p-2"><strong>False Positive (FP)</strong></td><td class="border p-2">Incorrectly predicted positive (Type I error).</td></tr>
+                                        <tr><td class="border p-2"><strong>False Negative (FN)</strong></td><td class="border p-2">Incorrectly predicted negative (Type II error).</td></tr>
+                                    </tbody>
+                                </table>
+                                <p class="mt-4"><strong>Accuracy:</strong> $(TP + TN) / \text{Total}$ - Overall correctness, but misleading with imbalanced classes.</p>
+                                <p><strong>Precision:</strong> $TP / (TP + FP)$ - "When I say yes, how often am I right?" (Avoiding false alarms).</p>
+                                <p><strong>Recall:</strong> $TP / (TP + FN)$ - "Of all the real positives, how many did I catch?" (Catching all true cases).</p>
+                                <p><strong>F1 Score:</strong> $2 \times (\text{Precision} \times \text{Recall}) / (\text{Precision} + \text{Recall})$ - Harmonic mean balancing precision and recall.</p>
+                             </div>
+                             <div class="hidden">
+                                <p class="text-center mb-4">Change the values in the confusion matrix to see how the metrics update in real-time.</p>
+                                <div class="grid grid-cols-2 gap-8 items-center">
+                                    <div class="grid grid-cols-2 gap-px bg-slate-300 border border-slate-300 rounded-lg overflow-hidden text-center shadow-md">
+                                        <div class="p-4 bg-green-100"><label for="cm-tp">True Positive (TP)</label><input id="cm-tp" type="number" value="85" class="w-full mt-1 text-center font-bold text-lg rounded"></div>
+                                        <div class="p-4 bg-red-100"><label for="cm-fp">False Positive (FP)</label><input id="cm-fp" type="number" value="5" class="w-full mt-1 text-center font-bold text-lg rounded"></div>
+                                        <div class="p-4 bg-red-100"><label for="cm-fn">False Negative (FN)</label><input id="cm-fn" type="number" value="15" class="w-full mt-1 text-center font-bold text-lg rounded"></div>
+                                        <div class="p-4 bg-green-100"><label for="cm-tn">True Negative (TN)</label><input id="cm-tn" type="number" value="95" class="w-full mt-1 text-center font-bold text-lg rounded"></div>
+                                    </div>
+                                    <div class="space-y-3 font-mono text-lg">
+                                        <div>Accuracy: <span id="metric-accuracy" class="font-bold text-indigo-600 float-right"></span></div>
+                                        <div>Precision: <span id="metric-precision" class="font-bold text-indigo-600 float-right"></span></div>
+                                        <div>Recall: <span id="metric-recall" class="font-bold text-indigo-600 float-right"></span></div>
+                                        <div>F1-Score: <span id="metric-f1" class="font-bold text-indigo-600 float-right"></span></div>
+                                    </div>
+                                </div>
+                             </div>
+                             <div class="prose max-w-none hidden">
+                                <h4>Medical Test Analogy</h4>
+                                <ul>
+                                    <li><strong>Precision:</strong> Of all people you diagnosed with a disease, what fraction actually has it? (Avoiding false alarms)</li>
+                                    <li><strong>Recall:</strong> Of all people who actually have the disease, what fraction did you diagnose? (Catching all cases)</li>
+                                </ul>
+                                <h4>Common Pitfalls</h4>
+                                <ul>
+                                    <li>⚠️ Using **accuracy** for imbalanced datasets - a model predicting "no cancer" for everyone gets 99% accuracy if only 1% have cancer.</li>
+                                    <li>⚠️ Optimizing for the wrong metric - choose precision when false positives are costly, recall when false negatives are costly.</li>
+                                </ul>
+                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 7: Class Imbalance -->
+                <section id="class-imbalance" class="content-section bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">7. Class Imbalance</h2>
+                    <p class="mb-4 text-slate-600">Class imbalance occurs in datasets where one class vastly outnumbers another, posing a significant challenge to model training and evaluation.</p>
+                    <div class="tabs">
+                        <div class="tab-buttons border-b mb-4">
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Concept</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Visualization</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Analogy & Pitfalls</button>
+                        </div>
+                        <div class="tab-content">
+                            <div class="prose max-w-none">
+                                <p>Class imbalance occurs when one class significantly outnumbers another in your dataset. This causes models to be biased toward the majority class.</p>
+                                <p>The Problem: A model can achieve high **accuracy** by simply predicting the majority class every time, learning nothing useful about the minority class.</p>
+                                <p>Example: With $95\%$ negative cases and $5\%$ positive, a model that always predicts negative gets $95\%$ accuracy but $0\%$ **recall** for the positive class.</p>
+                            </div>
+                            <div class="hidden">
+                                <p class="text-center mb-4">Adjust the slider to simulate different class imbalance ratios.</p>
+                                <div class="chart-container"><canvas id="imbalanceChart"></canvas></div>
+                                <div class="text-center mt-4">
+                                    <label for="imbalanceSlider" class="block font-semibold">Imbalance Ratio: <span id="imbalanceValue">90%</span> Majority</label>
+                                    <input type="range" id="imbalanceSlider" min="50" max="99" value="90" class="w-64">
+                                </div>
+                            </div>
+                            <div class="prose max-w-none hidden">
+                                <h4>Security Checkpoint Analogy</h4>
+                                <p>Imagine a security system where $99.9\%$ of people are safe and $0.1\%$ are threats. A naive model that lets everyone through is $99.9\%$ accurate but catches zero threats (terrible **recall**).</p>
+                                <h4>Common Pitfalls</h4>
+                                <ul>
+                                    <li>⚠️ Not recognizing the imbalance - always check class distributions before training.</li>
+                                    <li>⚠️ Using **accuracy** as your metric - use precision, recall, or F1 score instead.</li>
+                                    <li>⚠️ Not trying resampling techniques (oversampling/undersampling) or setting class weights.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                 <!-- Section 8: Hyperparameter Tuning -->
+                 <section id="hyperparameter-tuning" class="content-section bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">8. Hyperparameter Tuning Visualization</h2>
+                    <p class="mb-4 text-slate-600">Hyperparameter tuning is the critical process of finding the optimal external settings (like $\lambda$ and $\eta$) that maximize model performance on unseen data.</p>
+                     <div class="tabs">
+                        <div class="tab-buttons border-b mb-4">
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Concept</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Visualization</button>
+                            <button class="tab-button py-2 px-4 font-semibold border-b-2 border-transparent">Analogy & Pitfalls</button>
+                        </div>
+                        <div class="tab-content">
+                            <div class="prose max-w-none">
+                                <p>Hyperparameters are settings you choose *before* training (unlike parameters, which the model learns). Examples include **learning rate ($\eta$)**, **regularization strength ($\lambda$)**, and tree depth.</p>
+                                <p>The Goal: Find the combination of hyperparameters that gives the **best performance on validation data** (not training data!).</p>
+                                <p>Methods include Grid Search (try all combinations), Random Search (sample randomly), or Bayesian optimization (intelligently explore the space).</p>
+                            </div>
+                            <div class="hidden">
+                               <p class="text-center mb-2">Hover over the grid to see the hypothetical performance score (darker = better) for different hyperparameter combinations.</p>
+                               <div id="hyperparameterGrid" class="grid grid-cols-5 gap-1 max-w-md mx-auto aspect-square border shadow-inner"></div>
+                               <p id="gridTooltip" class="text-center font-semibold mt-2 h-6"></p>
+                            </div>
+                             <div class="prose max-w-none hidden">
+                                <h4>Cooking Recipe Analogy</h4>
+                                <p>Think of hyperparameters as oven temperature, cooking time, and ingredient ratios - settings you control before cooking to achieve the perfect result.</p>
+                                <h4>Common Pitfalls</h4>
+                                <ul>
+                                    <li>⚠️ Tuning on **test data** - always use a separate validation set to avoid overfitting to the test set.</li>
+                                    <li>⚠️ Not searching broadly enough - start with wide ranges, then narrow down.</li>
+                                    <li>⚠️ Tuning too many hyperparameters - focus on the most important ones first.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const app = {
+        charts: {},
+        init() {
+            this.setupNavigation();
+            this.setupTabs();
+            this.initAllCharts();
+        },
+
+        setupNavigation() {
+            const navLinks = document.querySelectorAll('#sidebar-nav a');
+            const sections = document.querySelectorAll('.content-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+                        });
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+
+            sections.forEach(section => observer.observe(section));
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            navLinks[0].classList.add('active');
+        },
+
+        setupTabs() {
+            const tabContainers = document.querySelectorAll('.tabs');
+            tabContainers.forEach(container => {
+                const buttons = container.querySelectorAll('.tab-button');
+                const contents = container.querySelectorAll('.tab-content > div');
+
+                buttons.forEach((button, index) => {
+                    button.addEventListener('click', () => {
+                        buttons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        contents.forEach(content => content.classList.add('hidden'));
+                        contents[index].classList.remove('hidden');
+                        if (index === 1 && button.closest('.content-section').id === 'learning-rate') {
+                            document.getElementById('goodLRBtn').click();
+                        }
+                    });
+                });
+                buttons[0].classList.add('active');
+            });
+        },
+        
+        initAllCharts() {
+            this.initModelFitChart();
+            this.initRegularizationChart();
+            this.initAlphaChart();
+            this.initLearningRateChart();
+            this.initHyperparameterGrid();
+            this.initConfusionMatrix();
+            this.initBiasVarianceChart();
+            this.initImbalanceChart();
+        },
+
+        // Chart Initializations
+        initModelFitChart() {
+            const ctx = document.getElementById('modelFitChart').getContext('2d');
+            const baseData = Array.from({length: 20}, (_, i) => ({x: i, y: 0.1 * (i - 10)**2 + Math.random() * 10}));
+            
+            this.charts.modelFit = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Training Data Points',
+                        data: baseData,
+                        backgroundColor: 'rgba(107, 114, 128, 0.5)',
+                        pointRadius: 4
+                    }, {
+                        type: 'line',
+                        label: 'Underfit Prediction',
+                        data: Array.from({length: 20}, (_, i) => ({x: i, y: 15})),
+                        borderColor: 'rgb(239, 68, 68)',
+                        tension: 0.1,
+                        fill: false,
+                        pointRadius: 0
+                    }, {
+                        type: 'line',
+                        label: 'Good Fit Prediction',
+                        data: Array.from({length: 20}, (_, i) => ({x: i, y: 0.1 * (i-10)**2 + 2})),
+                        borderColor: 'rgb(34, 197, 94)',
+                        tension: 0.4,
+                        fill: false,
+                        pointRadius: 0
+                    }, {
+                        type: 'line',
+                        label: 'Overfit Prediction',
+                        data: baseData.map(d => ({x: d.x, y: d.y - 1 + Math.random()*2})).sort((a,b) => a.x - b.x),
+                        borderColor: 'rgb(59, 130, 246)',
+                        tension: 0.8,
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { title: { display: true, text: 'Feature Value' } }, y: { title: { display: true, text: 'Target Value' } } } }
+            });
+
+            document.getElementById('underfitToggle').addEventListener('change', (e) => { this.charts.modelFit.setDatasetVisibility(1, e.target.checked); this.charts.modelFit.update(); });
+            document.getElementById('goodFitToggle').addEventListener('change', (e) => { this.charts.modelFit.setDatasetVisibility(2, e.target.checked); this.charts.modelFit.update(); });
+            document.getElementById('overfitToggle').addEventListener('change', (e) => { this.charts.modelFit.setDatasetVisibility(3, e.target.checked); this.charts.modelFit.update(); });
+        },
+
+        initRegularizationChart() {
+            const ctx = document.getElementById('regularizationChart').getContext('2d');
+            const originalCoeffs = [8, 6.5, 5, 2, 1.5];
+            
+            this.charts.regularization = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Feat 1 (High Importance)', 'Feat 2 (Medium)', 'Feat 3 (Medium)', 'Feat 4 (Low)', 'Feat 5 (Noise)'],
+                    datasets: [{
+                        label: 'Coefficient Magnitudes (Absolute Value)',
+                        data: [...originalCoeffs],
+                        backgroundColor: 'rgba(59, 130, 246, 0.5)'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y' }
+            });
+            
+            document.getElementById('noRegBtn').addEventListener('click', () => { this.charts.regularization.data.datasets[0].data = [...originalCoeffs]; this.charts.regularization.update(); });
+            document.getElementById('ridgeBtn').addEventListener('click', () => { this.charts.regularization.data.datasets[0].data = originalCoeffs.map(c => c * 0.7); this.charts.regularization.update(); });
+            document.getElementById('lassoBtn').addEventListener('click', () => { this.charts.regularization.data.datasets[0].data = originalCoeffs.map(c => Math.max(0, c * 0.8 - 1.8)); this.charts.regularization.update(); });
+        },
+
+        initAlphaChart() {
+            const ctx = document.getElementById('alphaChart').getContext('2d');
+            const originalCoeffs = [8, 6.5, 5, 2, 1.5];
+            this.charts.alpha = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Feat 1', 'Feat 2', 'Feat 3', 'Feat 4', 'Feat 5'],
+                    datasets: [{
+                        label: 'Coefficient Magnitudes',
+                        data: [...originalCoeffs],
+                        backgroundColor: 'rgba(59, 130, 246, 0.5)'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { title: { display: true, text: 'Feature' } }, y: { title: { display: true, text: 'Coefficient Value' } } } }
+            });
+
+            document.getElementById('alphaSlider').addEventListener('input', e => {
+                const alpha = parseFloat(e.target.value);
+                document.getElementById('alphaValue').textContent = alpha.toFixed(0);
+                this.charts.alpha.data.datasets[0].data = originalCoeffs.map(c => c / (1 + alpha * 0.2));
+                this.charts.alpha.update();
+            });
+        },
+
+        initLearningRateChart() {
+            const ctx = document.getElementById('learningRateChart').getContext('2d');
+            const lossCurve = Array.from({length: 21}, (_, i) => ({x: i - 10, y: (i - 10)**2 + 10 }));
+            this.charts.learningRate = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Loss Function',
+                        data: lossCurve,
+                        borderColor: 'rgb(107, 114, 128)',
+                        pointRadius: 0,
+                        fill: 'origin',
+                        backgroundColor: 'rgba(203, 213, 225, 0.3)'
+                    }, {
+                        label: 'Optimization Path',
+                        data: [],
+                        backgroundColor: 'rgb(239, 68, 68)',
+                        borderColor: 'rgb(239, 68, 68)',
+                        showLine: true
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: { x: { title: { display: true, text: 'Parameter Space (W)' } }, y: { title: { display: true, text: 'Loss Value' } } }
+                }
+            });
+
+            const animatePath = (rate, steps, color) => {
+                let path = [];
+                let current_x = -9;
+                for (let i = 0; i < steps; i++) {
+                    path.push({x: current_x, y: current_x**2 + 10});
+                    let gradient = 2 * current_x;
+                    current_x -= rate * gradient;
+                }
+                path.push({x: current_x, y: current_x**2 + 10});
+                this.charts.learningRate.data.datasets[1].data = path;
+                this.charts.learningRate.data.datasets[1].borderColor = color;
+                this.charts.learningRate.data.datasets[1].backgroundColor = color;
+                this.charts.learningRate.update();
+            };
+            
+            document.getElementById('lowLRBtn').addEventListener('click', () => animatePath(0.05, 15, 'rgb(245, 158, 11)'));
+            document.getElementById('goodLRBtn').addEventListener('click', () => animatePath(0.31, 5, 'rgb(34, 197, 94)'));
+            document.getElementById('highLRBtn').addEventListener('click', () => animatePath(0.51, 8, 'rgb(239, 68, 68)'));
+        },
+        
+        initHyperparameterGrid() {
+            const grid = document.getElementById('hyperparameterGrid');
+            const tooltip = document.getElementById('gridTooltip');
+            const data = [];
+            for(let i = 0; i < 5; i++) {
+                for(let j = 0; j < 5; j++) {
+                    // Score peaks around i=1, j=3
+                    const score = 1 - Math.sqrt((i-1.5)**2 + (j-3.5)**2)/8;
+                    data.push({i, j, score});
+                }
+            }
+            data.forEach(({i, j, score}) => {
+                const cell = document.createElement('div');
+                cell.className = 'w-full h-full';
+                cell.style.backgroundColor = `rgba(79, 70, 229, ${score * 0.9})`;
+                cell.dataset.tooltip = `Complexity (X): ${i*0.2}, Rate (Y): ${j*0.05}, Score: ${score.toFixed(3)}`;
+                cell.addEventListener('mouseover', () => tooltip.textContent = cell.dataset.tooltip);
+                grid.appendChild(cell);
+            });
+            grid.addEventListener('mouseout', () => tooltip.textContent = 'Hover over the grid cells.');
+            tooltip.textContent = 'Hover over the grid cells.';
+        },
+
+        initConfusionMatrix() {
+            const inputs = ['cm-tp', 'cm-fp', 'cm-fn', 'cm-tn'].map(id => document.getElementById(id));
+            
+            const calculate = () => {
+                const [tp, fp, fn, tn] = inputs.map(i => parseInt(i.value) || 0);
+                const total = tp + fp + fn + tn;
+                const accuracy = total > 0 ? (tp + tn) / total : 0;
+                const precision = (tp + fp) > 0 ? tp / (tp + fp) : 0;
+                const recall = (tp + fn) > 0 ? tp / (tp + fn) : 0;
+                const f1 = (precision + recall) > 0 ? 2 * (precision * recall) / (precision + recall) : 0;
+                
+                document.getElementById('metric-accuracy').textContent = accuracy.toFixed(3);
+                document.getElementById('metric-precision').textContent = precision.toFixed(3);
+                document.getElementById('metric-recall').textContent = recall.toFixed(3);
+                document.getElementById('metric-f1').textContent = f1.toFixed(3);
+            };
+
+            inputs.forEach(input => input.addEventListener('input', calculate));
+            calculate();
+        },
+
+        initBiasVarianceChart() {
+            const ctx = document.getElementById('biasVarianceChart').getContext('2d');
+            const complexity = Array.from({length: 101}, (_, i) => i);
+            const bias = complexity.map(c => 100 * Math.exp(-c * 0.08));
+            const variance = complexity.map(c => 2 * Math.exp(c * 0.035));
+            const totalError = bias.map((b, i) => b + variance[i] + 10);
+            
+            this.charts.biasVariance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: complexity,
+                    datasets: [
+                        { label: 'Bias²', data: bias, borderColor: 'rgb(239, 68, 68)', pointRadius: 0 },
+                        { label: 'Variance', data: variance, borderColor: 'rgb(59, 130, 246)', pointRadius: 0 },
+                        { label: 'Total Error', data: totalError, borderColor: 'rgb(34, 197, 94)', pointRadius: 0, borderWidth: 3 }
+                    ]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: { annotation: { annotations: { line1: { type: 'line', xMin: 50, xMax: 50, borderColor: 'rgb(0, 0, 0)', borderWidth: 2, borderDash: [6, 6] }}} },
+                    scales: { x: { title: { display: true, text: 'Model Complexity (e.g., Degree of Polynomial)' } }, y: { title: { display: true, text: 'Error' } } }
+                }
+            });
+            
+            document.getElementById('complexitySlider').addEventListener('input', e => {
+                const value = e.target.value;
+                this.charts.biasVariance.options.plugins.annotation.annotations.line1.xMin = value;
+                this.charts.biasVariance.options.plugins.annotation.annotations.line1.xMax = value;
+                this.charts.biasVariance.update();
+            });
+        },
+        
+        initImbalanceChart() {
+            const ctx = document.getElementById('imbalanceChart').getContext('2d');
+            this.charts.imbalance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Majority Class (e.g., Not Fraud)', 'Minority Class (e.g., Fraud)'],
+                    datasets: [{
+                        label: 'Observation Count',
+                        data: [900, 100],
+                        backgroundColor: ['rgba(59, 130, 246, 0.5)', 'rgba(239, 68, 68, 0.5)']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Count' } } } }
+            });
+
+            document.getElementById('imbalanceSlider').addEventListener('input', e => {
+                const majPercent = parseInt(e.target.value);
+                const minPercent = 100 - majPercent;
+                document.getElementById('imbalanceValue').textContent = `${majPercent}%`;
+                this.charts.imbalance.data.datasets[0].data = [majPercent * 10, minPercent * 10];
+                this.charts.imbalance.update();
+            });
+        }
+    };
+
+    app.init();
+});
+</script>
+
+</body>
+</html>
