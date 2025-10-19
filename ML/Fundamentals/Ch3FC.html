@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Classification Flashcards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#4c51bf',
+                        'secondary-green': '#10b981',
+                        'dark-bg': '#1e293b', // Slate-800 equivalent
+                        'card-bg': '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Apply Inter font globally and setup background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* Slate-100 */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow-x: hidden;
+        }
+
+        /* Custom styles for the card flip effect */
+        .flashcard-container {
+            width: 100%;
+            height: 450px;
+            max-width: 600px;
+            perspective: 1000px;
+            position: relative;
+            margin: 0 auto;
+        }
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+            cursor: pointer;
+        }
+        .is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.5rem; /* rounded-3xl */
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: box-shadow 0.3s;
+        }
+        .card-front {
+            background-color: #f8fafc; /* White/Light */
+            color: #1e293b; /* Dark text */
+            border: 2px solid #e2e8f0;
+        }
+        .card-back {
+            background-color: #4c51bf; /* Primary Blue */
+            color: white;
+            transform: rotateY(180deg);
+            border: 2px solid #3d429a;
+        }
+
+        /* Card Stack Effect */
+        .card-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 1.5rem;
+            background: #cbd5e1; /* Slate-300 */
+            z-index: -1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .card-bg-1 {
+            transform: translate(8px, 8px);
+            background: #94a3b8; /* Slate-400 */
+        }
+        .card-bg-2 {
+            transform: translate(16px, 16px);
+            background: #64748b; /* Slate-500 */
+        }
+        @media (min-width: 640px) {
+            .card-bg-1 { transform: translate(12px, 12px); }
+            .card-bg-2 { transform: translate(24px, 24px); }
+        }
+
+        /* Blob Backgrounds (for visual aesthetic) */
+        .blob {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            opacity: 0.5;
+            filter: blur(100px);
+            z-index: -2;
+        }
+        .blob-green {
+            background-color: #10b981;
+            top: -50px;
+            left: -50px;
+        }
+        .blob-blue {
+            background-color: #4c51bf;
+            bottom: -50px;
+            right: -50px;
+        }
+
+        /* Custom icons for the buttons - Using unicode arrows as a simple fallback */
+        .nav-button-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        /* MathJax styling for visibility and size */
+        .card-back-content .MathJax {
+            color: white !important;
+            font-size: 1.5rem !important; /* Larger for formulas */
+            overflow-x: auto;
+            max-width: 100%;
+            display: inline-block;
+        }
+
+        /* Ensure content doesn't overflow */
+        .max-h-full {
+            max-height: calc(100% - 2rem);
+            overflow-y: auto; /* Allow scrolling for long answers */
+        }
+        .card-back-content {
+            font-size: 1.25rem;
+        }
+    </style>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'a']
+        }
+      };
+    </script>
+</head>
+<body class="font-sans">
+
+    <div class="blob blob-green"></div>
+    <div class="blob blob-blue"></div>
+
+    <main class="w-full max-w-2xl mx-auto py-10">
+        <h1 class="text-4xl font-extrabold text-center mb-8 text-primary-blue tracking-tight">
+            📊 ML Classification Flashcards
+        </h1>
+
+        <div class="flashcard-container">
+
+            <div class="card-bg card-bg-2"></div>
+            <div class="card-bg card-bg-1"></div>
+
+            <div id="flashcard" class="flashcard" onclick="flipCard()">
+                <div class="card-face card-front">
+                    <p class="text-xs font-semibold uppercase text-secondary-green mb-2" id="card-status-front">Question <span id="current-index-front">1</span> / <span id="total-cards-front">56</span></p>
+                    <div class="max-h-full overflow-y-auto flex items-center justify-center">
+                        <p id="card-question" class="text-2xl font-bold leading-relaxed text-dark-bg">
+                            What are the two most common supervised learning tasks mentioned in the text?
+                        </p>
+                    </div>
+                    <p class="text-sm mt-4 text-gray-500">Click to reveal the answer</p>
+                </div>
+
+                <div class="card-face card-back">
+                    <p class="text-xs font-semibold uppercase text-white opacity-75 mb-2" id="card-status-back">Answer <span id="current-index-back">1</span> / <span id="total-cards-back">56</span></p>
+                    <div class="max-h-full overflow-y-auto flex items-center justify-center">
+                        <p id="card-answer" class="font-medium leading-relaxed card-back-content">
+                            Regression (predicting values) and classification (predicting classes).
+                        </p>
+                    </div>
+                    <p class="text-sm mt-4 text-white opacity-75">Click to return to the question</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center space-x-6 mt-10">
+            <button id="prev-btn" onclick="navigateCard(-1)"
+                    class="flex items-center space-x-2 px-6 py-3 bg-white text-primary-blue border border-primary-blue rounded-full shadow-lg hover:bg-gray-100 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="nav-button-icon">←</span>
+                <span class="font-semibold">Previous</span>
+            </button>
+            <button id="next-btn" onclick="navigateCard(1)"
+                    class="flex items-center space-x-2 px-6 py-3 bg-primary-blue text-white rounded-full shadow-lg hover:bg-indigo-700 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="font-semibold">Next</span>
+                <span class="nav-button-icon">→</span>
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Data structure for flashcards
+        const flashcardsData = [
+             {
+              "f": "What are the two most common supervised learning tasks mentioned in the text?",
+              "b": "Regression (predicting values) and classification (predicting classes)."
+            },
+            {
+              "f": "Where does Scikit-Learn cache downloaded datasets by default?",
+              "b": "In a directory named `$HOME/scikit_learn_data`."
+            },
+            {
+              "f": "What is the MNIST dataset?",
+              "b": "A set of 70,000 small images of handwritten digits from 0 to 9."
+            },
+            {
+              "f": "Why is the MNIST dataset often called the 'hello world' of Machine Learning?",
+              "b": "Because it's a standard, well-studied dataset that is often used to test new classification algorithms."
+            },
+            {
+              "f": "What three keys are typically present in a dataset dictionary loaded by Scikit-Learn?",
+              "b": "A 'DESCR' key for the description, a 'data' key for the features, and a 'target' key for the labels."
+            },
+            {
+              "f": "The MNIST dataset contains 70,000 images, each with 784 features. What do these 784 features represent?",
+              "b": "The intensity of each pixel in a 28x28 image, from 0 (white) to 255 (black)."
+            },
+            {
+              "f": "Into what two sets is the MNIST dataset already split?",
+              "b": "A training set of the first 60,000 images and a test set of the last 10,000 images."
+            },
+            {
+              "f": "Why is it beneficial that the MNIST training set is already shuffled?",
+              "b": "It ensures cross-validation folds are similar and helps algorithms that are sensitive to the order of training instances."
+            },
+            {
+              "f": "For what type of data might shuffling the dataset be a bad idea?",
+              "b": "Time series data, such as stock market prices or weather conditions."
+            },
+            {
+              "f": "A classifier capable of distinguishing between just two classes (e.g., '5' and 'not-5') is known as a _____ classifier.",
+              "b": "binary"
+            },
+            {
+              "f": "What is the primary advantage of the `SGDClassifier` mentioned in the text?",
+              "b": "It is capable of handling very large datasets efficiently because it processes instances one at a time."
+            },
+            {
+              "f": "For a binary classification task to detect the number 5, what would the target vector `y_train_5` contain?",
+              "b": "It would contain `True` for all images that are 5s and `False` for all other digits."
+            },
+            {
+              "f": "What parameter should be set in classifiers like `SGDClassifier` to ensure reproducible results?",
+              "b": "The `random_state` parameter."
+            },
+            {
+              "f": "Why is accuracy generally not the preferred performance measure for classifiers, especially with skewed datasets?",
+              "b": "Because a classifier can achieve high accuracy by simply guessing the most frequent class."
+            },
+            {
+              "f": "What is a skewed dataset?",
+              "b": "A dataset where some classes are much more frequent than others."
+            },
+            {
+              "f": "A better way to evaluate the performance of a classifier than accuracy is to look at the _____.",
+              "b": "confusion matrix"
+            },
+            {
+              "f": "What does the `cross_val_predict()` function in Scikit-Learn return?",
+              "b": "It returns the predictions made on each test fold during K-fold cross-validation."
+            },
+            {
+              "f": "In a confusion matrix, each row represents an _____, while each column represents a _____.",
+              "b": "actual class, predicted class"
+            },
+            {
+              "f": "Term: True Negatives (TN)",
+              "b": "Instances of the negative class that were correctly classified as negative."
+            },
+            {
+              "f": "Term: False Positives (FP)",
+              "b": "Instances of the negative class that were wrongly classified as positive."
+            },
+            {
+              "f": "Term: False Negatives (FN)",
+              "b": "Instances of the positive class that were wrongly classified as negative."
+            },
+            {
+              "f": "Term: True Positives (TP)",
+              "b": "Instances of the positive class that were correctly classified as positive."
+            },
+            {
+              "f": "A perfect classifier would have a confusion matrix with nonzero values only on its _____.",
+              "b": "main diagonal (top left to bottom right)"
+            },
+            {
+              "f": "What is the definition of precision in classification?",
+              "b": "The accuracy of the positive predictions; the ratio of true positives to all positive predictions."
+            },
+            {
+              "f": "What is the formula for precision?",
+              "b": "$precision = \\frac{TP}{TP + FP}$"
+            },
+            {
+              "f": "What is the definition of recall in classification?",
+              "b": "The ratio of positive instances that are correctly detected by the classifier."
+            },
+            {
+              "f": "What are two other names for recall?",
+              "b": "Sensitivity or the true positive rate (TPR)."
+            },
+            {
+              "f": "What is the formula for recall?",
+              "b": "$recall = \\frac{TP}{TP + FN}$"
+            },
+            {
+              "f": "The _____ score is the harmonic mean of precision and recall, useful for comparing two classifiers.",
+              "b": "F1"
+            },
+            {
+              "f": "A classifier will only get a high F1 score if both _____ and _____ are high.",
+              "b": "recall, precision"
+            },
+            {
+              "f": "What is the formula for the F1 score?",
+              "b": "$F_1 = 2 \\times \\frac{precision \\times recall}{precision + recall}$"
+            },
+            {
+              "f": "The inverse relationship where increasing precision reduces recall, and vice versa, is called the _____.",
+              "b": "precision/recall trade-off"
+            },
+            {
+              "f": "How does the `SGDClassifier` make a classification decision for an instance?",
+              "b": "It computes a score using a decision function and assigns the instance to the positive class if the score is greater than a threshold."
+            },
+            {
+              "f": "What Scikit-Learn method allows you to access the scores used by a classifier to make predictions?",
+              "b": "The `decision_function()` method."
+            },
+            {
+              "f": "How does raising the decision threshold of a classifier generally affect precision and recall?",
+              "b": "It increases precision and decreases recall."
+            },
+            {
+              "f": "How does lowering the decision threshold of a classifier generally affect precision and recall?",
+              "b": "It decreases precision and increases recall."
+            },
+            {
+              "f": "What does the receiver operating characteristic (ROC) curve plot? (Axes)",
+              "b": "It plots the true positive rate (TPR) against the false positive rate (FPR)."
+            },
+            {
+              "f": "The false positive rate (FPR) is the ratio of _____ instances that are incorrectly classified as _____. (Classes)",
+              "b": "negative, positive"
+            },
+            {
+              "f": "FPR is equal to 1 minus the _____, which is also called specificity.",
+              "b": "true negative rate (TNR)"
+            },
+            {
+              "f": "Therefore, the ROC curve plots sensitivity (recall) versus _____. (Term)",
+              "b": "1 - specificity"
+            },
+            {
+              "f": "What does the area under the ROC curve (AUC) measure?",
+              "b": "It serves as a single number summary of a classifier's performance, where a perfect classifier has an AUC of 1 and a random one has an AUC of 0.5."
+            },
+            {
+              "f": "When should the Precision-Recall (PR) curve be preferred over the ROC curve?",
+              "b": "When the positive class is rare or when you care more about false positives than false negatives."
+            },
+            {
+              "f": "Instead of a `decision_function()`, what method does a `RandomForestClassifier` have to get prediction scores?",
+              "b": "The `predict_proba()` method."
+            },
+            {
+              "f": "What does the `predict_proba()` method return?",
+              "b": "An array with one row per instance and one column per class, containing the probability that the instance belongs to the given class."
+            },
+            {
+              "f": "Classifiers that can distinguish between more than two classes are called _____ classifiers.",
+              "b": "multiclass (or multinomial)"
+            },
+            {
+              "f": "Name two algorithms mentioned in the text that are strictly binary classifiers and require a strategy for multiclass tasks.",
+              "b": "Logistic Regression and Support Vector Machine (SVM) classifiers."
+            },
+            {
+              "f": "Describe the one-versus-the-rest (OvR) strategy for multiclass classification.",
+              "b": "Train one binary classifier for each digit (e.g., a 0-detector, 1-detector) and select the class whose classifier outputs the highest score."
+            },
+            {
+              "f": "Describe the one-versus-one (OvO) strategy for multiclass classification.",
+              "b": "Train a binary classifier for every pair of digits (e.g., 0s vs 1s, 0s vs 2s) and see which class wins the most duels."
+            },
+            {
+              "f": "For the MNIST problem with 10 classes, how many binary classifiers would the OvO strategy require?",
+              "b": "45 classifiers, calculated as $10 \\times (10 - 1) / 2$."
+            },
+            {
+              "f": "What is the main advantage of the OvO strategy, especially for algorithms like SVMs?",
+              "b": "Each classifier only needs to be trained on the part of the training set for the two classes it must distinguish, which is faster for algorithms that scale poorly."
+            },
+            {
+              "f": "Which multiclass strategy does Scikit-Learn use by default for the `SVC` class?",
+              "b": "The one-versus-one (OvO) strategy."
+            },
+            {
+              "f": "If you want to explicitly force Scikit-Learn to use an OvR strategy with an SVC, what class would you use?",
+              "b": "The `OneVsRestClassifier` class, passing the SVC as an argument."
+            },
+            {
+              "f": "What is a key step in error analysis for a multiclass classifier?",
+              "b": "To look at the confusion matrix to see the types of errors the classifier makes."
+            },
+            {
+              "f": "To compare error rates in a confusion matrix, each value should be divided by the number of images in the corresponding _____. (Class type)",
+              "b": "actual class"
+            },
+            {
+              "f": "Looking at the normalized confusion matrix plot, a bright column for class 8 indicates what?",
+              "b": "It indicates that many images from other classes are being misclassified as 8s."
+            },
+            {
+              "f": "What is one way to reduce the confusion between 3s and 5s for a linear classifier?",
+              "b": "Preprocess the images to ensure they are well-centered and not too rotated."
+            },
+            {
+              "f": "What is a multilabel classification system?",
+              "b": "A classification system that outputs multiple binary tags for each instance."
+            },
+            {
+              "f": "In Scikit-Learn's `f1_score` function for a multilabel task, what does setting `average=\"weighted\"` do?",
+              "b": "It gives each label a weight equal to its support (the number of instances with that label)."
+            },
+            {
+              "f": "Term: Multioutput classification",
+              "b": "A generalization of multilabel classification where each label can be multiclass (i.e., can have more than two possible values)."
+            },
+            {
+              "f": "The example of building a system to remove noise from images is an instance of what type of classification?",
+              "b": "Multioutput classification, where each pixel is a label with a value from 0-255."
+            },
+            {
+              "f": "What is the technique of artificially growing the training set called?",
+              "b": "Data augmentation or training set expansion."
+            },
+            {
+              "f": "What is an example of data augmentation described for the MNIST dataset?",
+              "b": "Creating four shifted copies (up, down, left, right) for each image in the training set."
+            },
+            {
+              "f": "What class in Scikit-Learn can perform stratified sampling to produce folds that contain a representative ratio of each class?",
+              "b": "The `StratifiedKFold` class."
+            },
+            {
+              "f": "In a confusion matrix, the first row considers the _____ class, and the second row considers the _____ class.",
+              "b": "negative, positive"
+            },
+            {
+              "f": "If you train a classifier to detect shoplifters, would you prioritize high precision or high recall?",
+              "b": "High recall, to ensure almost all shoplifters are caught, even if it means a few false alerts."
+            },
+            {
+              "f": "If you train a classifier to detect videos safe for kids, would you prioritize high precision or high recall?",
+              "b": "High precision, to ensure only safe videos are kept, even if some good videos are rejected."
+            },
+            {
+              "f": "What does scaling the inputs using `StandardScaler` often do for a model's performance?",
+              "b": "It can significantly increase accuracy."
+            }
+        ];
+
+        let currentCardIndex = 0;
+        const totalCards = flashcardsData.length;
+        const flashcardElement = document.getElementById('flashcard');
+        const questionElement = document.getElementById('card-question');
+        const answerElement = document.getElementById('card-answer');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        /**
+         * Renders the current flashcard data to the DOM and updates navigation status.
+         */
+        function renderCard() {
+            const card = flashcardsData[currentCardIndex];
+            const currentIndexDisplay = currentCardIndex + 1;
+
+            questionElement.innerHTML = card.f;
+            answerElement.innerHTML = card.b;
+
+            // Update status indicators
+            document.getElementById('current-index-front').textContent = currentIndexDisplay;
+            document.getElementById('total-cards-front').textContent = totalCards;
+            document.getElementById('current-index-back').textContent = currentIndexDisplay;
+            document.getElementById('total-cards-back').textContent = totalCards;
+
+            // Re-render MathJax. Use MathJax.typesetPromise for asynchronous rendering
+            if (window.MathJax) {
+                // Clear previous MathJax output before re-rendering
+                MathJax.texReset();
+                MathJax.typesetClear([questionElement, answerElement]);
+                MathJax.typesetPromise([questionElement, answerElement]).catch((err) => console.error("MathJax typesetting failed: " + err.message));
+            }
+
+
+            // Update button disabled state
+            prevBtn.disabled = currentCardIndex === 0;
+            nextBtn.disabled = currentCardIndex === totalCards - 1;
+        }
+
+        /**
+         * Flips the flashcard.
+         */
+        function flipCard() {
+            flashcardElement.classList.toggle('is-flipped');
+        }
+
+        /**
+         * Navigates to the next or previous card.
+         * @param {number} direction - 1 for next, -1 for previous.
+         */
+        function navigateCard(direction) {
+            const newIndex = currentCardIndex + direction;
+
+            if (newIndex >= 0 && newIndex < totalCards) {
+                // If card is flipped, flip it back before navigating
+                if (flashcardElement.classList.contains('is-flipped')) {
+                    flashcardElement.classList.remove('is-flipped');
+                    // Wait for the flip animation to finish before updating content
+                    setTimeout(() => {
+                        currentCardIndex = newIndex;
+                        renderCard();
+                    }, 300); // 300ms is half of the flip transition time (0.6s)
+                } else {
+                    currentCardIndex = newIndex;
+                    renderCard();
+                }
+            }
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCard();
+        });
+    </script>
+</body>
+</html>
