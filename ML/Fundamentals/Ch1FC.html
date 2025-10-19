@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Project Flashcards</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for custom styling -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#4c51bf',
+                        'secondary-green': '#10b981',
+                        'dark-bg': '#1e293b', // Slate-800 equivalent
+                        'card-bg': '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Apply Inter font globally and setup background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* Slate-100 */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow-x: hidden;
+        }
+        /* Custom styles for the card flip effect */
+        .flashcard-container {
+            width: 100%;
+            height: 450px;
+            max-width: 600px;
+            perspective: 1000px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.5rem; /* rounded-3xl */
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: box-shadow 0.3s;
+        }
+
+        .card-front {
+            background-color: #f8fafc; /* White/Light */
+            color: #1e293b; /* Dark text */
+            border: 2px solid #e2e8f0;
+        }
+
+        .card-back {
+            background-color: #4c51bf; /* Primary Blue */
+            color: white;
+            transform: rotateY(180deg);
+            border: 2px solid #3d429a;
+        }
+
+        /* Card Stack Effect */
+        .card-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 1.5rem;
+            background: #cbd5e1; /* Slate-300 */
+            z-index: -1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .card-bg-1 {
+            transform: translate(8px, 8px);
+            background: #94a3b8; /* Slate-400 */
+        }
+        .card-bg-2 {
+            transform: translate(16px, 16px);
+            background: #64748b; /* Slate-500 */
+        }
+        @media (min-width: 640px) {
+            .card-bg-1 { transform: translate(12px, 12px); }
+            .card-bg-2 { transform: translate(24px, 24px); }
+        }
+
+        /* Blob Backgrounds (recreating the aesthetic) */
+        .blob {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            opacity: 0.5;
+            filter: blur(100px);
+            z-index: -2;
+        }
+        .blob-green {
+            background-color: #10b981;
+            top: -50px;
+            left: -50px;
+        }
+        .blob-blue {
+            background-color: #4c51bf;
+            bottom: -50px;
+            right: -50px;
+        }
+
+        /* Custom icons for the buttons */
+        .nav-button-icon {
+            font-family: 'Material Symbols Outlined';
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        /* MathJax styling for visibility */
+        .card-back-content .MathJax {
+            color: white !important;
+        }
+    </style>
+    <!-- MathJax Configuration for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'a']
+        }
+      };
+    </script>
+</head>
+<body class="font-sans">
+
+    <!-- Extract data from the Angular container (mocking the environment data passing) -->
+    <div id="data-source" style="display: none;" data-app-data="
+        {
+            &quot;flashcards&quot;: [
+                { &quot;f&quot;: &quot;What are the eight main steps of an end-to-end Machine Learning project as listed in the source?&quot;, &quot;b&quot;: &quot;1. Look at the big picture. 2. Get the data. 3. Discover and visualize the data. 4. Prepare the data. 5. Select and train a model. 6. Fine-tune the model. 7. Present the solution. 8. Launch, monitor, and maintain the system.&quot; },
+                { &quot;f&quot;: &quot;In the context of ML project management, what is the first question you should ask your boss?&quot;, &quot;b&quot;: &quot;What is the business objective?&quot; },
+                { &quot;f&quot;: &quot;A sequence of data processing components is called a data _____.&quot;, &quot;b&quot;: &quot;pipeline&quot; },
+                { &quot;f&quot;: &quot;What is the key advantage of a pipeline architecture where components run asynchronously?&quot;, &quot;b&quot;: &quot;The system is robust; if one component breaks, downstream components can often continue running using the last available output.&quot; },
+                { &quot;f&quot;: &quot;In the California Housing project example, what type of machine learning problem is predicting the median housing price?&quot;, &quot;b&quot;: &quot;A supervised learning, multiple regression task.&quot; },
+                { &quot;f&quot;: &quot;Why is the California Housing project considered a univariate regression problem?&quot;, &quot;b&quot;: &quot;Because the goal is to predict a single value (the median housing price) for each district.&quot; },
+                { &quot;f&quot;: &quot;The problem of predicting a district's median housing price is framed as a batch learning task. Why?&quot;, &quot;b&quot;: &quot;There is no continuous flow of data, no need to adjust to changing data rapidly, and the data fits in memory.&quot; },
+                { &quot;f&quot;: &quot;What is the typical performance measure for regression problems like the housing price prediction task?&quot;, &quot;b&quot;: &quot;Root Mean Square Error (RMSE).&quot; },
+                { &quot;f&quot;: &quot;In the RMSE formula, what does the variable 'm' represent?&quot;, &quot;b&quot;: &quot;The number of instances in the dataset you are measuring the RMSE on.&quot; },
+                { &quot;f&quot;: &quot;In ML notation, what is the difference between $x^{(i)}$ and $y^{(i)}$?&quot;, &quot;b&quot;: &quot;$x^{(i)}$ is a vector of all feature values for the i-th instance, while $y^{(i)}$ is its label (the desired output value).&quot; },
+                { &quot;f&quot;: &quot;In ML notation, what does the function 'h' represent?&quot;, &quot;b&quot;: &quot;The system's prediction function, also called a hypothesis.&quot; },
+                { &quot;f&quot;: &quot;If you have many outlier districts in a regression problem, which performance measure might be preferred over RMSE?&quot;, &quot;b&quot;: &quot;Mean Absolute Error (MAE).&quot; },
+                { &quot;f&quot;: &quot;Computing the RMSE corresponds to which mathematical norm?&quot;, &quot;b&quot;: &quot;The Euclidean norm, or $\\ell_2$ norm.&quot; },
+                { &quot;f&quot;: &quot;Computing the MAE corresponds to which mathematical norm, also known as the Manhattan norm?&quot;, &quot;b&quot;: &quot;The $\\ell_1$ norm.&quot; },
+                { &quot;f&quot;: &quot;Why is RMSE more sensitive to outliers than MAE?&quot;, &quot;b&quot;: &quot;Because the higher norm index of RMSE focuses more on large values (errors) and neglects small ones.&quot; },
+                { &quot;f&quot;: &quot;What is the purpose of creating an isolated Python environment using a tool like `virtualenv`?&quot;, &quot;b&quot;: &quot;To work on different projects without having conflicting library versions.&quot; },
+                { &quot;f&quot;: &quot;What is the term for the bias that occurs if you look at the test set and find a pattern that leads you to select a particular model?&quot;, &quot;b&quot;: &quot;Data snooping bias.&quot; },
+                { &quot;f&quot;: &quot;How can you create a stable train/test split that remains consistent even after updating the dataset?&quot;, &quot;b&quot;: &quot;Use each instance's unique and immutable identifier to decide whether it goes into the test set, for example by using a hash of the identifier.&quot; },
+                { &quot;f&quot;: &quot;What is the simplest function provided by Scikit-Learn to split datasets into training and testing sets?&quot;, &quot;b&quot;: &quot;The `train_test_split()` function.&quot; },
+                { &quot;f&quot;: &quot;What is stratified sampling?&quot;, &quot;b&quot;: &quot;A sampling method where the population is divided into homogeneous subgroups called strata, and instances are sampled from each stratum to ensure the test set is representative.&quot; },
+                { &quot;f&quot;: &quot;In the housing dataset example, why was stratified sampling performed on the 'median_income' attribute?&quot;, &quot;b&quot;: &quot;Because experts indicated median income is very important for predicting prices, and stratified sampling ensures the test set represents all income categories.&quot; },
+                { &quot;f&quot;: &quot;Which Scikit-Learn class is used to perform stratified sampling based on a specific category?&quot;, &quot;b&quot;: &quot;`StratifiedShuffleSplit`.&quot; },
+                { &quot;f&quot;: &quot;In a scatter plot, what is the purpose of setting the `alpha` option to a low value like 0.1?&quot;, &quot;b&quot;: &quot;It makes it easier to visualize the density of data points in a plot.&quot; },
+                { &quot;f&quot;: &quot;What does the standard correlation coefficient (Pearson's r) measure?&quot;, &quot;b&quot;: &quot;It measures the strength and direction of a linear relationship between two variables, ranging from -1 to 1.&quot; },
+                { &quot;f&quot;: &quot;What does a correlation coefficient close to 0 imply?&quot;, &quot;b&quot;: &quot;It implies that there is no linear correlation between the variables.&quot; },
+                { &quot;f&quot;: &quot;What is a key limitation of the correlation coefficient?&quot;, &quot;b&quot;: &quot;It only measures linear correlations and may completely miss nonlinear relationships.&quot; },
+                { &quot;f&quot;: &quot;What pandas function can be used to plot every numerical attribute against every other numerical attribute?&quot;, &quot;b&quot;: &quot;The `scatter_matrix()` function from `pandas.plotting`.&quot; },
+                { &quot;f&quot;: &quot;What data quirk was observed in the `median_house_value` attribute?&quot;, &quot;b&quot;: &quot;The values were capped at $500,000, creating a horizontal line in scatter plots.&quot; },
+                { &quot;f&quot;: &quot;What is meant by a 'tail-heavy' histogram distribution?&quot;, &quot;b&quot;: &quot;The distribution extends much farther to one side of the median than the other.&quot; },
+                { &quot;f&quot;: &quot;In the housing data exploration, which new attribute was found to be more correlated with `median_house_value` than `total_rooms` or `total_bedrooms`?&quot;, &quot;b&quot;: &quot;The `bedrooms_per_room` attribute.&quot; },
+                { &quot;f&quot;: &quot;Why is it recommended to write functions for data preparation instead of doing it manually?&quot;, &quot;b&quot;: &quot;To easily reproduce transformations on new data, build a reusable library, and use them in a live system.&quot; },
+                { &quot;f&quot;: &quot;What are the three main options for handling missing features in a dataset?&quot;, &quot;b&quot;: &quot;1. Get rid of the corresponding instances. 2. Get rid of the whole attribute. 3. Set the missing values to some value (zero, mean, median, etc.).&quot; },
+                { &quot;f&quot;: &quot;Which Scikit-Learn class is a handy way to take care of missing values?&quot;, &quot;b&quot;: &quot;`SimpleImputer`.&quot; },
+                { &quot;f&quot;: &quot;In Scikit-Learn's design, any object that can estimate parameters based on a dataset (e.g., an `imputer`) is called an _____.&quot;, &quot;b&quot;: &quot;estimator&quot; },
+                { &quot;f&quot;: &quot;In Scikit-Learn, what method is used by an estimator to perform its estimation?&quot;, &quot;b&quot;: &quot;The `fit()` method.&quot; },
+                { &quot;f&quot;: &quot;What is a 'transformer' in Scikit-Learn?&quot;, &quot;b&quot;: &quot;An estimator that can also transform a dataset using its `transform()` method.&quot; },
+                { &quot;f&quot;: &quot;What is the purpose of the `fit_transform()` method in Scikit-Learn transformers?&quot;, &quot;b&quot;: &quot;It is a convenience method that is equivalent to calling `fit()` and then `transform()`, and is often optimized to run faster.&quot; },
+                { &quot;f&quot;: &quot;In Scikit-Learn, what is a 'predictor'?&quot;, &quot;b&quot;: &quot;An estimator that is capable of making predictions on a new dataset using its `predict()` method.&quot; },
+                { &quot;f&quot;: &quot;How can you access an estimator's learned parameters in Scikit-Learn?&quot;, &quot;b&quot;: &quot;They are accessible via public instance variables with an underscore suffix (e.g., `imputer.statistics_`).&quot; },
+                { &quot;f&quot;: &quot;What is the common solution for converting a categorical attribute with no inherent order into a numerical format for ML algorithms?&quot;, &quot;b&quot;: &quot;One-hot encoding, which creates one binary attribute per category.&quot; },
+                { &quot;f&quot;: &quot;Which Scikit-Learn class is used to convert categorical values into one-hot vectors?&quot;, &quot;b&quot;: &quot;`OneHotEncoder`.&quot; },
+                { &quot;f&quot;: &quot;What kind of data structure does Scikit-Learn's `OneHotEncoder` output, and why is it useful?&quot;, &quot;b&quot;: &quot;A SciPy sparse matrix, which is memory-efficient as it only stores the location of non-zero elements.&quot; },
+                { &quot;f&quot;: &quot;If a categorical attribute has a very large number of categories, what is a potential downside of one-hot encoding?&quot;, &quot;b&quot;: &quot;It can result in a large number of input features, which may slow down training and degrade performance.&quot; },
+                { &quot;f&quot;: &quot;To create a custom transformer that works with Scikit-Learn pipelines, what two classes should you use as base classes?&quot;, &quot;b&quot;: &quot;`BaseEstimator` and `TransformerMixin`.&quot; },
+                { &quot;f&quot;: &quot;What is the primary reason for applying feature scaling to data?&quot;, &quot;b&quot;: &quot;Most Machine Learning algorithms don't perform well when the input numerical attributes have very different scales.&quot; },
+                { &quot;f&quot;: &quot;What is min-max scaling (normalization)?&quot;, &quot;b&quot;: &quot;A feature scaling technique where values are shifted and rescaled so that they end up ranging from 0 to 1.&quot; },
+                { &quot;f&quot;: &quot;What is standardization?&quot;, &quot;b&quot;: &quot;A feature scaling technique where a value is first centered by subtracting the mean and then scaled by dividing by the standard deviation.&quot; },
+                { &quot;f&quot;: &quot;Which feature scaling method is less affected by outliers: min-max scaling or standardization?&quot;, &quot;b&quot;: &quot;Standardization.&quot; },
+                { &quot;f&quot;: &quot;What Scikit-Learn class is used to apply standardization?&quot;, &quot;b&quot;: &quot;`StandardScaler`.&quot; },
+                { &quot;f&quot;: &quot;What is the purpose of Scikit-Learn's `Pipeline` class?&quot;, &quot;b&quot;: &quot;To help with sequences of data transformations by executing them in the right order.&quot; },
+                { &quot;f&quot;: &quot;What Scikit-Learn class allows you to apply different transformation pipelines to different columns of a dataset?&quot;, &quot;b&quot;: &quot;`ColumnTransformer`.&quot; },
+                { &quot;f&quot;: &quot;A model that performs well on the training data but poorly on new data is said to be _____ the data.&quot;, &quot;b&quot;: &quot;overfitting&quot; },
+                { &quot;f&quot;: &quot;A model that performs poorly on both the training data and new data is said to be _____ the data.&quot;, &quot;b&quot;: &quot;underfitting&quot; },
+                { &quot;f&quot;: &quot;What is K-fold cross-validation?&quot;, &quot;b&quot;: &quot;A technique that splits the training set into K folds, then trains and evaluates the model K times, using a different fold for evaluation each time.&quot; },
+                { &quot;f&quot;: &quot;Why does Scikit-Learn's `cross_val_score` function use a scoring function like `neg_mean_squared_error`?&quot;, &quot;b&quot;: &quot;Because Scikit-Learn's cross-validation features expect a utility function (greater is better) rather than a cost function (lower is better).&quot; },
+                { &quot;f&quot;: &quot;What is Ensemble Learning?&quot;, &quot;b&quot;: &quot;A machine learning technique that builds a model on top of many other models, often resulting in better performance.&quot; },
+                { &quot;f&quot;: &quot;What is the purpose of Scikit-Learn's `GridSearchCV`?&quot;, &quot;b&quot;: &quot;To automatically search for the best combination of hyperparameter values for a model using cross-validation.&quot; },
+                { &quot;f&quot;: &quot;When is it preferable to use `RandomizedSearchCV` instead of `GridSearchCV`?&quot;, &quot;b&quot;: &quot;When the hyperparameter search space is large.&quot; },
+                { &quot;f&quot;: &quot;What is the key difference between how `GridSearchCV` and `RandomizedSearchCV` explore hyperparameters?&quot;, &quot;b&quot;: &quot;`GridSearchCV` tries all possible combinations, while `RandomizedSearchCV` evaluates a given number of random combinations.&quot; },
+                { &quot;f&quot;: &quot;After fine-tuning a model, what is the final step to estimate its generalization error before launch?&quot;, &quot;b&quot;: &quot;Evaluate the final model on the test set.&quot; },
+                { &quot;f&quot;: &quot;When applying a preprocessing pipeline to the test set, which method should you call: `fit_transform()` or `transform()`?&quot;, &quot;b&quot;: &quot;You must call `transform()` only, as you do not want to fit the pipeline to the test set.&quot; },
+                { &quot;f&quot;: &quot;After a model is deployed, why is it common for its performance to decay over time?&quot;, &quot;b&quot;: &quot;Because the real world data evolves, and the model, trained on older data, may no longer be adapted to the new data.&quot; },
+                { &quot;f&quot;: &quot;What is a common strategy for deploying a trained ML model so it can be used by a web application?&quot;, &quot;b&quot;: &quot;Wrap the model in a dedicated web service that the application can query through a REST API.&quot; },
+                { &quot;f&quot;: &quot;Besides monitoring model performance, what other aspect of the system should be monitored to catch issues early?&quot;, &quot;b&quot;: &quot;The quality of the model's input data, looking for changes like missing features or statistical drift.&quot; },
+                { &quot;f&quot;: &quot;What is the primary benefit of K-fold cross-validation over using a single validation set?&quot;, &quot;b&quot;: &quot;It provides not only a performance estimate but also a measure of how precise that estimate is (its standard deviation).&quot; },
+                { &quot;f&quot;: &quot;The `RandomForestRegressor` can provide the relative importance of each attribute. What is this information useful for?&quot;, &quot;b&quot;: &quot;It can help you decide to drop less useful features, simplifying the model.&quot; }
+            ]
+        }
+    "></div>
+
+    <div class="w-full max-w-4xl flex flex-col items-center">
+        <!-- Header/Instructions -->
+        <div class="w-full text-center mb-6">
+            <h1 class="text-3xl font-extrabold text-dark-bg sm:text-4xl">ML Fundamentals Review</h1>
+            <p class="text-sm font-medium text-gray-500 mt-1">Press "Space" to flip, "← / →" to navigate</p>
+        </div>
+
+        <!-- Main Card Area -->
+        <div class="relative w-full flex justify-center items-center">
+            <!-- Navigation Button (Previous) -->
+            <button id="prev-btn" class="nav-button p-4 mx-2 rounded-full bg-primary-blue text-white shadow-lg hover:bg-indigo-700 transition duration-150 disabled:opacity-30 disabled:cursor-not-allowed z-10" onclick="navigateCard(-1)" aria-label="Previous card">
+                <span class="nav-button-icon">Back</span>
+            </button>
+
+            <!-- Card Stack and Flashcard -->
+            <div class="flashcard-container" id="flashcard-area">
+                <div class="card-bg card-bg-2"></div>
+                <div class="card-bg card-bg-1"></div>
+                <div class="flashcard" id="flashcard">
+                    <div class="card-face card-front" id="card-front">
+                        <!-- Content goes here -->
+                        <div class="card-front-content max-h-full overflow-y-auto p-4 flex flex-col justify-center items-center">
+                            <p id="card-text-front" class="text-3xl font-semibold leading-relaxed"></p>
+                        </div>
+                        <span class="absolute bottom-4 text-sm font-medium opacity-70">Tap or Space to see answer</span>
+                    </div>
+                    <div class="card-face card-back" id="card-back">
+                        <!-- Content goes here -->
+                        <div class="card-back-content max-h-full overflow-y-auto p-4 flex flex-col justify-center items-center">
+                            <p id="card-text-back" class="text-xl leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Button (Next) -->
+            <button id="next-btn" class="nav-button p-4 mx-2 rounded-full bg-primary-blue text-white shadow-lg hover:bg-indigo-700 transition duration-150 disabled:opacity-30 disabled:cursor-not-allowed z-10" onclick="navigateCard(1)" aria-label="Next card">
+                <span class="nav-button-icon">Next</span>
+            </button>
+        </div>
+
+        <!-- Progress and Controls -->
+        <div class="w-full flex justify-center items-center mt-8 space-x-4">
+            <!-- Restart Button -->
+            <button id="restart-btn" class="flex items-center space-x-2 py-2 px-4 rounded-full bg-gray-200 text-gray-800 font-medium hover:bg-gray-300 transition duration-150" onclick="restartDeck()">
+                <span class="nav-button-icon text-base">restart_alt</span>
+                <span>Restart</span>
+            </button>
+
+            <!-- Progress Text -->
+            <span id="progress-text" class="text-lg font-semibold text-dark-bg">1 / 66 cards</span>
+        </div>
+
+        <!-- Progress Bar (Visual) -->
+        <div class="w-full max-w-md mt-4 h-2 bg-gray-300 rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-secondary-green transition-all duration-300" style="width: 0%;"></div>
+        </div>
+
+    </div>
+
+    <!-- Background Blobs (for visual aesthetic) -->
+    <div class="blob blob-green"></div>
+    <div class="blob blob-blue"></div>
+
+    <script>
+        // Data and State
+        let flashcards = [];
+        let currentIndex = 0;
+        let isFlipped = false;
+
+        // DOM Elements
+        const flashcardElement = document.getElementById('flashcard');
+        const cardTextFront = document.getElementById('card-text-front');
+        const cardTextBack = document.getElementById('card-text-back');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+
+        // Utility: Parse and unescape data from the mock Angular structure
+        function loadData() {
+            const dataSource = document.getElementById('data-source');
+            if (dataSource) {
+                const rawData = dataSource.getAttribute('data-app-data');
+                try {
+                    // Unescape HTML entities for quotes and parse the JSON string
+                    const unescapedData = rawData.replace(/&quot;/g, '"');
+                    const data = JSON.parse(unescapedData);
+                    flashcards = data.flashcards || [];
+                    console.log(`Loaded ${flashcards.length} flashcards.`);
+                } catch (e) {
+                    console.error("Error parsing flashcard data:", e);
+                    flashcards = [];
+                }
+            }
+        }
+
+        // Action: Flips the card (toggles the 'is-flipped' class)
+        function flipCard() {
+            isFlipped = !isFlipped;
+            flashcardElement.classList.toggle('is-flipped', isFlipped);
+
+            // Re-render MathJax content when flipping to the back
+            if (isFlipped && typeof MathJax !== 'undefined') {
+                MathJax.typeset([cardTextBack]);
+            }
+        }
+
+        // Action: Navigates to the next or previous card
+        function navigateCard(direction) {
+            const newIndex = currentIndex + direction;
+            if (newIndex >= 0 && newIndex < flashcards.length) {
+                currentIndex = newIndex;
+                isFlipped = false;
+                flashcardElement.classList.remove('is-flipped');
+                renderCard();
+            }
+        }
+
+        // Action: Resets the deck to the first card
+        function restartDeck() {
+            currentIndex = 0;
+            isFlipped = false;
+            flashcardElement.classList.remove('is-flipped');
+            renderCard();
+        }
+
+        // Helper: Adjusts font size based on text length to keep it contained
+        function adjustFontSize(element, text) {
+            let size = 32; // Default for front
+            if (element.id === 'card-text-back') {
+                size = 20; // Default for back
+            }
+
+            // Simple heuristic: reduce font size for very long texts
+            if (text.length > 300) {
+                size -= 6;
+            } else if (text.length > 200) {
+                size -= 4;
+            } else if (text.length > 100) {
+                size -= 2;
+            }
+
+            element.style.fontSize = `${size}px`;
+        }
+
+        // Render: Updates the DOM with the current card's content and state
+        function renderCard() {
+            if (flashcards.length === 0) {
+                cardTextFront.innerHTML = 'No flashcards loaded.';
+                cardTextBack.innerHTML = 'Check data source.';
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                progressText.textContent = '0 / 0 cards';
+                progressBar.style.width = '0%';
+                return;
+            }
+
+            const currentCard = flashcards[currentIndex];
+
+            // Update text content and adjust font size
+            cardTextFront.innerHTML = currentCard.f;
+            cardTextBack.innerHTML = currentCard.b;
+            adjustFontSize(cardTextFront, currentCard.f);
+            adjustFontSize(cardTextBack, currentCard.b);
+
+            // Update navigation and progress
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === flashcards.length - 1;
+            progressText.textContent = `${currentIndex + 1} / ${flashcards.length} cards`;
+
+            // Update progress bar
+            const progress = (currentIndex + 1) / flashcards.length * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // Re-render MathJax on the current side if it's the back and it's visible
+            // We call this here to ensure the initial load and any navigation updates math
+            if (typeof MathJax !== 'undefined' && flashcardElement.classList.contains('is-flipped')) {
+                MathJax.typeset([cardTextBack]);
+            } else if (typeof MathJax !== 'undefined') {
+                // Ensure MathJax is rendered on the front too, for the case where we navigate
+                MathJax.typeset([cardTextFront]);
+            }
+        }
+
+        // Initialization on window load
+        window.onload = function() {
+            loadData();
+            renderCard();
+
+            // Event listener for card click/tap to flip
+            flashcardElement.addEventListener('click', flipCard);
+
+            // Event listener for keyboard shortcuts
+            document.addEventListener('keydown', (event) => {
+                // Ignore key presses if the user is focused on an input/textarea (not applicable here, but good practice)
+                if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+
+                if (event.code === 'Space') {
+                    event.preventDefault(); // Prevents page scroll
+                    flipCard();
+                } else if (event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    navigateCard(-1);
+                } else if (event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    navigateCard(1);
+                }
+            });
+        };
+    </script>
+</body>
+</html>
