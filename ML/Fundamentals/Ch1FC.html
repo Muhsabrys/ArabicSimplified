@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Project Flashcards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#4c51bf',
+                        'secondary-green': '#10b981',
+                        'dark-bg': '#1e293b', // Slate-800 equivalent
+                        'card-bg': '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Apply Inter font globally and setup background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* Slate-100 */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow-x: hidden;
+        }
+
+        /* Custom styles for the card flip effect */
+        .flashcard-container {
+            width: 100%;
+            height: 450px;
+            max-width: 600px;
+            perspective: 1000px;
+            position: relative;
+            margin: 0 auto;
+        }
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+            cursor: pointer;
+        }
+        .is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.5rem; /* rounded-3xl */
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: box-shadow 0.3s;
+        }
+        .card-front {
+            background-color: #f8fafc; /* White/Light */
+            color: #1e293b; /* Dark text */
+            border: 2px solid #e2e8f0;
+        }
+        .card-back {
+            background-color: #4c51bf; /* Primary Blue */
+            color: white;
+            transform: rotateY(180deg);
+            border: 2px solid #3d429a;
+        }
+
+        /* Card Stack Effect */
+        .card-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 1.5rem;
+            background: #cbd5e1; /* Slate-300 */
+            z-index: -1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .card-bg-1 {
+            transform: translate(8px, 8px);
+            background: #94a3b8; /* Slate-400 */
+        }
+        .card-bg-2 {
+            transform: translate(16px, 16px);
+            background: #64748b; /* Slate-500 */
+        }
+        @media (min-width: 640px) {
+            .card-bg-1 { transform: translate(12px, 12px); }
+            .card-bg-2 { transform: translate(24px, 24px); }
+        }
+
+        /* Blob Backgrounds (for visual aesthetic) */
+        .blob {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            opacity: 0.5;
+            filter: blur(100px);
+            z-index: -2;
+        }
+        .blob-green {
+            background-color: #10b981;
+            top: -50px;
+            left: -50px;
+        }
+        .blob-blue {
+            background-color: #4c51bf;
+            bottom: -50px;
+            right: -50px;
+        }
+
+        /* Custom icons for the buttons - Using unicode arrows as a simple fallback */
+        .nav-button-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        /* MathJax styling for visibility */
+        .card-back-content .MathJax {
+            color: white !important;
+            font-size: 1.25rem; /* text-xl */
+        }
+
+        /* Ensure content doesn't overflow */
+        .max-h-full {
+            /* Adjust max height to account for padding and container height */
+            max-height: calc(100% - 2rem);
+        }
+    </style>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'a']
+        }
+      };
+    </script>
+</head>
+<body class="font-sans">
+
+    <div class="blob blob-green"></div>
+    <div class="blob blob-blue"></div>
+
+    <main class="w-full max-w-2xl mx-auto py-10">
+        <h1 class="text-4xl font-extrabold text-center mb-8 text-primary-blue tracking-tight">
+            🧠 ML Project Flashcards
+        </h1>
+
+        <div class="flashcard-container">
+
+            <div class="card-bg card-bg-2"></div>
+            <div class="card-bg card-bg-1"></div>
+
+            <div id="flashcard" class="flashcard" onclick="flipCard()">
+                <div class="card-face card-front">
+                    <p class="text-xs font-semibold uppercase text-secondary-green mb-2" id="card-status-front">Question <span id="current-index-front">1</span> / <span id="total-cards-front">56</span></p>
+                    <div class="max-h-full overflow-y-auto">
+                        <p id="card-question" class="text-2xl font-bold leading-relaxed text-dark-bg">
+                            What is the general definition of Machine Learning?
+                        </p>
+                    </div>
+                    <p class="text-sm mt-4 text-gray-500">Click to reveal the answer</p>
+                </div>
+
+                <div class="card-face card-back">
+                    <p class="text-xs font-semibold uppercase text-white opacity-75 mb-2" id="card-status-back">Answer <span id="current-index-back">1</span> / <span id="total-cards-back">56</span></p>
+                    <div class="max-h-full overflow-y-auto">
+                        <p id="card-answer" class="text-xl font-medium leading-relaxed card-back-content">
+                            It is the science and art of programming computers so they can learn from data.
+                        </p>
+                    </div>
+                    <p class="text-sm mt-4 text-white opacity-75">Click to return to the question</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center space-x-6 mt-10">
+            <button id="prev-btn" onclick="navigateCard(-1)"
+                    class="flex items-center space-x-2 px-6 py-3 bg-white text-primary-blue border border-primary-blue rounded-full shadow-lg hover:bg-gray-100 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="nav-button-icon">←</span>
+                <span class="font-semibold">Previous</span>
+            </button>
+            <button id="next-btn" onclick="navigateCard(1)"
+                    class="flex items-center space-x-2 px-6 py-3 bg-primary-blue text-white rounded-full shadow-lg hover:bg-indigo-700 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="font-semibold">Next</span>
+                <span class="nav-button-icon">→</span>
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Data structure for flashcards
+        const flashcardsData = [
+            {
+              "f": "What is the general definition of Machine Learning?",
+              "b": "It is the science and art of programming computers so they can learn from data."
+            },
+            {
+              "f": "According to Arthur Samuel (1959), Machine Learning is the field of study that gives computers the ability to learn without being ____.",
+              "b": "explicitly programmed"
+            },
+            {
+              "f": "In Tom Mitchell's 1997 definition of machine learning, what do T, P, and E represent?",
+              "b": "Task T, performance measure P, and experience E."
+            },
+            {
+              "f": "In the context of a spam filter, what are the examples that the system uses to learn called?",
+              "b": "The training set."
+            },
+            {
+              "f": "What is a single example within a training set called?",
+              "b": "A training instance or sample."
+            },
+            {
+              "f": "For a spam filter, what is the task (T), experience (E), and a common performance measure (P)?",
+              "b": "Task T is to flag spam, Experience E is the training data, and Performance measure P can be accuracy (the ratio of correctly classified emails)."
+            },
+            {
+              "f": "Why is simply downloading a copy of Wikipedia not considered Machine Learning?",
+              "b": "Because the computer has more data, but is not suddenly better at any specific task."
+            },
+            {
+              "f": "In contrast to an ML approach, a traditional spam filter program will likely become a long list of ____ rules.",
+              "b": "complex"
+            },
+            {
+              "f": "How does an ML-based spam filter adapt to new spam tactics, like spammers changing '4U' to 'For U'?",
+              "b": "It automatically notices that 'For U' has become unusually frequent in spam flagged by users and starts flagging it."
+            },
+            {
+              "f": "For which types of problems does Machine Learning shine over traditional approaches?",
+              "b": "Problems that are too complex for traditional approaches or have no known algorithm, like speech recognition."
+            },
+            {
+              "f": "What is the process of applying ML techniques to dig into large amounts of data to discover patterns that were not immediately apparent called?",
+              "b": "Data mining."
+            },
+            {
+              "f": "For what four general types of problems is Machine Learning great?",
+              "b": "Problems requiring fine-tuning or long rule lists, complex problems with no traditional solution, fluctuating environments, and getting insights from complex problems and large data."
+            },
+            {
+              "f": "What is the ML task of predicting a target numeric value, such as the price of a car, called?",
+              "b": "Regression."
+            },
+            {
+              "f": "In a regression task, what are the input features (e.g., mileage, age, brand) called?",
+              "b": "Predictors."
+            },
+            {
+              "f": "In supervised learning, what are the desired solutions included in the training data called?",
+              "b": "Labels."
+            },
+            {
+              "f": "What is the most common type of ML system, classified by the amount of human supervision during training?",
+              "b": "Supervised learning."
+            },
+            {
+              "f": "Besides classification, what is another typical supervised learning task?",
+              "b": "Regression, which involves predicting a target numeric value."
+            },
+            {
+              "f": "What kind of data is used in unsupervised learning?",
+              "b": "Unlabeled training data."
+            },
+            {
+              "f": "What unsupervised learning task involves detecting groups of similar visitors on a blog?",
+              "b": "Clustering."
+            },
+            {
+              "f": "What is the goal of dimensionality reduction?",
+              "b": "To simplify the data without losing too much information, often by merging correlated features."
+            },
+            {
+              "f": "Merging several correlated features into one is a form of dimensionality reduction called ____.",
+              "b": "feature extraction"
+            },
+            {
+              "f": "What unsupervised task involves detecting unusual credit card transactions to prevent fraud?",
+              "b": "Anomaly detection."
+            },
+            {
+              "f": "What is the difference between anomaly detection and novelty detection?",
+              "b": "Novelty detection aims to detect new instances different from all instances in a 'clean' training set, while anomaly detection may classify rare instances within the set as anomalies."
+            },
+            {
+              "f": "What unsupervised task aims to discover interesting relations between attributes in large amounts of data, such as items frequently bought together in a supermarket?",
+              "b": "Association rule learning."
+            },
+            {
+              "f": "What type of learning deals with data that is partially labeled (plenty of unlabeled instances and few labeled ones)?",
+              "b": "Semisupervised learning."
+            },
+            {
+              "f": "In Reinforcement Learning, what is the learning system called?",
+              "b": "An agent."
+            },
+            {
+              "f": "In Reinforcement Learning, what is the strategy that an agent learns to get the most reward over time called?",
+              "b": "A policy."
+            },
+            {
+              "f": "What type of learning system must be trained using all available data at once and cannot learn incrementally?",
+              "b": "A batch learning system."
+            },
+            {
+              "f": "Training a batch learning system is typically done offline. What is this process called?",
+              "b": "Offline learning."
+            },
+            {
+              "f": "What is a major downside of batch learning regarding time and resources?",
+              "b": "It can take a lot of time and computing resources, as it requires training from scratch on the full dataset."
+            },
+            {
+              "f": "What type of learning system trains by feeding data instances sequentially, either individually or in small groups?",
+              "b": "Online learning."
+            },
+            {
+              "f": "In online learning, what are the small groups of data instances used for training called?",
+              "b": "Mini-batches."
+            },
+            {
+              "f": "Online learning algorithms can be used to train systems on huge datasets that cannot fit in one machine’s main memory. What is this called?",
+              "b": "Out-of-core learning."
+            },
+            {
+              "f": "Online learning can be a confusing name. What is a better, alternative name for it?",
+              "b": "Incremental learning."
+            },
+            {
+              "f": "What important parameter of online learning systems controls how fast they adapt to changing data?",
+              "b": "The learning rate."
+            },
+            {
+              "f": "What is a major challenge with online learning if bad data is fed to the system?",
+              "b": "The system's performance will gradually decline."
+            },
+            {
+              "f": "What are the two main approaches to generalization in Machine Learning?",
+              "b": "Instance-based learning and model-based learning."
+            },
+            {
+              "f": "In _____ learning, the system learns examples by heart and then generalizes to new cases using a similarity measure.",
+              "b": "instance-based"
+            },
+            {
+              "f": "What is the approach to generalization that involves building a model of training examples and then using that model to make predictions?",
+              "b": "Model-based learning."
+            },
+            {
+              "f": "In model-based learning, what is the step of selecting a type of model (e.g., a linear model) called?",
+              "b": "Model selection."
+            },
+            {
+              "f": "In the linear model equation 'life_satisfaction = $\\theta_0 + \\theta_1 \\times$ GDP_per_capita', what are $\\theta_0$ and $\\theta_1$ called?",
+              "b": "Model parameters."
+            },
+            {
+              "f": "For Linear Regression problems, what kind of function is typically defined to measure how bad a model is?",
+              "b": "A cost function."
+            },
+            {
+              "f": "What is the process of an algorithm finding the parameter values that make a model best fit the training data called?",
+              "b": "Training the model."
+            },
+            {
+              "f": "After a model is trained, what is the process of applying it to make predictions on new cases called?",
+              "b": "Inference."
+            },
+            {
+              "f": "What are the two primary things that can go wrong in a Machine Learning project?",
+              "b": "\"Bad algorithm\" and \"bad data.\""
+            },
+            {
+              "f": "The idea that for complex problems, data matters more than algorithms was popularized in a 2009 paper titled 'The Unreasonable _____ of Data'.",
+              "b": "Effectiveness"
+            },
+            {
+              "f": "Why is it crucial for training data to be representative of the new cases you want to generalize to?",
+              "b": "To avoid training a model that is unlikely to make accurate predictions on new data."
+            },
+            {
+              "f": "What is it called when a training set is not representative due to a flawed sampling method?",
+              "b": "Sampling bias."
+            },
+            {
+              "f": "A critical part of a successful ML project is coming up with a good set of features to train on. What is this process called?",
+              "b": "Feature engineering."
+            },
+            {
+              "f": "What are the three steps involved in feature engineering?",
+              "b": "Feature selection, feature extraction, and creating new features by gathering new data."
+            },
+            {
+              "f": "In Machine Learning, what is it called when a model performs well on the training data but does not generalize well to new instances?",
+              "b": "Overfitting."
+            },
+            {
+              "f": "When does overfitting typically happen?",
+              "b": "When the model is too complex relative to the amount and noisiness of the training data."
+            },
+            {
+              "f": "What are three possible solutions to overfitting?",
+              "b": "Simplify the model, gather more training data, or reduce the noise in the training data."
+            },
+            {
+              "f": "What is the technique of constraining a model to make it simpler and reduce the risk of overfitting called?",
+              "b": "Regularization."
+            },
+            {
+              "f": "What is a parameter of a learning algorithm (not of the model) that is set prior to training and remains constant during training?",
+              "b": "A hyperparameter."
+            },
+            {
+              "f": "What is the opposite of overfitting, which occurs when a model is too simple to learn the underlying structure of the data?",
+              "b": "Underfitting."
+            },
+            {
+              "f": "What are the main options for fixing underfitting?",
+              "b": "Select a more powerful model, feed better features (feature engineering), or reduce the constraints on the model (e.g., reduce regularization)."
+            },
+            {
+              "f": "How do you get an estimate of a model's generalization error (or out-of-sample error)?",
+              "b": "By splitting the data into a training set and a test set, and then evaluating the trained model on the test set."
+            },
+            {
+              "f": "What does it mean if the training error is low but the generalization error is high?",
+              "b": "The model is overfitting the training data."
+            },
+            {
+              "f": "What is the common solution to the problem of tuning hyperparameters on the test set, leading to an over-optimistic error rate?",
+              "b": "Holdout validation, where part of the training set is held out as a validation set."
+            },
+            {
+              "f": "In holdout validation, what is the new held-out set used to evaluate candidate models called?",
+              "b": "The validation set (or dev set)."
+            },
+            {
+              "f": "What is the final step after selecting the best model using a validation set?",
+              "b": "Train the best model on the full training set (including the validation set) and evaluate this final model on the test set."
+            },
+            {
+              "f": "What problem might occur if your validation set is too small?",
+              "b": "Model evaluations will be imprecise, and you may select a suboptimal model by mistake."
+            },
+            {
+              "f": "What problem can arise if the data used for training is not perfectly representative of the data that will be used in production?",
+              "b": "Data mismatch."
+            },
+            {
+              "f": "In cases of data mismatch, what must be true about the validation and test sets?",
+              "b": "They must be as representative as possible of the data expected in production."
+            },
+            {
+              "f": "When dealing with data mismatch, what is the purpose of a 'train-dev' set?",
+              "b": "To determine if poor performance on the validation set is due to overfitting the training set or to the data mismatch itself."
+            },
+            {
+              "f": "What is the name of the theorem stating that if you make no assumptions about the data, there is no reason to prefer one model over any other?",
+              "b": "The No Free Lunch (NFL) theorem."
+            }
+        ];
+
+        let currentCardIndex = 0;
+        const totalCards = flashcardsData.length;
+        const flashcardElement = document.getElementById('flashcard');
+        const questionElement = document.getElementById('card-question');
+        const answerElement = document.getElementById('card-answer');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        /**
+         * Renders the current flashcard data to the DOM and updates navigation status.
+         */
+        function renderCard() {
+            const card = flashcardsData[currentCardIndex];
+            const currentIndexDisplay = currentCardIndex + 1;
+
+            questionElement.innerHTML = card.f;
+            answerElement.innerHTML = card.b;
+
+            // Update status indicators
+            document.getElementById('current-index-front').textContent = currentIndexDisplay;
+            document.getElementById('total-cards-front').textContent = totalCards;
+            document.getElementById('current-index-back').textContent = currentIndexDisplay;
+            document.getElementById('total-cards-back').textContent = totalCards;
+
+            // Re-render MathJax
+            MathJax.typesetPromise([questionElement, answerElement]);
+
+            // Update button disabled state
+            prevBtn.disabled = currentCardIndex === 0;
+            nextBtn.disabled = currentCardIndex === totalCards - 1;
+        }
+
+        /**
+         * Flips the flashcard.
+         */
+        function flipCard() {
+            flashcardElement.classList.toggle('is-flipped');
+        }
+
+        /**
+         * Navigates to the next or previous card.
+         * @param {number} direction - 1 for next, -1 for previous.
+         */
+        function navigateCard(direction) {
+            const newIndex = currentCardIndex + direction;
+
+            if (newIndex >= 0 && newIndex < totalCards) {
+                // If card is flipped, flip it back before navigating
+                if (flashcardElement.classList.contains('is-flipped')) {
+                    flashcardElement.classList.remove('is-flipped');
+                    // Wait for the flip animation to finish before updating content
+                    setTimeout(() => {
+                        currentCardIndex = newIndex;
+                        renderCard();
+                    }, 300); // 300ms is half of the flip transition time (0.6s)
+                } else {
+                    currentCardIndex = newIndex;
+                    renderCard();
+                }
+            }
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCard();
+        });
+    </script>
+</body>
+</html>
