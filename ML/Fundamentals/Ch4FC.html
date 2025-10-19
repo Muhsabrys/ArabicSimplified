@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Flashcards</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a modern look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            perspective: 1000px; /* Required for 3D flip effect */
+            background: #f7f9fb;
+            overflow-x: hidden;
+        }
+
+        /* Card container for 3D preservation */
+        #flashcard-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        /* Card element that flips */
+        #flashcard {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce effect for fun */
+            cursor: pointer;
+        }
+
+        /* Card faces */
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; /* Hide the back when flipped */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+
+        .card-front {
+            background-color: #ffffff;
+            z-index: 2;
+        }
+
+        .card-back {
+            background-color: #059669; /* Emerald 600 */
+            color: white;
+            transform: rotateY(180deg);
+            z-index: 1;
+        }
+
+        /* Flipped state */
+        .flipped #flashcard {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom styling for the "Explain" button */
+        .explain-button {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .explain-button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Simple animation for card background layers (subtle depth) */
+        @keyframes subtleMove {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-2px, -2px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .card-bg-layer {
+            position: absolute;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            animation: subtleMove 4s ease-in-out infinite alternate;
+        }
+
+        .card-bg-1 {
+            top: 5px;
+            left: 5px;
+            z-index: -10;
+            background-color: #d1fae5; /* Emerald 50 */
+        }
+
+        .card-bg-2 {
+            top: 10px;
+            left: 10px;
+            z-index: -20;
+            background-color: #ecfdf5; /* Emerald 10 */
+        }
+
+        /* Progress Bar Styling */
+        #progress-bar {
+            height: 10px;
+            background-color: #059669;
+            border-radius: 9999px;
+            transition: width 0.3s ease-in-out;
+        }
+        
+        /* Nav button custom styling */
+        .nav-button {
+            background-color: #e2e8f0; /* Slate 200 */
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s, background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button:hover:not(:disabled) {
+            background-color: #64748b; /* Slate 600 */
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Mobile adjustments for a better fit */
+        @media (max-width: 640px) {
+            #flashcard-container {
+                height: 350px;
+            }
+            .card-face {
+                padding: 2rem;
+            }
+            .nav-button {
+                width: 3.5rem;
+                height: 3.5rem;
+            }
+        }
+
+    </style>
+    <!-- MathJax for rendering LaTeX equations -->
+    <script>
+        window.MathJax = {
+            tex: {
+                // Use single dollar signs for inline math
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- Header for instructions -->
+    <header class="mb-8 text-center text-gray-600">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Machine Learning Flashcards: Fundamentals</h1>
+        <p class="text-sm md:text-base">
+            <span class="font-bold">Space</span> to flip | 
+            <span class="font-bold">←</span> / <span class="font-bold">→</span> to navigate
+        </p>
+    </header>
+
+    <main class="w-full max-w-2xl flex items-center justify-between space-x-4">
+        
+        <!-- Previous Button -->
+        <button id="prev-btn" class="nav-button prev text-gray-700">
+            <!-- Icon: Arrow Left -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        </button>
+
+        <!-- Card Stack Area -->
+        <div class="flex-grow relative h-[400px]">
+            <!-- Subtle background layers for depth -->
+            <div class="card-bg-layer card-bg-2 w-full h-full"></div>
+            <div class="card-bg-layer card-bg-1 w-full h-full"></div>
+            
+            <div id="flashcard-container" class="relative w-full h-full">
+                <!-- Flashcard Element -->
+                <div id="flashcard" role="button" tabindex="0" aria-label="Flashcard. Click or press space to flip.">
+                    
+                    <!-- Card Front -->
+                    <div class="card-face card-front" id="card-front">
+                        <div class="p-6">
+                            <p class="text-3xl font-semibold text-gray-900" id="card-front-text"></p>
+                        </div>
+                        <span class="absolute bottom-4 text-sm text-gray-500 font-medium">Click or Space to See Answer</span>
+                    </div>
+
+                    <!-- Card Back -->
+                    <div class="card-face card-back" id="card-back">
+                        <div class="relative w-full h-full flex items-center justify-center p-6">
+                            <p class="text-2xl font-medium" id="card-back-text"></p>
+                            <!-- Simulate LLM Explanation feature -->
+                            <button class="explain-button" onclick="showExplanationAlert(event)">
+                                <!-- Icon: Chat Spark -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1 -mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M10 9l2 2 2-2M10 15l2-2 2 2"/></svg>
+                                Explain
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Button -->
+        <button id="next-btn" class="nav-button next text-gray-700">
+            <!-- Icon: Arrow Right -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </button>
+    </main>
+
+    <!-- Progress Bar and Restart -->
+    <footer class="w-full max-w-2xl mt-8 p-4 bg-white rounded-xl shadow-xl flex justify-between items-center space-x-4">
+        <button id="restart-btn" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-emerald-700 font-medium transition">
+            <!-- Icon: Restart -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12A8.5 8.5 0 0 1 12 21.5c-4.69 0-8.5-3.81-8.5-8.5s3.81-8.5 8.5-8.5c2.47 0 4.7 1.07 6.3 2.8M21 4v4h-4"/><path d="M17.6 7.4A7.96 7.96 0 0 0 12 4.5"/></svg>
+            Restart
+        </button>
+        <div class="flex-grow h-2 bg-gray-200 rounded-full relative overflow-hidden">
+            <div id="progress-bar" class="absolute inset-y-0 left-0"></div>
+        </div>
+        <span id="progress-text" class="text-sm font-medium text-gray-700 w-24 text-right">0 / 0 cards</span>
+    </footer>
+
+    <!-- Simple Custom Modal/Message Box (Used instead of alert()) -->
+    <div id="message-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 transition-opacity duration-300">
+        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-lg w-full">
+            <h3 class="text-xl font-bold mb-4 text-emerald-700">LLM Explanation Feature</h3>
+            <p id="message-text" class="text-base mb-6 text-gray-700"></p>
+            <button onclick="document.getElementById('message-modal').classList.add('hidden')" class="w-full px-4 py-2 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition">Got It</button>
+        </div>
+    </div>
+
+
+    <script>
+        // --- DATA INJECTION (FIXED FOR RELIABILITY) ---
+        // The flashcard data is now directly embedded as a JavaScript object 
+        // instead of relying on parsing from a dynamic HTML attribute.
+        const FLASHCARD_DATA = [
+            { "f": "What are the two main benefits of understanding the inner workings of machine learning models?", "b": "It helps in selecting the right model, training algorithm, and hyperparameters, and it aids in debugging and error analysis." },
+            { "f": "What are the two distinct methods discussed for training a Linear Regression model?", "b": "A direct 'closed-form' equation (the Normal Equation) and an iterative optimization approach called Gradient Descent." },
+            { "f": "In a linear model, a prediction is made by computing a weighted sum of input features plus a constant. What is this constant called?", "b": "The bias term (or intercept term)." },
+            { "f": "Write the general equation for a Linear Regression model's prediction.", "b": "$y = \\theta_0 + \\theta_1x_1 + \\theta_2x_2 + \\dots + \\theta_nx_n$" },
+            { "f": "In the vectorized form of the Linear Regression model prediction, $y = h_{\\theta}(x) = \\theta^T x$, what does the vector $x$ contain?", "b": "The instance's feature vector, containing $x_0$ to $x_n$, where $x_0$ is always equal to 1." },
+            { "f": "What does training a model mean in the context of Linear Regression?", "b": "Setting its parameters (the vector $\\theta$) so that the model best fits the training set." },
+            { "f": "What is the most common performance measure for a regression model, which is minimized during training?", "b": "The Mean Squared Error (MSE)." },
+            { "f": "What is the name of the closed-form solution used to find the value of $\\theta$ that minimizes the cost function in Linear Regression?", "b": "The Normal Equation." },
+            { "f": "What is the formula for the Normal Equation?", "b": "$\\hat{\\theta} = (X^T X)^{-1} X^T y$" },
+            { "f": "Scikit-Learn's `LinearRegression` class is based on a function that computes $\\hat{\\theta} = X^+y$. What is $X^+$?", "b": "$X^+$ is the pseudoinverse (specifically, the Moore-Penrose inverse) of the training set matrix $X$." },
+            { "f": "The pseudoinverse is computed using a matrix factorization technique called _____", "b": "Singular Value Decomposition (SVD)" },
+            { "f": "What is a key advantage of using the pseudoinverse/SVD method over the Normal Equation?", "b": "The pseudoinverse is always defined, even if the matrix $X^T X$ is not invertible (i.e., singular)." },
+            { "f": "What is the computational complexity of inverting the $(n+1) \\times (n+1)$ matrix in the Normal Equation?", "b": "Typically between $O(n^{2.4})$ and $O(n^3)$, where $n$ is the number of features." },
+            { "f": "How does the computational complexity of both the Normal Equation and SVD scale with the number of instances ($m$) in the training set?", "b": "They are linear with regard to the number of instances, expressed as $O(m)$." },
+            { "f": "What is the general idea of the Gradient Descent optimization algorithm?", "b": "To tweak parameters iteratively in order to minimize a cost function." },
+            { "f": "In Gradient Descent, what hyperparameter determines the size of the steps taken to minimize the cost function?", "b": "The learning rate." },
+            { "f": "What happens in Gradient Descent if the learning rate is too high?", "b": "The algorithm may jump across the minimum and diverge, failing to find a good solution." },
+            { "f": "What are the two main challenges with Gradient Descent when the cost function has an irregular terrain?", "b": "The algorithm can converge to a local minimum instead of the global minimum, or it can take a very long time to cross a plateau." },
+            { "f": "The MSE cost function for a Linear Regression model has a special property that guarantees Gradient Descent can approach the global minimum. What is this property?", "b": "It is a convex function, meaning it has no local minima, only one global minimum." },
+            { "f": "Why should you ensure all features have a similar scale when using Gradient Descent?", "b": "If features have different scales, the cost function becomes an elongated bowl, causing the algorithm to take a long, indirect path to the minimum and converge much more slowly." },
+            { "f": "To implement Gradient Descent, you need to compute the gradient of the cost function with regard to each model parameter $\\theta_j$. This is also known as a _____", "b": "partial derivative" },
+            { "f": "What is the name for the vector that contains all the partial derivatives of the cost function?", "b": "The gradient vector, noted $\\nabla_{\\theta} \\text{MSE}(\\theta)$." },
+            { "f": "What is the formula for the gradient vector of the MSE cost function?", "b": "$\\nabla_{\\theta} \\text{MSE}(\\theta) = \\frac{2}{m}X^T(X\\theta - y)$" },
+            { "f": "Why is the algorithm called Batch Gradient Descent?", "b": "Because it uses the whole batch of training data to compute the gradients at every step." },
+            { "f": "In which scenario is Gradient Descent much faster than the Normal Equation or SVD decomposition for training a Linear Regression model?", "b": "When there are hundreds of thousands of features." },
+            { "f": "What is the formula for a single Gradient Descent step?", "b": "$\\theta^{\\text{(next step)}} = \\theta - \\eta \\nabla_{\\theta} \\text{MSE}(\\theta)$" },
+            { "f": "How can you determine a good learning rate for Gradient Descent?", "b": "You can use grid search." },
+            { "f": "A simple solution for setting the number of iterations in Gradient Descent is to set a large number but interrupt the algorithm when the gradient vector's norm becomes smaller than a tiny number $\\epsilon$. What is $\\epsilon$ called?", "b": "The tolerance." },
+            { "f": "The main problem with _____ is that it uses the whole training set to compute gradients at every step, making it very slow on large datasets.", "b": "Batch Gradient Descent" },
+            { "f": "How does Stochastic Gradient Descent (SGD) differ from Batch Gradient Descent?", "b": "SGD picks a random instance in the training set at every step and computes gradients based only on that single instance." },
+            { "f": "What is a major advantage of Stochastic Gradient Descent regarding memory usage?", "b": "Only one instance needs to be in memory at each iteration, making it possible to train on huge datasets (out-of-core)." },
+            { "f": "Due to its random nature, the cost function in Stochastic GD does not decrease gently but will _____ up and down, decreasing only on average.", "b": "bounce" },
+            { "f": "What is a key benefit of the randomness in Stochastic Gradient Descent when dealing with irregular cost functions?", "b": "It can help the algorithm jump out of local minima." },
+            { "f": "To solve the dilemma of SGD never settling at the minimum, one can gradually reduce the learning rate. What is the function that determines the learning rate at each iteration called?", "b": "The learning schedule." },
+            { "f": "In Stochastic Gradient Descent, each round of $m$ iterations (where $m$ is the number of instances) is called an _____", "b": "epoch" },
+            { "f": "When using SGD, why is it important to shuffle the training instances?", "b": "To ensure instances are independent and identically distributed (IID), which pulls the parameters toward the global optimum on average." },
+            { "f": "Which Scikit-Learn class performs Linear Regression using Stochastic Gradient Descent?", "b": "`SGDRegressor`" },
+            { "f": "How does Mini-batch Gradient Descent compute gradients at each step?", "b": "It computes gradients on small random sets of instances called mini-batches." },
+            { "f": "What is the main advantage of Mini-batch GD over Stochastic GD?", "b": "You can get a performance boost from hardware optimization of matrix operations, especially when using GPUs." },
+            { "f": "Of the three Gradient Descent algorithms, which one's path stops exactly at the minimum?", "b": "Batch Gradient Descent." },
+            { "f": "What technique allows you to use a linear model to fit nonlinear data?", "b": "Polynomial Regression, which involves adding powers of each feature as new features." },
+            { "f": "What is the name of the Scikit-Learn class used to transform data for Polynomial Regression?", "b": "`PolynomialFeatures`" },
+            { "f": "What is the main risk of using a high-degree Polynomial Regression model?", "b": "It can severely overfit the training data." },
+            { "f": "What are learning curves?", "b": "Plots of a model's performance on the training set and the validation set as a function of the training set size." },
+            { "f": "If a model's learning curves show that both the training and validation errors have reached a high plateau and are close to each other, what is likely the problem?", "b": "The model is underfitting the data." },
+            { "f": "If a model is underfitting, will adding more training examples help?", "b": "No, you need to use a more complex model or find better features." },
+            { "f": "What is the hallmark of an overfitting model when looking at its learning curves?", "b": "There is a large gap between the training error (which is low) and the validation error." },
+            { "f": "What is one way to improve an overfitting model?", "b": "Feed it more training data until the validation error reaches the training error." },
+            { "f": "A model’s generalization error can be expressed as the sum of three different errors: Bias, Variance, and _____", "b": "Irreducible error" },
+            { "f": "What does the 'Bias' part of a model's generalization error stem from?", "b": "It is due to wrong assumptions, such as assuming the data is linear when it is actually quadratic. High bias leads to underfitting." },
+            { "f": "What does the 'Variance' part of a model's generalization error stem from?", "b": "It is due to the model's excessive sensitivity to small variations in the training data. High variance leads to overfitting." },
+            { "f": "Increasing a model's complexity will typically _____ its variance and _____ its bias.", "b": "increase, reduce" },
+            { "f": "For a linear model, regularization is typically achieved by constraining the _____ of the model.", "b": "weights" },
+            { "f": "Ridge Regression is a regularized version of Linear Regression where a regularization term is added to the cost function. What is this term based on?", "b": "The $\\ell_2$ norm of the weight vector." },
+            { "f": "What is the Ridge Regression cost function?", "b": "$J(\\theta) = \\text{MSE}(\\theta) + \\alpha \\frac{1}{2} \\sum_{i=1}^{n} \\theta_i^2$" },
+            { "f": "In Ridge Regression, what does the hyperparameter $\\alpha$ control?", "b": "It controls how much the model is regularized; a larger $\\alpha$ results in more regularization." },
+            { "f": "Why is it important to scale the data before performing Ridge Regression?", "b": "Because Ridge Regression is sensitive to the scale of the input features." },
+            { "f": "Lasso Regression is another regularized version of Linear Regression. What norm does it use for its regularization term?", "b": "The $\\ell_1$ norm of the weight vector." },
+            { "f": "What is an important characteristic of Lasso Regression that differentiates it from Ridge Regression?", "b": "It tends to completely eliminate the weights of the least important features, effectively performing feature selection." },
+            { "f": "A model with few nonzero feature weights, as often produced by Lasso Regression, is called a _____ model.", "b": "sparse" },
+            { "f": "What is Elastic Net?", "b": "A middle ground between Ridge and Lasso Regression, where the regularization term is a mix of both Ridge's and Lasso's terms." },
+            { "f": "In general, _____ is preferred over Lasso because Lasso may behave erratically when the number of features is greater than the number of training instances.", "b": "Elastic Net" },
+            { "f": "What is early stopping?", "b": "A regularization technique for iterative learning algorithms where training is stopped as soon as the validation error reaches a minimum." },
+            { "f": "What is the primary purpose of a Logistic Regression model?", "b": "To estimate the probability that an instance belongs to a particular class, making it a binary classifier." },
+            { "f": "A Logistic Regression model computes a weighted sum of inputs and then outputs the _____ of this result.", "b": "logistic" },
+            { "f": "What is the formula for the logistic function, $\\sigma(t)$?", "b": "$\\sigma(t) = \\frac{1}{1 + \\exp(-t)}$" },
+            { "f": "The logistic function, also known as a _____ function, outputs a number between 0 and 1.", "b": "sigmoid" },
+            { "f": "A Logistic Regression model predicts class 1 if $x^T\\theta$ is positive, and class 0 if it is negative. What is the value of $x^T\\theta$ often called?", "b": "The logit or log-odds." },
+            { "f": "What is the name of the cost function used for training a Logistic Regression model?", "b": "Log loss (or Logistic Regression cost function)." },
+            { "f": "Why is an iterative algorithm like Gradient Descent used to train a Logistic Regression model?", "b": "Because there is no known closed-form equation (like the Normal Equation) to compute the value of $\\theta$ that minimizes the cost function." },
+            { "f": "What does the line where a Logistic Regression model estimates a 50% probability represent?", "b": "The model's decision boundary." },
+            { "f": "The hyperparameter controlling regularization strength in Scikit-Learn's `LogisticRegression` is `C`. How is the model regularized if the value of `C` is high?", "b": "If C is high, the model is less regularized." },
+            { "f": "What is Softmax Regression?", "b": "A generalization of the Logistic Regression model to support multiple classes directly (multiclass classification)." },
+            { "f": "How does a Softmax Regression model estimate the probability for each class?", "b": "It computes a score for each class and then applies the softmax function (normalized exponential) to the scores." },
+            { "f": "In Softmax Regression, each class has its own dedicated parameter vector, $\\theta^{(k)}$. These vectors are typically stored as rows in a _____", "b": "parameter matrix $\\Theta$" },
+            { "f": "What is the name of the cost function that is minimized during the training of a Softmax Regression model?", "b": "Cross entropy." },
+            { "f": "Cross entropy is frequently used to measure how well a set of estimated class probabilities matches the _____ classes.", "b": "target" },
+            { "f": "When there are only two classes ($K=2$), the cross entropy cost function is equivalent to the _____ cost function.", "b": "Logistic Regression (log loss)" },
+            { "f": "To use Softmax Regression in Scikit-Learn's `LogisticRegression`, what must the `multi_class` hyperparameter be set to?", "b": "`'multinomial'`" }
+        ];
+
+        // Global state
+        let currentCardIndex = 0;
+        let cards = [];
+
+        // DOM elements
+        const flashcard = document.getElementById('flashcard');
+        const cardFrontText = document.getElementById('card-front-text');
+        const cardBackText = document.getElementById('card-back-text');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        
+        // --- DATA INITIALIZATION ---
+
+        function parseInitialData() {
+            // Now directly use the embedded array for maximum robustness
+            if (FLASHCARD_DATA && Array.isArray(FLASHCARD_DATA) && FLASHCARD_DATA.length > 0) {
+                return FLASHCARD_DATA;
+            }
+            
+            // Fallback data if something is critically wrong
+            console.error("Critical Error: FLASHCARD_DATA is not an array or is empty.");
+            return [
+                { f: "Initialization Failed: No card data found.", b: "Please check the script console for errors." },
+            ];
+        }
+
+        // --- UI & STATE FUNCTIONS ---
+
+        function updateCardDisplay(index) {
+            if (cards.length === 0) return;
+
+            // 1. Update Content (Front and Back)
+            const card = cards[index];
+            cardFrontText.innerHTML = card.f;
+            cardBackText.innerHTML = card.b;
+            
+            // 2. Render MathJax (Important for equations)
+            if (typeof MathJax !== 'undefined') {
+                // Clear and Typeset the content
+                const elements = [cardFrontText, cardBackText];
+                // TypesetPromise ensures the update happens
+                MathJax.typesetClear(elements);
+                MathJax.typesetPromise(elements).catch(err => console.error("MathJax Error:", err));
+            }
+            
+            // 3. Ensure card is always unflipped when navigating to a new card
+            flashcard.classList.remove('flipped');
+
+            // 4. Update Navigation/Progress
+            updateNavigationControls();
+            updateProgress();
+        }
+
+        function flipCard() {
+            flashcard.classList.toggle('flipped');
+        }
+
+        function navigate(direction) {
+            let newIndex = currentCardIndex + direction;
+
+            if (newIndex >= 0 && newIndex < cards.length) {
+                currentCardIndex = newIndex;
+                updateCardDisplay(currentCardIndex);
+            }
+        }
+
+        function updateNavigationControls() {
+            prevBtn.disabled = currentCardIndex === 0;
+            nextBtn.disabled = currentCardIndex === cards.length - 1;
+        }
+
+        function updateProgress() {
+            const total = cards.length;
+            const current = total > 0 ? currentCardIndex + 1 : 0;
+            const percentage = total > 0 ? (current / total) * 100 : 0;
+
+            progressText.textContent = `${current} / ${total} cards`;
+            progressBar.style.width = `${percentage}%`;
+        }
+        
+        function showMessage(message) {
+            const modal = document.getElementById('message-modal');
+            document.getElementById('message-text').textContent = message;
+            modal.classList.remove('hidden');
+        }
+
+        function showExplanationAlert(event) {
+            event.stopPropagation(); // Stop the card from flipping back
+            const currentCard = cards[currentCardIndex];
+            const front = currentCard.f.length > 50 ? currentCard.f.substring(0, 50) + '...' : currentCard.f;
+            
+            showMessage(
+                `This button would send the current question ("${front}") and answer to an LLM ` + 
+                `(like Gemini) to generate a detailed, contextual explanation of the concept, ` + 
+                `such as the mathematical derivation or a real-world example.`
+            );
+        }
+
+        // Expose function globally for the onclick attribute
+        window.showExplanationAlert = showExplanationAlert;
+        
+        // --- EVENT LISTENERS ---
+
+        function setupEventListeners() {
+            // Card Flip on Click/Tap
+            flashcard.addEventListener('click', flipCard);
+
+            // Navigation Buttons
+            prevBtn.addEventListener('click', () => navigate(-1));
+            nextBtn.addEventListener('click', () => navigate(1));
+            
+            // Restart Button
+            restartBtn.addEventListener('click', () => {
+                currentCardIndex = 0;
+                updateCardDisplay(currentCardIndex);
+                showMessage("Flashcards restarted from the beginning!");
+            });
+
+            // Keyboard Shortcuts
+            document.addEventListener('keydown', (e) => {
+                switch (e.code) {
+                    case 'Space':
+                        e.preventDefault(); // Prevent scrolling
+                        flipCard();
+                        break;
+                    case 'ArrowRight':
+                        navigate(1);
+                        break;
+                    case 'ArrowLeft':
+                        navigate(-1);
+                        break;
+                }
+            });
+        }
+
+        // --- INITIALIZATION ---
+
+        function init() {
+            cards = parseInitialData();
+            if (cards.length > 0) {
+                currentCardIndex = 0;
+                setupEventListeners();
+                updateCardDisplay(currentCardIndex);
+            } else {
+                 showMessage("Error: No flashcards were loaded. Please reload or check data source.");
+            }
+        }
+
+        // Wait for the window to load (important for DOM and MathJax)
+        window.onload = init;
+        
+    </script>
+</body>
+</html>
