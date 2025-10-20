@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projection Visualization (PCA Analogy)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    canvas { display: block; margin: auto; background: radial-gradient(circle at center, #1e293b, #0f172a); border-radius: 1rem; }
+    .caption { max-width: 750px; margin: 1.5rem auto; text-align: center; color: #94a3b8; }
+    .explanation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 800px; margin: 2rem auto; text-align: left; }
+    .explanation-grid div { background: #1e293b; padding: 1rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; }
+    .explanation-grid h3 { color: #a78bfa; font-weight: bold; margin-bottom: 0.5rem; }
+    .explanation-grid p { font-size: 0.9rem; }
+  </style>
+</head>
+<body class="p-8">
+
+  <h1 class="text-3xl font-bold text-center text-purple-400 mb-4">
+    Projection: PCA and Maximizing Explainability
+  </h1>
+
+  <p class="caption text-base">
+    The oblong 3D data (left) rotates. **PCA's job** is to find the angle (the Principal Component) where the 2D shadow (right) is **maximally stretched**—this is where the most information (variance) is preserved.
+  </p>
+
+  <canvas id="projectionCanvas" width="800" height="450"></canvas>
+
+  <script>
+    const canvas = document.getElementById("projectionCanvas");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    // --- 1. Generate OBLONG (Ellipsoid) data ---
+    const N = 300;
+    const points = [];
+    const SCALE_X = 2.0;
+    const SCALE_Y = 0.5;
+    const SCALE_Z = 0.8; 
+
+    for (let i = 0; i < N; i++) {
+      let x = (Math.random() - 0.5) * 2;
+      let y = (Math.random() - 0.5) * 2;
+      let z = (Math.random() - 0.5) * 2;
+
+      x *= SCALE_X;
+      y *= SCALE_Y;
+      z *= SCALE_Z;
+
+      const r = Math.PI / 4;
+      const x_prime = x * Math.cos(r) - y * Math.sin(r);
+      const y_prime = x * Math.sin(r) + y * Math.cos(r);
+
+      points.push({ x: x_prime, y: y_prime, z: z });
+    }
+
+    let angle = 0;
+    const projectionWallX = W/2 + 100;
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // --- Draw 2D projection plane (shadow wall) ---
+      ctx.fillStyle = "#1e293b";
+      ctx.fillRect(projectionWallX, 50, 4, 350);
+      ctx.fillStyle = "#334155";
+      ctx.fillRect(projectionWallX + 4, 50, 250, 350);
+
+      // Title overlays
+      ctx.font = "16px Inter";
+      ctx.fillStyle = "#a78bfa";
+      ctx.fillText("Original 3D Data", W/2 - 250, 40);
+      ctx.fillText("2D Shadow (Projection)", projectionWallX + 40, 40);
+
+      // --- Rotate and Project Points ---
+      const cosA = Math.cos(angle);
+      const sinA = Math.sin(angle);
+      let minShadowY = H;
+      let maxShadowY = 0;
+      let minShadowX = W;
+      let maxShadowX = 0;
+
+      for (const p of points) {
+        const x3d = p.x * cosA - p.z * sinA;
+        const z3d = p.x * sinA + p.z * cosA;
+        const y3d = p.y;
+
+        const scale = 80;
+        const x2d = W / 2 + x3d * scale - 180;
+        const y2d = H / 2 + y3d * scale;
+
+        // Draw 3D point
+        ctx.beginPath();
+        ctx.arc(x2d, y2d, 3, 0, Math.PI * 2);
+        ctx.fillStyle = "#8b5cf6";
+        ctx.fill();
+
+        // --- Shadow (Projection) ---
+        const shadowX = projectionWallX + 120 + x3d * 60;
+        const shadowY = y2d;
+
+        // Draw shadow point
+        ctx.beginPath();
+        ctx.arc(shadowX, shadowY, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(168, 85, 247, 0.7)";
+        ctx.fill();
+
+        // Update bounds for variance calculation
+        minShadowY = Math.min(minShadowY, shadowY);
+        maxShadowY = Math.max(maxShadowY, shadowY);
+        minShadowX = Math.min(minShadowX, shadowX);
+        maxShadowX = Math.max(maxShadowX, shadowX);
+
+        // Draw light rays
+        ctx.beginPath();
+        ctx.moveTo(x2d, y2d);
+        ctx.lineTo(shadowX, shadowY);
+        ctx.strokeStyle = "rgba(139,92,246,0.1)";
+        ctx.stroke();
+      }
+
+      // --- Visualize Variance (Explainability Score) ---
+      const shadowWidth = maxShadowX - minShadowX;
+      const shadowHeight = maxShadowY - minShadowY;
+      const variance = shadowWidth * shadowHeight; 
+
+      // Dynamic color/size to show "goodness" of projection (Explainability)
+      const maxVariance = 120 * 180; // A reasonable estimate for max area
+      const hue = 120 * (variance / maxVariance) * 4; // Scale hue based on spread (0=Red/Bad, 120=Green/Good)
+      const color = `hsl(${Math.min(hue, 120)}, 80%, 60%)`;
+
+      ctx.font = "bold 20px Inter";
+      ctx.fillStyle = color;
+      ctx.textAlign = 'center';
+      ctx.fillText(`Explainability Score: ${variance.toFixed(0)}`, projectionWallX + 175, 420);
+      ctx.textAlign = 'left';
+
+      // Draw a box around the projected points to clearly show the spread
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(minShadowX, minShadowY, shadowWidth, shadowHeight);
+      
+      angle += 0.005;
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+
+  <div class="explanation-grid">
+    <div>
+      <h3>High Score: Good Explanation (PCA Goal)</h3>
+      <p>When the score is **high** (green), the shadow is stretched. This means the projection preserved the most distance and difference between the data points. You lose the least amount of information.</p>
+    </div>
+    <div>
+      <h3>Low Score: Poor Explanation (The "Squishing")</h3>
+      <p>When the score is **low** (red/yellow), the shadow is compact. The original differences between data points have been 'squished' together, making the low-dimensional data hard to interpret and less useful.</p>
+    </div>
+  </div>
+
+</body>
+</html>
