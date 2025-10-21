@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understanding PCA: Principal Component Analysis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    canvas { display: block; margin: auto; background: radial-gradient(circle at center, #1e293b, #0f172a); border-radius: 1rem; cursor: crosshair; }
+    .caption { max-width: 850px; margin: 1.5rem auto; text-align: center; color: #94a3b8; line-height: 1.6; }
+    .controls { max-width: 900px; margin: 2rem auto; display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+    .controls button { background: #8b5cf6; color: white; padding: 0.5rem 1.5rem; border-radius: 0.5rem; border: none; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+    .controls button:hover { background: #a78bfa; transform: translateY(-2px); }
+    .controls button.active { background: #10b981; }
+    .step-indicator { max-width: 900px; margin: 2rem auto; display: flex; justify-content: space-between; gap: 0.5rem; }
+    .step { flex: 1; background: #1e293b; padding: 1rem; border-radius: 0.5rem; text-align: center; border: 2px solid #334155; transition: all 0.3s; }
+    .step.active { border-color: #8b5cf6; background: #2d1b69; }
+    .step-num { display: inline-block; width: 30px; height: 30px; border-radius: 50%; background: #8b5cf6; color: white; line-height: 30px; margin-bottom: 0.5rem; font-weight: bold; }
+    .step.active .step-num { background: #10b981; }
+    .step-title { font-weight: bold; color: #a78bfa; font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .step-desc { font-size: 0.75rem; color: #94a3b8; }
+    .explanation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 900px; margin: 2rem auto; }
+    .explanation-grid div { background: #1e293b; padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid #8b5cf6; }
+    .explanation-grid h3 { color: #a78bfa; font-weight: bold; margin-bottom: 0.75rem; font-size: 1.1rem; }
+    .explanation-grid p { font-size: 0.95rem; line-height: 1.6; }
+    .key-concepts { max-width: 900px; margin: 2rem auto; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 2rem; border-radius: 0.75rem; border: 2px solid #8b5cf6; }
+    .key-concepts h2 { color: #a78bfa; margin-bottom: 1.5rem; font-size: 1.5rem; }
+    .concept-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+    .concept-card { background: rgba(139, 92, 246, 0.1); padding: 1rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; }
+    .concept-card h3 { color: #c4b5fd; font-weight: bold; margin-bottom: 0.5rem; }
+    .concept-card p { font-size: 0.9rem; color: #cbd5e1; }
+  </style>
+</head>
+<body class="p-8">
+
+  <h1 class="text-4xl font-bold text-center text-purple-400 mb-4">
+    Understanding PCA: Principal Component Analysis
+  </h1>
+
+  <p class="caption text-base">
+    <strong>PCA finds the "best" axes</strong> to represent your data. Watch as PCA analyzes the data cloud, identifies the direction of maximum spread (PC1), 
+    then finds the second-best perpendicular direction (PC2). These new axes capture the most important patterns in your data.
+  </p>
+
+  <div class="step-indicator">
+    <div class="step" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-title">Original Data</div>
+      <div class="step-desc">2D scattered points</div>
+    </div>
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-title">Find PC1</div>
+      <div class="step-desc">Maximum variance</div>
+    </div>
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-title">Find PC2</div>
+      <div class="step-desc">Perpendicular direction</div>
+    </div>
+    <div class="step" id="step4">
+      <div class="step-num">4</div>
+      <div class="step-title">Project Data</div>
+      <div class="step-desc">New coordinate system</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="playBtn">▶ Play Animation</button>
+    <button id="step1Btn">Step 1: Data</button>
+    <button id="step2Btn">Step 2: PC1</button>
+    <button id="step3Btn">Step 3: PC2</button>
+    <button id="step4Btn">Step 4: Project</button>
+    <button id="resetBtn">↻ Reset</button>
+  </div>
+
+  <canvas id="pcaCanvas" width="900" height="600"></canvas>
+
+  <script>
+    const canvas = document.getElementById("pcaCanvas");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+    const centerX = W / 2;
+    const centerY = H / 2;
+
+    // Animation state
+    let currentStep = 0;
+    let animating = false;
+    let animationProgress = 0;
+
+    // Generate correlated 2D data (elliptical cluster)
+    const N = 150;
+    const points = [];
+    const angle = Math.PI / 6; // Data orientation
+    const scaleX = 2.5;
+    const scaleY = 0.8;
+
+    for (let i = 0; i < N; i++) {
+      let x = (Math.random() - 0.5) * 2 * scaleX;
+      let y = (Math.random() - 0.5) * 2 * scaleY;
+      
+      // Rotate to create correlation
+      const x_rot = x * Math.cos(angle) - y * Math.sin(angle);
+      const y_rot = x * Math.sin(angle) + y * Math.cos(angle);
+      
+      points.push({ x: x_rot, y: y_rot });
+    }
+
+    // Calculate PCA manually
+    // Mean center the data
+    let meanX = 0, meanY = 0;
+    for (const p of points) {
+      meanX += p.x;
+      meanY += p.y;
+    }
+    meanX /= N;
+    meanY /= N;
+
+    // Calculate covariance matrix
+    let cov_xx = 0, cov_yy = 0, cov_xy = 0;
+    for (const p of points) {
+      const dx = p.x - meanX;
+      const dy = p.y - meanY;
+      cov_xx += dx * dx;
+      cov_yy += dy * dy;
+      cov_xy += dx * dy;
+    }
+    cov_xx /= N;
+    cov_yy /= N;
+    cov_xy /= N;
+
+    // Calculate eigenvalues and eigenvectors (2x2 matrix)
+    const trace = cov_xx + cov_yy;
+    const det = cov_xx * cov_yy - cov_xy * cov_xy;
+    const lambda1 = trace / 2 + Math.sqrt(trace * trace / 4 - det);
+    const lambda2 = trace / 2 - Math.sqrt(trace * trace / 4 - det);
+
+    // PC1 eigenvector (direction of maximum variance)
+    let pc1_x = cov_xy;
+    let pc1_y = lambda1 - cov_xx;
+    const pc1_len = Math.sqrt(pc1_x * pc1_x + pc1_y * pc1_y);
+    pc1_x /= pc1_len;
+    pc1_y /= pc1_len;
+
+    // PC2 is perpendicular to PC1
+    const pc2_x = -pc1_y;
+    const pc2_y = pc1_x;
+
+    const variance_explained_1 = (lambda1 / (lambda1 + lambda2) * 100).toFixed(1);
+    const variance_explained_2 = (lambda2 / (lambda1 + lambda2) * 100).toFixed(1);
+
+    // Button handlers
+    document.getElementById("playBtn").addEventListener("click", function() {
+      if (!animating) {
+        animating = true;
+        currentStep = 0;
+        animationProgress = 0;
+        this.textContent = "⏸ Pause";
+      } else {
+        animating = false;
+        this.textContent = "▶ Play Animation";
+      }
+    });
+
+    document.getElementById("step1Btn").addEventListener("click", () => { currentStep = 0; animating = false; updatePlayButton(); });
+    document.getElementById("step2Btn").addEventListener("click", () => { currentStep = 1; animating = false; updatePlayButton(); });
+    document.getElementById("step3Btn").addEventListener("click", () => { currentStep = 2; animating = false; updatePlayButton(); });
+    document.getElementById("step4Btn").addEventListener("click", () => { currentStep = 3; animating = false; updatePlayButton(); });
+    document.getElementById("resetBtn").addEventListener("click", () => { currentStep = 0; animating = false; animationProgress = 0; updatePlayButton(); });
+
+    function updatePlayButton() {
+      document.getElementById("playBtn").textContent = "▶ Play Animation";
+    }
+
+    function updateStepIndicators() {
+      for (let i = 1; i <= 4; i++) {
+        const stepEl = document.getElementById(`step${i}`);
+        if (i - 1 === currentStep) {
+          stepEl.classList.add('active');
+        } else {
+          stepEl.classList.remove('active');
+        }
+      }
+    }
+
+    function drawGrid() {
+      ctx.strokeStyle = "rgba(71, 85, 103, 0.3)";
+      ctx.lineWidth = 1;
+      
+      // Vertical lines
+      for (let x = 0; x <= W; x += 50) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+      }
+      
+      // Horizontal lines
+      for (let y = 0; y <= H; y += 50) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+
+      // Original axes
+      ctx.strokeStyle = "rgba(148, 163, 184, 0.5)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(centerX, 0);
+      ctx.lineTo(centerX, H);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, centerY);
+      ctx.lineTo(W, centerY);
+      ctx.stroke();
+
+      // Axis labels
+      ctx.fillStyle = "#64748b";
+      ctx.font = "14px Inter";
+      ctx.fillText("Original X", W - 80, centerY - 10);
+      ctx.fillText("Original Y", centerX + 10, 30);
+    }
+
+    function drawPoints(opacity = 1, useProjection = false) {
+      const scale = 60;
+      
+      for (const p of points) {
+        let screenX, screenY;
+        
+        if (useProjection) {
+          // Project onto PC axes
+          const pc1_proj = (p.x - meanX) * pc1_x + (p.y - meanY) * pc1_y;
+          const pc2_proj = (p.x - meanX) * pc2_x + (p.y - meanY) * pc2_y;
+          
+          screenX = centerX + pc1_proj * scale;
+          screenY = centerY - pc2_proj * scale;
+        } else {
+          screenX = centerX + (p.x - meanX) * scale;
+          screenY = centerY - (p.y - meanY) * scale;
+        }
+        
+        ctx.beginPath();
+        ctx.arc(screenX, screenY, 4, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(139, 92, 246, ${opacity})`;
+        ctx.fill();
+      }
+    }
+
+    function drawPC(pcx, pcy, length, color, label, varianceExplained, progress = 1) {
+      const scale = 60;
+      const len = length * scale * progress;
+      
+      // Draw axis line
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(centerX - pcx * len, centerY + pcy * len);
+      ctx.lineTo(centerX + pcx * len, centerY - pcy * len);
+      ctx.stroke();
+
+      // Draw arrowheads
+      const arrowSize = 15;
+      const angle = Math.atan2(-pcy, pcx);
+      
+      // Positive direction arrow
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(centerX + pcx * len, centerY - pcy * len);
+      ctx.lineTo(
+        centerX + pcx * len - arrowSize * Math.cos(angle - Math.PI / 6),
+        centerY - pcy * len + arrowSize * Math.sin(angle - Math.PI / 6)
+      );
+      ctx.lineTo(
+        centerX + pcx * len - arrowSize * Math.cos(angle + Math.PI / 6),
+        centerY - pcy * len + arrowSize * Math.sin(angle + Math.PI / 6)
+      );
+      ctx.closePath();
+      ctx.fill();
+
+      // Label
+      if (progress > 0.8) {
+        ctx.font = "bold 16px Inter";
+        ctx.fillStyle = color;
+        const labelX = centerX + pcx * (len + 30);
+        const labelY = centerY - pcy * (len + 30);
+        ctx.fillText(label, labelX, labelY);
+        
+        ctx.font = "12px Inter";
+        ctx.fillText(`${varianceExplained}% variance`, labelX, labelY + 18);
+      }
+    }
+
+    function drawProjectionLines() {
+      const scale = 60;
+      
+      for (const p of points) {
+        const pc1_proj = (p.x - meanX) * pc1_x + (p.y - meanY) * pc1_y;
+        const pc2_proj = (p.x - meanX) * pc2_x + (p.y - meanY) * pc2_y;
+        
+        const origX = centerX + (p.x - meanX) * scale;
+        const origY = centerY - (p.y - meanY) * scale;
+        const projX = centerX + pc1_proj * scale;
+        const projY = centerY - pc2_proj * scale;
+        
+        ctx.beginPath();
+        ctx.moveTo(origX, origY);
+        ctx.lineTo(projX, projY);
+        ctx.strokeStyle = "rgba(16, 185, 129, 0.3)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      drawGrid();
+
+      updateStepIndicators();
+
+      // Step descriptions
+      ctx.font = "bold 20px Inter";
+      ctx.fillStyle = "#a78bfa";
+      ctx.textAlign = "center";
+      
+      switch(currentStep) {
+        case 0:
+          ctx.fillText("Step 1: Original Data in 2D Space", centerX, 40);
+          drawPoints();
+          ctx.font = "14px Inter";
+          ctx.fillStyle = "#94a3b8";
+          ctx.fillText("Data is correlated - points form an elongated cluster", centerX, H - 20);
+          break;
+          
+        case 1:
+          ctx.fillText("Step 2: First Principal Component (PC1)", centerX, 40);
+          drawPoints(0.7);
+          drawPC(pc1_x, pc1_y, 3.5, "#10b981", "PC1", variance_explained_1, animationProgress);
+          ctx.font = "14px Inter";
+          ctx.fillStyle = "#94a3b8";
+          ctx.fillText("PC1 points in the direction of MAXIMUM variance (widest spread)", centerX, H - 20);
+          break;
+          
+        case 2:
+          ctx.fillText("Step 3: Second Principal Component (PC2)", centerX, 40);
+          drawPoints(0.7);
+          drawPC(pc1_x, pc1_y, 3.5, "#10b981", "PC1", variance_explained_1, 1);
+          drawPC(pc2_x, pc2_y, 2, "#f59e0b", "PC2", variance_explained_2, animationProgress);
+          ctx.font = "14px Inter";
+          ctx.fillStyle = "#94a3b8";
+          ctx.fillText("PC2 is perpendicular to PC1, capturing remaining variance", centerX, H - 20);
+          break;
+          
+        case 3:
+          ctx.fillText("Step 4: Data Projected onto PC Axes", centerX, 40);
+          drawProjectionLines();
+          drawPoints(0.3);
+          drawPoints(1, true);
+          drawPC(pc1_x, pc1_y, 3.5, "#10b981", "PC1", variance_explained_1, 1);
+          drawPC(pc2_x, pc2_y, 2, "#f59e0b", "PC2", variance_explained_2, 1);
+          ctx.font = "14px Inter";
+          ctx.fillStyle = "#94a3b8";
+          ctx.fillText("Green lines show projection. Data is now aligned with PC axes!", centerX, H - 20);
+          break;
+      }
+      
+      ctx.textAlign = "left";
+
+      // Animation logic
+      if (animating) {
+        animationProgress += 0.015;
+        if (animationProgress >= 1) {
+          animationProgress = 0;
+          currentStep = (currentStep + 1) % 4;
+          if (currentStep === 0) {
+            animating = false;
+            updatePlayButton();
+          }
+        }
+      } else {
+        animationProgress = 1;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+
+  <div class="key-concepts">
+    <h2>🎯 How PCA Works: The Complete Picture</h2>
+    <div class="concept-row">
+      <div class="concept-card">
+        <h3>1. Center the Data</h3>
+        <p>PCA first shifts all data points so their average is at the origin (0,0). This ensures we're measuring variance from the center of the data cloud.</p>
+      </div>
+      <div class="concept-card">
+        <h3>2. Find Maximum Variance</h3>
+        <p>PC1 is calculated as the direction where data points are most spread out. This is the most "informative" direction in your data.</p>
+      </div>
+    </div>
+    <div class="concept-row">
+      <div class="concept-card">
+        <h3>3. Find Perpendicular Directions</h3>
+        <p>PC2, PC3, etc. are always perpendicular (orthogonal) to previous components. Each captures the maximum remaining variance.</p>
+      </div>
+      <div class="concept-card">
+        <h3>4. Dimensionality Reduction</h3>
+        <p>Keep only the top components (e.g., PC1 and PC2) and discard the rest. This reduces dimensions while preserving most information!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="explanation-grid">
+    <div>
+      <h3>📊 Why PCA Matters</h3>
+      <p>In real datasets with hundreds or thousands of dimensions (features), PCA finds the handful of directions that capture most of the variation. This makes visualization possible, speeds up machine learning, and reveals hidden patterns in the data.</p>
+    </div>
+    <div>
+      <h3>🧮 The Mathematics</h3>
+      <p>PCA computes eigenvectors and eigenvalues of the covariance matrix. Eigenvectors become the principal components (new axes), and eigenvalues tell us how much variance each component captures. The math is elegant and computationally efficient!</p>
+    </div>
+    <div>
+      <h3>🎨 Variance Explained</h3>
+      <p>Each PC comes with a "variance explained" percentage. PC1 might explain 85% of total variance, PC2 adds 12%, etc. This helps you decide how many components to keep for your analysis.</p>
+    </div>
+    <div>
+      <h3>🔄 Real Applications</h3>
+      <p>Face recognition (eigenfaces), genomics (analyzing gene expression), finance (portfolio risk), image compression, and exploratory data analysis all rely on PCA to handle high-dimensional data efficiently.</p>
+    </div>
+  </div>
+
+</body>
+</html>
