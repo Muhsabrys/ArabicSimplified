@@ -3,41 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projection Visualization (PCA Analogy)</title>
+  <title>Understanding Projection: From 3D to 2D</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-    canvas { display: block; margin: auto; background: radial-gradient(circle at center, #1e293b, #0f172a); border-radius: 1rem; }
+    canvas { display: block; margin: auto; background: radial-gradient(circle at center, #1e293b, #0f172a); border-radius: 1rem; cursor: grab; }
+    canvas:active { cursor: grabbing; }
     .caption { max-width: 750px; margin: 1.5rem auto; text-align: center; color: #94a3b8; }
+    .controls { max-width: 800px; margin: 2rem auto; display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+    .controls button { background: #8b5cf6; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; cursor: pointer; transition: all 0.3s; }
+    .controls button:hover { background: #a78bfa; transform: translateY(-2px); }
+    .controls button.active { background: #10b981; }
     .explanation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 800px; margin: 2rem auto; text-align: left; }
     .explanation-grid div { background: #1e293b; padding: 1rem; border-radius: 0.5rem; border-left: 3px solid #8b5cf6; }
     .explanation-grid h3 { color: #a78bfa; font-weight: bold; margin-bottom: 0.5rem; }
     .explanation-grid p { font-size: 0.9rem; }
+    .key-concepts { max-width: 800px; margin: 2rem auto; background: #1e293b; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #8b5cf6; }
+    .key-concepts h2 { color: #a78bfa; margin-bottom: 1rem; }
+    .key-concepts ul { list-style: none; padding: 0; }
+    .key-concepts li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+    .key-concepts li:before { content: "→"; position: absolute; left: 0; color: #8b5cf6; font-weight: bold; }
   </style>
 </head>
 <body class="p-8">
 
   <h1 class="text-3xl font-bold text-center text-purple-400 mb-4">
-    Projection: PCA and Maximizing Explainability
+    Understanding Projection: From 3D to 2D
   </h1>
 
   <p class="caption text-base">
-    The oblong 3D data (left) rotates. **PCA's job** is to find the angle (the Principal Component) where the 2D shadow (right) is **maximally stretched**—this is where the most information (variance) is preserved.
+    <strong>Projection</strong> is like casting a shadow. When 3D data projects onto a 2D plane, some information is lost. 
+    <strong>PCA finds the best angle</strong> to preserve the most information by maximizing the spread (variance) of the projected shadow.
   </p>
 
-  <canvas id="projectionCanvas" width="800" height="450"></canvas>
+  <div class="controls">
+    <button id="rotateBtn">⏸ Pause Rotation</button>
+    <button id="toggleRaysBtn">Hide Light Rays</button>
+    <button id="resetBtn">Reset View</button>
+  </div>
+
+  <canvas id="pcaCanvas" width="900" height="500"></canvas>
 
   <script>
-    const canvas = document.getElementById("projectionCanvas");
+    const canvas = document.getElementById("pcaCanvas");
     const ctx = canvas.getContext("2d");
     const W = canvas.width, H = canvas.height;
 
-    // --- 1. Generate OBLONG (Ellipsoid) data ---
-    const N = 300;
+    // Controls
+    let isRotating = true;
+    let showRays = true;
+    let angle = 0;
+    let isDragging = false;
+    let lastMouseX = 0;
+
+    document.getElementById("rotateBtn").addEventListener("click", function() {
+      isRotating = !isRotating;
+      this.textContent = isRotating ? "⏸ Pause Rotation" : "▶ Resume Rotation";
+    });
+
+    document.getElementById("toggleRaysBtn").addEventListener("click", function() {
+      showRays = !showRays;
+      this.textContent = showRays ? "Hide Light Rays" : "Show Light Rays";
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", function() {
+      angle = 0;
+      isRotating = true;
+      document.getElementById("rotateBtn").textContent = "⏸ Pause Rotation";
+    });
+
+    // Mouse interaction for manual rotation
+    canvas.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      lastMouseX = e.clientX;
+      isRotating = false;
+      document.getElementById("rotateBtn").textContent = "▶ Resume Rotation";
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+      if (isDragging) {
+        const deltaX = e.clientX - lastMouseX;
+        angle += deltaX * 0.01;
+        lastMouseX = e.clientX;
+      }
+    });
+
+    canvas.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    canvas.addEventListener("mouseleave", () => {
+      isDragging = false;
+    });
+
+    // --- Generate elongated ellipsoid data ---
+    const N = 250;
     const points = [];
-    const SCALE_X = 2.0;
-    const SCALE_Y = 0.5;
-    const SCALE_Z = 0.8; 
+    const SCALE_X = 2.2;
+    const SCALE_Y = 0.6;
+    const SCALE_Z = 0.9;
 
     for (let i = 0; i < N; i++) {
       let x = (Math.random() - 0.5) * 2;
@@ -48,32 +112,57 @@
       y *= SCALE_Y;
       z *= SCALE_Z;
 
-      const r = Math.PI / 4;
+      const r = Math.PI / 4; 
       const x_prime = x * Math.cos(r) - y * Math.sin(r);
       const y_prime = x * Math.sin(r) + y * Math.cos(r);
 
       points.push({ x: x_prime, y: y_prime, z: z });
     }
 
-    let angle = 0;
-    const projectionWallX = W/2 + 100;
+    const projectionWallX = W / 2 + 120;
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
 
-      // --- Draw 2D projection plane (shadow wall) ---
-      ctx.fillStyle = "#1e293b";
-      ctx.fillRect(projectionWallX, 50, 4, 350);
-      ctx.fillStyle = "#334155";
-      ctx.fillRect(projectionWallX + 4, 50, 250, 350);
+      // --- Draw projection plane with depth effect ---
+      const gradient = ctx.createLinearGradient(projectionWallX, 0, projectionWallX + 300, 0);
+      gradient.addColorStop(0, "#1e293b");
+      gradient.addColorStop(1, "#0f172a");
+      
+      ctx.fillStyle = gradient;
+      ctx.fillRect(projectionWallX + 4, 70, 300, 360);
+      
+      // Projection plane edge
+      ctx.fillStyle = "#475569";
+      ctx.fillRect(projectionWallX, 70, 5, 360);
 
-      // Title overlays
-      ctx.font = "16px Inter";
+      // Grid on projection plane
+      ctx.strokeStyle = "rgba(100, 116, 139, 0.3)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 6; i++) {
+        const y = 70 + i * 60;
+        ctx.beginPath();
+        ctx.moveTo(projectionWallX + 5, y);
+        ctx.lineTo(projectionWallX + 304, y);
+        ctx.stroke();
+      }
+      for (let i = 0; i <= 5; i++) {
+        const x = projectionWallX + 5 + i * 60;
+        ctx.beginPath();
+        ctx.moveTo(x, 70);
+        ctx.lineTo(x, 430);
+        ctx.stroke();
+      }
+
+      // Titles
+      ctx.font = "bold 18px Inter";
       ctx.fillStyle = "#a78bfa";
-      ctx.fillText("Original 3D Data", W/2 - 250, 40);
-      ctx.fillText("2D Shadow (Projection)", projectionWallX + 40, 40);
+      ctx.textAlign = "center";
+      ctx.fillText("Original 3D Data", W / 2 - 200, 50);
+      ctx.fillText("2D Projection", projectionWallX + 150, 50);
+      ctx.textAlign = "left";
 
-      // --- Rotate and Project Points ---
+      // --- Rotate and project points ---
       const cosA = Math.cos(angle);
       const sinA = Math.sin(angle);
       let minShadowY = H;
@@ -81,81 +170,157 @@
       let minShadowX = W;
       let maxShadowX = 0;
 
+      // Store projected points for rendering order
+      const projectedPoints = [];
+
       for (const p of points) {
+        // Rotation around Y-axis
         const x3d = p.x * cosA - p.z * sinA;
         const z3d = p.x * sinA + p.z * cosA;
         const y3d = p.y;
 
-        const scale = 80;
-        const x2d = W / 2 + x3d * scale - 180;
+        // Perspective projection for 3D view
+        const scale = 85;
+        const depth = 1 / (1 + z3d * 0.1);
+        const x2d = W / 2 + x3d * scale - 230;
         const y2d = H / 2 + y3d * scale;
 
-        // Draw 3D point
-        ctx.beginPath();
-        ctx.arc(x2d, y2d, 3, 0, Math.PI * 2);
-        ctx.fillStyle = "#8b5cf6";
-        ctx.fill();
+        // Shadow projection
+        const shadowX = projectionWallX + 152 + x3d * 65; 
+        const shadowY = H / 2 + y3d * scale;
 
-        // --- Shadow (Projection) ---
-        const shadowX = projectionWallX + 120 + x3d * 60;
-        const shadowY = y2d;
+        projectedPoints.push({ x2d, y2d, shadowX, shadowY, depth, z3d });
 
-        // Draw shadow point
-        ctx.beginPath();
-        ctx.arc(shadowX, shadowY, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(168, 85, 247, 0.7)";
-        ctx.fill();
-
-        // Update bounds for variance calculation
         minShadowY = Math.min(minShadowY, shadowY);
         maxShadowY = Math.max(maxShadowY, shadowY);
         minShadowX = Math.min(minShadowX, shadowX);
         maxShadowX = Math.max(maxShadowX, shadowX);
-
-        // Draw light rays
-        ctx.beginPath();
-        ctx.moveTo(x2d, y2d);
-        ctx.lineTo(shadowX, shadowY);
-        ctx.strokeStyle = "rgba(139,92,246,0.1)";
-        ctx.stroke();
       }
 
-      // --- Visualize Variance (Explainability Score) ---
+      // Sort by depth for proper rendering
+      projectedPoints.sort((a, b) => a.z3d - b.z3d);
+
+      // Draw light rays first
+      if (showRays) {
+        for (const pt of projectedPoints) {
+          ctx.beginPath();
+          ctx.moveTo(pt.x2d, pt.y2d);
+          ctx.lineTo(pt.shadowX, pt.shadowY);
+          ctx.strokeStyle = "rgba(139, 92, 246, 0.08)";
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+
+      // Draw 3D points
+      for (const pt of projectedPoints) {
+        const size = 2.5 + pt.depth * 1.5;
+        ctx.beginPath();
+        ctx.arc(pt.x2d, pt.y2d, size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(139, 92, 246, ${0.7 + pt.depth * 0.3})`;
+        ctx.fill();
+      }
+
+      // Draw shadow points
+      for (const pt of projectedPoints) {
+        ctx.beginPath();
+        ctx.arc(pt.shadowX, pt.shadowY, 2.8, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(168, 85, 247, 0.85)";
+        ctx.fill();
+      }
+
+      // --- Calculate and display variance ---
       const shadowWidth = maxShadowX - minShadowX;
       const shadowHeight = maxShadowY - minShadowY;
-      const variance = shadowWidth * shadowHeight; 
+      const variance = shadowWidth * shadowHeight;
+      const maxPossibleVariance = 130 * 200;
+      const ratio = Math.min(variance / maxPossibleVariance, 1);
+      
+      // Color gradient from red (low) to green (high)
+      const hue = 120 * ratio;
+      const color = `hsl(${hue}, 75%, 60%)`;
 
-      // Dynamic color/size to show "goodness" of projection (Explainability)
-      const maxVariance = 120 * 180; // A reasonable estimate for max area
-      const hue = 120 * (variance / maxVariance) * 4; // Scale hue based on spread (0=Red/Bad, 120=Green/Good)
-      const color = `hsl(${Math.min(hue, 120)}, 80%, 60%)`;
+      // Draw bounding box around projection
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.setLineDash([5, 5]);
+      ctx.strokeRect(minShadowX - 5, minShadowY - 5, shadowWidth + 10, shadowHeight + 10);
+      ctx.setLineDash([]);
 
-      ctx.font = "bold 20px Inter";
+      // Display metrics
+      ctx.font = "bold 22px Inter";
       ctx.fillStyle = color;
       ctx.textAlign = 'center';
-      ctx.fillText(`Explainability Score: ${variance.toFixed(0)}`, projectionWallX + 175, 420);
+      ctx.fillText(`Variance Captured: ${(ratio * 100).toFixed(1)}%`, projectionWallX + 150, 460);
+      
+      ctx.font = "14px Inter";
+      ctx.fillStyle = "#94a3b8";
+      ctx.fillText(`Spread: ${shadowWidth.toFixed(0)} × ${shadowHeight.toFixed(0)} pixels`, projectionWallX + 150, 480);
       ctx.textAlign = 'left';
 
-      // Draw a box around the projected points to clearly show the spread
-      ctx.strokeStyle = color;
+      // Add arrows showing projection direction
+      ctx.strokeStyle = "#a78bfa";
+      ctx.fillStyle = "#a78bfa";
       ctx.lineWidth = 2;
-      ctx.strokeRect(minShadowX, minShadowY, shadowWidth, shadowHeight);
+      ctx.setLineDash([]);
       
-      angle += 0.005;
+      // Arrow from 3D space to projection
+      const arrowY = 100;
+      ctx.beginPath();
+      ctx.moveTo(W / 2 - 50, arrowY);
+      ctx.lineTo(projectionWallX - 20, arrowY);
+      ctx.stroke();
+      
+      // Arrowhead
+      ctx.beginPath();
+      ctx.moveTo(projectionWallX - 20, arrowY);
+      ctx.lineTo(projectionWallX - 30, arrowY - 5);
+      ctx.lineTo(projectionWallX - 30, arrowY + 5);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.font = "12px Inter";
+      ctx.fillStyle = "#a78bfa";
+      ctx.textAlign = "center";
+      ctx.fillText("Projection", W / 2 + 35, arrowY - 10);
+      ctx.textAlign = "left";
+
+      if (isRotating) {
+        angle += 0.006;
+      }
       requestAnimationFrame(draw);
     }
 
     draw();
   </script>
 
+  <div class="key-concepts">
+    <h2>🔑 What is Projection?</h2>
+    <ul>
+      <li><strong>Projection</strong> transforms higher-dimensional data to lower dimensions, like casting a 3D shadow onto a 2D wall</li>
+      <li>The <strong>light rays</strong> show how each 3D point maps to its 2D position on the projection plane</li>
+      <li><strong>Information loss</strong> is inevitable—the 3D depth gets "flattened" into 2D</li>
+      <li><strong>Angle matters!</strong> Different rotation angles create different projections with varying amounts of preserved information</li>
+      <li><strong>PCA's goal:</strong> Find the projection angle that keeps the data as "spread out" as possible (maximum variance)</li>
+    </ul>
+  </div>
+
   <div class="explanation-grid">
     <div>
-      <h3>High Score: Good Explanation (PCA Goal)</h3>
-      <p>When the score is **high** (green), the shadow is stretched. This means the projection preserved the most distance and difference between the data points. You lose the least amount of information.</p>
+      <h3>High Variance = Good Projection</h3>
+      <p>When the variance captured is <strong>high (green)</strong>, the projected points are spread out widely. This means the projection preserves distinctions between data points—they remain separable and informative in the reduced space.</p>
     </div>
     <div>
-      <h3>Low Score: Poor Explanation (The "Squishing")</h3>
-      <p>When the score is **low** (red/yellow), the shadow is compact. The original differences between data points have been 'squished' together, making the low-dimensional data hard to interpret and less useful.</p>
+      <h3>Low Variance = Poor Projection</h3>
+      <p>When variance is <strong>low (red)</strong>, the projection squashes points together. Different data points that were distinct in 3D become clustered in 2D, losing their unique characteristics and making them hard to distinguish.</p>
+    </div>
+    <div>
+      <h3>Interactive Controls</h3>
+      <p><strong>Drag the canvas</strong> to manually rotate the 3D data and see how different angles affect the projection. <strong>Pause rotation</strong> to examine a specific viewpoint, or <strong>hide light rays</strong> to focus on the point clouds.</p>
+    </div>
+    <div>
+      <h3>Real-World Applications</h3>
+      <p>Projection is used everywhere: compressing images, visualizing high-dimensional datasets, reducing noise in signals, and finding patterns in data with hundreds or thousands of dimensions that humans can't directly visualize.</p>
     </div>
   </div>
 
