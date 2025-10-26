@@ -219,274 +219,174 @@
     <script>
         // Data structure for flashcards
         const flashcardsData = [
-             {
-              "f": "What are the two most common supervised learning tasks mentioned in the text?",
-              "b": "Regression (predicting values) and classification (predicting classes)."
-            },
-            {
-              "f": "Where does Scikit-Learn cache downloaded datasets by default?",
-              "b": "In a directory named `$HOME/scikit_learn_data`."
-            },
-            {
-              "f": "What is the MNIST dataset?",
-              "b": "A set of 70,000 small images of handwritten digits from 0 to 9."
-            },
-            {
-              "f": "Why is the MNIST dataset often called the 'hello world' of Machine Learning?",
-              "b": "Because it's a standard, well-studied dataset that is often used to test new classification algorithms."
-            },
-            {
-              "f": "What three keys are typically present in a dataset dictionary loaded by Scikit-Learn?",
-              "b": "A 'DESCR' key for the description, a 'data' key for the features, and a 'target' key for the labels."
-            },
-            {
-              "f": "The MNIST dataset contains 70,000 images, each with 784 features. What do these 784 features represent?",
-              "b": "The intensity of each pixel in a 28x28 image, from 0 (white) to 255 (black)."
-            },
-            {
-              "f": "Into what two sets is the MNIST dataset already split?",
-              "b": "A training set of the first 60,000 images and a test set of the last 10,000 images."
-            },
-            {
-              "f": "Why is it beneficial that the MNIST training set is already shuffled?",
-              "b": "It ensures cross-validation folds are similar and helps algorithms that are sensitive to the order of training instances."
-            },
-            {
-              "f": "For what type of data might shuffling the dataset be a bad idea?",
-              "b": "Time series data, such as stock market prices or weather conditions."
-            },
-            {
-              "f": "A classifier capable of distinguishing between just two classes (e.g., '5' and 'not-5') is known as a _____ classifier.",
-              "b": "binary"
-            },
-            {
-              "f": "What is the primary advantage of the `SGDClassifier` mentioned in the text?",
-              "b": "It is capable of handling very large datasets efficiently because it processes instances one at a time."
-            },
-            {
-              "f": "For a binary classification task to detect the number 5, what would the target vector `y_train_5` contain?",
-              "b": "It would contain `True` for all images that are 5s and `False` for all other digits."
-            },
-            {
-              "f": "What parameter should be set in classifiers like `SGDClassifier` to ensure reproducible results?",
-              "b": "The `random_state` parameter."
-            },
-            {
-              "f": "Why is accuracy generally not the preferred performance measure for classifiers, especially with skewed datasets?",
-              "b": "Because a classifier can achieve high accuracy by simply guessing the most frequent class."
-            },
-            {
-              "f": "What is a skewed dataset?",
-              "b": "A dataset where some classes are much more frequent than others."
-            },
-            {
-              "f": "A better way to evaluate the performance of a classifier than accuracy is to look at the _____.",
-              "b": "confusion matrix"
-            },
-            {
-              "f": "What does the `cross_val_predict()` function in Scikit-Learn return?",
-              "b": "It returns the predictions made on each test fold during K-fold cross-validation."
-            },
-            {
-              "f": "In a confusion matrix, each row represents an _____, while each column represents a _____.",
-              "b": "actual class, predicted class"
-            },
-            {
-              "f": "Term: True Negatives (TN)",
-              "b": "Instances of the negative class that were correctly classified as negative."
-            },
-            {
-              "f": "Term: False Positives (FP)",
-              "b": "Instances of the negative class that were wrongly classified as positive."
-            },
-            {
-              "f": "Term: False Negatives (FN)",
-              "b": "Instances of the positive class that were wrongly classified as negative."
-            },
-            {
-              "f": "Term: True Positives (TP)",
-              "b": "Instances of the positive class that were correctly classified as positive."
-            },
-            {
-              "f": "A perfect classifier would have a confusion matrix with nonzero values only on its _____.",
-              "b": "main diagonal (top left to bottom right)"
-            },
-            {
-              "f": "What is the definition of precision in classification?",
-              "b": "The accuracy of the positive predictions; the ratio of true positives to all positive predictions."
-            },
-            {
-              "f": "What is the formula for precision?",
-              "b": "$precision = \\frac{TP}{TP + FP}$"
-            },
-            {
-              "f": "What is the definition of recall in classification?",
-              "b": "The ratio of positive instances that are correctly detected by the classifier."
-            },
-            {
-              "f": "What are two other names for recall?",
-              "b": "Sensitivity or the true positive rate (TPR)."
-            },
-            {
-              "f": "What is the formula for recall?",
-              "b": "$recall = \\frac{TP}{TP + FN}$"
-            },
-            {
-              "f": "The _____ score is the harmonic mean of precision and recall, useful for comparing two classifiers.",
-              "b": "F1"
-            },
-            {
-              "f": "A classifier will only get a high F1 score if both _____ and _____ are high.",
-              "b": "recall, precision"
-            },
-            {
-              "f": "What is the formula for the F1 score?",
-              "b": "$F_1 = 2 \\times \\frac{precision \\times recall}{precision + recall}$"
-            },
-            {
-              "f": "The inverse relationship where increasing precision reduces recall, and vice versa, is called the _____.",
-              "b": "precision/recall trade-off"
-            },
-            {
-              "f": "How does the `SGDClassifier` make a classification decision for an instance?",
-              "b": "It computes a score using a decision function and assigns the instance to the positive class if the score is greater than a threshold."
-            },
-            {
-              "f": "What Scikit-Learn method allows you to access the scores used by a classifier to make predictions?",
-              "b": "The `decision_function()` method."
-            },
-            {
-              "f": "How does raising the decision threshold of a classifier generally affect precision and recall?",
-              "b": "It increases precision and decreases recall."
-            },
-            {
-              "f": "How does lowering the decision threshold of a classifier generally affect precision and recall?",
-              "b": "It decreases precision and increases recall."
-            },
-            {
-              "f": "What does the receiver operating characteristic (ROC) curve plot? (Axes)",
-              "b": "It plots the true positive rate (TPR) against the false positive rate (FPR)."
-            },
-            {
-              "f": "The false positive rate (FPR) is the ratio of _____ instances that are incorrectly classified as _____. (Classes)",
-              "b": "negative, positive"
-            },
-            {
-              "f": "FPR is equal to 1 minus the _____, which is also called specificity.",
-              "b": "true negative rate (TNR)"
-            },
-            {
-              "f": "Therefore, the ROC curve plots sensitivity (recall) versus _____. (Term)",
-              "b": "1 - specificity"
-            },
-            {
-              "f": "What does the area under the ROC curve (AUC) measure?",
-              "b": "It serves as a single number summary of a classifier's performance, where a perfect classifier has an AUC of 1 and a random one has an AUC of 0.5."
-            },
-            {
-              "f": "When should the Precision-Recall (PR) curve be preferred over the ROC curve?",
-              "b": "When the positive class is rare or when you care more about false positives than false negatives."
-            },
-            {
-              "f": "Instead of a `decision_function()`, what method does a `RandomForestClassifier` have to get prediction scores?",
-              "b": "The `predict_proba()` method."
-            },
-            {
-              "f": "What does the `predict_proba()` method return?",
-              "b": "An array with one row per instance and one column per class, containing the probability that the instance belongs to the given class."
-            },
-            {
-              "f": "Classifiers that can distinguish between more than two classes are called _____ classifiers.",
-              "b": "multiclass (or multinomial)"
-            },
-            {
-              "f": "Name two algorithms mentioned in the text that are strictly binary classifiers and require a strategy for multiclass tasks.",
-              "b": "Logistic Regression and Support Vector Machine (SVM) classifiers."
-            },
-            {
-              "f": "Describe the one-versus-the-rest (OvR) strategy for multiclass classification.",
-              "b": "Train one binary classifier for each digit (e.g., a 0-detector, 1-detector) and select the class whose classifier outputs the highest score."
-            },
-            {
-              "f": "Describe the one-versus-one (OvO) strategy for multiclass classification.",
-              "b": "Train a binary classifier for every pair of digits (e.g., 0s vs 1s, 0s vs 2s) and see which class wins the most duels."
-            },
-            {
-              "f": "For the MNIST problem with 10 classes, how many binary classifiers would the OvO strategy require?",
-              "b": "45 classifiers, calculated as $10 \\times (10 - 1) / 2$."
-            },
-            {
-              "f": "What is the main advantage of the OvO strategy, especially for algorithms like SVMs?",
-              "b": "Each classifier only needs to be trained on the part of the training set for the two classes it must distinguish, which is faster for algorithms that scale poorly."
-            },
-            {
-              "f": "Which multiclass strategy does Scikit-Learn use by default for the `SVC` class?",
-              "b": "The one-versus-one (OvO) strategy."
-            },
-            {
-              "f": "If you want to explicitly force Scikit-Learn to use an OvR strategy with an SVC, what class would you use?",
-              "b": "The `OneVsRestClassifier` class, passing the SVC as an argument."
-            },
-            {
-              "f": "What is a key step in error analysis for a multiclass classifier?",
-              "b": "To look at the confusion matrix to see the types of errors the classifier makes."
-            },
-            {
-              "f": "To compare error rates in a confusion matrix, each value should be divided by the number of images in the corresponding _____. (Class type)",
-              "b": "actual class"
-            },
-            {
-              "f": "Looking at the normalized confusion matrix plot, a bright column for class 8 indicates what?",
-              "b": "It indicates that many images from other classes are being misclassified as 8s."
-            },
-            {
-              "f": "What is one way to reduce the confusion between 3s and 5s for a linear classifier?",
-              "b": "Preprocess the images to ensure they are well-centered and not too rotated."
-            },
-            {
-              "f": "What is a multilabel classification system?",
-              "b": "A classification system that outputs multiple binary tags for each instance."
-            },
-            {
-              "f": "In Scikit-Learn's `f1_score` function for a multilabel task, what does setting `average=\"weighted\"` do?",
-              "b": "It gives each label a weight equal to its support (the number of instances with that label)."
-            },
-            {
-              "f": "Term: Multioutput classification",
-              "b": "A generalization of multilabel classification where each label can be multiclass (i.e., can have more than two possible values)."
-            },
-            {
-              "f": "The example of building a system to remove noise from images is an instance of what type of classification?",
-              "b": "Multioutput classification, where each pixel is a label with a value from 0-255."
-            },
-            {
-              "f": "What is the technique of artificially growing the training set called?",
-              "b": "Data augmentation or training set expansion."
-            },
-            {
-              "f": "What is an example of data augmentation described for the MNIST dataset?",
-              "b": "Creating four shifted copies (up, down, left, right) for each image in the training set."
-            },
-            {
-              "f": "What class in Scikit-Learn can perform stratified sampling to produce folds that contain a representative ratio of each class?",
-              "b": "The `StratifiedKFold` class."
-            },
-            {
-              "f": "In a confusion matrix, the first row considers the _____ class, and the second row considers the _____ class.",
-              "b": "negative, positive"
-            },
-            {
-              "f": "If you train a classifier to detect shoplifters, would you prioritize high precision or high recall?",
-              "b": "High recall, to ensure almost all shoplifters are caught, even if it means a few false alerts."
-            },
-            {
-              "f": "If you train a classifier to detect videos safe for kids, would you prioritize high precision or high recall?",
-              "b": "High precision, to ensure only safe videos are kept, even if some good videos are rejected."
-            },
-            {
-              "f": "What does scaling the inputs using `StandardScaler` often do for a model's performance?",
-              "b": "It can significantly increase accuracy."
-            }
+  {
+    "front": "What are the two most common supervised learning tasks?",
+    "back": "Regression (predicting continuous values) and classification (predicting discrete classes or categories)."
+  },
+  {
+    "front": "What is a binary classifier?",
+    "back": "A classifier capable of distinguishing between exactly two classes (e.g., 'spam' vs 'not spam', 'positive' vs 'negative')."
+  },
+  {
+    "front": "What is a multiclass (multinomial) classifier?",
+    "back": "A classifier that can distinguish between more than two classes (e.g., classifying images into categories like cat, dog, bird, etc.)."
+  },
+  {
+    "front": "What is a skewed dataset in classification?",
+    "back": "A dataset where some classes are much more frequent than others (class imbalance), which can lead to misleading accuracy metrics."
+  },
+  {
+    "front": "What is a confusion matrix?",
+    "back": "A table that shows the number of correct and incorrect predictions made by a classifier, broken down by actual class and predicted class."
+  },
+  {
+    "front": "In a confusion matrix, what do rows and columns represent?",
+    "back": "Each row represents an actual class, while each column represents a predicted class."
+  },
+  {
+    "front": "What would a perfect classifier's confusion matrix look like?",
+    "back": "It would have nonzero values only on the main diagonal (from top-left to bottom-right), indicating all predictions were correct."
+  },
+  {
+    "front": "Define: True Positives (TP)",
+    "back": "Instances of the positive class that were correctly classified as positive."
+  },
+  {
+    "front": "Define: False Positives (FP)",
+    "back": "Instances of the negative class that were incorrectly classified as positive (Type I error)."
+  },
+  {
+    "front": "Define: False Negatives (FN)",
+    "back": "Instances of the positive class that were incorrectly classified as negative (Type II error)."
+  },
+  {
+    "front": "Define: True Negatives (TN)",
+    "back": "Instances of the negative class that were correctly classified as negative."
+  },
+  {
+    "front": "Why is accuracy often not the best metric for classification, especially with imbalanced datasets?",
+    "back": "A classifier can achieve high accuracy by simply predicting the most frequent class for all instances, missing the minority class entirely."
+  },
+  {
+    "front": "What is precision in classification?",
+    "back": "The accuracy of positive predictions; the ratio of true positives to all positive predictions. Formula: Precision = TP / (TP + FP)"
+  },
+  {
+    "front": "What is recall (sensitivity) in classification?",
+    "back": "The ratio of positive instances that are correctly detected. Formula: Recall = TP / (TP + FN). Also called the true positive rate (TPR)."
+  },
+  {
+    "front": "What is the F1 score?",
+    "back": "The harmonic mean of precision and recall, providing a single score that balances both metrics. Formula: F1 = 2 × (precision × recall) / (precision + recall)"
+  },
+  {
+    "front": "When will a classifier get a high F1 score?",
+    "back": "Only when both precision and recall are high. The F1 score penalizes classifiers that have either low precision or low recall."
+  },
+  {
+    "front": "What is specificity?",
+    "back": "The true negative rate (TNR); the ratio of negative instances that are correctly identified as negative. Specificity = TN / (TN + FP)"
+  },
+  {
+    "front": "What is the precision/recall trade-off?",
+    "back": "The inverse relationship where increasing precision typically reduces recall and vice versa. You can adjust this trade-off by changing the decision threshold."
+  },
+  {
+    "front": "How does raising the decision threshold affect precision and recall?",
+    "back": "It generally increases precision (fewer false positives) but decreases recall (more false negatives)."
+  },
+  {
+    "front": "How does lowering the decision threshold affect precision and recall?",
+    "back": "It generally decreases precision (more false positives) but increases recall (fewer false negatives)."
+  },
+  {
+    "front": "When would you prioritize high precision over high recall?",
+    "back": "When false positives are very costly (e.g., spam detection where legitimate emails must not be blocked, medical diagnosis where false alarms cause unnecessary worry)."
+  },
+  {
+    "front": "When would you prioritize high recall over high precision?",
+    "back": "When false negatives are very costly (e.g., fraud detection, disease screening, security threats where missing a positive case is dangerous)."
+  },
+  {
+    "front": "What does the ROC (Receiver Operating Characteristic) curve plot?",
+    "back": "It plots the True Positive Rate (TPR/Recall) against the False Positive Rate (FPR) at various threshold settings."
+  },
+  {
+    "front": "What is the False Positive Rate (FPR)?",
+    "back": "The ratio of negative instances incorrectly classified as positive. FPR = FP / (FP + TN) = 1 - Specificity"
+  },
+  {
+    "front": "What does the Area Under the ROC Curve (AUC) measure?",
+    "back": "A single-number summary of classifier performance. Perfect classifier: AUC = 1.0, Random classifier: AUC = 0.5, Worse than random: AUC < 0.5"
+  },
+  {
+    "front": "When should you prefer the Precision-Recall curve over the ROC curve?",
+    "back": "When dealing with highly imbalanced datasets where the positive class is rare, or when you care more about the performance on the positive class."
+  },
+  {
+    "front": "What is the One-vs-Rest (OvR) strategy for multiclass classification?",
+    "back": "Train one binary classifier for each class against all other classes combined, then select the class whose classifier outputs the highest confidence score."
+  },
+  {
+    "front": "What is the One-vs-One (OvO) strategy for multiclass classification?",
+    "back": "Train a binary classifier for every pair of classes, then classify by voting - the class that wins the most pairwise comparisons is selected."
+  },
+  {
+    "front": "How many binary classifiers does OvO require for N classes?",
+    "back": "N × (N-1) / 2 classifiers. For example, 10 classes would require 45 binary classifiers."
+  },
+  {
+    "front": "What is the main advantage of the OvO strategy?",
+    "back": "Each classifier only trains on data from two classes, making it faster for algorithms that don't scale well with dataset size, and potentially more accurate for complex decision boundaries."
+  },
+  {
+    "front": "What is multilabel classification?",
+    "back": "A classification system where each instance can belong to multiple classes simultaneously (e.g., tagging an article with multiple topics)."
+  },
+  {
+    "front": "What is multioutput classification?",
+    "back": "A generalization where each instance has multiple outputs, and each output can be multiclass (more than binary). Example: predicting multiple attributes of an object."
+  },
+  {
+    "front": "What is data augmentation in the context of classification?",
+    "back": "The technique of artificially expanding the training set by creating modified versions of existing data (e.g., rotating, scaling, or adding noise to images)."
+  },
+  {
+    "front": "What is stratified sampling in cross-validation?",
+    "back": "A sampling technique that ensures each fold contains approximately the same percentage of samples from each class as the complete dataset, maintaining class distribution."
+  },
+  {
+    "front": "What is a key step in error analysis for a classifier?",
+    "back": "Examining the confusion matrix to identify patterns in misclassification, understanding which classes are commonly confused with each other."
+  },
+  {
+    "front": "How can you analyze errors in a multiclass confusion matrix?",
+    "back": "Normalize by dividing each value by the number of instances in the actual class, then look for bright spots off the diagonal to identify common confusions."
+  },
+  {
+    "front": "What is the effect of feature scaling on classification performance?",
+    "back": "Proper feature scaling (e.g., standardization or normalization) often significantly improves classifier performance, especially for distance-based algorithms."
+  },
+  {
+    "front": "What is a decision function in classification?",
+    "back": "A function that computes a score for each instance; the classifier assigns the instance to a class based on whether this score exceeds a threshold."
+  },
+  {
+    "front": "What's the difference between decision_function() and predict_proba()?",
+    "back": "decision_function() returns a score (can be any real number), while predict_proba() returns probability estimates between 0 and 1 for each class."
+  },
+  {
+    "front": "Why might shuffling training data be beneficial?",
+    "back": "It ensures that cross-validation folds are similar and prevents algorithms sensitive to instance order from learning spurious patterns."
+  },
+  {
+    "front": "When should you NOT shuffle your training data?",
+    "back": "For time series data or any sequential data where the order contains important information (e.g., stock prices, weather patterns, text sequences)."
+  },
+  {
+    "front": "What are some ways to handle class imbalance?",
+    "back": "Resampling (over-sampling minority or under-sampling majority), using class weights, choosing appropriate metrics (F1, AUC), or using ensemble methods like SMOTE."
+  }
         ];
 
         let currentCardIndex = 0;
