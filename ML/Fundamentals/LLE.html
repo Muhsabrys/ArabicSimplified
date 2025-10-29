@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understanding LLE: Keep Your Neighbors</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0f172a; color: #e2e8f0; font-family: Inter, ui-sans-serif, system-ui; }
+    .panel { background: radial-gradient(circle at 50% 30%, #1f2937 0%, #0b1220 60%); border-radius: 1rem; }
+    .caption { color: #94a3b8; }
+    canvas { display:block; margin:0 auto; border-radius: .75rem; cursor: grab; }
+    canvas:active { cursor: grabbing; }
+    .btn { background:#8b5cf6; padding:.5rem .75rem; border-radius:.5rem; transition:all .2s; }
+    .btn:hover { background:#a78bfa; transform: translateY(-1px); }
+    .btn.secondary { background:#0ea5e9; }
+    .btn.secondary:hover { background:#38bdf8; }
+    .btn.ghost { background:#334155; }
+    .btn.ghost:hover { background:#475569; }
+    .badge { background:#1e293b; border:1px solid #334155; border-radius:.375rem; padding:.1rem .4rem; color:#cbd5e1; }
+    .card { background:#0b1220; border:1px solid #1f2a40; border-radius:.75rem; }
+    .accent { color:#a78bfa; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+    .slim { letter-spacing:.1px; }
+  </style>
+</head>
+<body class="p-6 md:p-10">
+  <header class="max-w-5xl mx-auto mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold text-center text-purple-300">Understanding LLE: Keep Your Neighbors</h1>
+    <p class="caption text-center mt-3">LLE makes a small, flat map of your data while keeping <b>who is near whom</b>. Think of a class standing on a spiral staircase (3D). LLE asks everyone to move to a hallway (2D) but <b>stay next to the same friends</b>.</p>
+  </header>
+
+  <main class="max-w-6xl mx-auto">
+    <!-- Controls -->
+    <section class="card p-4 mb-4">
+      <div class="flex flex-wrap items-center gap-2 justify-center">
+        <button id="regenBtn" class="btn">🔁 Regenerate Data</button>
+        <button id="rotateBtn" class="btn ghost">⏸ Pause 3D Rotation</button>
+        <button id="optBtn" class="btn secondary">▶ Run LLE Optimization</button>
+        <button id="resetYBtn" class="btn ghost">Reset 2D Init</button>
+        <label class="flex items-center gap-2 ml-2">k (neighbors): <input id="kInput" type="range" min="5" max="20" value="12" class="w-40"/><span id="kLabel" class="badge">12</span></label>
+        <label class="flex items-center gap-2">N (points): <input id="nInput" type="range" min="80" max="280" value="180" class="w-40"/><span id="nLabel" class="badge">180</span></label>
+        <label class="flex items-center gap-2"><input id="showEdges" type="checkbox" checked/> <span>Show neighbor lines</span></label>
+      </div>
+    </section>
+
+    <!-- Canvases -->
+    <section class="grid-3 gap-3 mb-6">
+      <div class="panel p-3">
+        <h3 class="text-center text-sm accent mb-1">Original 3D (Swiss Roll)</h3>
+        <canvas id="canvas3d" width="420" height="340"></canvas>
+        <p class="caption text-xs text-center">Drag to rotate. LLE builds a neighbor graph in this space.</p>
+      </div>
+      <div class="panel p-3">
+        <h3 class="text-center text-sm accent mb-1">Neighbor Recipes (Weights)</h3>
+        <canvas id="canvasWeights" width="420" height="340"></canvas>
+        <p class="caption text-xs text-center">Pick a point (click). We highlight its <b>k</b> friends and the reconstruction idea.</p>
+      </div>
+      <div class="panel p-3">
+        <h3 class="text-center text-sm accent mb-1">LLE 2D Embedding</h3>
+        <canvas id="canvas2d" width="420" height="340"></canvas>
+        <div class="caption text-xs text-center mt-1">Objective: keep the same neighbor recipes in 2D. <span id="lossLabel" class="badge">Loss: –</span></div>
+      </div>
+    </section>
+
+    <!-- Concepts -->
+    <section class="card p-4 mb-6">
+      <div class="grid-2">
+        <div>
+          <h4 class="accent font-semibold mb-2">How LLE Works</h4>
+          <ul class="list-disc pl-5 slim">
+            <li><b>Find friends:</b> For each point, get its <span class="badge">k nearest neighbors</span>.</li>
+            <li><b>Write a recipe:</b> Rebuild the point from its friends with weights <code>w<sub>ij</sub></code> that sum to 1.</li>
+            <li><b>Make the map:</b> Place points in 2D so those same recipes still reconstruct each point well.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="accent font-semibold mb-2">What to Notice</h4>
+          <ul class="list-disc pl-5 slim">
+            <li><b>Local fidelity:</b> Nearby points stay nearby after embedding.</li>
+            <li><b>k matters:</b> Too small → tearing. Too big → looks like PCA.</li>
+            <li><b>Loss:</b> We minimize <span class="badge">∑‖y<sub>i</sub> − Σ<sub>j∈N(i)</sub>w<sub>ij</sub> y<sub>j</sub>‖²</span>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tips -->
+    <section class="card p-4">
+      <h4 class="accent font-semibold mb-2">Tips</h4>
+      <div class="grid-2">
+        <div class="panel p-3">
+          <p class="caption"><b>Good k</b> gives smooth unfolding with intact local groups.</p>
+          <p class="caption">Try <span class="badge">k=10–15</span>. Increase slowly.</p>
+        </div>
+        <div class="panel p-3">
+          <p class="caption">This demo uses small <span class="badge">N</span> and a simple optimizer so that it runs in-browser.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ====== Utility math ======
+    function dot(a,b){let s=0;for(let i=0;i<a.length;i++) s+=a[i]*b[i];return s}
+    function sub(a,b){return a.map((v,i)=>v-b[i])}
+    function add(a,b){return a.map((v,i)=>v+b[i])}
+    function mul(a,c){return a.map(v=>v*c)}
+    function norm2(a){return Math.sqrt(dot(a,a))}
+
+    // Solve Ax = b with simple regularized Gaussian elimination (small systems)
+    function solveLinear(A,b,lambda=1e-3){
+      const n=A.length; // copy
+      const M = A.map(r=>r.slice());
+      const x = new Array(n).fill(0);
+      const rhs = b.slice();
+      for(let i=0;i<n;i++) M[i][i]+=lambda; // Tikhonov
+      for(let i=0;i<n;i++){
+        // pivot
+        let piv=i; for(let r=i+1;r<n;r++){ if(Math.abs(M[r][i])>Math.abs(M[piv][i])) piv=r }
+        if(piv!==i){ [M[i],M[piv]]=[M[piv],M[i]]; [rhs[i],rhs[piv]]=[rhs[piv],rhs[i]] }
+        const div = M[i][i]||1e-12; for(let j=i;j<n;j++) M[i][j]/=div; rhs[i]/=div;
+        for(let r=0;r<n;r++) if(r!==i){ const f=M[r][i]; if(f!==0){ for(let c=i;c<n;c++) M[r][c]-=f*M[i][c]; rhs[r]-=f*rhs[i]; }}
+      }
+      for(let i=0;i<n;i++) x[i]=rhs[i];
+      return x;
+    }
+
+    // ====== Data generation (Swiss roll) ======
+    function makeSwissRoll(N, noise=0.03){
+      const X=[]; // 3D points
+      const t=[]; // intrinsic parameter
+      for(let i=0;i<N;i++){
+        const ti = 1.5*Math.PI*(1+2*Math.random());
+        const z = 21*Math.random();
+        const x = ti*Math.cos(ti) + noise*(Math.random()-0.5)*10;
+        const y = ti*Math.sin(ti) + noise*(Math.random()-0.5)*10;
+        X.push([x,y,z]); t.push(ti)
+      }
+      return {X,t};
+    }
+
+    // Pairwise distances (brute force, small N)
+    function pairwiseDists(X){
+      const N=X.length; const D=Array.from({length:N},()=>new Array(N).fill(0));
+      for(let i=0;i<N;i++){
+        for(let j=i+1;j<N;j++){
+          const dx=X[i][0]-X[j][0];
+          const dy=X[i][1]-X[j][1];
+          const dz=X[i][2]-X[j][2];
+          const d=Math.sqrt(dx*dx+dy*dy+dz*dz);
+          D[i][j]=D[j][i]=d;
+        }
+      }
+      return D;
+    }
+
+    // kNN indices per point
+    function knnIndices(D,k){
+      const N=D.length; const idx=Array.from({length:N},()=>[]);
+      for(let i=0;i<N;i++){
+        const order = Array.from({length:N},(_,j)=>j).filter(j=>j!==i).sort((a,b)=>D[i][a]-D[i][b]);
+        idx[i]=order.slice(0,k);
+      }
+      return idx;
+    }
+
+    // LLE weights per point: minimize ||x_i - sum_j w_ij x_j||^2 s.t. sum w_ij = 1
+    function lleWeights(X, knn){
+      const N=X.length; const k=knn[0].length; const W=Array.from({length:N},()=>new Array(N).fill(0));
+      for(let i=0;i<N;i++){
+        const nbrs=knn[i];
+        // Build local covariance C: C_ab = (x_i - x_a)·(x_i - x_b)
+        const C = Array.from({length:k},()=>new Array(k).fill(0));
+        for(let a=0;a<k;a++){
+          const xa = sub(X[i], X[nbrs[a]]);
+          for(let b=0;b<k;b++){
+            const xb = sub(X[i], X[nbrs[b]]);
+            C[a][b]=dot(xa,xb);
+          }
+        }
+        // Solve C w = 1, then normalize so sum w = 1
+        const ones = new Array(k).fill(1);
+        let w = solveLinear(C, ones, 1e-3);
+        let s=0; for(const wi of w) s+=wi; if(Math.abs(s)<1e-8) s=1e-8;
+        w = w.map(v=>v/s);
+        for(let a=0;a<k;a++) W[i][nbrs[a]]=w[a];
+      }
+      return W;
+    }
+
+    // Optimize Y to minimize E(Y) = sum_i || y_i - sum_j w_ij y_j ||^2
+    function optimizeEmbedding(W, dim=2, iters=500, lr=0.5){
+      const N=W.length; let Y=Array.from({length:N},()=>Array.from({length:dim},()=> (Math.random()-0.5)*0.01));
+      // simple gradient descent with centering + scale normalization per step
+      function step(){
+        const G = Array.from({length:N},()=>Array(dim).fill(0));
+        for(let i=0;i<N;i++){
+          for(let d=0;d<dim;d++){
+            let yi = Y[i][d];
+            let yhat=0;
+            for(let j=0;j<N;j++){ const wij=W[i][j]; if(wij!==0) yhat += wij*Y[j][d]; }
+            const r = yi - yhat; // residual
+            // d/dyi -> 2*r ; d/dyj -> -2*wij*r
+            G[i][d] += 2*r;
+            for(let j=0;j<N;j++){ const wij=W[i][j]; if(wij!==0) G[j][d] += -2*wij*r; }
+          }
+        }
+        // update
+        for(let i=0;i<N;i++) for(let d=0;d<dim;d++) Y[i][d] -= lr*G[i][d]/N;
+        // center & scale
+        for(let d=0;d<dim;d++){
+          let mean=0; for(let i=0;i<N;i++) mean+=Y[i][d]; mean/=N; for(let i=0;i<N;i++) Y[i][d]-=mean;
+          let ss=0; for(let i=0;i<N;i++) ss+=Y[i][d]*Y[i][d]; ss=Math.sqrt(ss/N)||1; for(let i=0;i<N;i++) Y[i][d]/=ss;
+        }
+        return Y;
+      }
+      function loss(){
+        let E=0; const N=W.length; const dim=Y[0].length;
+        for(let i=0;i<N;i++){
+          for(let d=0;d<dim;d++){
+            let yi = Y[i][d]; let yhat=0; for(let j=0;j<N;j++){ const wij=W[i][j]; if(wij!==0) yhat+=wij*Y[j][d]; }
+            const r = yi - yhat; E += r*r;
+          }
+        }
+        return E;
+      }
+      return {Y, step, loss};
+    }
+
+    // ====== Rendering helpers ======
+    const c3 = document.getElementById('canvas3d');
+    const cW = document.getElementById('canvasWeights');
+    const c2 = document.getElementById('canvas2d');
+    const g3 = c3.getContext('2d');
+    const gW = cW.getContext('2d');
+    const g2 = c2.getContext('2d');
+
+    let N=180, k=12;
+    let data={X:[], t:[]};
+    let D, knn, W, opt;
+    let rotate=true; let angle=0; let dragging=false; let lastX=0; let picked=0;
+
+    function project3D(p){
+      const s=9; const cx=c3.width/2, cy=c3.height/2;
+      const cosA=Math.cos(angle), sinA=Math.sin(angle);
+      const x = p[0]*cosA - p[2]*sinA;
+      const z = p[0]*sinA + p[2]*cosA;
+      const y = p[1];
+      const depth = 1/(1+0.02*z);
+      return {x: cx + x*s*depth, y: cy + y*s*depth, depth};
+    }
+
+    function draw3D(){
+      g3.clearRect(0,0,c3.width,c3.height);
+      const P = data.X.map(project3D);
+      // render back to front
+      const order = P.map((q,i)=>({i, z:q.depth})).sort((a,b)=>a.z-b.z);
+      for(const o of order){
+        const q=P[o.i];
+        g3.beginPath();
+        g3.arc(q.x,q.y,2+q.depth*1.5,0,Math.PI*2);
+        g3.fillStyle = `rgba(168,85,247,${0.6+0.4*q.depth})`;
+        g3.fill();
+      }
+    }
+
+    function drawWeights(){
+      gW.clearRect(0,0,cW.width,cW.height);
+      // Use a quick 2D PCA-ish projection for clarity: take x,y from 3D directly (since swiss-roll is in xy)
+      const pts = data.X.map(p=>({x: cW.width*0.5 + p[0]*0.7, y: cW.height*0.5 + p[1]*0.7}));
+      // neighbors of picked
+      const nbrs = knn[picked]||[];
+      if(document.getElementById('showEdges').checked){
+        gW.strokeStyle = 'rgba(139,92,246,0.2)'; gW.lineWidth=1;
+        for(let i=0;i<N;i++){
+          const a=pts[i];
+          for(const j of knn[i]){ const b=pts[j]; gW.beginPath(); gW.moveTo(a.x,a.y); gW.lineTo(b.x,b.y); gW.stroke(); }
+        }
+      }
+      // highlight picked
+      for(let i=0;i<N;i++){
+        const p=pts[i];
+        gW.beginPath(); gW.arc(p.x,p.y,2.2,0,Math.PI*2);
+        gW.fillStyle = i===picked? '#22d3ee' : '#94a3b8';
+        gW.fill();
+      }
+      // draw weight rays for picked point
+      const pi=pts[picked];
+      for(const j of nbrs){
+        const pj=pts[j];
+        const w=W[picked][j];
+        gW.beginPath(); gW.moveTo(pi.x,pi.y); gW.lineTo(pj.x,pj.y); gW.strokeStyle='rgba(34,211,238,0.45)'; gW.lineWidth = Math.max(1, Math.abs(w)*3);
+        gW.stroke();
+      }
+    }
+
+    function draw2D(){
+      g2.clearRect(0,0,c2.width,c2.height);
+      const Y = opt.Y;
+      // scale to canvas
+      let minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;
+      for(const p of Y){ minx=Math.min(minx,p[0]); maxx=Math.max(maxx,p[0]); miny=Math.min(miny,p[1]); maxy=Math.max(maxy,p[1]); }
+      const sx = 0.8*c2.width/(maxx-minx+1e-9); const sy = 0.8*c2.height/(maxy-miny+1e-9);
+      const cx = c2.width*0.5, cy=c2.height*0.5;
+      const pts = Y.map(p=>({x: cx + (p[0]-(minx+maxx)/2)*sx, y: cy + (p[1]-(miny+maxy)/2)*sy }));
+
+      if(document.getElementById('showEdges').checked){
+        g2.strokeStyle='rgba(139,92,246,0.18)'; g2.lineWidth=1;
+        for(let i=0;i<N;i++){
+          const a=pts[i];
+          for(const j of knn[i]){ const b=pts[j]; g2.beginPath(); g2.moveTo(a.x,a.y); g2.lineTo(b.x,b.y); g2.stroke(); }
+        }
+      }
+      for(let i=0;i<N;i++){
+        const p=pts[i];
+        g2.beginPath(); g2.arc(p.x,p.y,2.2,0,Math.PI*2);
+        g2.fillStyle = i===picked? '#22d3ee' : '#e879f9';
+        g2.fill();
+      }
+      document.getElementById('lossLabel').textContent = 'Loss: ' + opt.loss().toFixed(4);
+    }
+
+    function loop(){
+      if(rotate) angle += 0.01;
+      draw3D(); drawWeights(); draw2D();
+      requestAnimationFrame(loop);
+    }
+
+    // ====== Interaction ======
+    c3.addEventListener('mousedown', e=>{ dragging=true; lastX=e.clientX; rotate=false; document.getElementById('rotateBtn').textContent='▶ Resume 3D Rotation'; });
+    window.addEventListener('mousemove', e=>{ if(dragging){ const dx=e.clientX-lastX; lastX=e.clientX; angle += dx*0.01; }});
+    window.addEventListener('mouseup', ()=> dragging=false);
+
+    cW.addEventListener('click', e=>{
+      const rect=cW.getBoundingClientRect(); const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+      // choose nearest point in the 2D (x,y of original)
+      let best=-1,bd=1e9;
+      for(let i=0;i<N;i++){
+        const px = cW.width*0.5 + data.X[i][0]*0.7; const py = cW.height*0.5 + data.X[i][1]*0.7;
+        const d=(px-mx)*(px-mx)+(py-my)*(py-my);
+        if(d<bd){bd=d;best=i;}
+      }
+      picked=best;
+    });
+
+    document.getElementById('rotateBtn').onclick = ()=>{
+      rotate = !rotate;
+      document.getElementById('rotateBtn').textContent = rotate? '⏸ Pause 3D Rotation' : '▶ Resume 3D Rotation';
+    };
+
+    let optTimer=null; let running=false;
+    document.getElementById('optBtn').onclick = ()=>{
+      if(!running){
+        running=true; document.getElementById('optBtn').textContent='⏸ Pause Optimization';
+        optTimer = setInterval(()=>{ for(let i=0;i<10;i++) opt.step(); }, 16);
+      } else {
+        running=false; document.getElementById('optBtn').textContent='▶ Run LLE Optimization';
+        clearInterval(optTimer); optTimer=null;
+      }
+    };
+
+    document.getElementById('resetYBtn').onclick = ()=>{
+      opt = optimizeEmbedding(W,2,400,0.4); // new random init
+    };
+
+    function rebuild(){
+      N = parseInt(document.getElementById('nInput').value,10);
+      k = parseInt(document.getElementById('kInput').value,10);
+      document.getElementById('nLabel').textContent = N;
+      document.getElementById('kLabel').textContent = k;
+      data = makeSwissRoll(N);
+      D = pairwiseDists(data.X);
+      knn = knnIndices(D,k);
+      W = lleWeights(data.X, knn);
+      opt = optimizeEmbedding(W,2,400,0.4);
+      picked = Math.floor(N/2);
+    }
+
+    document.getElementById('regenBtn').onclick = rebuild;
+    document.getElementById('kInput').oninput = ()=> rebuild();
+    document.getElementById('nInput').oninput = ()=> rebuild();
+
+    // init
+    rebuild();
+    loop();
+  </script>
+</body>
+</html>
