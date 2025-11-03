@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jumlat As-Sifah (Relative Clause)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+        }
+        .arabic {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            font-weight: 700;
+            font-size: 1.5rem;
+            line-height: 2.2;
+            color: #1e3a8a;
+        }
+        .slide {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+            min-height: 60vh;
+        }
+        .slide.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="p-6 md:p-10">
+
+<div id="presentation-container" class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-2xl border border-gray-200">
+    <div class="mb-6 flex justify-between items-center border-b border-gray-300 pb-4">
+        <h1 class="text-3xl font-extrabold text-blue-700">Jumlat As-Sifah (جملة الصفة)</h1>
+        <div class="text-lg font-medium text-gray-500">
+            Slide <span id="current-slide-number">1</span> of 4
+        </div>
+    </div>
+
+    <div id="slides-container">
+        <div id="slide-1" class="slide active flex-col">
+            <h2 class="text-4xl text-pink-700 font-bold mb-4">What is جملة الصفة?</h2>
+            <p class="text-lg mb-6">In Arabic grammar, <b>جملة الصفة</b> (Jumlat As-Sifah) means “the adjective sentence,” or the <b>relative clause</b> in English.</p>
+            <div class="bg-blue-50 p-6 rounded-xl border border-blue-200">
+                <p class="text-lg mb-2">It’s a complete sentence — verbal or nominal — that describes a noun.</p>
+                <p class="text-lg text-blue-700 font-semibold">In English, we say “the man <i>who runs</i>,” but in Arabic, we use a short sentence after the noun.</p>
+            </div>
+        </div>
+
+        <div id="slide-2" class="slide flex-col">
+            <h2 class="text-4xl text-pink-700 font-bold mb-4">Golden Rule: Indefinite Noun</h2>
+            <div class="bg-yellow-50 p-6 rounded-xl border border-yellow-200">
+                <p class="text-lg mb-4">A sentence works as an adjective (<b>جملة الصفة</b>) only when the described noun (<b>المنعوت</b>) is <span class="text-red-600 font-bold">نكرة (indefinite)</span>.</p>
+                <div class="text-center my-6">
+                    <div class="text-xl font-extrabold text-green-700 p-3 bg-green-100 rounded-lg inline-block border border-green-300 shadow-md">
+                        <span class="text-red-600">نكرة (Indefinite Noun)</span> + <span class="text-blue-700">جملة (Sentence)</span>
+                    </div>
+                </div>
+                <p class="text-lg">If the noun were <b>definite</b> (<span class="text-blue-700">معرفة</span>), the sentence would just describe it, not act as an adjective.</p>
+            </div>
+        </div>
+
+        <div id="slide-3" class="slide flex-col">
+            <h2 class="text-4xl text-pink-700 font-bold mb-6">Type 1: Verbal Clause (جملة فعلية)</h2>
+
+            <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                <div class="arabic">رأيت <span class="text-red-600">طفلاً</span> <span class="text-green-700">يلعب في الحديقة</span></div>
+                <p class="text-lg mt-2">I saw a <b>child</b> <span class="text-green-700">who is playing in the park</span>.</p>
+            </div>
+
+            <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                <div class="arabic">قابلت <span class="text-red-600">رجلًا</span> <span class="text-green-700">يعمل في المدرسة</span></div>
+                <p class="text-lg mt-2">I met a <b>man</b> <span class="text-green-700">who works at the school</span>.</p>
+            </div>
+
+            <div class="bg-blue-50 p-4 rounded-lg">
+                <div class="arabic">اشترينا <span class="text-red-600">كتابًا</span> <span class="text-green-700">يشرح القواعد</span></div>
+                <p class="text-lg mt-2">We bought a <b>book</b> <span class="text-green-700">that explains grammar</span>.</p>
+            </div>
+
+            <p class="text-base text-gray-600 mt-4 italic">The green part (<b>جملة الصفة</b>) includes a pronoun that links back to the red noun (<b>الضمير الرابط</b>).</p>
+        </div>
+
+        <div id="slide-4" class="slide flex-col">
+            <h2 class="text-4xl text-pink-700 font-bold mb-6">Type 2: Nominal Clause (جملة اسمية)</h2>
+            <p class="text-lg mb-4 bg-purple-50 p-4 rounded-lg border border-purple-200">Here, the describing sentence starts with a noun or pronoun (a nominal sentence).</p>
+
+            <div class="bg-purple-50 p-4 rounded-lg mb-4">
+                <div class="arabic">هذه <span class="text-red-600">قطة</span> <span class="text-green-700">شعرها طويل</span></div>
+                <p class="text-lg mt-2">This is a <b>cat</b> <span class="text-green-700">whose hair is long</span>.</p>
+            </div>
+
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <div class="arabic">رأيت <span class="text-red-600">بنتًا</span> <span class="text-green-700">ملابسها جميلة</span></div>
+                <p class="text-lg mt-2">I saw a <b>girl</b> <span class="text-green-700">whose clothes are pretty</span>.</p>
+            </div>
+
+            <p class="text-base text-gray-600 mt-4 italic">The linking pronoun is inside the green clause, such as <b>ـها</b> or <b>ـه</b>, referring back to the red noun.</p>
+        </div>
+    </div>
+
+    <div class="mt-8 flex justify-between">
+        <button id="prev-btn" onclick="changeSlide(-1)" class="px-6 py-3 bg-gray-200 font-bold rounded-xl hover:bg-gray-300">← Previous</button>
+        <button id="next-btn" onclick="changeSlide(1)" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700">Next →</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 1;
+    const totalSlides = 4;
+    const slideNumberDisplay = document.getElementById('current-slide-number');
+
+    function updateSlide() {
+        document.querySelectorAll('.slide').forEach((slide, i) => {
+            slide.classList.toggle('active', i + 1 === currentSlide);
+        });
+        document.getElementById('prev-btn').disabled = currentSlide === 1;
+        document.getElementById('next-btn').disabled = currentSlide === totalSlides;
+        slideNumberDisplay.textContent = currentSlide;
+    }
+
+    function changeSlide(delta) {
+        currentSlide = Math.min(Math.max(1, currentSlide + delta), totalSlides);
+        updateSlide();
+    }
+</script>
+
+</body>
+</html>
