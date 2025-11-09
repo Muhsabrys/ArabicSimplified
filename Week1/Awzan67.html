@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Guide: Arabic Verb Forms VI & VII</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .concept-btn.active { background-color: #4338ca; color: #fff; }
+    .concept-btn { transition: all 0.2s ease-in-out; }
+    .quiz-question { transition: background-color 0.3s ease; }
+    .correct-answer { background-color: #f0fdf4; border-color: #86efac; }
+    .incorrect-answer { background-color: #fef2f2; border-color: #fca5a5; }
+    .unanswered { background-color: #f9fafb; border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-white text-stone-800 font-sans leading-relaxed">
+  <div class="max-w-5xl mx-auto p-6 sm:p-8">
+    <header class="mb-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-stone-900 mb-2">Interactive Guide to Arabic Verb Forms</h1>
+      <h2 class="text-2xl md:text-3xl font-light text-indigo-600">Exploring Form VI (تفاعَلَ) & Form VII (اِنفَعَلَ)</h2>
+    </header>
+
+    <main class="space-y-16">
+      <!-- Comparison Cards -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-stone-50 border border-stone-200 rounded-lg shadow-sm p-6">
+          <h3 class="text-3xl font-bold mb-4" dir="rtl" lang="ar"><span class="text-indigo-600">تَفَاعَلَ</span> (Form VI)</h3>
+          <ul class="list-disc pl-6 space-y-2 text-stone-700">
+            <li><strong>Reciprocal Action:</strong> فعلٌ متبادل بين طرفين (e.g., <span dir="rtl" lang="ar">تَعَاوَنَ الطُّلَّابُ</span> “the students cooperated”).</li>
+            <li><strong>Feigning:</strong> التظاهر بحالة ما (e.g., <span dir="rtl" lang="ar">تَمَارَضَ</span> “pretended to be sick”).</li>
+            <li><strong>Participation:</strong> الاشتراك في عمل (e.g., <span dir="rtl" lang="ar">تَشَارَكَ</span> “shared together”).</li>
+          </ul>
+          <p class="mt-4 text-stone-700">Often reciprocal to <strong>Form III (فاعَلَ)</strong>.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 rounded-lg shadow-sm p-6">
+          <h3 class="text-3xl font-bold mb-4" dir="rtl" lang="ar"><span class="text-indigo-600">اِنفَعَلَ</span> (Form VII)</h3>
+          <ul class="list-disc pl-6 space-y-2 text-stone-700">
+            <li><strong>Passive/Reflexive:</strong> الفعل يحدث للفاعل نفسه (e.g., <span dir="rtl" lang="ar">اِنكَسَرَ الزُّجَاجُ</span> “the glass broke”).</li>
+            <li><strong>Change of State:</strong> describes becoming or entering a new state (e.g., <span dir="rtl" lang="ar">اِنفَتَحَ البابُ</span> “the door opened”).</li>
+          </ul>
+          <p class="mt-4 text-stone-700">Often reflexive of <strong>Form I (فَعَلَ)</strong>.</p>
+        </div>
+      </section>
+
+      <!-- Interactive Explorer -->
+      <section>
+        <h2 class="text-3xl font-semibold mb-6 border-b border-stone-200 pb-2">Interactive Explorer</h2>
+        <p class="text-lg mb-6">Click a meaning below to view examples of verbs illustrating it.</p>
+
+        <div class="flex flex-wrap gap-3 mb-6">
+          <button class="concept-btn active px-5 py-2 border border-stone-300 rounded-full" data-concept="mutual">Mutual Action</button>
+          <button class="concept-btn px-5 py-2 border border-stone-300 rounded-full" data-concept="passive">Passive</button>
+          <button class="concept-btn px-5 py-2 border border-stone-300 rounded-full" data-concept="feigning">Feigning</button>
+        </div>
+
+        <div id="explorer-content" class="bg-stone-50 border border-stone-200 rounded-lg p-6"></div>
+      </section>
+
+      <!-- Quiz Section -->
+      <section>
+        <h2 class="text-3xl font-semibold mb-6 border-b border-stone-200 pb-2">Knowledge Check</h2>
+        <p class="mb-6">Test your understanding of Forms VI and VII.</p>
+        <div id="quiz">
+          <div id="q1" class="quiz-question p-4 border rounded mb-4">
+            <p>1. Which form expresses reciprocal action?</p>
+            <label><input type="radio" name="q1" value="VI"> Form VI</label>
+            <label class="ml-4"><input type="radio" name="q1" value="VII"> Form VII</label>
+          </div>
+          <div id="q2" class="quiz-question p-4 border rounded mb-4">
+            <p>2. <span dir="rtl" lang="ar">اِنكَسَرَ</span> means?</p>
+            <label><input type="radio" name="q2" value="VI"> Form VI (mutual)</label>
+            <label class="ml-4"><input type="radio" name="q2" value="VII"> Form VII (passive)</label>
+          </div>
+          <div class="flex gap-4 mt-6">
+            <button id="check-answers" class="px-4 py-2 bg-indigo-600 text-white rounded">Check Answers</button>
+            <button id="reset-quiz" class="px-4 py-2 bg-stone-200 rounded">Reset</button>
+          </div>
+          <div id="result" class="hidden mt-4 p-3 rounded bg-indigo-50 border border-indigo-200"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const explorerButtons = document.querySelectorAll('.concept-btn');
+    const explorerContent = document.getElementById('explorer-content');
+
+    const explorerData = {
+      mutual: {
+        title: 'Form VI: Mutual Action',
+        examples: [
+          { base: 'كَاتَبَ → تَكَاتَبَ', meaning: 'to correspond ↔ to write to each other' },
+          { base: 'سَاعَدَ → تَسَاعَدَ', meaning: 'to help ↔ to help each other' },
+          { base: 'بَادَلَ → تَبَادَلَ', meaning: 'to exchange ↔ to exchange with one another' }
+        ]
+      },
+      passive: {
+        title: 'Form VII: Passive / Reflexive',
+        examples: [
+          { base: 'كَسَرَ → اِنكَسَرَ', meaning: 'to break ↔ it was broken' },
+          { base: 'فَتَحَ → اِنفَتَحَ', meaning: 'to open ↔ it opened' },
+          { base: 'قَطَعَ → اِنقَطَعَ', meaning: 'to cut ↔ to be cut off' }
+        ]
+      },
+      feigning: {
+        title: 'Form VI: Feigning / Pretending',
+        examples: [
+          { base: 'جَهِلَ → تَجَاهَلَ', meaning: 'to not know ↔ to pretend not to know' },
+          { base: 'مَرِضَ → تَمَارَضَ', meaning: 'to be sick ↔ to pretend to be sick' },
+          { base: 'نَسِيَ → تَنَاسَى', meaning: 'to forget ↔ to pretend to forget' }
+        ]
+      }
+    };
+
+    function updateExplorer(concept) {
+      const data = explorerData[concept];
+      explorerButtons.forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`[data-concept="${concept}"]`).classList.add('active');
+      explorerContent.innerHTML = `
+        <h4 class='text-2xl font-bold text-indigo-700 mb-3'>${data.title}</h4>
+        ${data.examples.map(ex => `<p class='p-2 border rounded bg-white mb-2'><strong>${ex.base}</strong> — ${ex.meaning}</p>`).join('')}
+      `;
+    }
+
+    explorerButtons.forEach(btn => btn.addEventListener('click', () => updateExplorer(btn.dataset.concept)));
+    updateExplorer('mutual');
+
+    // Quiz functionality
+    const answers = { q1: 'VI', q2: 'VII' };
+    document.getElementById('check-answers').addEventListener('click', () => {
+      let score = 0;
+      for (let q in answers) {
+        const chosen = document.querySelector(`input[name="${q}"]:checked`);
+        const box = document.getElementById(q);
+        box.classList.remove('correct-answer', 'incorrect-answer', 'unanswered');
+        if (!chosen) box.classList.add('unanswered');
+        else if (chosen.value === answers[q]) { score++; box.classList.add('correct-answer'); }
+        else box.classList.add('incorrect-answer');
+      }
+      const result = document.getElementById('result');
+      result.classList.remove('hidden');
+      result.textContent = `You scored ${score} / ${Object.keys(answers).length}.`;
+    });
+
+    document.getElementById('reset-quiz').addEventListener('click', () => {
+      document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+      document.querySelectorAll('.quiz-question').forEach(q => q.classList.remove('correct-answer', 'incorrect-answer', 'unanswered'));
+      document.getElementById('result').classList.add('hidden');
+    });
+  </script>
+</body>
+</html>
