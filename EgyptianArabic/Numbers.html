@@ -8,310 +8,54 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Amiri:wght@400;700&display=swap');
-        
-        :root {
-            --primary: #4f46e5;
-            --secondary: #06b6d4;
-            --accent: #f59e0b;
-            --light: #f0f9ff;
-            --dark: #1e293b;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f0f8ff 0%, #e0f2fe 100%);
-            color: var(--dark);
-            min-height: 100vh;
-        }
-        
-        .arabic-text {
-            font-family: 'Amiri', serif;
-            font-size: 1.5rem;
-            direction: rtl;
-            text-align: right;
-            line-height: 2;
-            font-weight: 700;
-        }
-        
-        .section-card {
-            background-color: #ffffff;
-            padding: 2.5rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 15px 30px -5px rgba(0, 50, 100, 0.1);
-            margin-bottom: 2rem;
-            border: 1px solid #cceeff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .section-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(0, 50, 100, 0.2);
-        }
-        
-        .section-header {
-            border-bottom: 4px solid var(--secondary);
-            padding-bottom: 0.5rem;
-            margin-top: 1.5rem;
-            color: var(--primary);
-            font-weight: 800;
-            position: relative;
-        }
-        
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 50px;
-            height: 4px;
-            background-color: var(--accent);
-        }
-        
-        .example-list li {
-            padding: 1rem;
-            border-radius: 0.75rem;
-            margin-bottom: 0.75rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid #e0f7fa;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .example-list li::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background-color: var(--secondary);
-        }
-        
-        .example-list li:hover {
-            transform: translateX(5px);
-            box-shadow: 3px 3px 10px rgba(6, 182, 212, 0.15);
-        }
-        
-        .pattern-highlight {
-            color: #ef4444;
-            font-weight: 700;
-            font-style: italic;
-        }
-        
-        .translation-box {
-            background-color: #e0f2f7;
-            border: 2px solid var(--secondary);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            position: relative;
-        }
-        
-        .translation-box::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
-            border-radius: 0 1rem 0 60px;
-            opacity: 0.1;
-        }
-        
-        .flashcard {
-            perspective: 1000px;
-            width: 100%;
-            height: 200px;
-            cursor: pointer;
-            margin: 1rem 0;
-        }
-        
-        .flashcard-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        
-        .flashcard.flipped .flashcard-inner {
-            transform: rotateY(180deg);
-        }
-        
-        .flashcard-front, .flashcard-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .flashcard-front {
-            background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%);
-            color: white;
-        }
-        
-        .flashcard-back {
-            background: white;
-            color: var(--dark);
-            transform: rotateY(180deg);
-        }
-        
-        .audio-btn {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-        }
-        
-        .audio-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 8px rgba(0,0,0,0.3);
-        }
-        
-        .quiz-option {
-            padding: 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 0.5rem;
-            margin-bottom: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .quiz-option:hover {
-            border-color: var(--secondary);
-            background-color: #f0f9ff;
-        }
-        
-        .quiz-option.correct {
-            border-color: #10b981;
-            background-color: #d1fae5;
-        }
-        
-        .quiz-option.incorrect {
-            border-color: #ef4444;
-            background-color: #fee2e2;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background-color: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .number-pattern {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 1rem 0;
-            padding: 1rem;
-            background-color: #f8fafc;
-            border-radius: 1rem;
-            border: 1px dashed var(--secondary);
-        }
-        
-        .number-part {
-            padding: 0.5rem 1rem;
-            margin: 0 0.5rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-        }
-        
-        .units {
-            background-color: #dbeafe;
-            color: var(--primary);
-        }
-        
-        .connector {
-            color: #ef4444;
-            font-weight: bold;
-        }
-        
-        .tens {
-            background-color: #cffafe;
-            color: #0e7490;
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .bounce {
-            animation: bounce 1s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
+        :root { --primary: #4f46e5; --secondary: #06b6d4; --accent: #f59e0b; --light: #f0f9ff; --dark: #1e293b; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f0f8ff 0%, #e0f2fe 100%); color: var(--dark); min-height: 100vh; }
+        .arabic-text { font-family: 'Amiri', serif; font-size: 1.5rem; direction: rtl; text-align: right; line-height: 2; font-weight: 700; }
+        .section-card { background-color: #ffffff; padding: 2.5rem; border-radius: 1.5rem; box-shadow: 0 15px 30px -5px rgba(0, 50, 100, 0.1); margin-bottom: 2rem; border: 1px solid #cceeff; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .section-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(0, 50, 100, 0.2); }
+        .section-header { border-bottom: 4px solid var(--secondary); padding-bottom: 0.5rem; margin-top: 1.5rem; color: var(--primary); font-weight: 800; position: relative; }
+        .section-header::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 50px; height: 4px; background-color: var(--accent); }
+        .pattern-highlight { color: #ef4444; font-weight: 700; font-style: italic; }
+        .translation-box { background-color: #e0f2f7; border: 2px solid var(--secondary); padding: 1.5rem; border-radius: 1rem; position: relative; }
+        .flashcard { perspective: 1000px; width: 100%; height: 200px; cursor: pointer; margin: 1rem 0; }
+        .flashcard-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .flashcard-front { background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%); color: white; }
+        .flashcard-back { background: white; color: var(--dark); transform: rotateY(180deg); }
+        .audio-btn { background-color: var(--accent); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 3px 5px rgba(0,0,0,0.2); }
+        .audio-btn:hover { transform: scale(1.1); box-shadow: 0 5px 8px rgba(0,0,0,0.3); }
+        .quiz-option { padding: 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.2s ease; }
+        .quiz-option:hover { border-color: var(--secondary); background-color: #f0f9ff; }
+        .quiz-option.correct { border-color: #10b981; background-color: #d1fae5; }
+        .quiz-option.incorrect { border-color: #ef4444; background-color: #fee2e2; }
+        .progress-bar { height: 8px; background-color: #e2e8f0; border-radius: 4px; overflow: hidden; margin: 1rem 0; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%); width: 0%; transition: width 0.5s ease; }
+        .number-pattern { display: flex; align-items: center; justify-content: center; margin: 1rem 0; padding: 1rem; background-color: #f8fafc; border-radius: 1rem; border: 1px dashed var(--secondary); }
+        .number-part { padding: 0.5rem 1rem; margin: 0 0.5rem; border-radius: 0.5rem; font-weight: bold; }
+        .units { background-color: #dbeafe; color: var(--primary); }
+        .connector { color: #ef4444; font-weight: bold; }
+        .tens { background-color: #cffafe; color: #0e7490; }
     </style>
 </head>
 <body class="p-4 sm:p-8">
     <div class="max-w-6xl mx-auto">
         <!-- Header -->
         <header class="text-center mb-10">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600 mb-4">
-                Interactive Arabic Number Pronunciation Guide
-            </h1>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-                Master Arabic numbers through interactive pronunciation, visual patterns, and engaging quizzes
-            </p>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600 mb-4"> Interactive Arabic Number Pronunciation Guide </h1>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto"> Master Arabic numbers through interactive translation, visual patterns, and engaging quizzes. </p>
         </header>
 
         <!-- Interactive Translator -->
         <div class="section-card mb-8">
             <h2 class="text-3xl font-bold section-header">Interactive Number Translator</h2>
-            <p class="text-gray-700 mb-6 text-lg">Type any number from 0 to 99 to see its Arabic script and pronunciation</p>
-            
+            <p class="text-gray-700 mb-6 text-lg">Type any number from 0 to 99 to see its Arabic script and pronunciation.</p>
             <div class="flex flex-col sm:flex-row gap-4 items-center mb-6">
-                <input 
-                    type="number" 
-                    id="numberInput" 
-                    placeholder="Enter 0-99" 
-                    min="0" max="99" 
-                    class="flex-grow p-4 border-2 border-indigo-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-200 text-lg shadow-inner"
-                    onkeydown="if(event.key === 'Enter') translateNumber()"
-                >
-                <button 
-                    onclick="translateNumber()" 
-                    class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-bold rounded-xl shadow-xl hover:from-indigo-700 hover:to-cyan-700 transition duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2"
-                >
-                    <i class="fas fa-language"></i>
-                    Translate Number
+                <input type="number" id="numberInput" placeholder="Enter 0-99" min="0" max="99" class="flex-grow p-4 border-2 border-indigo-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-200 text-lg shadow-inner" onkeydown="if(event.key === 'Enter') translateNumber()">
+                <button onclick="translateNumber()" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-bold rounded-xl shadow-xl hover:from-indigo-700 hover:to-cyan-700 transition duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2">
+                    <i class="fas fa-language"></i> Translate Number
                 </button>
             </div>
-
             <div id="errorWarning" class="hidden mt-4 p-4 bg-red-100 text-red-700 border border-red-400 rounded-lg"></div>
             <div id="translationResult" class="hidden mt-6"></div>
         </div>
@@ -320,11 +64,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             <!-- Core Principle -->
             <div class="section-card">
-                <h2 class="text-3xl font-bold section-header">Core Principle: Units-First Rule</h2>
-                <p class="mt-4 text-gray-700 text-lg">
-                    For numbers 21-99, Arabic reads the <strong>Units</strong> digit first, then the <strong>Tens</strong> digit, connected by <strong>"wa"</strong> (و).
-                </p>
-                
+                <h2 class="text-3xl font-bold section-header">Core Principle: The Units-First Rule</h2>
+                <p class="mt-4 text-gray-700 text-lg"> For numbers 21-99, Arabic reads the <strong>Units</strong> digit first, then the <strong>Tens</strong> digit, connected by <strong>"wa"</strong> (و). </p>
                 <div class="mt-6">
                     <div class="number-pattern">
                         <div class="number-part units">Units</div>
@@ -332,7 +73,6 @@
                         <div class="number-part tens">Tens</div>
                     </div>
                 </div>
-                
                 <div class="flashcard mt-6" id="principleFlashcard" onclick="flipCard('principleFlashcard')">
                     <div class="flashcard-inner">
                         <div class="flashcard-front">
@@ -351,28 +91,26 @@
 
             <!-- Number Groups -->
             <div class="section-card">
-                <h2 class="text-3xl font-bold section-header">Number Groups</h2>
-                
+                <h2 class="text-3xl font-bold section-header">Number Groups Breakdown</h2>
                 <div class="mb-6">
-                    <h3 class="text-xl font-bold text-indigo-700 mb-2">Group 1: 11-19</h3>
-                    <p class="text-gray-700 mb-3">Special compound words combining units with the root for ten (عشر)</p>
-                    <div class="flex items-center justify-between bg-blue-50 p-3 rounded-lg">
-                        <span class="font-bold text-blue-800">16</span>
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">Group 1: 11-19 (Teens)</h3>
+                    <p class="text-gray-700 mb-3">Special compound words combining units with the root for ten (عشر).</p>
+                    <div class="flex items-center justify-between bg-blue-50 p-3 rounded-lg arabic-text">
+                        <span class="font-bold text-blue-800 text-left">16</span>
                         <span class="arabic-text text-blue-900">ستة عشر</span>
-                        <span class="text-red-600 font-semibold">Sittata 'ashar</span>
+                        <span class="text-red-600 font-semibold text-left">Sittata 'ashar</span>
                         <button class="audio-btn" onclick="playAudio('Sittata ashar')">
                             <i class="fas fa-volume-up"></i>
                         </button>
                     </div>
                 </div>
-                
                 <div>
-                    <h3 class="text-xl font-bold text-indigo-700 mb-2">Group 2: 20-99</h3>
-                    <p class="text-gray-700 mb-3">Follows the Units-First rule with plural tens ending in -ūn</p>
-                    <div class="flex items-center justify-between bg-green-50 p-3 rounded-lg">
-                        <span class="font-bold text-green-800">63</span>
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">Group 2: 20-99 (Units-First)</h3>
+                    <p class="text-gray-700 mb-3">Follows the Units-First rule with plural tens ending in -ūn.</p>
+                    <div class="flex items-center justify-between bg-green-50 p-3 rounded-lg arabic-text">
+                        <span class="font-bold text-green-800 text-left">63</span>
                         <span class="arabic-text text-green-900">ثلاثة وستون</span>
-                        <span class="text-red-600 font-semibold">Thalāthah wa sittūn</span>
+                        <span class="text-red-600 font-semibold text-left">Thalāthah wa sittūn</span>
                         <button class="audio-btn" onclick="playAudio('Thalathah wa sittun')">
                             <i class="fas fa-volume-up"></i>
                         </button>
@@ -380,99 +118,97 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Year Examples -->
+        <div class="section-card mb-8">
+            <h2 class="text-3xl font-bold section-header">Pronouncing Years Correctly</h2>
+            <p class="text-gray-700 mb-6 text-lg">Reading is typically Left-to-Right: Thousands → Hundreds → (Units and Tens).</p>
+            <div class="space-y-4 mt-6">
+                <div class="p-4 bg-blue-50 rounded-xl flex justify-between items-center border border-blue-200">
+                    <span class="font-bold text-2xl text-blue-800">1992</span>
+                    <span class="arabic-text text-2xl text-right text-blue-900">ألف وتسع مئة واثنان وتسعون</span>
+                    <span class="font-semibold text-gray-700 text-left">Alf wa tis‘u mi’ah wa ithnān wa tis‘ūn</span>
+                </div>
+                <div class="p-4 bg-green-50 rounded-xl flex justify-between items-center border border-green-200">
+                    <span class="font-bold text-2xl text-green-800">2024</span>
+                    <span class="arabic-text text-2xl text-right text-green-900">ألفان وأربعة وعشرون</span>
+                    <span class="font-semibold text-gray-700 text-left">Alfān wa arba‘ah wa ‘ishrūn</span>
+                </div>
+                <div class="p-4 bg-purple-50 rounded-xl flex justify-between items-center border border-purple-200">
+                    <span class="font-bold text-2xl text-purple-800">1875</span>
+                    <span class="arabic-text text-2xl text-right text-purple-900">ألف وثمان مئة وخمسة وسبعون</span>
+                    <span class="font-semibold text-gray-700 text-left">Alf wa thamān mi’ah wa khamsah wa sab‘ūn</span>
+                </div>
+            </div>
+        </div>
 
         <!-- Interactive Quiz -->
         <div class="section-card mb-8">
-            <h2 class="text-3xl font-bold section-header">Test Your Knowledge</h2>
-            <p class="text-gray-700 mb-6">Practice what you've learned with this interactive quiz</p>
-            
-            <div id="quizContainer">
-                <div class="text-center py-8">
-                    <h3 class="text-2xl font-bold text-indigo-700 mb-4" id="quizQuestion">What is the Arabic pronunciation for 45?</h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                        <div class="quiz-option" onclick="checkAnswer(this, 'correct')">
-                            <span class="font-semibold">A.</span> Arba'ah wa khamsūn
-                        </div>
-                        <div class="quiz-option" onclick="checkAnswer(this, 'incorrect')">
-                            <span class="font-semibold">B.</span> Khamsah wa arba'ūn
-                        </div>
-                        <div class="quiz-option" onclick="checkAnswer(this, 'incorrect')">
-                            <span class="font-semibold">C.</span> Arba'ata 'ashar
-                        </div>
-                        <div class="quiz-option" onclick="checkAnswer(this, 'incorrect')">
-                            <span class="font-semibold">D.</span> Khamsūn wa arba'ah
-                        </div>
-                    </div>
-                    
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="quizProgress"></div>
-                    </div>
-                    
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-600">Question <span id="currentQuestion">1</span> of 5</span>
-                        <button id="nextQuestionBtn" class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 hidden" onclick="nextQuestion()">
-                            Next Question <i class="fas fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
+            <h2 class="text-3xl font-bold section-header">Test Your Knowledge: Interactive Quiz</h2>
+            <p class="text-gray-700 mb-6">Practice what you've learned with this quick quiz. Questions and options are in Arabic script.</p>
+            <div id="quizContainer" class="text-center py-8">
+                <h3 class="text-2xl font-bold text-indigo-700 mb-4" id="quizQuestion"></h3>
+                <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
+                <div class="progress-bar"><div class="progress-fill" id="quizProgress"></div></div>
+                <div class="flex justify-between items-center mt-4">
+                    <span class="text-sm text-gray-600">Question <span id="currentQuestion">1</span> of 10</span>
+                    <button id="nextQuestionBtn" class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 hidden" onclick="nextQuestion()"> Next Question <i class="fas fa-arrow-right ml-2"></i> </button>
                 </div>
             </div>
         </div>
-
+        
         <!-- Number Patterns Visualization -->
         <div class="section-card">
-            <h2 class="text-3xl font-bold section-header">Number Patterns Visualization</h2>
-            <p class="text-gray-700 mb-6">See how the Units-First rule applies across different number ranges</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-gradient-to-br from-blue-50 to-cyan-50 p-5 rounded-xl border border-blue-200 text-center">
-                    <h3 class="text-xl font-bold text-blue-700 mb-3">11-19</h3>
-                    <p class="text-gray-700 mb-3">Special compound words</p>
-                    <div class="arabic-text text-blue-800 text-2xl mb-2">ثلاثة عشر</div>
-                    <p class="text-sm text-gray-600">Thalāthata 'ashar</p>
-                </div>
-                
-                <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-5 rounded-xl border border-green-200 text-center">
-                    <h3 class="text-xl font-bold text-green-700 mb-3">20-99</h3>
-                    <p class="text-gray-700 mb-3">Units + wa + Tens</p>
-                    <div class="flex justify-center items-center mb-2">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded mr-2">سبعة</span>
-                        <span class="text-red-500 mx-1">wa</span>
-                        <span class="bg-cyan-100 text-cyan-800 px-2 py-1 rounded ml-2">ثلاثون</span>
-                    </div>
-                    <p class="text-sm text-gray-600">Sab'ah wa thalāthūn (37)</p>
-                </div>
-                
-                <div class="bg-gradient-to-br from-purple-50 to-violet-50 p-5 rounded-xl border border-purple-200 text-center">
-                    <h3 class="text-xl font-bold text-purple-700 mb-3">Years</h3>
-                    <p class="text-gray-700 mb-3">Thousands + Hundreds + Compound</p>
-                    <div class="arabic-text text-purple-800 text-xl mb-2">ألف وتسع مئة واثنان وتسعون</div>
-                    <p class="text-sm text-gray-600">1992: Alf wa tis'u mi'ah wa ithnān wa tis'ūn</p>
-                </div>
-            </div>
+             <h2 class="text-3xl font-bold section-header">Number Patterns Visualization</h2>
+             <p class="text-gray-700 mb-6">See how the Units-First rule applies across different number ranges.</p>
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                 <div class="bg-gradient-to-br from-blue-50 to-cyan-50 p-5 rounded-xl border border-blue-200 text-center">
+                     <h3 class="text-xl font-bold text-blue-700 mb-3">11-19 (Teens)</h3>
+                     <p class="text-gray-700 mb-3">Special compound words</p>
+                     <div class="arabic-text text-blue-800 text-2xl mb-2">ثلاثة عشر</div>
+                     <p class="text-sm text-gray-600">Thalāthata 'ashar</p>
+                 </div>
+                 <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-5 rounded-xl border border-green-200 text-center">
+                     <h3 class="text-xl font-bold text-green-700 mb-3">20-99 (Units-First)</h3>
+                     <p class="text-gray-700 mb-3">Units + wa + Tens</p>
+                     <div class="flex justify-center items-center mb-2">
+                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded mr-2 arabic-text">سبعة</span>
+                         <span class="text-red-500 mx-1 font-bold">wa</span>
+                         <span class="bg-cyan-100 text-cyan-800 px-2 py-1 rounded ml-2 arabic-text">ثلاثون</span>
+                     </div>
+                     <p class="text-sm text-gray-600">Sab'ah wa thalāthūn (37)</p>
+                 </div>
+                 <div class="bg-gradient-to-br from-purple-50 to-violet-50 p-5 rounded-xl border border-purple-200 text-center">
+                     <h3 class="text-xl font-bold text-purple-700 mb-3">Years</h3>
+                     <p class="text-gray-700 mb-3">Thousands + Hundreds + Compound</p>
+                     <div class="arabic-text text-purple-800 text-xl mb-2">ألف وتسع مئة واثنان وتسعون</div>
+                     <p class="text-sm text-gray-600">1992: Alf wa tis'u mi'ah wa ithnān wa tis'ūn</p>
+                 </div>
+             </div>
         </div>
+
     </div>
 
     <script>
         // --- Core Logic for Number Translation ---
         function getArabicPronunciation(num) {
             const units = [
-                "Sifr (Zero)", "Wāḥid (One)", "Ithnān (Two)", "Thalāthah (Three)", "Arba'ah (Four)",
+                "Sifr (Zero)", "Wāḥid (One)", "Ithnān (Two)", "Thalāthah (Three)", "Arba'ah (Four)", 
                 "Khamsah (Five)", "Sittah (Six)", "Sab'ah (Seven)", "Thamāniyah (Eight)", "Tis'ah (Nine)"
             ];
             const tens = [
-                "", "", "‘Ishrūn (Twenty)", "Thalāthūn (Thirty)", "Arba‘ūn (Forty)",
-                "Khamsūn (Fifty)", "Sittūn (Sixty)", "Sab‘ūn (Seventy)", "Thamānūn (Eighty)", "Tis‘ūn (Ninety)"
+                "", "", "‘Ishrūn (Twenty)", "Thalāthūn (Thirty)", "Arba‘ūn (Forty)", "Khamsūn (Fifty)", 
+                "Sittūn (Sixty)", "Sab‘ūn (Seventy)", "Thamānūn (Eighty)", "Tis‘ūn (Ninety)"
             ];
             const teens = [
-                "‘Asharah (Ten)", "Aḥada ‘ashar (Eleven)", "Ithnā ‘ashar (Twelve)", "Thalāthata ‘ashar (Thirteen)",
-                "Arba‘ata ‘ashar (Fourteen)", "Khamsata ‘ashar (Fifteen)", "Sittata ‘ashar (Sixteen)",
+                "‘Asharah (Ten)", "Aḥada ‘ashar (Eleven)", "Ithnā ‘ashar (Twelve)", "Thalāthata ‘ashar (Thirteen)", 
+                "Arba‘ata ‘ashar (Fourteen)", "Khamsata ‘ashar (Fifteen)", "Sittata ‘ashar (Sixteen)", 
                 "Sab‘ata ‘ashar (Seventeen)", "Thamāniyata ‘ashar (Eighteen)", "Tis‘ata ‘ashar (Nineteen)"
             ];
 
-            if (num < 10) return units[num];
-            if (num >= 10 && num < 20) return teens[num - 10];
-            if (num === 0) return units[0];
+            if (num < 10) return { spoken: `<span class="text-blue-600 font-bold">${units[num].split(' ')[0]}</span>`, breakdown: units[num].split(' ')[1] };
+            if (num >= 10 && num < 20) return { spoken: `<span class="text-cyan-600 font-bold">${teens[num - 10].split(' ')[0]}</span>`, breakdown: teens[num - 10].split(' ')[1] };
+            if (num === 0) return { spoken: `<span class="text-blue-600 font-bold">${units[0].split(' ')[0]}</span>`, breakdown: units[0].split(' ')[1] };
 
             const unit = num % 10;
             const ten = Math.floor(num / 10);
@@ -497,8 +233,7 @@
             }
 
             // Generate the English breakdown for clarity
-            const fullTranslation = `<span class="text-gray-600">(${unit > 0 ? unitName : ''} ${unit > 0 && ten > 1 ? 'and' : ''} ${tenName || ''})</span>`;
-
+            const fullTranslation = `(${unit > 0 ? unitName : ''} ${unit > 0 && ten > 1 ? 'and' : ''} ${tenName || ''})`;
             return { spoken: result.trim(), breakdown: fullTranslation };
         }
 
@@ -542,7 +277,7 @@
             resultDiv.classList.add('hidden');
 
             if (isNaN(number) || number < 0 || number > 99) {
-                errorDiv.textContent = 'Please enter a whole number between 0 and 99 to see the pattern.';
+                errorDiv.textContent = 'Please enter a whole number between 0 and 99.';
                 errorDiv.classList.remove('hidden');
                 return;
             }
@@ -550,23 +285,24 @@
             const script = getArabicScript(number);
             const pronunciation = getArabicPronunciation(number);
 
+            // Strip HTML for audio function
+            const spokenTextForAudio = pronunciation.spoken.replace(/<[^>]*>/g, '').trim();
+
             resultDiv.innerHTML = `
                 <div class="space-y-4 p-6 translation-box">
                     <div class="flex items-center justify-between border-b border-cyan-300 pb-2">
                         <p class="text-lg font-bold text-gray-700">Input Number:</p>
                         <span class="text-4xl font-extrabold text-indigo-700">${number}</span>
                     </div>
-
                     <div class="border-b border-cyan-300 pb-2">
                         <p class="text-lg font-bold text-gray-700 mb-1">1. Arabic Script:</p>
                         <p class="arabic-text text-4xl font-extrabold text-cyan-800">${script}</p>
                     </div>
-
                     <div class="pt-2">
                         <p class="text-lg font-bold text-gray-700 mb-1">2. Pronunciation (Transliterated):</p>
                         <div class="flex items-center">
                             <p class="font-mono text-2xl font-bold">${pronunciation.spoken}</p>
-                            <button class="audio-btn ml-3" onclick="playAudio('${pronunciation.spoken.replace(/<[^>]*>/g, '')}')">
+                            <button class="audio-btn ml-3" onclick="playAudio('${spokenTextForAudio}')">
                                 <i class="fas fa-volume-up"></i>
                             </button>
                         </div>
@@ -584,96 +320,110 @@
             card.classList.toggle('flipped');
         }
 
-        // Quiz functionality
-        let currentQuizQuestion = 1;
-        let quizScore = 0;
+        // Audio simulation (using alert instead of actual TTS for demonstration)
+        function playAudio(text) {
+            alert(`Simulating audio playback for: ${text}`);
+        }
 
-        function checkAnswer(element, type) {
-            // Remove any existing selections
+        // --- Quiz Logic (From Second Script, Arabic content kept) ---
+        const quizData = [
+            { q: "ما النطق الصحيح للعدد ٤٥؟", options: ["خمسة وأربعون", "أربعون وخمسة", "خمسة عشر", "أربع وخمسون"], correct: 0 },
+            { q: "كيف يُنطق العدد ٢٧؟", options: ["سبعة وعشرون", "سبعون واثنان", "اثنان وسبعون", "عشرون وسبعة"], correct: 0 },
+            { q: "ما النطق الصحيح للعدد ٨٣؟", options: ["ثلاثة وثمانون", "ثمانية وثلاثون", "ثلاثة وثلاثون", "ثمانون وثلاثة"], correct: 0 },
+            { q: "اختر النطق الصحيح للعدد ٥٦؟", options: ["ستة وخمسون", "خمسة وستون", "ستة وستون", "خمسة وستون"], correct: 0 },
+            { q: "كيف يُنطق العدد ٩١؟", options: ["واحد وتسعون", "تسعون وواحد", "تسعة عشر", "إحدى وتسعون"], correct: 0 },
+            { q: "ما النطق الصحيح للعدد ٣٤؟", options: ["أربعة وثلاثون", "ثلاثة وأربعون", "أربعة وأربعون", "ثلاثة وثلاثون"], correct: 0 },
+            { q: "اختر النطق الصحيح للعدد ٦٨؟", options: ["ثمانية وستون", "ثمانون وستة", "سبعة وستون", "ستون وثمانية"], correct: 0 },
+            { q: "ما النطق الصحيح للعدد ٧٢؟", options: ["اثنان وسبعون", "سبعون واثنان", "اثنا عشر", "سبع وعشرون"], correct: 0 },
+            { q: "كيف يُنطق العدد ١٩؟", options: ["تسعة عشر", "تسعة وعشرون", "تسعة وسبعون", "أحد عشر"], correct: 0 },
+            { q: "ما النطق الصحيح للعدد ٩٩؟", options: ["تسعة وتسعون", "تسعة وعشرون", "سبعة وتسعون", "تسعة وسبعون"], correct: 0 }
+        ];
+
+        let currentQuiz = 0;
+        let quizScore = 0;
+        const totalQuestions = quizData.length;
+
+        function loadQuiz() {
+            const q = quizData[currentQuiz];
+            document.getElementById('quizQuestion').textContent = q.q;
+            document.getElementById('currentQuestion').textContent = currentQuiz + 1;
+
+            const box = document.getElementById('quizOptions');
+            box.innerHTML = '';
+            
+            q.options.forEach((opt, i) => {
+                let div = document.createElement('div');
+                // Use Arabic text for options
+                div.className = 'quiz-option text-lg font-semibold text-gray-800 arabic-text text-right';
+                div.textContent = opt;
+                div.onclick = () => checkQuizAnswer(i);
+                box.appendChild(div);
+            });
+            document.getElementById('quizProgress').style.width = `${(currentQuiz / totalQuestions) * 100}%`;
+        }
+
+        function checkQuizAnswer(i) {
+            // Disable other options after selection
             document.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.classList.remove('correct', 'incorrect');
+                opt.onclick = null;
             });
             
-            // Mark the selected option
-            element.classList.add(type);
-            
-            // Update score
-            if (type === 'correct') {
+            const correctIndex = quizData[currentQuiz].correct;
+            const selectedOption = document.querySelectorAll('.quiz-option')[i];
+
+            selectedOption.classList.add(i === correctIndex ? 'correct' : 'incorrect');
+
+            if (i === correctIndex) {
                 quizScore++;
             }
-            
-            // Show next button
+
             document.getElementById('nextQuestionBtn').classList.remove('hidden');
-            
-            // Update progress bar
-            document.getElementById('quizProgress').style.width = `${(currentQuizQuestion / 5) * 100}%`;
+            document.getElementById('quizProgress').style.width = `${((currentQuiz + 1) / totalQuestions) * 100}%`;
         }
 
         function nextQuestion() {
-            currentQuizQuestion++;
-            
-            if (currentQuizQuestion > 5) {
-                // Quiz completed
+            currentQuiz++;
+            document.getElementById('nextQuestionBtn').classList.add('hidden');
+
+            if (currentQuiz === totalQuestions) {
                 document.getElementById('quizContainer').innerHTML = `
                     <div class="text-center py-8">
                         <div class="text-5xl text-indigo-600 mb-4">
-                            <i class="fas fa-trophy"></i>
+                             <i class="fas fa-trophy"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-indigo-700 mb-4">Quiz Completed!</h3>
-                        <p class="text-xl mb-6">You scored ${quizScore} out of 5</p>
-                        <button class="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition duration-300" onclick="resetQuiz()">
-                            Try Again <i class="fas fa-redo ml-2"></i>
+                        <h3 class="text-3xl font-bold text-indigo-700 mb-4">Quiz Completed!</h3>
+                        <p class="text-xl mb-6">Your Score: ${quizScore} out of ${totalQuestions}</p>
+                        <button class="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition duration-300" onclick="resetQuiz()"> 
+                            Try Again <i class="fas fa-redo ml-2"></i> 
                         </button>
                     </div>
                 `;
                 return;
             }
-            
-            // Reset for next question
-            document.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.classList.remove('correct', 'incorrect');
-            });
-            
-            document.getElementById('nextQuestionBtn').classList.add('hidden');
-            document.getElementById('currentQuestion').textContent = currentQuizQuestion;
-            
-            // Update question (in a real app, you'd have a question bank)
-            const questions = [
-                "What is the Arabic pronunciation for 27?",
-                "How do you say 83 in Arabic?",
-                "What is the correct pattern for 56?",
-                "How is 19 pronounced in Arabic?",
-                "What is the Arabic for 91?"
-            ];
-            
-            document.getElementById('quizQuestion').textContent = questions[currentQuizQuestion - 1];
+            loadQuiz();
         }
 
         function resetQuiz() {
-            currentQuizQuestion = 1;
+            currentQuiz = 0;
             quizScore = 0;
-            document.getElementById('quizProgress').style.width = '0%';
-            document.getElementById('currentQuestion').textContent = '1';
-            document.getElementById('quizQuestion').textContent = "What is the Arabic pronunciation for 45?";
-            document.getElementById('nextQuestionBtn').classList.add('hidden');
-            
-            // Reset options styling
-            document.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.classList.remove('correct', 'incorrect');
-            });
+            // Re-render the quiz structure
+            document.getElementById('quizContainer').innerHTML = `
+                <h3 class="text-2xl font-bold text-indigo-700 mb-4" id="quizQuestion"></h3>
+                <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
+                <div class="progress-bar"><div class="progress-fill" id="quizProgress"></div></div>
+                <div class="flex justify-between items-center mt-4">
+                    <span class="text-sm text-gray-600">Question <span id="currentQuestion">1</span> of ${totalQuestions}</span>
+                    <button id="nextQuestionBtn" class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 hidden" onclick="nextQuestion()"> Next Question <i class="fas fa-arrow-right ml-2"></i> </button>
+                </div>
+            `;
+            loadQuiz();
         }
 
-        // Audio simulation (in a real app, you'd use actual audio files)
-        function playAudio(text) {
-            // This is a simulation - in a real application you would use actual audio files
-            alert(`Playing audio for: ${text}`);
-        }
-
-        // Initialize the page with some examples
+        // Initialize the page with a default number for demonstration
         window.onload = function() {
-            // Set a default number in the input for demonstration
             document.getElementById('numberInput').value = '36';
             translateNumber();
+            loadQuiz(); // Start the quiz
         };
     </script>
 </body>
