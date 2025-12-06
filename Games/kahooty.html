@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kahoot Quiz - Arabic Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lato', sans-serif; }
+        .font-arabic { font-family: 'Cairo', sans-serif; }
+        .answer-btn { transition: all 0.3s; }
+        .answer-btn:hover { transform: scale(1.05); }
+        .answer-btn.correct { background: #10b981 !important; }
+        .answer-btn.incorrect { background: #ef4444 !important; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-red-50 to-yellow-50">
+    
+    <nav class="bg-gradient-to-r from-red-600 to-yellow-500 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-left text-2xl"></i>
+                    <span class="text-xl hidden md:inline">Back to Games</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-quiz text-3xl"></i>
+                    <h1 class="text-2xl font-bold">Kahoot Quiz</h1>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-3xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Kahoot Quiz 🎮</h2>
+                <p class="text-gray-600 text-lg">Test your Arabic knowledge with fun multiple-choice questions!</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-4 gap-4 mb-8">
+                <div class="bg-white rounded-lg p-4 text-center shadow">
+                    <p class="text-gray-600 text-sm">Score</p>
+                    <p id="score" class="text-2xl font-bold text-red-600">0</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 text-center shadow">
+                    <p class="text-gray-600 text-sm">Question</p>
+                    <p id="questionNum" class="text-2xl font-bold text-blue-600">1/10</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 text-center shadow">
+                    <p class="text-gray-600 text-sm">Time Left</p>
+                    <p id="timer" class="text-2xl font-bold text-green-600">15s</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 text-center shadow">
+                    <p class="text-gray-600 text-sm">Streak</p>
+                    <p id="streak" class="text-2xl font-bold text-orange-600">0</p>
+                </div>
+            </div>
+
+            <!-- Game Card -->
+            <div id="gameContainer" class="bg-white rounded-lg shadow-2xl p-8 mb-8">
+                <!-- Question -->
+                <div class="mb-8">
+                    <p class="text-gray-500 text-sm font-semibold mb-2">QUESTION</p>
+                    <p id="question" class="text-2xl font-bold text-gray-900 font-arabic text-center"></p>
+                </div>
+
+                <!-- Answer Options -->
+                <div id="answersContainer" class="grid grid-cols-2 gap-4 mb-8">
+                    <!-- Answer buttons will be generated -->
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="progressBar" class="bg-gradient-to-r from-red-600 to-yellow-500 h-2 rounded-full transition-all"></div>
+                </div>
+            </div>
+
+            <!-- Start/Reset Button -->
+            <div id="startScreen" class="bg-gradient-to-br from-red-600 to-yellow-500 text-white rounded-lg p-8 text-center hidden">
+                <i class="fas fa-gamepad text-6xl mb-4"></i>
+                <h2 class="text-3xl font-bold mb-4">Ready to Play?</h2>
+                <p class="text-xl mb-6">Answer 10 questions about Arabic vocabulary and grammar!</p>
+                <button onclick="startGame()" class="bg-white text-red-600 font-bold px-8 py-3 rounded-lg hover:shadow-lg transition">
+                    Start Game
+                </button>
+            </div>
+
+            <!-- End Screen -->
+            <div id="endScreen" class="bg-white rounded-lg shadow-lg p-8 text-center hidden">
+                <i class="fas fa-crown text-6xl text-yellow-500 mb-4"></i>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Quiz Complete!</h2>
+                <p id="finalScore" class="text-5xl font-bold text-red-600 mb-4">0/100</p>
+                <p id="resultMessage" class="text-xl text-gray-700 mb-6"></p>
+                <button onclick="resetGame()" class="bg-red-600 text-white font-bold px-8 py-3 rounded-lg hover:bg-red-700 transition">
+                    Play Again
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../ai-assistant.js"></script>
+    <script>
+        const questions = [
+            { q: 'What does "كتاب" mean?', options: ['Book', 'Pen', 'School', 'Water'], correct: 0 },
+            { q: 'How do you say "Thank you" in Arabic?', options: ['Okay', 'Sorry', 'Shukran', 'Hello'], correct: 2 },
+            { q: 'What does "مدرسة" mean?', options: ['Teacher', 'School', 'Student', 'Class'], correct: 1 },
+            { q: 'Choose the correct greeting:', options: ['Marhaba', 'Goodbye', 'Good night', 'See you'], correct: 0 },
+            { q: 'What does "ماء" mean?', options: ['Bread', 'Water', 'Food', 'Milk'], correct: 1 },
+            { q: 'How many letters in the Arabic alphabet?', options: ['24', '26', '28', '30'], correct: 2 },
+            { q: 'What does "قمر" mean?', options: ['Sun', 'Star', 'Moon', 'Sky'], correct: 2 },
+            { q: 'Choose the correct number "5":', options: ['Sitah', 'Khamsah', 'Thalathah', 'Arbaah'], correct: 1 },
+            { q: 'What does "معلم" mean?', options: ['Student', 'School', 'Teacher', 'Book'], correct: 2 },
+            { q: 'What is "Assalamu alaikum"?', options: ['Goodbye', 'A greeting', 'Thank you', 'Please'], correct: 1 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let streak = 0;
+        let timeLeft = 15;
+        let timerInterval = null;
+        let gameActive = false;
+
+        function startGame() {
+            document.getElementById('startScreen').classList.add('hidden');
+            gameActive = true;
+            currentQuestion = 0;
+            score = 0;
+            streak = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) {
+                endGame();
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            document.getElementById('question').textContent = q.q;
+            document.getElementById('questionNum').textContent = `${currentQuestion + 1}/10`;
+            document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / 10) * 100}%`;
+
+            const container = document.getElementById('answersContainer');
+            container.innerHTML = '';
+
+            q.options.forEach((option, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn bg-red-600 text-white font-bold py-6 rounded-lg text-xl hover:opacity-90 transition';
+                btn.textContent = option;
+                btn.onclick = () => checkAnswer(idx, q.correct, btn);
+                container.appendChild(btn);
+            });
+
+            timeLeft = 15;
+            document.getElementById('timer').textContent = '15s';
+            clearInterval(timerInterval);
+            startTimer();
+        }
+
+        function checkAnswer(selected, correct, btn) {
+            const buttons = document.querySelectorAll('.answer-btn');
+            buttons.forEach(b => b.disabled = true);
+            clearInterval(timerInterval);
+
+            if (selected === correct) {
+                score += 10;
+                streak++;
+                btn.classList.add('correct');
+                document.getElementById('score').textContent = score;
+                document.getElementById('streak').textContent = streak;
+            } else {
+                streak = 0;
+                btn.classList.add('incorrect');
+                buttons[correct].classList.add('correct');
+                document.getElementById('streak').textContent = '0';
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                loadQuestion();
+            }, 1500);
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = `${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    currentQuestion++;
+                    loadQuestion();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            gameActive = false;
+            document.getElementById('gameContainer').classList.add('hidden');
+            document.getElementById('endScreen').classList.remove('hidden');
+            document.getElementById('finalScore').textContent = `${score}/100`;
+            
+            let message = '';
+            if (score === 100) message = '🎉 Perfect Score! You\'re an Arabic master!';
+            else if (score >= 80) message = '🌟 Excellent! Great job!';
+            else if (score >= 60) message = '👏 Good work! Keep practicing!';
+            else if (score >= 40) message = '💪 Not bad! Try again!';
+            else message = '📚 Keep learning! You\'ll improve!';
+            
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function resetGame() {
+            document.getElementById('endScreen').classList.add('hidden');
+            document.getElementById('gameContainer').classList.remove('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            document.getElementById('score').textContent = '0';
+            document.getElementById('streak').textContent = '0';
+        }
+    </script>
+</body>
+</html>

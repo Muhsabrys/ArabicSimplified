@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening Challenge | Al-Manara</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        game: {
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+        .correct { background-color: #22c55e !important; }
+        .incorrect { background-color: #ef4444 !important; }
+        .answer-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .playing-icon { animation: spin 2s linear infinite; }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-yellow-50 via-white to-orange-50 text-gray-800 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-game-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Games</span>
+                </a>
+                <h1 class="text-2xl font-bold">Listening Challenge</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Game Container -->
+    <main class="container mx-auto px-6 py-8">
+        
+        <!-- Start Screen -->
+        <div id="startScreen" class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-12 text-center border-4 border-yellow-300">
+                <i class="fa-solid fa-headphones text-6xl text-yellow-500 mb-6"></i>
+                <h2 class="text-4xl font-bold text-game-800 mb-4 font-arabic">تحدي الاستماع</h2>
+                <h3 class="text-2xl font-bold text-gray-700 mb-6">Listening Challenge</h3>
+                <p class="text-xl text-gray-600 mb-8">Listen to audio clips and select the correct meaning from the options. Test your listening comprehension!</p>
+                <div class="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-6 mb-8 text-left">
+                    <h4 class="font-bold text-lg mb-3">How to Play:</h4>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>📻 Listen to each Arabic word or phrase</li>
+                        <li>✅ Choose the correct English translation</li>
+                        <li>⏱️ Answer before time runs out</li>
+                        <li>🎯 Try to get all 5 correct!</li>
+                    </ul>
+                </div>
+                <button onclick="startGame()" class="bg-game-600 hover:bg-game-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition">
+                    Start Challenge <i class="fa-solid fa-play ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="max-w-2xl mx-auto hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 border-4 border-yellow-300">
+                
+                <!-- Progress Bar -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-lg">Question <span id="questionNum">1</span>/5</span>
+                        <span class="text-sm font-semibold text-gray-600">Score: <span id="score">0</span>/50</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="progressBar" class="bg-game-600 h-3 rounded-full" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <!-- Audio Player -->
+                <div class="text-center mb-8">
+                    <i id="playingIcon" class="fa-solid fa-headphones text-5xl text-yellow-500 mb-4"></i>
+                    <button id="audioBtn" onclick="playAudio()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-8 rounded-lg transition flex items-center gap-2 mx-auto">
+                        <i class="fa-solid fa-play"></i>
+                        <span id="audioBtnText">Play Audio</span>
+                    </button>
+                    <p class="text-gray-600 mt-4">Press the button to hear the word/phrase</p>
+                </div>
+
+                <!-- Timer -->
+                <div class="text-center mb-6">
+                    <p class="text-gray-600">Time remaining:</p>
+                    <div class="text-4xl font-bold text-game-600"><span id="timer">15</span>s</div>
+                </div>
+
+                <!-- Answer Options -->
+                <div id="optionsContainer" class="grid grid-cols-1 gap-3">
+                    <!-- Options will be inserted here -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- End Screen -->
+        <div id="endScreen" class="max-w-2xl mx-auto hidden">
+            <div class="bg-white rounded-xl shadow-lg p-12 text-center border-4 border-yellow-300">
+                <i class="fa-solid fa-trophy text-6xl text-yellow-500 mb-6"></i>
+                <h2 class="text-3xl font-bold text-game-800 mb-4">Challenge Complete!</h2>
+                <div class="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-8 mb-8">
+                    <p class="text-5xl font-bold text-game-600 mb-2"><span id="finalScore">0</span>/50</p>
+                    <p class="text-xl font-semibold text-gray-700" id="performanceMessage"></p>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <p class="text-gray-600">Correct Answers</p>
+                        <p class="text-3xl font-bold text-blue-600"><span id="correctAnswers">0</span>/5</p>
+                    </div>
+                    <div class="bg-purple-50 rounded-lg p-4">
+                        <p class="text-gray-600">Accuracy</p>
+                        <p class="text-3xl font-bold text-purple-600"><span id="accuracy">0</span>%</p>
+                    </div>
+                </div>
+                <button onclick="location.href='index.html'" class="bg-game-600 hover:bg-game-700 text-white font-bold py-3 px-8 rounded-lg transition">
+                    Back to Games <i class="fa-solid fa-arrow-left ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- AI Assistant -->
+    <script src="../ai-assistant.js"></script>
+
+    <script>
+        const audioClips = [
+            {
+                text: "السلام عليكم",
+                options: ["Hello", "Goodbye", "Thank you", "Please"],
+                correct: 0
+            },
+            {
+                text: "كتاب",
+                options: ["Pen", "Book", "School", "Student"],
+                correct: 1
+            },
+            {
+                text: "ماء",
+                options: ["Fire", "Air", "Water", "Earth"],
+                correct: 2
+            },
+            {
+                text: "شكراً",
+                options: ["You're welcome", "Excuse me", "Thank you", "I'm sorry"],
+                correct: 2
+            },
+            {
+                text: "مدرسة",
+                options: ["Teacher", "Student", "School", "Classroom"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        let timerInterval;
+        let timeLeft = 15;
+
+        function startGame() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            currentQuestion = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= audioClips.length) {
+                endGame();
+                return;
+            }
+
+            answered = false;
+            timeLeft = 15;
+            document.getElementById('questionNum').textContent = currentQuestion + 1;
+            document.getElementById('progressBar').style.width = ((currentQuestion + 1) / 5 * 100) + '%';
+            
+            const options = audioClips[currentQuestion].options;
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-lg transition text-left';
+                btn.textContent = option;
+                btn.onclick = () => selectAnswer(index);
+                container.appendChild(btn);
+            });
+
+            startTimer();
+        }
+
+        function playAudio() {
+            const text = audioClips[currentQuestion].text;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ar-SA';
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function selectAnswer(index) {
+            if (answered) return;
+            answered = true;
+            clearInterval(timerInterval);
+
+            const buttons = document.querySelectorAll('.answer-btn');
+            const correct = audioClips[currentQuestion].correct;
+
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (index === correct) {
+                score += 10;
+                buttons[index].classList.add('correct');
+                document.getElementById('score').textContent = score;
+            } else {
+                buttons[index].classList.add('incorrect');
+                buttons[correct].classList.add('correct');
+            }
+
+            setTimeout(nextQuestion, 2000);
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (!answered) {
+                        answered = true;
+                        const buttons = document.querySelectorAll('.answer-btn');
+                        buttons.forEach(btn => btn.disabled = true);
+                        buttons[audioClips[currentQuestion].correct].classList.add('correct');
+                        setTimeout(nextQuestion, 2000);
+                    }
+                }
+            }, 1000);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function endGame() {
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('endScreen').classList.remove('hidden');
+            
+            const correctAnswers = score / 10;
+            const accuracy = Math.round((correctAnswers / 5) * 100);
+            
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('correctAnswers').textContent = correctAnswers;
+            document.getElementById('accuracy').textContent = accuracy;
+            
+            let message = '';
+            if (accuracy === 100) message = 'Perfect! Outstanding listening skills! 🌟';
+            else if (accuracy >= 80) message = 'Excellent! Great comprehension! 🎉';
+            else if (accuracy >= 60) message = 'Good job! Keep practicing! 👍';
+            else if (accuracy >= 40) message = 'Not bad! Try again to improve! 💪';
+            else message = 'Keep learning! You\'ll get better! 📚';
+            
+            document.getElementById('performanceMessage').textContent = message;
+        }
+    </script>
+
+</body>
+</html>

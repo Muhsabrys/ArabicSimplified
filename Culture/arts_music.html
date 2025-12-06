@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arts & Music | Al-Manara Culture</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        culture: { 600: '#b45309', 700: '#92400e', 800: '#78350f' }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 text-gray-800 font-sans">
+
+    <nav class="bg-culture-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Culture</span>
+                </a>
+                <h1 class="text-2xl font-bold">Arts & Music</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <i class="fa-solid fa-music text-6xl text-culture-600 mb-4"></i>
+                <h2 class="text-4xl font-bold text-culture-800 mb-4 font-arabic">الفنون والموسيقى</h2>
+                <p class="text-xl text-gray-600">Traditional and Contemporary Arab Arts</p>
+            </div>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Traditional Music</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-indigo-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">الطرب - Classical Arabic Music</h4>
+                        <p class="text-gray-700 text-sm">Characterized by complex maqam (modal) systems, improvisation, and emotional expression. Legendary singers include Umm Kulthum, Fairuz, and Abdel Halim Hafez.</p>
+                    </div>
+                    <div class="bg-purple-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2">Oud & Traditional Instruments</h4>
+                        <p class="text-gray-700 text-sm">The oud (lute), qanun (zither), ney (flute), and darbuka (drum) are essential. These instruments date back centuries and remain central to Arab music.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Visual Arts</h3>
+                <div class="space-y-4">
+                    <div class="bg-amber-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">الخط العربي - Arabic Calligraphy</h4>
+                        <p class="text-gray-700">The art of beautiful writing elevated to its highest form. Scripts include Kufic, Naskh, Thuluth, and Diwani. Calligraphy adorns mosques, manuscripts, and modern art.</p>
+                    </div>
+                    <div class="bg-yellow-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2">Geometric Patterns</h4>
+                        <p class="text-gray-700">Islamic art uses intricate geometric designs symbolizing infinity and divine order. Found in architecture, textiles, and ceramics.</p>
+                    </div>
+                    <div class="bg-amber-100 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2">Miniature Paintings</h4>
+                        <p class="text-gray-700">Detailed illustrations in manuscripts depicting historical events, poetry, and scientific texts. Persian and Arab miniatures influenced each other.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Traditional Crafts</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-rug text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Carpet Weaving</h4>
+                        <p class="text-sm text-gray-700">Persian and Arab carpets with intricate patterns</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-vial text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Glassblowing</h4>
+                        <p class="text-sm text-gray-700">Syrian and Egyptian glass crafts</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-gem text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Metalwork</h4>
+                        <p class="text-sm text-gray-700">Brass and copper engravings</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Modern Arab Arts</h3>
+                <p class="text-gray-700 mb-4">
+                    Contemporary Arab artists blend traditional techniques with modern themes. Arab cinema, particularly Egyptian, has been influential since the 1920s. Street art and graffiti emerged during the Arab Spring as forms of political expression.
+                </p>
+                <div class="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg p-6">
+                    <h4 class="font-bold mb-2">Notable Modern Artists</h4>
+                    <p class="text-sm text-gray-700">Mahmoud Said (Egypt), Etel Adnan (Lebanon), and Shirin Neshat blend Arab heritage with contemporary art movements.</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-culture-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-200">&copy; 2025 Al-Manara Arabic Learning Hub</p>
+        </div>
+    </footer>
+
+    <script src="../ai-assistant.js"></script>
+</body>
+</html>

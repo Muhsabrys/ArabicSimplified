@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literature & Poetry | Al-Manara Culture</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        culture: { 600: '#b45309', 700: '#92400e', 800: '#78350f' }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-rose-50 via-white to-pink-50 text-gray-800 font-sans">
+
+    <nav class="bg-culture-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Culture</span>
+                </a>
+                <h1 class="text-2xl font-bold">Literature & Poetry</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <i class="fa-solid fa-feather-pointed text-6xl text-culture-600 mb-4"></i>
+                <h2 class="text-4xl font-bold text-culture-800 mb-4 font-arabic">الأدب والشعر</h2>
+                <p class="text-xl text-gray-600">Classical and Modern Arabic Literature</p>
+            </div>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Classical Arabic Poetry</h3>
+                <p class="text-gray-700 mb-4">
+                    Poetry holds supreme status in Arab culture, predating Islam. Pre-Islamic poets composed oral verses memorized and passed down through generations. Arabic poetry follows complex meters (بحور - buhur) and rhyme schemes.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-rose-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2">The Mu'allaqat (المعلقات)</h4>
+                        <p class="text-gray-700 text-sm">Seven legendary pre-Islamic odes "hung" on the Kaaba. Composed by poets like Imru' al-Qais and Antarah ibn Shaddad, celebrating love, bravery, and Bedouin life.</p>
+                    </div>
+                    <div class="bg-pink-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2">Abbasid Golden Age</h4>
+                        <p class="text-gray-700 text-sm">Poets like Abu Nuwas and Al-Mutanabbi reached artistic heights. Poetry became more refined, exploring wine, love, philosophy, and satire.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Prose & Storytelling</h3>
+                <div class="space-y-4">
+                    <div class="bg-amber-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">ألف ليلة وليلة - One Thousand and One Nights</h4>
+                        <p class="text-gray-700">Collection of Middle Eastern folk tales featuring Scheherazade, Aladdin, Ali Baba, and Sinbad. Compiled over centuries, blending Persian, Indian, and Arab traditions.</p>
+                    </div>
+                    <div class="bg-yellow-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2">Maqamat (المقامات)</h4>
+                        <p class="text-gray-700">Rhymed prose narratives combining eloquence with adventure. Al-Hariri's Maqamat showcased linguistic virtuosity and wit.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Modern Arabic Literature</h3>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3 bg-gray-50 p-4 rounded-lg">
+                        <i class="fa-solid fa-book text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold">The Nahda (النهضة) - Arab Renaissance</h4>
+                            <p class="text-sm text-gray-700">19th-20th century literary revival. Writers adopted novel and short story forms while modernizing Arabic expression.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 bg-gray-50 p-4 rounded-lg">
+                        <i class="fa-solid fa-award text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold">Nobel Prize Winner</h4>
+                            <p class="text-sm text-gray-700">Naguib Mahfouz (Egypt, 1988) - Author of the Cairo Trilogy, exploring Egyptian society through rich characters and settings.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 bg-gray-50 p-4 rounded-lg">
+                        <i class="fa-solid fa-pen text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold">Contemporary Voices</h4>
+                            <p class="text-sm text-gray-700">Authors like Mahmoud Darwish (Palestine), Adonis (Syria), and Hanan al-Shaykh (Lebanon) blend tradition with modern themes.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Poetry in Arab Life</h3>
+                <p class="text-gray-700 mb-4">
+                    Poetry remains integral to Arab culture. Poetry contests air on television, poets are celebrated celebrities, and verses are quoted in daily conversation. Nabati poetry (النبطي) - Bedouin vernacular poetry - enjoys huge popularity in the Gulf.
+                </p>
+                <div class="bg-gradient-to-r from-rose-100 to-pink-100 rounded-lg p-6">
+                    <h4 class="font-bold mb-2">Famous Arabic Sayings</h4>
+                    <p class="text-sm text-gray-700 rtl mb-1">"الشعر ديوان العرب" - Poetry is the archive of the Arabs</p>
+                    <p class="text-sm text-gray-700 rtl">"أعذب الشعر أكذبه" - The sweetest poetry is the most fictional</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-culture-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-200">&copy; 2025 Al-Manara Arabic Learning Hub</p>
+        </div>
+    </footer>
+
+    <script src="../ai-assistant.js"></script>
+</body>
+</html>

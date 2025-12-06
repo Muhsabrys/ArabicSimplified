@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Time | Al-Manara</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        game: {
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .correct { background-color: #22c55e !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #ef4444 !important; border-color: #dc2626 !important; }
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-white to-cyan-50 text-gray-800 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-game-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Games</span>
+                </a>
+                <h1 class="text-2xl font-bold">Trivia Time</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Game Container -->
+    <main class="container mx-auto px-6 py-8">
+        
+        <!-- Start Screen -->
+        <div id="startScreen" class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-12 text-center border-4 border-blue-300">
+                <i class="fa-solid fa-lightbulb text-6xl text-blue-500 mb-6"></i>
+                <h2 class="text-4xl font-bold text-game-800 mb-4 font-arabic">أسئلة الثقافة</h2>
+                <h3 class="text-2xl font-bold text-gray-700 mb-6">Trivia Time</h3>
+                <p class="text-xl text-gray-600 mb-8">Answer trivia questions about Arab culture, history, and geography. Test your cultural knowledge!</p>
+                <div class="bg-blue-50 border-2 border-blue-300 rounded-lg p-6 mb-8 text-left">
+                    <h4 class="font-bold text-lg mb-3">How to Play:</h4>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>❓ Read the trivia question</li>
+                        <li>🎯 Choose the correct answer</li>
+                        <li>⏱️ Answer before time runs out</li>
+                        <li>🏆 Answer all 8 questions!</li>
+                    </ul>
+                </div>
+                <button onclick="startGame()" class="bg-game-600 hover:bg-game-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition">
+                    Start Trivia <i class="fa-solid fa-play ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="max-w-2xl mx-auto hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 border-4 border-blue-300">
+                
+                <!-- Progress -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-lg">Question <span id="questionNum">1</span>/8</span>
+                        <span class="text-sm font-semibold text-gray-600">Score: <span id="score">0</span>/80</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="progressBar" class="bg-game-600 h-3 rounded-full" style="width: 12.5%"></div>
+                    </div>
+                </div>
+
+                <!-- Timer -->
+                <div class="text-center mb-6 p-4 bg-blue-50 rounded-lg">
+                    <p class="text-gray-600">Time remaining:</p>
+                    <div class="text-3xl font-bold text-game-600"><span id="timer">15</span>s</div>
+                </div>
+
+                <!-- Question -->
+                <div class="mb-6 p-6 bg-gray-50 rounded-lg border-2 border-gray-300">
+                    <p id="question" class="text-xl font-bold text-gray-800"></p>
+                </div>
+
+                <!-- Options -->
+                <div id="optionsContainer" class="grid grid-cols-1 gap-3 mb-6">
+                    <!-- Options will be inserted here -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- End Screen -->
+        <div id="endScreen" class="max-w-2xl mx-auto hidden">
+            <div class="bg-white rounded-xl shadow-lg p-12 text-center border-4 border-blue-300">
+                <i class="fa-solid fa-trophy text-6xl text-blue-500 mb-6"></i>
+                <h2 class="text-3xl font-bold text-game-800 mb-4">Trivia Complete!</h2>
+                <div class="bg-blue-50 border-2 border-blue-300 rounded-lg p-8 mb-8">
+                    <p class="text-5xl font-bold text-game-600 mb-2"><span id="finalScore">0</span>/80</p>
+                    <p class="text-xl font-semibold text-gray-700" id="performanceMessage"></p>
+                </div>
+                <button onclick="location.href='index.html'" class="bg-game-600 hover:bg-game-700 text-white font-bold py-3 px-8 rounded-lg transition">
+                    Back to Games <i class="fa-solid fa-arrow-left ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- AI Assistant -->
+    <script src="../ai-assistant.js"></script>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of Egypt?",
+                options: ["Alexandria", "Cairo", "Giza", "Luxor"],
+                correct: 1
+            },
+            {
+                question: "Which Arabic country is famous for its oil reserves?",
+                options: ["Jordan", "Saudi Arabia", "Lebanon", "Palestine"],
+                correct: 1
+            },
+            {
+                question: "How many countries are in the Arab League?",
+                options: ["20", "22", "25", "30"],
+                correct: 1
+            },
+            {
+                question: "Which is the longest river in Africa?",
+                options: ["Niger River", "Tigris River", "Nile River", "Euphrates River"],
+                correct: 2
+            },
+            {
+                question: "What year did the Arab Spring begin?",
+                options: ["2009", "2010", "2011", "2012"],
+                correct: 2
+            },
+            {
+                question: "Which Arab country is known for cedar trees on its flag?",
+                options: ["Syria", "Lebanon", "Palestine", "Iraq"],
+                correct: 1
+            },
+            {
+                question: "What is the official language of all Arab League countries?",
+                options: ["English", "French", "Arabic", "German"],
+                correct: 2
+            },
+            {
+                question: "Which city is known as the 'City of Peace' in the Middle East?",
+                options: ["Baghdad", "Damascus", "Jerusalem", "Amman"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        let timerInterval;
+        let timeLeft = 15;
+
+        function startGame() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            currentQuestion = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) {
+                endGame();
+                return;
+            }
+
+            answered = false;
+            timeLeft = 15;
+            document.getElementById('questionNum').textContent = currentQuestion + 1;
+            document.getElementById('progressBar').style.width = ((currentQuestion + 1) / 8 * 100) + '%';
+            document.getElementById('question').textContent = questions[currentQuestion].question;
+            
+            const options = questions[currentQuestion].options;
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-lg transition text-left border-2 border-gray-300';
+                btn.textContent = option;
+                btn.onclick = () => selectAnswer(index);
+                container.appendChild(btn);
+            });
+
+            startTimer();
+        }
+
+        function selectAnswer(index) {
+            if (answered) return;
+            answered = true;
+            clearInterval(timerInterval);
+
+            const buttons = document.querySelectorAll('.option-btn');
+            const correct = questions[currentQuestion].correct;
+
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (index === correct) {
+                score += 10;
+                buttons[index].classList.add('correct');
+                document.getElementById('score').textContent = score;
+            } else {
+                buttons[index].classList.add('incorrect');
+                buttons[correct].classList.add('correct');
+            }
+
+            setTimeout(nextQuestion, 2000);
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (!answered) {
+                        answered = true;
+                        const buttons = document.querySelectorAll('.option-btn');
+                        buttons.forEach(btn => btn.disabled = true);
+                        buttons[questions[currentQuestion].correct].classList.add('correct');
+                        setTimeout(nextQuestion, 2000);
+                    }
+                }
+            }, 1000);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function endGame() {
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('endScreen').classList.remove('hidden');
+            
+            document.getElementById('finalScore').textContent = score;
+            
+            let message = '';
+            if (score === 80) message = 'Perfect! You\'re a cultural expert! 🌟';
+            else if (score >= 70) message = 'Excellent! Great cultural knowledge! 🎉';
+            else if (score >= 50) message = 'Good job! You know a lot! 👍';
+            else if (score >= 30) message = 'Not bad! Keep learning! 💪';
+            else message = 'Keep exploring Arab culture! 📚';
+            
+            document.getElementById('performanceMessage').textContent = message;
+        }
+    </script>
+
+</body>
+</html>

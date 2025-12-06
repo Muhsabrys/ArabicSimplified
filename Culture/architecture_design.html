@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture & Design | Al-Manara Culture</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        culture: { 600: '#b45309', 700: '#92400e', 800: '#78350f' }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-stone-50 via-white to-amber-50 text-gray-800 font-sans">
+
+    <nav class="bg-culture-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Culture</span>
+                </a>
+                <h1 class="text-2xl font-bold">Architecture & Design</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <i class="fa-solid fa-gopuram text-6xl text-culture-600 mb-4"></i>
+                <h2 class="text-4xl font-bold text-culture-800 mb-4 font-arabic">العمارة والتصميم</h2>
+                <p class="text-xl text-gray-600">Islamic Architecture and Design Aesthetics</p>
+            </div>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Mosque Architecture</h3>
+                <div class="space-y-4">
+                    <div class="bg-amber-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2">Domes & Minarets</h4>
+                        <p class="text-gray-700">Grand domes symbolize the vault of heaven. Minarets tower over mosques, calling the faithful to prayer. Examples include the Dome of the Rock (Jerusalem) and Sultan Ahmed Mosque (Istanbul).</p>
+                    </div>
+                    <div class="bg-yellow-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2">Prayer Halls & Courtyards</h4>
+                        <p class="text-gray-700">Large open spaces accommodate worshippers. Courtyards with fountains provide ritual washing areas (wudu). Qibla walls face Mecca.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Design Elements</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-stone-50 rounded-lg p-6">
+                        <h4 class="font-bold mb-2 rtl">الأرابيسك - Arabesque</h4>
+                        <p class="text-gray-700 text-sm">Flowing, intertwining vine patterns representing nature's infinite growth. Covers walls, ceilings, and surfaces.</p>
+                    </div>
+                    <div class="bg-amber-100 rounded-lg p-6">
+                        <h4 class="font-bold mb-2">Muqarnas</h4>
+                        <p class="text-gray-700 text-sm">Honeycomb-like decorative vaulting creating 3D geometric patterns. Found in domes and archways.</p>
+                    </div>
+                    <div class="bg-yellow-100 rounded-lg p-6">
+                        <h4 class="font-bold mb-2">Mashrabiya</h4>
+                        <p class="text-gray-700 text-sm">Ornate wooden lattice screens providing privacy while allowing air flow and filtered light.</p>
+                    </div>
+                    <div class="bg-stone-100 rounded-lg p-6">
+                        <h4 class="font-bold mb-2">Zellige Tilework</h4>
+                        <p class="text-gray-700 text-sm">Colorful mosaic tiles forming geometric patterns, prominent in Moroccan architecture.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Gardens & Water Features</h3>
+                <p class="text-gray-700 mb-4">
+                    Islamic gardens reflect paradise (جنة - Jannah) with flowing water, shade trees, and fragrant flowers. The Alhambra in Spain and Mughal gardens in India exemplify this tradition.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-fountain text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Fountains</h4>
+                        <p class="text-sm text-gray-700">Central water features</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-tree text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Gardens</h4>
+                        <p class="text-sm text-gray-700">Symmetrical layouts</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-spa text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Courtyards</h4>
+                        <p class="text-sm text-gray-700">Private outdoor spaces</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Modern Architecture</h3>
+                <p class="text-gray-700">
+                    Contemporary Arab architects blend traditional Islamic design with modern materials and technology. Notable examples include the Burj Khalifa (Dubai), King Abdullah Financial District (Riyadh), and the Museum of Islamic Art (Qatar).
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-culture-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-200">&copy; 2025 Al-Manara Arabic Learning Hub</p>
+        </div>
+    </footer>
+
+    <script src="../ai-assistant.js"></script>
+</body>
+</html>

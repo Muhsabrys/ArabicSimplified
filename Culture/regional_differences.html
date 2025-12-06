@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Differences | Al-Manara Culture</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        culture: {
+                            600: '#b45309',
+                            700: '#92400e',
+                            800: '#78350f',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-white to-cyan-50 text-gray-800 font-sans">
+
+    <nav class="bg-culture-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Culture</span>
+                </a>
+                <h1 class="text-2xl font-bold">Regional Differences</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <i class="fa-solid fa-map text-6xl text-culture-600 mb-4"></i>
+                <h2 class="text-4xl font-bold text-culture-800 mb-4 font-arabic">الفروقات الإقليمية</h2>
+                <p class="text-xl text-gray-600">Diversity Across the Arab World</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <p class="text-gray-700 mb-6">
+                    The Arab world spans 22 countries across North Africa and Southwest Asia, from Morocco to Oman. While united by Arabic language and Islamic heritage, each region has unique cultural characteristics shaped by history, geography, and local traditions.
+                </p>
+            </div>
+
+            <!-- Regions -->
+            <section class="space-y-6">
+                
+                <!-- Levant -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fa-solid fa-mountain text-4xl text-blue-600"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-culture-800">The Levant</h3>
+                            <p class="text-sm text-gray-600">Syria, Lebanon, Jordan, Palestine</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold mb-2">Dialect Features</h4>
+                            <p class="text-gray-700 text-sm">Levantine Arabic is melodic and considered easy to understand. Uses "شو" (shu) for "what" and distinctive verb conjugations.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Cultural Highlights</h4>
+                            <p class="text-gray-700 text-sm">Ancient civilizations, Phoenician heritage, diverse religious communities, mezze food culture, famous for hospitality and dabke dance.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gulf -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fa-solid fa-oil-well text-4xl text-amber-600"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-culture-800">Arabian Gulf</h3>
+                            <p class="text-sm text-gray-600">Saudi Arabia, UAE, Kuwait, Qatar, Bahrain, Oman</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold mb-2">Dialect Features</h4>
+                            <p class="text-gray-700 text-sm">Gulf Arabic retains classical Bedouin features. Distinctive pronunciation of "qaf" as "g". Rich vocabulary related to desert life and pearling.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Cultural Highlights</h4>
+                            <p class="text-gray-700 text-sm">Bedouin heritage, pearl diving history, modern architecture, falconry, camel racing, traditional coffee ceremony, rapid modernization alongside tradition.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Egypt -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fa-solid fa-landmark text-4xl text-yellow-600"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-culture-800">Egypt</h3>
+                            <p class="text-sm text-gray-600">Most populous Arab country</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold mb-2">Dialect Features</h4>
+                            <p class="text-gray-700 text-sm">Egyptian Arabic is the most widely understood due to Egypt's film industry. Replaces "ث" with "ت" and "ذ" with "د". Unique expressions and humor.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Cultural Highlights</h4>
+                            <p class="text-gray-700 text-sm">Ancient pharaonic heritage, Coptic Christian minority, leading Arab film/music industry, Islamic Cairo, Nile River culture, vibrant street life.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Maghreb -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fa-solid fa-sun text-4xl text-orange-600"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-culture-800">The Maghreb</h3>
+                            <p class="text-sm text-gray-600">Morocco, Algeria, Tunisia, Libya, Mauritania</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold mb-2">Dialect Features</h4>
+                            <p class="text-gray-700 text-sm">Maghrebi Arabic influenced by Berber and French. Fast-paced speech. Moroccan Darija very distinct. "ق" pronounced as "g" or "q".</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Cultural Highlights</h4>
+                            <p class="text-gray-700 text-sm">Berber (Amazigh) heritage, Andalusian influence, French colonial legacy, vibrant souks, tagine cuisine, gnawa music, intricate tile work.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Iraq -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fa-solid fa-water text-4xl text-cyan-600"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-culture-800">Iraq</h3>
+                            <p class="text-sm text-gray-600">Cradle of Civilization</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold mb-2">Dialect Features</h4>
+                            <p class="text-gray-700 text-sm">Iraqi Arabic preserves many classical features. Distinctive "ch" sound. Rich vocabulary from Mesopotamian roots and Persian influence.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Cultural Highlights</h4>
+                            <p class="text-gray-700 text-sm">Ancient Mesopotamian civilization (Babylon, Ur), Abbasid caliphate legacy, Shia religious sites, maqam music tradition, masgouf fish specialty.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sudan -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fa-solid fa-globe-africa text-4xl text-green-600"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-culture-800">Sudan</h3>
+                            <p class="text-sm text-gray-600">Bridge between Arab and African worlds</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold mb-2">Dialect Features</h4>
+                            <p class="text-gray-700 text-sm">Sudanese Arabic influenced by Nubian languages. Unique vocabulary and expressions. "ج" pronounced as "g".</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Cultural Highlights</h4>
+                            <p class="text-gray-700 text-sm">Nubian heritage, Sufi traditions, diverse ethnic groups, ancient pyramids of Meroe, Nile river culture, henna art, unique coffee ceremony.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Common Threads -->
+            <section class="bg-gradient-to-r from-amber-100 to-yellow-100 rounded-xl p-8 mt-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-4">What Unites Us</h3>
+                <p class="text-gray-700">
+                    Despite regional differences, Arab countries share the Arabic language (Modern Standard Arabic), Islamic heritage, emphasis on family and hospitality, love of poetry and storytelling, similar cuisine elements, and a sense of shared history and identity.
+                </p>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-culture-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-200">&copy; 2025 Al-Manara Arabic Learning Hub</p>
+        </div>
+    </footer>
+
+    <script src="../ai-assistant.js"></script>
+
+</body>
+</html>

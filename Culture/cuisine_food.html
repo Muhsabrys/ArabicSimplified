@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuisine & Food Culture | Al-Manara Culture</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        culture: { 600: '#b45309', 700: '#92400e', 800: '#78350f' }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 via-white to-red-50 text-gray-800 font-sans">
+
+    <nav class="bg-culture-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Culture</span>
+                </a>
+                <h1 class="text-2xl font-bold">Cuisine & Food Culture</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <i class="fa-solid fa-bowl-food text-6xl text-culture-600 mb-4"></i>
+                <h2 class="text-4xl font-bold text-culture-800 mb-4 font-arabic">الطعام والثقافة الغذائية</h2>
+                <p class="text-xl text-gray-600">Traditional Dishes and Dining Customs</p>
+            </div>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Staple Dishes</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-orange-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">المزة - Mezze</h4>
+                        <p class="text-gray-700 text-sm">Small appetizer dishes shared before the main meal. Includes hummus, baba ghanoush, tabbouleh, falafel, and stuffed grape leaves.</p>
+                    </div>
+                    <div class="bg-red-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">الكبسة - Kabsa</h4>
+                        <p class="text-gray-700 text-sm">Gulf rice dish with meat, vegetables, and aromatic spices. Often served on large platters for communal dining.</p>
+                    </div>
+                    <div class="bg-orange-100 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">المنسف - Mansaf</h4>
+                        <p class="text-gray-700 text-sm">Jordanian national dish: lamb cooked in fermented dried yogurt, served over rice with pine nuts.</p>
+                    </div>
+                    <div class="bg-red-100 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">الكسكسي - Couscous</h4>
+                        <p class="text-gray-700 text-sm">North African staple: steamed semolina grains served with vegetables and meat in flavorful broth.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Desserts & Sweets</h3>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3 bg-amber-50 p-4 rounded-lg">
+                        <i class="fa-solid fa-cookie text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold rtl">البقلاوة - Baklava</h4>
+                            <p class="text-sm text-gray-700">Layers of phyllo pastry filled with nuts and sweetened with honey or syrup</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 bg-yellow-50 p-4 rounded-lg">
+                        <i class="fa-solid fa-candy-cane text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold rtl">الكنافة - Kunafa</h4>
+                            <p class="text-sm text-gray-700">Shredded phyllo or semolina with sweet cheese, soaked in sugar syrup</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 bg-amber-100 p-4 rounded-lg">
+                        <i class="fa-solid fa-ice-cream text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold rtl">المهلبية - Muhallabia</h4>
+                            <p class="text-sm text-gray-700">Creamy milk pudding flavored with rose water or orange blossom</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Beverages</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="text-center p-4 bg-green-50 rounded-lg">
+                        <i class="fa-solid fa-mug-hot text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold rtl">القهوة العربية</h4>
+                        <p class="text-sm text-gray-700">Arabic coffee with cardamom</p>
+                    </div>
+                    <div class="text-center p-4 bg-teal-50 rounded-lg">
+                        <i class="fa-solid fa-leaf text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold rtl">الشاي</h4>
+                        <p class="text-sm text-gray-700">Sweet mint tea</p>
+                    </div>
+                    <div class="text-center p-4 bg-cyan-50 rounded-lg">
+                        <i class="fa-solid fa-glass-water text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold rtl">عصير التمر - Jallab</h4>
+                        <p class="text-sm text-gray-700">Date syrup drink with rosewater</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Dining Customs</h3>
+                <div class="bg-gradient-to-r from-orange-100 to-red-100 rounded-lg p-6">
+                    <ul class="space-y-2 text-gray-700">
+                        <li><strong>• Right Hand:</strong> Eating with the right hand is customary</li>
+                        <li><strong>• Communal Eating:</strong> Sharing from a central platter strengthens bonds</li>
+                        <li><strong>• Generosity:</strong> Hosts insist guests eat more, refusing once is polite</li>
+                        <li><strong>• Starting Phrase:</strong> "Bismillah" (In God's name) before eating</li>
+                        <li><strong>• Finishing:</strong> "Alhamdulillah" (Praise be to God) after meals</li>
+                        <li><strong>• Hospitality:</strong> Offering food to guests is sacred duty</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-culture-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-200">&copy; 2025 Al-Manara Arabic Learning Hub</p>
+        </div>
+    </footer>
+
+    <script src="../ai-assistant.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Heritage | Al-Manara Culture</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        culture: {
+                            600: '#b45309',
+                            700: '#92400e',
+                            800: '#78350f',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 via-white to-emerald-50 text-gray-800 font-sans">
+
+    <nav class="bg-culture-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Culture</span>
+                </a>
+                <h1 class="text-2xl font-bold">Islamic Heritage</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <i class="fa-solid fa-star-and-crescent text-6xl text-culture-600 mb-4"></i>
+                <h2 class="text-4xl font-bold text-culture-800 mb-4 font-arabic">التراث الإسلامي</h2>
+                <p class="text-xl text-gray-600">Islamic Traditions and Their Cultural Influence</p>
+            </div>
+
+            <!-- Five Pillars -->
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">The Five Pillars of Islam</h3>
+                <div class="space-y-6">
+                    <div class="bg-green-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg text-culture-700 mb-2 rtl">الشهادة - Shahada (Faith)</h4>
+                        <p class="text-gray-700">The declaration of faith: "There is no god but Allah, and Muhammad is His messenger." This testimony is the foundation of Islamic belief.</p>
+                    </div>
+                    <div class="bg-emerald-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg text-culture-700 mb-2 rtl">الصلاة - Salah (Prayer)</h4>
+                        <p class="text-gray-700">Muslims pray five times daily facing Mecca: Fajr (dawn), Dhuhr (midday), Asr (afternoon), Maghrib (sunset), and Isha (night). Prayer connects believers to Allah.</p>
+                    </div>
+                    <div class="bg-green-100 rounded-lg p-6">
+                        <h4 class="font-bold text-lg text-culture-700 mb-2 rtl">الزكاة - Zakat (Charity)</h4>
+                        <p class="text-gray-700">Mandatory charity of 2.5% of one's wealth annually to help the poor. Zakat purifies wealth and promotes social equity.</p>
+                    </div>
+                    <div class="bg-emerald-100 rounded-lg p-6">
+                        <h4 class="font-bold text-lg text-culture-700 mb-2 rtl">الصيام - Sawm (Fasting)</h4>
+                        <p class="text-gray-700">Fasting during Ramadan from dawn to sunset. This develops self-discipline, empathy for the less fortunate, and spiritual growth.</p>
+                    </div>
+                    <div class="bg-green-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg text-culture-700 mb-2 rtl">الحج - Hajj (Pilgrimage)</h4>
+                        <p class="text-gray-700">The pilgrimage to Mecca once in a lifetime for those who are able. Millions gather annually, symbolizing unity and equality before God.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quran & Hadith -->
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Sacred Texts</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-amber-50 rounded-lg p-6">
+                        <i class="fa-solid fa-book-quran text-4xl text-culture-600 mb-4"></i>
+                        <h4 class="font-bold text-lg mb-2 rtl">القرآن الكريم - The Quran</h4>
+                        <p class="text-gray-700 text-sm">The holy book of Islam, believed to be the literal word of Allah revealed to Prophet Muhammad over 23 years. It contains 114 chapters (surahs) covering theology, law, morality, and guidance for life. The Quran is recited in Arabic worldwide and is the foundation of Islamic law (Sharia).</p>
+                    </div>
+                    <div class="bg-yellow-50 rounded-lg p-6">
+                        <i class="fa-solid fa-scroll text-4xl text-culture-600 mb-4"></i>
+                        <h4 class="font-bold text-lg mb-2 rtl">الحديث - Hadith</h4>
+                        <p class="text-gray-700 text-sm">Collections of the Prophet Muhammad's sayings, actions, and approvals. Hadith literature complements the Quran and provides practical examples of Islamic living. The most authentic collections include Sahih al-Bukhari and Sahih Muslim.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Islamic Values -->
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Core Islamic Values</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-hand-holding-heart text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Compassion</h4>
+                        <p class="text-sm text-gray-700">Mercy and kindness to all</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-scale-balanced text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Justice</h4>
+                        <p class="text-sm text-gray-700">Fairness and equality</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-handshake text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Honesty</h4>
+                        <p class="text-sm text-gray-700">Truthfulness in all dealings</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-people-group text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Unity</h4>
+                        <p class="text-sm text-gray-700">Brotherhood among believers</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-leaf text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Moderation</h4>
+                        <p class="text-sm text-gray-700">Balance in all aspects</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fa-solid fa-book-open text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold">Knowledge</h4>
+                        <p class="text-sm text-gray-700">Pursuit of learning</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Islamic Calendar -->
+            <section class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">The Islamic Calendar</h3>
+                <p class="text-gray-700 mb-4">
+                    The Islamic calendar is lunar-based with 12 months of 29-30 days (354-355 days per year). It begins with the Hijra (Prophet Muhammad's migration from Mecca to Medina in 622 CE).
+                </p>
+                <div class="bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg p-6">
+                    <h4 class="font-bold text-lg mb-3">Important Islamic Months</h4>
+                    <ul class="space-y-2 text-gray-700 text-sm">
+                        <li><strong>Ramadan (9th month):</strong> Month of fasting, prayer, and reflection</li>
+                        <li><strong>Dhul-Hijjah (12th month):</strong> Month of Hajj pilgrimage</li>
+                        <li><strong>Muharram (1st month):</strong> Islamic New Year</li>
+                        <li><strong>Rajab & Sha'ban:</strong> Months of spiritual preparation</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-culture-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-200">&copy; 2025 Al-Manara Arabic Learning Hub</p>
+        </div>
+    </footer>
+
+    <script src="../ai-assistant.js"></script>
+
+</body>
+</html>

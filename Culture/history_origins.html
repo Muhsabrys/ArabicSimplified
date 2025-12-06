@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History & Origins | Al-Manara Culture</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        culture: {
+                            600: '#b45309',
+                            700: '#92400e',
+                            800: '#78350f',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+        .timeline-item { position: relative; padding-left: 40px; }
+        .timeline-item::before { content: ''; position: absolute; left: 0; top: 8px; width: 16px; height: 16px; background: #b45309; border-radius: 50%; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-yellow-50 via-white to-amber-50 text-gray-800 font-sans">
+
+    <nav class="bg-culture-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Culture</span>
+                </a>
+                <h1 class="text-2xl font-bold">History & Origins</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <i class="fa-solid fa-hourglass-start text-6xl text-culture-600 mb-4"></i>
+                <h2 class="text-4xl font-bold text-culture-800 mb-4 font-arabic">التاريخ والأصول</h2>
+                <p class="text-xl text-gray-600">The Rich History of Arab Civilization</p>
+            </div>
+
+            <!-- Timeline Section -->
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Historical Timeline</h3>
+                
+                <div class="space-y-6">
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-culture-700">Pre-Islamic Era (Before 610 CE)</h4>
+                        <p class="text-gray-700">The Arabian Peninsula was home to nomadic Bedouin tribes and thriving trade cities like Mecca. Poetry and oral traditions flourished, and the Kaaba was already a sacred site.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-culture-700">Birth of Islam (610-632 CE)</h4>
+                        <p class="text-gray-700">Prophet Muhammad (peace be upon him) received revelations in Mecca. Islam unified the Arabian tribes and began spreading across the region.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-culture-700">The Rashidun Caliphate (632-661 CE)</h4>
+                        <p class="text-gray-700">The four rightly guided caliphs expanded Islamic territory into Persia, Byzantine lands, and North Africa. Islamic governance and law began to take shape.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-culture-700">Umayyad Dynasty (661-750 CE)</h4>
+                        <p class="text-gray-700">The Islamic empire expanded dramatically, reaching Spain in the west and India in the east. Damascus became the capital, and Arabic became the administrative language.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-culture-700">Abbasid Golden Age (750-1258 CE)</h4>
+                        <p class="text-gray-700">Baghdad became the center of learning, science, and culture. Scholars preserved and advanced Greek philosophy, mathematics, astronomy, and medicine. The House of Wisdom translated works from many cultures.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-culture-700">Ottoman Empire (1299-1922)</h4>
+                        <p class="text-gray-700">Turkish Ottoman sultans ruled vast Arab territories. Arabic remained the language of religion and scholarship while Turkish dominated governance.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h4 class="font-bold text-lg text-culture-700">Modern Era (20th Century-Present)</h4>
+                        <p class="text-gray-700">Arab nations gained independence from colonial powers. The Arab League formed in 1945. Today, 22 Arab countries preserve and evolve their cultural heritage while engaging with the modern world.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Contributions -->
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Arab Contributions to Civilization</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-amber-50 rounded-lg p-6">
+                        <i class="fa-solid fa-flask text-3xl text-culture-600 mb-3"></i>
+                        <h4 class="font-bold text-lg mb-2">Science & Mathematics</h4>
+                        <ul class="text-gray-700 space-y-1 text-sm">
+                            <li>• Algebra (from Arabic "al-jabr")</li>
+                            <li>• Algorithm (from mathematician Al-Khwarizmi)</li>
+                            <li>• Arabic numerals (0-9)</li>
+                            <li>• Advances in chemistry, optics, and astronomy</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-yellow-50 rounded-lg p-6">
+                        <i class="fa-solid fa-book-medical text-3xl text-culture-600 mb-3"></i>
+                        <h4 class="font-bold text-lg mb-2">Medicine</h4>
+                        <ul class="text-gray-700 space-y-1 text-sm">
+                            <li>• Ibn Sina's "Canon of Medicine" (used for centuries)</li>
+                            <li>• Al-Razi's work on smallpox and measles</li>
+                            <li>• Development of hospitals and medical schools</li>
+                            <li>• Surgical instruments and procedures</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-amber-100 rounded-lg p-6">
+                        <i class="fa-solid fa-pen-fancy text-3xl text-culture-600 mb-3"></i>
+                        <h4 class="font-bold text-lg mb-2">Literature & Philosophy</h4>
+                        <ul class="text-gray-700 space-y-1 text-sm">
+                            <li>• "One Thousand and One Nights" tales</li>
+                            <li>• Classical Arabic poetry traditions</li>
+                            <li>• Preservation of Greek philosophy</li>
+                            <li>• Islamic philosophy and theology</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-yellow-100 rounded-lg p-6">
+                        <i class="fa-solid fa-mosque text-3xl text-culture-600 mb-3"></i>
+                        <h4 class="font-bold text-lg mb-2">Architecture & Art</h4>
+                        <ul class="text-gray-700 space-y-1 text-sm">
+                            <li>• Islamic geometric patterns</li>
+                            <li>• Magnificent mosques and palaces</li>
+                            <li>• Arabic calligraphy as art form</li>
+                            <li>• Gardens and water features</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ancient Trade Routes -->
+            <section class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Trade & Cultural Exchange</h3>
+                <p class="text-gray-700 mb-4">
+                    The Arabian Peninsula was at the crossroads of major trade routes connecting East and West. Merchants traded spices, silk, gold, and ideas between Asia, Africa, and Europe.
+                </p>
+                <div class="bg-gradient-to-r from-amber-100 to-yellow-100 rounded-lg p-6">
+                    <h4 class="font-bold text-lg mb-3">The Silk Road & Incense Route</h4>
+                    <p class="text-gray-700 text-sm mb-2">
+                        Arab traders were essential intermediaries on the Silk Road, facilitating commerce between China, India, Persia, and Rome. The Incense Route brought frankincense and myrrh from Southern Arabia to Mediterranean markets.
+                    </p>
+                    <p class="text-gray-700 text-sm">
+                        This trade network not only enriched Arab cities but also spread knowledge, technology, and cultural practices across continents, making Arabic a language of commerce and diplomacy.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-culture-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-200">&copy; 2025 Al-Manara Arabic Learning Hub</p>
+        </div>
+    </footer>
+
+    <script src="../ai-assistant.js"></script>
+
+</body>
+</html>

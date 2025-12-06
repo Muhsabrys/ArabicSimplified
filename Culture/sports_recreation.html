@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports & Recreation | Al-Manara Culture</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        culture: { 600: '#b45309', 700: '#92400e', 800: '#78350f' }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 via-white to-emerald-50 text-gray-800 font-sans">
+
+    <nav class="bg-culture-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Culture</span>
+                </a>
+                <h1 class="text-2xl font-bold">Sports & Recreation</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <i class="fa-solid fa-futbol text-6xl text-culture-600 mb-4"></i>
+                <h2 class="text-4xl font-bold text-culture-800 mb-4 font-arabic">الرياضة والترفيه</h2>
+                <p class="text-xl text-gray-600">Sports, Recreation & Leisure in Arab Culture</p>
+            </div>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Football - The National Passion</h3>
+                <p class="text-gray-700 mb-4">
+                    Football (soccer) is the most popular sport across the Arab world. National teams inspire fierce loyalty, and matches bring communities together. Major clubs like Al-Ahly (Egypt), Al-Hilal (Saudi Arabia), and Esperance (Tunisia) have massive followings.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 rounded-lg p-6">
+                        <i class="fa-solid fa-trophy text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold text-lg mb-2">Major Tournaments</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• FIFA World Cup (Qatar 2022 was first Arab-hosted)</li>
+                            <li>• AFC Asian Cup</li>
+                            <li>• CAF Africa Cup of Nations</li>
+                            <li>• Gulf Cup of Nations</li>
+                        </ul>
+                    </div>
+                    <div class="bg-emerald-50 rounded-lg p-6">
+                        <i class="fa-solid fa-star text-3xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold text-lg mb-2">Famous Arab Footballers</h4>
+                        <ul class="text-sm text-gray-700 space-y-1">
+                            <li>• Mohamed Salah (Egypt) - Liverpool FC</li>
+                            <li>• Riyad Mahrez (Algeria) - Manchester City</li>
+                            <li>• Achraf Hakimi (Morocco) - Paris Saint-Germain</li>
+                            <li>• Hakim Ziyech (Morocco) - Chelsea/Ajax</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Traditional Sports</h3>
+                <div class="space-y-4">
+                    <div class="bg-amber-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">الصقارة - Falconry</h4>
+                        <p class="text-gray-700 text-sm">Ancient Bedouin tradition of hunting with trained falcons. UNESCO-listed intangible cultural heritage. Extremely popular in the Gulf states, with falcon competitions and auctions.</p>
+                    </div>
+                    <div class="bg-yellow-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">سباق الهجن - Camel Racing</h4>
+                        <p class="text-gray-700 text-sm">Traditional desert sport dating back centuries. Modern races use robot jockeys. Major events in UAE, Saudi Arabia, and Qatar offer substantial prize money.</p>
+                    </div>
+                    <div class="bg-orange-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-2 rtl">الفروسية - Equestrian Sports</h4>
+                        <p class="text-gray-700 text-sm">Arabian horses are prized worldwide for beauty and endurance. Horse racing, show jumping, and endurance riding are popular across Arab countries.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Emerging Sports</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-sky-50 rounded-lg p-6 text-center">
+                        <i class="fa-solid fa-basketball text-4xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold mb-2">Basketball</h4>
+                        <p class="text-sm text-gray-700">Growing in Lebanon, Egypt, and Tunisia</p>
+                    </div>
+                    <div class="bg-blue-50 rounded-lg p-6 text-center">
+                        <i class="fa-solid fa-table-tennis-paddle-ball text-4xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold mb-2">Table Tennis</h4>
+                        <p class="text-sm text-gray-700">Egypt dominates African championships</p>
+                    </div>
+                    <div class="bg-sky-100 rounded-lg p-6 text-center">
+                        <i class="fa-solid fa-volleyball text-4xl text-culture-600 mb-2"></i>
+                        <h4 class="font-bold mb-2">Volleyball</h4>
+                        <p class="text-sm text-gray-700">Popular in Tunisia, Egypt, and Iran</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Leisure & Recreation</h3>
+                <div class="space-y-3">
+                    <div class="bg-rose-50 rounded-lg p-4 flex items-start gap-3">
+                        <i class="fa-solid fa-mug-hot text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold">Café Culture (المقاهي)</h4>
+                            <p class="text-sm text-gray-700">Coffeehouses are social hubs for conversation, backgammon, chess, and shisha (water pipe). Men gather for hours discussing politics, sports, and life.</p>
+                        </div>
+                    </div>
+                    <div class="bg-pink-50 rounded-lg p-4 flex items-start gap-3">
+                        <i class="fa-solid fa-water text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold">Beach & Water Sports</h4>
+                            <p class="text-sm text-gray-700">Coastal cities enjoy swimming, diving, and sailing. Red Sea diving (Egypt, Jordan) attracts tourists worldwide. Wakeboarding and kitesurfing growing popular.</p>
+                        </div>
+                    </div>
+                    <div class="bg-rose-100 rounded-lg p-4 flex items-start gap-3">
+                        <i class="fa-solid fa-mountain text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold">Desert Activities</h4>
+                            <p class="text-sm text-gray-700">Dune bashing (4x4 off-roading), sandboarding, and desert camping are weekend favorites in Gulf countries. Bedouin-style camps offer traditional experiences.</p>
+                        </div>
+                    </div>
+                    <div class="bg-pink-100 rounded-lg p-4 flex items-start gap-3">
+                        <i class="fa-solid fa-chess text-2xl text-culture-600"></i>
+                        <div>
+                            <h4 class="font-bold">Games & Pastimes</h4>
+                            <p class="text-sm text-gray-700">Backgammon (طاولة - tawla), chess, and cards are popular. Dominoes played in cafés. Modern gaming culture growing among youth.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-culture-800 mb-6">Sporting Events & Venues</h3>
+                <p class="text-gray-700 mb-4">
+                    Arab countries increasingly host major international sporting events. Qatar hosted FIFA World Cup 2022, UAE hosts Formula 1, Saudi Arabia invests in golf, tennis, and boxing events. World-class stadiums and sports cities showcase regional ambition.
+                </p>
+                <div class="bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg p-6">
+                    <h4 class="font-bold mb-2">Notable Venues</h4>
+                    <ul class="text-sm text-gray-700 space-y-1">
+                        <li>• Lusail Stadium (Qatar) - World Cup Final 2022</li>
+                        <li>• King Fahd International Stadium (Saudi Arabia)</li>
+                        <li>• Cairo International Stadium (Egypt)</li>
+                        <li>• Yas Marina Circuit (UAE) - Formula 1</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-culture-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-200">&copy; 2025 Al-Manara Arabic Learning Hub</p>
+        </div>
+    </footer>
+
+    <script src="../ai-assistant.js"></script>
+</body>
+</html>

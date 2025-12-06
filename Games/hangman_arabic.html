@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Arabic | Al-Manara</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        game: {
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+        .word-display {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            direction: rtl;
+            font-family: 'Cairo', sans-serif;
+        }
+        .letter-btn {
+            transition: all 0.2s;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .letter-btn:hover:not(:disabled) { transform: scale(1.1); }
+        .letter-btn:disabled { 
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .letter-btn.correct { background-color: #22c55e !important; color: white; }
+        .letter-btn.incorrect { background-color: #ef4444 !important; color: white; }
+        .hangman-stage { height: 200px; display: flex; align-items: center; justify-content: center; font-size: 100px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-cyan-50 via-white to-blue-50 text-gray-800 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-game-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Games</span>
+                </a>
+                <h1 class="text-2xl font-bold">Hangman Arabic</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Game Container -->
+    <main class="container mx-auto px-6 py-8">
+        
+        <!-- Start Screen -->
+        <div id="startScreen" class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-12 text-center border-4 border-cyan-300">
+                <i class="fa-solid fa-question text-6xl text-cyan-500 mb-6"></i>
+                <h2 class="text-4xl font-bold text-game-800 mb-4 font-arabic">الكلمة السرية</h2>
+                <h3 class="text-2xl font-bold text-gray-700 mb-6">Hangman Arabic</h3>
+                <p class="text-xl text-gray-600 mb-8">Guess Arabic letters to reveal hidden words. A classic game with an Arabic twist!</p>
+                <div class="bg-cyan-50 border-2 border-cyan-300 rounded-lg p-6 mb-8 text-left">
+                    <h4 class="font-bold text-lg mb-3">How to Play:</h4>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>🔤 Guess letters to reveal the Arabic word</li>
+                        <li>❌ You get 6 wrong guesses</li>
+                        <li>⏱️ Guess the word before you run out of attempts</li>
+                        <li>🎯 Complete 5 words!</li>
+                    </ul>
+                </div>
+                <button onclick="startGame()" class="bg-game-600 hover:bg-game-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition">
+                    Start Guessing <i class="fa-solid fa-play ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="max-w-2xl mx-auto hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 border-4 border-cyan-300">
+                
+                <!-- Progress -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-lg">Word <span id="wordNum">1</span>/5</span>
+                        <span class="text-sm font-semibold text-gray-600">Score: <span id="score">0</span>/50</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="progressBar" class="bg-game-600 h-3 rounded-full" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <!-- Hangman Stage -->
+                <div class="text-center mb-4 p-4 bg-cyan-50 rounded-lg">
+                    <div id="hangmanStage" class="hangman-stage">
+                        <span id="hangmanDisplay">😊</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Wrong Guesses: <span id="wrongCount">0</span>/6</p>
+                </div>
+
+                <!-- Word Display -->
+                <div class="text-center mb-6 p-6 bg-gray-50 rounded-lg">
+                    <p id="wordDisplay" class="word-display mb-2"></p>
+                    <p class="text-gray-600">Hint: <span id="hint"></span></p>
+                </div>
+
+                <!-- Letters Keyboard -->
+                <div id="letterContainer" class="grid grid-cols-6 gap-2 mb-6">
+                    <!-- Letters will be inserted here -->
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-3">
+                    <button onclick="giveUp()" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-lg transition">
+                        <i class="fa-solid fa-flag mr-2"></i>Give Up
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- End Screen -->
+        <div id="endScreen" class="max-w-2xl mx-auto hidden">
+            <div class="bg-white rounded-xl shadow-lg p-12 text-center border-4 border-cyan-300">
+                <i id="endIcon" class="fa-solid fa-trophy text-6xl text-cyan-500 mb-6"></i>
+                <h2 id="endTitle" class="text-3xl font-bold text-game-800 mb-4">Game Complete!</h2>
+                <div class="bg-cyan-50 border-2 border-cyan-300 rounded-lg p-8 mb-8">
+                    <p class="text-5xl font-bold text-game-600 mb-2"><span id="finalScore">0</span>/50</p>
+                    <p class="text-xl font-semibold text-gray-700" id="performanceMessage"></p>
+                </div>
+                <button onclick="location.href='index.html'" class="bg-game-600 hover:bg-game-700 text-white font-bold py-3 px-8 rounded-lg transition">
+                    Back to Games <i class="fa-solid fa-arrow-left ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- AI Assistant -->
+    <script src="../ai-assistant.js"></script>
+
+    <script>
+        const arabicLetters = ['ا', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ي'];
+        
+        const words = [
+            { word: 'كتاب', english: 'Book', hint: 'You read this' },
+            { word: 'مدرسة', english: 'School', hint: 'Place of learning' },
+            { word: 'معلم', english: 'Teacher', hint: 'Person who teaches' },
+            { word: 'قمر', english: 'Moon', hint: 'Shines at night' },
+            { word: 'شمس', english: 'Sun', hint: 'Bright and warm' }
+        ];
+
+        let currentWord = 0;
+        let score = 0;
+        let guessedLetters = [];
+        let wrongGuesses = 0;
+        let gameOver = false;
+        const maxWrong = 6;
+        const hangmanEmojis = ['😊', '😐', '😕', '😟', '😧', '😨', '😵'];
+
+        function startGame() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            currentWord = 0;
+            score = 0;
+            loadWord();
+        }
+
+        function loadWord() {
+            if (currentWord >= words.length) {
+                endGame();
+                return;
+            }
+
+            gameOver = false;
+            guessedLetters = [];
+            wrongGuesses = 0;
+            
+            document.getElementById('wordNum').textContent = currentWord + 1;
+            document.getElementById('progressBar').style.width = ((currentWord + 1) / 5 * 100) + '%';
+            document.getElementById('hint').textContent = words[currentWord].hint;
+            
+            updateDisplay();
+            createLetterButtons();
+        }
+
+        function createLetterButtons() {
+            const container = document.getElementById('letterContainer');
+            container.innerHTML = '';
+            
+            arabicLetters.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.className = 'letter-btn bg-blue-500 hover:bg-blue-600 text-white font-bold rounded';
+                btn.textContent = letter;
+                btn.onclick = () => guessLetter(letter, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function guessLetter(letter, btn) {
+            if (gameOver || guessedLetters.includes(letter)) return;
+            
+            guessedLetters.push(letter);
+            btn.disabled = true;
+            
+            const word = words[currentWord].word;
+            if (word.includes(letter)) {
+                btn.classList.add('correct');
+                updateDisplay();
+                
+                if (isWordComplete()) {
+                    score += 10;
+                    document.getElementById('score').textContent = score;
+                    gameOver = true;
+                    setTimeout(() => {
+                        currentWord++;
+                        loadWord();
+                    }, 1500);
+                }
+            } else {
+                btn.classList.add('incorrect');
+                wrongGuesses++;
+                document.getElementById('wrongCount').textContent = wrongGuesses;
+                document.getElementById('hangmanDisplay').textContent = hangmanEmojis[wrongGuesses];
+                
+                if (wrongGuesses >= maxWrong) {
+                    gameOver = true;
+                    setTimeout(() => {
+                        currentWord++;
+                        loadWord();
+                    }, 1500);
+                }
+            }
+        }
+
+        function updateDisplay() {
+            const word = words[currentWord].word;
+            let display = '';
+            
+            for (let letter of word) {
+                if (guessedLetters.includes(letter)) {
+                    display += letter;
+                } else {
+                    display += '_ ';
+                }
+            }
+            
+            document.getElementById('wordDisplay').textContent = display;
+        }
+
+        function isWordComplete() {
+            const word = words[currentWord].word;
+            return Array.from(word).every(letter => guessedLetters.includes(letter));
+        }
+
+        function giveUp() {
+            if (gameOver) return;
+            gameOver = true;
+            const word = words[currentWord].word;
+            document.getElementById('wordDisplay').textContent = word;
+            
+            setTimeout(() => {
+                currentWord++;
+                loadWord();
+            }, 2000);
+        }
+
+        function endGame() {
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('endScreen').classList.remove('hidden');
+            
+            document.getElementById('finalScore').textContent = score;
+            
+            let message = '';
+            if (score === 50) {
+                message = 'Perfect! You\'re a letter master! 🌟';
+                document.getElementById('endIcon').className = 'fa-solid fa-crown text-6xl text-yellow-500 mb-6';
+                document.getElementById('endTitle').textContent = 'Outstanding!';
+            } else if (score >= 40) {
+                message = 'Excellent! Great guessing skills! 🎉';
+                document.getElementById('endIcon').className = 'fa-solid fa-trophy text-6xl text-yellow-500 mb-6';
+            } else if (score >= 30) {
+                message = 'Good job! You guessed well! 👍';
+            } else if (score >= 20) {
+                message = 'Not bad! Try again! 💪';
+            } else {
+                message = 'Keep guessing! You\'ll improve! 📚';
+            }
+            
+            document.getElementById('performanceMessage').textContent = message;
+        }
+    </script>
+
+</body>
+</html>

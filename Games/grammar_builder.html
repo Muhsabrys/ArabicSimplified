@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Builder | Al-Manara</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        game: {
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+        .word-btn { 
+            transition: all 0.2s; 
+            cursor: grab;
+        }
+        .word-btn:active { cursor: grabbing; }
+        .word-btn.used { opacity: 0.4; cursor: not-allowed; }
+        .drop-zone { 
+            min-height: 60px;
+            border: 2px dashed #dc2626;
+            border-radius: 8px;
+            padding: 8px;
+        }
+        .drop-zone.drag-over {
+            background-color: #fee2e2;
+            border-color: #991b1b;
+        }
+        .correct { background-color: #22c55e !important; }
+        .incorrect { background-color: #ef4444 !important; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-white to-red-50 text-gray-800 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-game-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Games</span>
+                </a>
+                <h1 class="text-2xl font-bold">Grammar Builder</h1>
+                <div class="w-32"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Game Container -->
+    <main class="container mx-auto px-6 py-8">
+        
+        <!-- Start Screen -->
+        <div id="startScreen" class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-12 text-center border-4 border-pink-300">
+                <i class="fa-solid fa-spell-check text-6xl text-pink-500 mb-6"></i>
+                <h2 class="text-4xl font-bold text-game-800 mb-4 font-arabic">بناء القواعد</h2>
+                <h3 class="text-2xl font-bold text-gray-700 mb-6">Grammar Builder</h3>
+                <p class="text-xl text-gray-600 mb-8">Arrange words to form grammatically correct sentences. Master Arabic sentence structure!</p>
+                <div class="bg-pink-50 border-2 border-pink-300 rounded-lg p-6 mb-8 text-left">
+                    <h4 class="font-bold text-lg mb-3">How to Play:</h4>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>📝 Read the sentence in English</li>
+                        <li>✏️ Arrange the Arabic words in the correct order</li>
+                        <li>✅ Check your answer</li>
+                        <li>🎯 Complete all 5 sentences!</li>
+                    </ul>
+                </div>
+                <button onclick="startGame()" class="bg-game-600 hover:bg-game-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition">
+                    Start Building <i class="fa-solid fa-play ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="max-w-3xl mx-auto hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 border-4 border-pink-300">
+                
+                <!-- Progress -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-lg">Sentence <span id="questionNum">1</span>/5</span>
+                        <span class="text-sm font-semibold text-gray-600">Score: <span id="score">0</span>/50</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="progressBar" class="bg-game-600 h-3 rounded-full" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <!-- English Translation -->
+                <div class="bg-blue-50 border-2 border-blue-300 rounded-lg p-4 mb-6">
+                    <p class="text-gray-600 font-semibold">English:</p>
+                    <p id="englishText" class="text-xl font-bold text-blue-700"></p>
+                </div>
+
+                <!-- Drop Zone -->
+                <div class="mb-6">
+                    <p class="text-gray-600 font-semibold mb-2">Arrange the words:</p>
+                    <div id="dropZone" class="drop-zone bg-white flex flex-wrap gap-2 items-center rtl">
+                        <!-- Words will be placed here -->
+                    </div>
+                </div>
+
+                <!-- Word Bank -->
+                <div class="mb-6">
+                    <p class="text-gray-600 font-semibold mb-2">Word Bank:</p>
+                    <div id="wordBank" class="flex flex-wrap gap-2 rtl">
+                        <!-- Words will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-3">
+                    <button onclick="checkAnswer()" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition">
+                        <i class="fa-solid fa-check mr-2"></i>Check Answer
+                    </button>
+                    <button onclick="resetSentence()" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-lg transition">
+                        <i class="fa-solid fa-redo mr-2"></i>Reset
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- End Screen -->
+        <div id="endScreen" class="max-w-3xl mx-auto hidden">
+            <div class="bg-white rounded-xl shadow-lg p-12 text-center border-4 border-pink-300">
+                <i class="fa-solid fa-trophy text-6xl text-pink-500 mb-6"></i>
+                <h2 class="text-3xl font-bold text-game-800 mb-4">Grammar Builder Complete!</h2>
+                <div class="bg-pink-50 border-2 border-pink-300 rounded-lg p-8 mb-8">
+                    <p class="text-5xl font-bold text-game-600 mb-2"><span id="finalScore">0</span>/50</p>
+                    <p class="text-xl font-semibold text-gray-700" id="performanceMessage"></p>
+                </div>
+                <button onclick="location.href='index.html'" class="bg-game-600 hover:bg-game-700 text-white font-bold py-3 px-8 rounded-lg transition">
+                    Back to Games <i class="fa-solid fa-arrow-left ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- AI Assistant -->
+    <script src="../ai-assistant.js"></script>
+
+    <script>
+        const sentences = [
+            {
+                english: "I like to read books.",
+                arabic: "أحب أن أقرأ الكتب",
+                words: ["أحب", "أن", "أقرأ", "الكتب"]
+            },
+            {
+                english: "She goes to school every day.",
+                arabic: "تذهب إلى المدرسة كل يوم",
+                words: ["تذهب", "إلى", "المدرسة", "كل", "يوم"]
+            },
+            {
+                english: "The teacher speaks Arabic fluently.",
+                arabic: "يتحدث المعلم اللغة العربية بطلاقة",
+                words: ["يتحدث", "المعلم", "اللغة", "العربية", "بطلاقة"]
+            },
+            {
+                english: "I want to learn new vocabulary.",
+                arabic: "أريد أن أتعلم مفردات جديدة",
+                words: ["أريد", "أن", "أتعلم", "مفردات", "جديدة"]
+            },
+            {
+                english: "Where is the nearest coffee shop?",
+                arabic: "أين أقرب مقهى؟",
+                words: ["أين", "أقرب", "مقهى"]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let currentOrder = [];
+
+        function startGame() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            currentQuestion = 0;
+            score = 0;
+            loadSentence();
+        }
+
+        function loadSentence() {
+            if (currentQuestion >= sentences.length) {
+                endGame();
+                return;
+            }
+
+            currentOrder = [];
+            document.getElementById('questionNum').textContent = currentQuestion + 1;
+            document.getElementById('progressBar').style.width = ((currentQuestion + 1) / 5 * 100) + '%';
+            document.getElementById('englishText').textContent = sentences[currentQuestion].english;
+            
+            const wordBank = document.getElementById('wordBank');
+            wordBank.innerHTML = '';
+            
+            const words = [...sentences[currentQuestion].words].sort(() => Math.random() - 0.5);
+            words.forEach((word, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'word-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg';
+                btn.textContent = word;
+                btn.onclick = () => addWord(index, word);
+                btn.id = `word-${index}`;
+                wordBank.appendChild(btn);
+            });
+
+            document.getElementById('dropZone').innerHTML = '';
+        }
+
+        function addWord(index, word) {
+            const btn = document.getElementById(`word-${index}`);
+            if (btn.classList.contains('used')) return;
+
+            btn.classList.add('used');
+            currentOrder.push(word);
+            
+            const dropZone = document.getElementById('dropZone');
+            const wordSpan = document.createElement('span');
+            wordSpan.className = 'bg-blue-100 text-blue-800 font-bold py-2 px-3 rounded-lg';
+            wordSpan.textContent = word;
+            wordSpan.onclick = () => removeWord(index, word);
+            wordSpan.style.cursor = 'pointer';
+            dropZone.appendChild(wordSpan);
+        }
+
+        function removeWord(index, word) {
+            const btn = document.getElementById(`word-${index}`);
+            btn.classList.remove('used');
+            currentOrder = currentOrder.filter(w => w !== word);
+            
+            const dropZone = document.getElementById('dropZone');
+            const words = dropZone.querySelectorAll('span');
+            words.forEach(span => {
+                if (span.textContent === word) span.remove();
+            });
+        }
+
+        function resetSentence() {
+            const wordBank = document.querySelectorAll('.word-btn');
+            wordBank.forEach(btn => btn.classList.remove('used'));
+            currentOrder = [];
+            document.getElementById('dropZone').innerHTML = '';
+        }
+
+        function checkAnswer() {
+            const correct = sentences[currentQuestion].words;
+            const isCorrect = JSON.stringify(currentOrder) === JSON.stringify(correct);
+
+            if (isCorrect) {
+                score += 10;
+                document.getElementById('score').textContent = score;
+                const dropZone = document.getElementById('dropZone');
+                dropZone.classList.add('correct');
+                setTimeout(() => {
+                    currentQuestion++;
+                    loadSentence();
+                }, 1500);
+            } else {
+                const dropZone = document.getElementById('dropZone');
+                dropZone.classList.add('incorrect');
+                setTimeout(() => {
+                    dropZone.classList.remove('incorrect');
+                }, 500);
+            }
+        }
+
+        function endGame() {
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('endScreen').classList.remove('hidden');
+            
+            document.getElementById('finalScore').textContent = score;
+            
+            let message = '';
+            if (score === 50) message = 'Perfect Grammar! You\'re a master! 🌟';
+            else if (score >= 40) message = 'Excellent Grammar Skills! 🎉';
+            else if (score >= 30) message = 'Good job! Keep practicing! 👍';
+            else if (score >= 20) message = 'Not bad! Try again! 💪';
+            else message = 'Keep learning! 📚';
+            
+            document.getElementById('performanceMessage').textContent = message;
+        }
+    </script>
+
+</body>
+</html>
