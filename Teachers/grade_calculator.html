@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator - Context Teachers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-100 min-h-screen flex items-center justify-center">
+    
+    <div class="text-center">
+        <div class="bg-white rounded-3xl shadow-2xl p-12 max-w-md">
+            <h1 class="text-4xl font-bold text-green-600 mb-8">Grade Calculator</h1>
+            
+            <div class="space-y-4 mb-8">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Points Earned</label>
+                    <input type="number" id="earned" placeholder="0" class="w-full px-4 py-3 border-2 border-green-300 rounded-lg focus:border-green-500 outline-none text-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Total Points</label>
+                    <input type="number" id="total" placeholder="100" class="w-full px-4 py-3 border-2 border-green-300 rounded-lg focus:border-green-500 outline-none text-lg">
+                </div>
+            </div>
+
+            <button onclick="calculate()" class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 rounded-xl font-bold text-xl hover:shadow-lg transition mb-8">
+                <i class="fas fa-calculator mr-2"></i>Calculate
+            </button>
+
+            <div id="result" class="hidden">
+                <div class="bg-gradient-to-r from-green-100 to-emerald-100 p-8 rounded-2xl border-4 border-green-500 mb-4">
+                    <p class="text-gray-600 mb-2">Grade</p>
+                    <p id="percentage" class="text-5xl font-bold text-green-700 mb-4">0%</p>
+                    <p id="letterGrade" class="text-3xl font-bold text-green-600"></p>
+                </div>
+                <div id="gradeMsg" class="text-lg font-semibold text-gray-700 mb-4"></div>
+                <button onclick="reset()" class="w-full bg-gray-400 text-white py-2 rounded-lg">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../ai-assistant.js"></script>
+    <script>
+        function calculate() {
+            const earned = parseFloat(document.getElementById('earned').value);
+            const total = parseFloat(document.getElementById('total').value);
+
+            if (!earned || !total || total === 0) {
+                alert('Please enter valid numbers');
+                return;
+            }
+
+            const percentage = Math.round((earned / total) * 100);
+            let letter = '';
+            let msg = '';
+
+            if (percentage >= 90) { letter = 'A'; msg = '🌟 Excellent!'; }
+            else if (percentage >= 80) { letter = 'B'; msg = '👍 Good job!'; }
+            else if (percentage >= 70) { letter = 'C'; msg = '✓ Satisfactory'; }
+            else if (percentage >= 60) { letter = 'D'; msg = '⚠️ Needs improvement'; }
+            else { letter = 'F'; msg = '❌ Failing'; }
+
+            document.getElementById('percentage').textContent = percentage + '%';
+            document.getElementById('letterGrade').textContent = letter;
+            document.getElementById('gradeMsg').textContent = msg;
+            document.getElementById('result').classList.remove('hidden');
+        }
+
+        function reset() {
+            document.getElementById('earned').value = '';
+            document.getElementById('total').value = '';
+            document.getElementById('result').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

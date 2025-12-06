@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator - Context Teachers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-cyan-50 to-blue-100 min-h-screen flex items-center justify-center p-4">
+    
+    <div class="w-full max-w-md">
+        <div class="bg-white rounded-3xl shadow-2xl p-12">
+            <h1 class="text-4xl font-bold text-blue-600 mb-8 text-center">GPA Calculator</h1>
+            
+            <div id="gradesContainer" class="space-y-3 mb-6">
+                <div class="grade-input flex gap-2">
+                    <input type="number" placeholder="Grade (0-100)" min="0" max="100" class="flex-1 px-3 py-2 border-2 border-blue-300 rounded-lg focus:border-blue-500 outline-none">
+                    <input type="number" placeholder="Credits" min="1" max="4" value="3" class="w-20 px-3 py-2 border-2 border-blue-300 rounded-lg focus:border-blue-500 outline-none">
+                    <button onclick="removeGrade(this)" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex gap-2 mb-8">
+                <button onclick="addGrade()" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold">
+                    <i class="fas fa-plus mr-2"></i>Add Grade
+                </button>
+                <button onclick="calculateGPA()" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold">
+                    <i class="fas fa-calculator mr-2"></i>Calculate
+                </button>
+            </div>
+
+            <div id="result" class="hidden">
+                <div class="bg-gradient-to-r from-blue-100 to-cyan-100 p-8 rounded-2xl border-4 border-blue-500 text-center">
+                    <p class="text-gray-600 mb-2">Your GPA</p>
+                    <p id="gpaResult" class="text-5xl font-bold text-blue-700"></p>
+                    <p id="gpaScale" class="text-sm text-gray-600 mt-2">(on 4.0 scale)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../ai-assistant.js"></script>
+    <script>
+        function addGrade() {
+            const container = document.getElementById('gradesContainer');
+            const div = document.createElement('div');
+            div.className = 'grade-input flex gap-2';
+            div.innerHTML = `
+                <input type="number" placeholder="Grade (0-100)" min="0" max="100" class="flex-1 px-3 py-2 border-2 border-blue-300 rounded-lg focus:border-blue-500 outline-none">
+                <input type="number" placeholder="Credits" min="1" max="4" value="3" class="w-20 px-3 py-2 border-2 border-blue-300 rounded-lg focus:border-blue-500 outline-none">
+                <button onclick="removeGrade(this)" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeGrade(btn) {
+            btn.parentElement.remove();
+        }
+
+        function calculateGPA() {
+            const inputs = document.querySelectorAll('.grade-input');
+            let totalPoints = 0;
+            let totalCredits = 0;
+
+            inputs.forEach(input => {
+                const grade = parseFloat(input.querySelector('input:first-child').value);
+                const credits = parseFloat(input.querySelector('input:nth-child(2)').value);
+                
+                if (grade && credits) {
+                    const gpa = (grade / 100) * 4;
+                    totalPoints += gpa * credits;
+                    totalCredits += credits;
+                }
+            });
+
+            if (totalCredits === 0) {
+                alert('Please enter grades and credits');
+                return;
+            }
+
+            const finalGPA = (totalPoints / totalCredits).toFixed(2);
+            document.getElementById('gpaResult').textContent = finalGPA;
+            document.getElementById('result').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

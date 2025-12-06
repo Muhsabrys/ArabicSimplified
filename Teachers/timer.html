@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer - Context Teachers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-red-50 to-orange-100 min-h-screen flex items-center justify-center">
+    
+    <div class="text-center">
+        <div class="bg-white rounded-3xl shadow-2xl p-12 max-w-md">
+            <h1 class="text-4xl font-bold text-red-600 mb-8">Class Timer</h1>
+            
+            <div class="grid grid-cols-3 gap-3 mb-8">
+                <button onclick="setTimer(5)" class="bg-orange-100 hover:bg-orange-200 px-4 py-3 rounded-lg font-bold text-lg text-orange-700">5m</button>
+                <button onclick="setTimer(10)" class="bg-orange-100 hover:bg-orange-200 px-4 py-3 rounded-lg font-bold text-lg text-orange-700">10m</button>
+                <button onclick="setTimer(15)" class="bg-orange-100 hover:bg-orange-200 px-4 py-3 rounded-lg font-bold text-lg text-orange-700">15m</button>
+                <button onclick="setTimer(20)" class="bg-orange-100 hover:bg-orange-200 px-4 py-3 rounded-lg font-bold text-lg text-orange-700">20m</button>
+                <button onclick="setTimer(25)" class="bg-orange-100 hover:bg-orange-200 px-4 py-3 rounded-lg font-bold text-lg text-orange-700">25m</button>
+                <button onclick="setTimer(30)" class="bg-orange-100 hover:bg-orange-200 px-4 py-3 rounded-lg font-bold text-lg text-orange-700">30m</button>
+            </div>
+
+            <div class="bg-gradient-to-r from-red-100 to-orange-100 p-8 rounded-2xl border-4 border-red-500 mb-8">
+                <p id="display" class="text-6xl font-bold text-red-600 font-mono">00:00</p>
+            </div>
+
+            <div class="flex gap-4">
+                <button onclick="startTimer()" id="startBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-bold text-lg">
+                    <i class="fas fa-play mr-2"></i>Start
+                </button>
+                <button onclick="pauseTimer()" id="pauseBtn" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg font-bold text-lg">
+                    <i class="fas fa-pause mr-2"></i>Pause
+                </button>
+                <button onclick="resetTimer()" class="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-bold text-lg">
+                    <i class="fas fa-redo mr-2"></i>Reset
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../ai-assistant.js"></script>
+    <script>
+        let timeLeft = 0;
+        let timerRunning = false;
+        let interval = null;
+
+        function setTimer(minutes) {
+            timeLeft = minutes * 60;
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('display').textContent = 
+                String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+        }
+
+        function startTimer() {
+            if (timerRunning || timeLeft === 0) return;
+            timerRunning = true;
+            interval = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+                if (timeLeft === 0) {
+                    clearInterval(interval);
+                    timerRunning = false;
+                    alert('⏰ Time\'s up!');
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            timerRunning = false;
+            clearInterval(interval);
+        }
+
+        function resetTimer() {
+            timerRunning = false;
+            clearInterval(interval);
+            timeLeft = 0;
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>

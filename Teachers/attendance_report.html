@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Generator - Context Teachers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-yellow-50 to-amber-100 min-h-screen flex items-center justify-center">
+    
+    <div class="text-center">
+        <div class="bg-white rounded-3xl shadow-2xl p-12 max-w-md">
+            <h1 class="text-4xl font-bold text-amber-600 mb-8">Attendance Report</h1>
+            
+            <div class="space-y-4 mb-8">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Total Classes</label>
+                    <input type="number" id="total" placeholder="20" value="20" class="w-full px-4 py-3 border-2 border-amber-300 rounded-lg focus:border-amber-500 outline-none text-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Classes Attended</label>
+                    <input type="number" id="attended" placeholder="18" class="w-full px-4 py-3 border-2 border-amber-300 rounded-lg focus:border-amber-500 outline-none text-lg">
+                </div>
+            </div>
+
+            <button onclick="generateReport()" class="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-xl font-bold text-xl hover:shadow-lg transition mb-8">
+                <i class="fas fa-chart-pie mr-2"></i>Generate
+            </button>
+
+            <div id="result" class="hidden">
+                <div class="bg-gradient-to-r from-amber-100 to-yellow-100 p-8 rounded-2xl border-4 border-amber-500 mb-4">
+                    <p class="text-gray-600 mb-2">Attendance Rate</p>
+                    <p id="rate" class="text-5xl font-bold text-amber-700 mb-4">0%</p>
+                    <p id="status" class="text-xl font-semibold text-amber-600"></p>
+                </div>
+                <button onclick="location.reload()" class="w-full bg-gray-400 text-white py-2 rounded-lg">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../ai-assistant.js"></script>
+    <script>
+        function generateReport() {
+            const total = parseInt(document.getElementById('total').value);
+            const attended = parseInt(document.getElementById('attended').value);
+
+            if (!total || !attended || attended > total) {
+                alert('Please enter valid numbers');
+                return;
+            }
+
+            const rate = Math.round((attended / total) * 100);
+            let status = '';
+
+            if (rate >= 95) status = '✅ Perfect attendance!';
+            else if (rate >= 85) status = '👍 Good attendance';
+            else if (rate >= 75) status = '⚠️ Acceptable but improve';
+            else status = '❌ Poor attendance';
+
+            document.getElementById('rate').textContent = rate + '%';
+            document.getElementById('status').textContent = status;
+            document.getElementById('result').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
