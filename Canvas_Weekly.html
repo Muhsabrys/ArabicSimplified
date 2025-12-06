@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Schedule Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+        h1, h2 {
+            color: #334155;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .form-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            background-color: #f1f5f9;
+        }
+        .form-section label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #475569;
+        }
+        .form-section input[type="text"],
+        .form-section input[type="url"],
+        .form-section textarea,
+        .form-section select {
+            width: calc(100% - 20px);
+            padding: 0.75rem 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .form-section textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+            background-color: #e0e7ff; /* Light blue for inputs */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #93c5fd;
+        }
+        .input-group label {
+            font-weight: 500;
+            color: #1e40af;
+        }
+        .button-group {
+            text-align: center;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        }
+        button {
+            background-color: #4f46e5;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background-color: #4338ca;
+        }
+        .button-secondary {
+            background-color: #64748b; /* Slate 500 */
+        }
+        .button-secondary:hover {
+            background-color: #475569; /* Slate 600 */
+        }
+        #output-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            display: none; /* Hidden by default */
+        }
+        #output-html {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.375rem;
+            padding: 10px;
+            font-family: monospace;
+            background-color: #f0f4f8;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+        .fixed-time-slot {
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+        .instructions {
+            background-color: #ecfdf5; /* Light green */
+            border-left: 4px solid #34d399; /* Green border */
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: #065f46; /* Dark green */
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .instructions ol {
+            margin-left: 1.25rem;
+            padding-left: 0;
+        }
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .form-section {
+                padding: 1rem;
+            }
+            .form-section input[type="text"],
+            .form-section input[type="url"],
+            .form-section textarea,
+            .form-section select {
+                padding: 0.6rem 8px;
+                font-size: 0.9rem;
+            }
+            button {
+                padding: 0.6rem 1.2rem;
+                font-size: 1rem;
+            }
+            .button-group {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Canvas Schedule Page Generator</h1>
+
+        <div class="instructions">
+            <h3>How to Use:</h3>
+            <ol>
+                <li><strong>Enter Week Number:</strong> Provide the current week number.</li>
+                <li><strong>Enter Weekday Name (Arabic):</strong> Type the day name in Arabic.</li>
+                <li><strong>Select Day Type:</strong> Choose the general schedule type (e.g., Mon/Tue/Thu). This will also change the color scheme of the generated output.</li>
+                <li><strong>Fill Daily Schedule:</strong> Enter the activity for each time slot. Break times are fixed.</li>
+                <li><strong>Enter Homework Due Date (Arabic):</strong> Type the date for the homework/preparation in Arabic.</li>
+                <li><strong>Add Assignments:</strong> Use "Add Assignment" to create new fields. Fill in the title, description (optional), and link for each.</li>
+                <li><strong>Generate HTML:</strong> Click the "Generate Canvas HTML" button.</li>
+                <li><strong>Copy & Paste:</strong> Click "Copy HTML" and paste the code into your Canvas page's HTML editor.</li>
+            </ol>
+        </div>
+
+        <div class="form-section">
+            <h2>Week and Day Details</h2>
+            <label for="weekNumber">Week Number (Arabic/Text):</label>
+            <input type="text" id="weekNumber" placeholder="e.g., الخامس">
+
+            <label for="dayNameArabic">Day Name (Arabic):</label>
+            <input type="text" id="dayNameArabic" placeholder="e.g., الثلاثاء">
+            
+            <label for="daySelect">Select Day Type:</label>
+            <select id="daySelect">
+                <option value="monday-tuesday-thursday">Monday, Tuesday, Thursday Schedule </option>
+                <option value="wednesday">Wednesday Schedule </option>
+                <option value="friday">Friday Schedule </option>
+            </select>
+        </div>
+
+        <div class="form-section">
+            <h2>Daily Schedule Activities</h2>
+            <div id="schedule-inputs">
+                </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Homework Due Date</h2>
+            <label for="homeworkDateArabic">Homework Due Date (Arabic):</label>
+            <input type="text" id="homeworkDateArabic" placeholder="e.g., الثلاثاء 1 يوليو/ تموز 2025">
+        </div>
+
+        <div class="form-section">
+            <h2>Assignments & Preparation</h2>
+            <div id="assignment-inputs">
+                </div>
+            <div class="button-group" style="margin-top: 1.5rem;">
+                <button type="button" onclick="addAssignmentField()">Add Assignment</button>
+                <button type="button" onclick="removeLastAssignmentField()" class="button-secondary">Remove Last Assignment</button>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button onclick="generateCanvasHtml()">Generate Canvas HTML</button>
+        </div>
+
+        <div id="output-section">
+            <h2>Generated Canvas HTML (Copy & Paste into Canvas)</h2>
+            <textarea id="output-html" readonly></textarea>
+            <button onclick="copyHtmlToClipboard()" style="margin-top: 1rem;">Copy HTML</button>
+        </div>
+    </div>
+
+    <script>
+        // Define fixed schedules for different days
+        const schedules = {
+            'monday-tuesday-thursday': [
+                { time: '9:00-9:50', label: 'Class 1', fixed: false },
+                { time: '9:50-10:00', label: 'استراحة (Break)', fixed: true },
+                { time: '10:00-10:50', label: 'Class 2', fixed: false },
+                { time: '10:50-11:00', label: 'استراحة (Break)', fixed: true },
+                { time: '11:00-11:50', label: 'Class 3', fixed: false },
+                { time: '12:00-1:10', label: 'استراحة الغداء (Lunch Break)', fixed: true },
+                { time: '1:30-2:20', label: 'Class 4', fixed: false },
+                { time: '2:20-2:30', label: 'استراحة (Break)', fixed: true },
+                { time: '2:30-3:20', label: 'Class 5', fixed: false }
+            ],
+            'wednesday': [
+                { time: '9:00-9:50', label: 'Class 1', fixed: false },
+                { time: '9:50-10:00', label: 'استراحة (Break)', fixed: true },
+                { time: '10:00-10:50', label: 'Class 2', fixed: false },
+                { time: '10:50-11:00', label: 'استراحة (Break)', fixed: true },
+                { time: '11:00-11:50', label: 'Class 3', fixed: false },
+                { time: '12:00-1:10', label: 'استراحة الغداء LUNCH BREAK', fixed: true },
+                { time: '1:30-3:20', label: 'Clubs النوادي', fixed: false },
+                { time: '7:30-9:00', label: 'المحاضرة (Lecture)', fixed: false } /* Evening slot */
+            ],
+            'friday': [
+                { time: '9:00-9:50', label: 'Class 1', fixed: false },
+                { time: '9:50-10:00', label: 'استراحة (Break)', fixed: true },
+                { time: '10:00-10:50', label: 'Class 2', fixed: false },
+                { time: '10:50-11:00', label: 'استراحة (Break)', fixed: true },
+                { time: '11:00-11:50', label: 'Class 3', fixed: false },
+                { time: '12:00-1:10', label: 'استراحة الغداء (Lunch Break)', fixed: true },
+                { time: '8:00', label: 'الليلة العربية (Arabian Night)', fixed: false } /* Evening event */
+            ]
+        };
+
+        const daySelect = document.getElementById('daySelect');
+        const scheduleInputsDiv = document.getElementById('schedule-inputs');
+        const assignmentInputsDiv = document.getElementById('assignment-inputs');
+        const outputHtmlTextarea = document.getElementById('output-html');
+        const outputSection = document.getElementById('output-section');
+
+        let assignmentCount = 0; // To keep track of assignments
+
+        // Function to update schedule input fields based on selected day
+        function updateScheduleInputs() {
+            const selectedDay = daySelect.value;
+            const currentSchedule = schedules[selectedDay];
+            scheduleInputsDiv.innerHTML = ''; // Clear previous inputs
+
+            currentSchedule.forEach((slot, index) => {
+                const inputGroup = document.createElement('div');
+                inputGroup.className = 'input-group';
+
+                if (slot.fixed) {
+                    // Display fixed break times as read-only text
+                    inputGroup.innerHTML = `
+                        <div class="fixed-time-slot">${slot.time} - ${slot.label}</div>
+                    `;
+                } else {
+                    // Create input field for customizable class times
+                    inputGroup.innerHTML = `
+                        <label for="classActivity${index}">${slot.time} - Activity:</label>
+                        <input type="text" id="classActivity${index}" data-time="${slot.time}" placeholder="${slot.label}">
+                    `;
+                }
+                scheduleInputsDiv.appendChild(inputGroup);
+            });
+        }
+
+        // Function to add a new assignment field
+        function addAssignmentField() {
+            assignmentCount++;
+            const newAssignmentGroup = document.createElement('div');
+            newAssignmentGroup.className = 'input-group';
+            newAssignmentGroup.id = `assignmentGroup${assignmentCount}`;
+            newAssignmentGroup.innerHTML = `
+                <label for="assignmentTitle${assignmentCount}">Assignment/Preparation Title ${assignmentCount}:</label>
+                <input type="text" id="assignmentTitle${assignmentCount}" placeholder="e.g., Drill 13: 'I am the oldest'">
+                <label for="assignmentDesc${assignmentCount}">Description ${assignmentCount} (Optional):</label>
+                <textarea id="assignmentDesc${assignmentCount}" placeholder="e.g., Drill 13: 'I am the oldest' pages 145-146."></textarea>
+                <label for="assignmentLink${assignmentCount}">Link ${assignmentCount} (Optional):</label>
+                <input type="url" id="assignmentLink${assignmentCount}" placeholder="e.g., https://canvas.instructure.com/courses/123/assignments/456">
+            `;
+            assignmentInputsDiv.appendChild(newAssignmentGroup);
+        }
+
+        // Function to remove the last assignment field
+        function removeLastAssignmentField() {
+            if (assignmentCount > 0) {
+                const lastAssignmentGroup = document.getElementById(`assignmentGroup${assignmentCount}`);
+                if (lastAssignmentGroup) {
+                    assignmentInputsDiv.removeChild(lastAssignmentGroup);
+                    assignmentCount--;
+                }
+            }
+        }
+
+        // Function to get colors based on day type
+        function getColorsForDayType(dayType) {
+            switch (dayType) {
+                case 'monday-tuesday-thursday':
+                    return { headerBg: '#4f46e5', headerText: '#ffffff', homeworkBg: '#4f46e5', homeworkText: '#ffffff' }; // Indigo
+                case 'wednesday':
+                    return { headerBg: '#10b981', headerText: '#ffffff', homeworkBg: '#10b981', homeworkText: '#ffffff' }; // Emerald
+                case 'friday':
+                    return { headerBg: '#8b5cf6', headerText: '#ffffff', homeworkBg: '#8b5cf6', homeworkText: '#ffffff' }; // Violet
+                default:
+                    return { headerBg: '#4f46e5', headerText: '#ffffff', homeworkBg: '#4f46e5', homeworkText: '#ffffff' }; // Default to Indigo
+            }
+        }
+
+        // Function to generate the Canvas-compatible HTML
+        function generateCanvasHtml() {
+            const weekNumber = document.getElementById('weekNumber').value.trim();
+            const dayNameArabic = document.getElementById('dayNameArabic').value.trim();
+            const selectedDay = daySelect.value;
+            const homeworkDateArabic = document.getElementById('homeworkDateArabic').value.trim();
+
+            const colors = getColorsForDayType(selectedDay);
+
+            let headerWeekLine = weekNumber ? `جدول الأسبوع ${weekNumber}` : 'جدول هذا الأسبوع';
+            let headerDayLine = dayNameArabic ? `يوم ${dayNameArabic}` : 'اليوم المحدد';
+
+            let generatedHtml = `
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<div style="max-width: 90%; margin: 2rem auto; padding: 1.5rem; background-color: #ffffff; border-radius: 0.75rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); font-family: 'Inter', sans-serif; box-sizing: border-box;">
+
+    <div style="background-color: ${colors.headerBg}; color: ${colors.headerText}; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; text-align: center; font-weight: 700; font-size: 1.5rem;">
+        ${headerWeekLine}<br>
+        ${headerDayLine}
+    </div>
+
+    <div style="font-size: 1.25rem; font-weight: 600; color: #334155; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0;">Daily Schedule</div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 1.5rem;">
+        <thead>
+            <tr>
+                <th style="padding: 0.75rem; text-align: left; background-color: #f1f5f9; font-weight: 600; color: #475569; border-bottom: 1px solid #e2e8f0;">التوقيت / Time</th>
+                <th style="padding: 0.75rem; text-align: left; background-color: #f1f5f9; font-weight: 600; color: #475569; border-bottom: 1px solid #e2e8f0;">الصف / Class</th>
+            </tr>
+        </thead>
+        <tbody>
+            `;
+
+            const currentSchedule = schedules[selectedDay];
+            currentSchedule.forEach((slot, index) => {
+                const activityInput = document.getElementById(`classActivity${index}`);
+                const activityText = activityInput ? activityInput.value.trim() : slot.label; // Use input value or fixed label
+
+                generatedHtml += `
+            <tr>
+                <td style="padding: 0.75rem; text-align: left; border-bottom: 1px solid #e2e8f0;">${slot.time}</td>
+                <td style="padding: 0.75rem; text-align: left; border-bottom: ${index === currentSchedule.length - 1 ? 'none' : '1px solid #e2e8f0'};">${activityText}</td>
+            </tr>`;
+            });
+
+            generatedHtml += `
+        </tbody>
+    </table>
+
+    <div style="background-color: ${colors.homeworkBg}; color: ${colors.homeworkText}; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; text-align: center; font-weight: 700; font-size: 1.5rem;">
+        الواجب ليوم ${homeworkDateArabic || 'تاريخ الواجب بالعربي'}
+    </div>
+            `;
+
+            // Add Assignment Boxes dynamically based on current assignmentCount
+            for (let i = 1; i <= assignmentCount; i++) {
+                const titleInput = document.getElementById(`assignmentTitle${i}`);
+                const descInput = document.getElementById(`assignmentDesc${i}`);
+                const linkInput = document.getElementById(`assignmentLink${i}`);
+
+                const title = titleInput ? titleInput.value.trim() : '';
+                const desc = descInput ? descInput.value.trim() : '';
+                const link = linkInput ? linkInput.value.trim() : '';
+
+                if (title || desc || link) { // Only add if there's any content
+                    generatedHtml += `
+    <div style="background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.5rem; padding: 1.25rem; margin-bottom: 1.5rem;">
+        <div style="font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: ${desc || link ? '0.75rem' : '0'};">
+            ${title || 'Assignment/Preparation Title'}
+        </div>`;
+                    if (desc) { // Only include description if it's not empty
+                        generatedHtml += `
+        <div style="color: #374151; line-height: 1.6; margin-bottom: ${link ? '0.75rem' : '0'};">
+            ${desc}
+        </div>`;
+                    }
+                    if (link) {
+                        generatedHtml += `
+        <a href="${link}" style="display: inline-block; background-color: #3b82f6; color: #ffffff; padding: 0.5rem 1rem; border-radius: 0.375rem; text-decoration: none; font-weight: 500;" target="_blank" rel="noopener noreferrer">View Assignment</a>`;
+                    }
+                    generatedHtml += `
+    </div>`;
+                }
+            }
+
+            generatedHtml += `
+    <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 0.5rem; color: #78350f; font-size: 0.9rem;">
+        <strong>Note:</strong> Remember to check Canvas regularly for any updates or additional resources.
+    </div>
+</div>
+            `;
+            outputHtmlTextarea.value = generatedHtml;
+            outputSection.style.display = 'block'; // Show the output section
+        }
+
+        // Helper functions (convertArabicDayToEnglish and convertArabicDateToEnglish are no longer needed
+        // for output, but are kept if you want to reintroduce English elements later or for other purposes)
+        function convertArabicDayToEnglish(arabicDay) {
+            const dayMap = {
+                'الاحد': 'Sunday', 'الأحد': 'Sunday',
+                'الاثنين': 'Monday', 'الإثنين': 'Monday',
+                'الثلاثاء': 'Tuesday',
+                'الاربعاء': 'Wednesday', 'الأربعاء': 'Wednesday',
+                'الخميس': 'Thursday',
+                'الجمعة': 'Friday',
+                'السبت': 'Saturday'
+            };
+            // Remove "يوم " prefix and trim
+            const cleanedArabicDay = arabicDay.replace('يوم ', '').trim();
+            return dayMap[cleanedArabicDay] || 'Selected Day';
+        }
+
+        function convertArabicDateToEnglish(arabicDate) {
+            if (!arabicDate) return '';
+
+            const arabicMonths = {
+                'يناير': 'January', 'فبراير': 'February', 'مارس': 'March', 'أبريل': 'April',
+                'مايو': 'May', 'يونيو': 'June', 'يوليو': 'July', 'أغسطس': 'August',
+                'سبتمبر': 'September', 'أكتوبر': 'October', 'نوفمبر': 'November', 'ديسمبر': 'December',
+                'كانون الثاني': 'January', 'شباط': 'February', 'آذار': 'March', 'نيسان': 'April',
+                'أيار': 'May', 'حزيران': 'June', 'تموز': 'July', 'آب': 'August',
+                'أيلول': 'September', 'تشرين الأول': 'October', 'تشرين الثاني': 'November', 'كانون الأول': 'December'
+            };
+
+            const parts = arabicDate.split(' ');
+            let englishParts = [];
+
+            for (const part of parts) {
+                const englishDay = convertArabicDayToEnglish(part);
+                if (englishDay !== 'Selected Day') {
+                    englishParts.push(englishDay);
+                    continue;
+                }
+
+                const cleanedPart = part.replace('/', '').trim();
+                let foundMonth = false;
+                for (const arabic in arabicMonths) {
+                    if (cleanedPart.includes(arabic)) {
+                        englishParts.push(arabicMonths[arabic]);
+                        foundMonth = true;
+                        break;
+                    }
+                }
+                if (foundMonth) continue;
+
+                if (!isNaN(parseInt(part))) {
+                    englishParts.push(part.replace(',', ''));
+                    continue;
+                }
+            }
+
+            const dayName = englishParts.find(p => p.includes('day'));
+            const monthName = englishParts.find(p => Object.values(arabicMonths).includes(p));
+            const dayNumber = englishParts.find(p => !isNaN(parseInt(p)) && parseInt(p) < 32);
+            const year = englishParts.find(p => !isNaN(parseInt(p)) && parseInt(p) > 1900);
+
+            let formattedEnglishDate = [];
+            if (dayName) formattedEnglishDate.push(dayName);
+            if (monthName) formattedEnglishDate.push(monthName);
+            if (dayNumber) formattedEnglishDate.push(dayNumber + (dayNumber ? ',' : ''));
+            if (year) formattedEnglishDate.push(year);
+
+            return formattedEnglishDate.join(' ').trim();
+        }
+
+
+        // Function to copy generated HTML to clipboard
+        function copyHtmlToClipboard() {
+            outputHtmlTextarea.select();
+            document.execCommand('copy');
+            // Provide feedback to the user (optional)
+            alert('HTML copied to clipboard!');
+        }
+
+        // Initial load and event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            updateScheduleInputs(); // Populate inputs on page load
+            daySelect.addEventListener('change', updateScheduleInputs);
+            // Add initial assignment fields (e.g., 3 by default)
+            for (let i = 0; i < 3; i++) {
+                addAssignmentField();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers Dashboard - Context Arabic Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lato', sans-serif; }
+        .font-arabic { font-family: 'Cairo', sans-serif; }
+        
+        .teacher-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .teacher-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgba(31, 78, 121, 0.25);
+        }
+        
+        .gradient-blue {
+            background: linear-gradient(135deg, #1f4e79 0%, #2563eb 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
+    
+    <!-- Navigation -->
+    <nav class="gradient-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                <i class="fas fa-arrow-left text-2xl"></i>
+                <span class="text-xl font-semibold hidden md:inline">Back to Home</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <i class="fas fa-chalkboard-user text-3xl"></i>
+                <h1 class="text-3xl font-bold">Teachers Dashboard</h1>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 text-center">
+        <div class="container mx-auto px-6">
+            <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-6">
+                <i class="fas fa-graduation-cap text-6xl text-blue-600"></i>
+            </div>
+            <h2 class="text-5xl font-bold text-gray-900 mb-4">Teachers' Resource Center</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Manage your Canvas LMS schedules, lesson plans, and classroom resources for teaching Arabic effectively.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-12 max-w-5xl">
+        
+        <!-- Canvas Scheduling Tools -->
+        <div class="mb-12">
+            <h3 class="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+                <i class="fas fa-calendar-alt text-blue-600"></i>
+                Canvas LMS Scheduling
+            </h3>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- Daily Schedule -->
+                <a href="Canvas_Daily.html" class="teacher-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-slate-200 hover:border-blue-400 transition-all">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-calendar-day text-3xl text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-gray-900">Daily Schedule</h4>
+                            <p class="text-sm text-gray-500 font-arabic">الجدول اليومي</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        Create and manage daily Canvas LMS schedules for your Arabic classes. Organize lessons, assignments, and activities by day.
+                    </p>
+                    <div class="flex items-center text-blue-600 font-semibold">
+                        <span>Open Schedule</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+
+                <!-- Weekly Schedule -->
+                <a href="Canvas_Weekly.html" class="teacher-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-slate-200 hover:border-blue-400 transition-all">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-calendar-week text-3xl text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-gray-900">Weekly Schedule</h4>
+                            <p class="text-sm text-gray-500 font-arabic">الجدول الأسبوعي</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        Plan your entire week at a glance. Coordinate multiple classes, track deadlines, and manage resources across the week.
+                    </p>
+                    <div class="flex items-center text-indigo-600 font-semibold">
+                        <span>Open Schedule</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- Teacher Resources Info -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border-2 border-blue-200">
+            <h4 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
+                <i class="fas fa-lightbulb text-yellow-500"></i>
+                Teaching Tips
+            </h4>
+            <ul class="space-y-3 text-gray-700">
+                <li class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-600 mt-1 flex-shrink-0"></i>
+                    <span><strong>Canvas Integration:</strong> Use these scheduling tools to synchronize your lesson plans with Canvas LMS for seamless student access.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-600 mt-1 flex-shrink-0"></i>
+                    <span><strong>Student Engagement:</strong> Direct your students to the contextual learning modules during scheduled lessons for maximum engagement.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-600 mt-1 flex-shrink-0"></i>
+                    <span><strong>AI Assistance:</strong> Remind students about the AI tutor available on every page for instant help with Arabic questions.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-600 mt-1 flex-shrink-0"></i>
+                    <span><strong>Assessment:</strong> Use quizzes and games modules to track student progress and understanding.</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="gradient-blue text-white py-12 mt-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="../index.html" class="hover:opacity-80 transition">Main Hub</a></li>
+                        <li><a href="../Reading/index.html" class="hover:opacity-80 transition">Reading Module</a></li>
+                        <li><a href="../Listening/index.html" class="hover:opacity-80 transition">Listening Module</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Teacher Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="Canvas_Daily.html" class="hover:opacity-80 transition">Daily Schedule</a></li>
+                        <li><a href="Canvas_Weekly.html" class="hover:opacity-80 transition">Weekly Schedule</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="../AI/chat_tutor.html" class="hover:opacity-80 transition">AI Tutor Help</a></li>
+                        <li><a href="../index.html" class="hover:opacity-80 transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white border-opacity-20 pt-8 text-center text-sm opacity-80">
+                <p>&copy; 2025 Context - Arabic Learning Hub. Teachers' Edition.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Global AI Assistant -->
+    <script src="../ai-assistant.js"></script>
+
+</body>
+</html>
