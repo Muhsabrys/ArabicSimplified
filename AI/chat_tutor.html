@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Arabic Tutor - Context Arabic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lato', sans-serif; }
+        .font-arabic { font-family: 'Cairo', sans-serif; }
+        
+        .chat-message {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .loading-dots span {
+            animation: blink 1.4s infinite;
+        }
+        
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes blink {
+            0%, 20% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        
+        .progress-fill {
+            transition: width 0.3s ease;
+        }
+        
+        #chatMessages {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-purple-50 min-h-screen">
+    
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-left text-2xl"></i>
+                    <span class="text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-robot text-3xl"></i>
+                    <div>
+                        <h1 class="text-2xl font-bold">AI Arabic Tutor</h1>
+                        <p class="text-sm opacity-90 font-arabic" dir="rtl">معلم الذكاء الاصطناعي</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8 max-w-5xl">
+        
+        <!-- Model Loading Section -->
+        <div id="loadingSection" class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+            <div class="text-center">
+                <div class="inline-block p-4 bg-purple-100 rounded-full mb-4">
+                    <i class="fas fa-brain text-5xl text-purple-600"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">AI Tutor Setup</h2>
+                
+                <div id="modelStatus" class="mb-6">
+                    <p class="text-gray-600 mb-4">Click the button below to initialize your AI tutor. This will download the model (first time only, ~1GB).</p>
+                    <button id="initButton" onclick="initializeEngine()" class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-lg transition-all transform hover:scale-105">
+                        <i class="fas fa-download mr-2"></i>Initialize AI Tutor
+                    </button>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div id="progressContainer" class="hidden">
+                    <div class="mb-4">
+                        <div class="flex justify-between mb-2">
+                            <span id="progressText" class="text-sm font-semibold text-gray-700">Loading...</span>
+                            <span id="progressPercent" class="text-sm font-semibold text-purple-600">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div id="progressBar" class="progress-fill bg-gradient-to-r from-purple-500 to-indigo-600 h-4 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        The model will be cached in your browser for future use
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Interface -->
+        <div id="chatSection" class="hidden bg-white rounded-2xl shadow-xl overflow-hidden">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white p-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-robot text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">AI Arabic Tutor</h3>
+                            <p class="text-sm opacity-90">Ready to help with Arabic learning</p>
+                        </div>
+                    </div>
+                    <button onclick="clearChat()" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition">
+                        <i class="fas fa-trash mr-2"></i>Clear Chat
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Prompts -->
+            <div class="bg-purple-50 p-4 border-b">
+                <p class="text-sm font-semibold text-gray-700 mb-2">Quick Prompts:</p>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="sendQuickPrompt('Explain the difference between فصحى and عامية')" class="bg-white px-3 py-1 rounded-full text-sm hover:bg-purple-100 transition">
+                        <i class="fas fa-question-circle mr-1"></i>فصحى vs عامية
+                    </button>
+                    <button onclick="sendQuickPrompt('How do I conjugate the verb كتب in present tense?')" class="bg-white px-3 py-1 rounded-full text-sm hover:bg-purple-100 transition">
+                        <i class="fas fa-book mr-1"></i>Verb Conjugation
+                    </button>
+                    <button onclick="sendQuickPrompt('Give me 5 common greetings in Arabic')" class="bg-white px-3 py-1 rounded-full text-sm hover:bg-purple-100 transition">
+                        <i class="fas fa-comments mr-1"></i>Greetings
+                    </button>
+                    <button onclick="sendQuickPrompt('Explain Arabic sentence structure')" class="bg-white px-3 py-1 rounded-full text-sm hover:bg-purple-100 transition">
+                        <i class="fas fa-puzzle-piece mr-1"></i>Grammar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="h-[500px] overflow-y-auto p-6 space-y-4">
+                <div class="chat-message flex items-start gap-3">
+                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white"></i>
+                    </div>
+                    <div class="bg-purple-100 rounded-2xl rounded-tl-none p-4 max-w-[80%]">
+                        <p class="text-gray-800">مرحباً! Hello! I'm your AI Arabic tutor. I can help you with:</p>
+                        <ul class="mt-2 space-y-1 text-sm">
+                            <li>✓ Grammar explanations</li>
+                            <li>✓ Vocabulary questions</li>
+                            <li>✓ Translation practice</li>
+                            <li>✓ Conversation practice</li>
+                            <li>✓ Cultural insights</li>
+                        </ul>
+                        <p class="mt-2 text-gray-800">How can I assist you today?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="border-t p-4 bg-gray-50">
+                <form onsubmit="sendMessage(event)" class="flex gap-3">
+                    <input 
+                        type="text" 
+                        id="userInput" 
+                        placeholder="Type your question here... اكتب سؤالك هنا"
+                        class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-full focus:border-purple-500 focus:outline-none"
+                        autocomplete="off"
+                    >
+                    <button 
+                        type="submit" 
+                        id="sendButton"
+                        class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition-all transform hover:scale-105"
+                    >
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+                <p class="text-xs text-gray-500 mt-2 text-center">
+                    <i class="fas fa-shield-alt mr-1"></i>
+                    All processing happens in your browser. Your conversations are private.
+                </p>
+            </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="grid md:grid-cols-3 gap-4 mt-6">
+            <div class="bg-white rounded-xl p-4 shadow-lg">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-lock text-purple-600 text-2xl"></i>
+                    <h4 class="font-bold text-gray-800">100% Private</h4>
+                </div>
+                <p class="text-sm text-gray-600">All conversations stay in your browser. No data is sent to servers.</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow-lg">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-bolt text-purple-600 text-2xl"></i>
+                    <h4 class="font-bold text-gray-800">Instant Responses</h4>
+                </div>
+                <p class="text-sm text-gray-600">Get real-time answers powered by AI running on your device.</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow-lg">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-dollar-sign text-purple-600 text-2xl"></i>
+                    <h4 class="font-bold text-gray-800">Completely Free</h4>
+                </div>
+                <p class="text-sm text-gray-600">No API costs. Use as much as you want after initial download.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import WebLLM -->
+    <script type="module">
+        import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+
+        let engine = null;
+        let conversationHistory = [];
+
+        // System prompt for Arabic tutoring
+        const SYSTEM_PROMPT = `You are an expert Arabic language tutor. You help students learn Modern Standard Arabic (فصحى) and Egyptian Arabic (عامية مصرية). You:
+- Provide clear, concise explanations
+- Give examples in both Arabic script and transliteration
+- Are patient and encouraging
+- Break down complex concepts into simple steps
+- Provide cultural context when relevant
+- Can explain grammar, vocabulary, pronunciation, and usage
+Keep responses focused and practical for learners.`;
+
+        // Make functions available globally
+        window.initializeEngine = async function() {
+            const initButton = document.getElementById('initButton');
+            const progressContainer = document.getElementById('progressContainer');
+            const loadingSection = document.getElementById('loadingSection');
+            const chatSection = document.getElementById('chatSection');
+            
+            initButton.disabled = true;
+            initButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Initializing...';
+            progressContainer.classList.remove('hidden');
+
+            try {
+                // Progress callback
+                const initProgressCallback = (progress) => {
+                    const percent = Math.round(progress.progress * 100);
+                    document.getElementById('progressBar').style.width = percent + '%';
+                    document.getElementById('progressPercent').textContent = percent + '%';
+                    document.getElementById('progressText').textContent = progress.text || 'Loading...';
+                };
+
+                // Create engine with Qwen2-1.5B (good Arabic support, small size)
+                engine = await webllm.CreateMLCEngine(
+                    "Qwen2-1.5B-Instruct-q4f16_1-MLC",
+                    { 
+                        initProgressCallback: initProgressCallback,
+                    }
+                );
+
+                // Initialize conversation with system prompt
+                conversationHistory = [
+                    { role: "system", content: SYSTEM_PROMPT }
+                ];
+
+                // Hide loading, show chat
+                loadingSection.classList.add('hidden');
+                chatSection.classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Failed to initialize engine:', error);
+                document.getElementById('progressText').textContent = 'Error: ' + error.message;
+                initButton.disabled = false;
+                initButton.innerHTML = '<i class="fas fa-redo mr-2"></i>Retry Initialization';
+            }
+        };
+
+        window.sendMessage = async function(event) {
+            event.preventDefault();
+            
+            const input = document.getElementById('userInput');
+            const sendButton = document.getElementById('sendButton');
+            const message = input.value.trim();
+            
+            if (!message || !engine) return;
+
+            // Disable input
+            input.disabled = true;
+            sendButton.disabled = true;
+
+            // Add user message to UI
+            addMessageToUI(message, 'user');
+            
+            // Clear input
+            input.value = '';
+
+            // Add to conversation history
+            conversationHistory.push({ role: "user", content: message });
+
+            // Show loading indicator
+            const loadingId = addLoadingMessage();
+
+            try {
+                // Get AI response
+                const chunks = await engine.chat.completions.create({
+                    messages: conversationHistory,
+                    temperature: 0.7,
+                    max_tokens: 512,
+                    stream: true,
+                });
+
+                let fullResponse = "";
+                removeLoadingMessage(loadingId);
+                const responseId = addMessageToUI("", 'assistant');
+
+                for await (const chunk of chunks) {
+                    const content = chunk.choices[0]?.delta?.content || "";
+                    fullResponse += content;
+                    updateMessageContent(responseId, fullResponse);
+                }
+
+                // Add to history
+                conversationHistory.push({ role: "assistant", content: fullResponse });
+
+            } catch (error) {
+                console.error('Error generating response:', error);
+                removeLoadingMessage(loadingId);
+                addMessageToUI("Sorry, I encountered an error. Please try again.", 'assistant');
+            }
+
+            // Re-enable input
+            input.disabled = false;
+            sendButton.disabled = false;
+            input.focus();
+        };
+
+        window.sendQuickPrompt = function(prompt) {
+            document.getElementById('userInput').value = prompt;
+            document.getElementById('userInput').form.dispatchEvent(new Event('submit'));
+        };
+
+        window.clearChat = function() {
+            conversationHistory = [
+                { role: "system", content: SYSTEM_PROMPT }
+            ];
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="chat-message flex items-start gap-3">
+                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white"></i>
+                    </div>
+                    <div class="bg-purple-100 rounded-2xl rounded-tl-none p-4 max-w-[80%]">
+                        <p class="text-gray-800">Chat cleared! How can I help you?</p>
+                    </div>
+                </div>
+            `;
+        };
+
+        let messageCounter = 0;
+
+        function addMessageToUI(content, role) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageId = 'msg-' + (++messageCounter);
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.id = messageId;
+            messageDiv.className = 'chat-message flex items-start gap-3 ' + (role === 'user' ? 'flex-row-reverse' : '');
+            
+            const avatar = role === 'user' 
+                ? '<div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-user text-white"></i></div>'
+                : '<div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-robot text-white"></i></div>';
+            
+            const bgColor = role === 'user' ? 'bg-indigo-100' : 'bg-purple-100';
+            const roundedCorner = role === 'user' ? 'rounded-tr-none' : 'rounded-tl-none';
+            
+            messageDiv.innerHTML = `
+                ${avatar}
+                <div class="${bgColor} rounded-2xl ${roundedCorner} p-4 max-w-[80%]">
+                    <p class="text-gray-800 whitespace-pre-wrap">${content}</p>
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return messageId;
+        }
+
+        function updateMessageContent(messageId, content) {
+            const messageDiv = document.getElementById(messageId);
+            if (messageDiv) {
+                const p = messageDiv.querySelector('p');
+                p.textContent = content;
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        function addLoadingMessage() {
+            const chatMessages = document.getElementById('chatMessages');
+            const loadingId = 'loading-' + Date.now();
+            
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = loadingId;
+            loadingDiv.className = 'chat-message flex items-start gap-3';
+            loadingDiv.innerHTML = `
+                <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-robot text-white"></i>
+                </div>
+                <div class="bg-purple-100 rounded-2xl rounded-tl-none p-4">
+                    <div class="loading-dots flex gap-1">
+                        <span class="w-2 h-2 bg-purple-600 rounded-full"></span>
+                        <span class="w-2 h-2 bg-purple-600 rounded-full"></span>
+                        <span class="w-2 h-2 bg-purple-600 rounded-full"></span>
+                    </div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return loadingId;
+        }
+
+        function removeLoadingMessage(loadingId) {
+            const loadingDiv = document.getElementById(loadingId);
+            if (loadingDiv) {
+                loadingDiv.remove();
+            }
+        }
+    </script>
+
+</body>
+</html>
