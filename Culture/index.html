@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture | Al-Manara Arabic Learning Hub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        culture: {
+                            50: '#fef3c7',
+                            100: '#fde68a',
+                            500: '#d97706',
+                            600: '#b45309',
+                            700: '#92400e',
+                            800: '#78350f',
+                            900: '#451a03',
+                        },
+                        heritage: '#7c3aed',
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+        .culture-card { transition: all 0.3s ease; }
+        .culture-card:hover { transform: translateY(-6px); box-shadow: 0 18px 45px rgba(217, 119, 6, 0.2); }
+        .ornament { border-top: 3px dashed #d97706; border-bottom: 3px dashed #d97706; padding: 1rem 0; }
+        .pattern-bg { background: linear-gradient(45deg, rgba(217, 119, 6, 0.05) 25%, transparent 25%, transparent 75%, rgba(217, 119, 6, 0.05) 75%, rgba(217, 119, 6, 0.05)), linear-gradient(45deg, rgba(217, 119, 6, 0.05) 25%, transparent 25%, transparent 75%, rgba(217, 119, 6, 0.05) 75%, rgba(217, 119, 6, 0.05)); background-size: 40px 40px; background-position: 0 0, 20px 20px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-culture-50 via-white to-yellow-50 text-culture-800 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-culture-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Home</span>
+                </a>
+                <div class="text-center">
+                    <h1 class="text-2xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-earth-americas text-yellow-300"></i>
+                        <span class="font-arabic">ثقافة | Culture</span>
+                    </h1>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-culture-800 via-amber-700 to-heritage text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <i class="fa-solid fa-mosque text-6xl text-yellow-200 mb-4"></i>
+                <h2 class="text-4xl font-bold mb-4 font-arabic">اكتشف الثقافة العربية</h2>
+                <h3 class="text-3xl font-bold mb-4">Discover Arab Culture</h3>
+                <p class="text-yellow-50 text-lg">
+                    Go beyond language to understand the rich traditions, history, values, and customs of the Arab world.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-16">
+        
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-culture-900 mb-2">Cultural Topics</h2>
+            <p class="text-culture-600">Immerse yourself in Arab culture and traditions</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+
+            <!-- Egyptian Dialect (Ammia) -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-amber-100 rounded-lg">
+                        <i class="fa-solid fa-comments text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Egyptian Dialect</h3>
+                        <p class="text-sm text-culture-600 font-arabic">العامية المصرية</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Learn the most widely understood Arabic dialect - Egyptian colloquial Arabic.</p>
+                <a href="Ammia.html" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- History & Origins -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-100 rounded-lg">
+                        <i class="fa-solid fa-hourglass-start text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">History & Origins</h3>
+                        <p class="text-sm text-culture-600 font-arabic">التاريخ والأصول</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Explore the history of Arab civilization, from pre-Islamic times to modern era.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Islamic Heritage -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-100 rounded-lg">
+                        <i class="fa-solid fa-star-and-crescent text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Islamic Heritage</h3>
+                        <p class="text-sm text-culture-600 font-arabic">التراث الإسلامي</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Islamic traditions, principles, and their influence on Arab culture.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Regional Differences -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-amber-200 rounded-lg">
+                        <i class="fa-solid fa-map text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Regional Differences</h3>
+                        <p class="text-sm text-culture-600 font-arabic">الفروقات الإقليمية</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Discover unique characteristics of different Arab regions and countries.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Traditions & Customs -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-200 rounded-lg">
+                        <i class="fa-solid fa-hands text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Traditions & Customs</h3>
+                        <p class="text-sm text-culture-600 font-arabic">التقاليد والعادات</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Celebrations, rituals, and social customs in Arab communities.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Arts & Music -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-amber-300 rounded-lg">
+                        <i class="fa-solid fa-music text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Arts & Music</h3>
+                        <p class="text-sm text-culture-600 font-arabic">الفنون والموسيقى</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Traditional and contemporary music, visual arts, and crafts.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Architecture & Design -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-100 rounded-lg">
+                        <i class="fa-solid fa-gopuram text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Architecture & Design</h3>
+                        <p class="text-sm text-culture-600 font-arabic">العمارة والتصميم</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Islamic architecture, geometric patterns, and design aesthetics.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Cuisine & Food Culture -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-amber-400 rounded-lg">
+                        <i class="fa-solid fa-bowl-food text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Cuisine & Food Culture</h3>
+                        <p class="text-sm text-culture-600 font-arabic">الطعام والثقافة الغذائية</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Traditional dishes, food traditions, and dining customs across Arab regions.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Literature & Poetry -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-300 rounded-lg">
+                        <i class="fa-solid fa-feather-pointed text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Literature & Poetry</h3>
+                        <p class="text-sm text-culture-600 font-arabic">الأدب والشعر</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Classical and modern Arabic literature, poetry, and storytelling traditions.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Values & Etiquette -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-200 rounded-lg">
+                        <i class="fa-solid fa-scroll text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Values & Etiquette</h3>
+                        <p class="text-sm text-culture-600 font-arabic">القيم والآداب</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Core Arab values, social etiquette, and cultural norms.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Notable Figures -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-amber-100 rounded-lg">
+                        <i class="fa-solid fa-crown text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Notable Figures</h3>
+                        <p class="text-sm text-culture-600 font-arabic">شخصيات بارزة</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Influential historical and contemporary figures in Arab culture.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Sports & Recreation -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-400 rounded-lg">
+                        <i class="fa-solid fa-futbol text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Sports & Recreation</h3>
+                        <p class="text-sm text-culture-600 font-arabic">الرياضة والترفيه</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Traditional sports, games, and modern recreational activities.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+            <!-- Holidays & Celebrations -->
+            <div class="culture-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-amber-200 rounded-lg">
+                        <i class="fa-solid fa-cake-candles text-culture-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Holidays & Celebrations</h3>
+                        <p class="text-sm text-culture-600 font-arabic">الأعياد والاحتفالات</p>
+                    </div>
+                </div>
+                <p class="text-culture-700 mb-6">Islamic and secular holidays celebrated across Arab countries.</p>
+                <a href="#" class="inline-block bg-culture-600 hover:bg-culture-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Explore →
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Cultural Immersion -->
+        <section class="pattern-bg rounded-lg p-12 mb-12 bg-gradient-to-br from-culture-100 to-yellow-100">
+            <h3 class="text-2xl font-bold text-culture-900 mb-8 text-center ornament">Cultural Immersion Tips</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <i class="fa-solid fa-tv text-4xl text-culture-600 mb-4"></i>
+                    <h4 class="font-bold text-lg mb-2">Watch Arab Media</h4>
+                    <p class="text-culture-700">Films, TV shows, and documentaries offer insight into contemporary Arab life.</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-person-hiking text-4xl text-culture-600 mb-4"></i>
+                    <h4 class="font-bold text-lg mb-2">Explore History</h4>
+                    <p class="text-culture-700">Learning about historical events deepens your understanding of culture.</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-people-group text-4xl text-culture-600 mb-4"></i>
+                    <h4 class="font-bold text-lg mb-2">Connect with People</h4>
+                    <p class="text-culture-700">Engaging with native speakers reveals authentic cultural perspectives.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="bg-gradient-to-r from-culture-800 to-heritage text-white rounded-lg p-12 text-center">
+            <h3 class="text-2xl font-bold mb-4">Immerse Yourself in Arab Culture</h3>
+            <p class="text-yellow-50 mb-6 max-w-2xl mx-auto">
+                Language is not just words—it's a gateway to understanding a rich, diverse, and vibrant culture that has shaped world civilization.
+            </p>
+            <a href="#" class="inline-block bg-white text-culture-800 font-bold py-3 px-8 rounded-lg hover:bg-yellow-100 transition">
+                Start Exploring <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-culture-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-200">&copy; 2025 Al-Manara Arabic Learning Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاستماع عن الطقس - Context Arabic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        .audio-player {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 1rem;
+            padding: 2rem;
+            color: white;
+        }
+        .question-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .option-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+        .option-btn:hover {
+            background: #e5e7eb;
+            border-color: #3b82f6;
+        }
+        .option-btn.selected {
+            background: #dbeafe;
+            border-color: #60a5fa;
+        }
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            font-weight: bold;
+        }
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        .score-display {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-sky-100">
+
+    <!-- Navigation -->
+    <nav class="text-white shadow-lg sticky top-0 z-50" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-cloud-sun-rain text-3xl"></i>
+                    <div class="text-right">
+                        <h1 class="text-xl md:text-2xl font-bold">الاستماع عن الطقس</h1>
+                        <p class="text-sm opacity-90 font-english">Listening about the Weather</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 max-w-4xl">
+
+        <!-- Audio Player -->
+        <div class="audio-player mb-8">
+            <h2 class="text-2xl font-bold mb-4">استمع إلى التسجيل الصوتي</h2>
+            <audio controls class="w-full" src="الطقس.mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+
+        <!-- MCQ Section -->
+        <div id="mcq-section" class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-list-ul text-blue-600 ml-2"></i>أسئلة اختيار من متعدد</h2>
+            
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١. كيف تكون السماء في الصيف؟</p>
+                <button onclick="selectOption(this, 'mcq1')" data-correct="false" class="option-btn">أ. ملبدة بالغيوم</button>
+                <button onclick="selectOption(this, 'mcq1')" data-correct="true" class="option-btn">ب. صافية</button>
+                <button onclick="selectOption(this, 'mcq1')" data-correct="false" class="option-btn">ج. مغطاة بالضباب</button>
+                <button onclick="selectOption(this, 'mcq1')" data-correct="false" class="option-btn">د. ممطرة</button>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٢. كيف تكون السماء في الصيف؟</p>
+                <button onclick="selectOption(this, 'mcq2')" data-correct="false" class="option-btn">أ. ملبدة بالغيوم</button>
+                <button onclick="selectOption(this, 'mcq2')" data-correct="true" class="option-btn">ب. صافية</button>
+                <button onclick="selectOption(this, 'mcq2')" data-correct="false" class="option-btn">ج. مغطاة بالضباب</button>
+                <button onclick="selectOption(this, 'mcq2')" data-correct="false" class="option-btn">د. ممطرة</button>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٣. ماذا يشعر الناس في الصيف؟</p>
+                <button onclick="selectOption(this, 'mcq3')" data-correct="false" class="option-btn">أ. بالبرد</button>
+                <button onclick="selectOption(this, 'mcq3')" data-correct="true" class="option-btn">ب. بالحر</button>
+                <button onclick="selectOption(this, 'mcq3')" data-correct="false" class="option-btn">ج. بالجفاف</button>
+                <button onclick="selectOption(this, 'mcq3')" data-correct="false" class="option-btn">د. بالرطوبة</button>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٤. كيف تكون الرطوبة في بعض المدن القريبة من البحر؟</p>
+                <button onclick="selectOption(this, 'mcq4')" data-correct="false" class="option-btn">أ. منخفضة</button>
+                <button onclick="selectOption(this, 'mcq4')" data-correct="false" class="option-btn">ب. متوسطة</button>
+                <button onclick="selectOption(this, 'mcq4')" data-correct="true" class="option-btn">ج. عالية جدا</button>
+                <button onclick="selectOption(this, 'mcq4')" data-correct="false" class="option-btn">د. معدومة</button>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٥. ماذا يحدث عندما تكون الرطوبة عالية؟</p>
+                <button onclick="selectOption(this, 'mcq5')" data-correct="false" class="option-btn">أ. الجو يصبح جميلا</button>
+                <button onclick="selectOption(this, 'mcq5')" data-correct="true" class="option-btn">ب. الجو يصبح سيئا</button>
+                <button onclick="selectOption(this, 'mcq5')" data-correct="false" class="option-btn">ج. الجو يصبح معتدلا</button>
+                <button onclick="selectOption(this, 'mcq5')" data-correct="false" class="option-btn">د. الجو يصبح باردا</button>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٦. كيف تكون كمية المطر في بعض البلاد؟</p>
+                <button onclick="selectOption(this, 'mcq6')" data-correct="false" class="option-btn">أ. كثيرة جدا</button>
+                <button onclick="selectOption(this, 'mcq6')" data-correct="false" class="option-btn">ب. معتدلة</button>
+                <button onclick="selectOption(this, 'mcq6')" data-correct="true" class="option-btn">ج. قليلة جدا</button>
+                <button onclick="selectOption(this, 'mcq6')" data-correct="false" class="option-btn">د. نادرة</button>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٧. كيف يكون الطقس في الشتاء؟</p>
+                <button onclick="selectOption(this, 'mcq7')" data-correct="true" class="option-btn">أ. أحسن كثيرا</button>
+                <button onclick="selectOption(this, 'mcq7')" data-correct="false" class="option-btn">ب. اسوأ كثيرا</button>
+                <button onclick="selectOption(this, 'mcq7')" data-correct="false" class="option-btn">ج. حارا</button>
+                <button onclick="selectOption(this, 'mcq7')" data-correct="false" class="option-btn">د. جافا</button>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٨. كيف يكون الطقس في لبنان في الشتاء؟</p>
+                <button onclick="selectOption(this, 'mcq8')" data-correct="false" class="option-btn">أ. معتدلا</button>
+                <button onclick="selectOption(this, 'mcq8')" data-correct="false" class="option-btn">ب. حارا</button>
+                <button onclick="selectOption(this, 'mcq8')" data-correct="true" class="option-btn">ج. بارد</button>
+                <button onclick="selectOption(this, 'mcq8')" data-correct="false" class="option-btn">د. عاصفا</button>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٩. ماذا يحدث في لبنان احيانا في الشتاء؟</p>
+                <button onclick="selectOption(this, 'mcq9')" data-correct="false" class="option-btn">أ. تسقط امطار غزيرة</button>
+                <button onclick="selectOption(this, 'mcq9')" data-correct="true" class="option-btn">ب. يكون هناك ثلج</button>
+                <button onclick="selectOption(this, 'mcq9')" data-correct="false" class="option-btn">ج. يكون الجو حارا</button>
+                <button onclick="selectOption(this, 'mcq9')" data-correct="false" class="option-btn">د. يكون الجو مشمسا</button>
+            </div>
+        </div>
+
+        <!-- True/False Section -->
+        <div id="tf-section" class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-check-circle text-green-600 ml-2"></i>أسئلة صح أو خطأ</h2>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١. الجو في معظم المدن العربية بارد جدا.</p>
+                <div class="flex gap-2"><button onclick="selectOption(this, 'tf1')" data-correct="false" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf1')" data-correct="true" class="option-btn flex-1">خطأ</button></div>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٢. الرطوبة تكون عالية جدا في بعض المدن القريبة من البحر.</p>
+                <div class="flex gap-2"><button onclick="selectOption(this, 'tf2')" data-correct="true" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf2')" data-correct="false" class="option-btn flex-1">خطأ</button></div>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٣. الناس يفرحون كثيرا عندما ينزل المطر.</p>
+                <div class="flex gap-2"><button onclick="selectOption(this, 'tf3')" data-correct="true" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf3')" data-correct="false" class="option-btn flex-1">خطأ</button></div>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٤. درجة الحرارة ترتفع في الشتاء.</p>
+                <div class="flex gap-2"><button onclick="selectOption(this, 'tf4')" data-correct="false" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf4')" data-correct="true" class="option-btn flex-1">خطأ</button></div>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٥. الطقس في الصحراء حار في النهار وبارد في الليل.</p>
+                <div class="flex gap-2"><button onclick="selectOption(this, 'tf5')" data-correct="true" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf5')" data-correct="false" class="option-btn flex-1">خطأ</button></div>
+            </div>
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٦. الطقس في لبنان يكون مشمس دائما في الشتاء.</p>
+                <div class="flex gap-2"><button onclick="selectOption(this, 'tf6')" data-correct="false" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf6')" data-correct="true" class="option-btn flex-1">خطأ</button></div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button onclick="checkAllAnswers()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-xl font-bold py-4 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition-all shadow-lg">
+            <i class="fas fa-check-double ml-2"></i>تحقق من الإجابات
+        </button>
+
+        <!-- Score Display -->
+        <div id="scoreDisplay" class="hidden score-display">
+            <i class="fas fa-trophy ml-2"></i>
+            <span id="scoreText"></span>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 text-white text-center" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+        <div class="container mx-auto px-6">
+            <a href="index.html" class="hover:opacity-80 transition">
+                <span class="font-semibold text-sm md:text-base">Back to Listening</span>
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const userSelections = {};
+
+        function selectOption(btn, qName) {
+            document.querySelectorAll(`button[onclick*="${qName}"]`).forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            userSelections[qName] = btn;
+        }
+
+        function checkAllAnswers() {
+            let totalScore = 0;
+            let totalQuestions = 0;
+
+            Object.values(userSelections).forEach(btn => {
+                const isCorrect = btn.dataset.correct === 'true';
+                btn.classList.remove('correct', 'incorrect');
+                if (isCorrect) {
+                    btn.classList.add('correct');
+                    totalScore++;
+                } else {
+                    btn.classList.add('incorrect');
+                }
+                const qName = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+                document.querySelector(`button[onclick*="${qName}"][data-correct="true"]`).classList.add('correct');
+            });
+            totalQuestions = Object.keys(userSelections).length;
+
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreText = document.getElementById('scoreText');
+            const percentage = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
+            
+            scoreText.textContent = `نتيجتك: ${totalScore} من ${totalQuestions} (${percentage}%)`;
+            scoreDisplay.classList.remove('hidden');
+            scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colors in Arabic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .color-card {
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        .color-card:hover {
+            transform: translateY(-5px);
+        }
+        .quiz-option:hover {
+            background-color: #e5e7eb;
+            cursor: pointer;
+        }
+        .correct-answer {
+            background-color: #d1fae5;
+            border-color: #34d399;
+        }
+        .incorrect-answer {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+        .correct-feedback {
+            color: #10b981;
+            font-weight: 600;
+        }
+        .incorrect-feedback {
+            color: #ef4444;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="p-6">
+
+    <!-- Context Arabic Navigation -->
+    <nav class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, #a78bfa, #ec4899);">
+        <div class="container mx-auto px-4 md:px-6 py-3 md:py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-2 text-white hover:opacity-80 transition">
+                    <i class="fas fa-home text-xl md:text-2xl"></i>
+                    <span class="font-semibold text-sm md:text-lg hidden sm:inline">Home</span>
+                </a>
+                <div class="text-center flex-1 px-4">
+                    <span class="text-lg md:text-2xl font-bold text-white">Vocabulary - Colors</span>
+                </div>
+                <a href="index.html" class="flex items-center gap-2 text-white hover:opacity-80 transition">
+                    <span class="font-semibold text-sm md:text-lg hidden sm:inline">Vocabulary Module</span>
+                    <i class="fas fa-arrow-right text-xl md:text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-4xl mx-auto space-y-12">
+
+        <!-- Header Section -->
+        <header class="text-center">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">A Guide to Colors in Arabic</h1>
+            <p class="text-gray-600 text-lg">Learn the names of common colors and test your knowledge with interactive quizzes!</p>
+        </header>
+
+        <!-- Colors Section -->
+        <section id="colors-guide" class="bg-white p-8 rounded-2xl shadow-lg">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Common Colors (ألوان)</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Red -->
+                <div class="color-card p-4 text-center border-2 border-red-500">
+                    <div class="w-16 h-16 bg-red-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Red</p>
+                    <p dir="rtl" class="text-xl font-semibold text-red-700">أحمر</p>
+                </div>
+                <!-- Blue -->
+                <div class="color-card p-4 text-center border-2 border-blue-500">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Blue</p>
+                    <p dir="rtl" class="text-xl font-semibold text-blue-700">أزرق</p>
+                </div>
+                <!-- Green -->
+                <div class="color-card p-4 text-center border-2 border-green-500">
+                    <div class="w-16 h-16 bg-green-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Green</p>
+                    <p dir="rtl" class="text-xl font-semibold text-green-700">أخضر</p>
+                </div>
+                <!-- Yellow -->
+                <div class="color-card p-4 text-center border-2 border-yellow-500">
+                    <div class="w-16 h-16 bg-yellow-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Yellow</p>
+                    <p dir="rtl" class="text-xl font-semibold text-yellow-700">أصفر</p>
+                </div>
+                <!-- Black -->
+                <div class="color-card p-4 text-center border-2 border-gray-900">
+                    <div class="w-16 h-16 bg-gray-900 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Black</p>
+                    <p dir="rtl" class="text-xl font-semibold text-gray-900">أسود</p>
+                </div>
+                <!-- White -->
+                <div class="color-card p-4 text-center border-2 border-gray-300">
+                    <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">White</p>
+                    <p dir="rtl" class="text-xl font-semibold text-gray-800">أبيض</p>
+                </div>
+                <!-- Orange -->
+                <div class="color-card p-4 text-center border-2 border-orange-500">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Orange</p>
+                    <p dir="rtl" class="text-xl font-semibold text-orange-700">برتقالي</p>
+                </div>
+                <!-- Purple -->
+                <div class="color-card p-4 text-center border-2 border-purple-500">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Purple</p>
+                    <p dir="rtl" class="text-xl font-semibold text-purple-700">بنفسجي</p>
+                </div>
+                <!-- Pink -->
+                <div class="color-card p-4 text-center border-2 border-pink-500">
+                    <div class="w-16 h-16 bg-pink-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Pink</p>
+                    <p dir="rtl" class="text-xl font-semibold text-pink-700">وردي</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feminine Colors Section -->
+        <section id="feminine-colors-guide" class="bg-white p-8 rounded-2xl shadow-lg mt-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Feminine Colors (مؤنث الألوان)</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Red (Feminine) -->
+                <div class="color-card p-4 text-center border-2 border-red-500">
+                    <div class="w-16 h-16 bg-red-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Red</p>
+                    <p dir="rtl" class="text-xl font-semibold text-red-700">حمراء</p>
+                </div>
+                <!-- Blue (Feminine) -->
+                <div class="color-card p-4 text-center border-2 border-blue-500">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Blue</p>
+                    <p dir="rtl" class="text-xl font-semibold text-blue-700">زرقاء</p>
+                </div>
+                <!-- Green (Feminine) -->
+                <div class="color-card p-4 text-center border-2 border-green-500">
+                    <div class="w-16 h-16 bg-green-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Green</p>
+                    <p dir="rtl" class="text-xl font-semibold text-green-700">خضراء</p>
+                </div>
+                <!-- Yellow (Feminine) -->
+                <div class="color-card p-4 text-center border-2 border-yellow-500">
+                    <div class="w-16 h-16 bg-yellow-500 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Yellow</p>
+                    <p dir="rtl" class="text-xl font-semibold text-yellow-700">صفراء</p>
+                </div>
+                <!-- Black (Feminine) -->
+                <div class="color-card p-4 text-center border-2 border-gray-900">
+                    <div class="w-16 h-16 bg-gray-900 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">Black</p>
+                    <p dir="rtl" class="text-xl font-semibold text-gray-900">سوداء</p>
+                </div>
+                <!-- White (Feminine) -->
+                <div class="color-card p-4 text-center border-2 border-gray-300">
+                    <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm text-gray-500">White</p>
+                    <p dir="rtl" class="text-xl font-semibold text-gray-800">بيضاء</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- YouTube Video Section -->
+        <section id="video-section" class="bg-white p-8 rounded-2xl shadow-lg mt-12 text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Listen and Learn More About Colors</h2>
+            <div class="relative w-full aspect-video rounded-lg overflow-hidden mx-auto">
+                <iframe
+                    class="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/RJl5gyqKKlA"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quizzes" class="space-y-12">
+            <!-- MCQ Quiz -->
+            <div id="mcq-quiz" class="bg-white p-8 rounded-2xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Quiz 1: Multiple Choice</h2>
+                <div id="mcq-questions" class="space-y-4"></div>
+                <button onclick="submitMcqQuiz()" class="mt-8 w-full bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-200">Submit Answers</button>
+                <div id="mcq-results" class="mt-6 text-center text-xl font-bold"></div>
+            </div>
+
+            <!-- True/False Quiz -->
+            <div id="tf-quiz" class="bg-white p-8 rounded-2xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Quiz 2: True or False</h2>
+                <div id="tf-questions" class="space-y-4"></div>
+                <button onclick="submitTfQuiz()" class="mt-8 w-full bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-200">Submit Answers</button>
+                <div id="tf-results" class="mt-6 text-center text-xl font-bold"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const mcqQuestions = [
+            {
+                question: "What is the color of the sun?",
+                options: ["أحمر", "أصفر", "أخضر", "أزرق"],
+                answer: "أصفر"
+            },
+            {
+                question: "What color is the sky on a clear day?",
+                options: ["أزرق", "أخضر", "أسود", "أبيض"],
+                answer: "أزرق"
+            },
+            {
+                question: "What is the color of milk?",
+                options: ["أحمر", "أسود", "أبيض", "أصفر"],
+                answer: "أبيض"
+            },
+            {
+                question: "What is the color of fresh grass?",
+                options: ["أحمر", "أخضر", "وردي", "برتقالي"],
+                answer: "أخضر"
+            },
+            {
+                question: "What color is a banana?",
+                options: ["بنفسجي", "أصفر", "أزرق", "أحمر"],
+                answer: "أصفر"
+            },
+            {
+                question: "What color are ripe cherries?",
+                options: ["أزرق", "أخضر", "أحمر", "أبيض"],
+                answer: "أحمر"
+            }
+        ];
+
+        const tfQuestions = [
+            {
+                question: "An orange is the color 'blue'.",
+                answer: false,
+                arabicAnswer: "خطأ"
+            },
+            {
+                question: "A cloud is usually 'white'.",
+                answer: true,
+                arabicAnswer: "صحيح"
+            },
+            {
+                question: "The color of the night sky is 'black'.",
+                answer: true,
+                arabicAnswer: "صحيح"
+            },
+            {
+                question: "A purple grape is the color 'green'.",
+                answer: false,
+                arabicAnswer: "خطأ"
+            },
+            {
+                question: "The color of the sea can be 'blue'.",
+                answer: true,
+                arabicAnswer: "صحيح"
+            }
+        ];
+
+        function renderMcqQuiz() {
+            const container = document.getElementById('mcq-questions');
+            mcqQuestions.forEach((q, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'bg-gray-50 p-6 rounded-lg border border-gray-200';
+                qDiv.innerHTML = `
+                    <p class="font-medium text-gray-700 mb-4">${index + 1}. ${q.question}</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        ${q.options.map(opt => `<button onclick="selectMcqOption(this, ${index})" data-option="${opt}" class="quiz-option p-3 rounded-lg border border-gray-300 text-gray-800 font-medium">${opt}</button>`).join('')}
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        function renderTfQuiz() {
+            const container = document.getElementById('tf-questions');
+            tfQuestions.forEach((q, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'bg-gray-50 p-6 rounded-lg border border-gray-200';
+                qDiv.innerHTML = `
+                    <p class="font-medium text-gray-700 mb-4">${index + 1}. ${q.question}</p>
+                    <div class="flex space-x-4 justify-center">
+                        <button onclick="selectTfOption(this, ${index})" data-option="true" class="quiz-option p-3 rounded-lg border border-gray-300 text-gray-800 font-medium" dir="rtl">صحيح</button>
+                        <button onclick="selectTfOption(this, ${index})" data-option="false" class="quiz-option p-3 rounded-lg border border-gray-300 text-gray-800 font-medium" dir="rtl">خطأ</button>
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+        
+        // Variables to store user answers
+        const mcqUserAnswers = new Array(mcqQuestions.length).fill(null);
+        const tfUserAnswers = new Array(tfQuestions.length).fill(null);
+        
+        function selectMcqOption(button, questionIndex) {
+            const options = button.parentElement.querySelectorAll('button');
+            options.forEach(opt => {
+                opt.classList.remove('bg-gray-200');
+            });
+            button.classList.add('bg-gray-200');
+            mcqUserAnswers[questionIndex] = button.dataset.option;
+        }
+
+        function selectTfOption(button, questionIndex) {
+            const options = button.parentElement.querySelectorAll('button');
+            options.forEach(opt => {
+                opt.classList.remove('bg-gray-200');
+            });
+            button.classList.add('bg-gray-200');
+            tfUserAnswers[questionIndex] = button.dataset.option === 'true';
+        }
+
+        function submitMcqQuiz() {
+            let score = 0;
+            const mcqQuestionsDivs = document.querySelectorAll('#mcq-questions > div');
+            mcqQuestions.forEach((q, index) => {
+                const selectedOption = mcqUserAnswers[index];
+                const questionDiv = mcqQuestionsDivs[index];
+                const feedbackDiv = document.createElement('div');
+                
+                const options = questionDiv.querySelectorAll('button');
+                options.forEach(opt => {
+                    opt.disabled = true; // Disable buttons after submission
+                    if (opt.dataset.option === q.answer) {
+                        opt.classList.add('correct-answer');
+                    }
+                    if (opt.dataset.option === selectedOption && selectedOption !== q.answer) {
+                        opt.classList.add('incorrect-answer');
+                    }
+                });
+
+                if (selectedOption === q.answer) {
+                    score++;
+                    feedbackDiv.className = 'correct-feedback mt-2 text-sm';
+                    feedbackDiv.innerHTML = `Correct!`;
+                } else {
+                    feedbackDiv.className = 'incorrect-feedback mt-2 text-sm';
+                    feedbackDiv.innerHTML = `Incorrect. The correct answer is: <span dir="rtl">${q.answer}</span>`;
+                }
+                questionDiv.appendChild(feedbackDiv);
+            });
+            document.getElementById('mcq-results').innerText = `Your score is: ${score} / ${mcqQuestions.length}`;
+            document.getElementById('mcq-quiz').querySelector('button').disabled = true;
+        }
+
+        function submitTfQuiz() {
+            let score = 0;
+            const tfQuestionsDivs = document.querySelectorAll('#tf-questions > div');
+            tfQuestions.forEach((q, index) => {
+                const selectedOption = tfUserAnswers[index];
+                const questionDiv = tfQuestionsDivs[index];
+                const feedbackDiv = document.createElement('div');
+                
+                const options = questionDiv.querySelectorAll('button');
+                options.forEach(opt => {
+                    opt.disabled = true; // Disable buttons
+                    if ((opt.dataset.option === 'true' && q.answer) || (opt.dataset.option === 'false' && !q.answer)) {
+                        opt.classList.add('correct-answer');
+                    }
+                     if ((opt.dataset.option === 'true' && selectedOption !== q.answer) || (opt.dataset.option === 'false' && selectedOption !== q.answer)) {
+                        opt.classList.add('incorrect-answer');
+                    }
+                });
+
+                if (selectedOption === q.answer) {
+                    score++;
+                    feedbackDiv.className = 'correct-feedback mt-2 text-sm';
+                    feedbackDiv.innerHTML = `Correct!`;
+                } else {
+                    feedbackDiv.className = 'incorrect-feedback mt-2 text-sm';
+                    feedbackDiv.innerHTML = `Incorrect. The correct answer is: <span dir="rtl">${q.arabicAnswer}</span>`;
+                }
+                questionDiv.appendChild(feedbackDiv);
+            });
+            document.getElementById('tf-results').innerText = `Your score is: ${score} / ${tfQuestions.length}`;
+            document.getElementById('tf-quiz').querySelector('button').disabled = true;
+        }
+
+        // Initialize quizzes
+        window.onload = function() {
+            renderMcqQuiz();
+            renderTfQuiz();
+        }
+    </script>
+
+    <!-- Context Arabic Footer -->
+    <footer class="mt-16 py-6 md:py-8 text-white text-center" style="background: linear-gradient(135deg, #a78bfa, #ec4899);">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <a href="../index.html" class="hover:opacity-80 transition">
+                    <i class="fas fa-brain text-xl md:text-2xl mr-2"></i>
+                    <span class="font-semibold text-sm md:text-base">Context Arabic</span>
+                </a>
+                <p class="text-xs md:text-sm opacity-90">&copy; 2025 - Learn Arabic in Context</p>
+                <a href="index.html" class="hover:opacity-80 transition">
+                    <span class="font-semibold text-sm md:text-base">Back to Vocabulary</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

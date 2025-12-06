@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games | Al-Manara Arabic Learning Hub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        game: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        },
+                        prize: '#f59e0b',
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+        .game-card { transition: all 0.3s ease; }
+        .game-card:hover { transform: scale(1.03) rotate(1deg); box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2); }
+        @keyframes bounce-float { 
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-icon { animation: bounce-float 2s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-game-50 via-white to-red-50 text-game-800 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-game-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Home</span>
+                </a>
+                <div class="text-center">
+                    <h1 class="text-2xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-gamepad text-prize"></i>
+                        <span class="font-arabic">ألعاب | Games</span>
+                    </h1>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-game-800 via-game-700 to-red-600 text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <i class="fa-solid fa-star text-6xl text-prize mb-4 float-icon"></i>
+                <h2 class="text-4xl font-bold mb-4 font-arabic">العب وتعلم</h2>
+                <h3 class="text-3xl font-bold mb-4">Learn Through Play</h3>
+                <p class="text-red-50 text-lg">
+                    Make learning fun with interactive games that reinforce vocabulary, grammar, and cultural knowledge while you enjoy!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-16">
+        
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-game-900 mb-2">Game Collection</h2>
+            <p class="text-game-600">Choose a game and start having fun while learning</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+
+            <!-- Job Interview Activity -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-blue-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-blue-600 rounded-lg">
+                        <i class="fa-solid fa-briefcase text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">مقابلة عمل 🧑‍💼</h3>
+                        <p class="text-sm text-game-600 font-english">Job Interview Role Play</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Practice job interview conversations and negotiation skills in Arabic!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐⭐ Intermediate</span>
+                    <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">15-25 min</span>
+                </div>
+                <a href="job_interview.html" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Start Activity <i class="fa-solid fa-arrow-left ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Hotel Online Activity -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-orange-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-orange-500 rounded-lg">
+                        <i class="fa-solid fa-hotel text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">فندق أونلاين 🏨</h3>
+                        <p class="text-sm text-game-600 font-english">Online Hotel Booking</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Interactive conversation activity - research hotels online and practice booking vocabulary!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐⭐ Intermediate</span>
+                    <span class="text-xs bg-orange-100 text-orange-700 px-3 py-1 rounded-full font-semibold">20-30 min</span>
+                </div>
+                <a href="hotel_online.html" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Start Activity <i class="fa-solid fa-arrow-left ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Kahoot Game -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-red-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-red-500 rounded-lg">
+                        <i class="fa-solid fa-gamepad text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Kahoot Quiz Game</h3>
+                        <p class="text-sm text-game-600 font-arabic">كاهووت</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Interactive quiz game format to test your Arabic knowledge in a fun way!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐ Beginner</span>
+                    <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full font-semibold">5-10 min</span>
+                </div>
+                <a href="kahooty.html" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Memory Match -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-orange-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-orange-500 rounded-lg">
+                        <i class="fa-solid fa-brain text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Memory Match</h3>
+                        <p class="text-sm text-game-600 font-arabic">الذاكرة</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Match Arabic words with their English translations. Test your memory and vocabulary!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐ Beginner</span>
+                    <span class="text-xs bg-orange-100 text-orange-700 px-3 py-1 rounded-full font-semibold">2-4 min</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Word Scramble -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-orange-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-orange-500 rounded-lg">
+                        <i class="fa-solid fa-shuffle text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Word Scramble</h3>
+                        <p class="text-sm text-game-600 font-arabic">الكلمات المشوشة</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Unscramble Arabic letters to form correct words. Improve spelling and recognition!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐⭐ Intermediate</span>
+                    <span class="text-xs bg-orange-100 text-orange-700 px-3 py-1 rounded-full font-semibold">3-5 min</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Listening Challenge -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-yellow-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-500 rounded-lg">
+                        <i class="fa-solid fa-headphones text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Listening Challenge</h3>
+                        <p class="text-sm text-game-600 font-arabic">تحدي الاستماع</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Listen to audio clips and choose the correct meaning. Sharpen your listening skills!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐ Beginner</span>
+                    <span class="text-xs bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-semibold">5 min</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Grammar Builder -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-pink-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-pink-500 rounded-lg">
+                        <i class="fa-solid fa-spell-check text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Grammar Builder</h3>
+                        <p class="text-sm text-game-600 font-arabic">بناء القواعد</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Arrange words to form grammatically correct sentences. Master sentence structure!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐⭐ Intermediate</span>
+                    <span class="text-xs bg-pink-100 text-pink-700 px-3 py-1 rounded-full font-semibold">4-6 min</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Sentence Builder -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-purple-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-purple-500 rounded-lg">
+                        <i class="fa-solid fa-pen-nib text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Sentence Builder</h3>
+                        <p class="text-sm text-game-600 font-arabic">بناء الجمل</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Build sentences from fragments. Learn proper structure and syntax!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐⭐⭐ Advanced</span>
+                    <span class="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-semibold">6-8 min</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Trivia Time -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-blue-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-blue-500 rounded-lg">
+                        <i class="fa-solid fa-lightbulb text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Trivia Time</h3>
+                        <p class="text-sm text-game-600 font-arabic">أسئلة الثقافة</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Answer trivia about Arab culture, history, and geography!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐ Beginner</span>
+                    <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">5 min</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Speed Matching -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-green-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-green-500 rounded-lg">
+                        <i class="fa-solid fa-bolt text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Speed Matching</h3>
+                        <p class="text-sm text-game-600 font-arabic">المطابقة السريعة</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Race against time to match words with definitions. Test your speed and knowledge!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐⭐ Intermediate</span>
+                    <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">2-3 min</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Dialogue Detective -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-indigo-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-indigo-500 rounded-lg">
+                        <i class="fa-solid fa-comments text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Dialogue Detective</h3>
+                        <p class="text-sm text-game-600 font-arabic">الحوار البوليسي</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Complete dialogues by choosing the right responses. Master conversational Arabic!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐⭐ Intermediate</span>
+                    <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-semibold">4-6 min</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Hangman Arabic -->
+            <div class="game-card bg-white rounded-xl shadow-md p-8 border-4 border-cyan-300">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-cyan-500 rounded-lg">
+                        <i class="fa-solid fa-question text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Hangman Arabic</h3>
+                        <p class="text-sm text-game-600 font-arabic">الكلمة السرية</p>
+                    </div>
+                </div>
+                <p class="text-game-700 mb-6">Guess Arabic letters to reveal hidden words. A classic game with Arabic twist!</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-semibold text-game-500">⭐⭐ Beginner</span>
+                    <span class="text-xs bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full font-semibold">3-5 min</span>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-game-600 hover:bg-game-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Play Now <i class="fa-solid fa-play ml-1"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Leaderboard -->
+        <section class="bg-white rounded-lg shadow-md p-8 mb-12">
+            <h3 class="text-2xl font-bold text-game-900 mb-6">Top Players This Week</h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-game-50 rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <span class="font-bold text-game-600 text-lg">🥇</span>
+                        <span class="font-semibold">Play to unlock leaderboard</span>
+                    </div>
+                    <span class="text-game-500 font-bold">0 points</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="bg-gradient-to-r from-game-700 to-red-600 text-white rounded-lg p-12 text-center">
+            <h3 class="text-2xl font-bold mb-4">Ready to Have Fun Learning?</h3>
+            <p class="text-red-50 mb-6 max-w-2xl mx-auto">
+                Games are a fantastic way to reinforce your learning while having a blast. Pick your favorite game and start playing now!
+            </p>
+            <a href="#" class="inline-block bg-white text-game-800 font-bold py-3 px-8 rounded-lg hover:bg-red-100 transition">
+                View All Games <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-game-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-red-200">&copy; 2025 Al-Manara Arabic Learning Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

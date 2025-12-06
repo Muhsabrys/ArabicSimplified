@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Check - فحص المفردات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        
+        .question-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .option-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+        
+        .option-btn:hover {
+            background: #e5e7eb;
+            border-color: #8b5cf6;
+        }
+        
+        .option-btn.selected {
+            background: #ede9fe;
+            border-color: #8b5cf6;
+        }
+        
+        .option-btn.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+            font-weight: bold;
+        }
+        
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        
+        .fill-blank-input {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            width: 180px;
+            text-align: center;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: inline-block;
+            margin: 0 0.25rem;
+        }
+        
+        .fill-blank-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+        }
+        
+        .fill-blank-input.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+        
+        .fill-blank-input.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        
+        .word-bank {
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .word-tag {
+            background: white;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin: 0.25rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-weight: 600;
+            color: #7c3aed;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-indigo-50">
+
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-spell-check text-3xl"></i>
+                    <div class="text-right">
+                        <h1 class="text-xl md:text-2xl font-bold">فحص المفردات</h1>
+                        <p class="text-sm opacity-90 font-english">Vocabulary Check</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="py-8 md:py-12 text-center">
+        <div class="container mx-auto px-6">
+            <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-4">
+                <i class="fas fa-book text-5xl text-purple-600"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-3">فحص المفردات</h1>
+            <p class="text-xl text-gray-700 mb-2">Vocabulary Practice & Assessment</p>
+            <div class="mt-4 inline-block bg-purple-100 text-purple-800 px-6 py-2 rounded-full text-sm font-semibold">
+                <i class="fas fa-graduation-cap ml-1"></i> Intermediate Level - متوسط
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pb-12 max-w-4xl">
+
+        <!-- Multiple Choice Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-list-ul text-purple-600 ml-2"></i>
+                اختر الإجابة الصحيحة
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١. مريم وأصدقاؤها يخططون للعطلة الصيفية. قالت مريم: "أنا أحب البحر، لكن __________ يُفضل الجبال."</p>
+                <button onclick="selectMCQ(this, 1)" data-question="1" data-correct="false" class="option-btn mcq-option">أ. لا أحد</button>
+                <button onclick="selectMCQ(this, 1)" data-question="1" data-correct="true" class="option-btn mcq-option">ب. مُعظمنا</button>
+                <button onclick="selectMCQ(this, 1)" data-question="1" data-correct="false" class="option-btn mcq-option">ج. عاطفي</button>
+                <button onclick="selectMCQ(this, 1)" data-question="1" data-correct="false" class="option-btn mcq-option">د. انقطَع</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٢. سافر يوسف إلى المغرب في برنامج تبادل، وهناك __________ على طلاب من دول مختلفة.</p>
+                <button onclick="selectMCQ(this, 2)" data-question="2" data-correct="true" class="option-btn mcq-option">أ. تعرّف</button>
+                <button onclick="selectMCQ(this, 2)" data-question="2" data-correct="false" class="option-btn mcq-option">ب. تجمّع</button>
+                <button onclick="selectMCQ(this, 2)" data-question="2" data-correct="false" class="option-btn mcq-option">ج. انقطَع</button>
+                <button onclick="selectMCQ(this, 2)" data-question="2" data-correct="false" class="option-btn mcq-option">د. خَجِل</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٣. دخل خالد الفندق وقال غاضبًا: "الإنترنت __________ منذ أمس ولا أستطيع العمل!"</p>
+                <button onclick="selectMCQ(this, 3)" data-question="3" data-correct="false" class="option-btn mcq-option">أ. تَبادَل</button>
+                <button onclick="selectMCQ(this, 3)" data-question="3" data-correct="true" class="option-btn mcq-option">ب. انقطَع</button>
+                <button onclick="selectMCQ(this, 3)" data-question="3" data-correct="false" class="option-btn mcq-option">ج. خطب</button>
+                <button onclick="selectMCQ(this, 3)" data-question="3" data-correct="false" class="option-btn mcq-option">د. خجل</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٤. ريم تبكي بسرعة وتشعر كثيرًا بالآخرين. يمكن أن نقول إنها:</p>
+                <button onclick="selectMCQ(this, 4)" data-question="4" data-correct="false" class="option-btn mcq-option">أ. لا أحد</button>
+                <button onclick="selectMCQ(this, 4)" data-question="4" data-correct="true" class="option-btn mcq-option">ب. عاطفية</button>
+                <button onclick="selectMCQ(this, 4)" data-question="4" data-correct="false" class="option-btn mcq-option">ج. مُعظم</button>
+                <button onclick="selectMCQ(this, 4)" data-question="4" data-correct="false" class="option-btn mcq-option">د. سياحية</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٥. في سوق مدينة مراكش، وجدنا __________ رائعة وهدايا يدوية جميلة.</p>
+                <button onclick="selectMCQ(this, 5)" data-question="5" data-correct="true" class="option-btn mcq-option">أ. جولات</button>
+                <button onclick="selectMCQ(this, 5)" data-question="5" data-correct="false" class="option-btn mcq-option">ب. فنادق</button>
+                <button onclick="selectMCQ(this, 5)" data-question="5" data-correct="false" class="option-btn mcq-option">ج. علاقات</button>
+                <button onclick="selectMCQ(this, 5)" data-question="5" data-correct="false" class="option-btn mcq-option">د. تجارب</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٦. "اليوم عندنا __________ في المدينة القديمة لزيارة الأماكن التاريخية."</p>
+                <button onclick="selectMCQ(this, 6)" data-question="6" data-correct="false" class="option-btn mcq-option">أ. تجربة</button>
+                <button onclick="selectMCQ(this, 6)" data-question="6" data-correct="false" class="option-btn mcq-option">ب. خطبة</button>
+                <button onclick="selectMCQ(this, 6)" data-question="6" data-correct="true" class="option-btn mcq-option">ج. جولة</button>
+                <button onclick="selectMCQ(this, 6)" data-question="6" data-correct="false" class="option-btn mcq-option">د. علاقة</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٧. في نهاية الصف، خرج الطلاب من الفصل</p>
+                <button onclick="selectMCQ(this, 7)" data-question="7" data-correct="true" class="option-btn mcq-option">أ. معًا</button>
+                <button onclick="selectMCQ(this, 7)" data-question="7" data-correct="false" class="option-btn mcq-option">ب. لا أحد</button>
+                <button onclick="selectMCQ(this, 7)" data-question="7" data-correct="false" class="option-btn mcq-option">ج. انقطعوا</button>
+                <button onclick="selectMCQ(this, 7)" data-question="7" data-correct="false" class="option-btn mcq-option">د. تعرّفوا</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٨. سافرت ليلى إلى تركيا في رحلة قصيرة. عند عودتها قالت: "كانت أفضل __________ في حياتي."</p>
+                <button onclick="selectMCQ(this, 8)" data-question="8" data-correct="false" class="option-btn mcq-option">أ. علاقة</button>
+                <button onclick="selectMCQ(this, 8)" data-question="8" data-correct="true" class="option-btn mcq-option">ب. تجربة</button>
+                <button onclick="selectMCQ(this, 8)" data-question="8" data-correct="false" class="option-btn mcq-option">ج. خطبة</button>
+                <button onclick="selectMCQ(this, 8)" data-question="8" data-correct="false" class="option-btn mcq-option">د. انقطاع</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٩. في اللقاء الأول بين الحبيبين، بدآ الحديث عن ........... السابقة.</p>
+                <button onclick="selectMCQ(this, 9)" data-question="9" data-correct="true" class="option-btn mcq-option">أ. العلاقات العاطفية</button>
+                <button onclick="selectMCQ(this, 9)" data-question="9" data-correct="false" class="option-btn mcq-option">ب. جولة سياحية</button>
+                <button onclick="selectMCQ(this, 9)" data-question="9" data-correct="false" class="option-btn mcq-option">ج. انقطاع الكهرباء</button>
+                <button onclick="selectMCQ(this, 9)" data-question="9" data-correct="false" class="option-btn mcq-option">د. تبادل الأطعمة</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١٠. نزلت عائلتنا في فندق خمس نجوم، لكن السعر كان:</p>
+                <button onclick="selectMCQ(this, 10)" data-question="10" data-correct="false" class="option-btn mcq-option">أ. خطيب</button>
+                <button onclick="selectMCQ(this, 10)" data-question="10" data-correct="false" class="option-btn mcq-option">ب. تَبادُل</button>
+                <button onclick="selectMCQ(this, 10)" data-question="10" data-correct="true" class="option-btn mcq-option">ج. غاليًا</button>
+                <button onclick="selectMCQ(this, 10)" data-question="10" data-correct="false" class="option-btn mcq-option">د. سوق</button>
+            </div>
+        </div>
+
+        <!-- Fill in the Blank Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-pen text-indigo-600 ml-2"></i>
+                املأ الفراغ
+            </h2>
+
+            <!-- Word Bank -->
+            <div class="word-bank">
+                <h3 class="text-xl font-bold text-purple-900 mb-3">
+                    <i class="fas fa-book-open ml-2"></i>
+                    🔹بنك الكلمات:
+                </h3>
+                <div class="flex flex-wrap">
+                    <span class="word-tag">غالية</span>
+                    <span class="word-tag">مرة</span>
+                    <span class="word-tag">فندق</span>
+                    <span class="word-tag">جولة</span>
+                    <span class="word-tag">تجمّع</span>
+                    <span class="word-tag">خطب</span>
+                    <span class="word-tag">معًا</span>
+                    <span class="word-tag">تعرّف</span>
+                    <span class="word-tag">انقطَعت</span>
+                    <span class="word-tag">علاقة</span>
+                    <span class="word-tag">تجربة</span>
+                    <span class="word-tag">أحد</span>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ١. سافرت لأول 
+                    <input type="text" id="fill1" class="fill-blank-input" data-answer="مرة">
+                    إلى فرنسا، وكانت الرحلة رائعة.
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ٢. في نهاية الحفل، 
+                    <input type="text" id="fill2" class="fill-blank-input" data-answer="تجمّع">
+                    كل الطلاب في الساحة لالتقاط صورة جماعية.
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ٣. لم أجد 
+                    <input type="text" id="fill3" class="fill-blank-input" data-answer="أحد">
+                    أعرفه في الحفل، فجلست وحدي.
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ٤. خلال المحاضرة، 
+                    <input type="text" id="fill4" class="fill-blank-input" data-answer="انقطَعت">
+                    الكهرباء فجأة، ولم أستطع أن أكمّل الشرح.
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ٥. أحمد سافر إلى ألمانيا في برنامج تبادل، وهناك 
+                    <input type="text" id="fill5" class="fill-blank-input" data-answer="تعرّف">
+                    على طلاب من ٦ دول.
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ٦. هناك 
+                    <input type="text" id="fill6" class="fill-blank-input" data-answer="علاقة">
+                    قوية بيني وبين أستاذي، مبنية على الاحترام.
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ٧. أردنا أن نحجز في هذا 
+                    <input type="text" id="fill7" class="fill-blank-input" data-answer="فندق">
+                    ، لكن السعر كان مرتفعًا جدًا.
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ٨. أحسن شيء في الرحلة كان 
+                    <input type="text" id="fill8" class="fill-blank-input" data-answer="جولة">
+                    القارب في النهر وسط الطبيعة.
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ٩. بعد سنتين من الصداقة، 
+                    <input type="text" id="fill9" class="fill-blank-input" data-answer="خطب">
+                    سارة لعلي أمام عائلتها.
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg">
+                    ١٠. جلسنا في الحديقة 
+                    <input type="text" id="fill10" class="fill-blank-input" data-answer="معًا">
+                    نأكل، ونتحدث، ونضحك.
+                </p>
+            </div>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="flex gap-4 mb-6">
+            <button onclick="checkMCQ()" class="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-lg font-bold py-4 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all shadow-lg">
+                <i class="fas fa-check ml-2"></i>تحقق من الاختيار
+            </button>
+            <button onclick="checkFillBlanks()" class="flex-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-lg font-bold py-4 rounded-lg hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-lg">
+                <i class="fas fa-pen ml-2"></i>تحقق من الفراغات
+            </button>
+        </div>
+
+        <!-- Score Display -->
+        <div id="scoreDisplay" class="hidden bg-gradient-to-r from-green-400 to-emerald-500 text-white p-6 rounded-xl text-center shadow-lg">
+            <i class="fas fa-trophy text-4xl mb-2"></i>
+            <p class="text-2xl font-bold" id="scoreText"></p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 md:py-8 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-center">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <a href="../index.html" class="hover:opacity-80 transition">
+                    <i class="fas fa-brain text-xl md:text-2xl mr-2"></i>
+                    <span class="font-semibold text-sm md:text-base">Context Arabic</span>
+                </a>
+                <p class="text-xs md:text-sm opacity-90">&copy; 2025 - Learn Arabic in Context</p>
+                <a href="index.html" class="hover:opacity-80 transition">
+                    <span class="font-semibold text-sm md:text-base">Back to Vocab Practice</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Store MCQ answers
+        const mcqAnswers = {};
+
+        function selectMCQ(btn, qnum) {
+            document.querySelectorAll(`[data-question="${qnum}"].mcq-option`).forEach(b => {
+                b.classList.remove('selected');
+            });
+            
+            btn.classList.add('selected');
+            mcqAnswers[qnum] = (btn.dataset.correct === 'true');
+        }
+
+        function checkMCQ() {
+            let mcqScore = 0;
+            const totalMCQ = 10;
+            
+            for (let i = 1; i <= totalMCQ; i++) {
+                const buttons = document.querySelectorAll(`[data-question="${i}"].mcq-option`);
+                const userAnswer = mcqAnswers[i];
+                
+                buttons.forEach(btn => {
+                    btn.classList.remove('correct', 'incorrect');
+                    const isCorrect = (btn.dataset.correct === 'true');
+                    
+                    if (isCorrect) {
+                        btn.classList.add('correct');
+                    } else if (btn.classList.contains('selected') && !isCorrect) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+                
+                if (userAnswer === true) {
+                    mcqScore++;
+                }
+            }
+            
+            const percentage = Math.round((mcqScore / totalMCQ) * 100);
+            
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreText = document.getElementById('scoreText');
+            
+            scoreText.textContent = `نتيجة الاختيار: ${mcqScore} من ${totalMCQ} (${percentage}%)`;
+            scoreDisplay.classList.remove('hidden');
+            
+            scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function checkFillBlanks() {
+            let fillScore = 0;
+            const totalFill = 10;
+            
+            const answers = [
+                { id: 'fill1', answer: 'مرة' },
+                { id: 'fill2', answer: 'تجمّع' },
+                { id: 'fill3', answer: 'أحد' },
+                { id: 'fill4', answer: 'انقطَعت' },
+                { id: 'fill5', answer: 'تعرّف' },
+                { id: 'fill6', answer: 'علاقة' },
+                { id: 'fill7', answer: 'فندق' },
+                { id: 'fill8', answer: 'جولة' },
+                { id: 'fill9', answer: 'خطب' },
+                { id: 'fill10', answer: 'معًا' }
+            ];
+            
+            answers.forEach(item => {
+                const input = document.getElementById(item.id);
+                const userAnswer = input.value.trim();
+                input.classList.remove('correct', 'incorrect');
+                
+                if (userAnswer === item.answer) {
+                    input.classList.add('correct');
+                    fillScore++;
+                } else if (userAnswer !== '') {
+                    input.classList.add('incorrect');
+                }
+            });
+            
+            const percentage = Math.round((fillScore / totalFill) * 100);
+            
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreText = document.getElementById('scoreText');
+            
+            scoreText.textContent = `نتيجة الفراغات: ${fillScore} من ${totalFill} (${percentage}%)`;
+            scoreDisplay.classList.remove('hidden');
+            
+            scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>

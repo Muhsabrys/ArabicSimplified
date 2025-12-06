@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egyptian Arabic Comparisons</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #F8F9FA; /* Very light gray */
+            color: #343A40; /* Dark gray for general text */
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #FFFFFF; /* White */
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        h1, h2 {
+            color: #212529; /* Dark charcoal for headings */
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .example-card {
+            background-color: #F0F4F8; /* Light blue-gray for cards */
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid #DEE2E6; /* Subtle border */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .example-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+        }
+        .arabic-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0056B3; /* Deeper blue for Arabic text */
+            text-align: right; /* Right-to-left for Arabic */
+            direction: rtl;
+            margin-bottom: 0.5rem;
+        }
+        .transliteration-text {
+            font-style: italic;
+            color: #6C757D; /* Medium gray for transliteration */
+            margin-bottom: 0.5rem;
+        }
+        .translation-text {
+            font-size: 1.1rem;
+            color: #198754; /* Slightly darker green for translation */
+            font-weight: 500;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed #CED4DA; /* Lighter dashed border */
+        }
+        .toggle-button {
+            background-color: #0D6EFD; /* Vibrant blue button */
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 0.75rem;
+        }
+        .toggle-button:hover {
+            background-color: #0B5ED7; /* Darker blue on hover */
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl font-extrabold mb-6">How Egyptians Make Comparisons</h1>
+        <p class="text-lg text-center mb-8">
+            In Egyptian Arabic, comparisons are often straightforward. Here are some common ways to compare things, people, or qualities, along with interactive examples.
+        </p>
+
+        <section class="mb-8">
+            <h2 class="text-3xl font-bold mb-4">Common Comparison Structures</h2>
+            <div class="bg-blue-50 p-6 rounded-lg shadow-inner">
+                <ul class="list-disc list-inside space-y-3 text-lg">
+                    <li>
+                        <strong>Comparative: "أفعل من" (af'al min) - More/Less than:</strong> Used for "more [adjective] than" or "less [adjective] than". The adjective takes a specific comparative form (often starting with 'أ').
+                        <span class="block text-sm text-gray-600 mt-1">Example: "أنا أطول منك" (Ana atwal mennak) - I am taller than you.</span>
+                        <span class="block text-sm text-gray-600 mt-1">Example: "هي أقل ذكاءً منه" (Heya aqall zaka'an mennoh) - She is less intelligent than him.</span>
+                    </li>
+                    <li>
+                        <strong>Equality: "زي" (zayy) - Like / As:</strong> Used for "as [adjective] as" or simply "like".
+                        <span class="block text-sm text-gray-600 mt-1">Example: "هو ذكي زي أخوه" (Howa zaki zayy akhuh) - He is as smart as his brother.</span>
+                    </li>
+                    <li>
+                        <strong>Superlative: "الأفعل" (el-af'al) - The Most/Least:</strong> Often formed by adding "الـ" (el-) to the comparative form of the adjective. This expresses "the most [adjective]" or "the [adjective]-est".
+                        <span class="block text-sm text-gray-600 mt-1">Example: "الأكبر" (el-akbar) - The biggest/oldest.</span>
+                        <span class="block text-sm text-gray-600 mt-1">Example: "الأسرع" (el-asra') - The fastest.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <h2 class="text-3xl font-bold mb-4">Examples</h2>
+        <div id="examples-container">
+            <!-- Examples will be dynamically loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Array of comparison examples
+        const examples = [
+            {
+                arabic: "القاهرة أكبر من الإسكندرية",
+                transliteration: "El-Qahira akbar min El-Eskandariya",
+                translation: "Cairo is bigger than Alexandria."
+            },
+            {
+                arabic: "القهوة أحلى من الشاي",
+                transliteration: "El-ahwa ahla min esh-shay",
+                translation: "Coffee is sweeter than tea."
+            },
+            {
+                arabic: "أنا أطول منك",
+                transliteration: "Ana atwal mennak",
+                translation: "I am taller than you."
+            },
+            {
+                arabic: "هي أذكى منه",
+                transliteration: "Heya azka mennoh",
+                translation: "She is smarter than him."
+            },
+            {
+                arabic: "الامتحان ده أصعب من اللي فات",
+                transliteration: "El-emtehan da as'ab min elly fat",
+                translation: "This exam is harder than the last one."
+            },
+            {
+                arabic: "الموبايل ده أغلى من التاني",
+                transliteration: "El-mobile da aghla min et-tani",
+                translation: "This mobile phone is more expensive than the other one."
+            },
+            {
+                arabic: "الشقة دي أوسع من شقتنا",
+                transliteration: "Esh-sha'a di awsa' min sha'etna",
+                translation: "This apartment is more spacious than our apartment."
+            },
+            {
+                arabic: "هو كريم زي أبوه",
+                transliteration: "Howa kareem zayy abuh",
+                translation: "He is as generous as his father."
+            },
+            {
+                arabic: "صوته حلو زي العصفور",
+                transliteration: "Sotoh helw zayy el-'asfour",
+                translation: "His voice is beautiful like a bird."
+            },
+            // Superlative Examples
+            {
+                arabic: "الشغل ده أهم حاجة دلوقتي",
+                transliteration: "Esh-shoghl da aham haga delwa'ti",
+                translation: "This work is the most important thing now."
+            },
+            {
+                arabic: "هو أسرع واحد في الفريق",
+                transliteration: "Howa asra' wahed fel fareeq",
+                translation: "He is the fastest one in the team."
+            },
+            {
+                arabic: "دي أحلى أغنية سمعتها",
+                transliteration: "Di ahla oghneya sema'taha",
+                translation: "This is the most beautiful song I've heard."
+            },
+            {
+                arabic: "هو أذكى طالب في الفصل",
+                transliteration: "Howa azka taleb fel fasl",
+                translation: "He is the smartest student in the class."
+            },
+            {
+                arabic: "الجبل ده أعلى جبل في مصر",
+                transliteration: "El-gabal da a'la gabal fi Masr",
+                translation: "This mountain is the highest mountain in Egypt."
+            }
+        ];
+
+        // Get the container where examples will be rendered
+        const examplesContainer = document.getElementById('examples-container');
+
+        // Function to render examples
+        function renderExamples() {
+            examplesContainer.innerHTML = ''; // Clear existing content
+            examples.forEach((example, index) => {
+                const exampleCard = document.createElement('div');
+                exampleCard.className = 'example-card';
+
+                // Arabic text
+                const arabicParagraph = document.createElement('p');
+                arabicParagraph.className = 'arabic-text';
+                arabicParagraph.textContent = example.arabic;
+                exampleCard.appendChild(arabicParagraph);
+
+                // Transliteration
+                const transliterationParagraph = document.createElement('p');
+                transliterationParagraph.className = 'transliteration-text';
+                transliterationParagraph.textContent = example.transliteration;
+                exampleCard.appendChild(transliterationParagraph);
+
+                // Translation (initially hidden)
+                const translationParagraph = document.createElement('p');
+                translationParagraph.className = 'translation-text hidden';
+                translationParagraph.textContent = example.translation;
+                translationParagraph.id = `translation-${index}`; // Unique ID for each translation
+                exampleCard.appendChild(translationParagraph);
+
+                // Toggle button
+                const toggleButton = document.createElement('button');
+                toggleButton.className = 'toggle-button';
+                toggleButton.textContent = 'Show Translation';
+                toggleButton.onclick = () => toggleTranslation(index); // Attach click handler
+                exampleCard.appendChild(toggleButton);
+
+                examplesContainer.appendChild(exampleCard);
+            });
+        }
+
+        // Function to toggle translation visibility
+        function toggleTranslation(index) {
+            const translationElement = document.getElementById(`translation-${index}`);
+            const buttonElement = translationElement.nextElementSibling; // The button is the next sibling
+
+            if (translationElement.classList.contains('hidden')) {
+                translationElement.classList.remove('hidden');
+                buttonElement.textContent = 'Hide Translation';
+            } else {
+                translationElement.classList.add('hidden');
+                buttonElement.textContent = 'Show Translation';
+            }
+        }
+
+        // Render examples when the page loads
+        window.onload = renderExamples;
+    </script>
+</body>
+</html>

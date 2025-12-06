@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقابلة عمل - Job Interview Role Play</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        
+        .role-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .role-card:hover {
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .question-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1rem 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        
+        .question-table th {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+        
+        .question-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .question-table tr:nth-child(even) {
+            background: #eff6ff;
+        }
+        
+        .phrase-card {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .phrase-item {
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin: 0.5rem 0;
+            border-right: 4px solid #3b82f6;
+        }
+        
+        .scenario-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            margin: 0.75rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-right: 4px solid #10b981;
+        }
+        
+        .scenario-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-50">
+
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-briefcase text-3xl"></i>
+                    <div class="text-right">
+                        <h1 class="text-xl md:text-2xl font-bold">مقابلة عمل</h1>
+                        <p class="text-sm opacity-90 font-english">Job Interview Role Play</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="py-8 md:py-12 text-center">
+        <div class="container mx-auto px-6">
+            <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-4">
+                <i class="fas fa-user-tie text-5xl text-blue-600"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-3">مقابلة عمل 🧑‍💼</h1>
+            <p class="text-xl text-gray-700 mb-2">نشاط تمثيل الأدوار</p>
+            <p class="text-lg text-gray-600 font-english mb-2">Job Interview Role Play Activity</p>
+            <div class="mt-4 inline-block bg-blue-100 text-blue-800 px-6 py-2 rounded-full text-sm font-semibold">
+                <i class="fas fa-users ml-1"></i> نشاط ثنائي - Pair Activity
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pb-12 max-w-6xl">
+
+        <!-- Roles Section -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Role A: Interviewer -->
+            <div class="role-card border-t-4 border-blue-600">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">المدير 🧑‍💼</h2>
+                        <p class="text-blue-600 font-english font-semibold">Role A: The Interviewer</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 bg-blue-50 p-4 rounded-lg">
+                    أنت مدير الموارد البشرية وتجري مقابلة عمل. اسأل الأسئلة وناقش شروط العمل.
+                </p>
+            </div>
+
+            <!-- Role B: Candidate -->
+            <div class="role-card border-t-4 border-green-600">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">المُرشَّح 👤</h2>
+                        <p class="text-green-600 font-english font-semibold">Role B: The Candidate</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 bg-green-50 p-4 rounded-lg">
+                    أنت المرشح للوظيفة. أجب عن الأسئلة وفاوض على شروط العمل المناسبة لك.
+                </p>
+            </div>
+        </div>
+
+        <!-- Interviewer Questions -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-question-circle text-blue-600 ml-2"></i>
+                أسئلة المقابلة
+            </h2>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <table class="question-table">
+                    <thead>
+                        <tr>
+                            <th class="text-right">سؤال المدير</th>
+                            <th class="text-left font-english">Translation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">لماذا تأخّرتَ عن الموعد؟</td>
+                            <td class="font-english">Why were you late to the appointment?</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">متى استيقظتَ اليوم؟</td>
+                            <td class="font-english">When did you wake up today?</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">هل نِمتَ متأخّرًا الليلة الماضية؟</td>
+                            <td class="font-english">Did you sleep late last night?</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">ما هو نظام نومك عادةً؟</td>
+                            <td class="font-english">What is your usual sleep schedule?</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">لماذا تريد هذه الوظيفة؟</td>
+                            <td class="font-english">Why do you want this job?</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">ما هو الراتب الذي تتوقّعه؟</td>
+                            <td class="font-english">What salary do you expect?</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">هل يمكنك العمل في عطلة نهاية الأسبوع؟</td>
+                            <td class="font-english">Can you work on weekends?</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">ما هي الأوقات التي تناسبك؟</td>
+                            <td class="font-english">What working hours suit you?</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">هل يمكنك أن تبدأ العمل من الأسبوع القادم؟</td>
+                            <td class="font-english">Can you start work next week?</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Useful Phrases -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-comments text-purple-600 ml-2"></i>
+                🧠 عبارات مفيدة للتفاوض
+            </h2>
+            <div class="phrase-card">
+                <h3 class="text-xl font-bold text-blue-900 mb-3">
+                    <i class="fas fa-language ml-2"></i>
+                    Phrases to Use in Negotiation
+                </h3>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="phrase-item">
+                        <p class="font-bold text-blue-900 mb-1">أفضّل أن...</p>
+                        <p class="text-sm text-gray-600 font-english">I prefer to...</p>
+                    </div>
+                    <div class="phrase-item">
+                        <p class="font-bold text-blue-900 mb-1">هل يمكن أن...؟</p>
+                        <p class="text-sm text-gray-600 font-english">Is it possible to...?</p>
+                    </div>
+                    <div class="phrase-item">
+                        <p class="font-bold text-blue-900 mb-1">في الحقيقة...</p>
+                        <p class="text-sm text-gray-600 font-english">Actually...</p>
+                    </div>
+                    <div class="phrase-item">
+                        <p class="font-bold text-blue-900 mb-1">أنا مستعدّ لـ...</p>
+                        <p class="text-sm text-gray-600 font-english">I'm willing to...</p>
+                    </div>
+                    <div class="phrase-item">
+                        <p class="font-bold text-blue-900 mb-1">هذا مناسب، لكن...</p>
+                        <p class="text-sm text-gray-600 font-english">That's fine, but...</p>
+                    </div>
+                    <div class="phrase-item">
+                        <p class="font-bold text-blue-900 mb-1">أظنّ أنّ...</p>
+                        <p class="text-sm text-gray-600 font-english">I think that...</p>
+                    </div>
+                    <div class="phrase-item">
+                        <p class="font-bold text-blue-900 mb-1">حسب الظروف...</p>
+                        <p class="text-sm text-gray-600 font-english">Depending on the circumstances...</p>
+                    </div>
+                    <div class="phrase-item">
+                        <p class="font-bold text-blue-900 mb-1">إذا كان ممكنًا...</p>
+                        <p class="text-sm text-gray-600 font-english">If possible...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scenario Examples -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-theater-masks text-green-600 ml-2"></i>
+                أمثلة على السيناريوهات
+            </h2>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <p class="text-gray-700 mb-4 font-semibold">
+                    <i class="fas fa-info-circle text-blue-600 ml-2"></i>
+                    استخدم هذه الأمثلة لإنشاء حوارات واقعية:
+                </p>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-dollar-sign text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">الراتب منخفض جدًا</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Salary too low</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                هل يمكن أن نزيد الراتب إذا زاد عدد ساعات العمل؟
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                Can we increase the salary if the working hours increase?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-clock text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">تفضيل الدوام الجزئي</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Want part-time only</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                هل يمكن أن تكون الوظيفة بدوام جزئي؟
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                Can the job be part-time?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-calendar text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">عدم تفضيل العمل يوم الجمعة</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Work on Friday not preferred</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                أنا مستعدّ للعمل يوم السبت بدلاً من يوم الجمعة.
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                I'm willing to work on Saturday instead of Friday.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-home text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">طلب المرونة</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Asking for flexibility</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                هل يمكنني أن أعمل من المنزل يومًا واحدًا في الأسبوع؟
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                Can I work from home one day a week?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-pray text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">وقت الصلاة</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Prayer time conflict</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                هل يمكن أن تكون هناك استراحة قصيرة وقت صلاة الظهر؟
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                Can there be a short break during Dhuhr prayer time?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-car text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">المسافة طويلة</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Travel time is long</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                المسافة طويلة. هل يمكن تعديل ساعات العمل قليلاً؟
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                The commute is long. Can the work hours be adjusted slightly?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-graduation-cap text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">طلب التدريب</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Requesting training</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                هل يوجد تدريب قبل البدء في العمل؟
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                Is there any training before starting the job?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-book-open text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">تعارض مع الدراسة</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Shift conflict with study</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                لديّ محاضرات في المساء. هل يمكنني أن أعمل في الفترة الصباحية فقط؟
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                I have evening classes. Can I work mornings only?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-umbrella-beach text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">السؤال عن الإجازات</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Asking about holiday</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                هل تُعطى إجازات في الأعياد الرسمية؟
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                Are there holidays during public holidays?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-calendar-plus text-green-600 text-xl mt-1"></i>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 mb-1">تأخير تاريخ البدء</p>
+                            <p class="text-sm text-gray-600 font-english mb-2">Scenario: Delay start date</p>
+                            <p class="text-blue-900 bg-blue-50 p-3 rounded-lg">
+                                هل يمكنني أن أبدأ بعد أسبوعين بدلاً من الأسبوع القادم؟
+                            </p>
+                            <p class="text-sm text-gray-500 font-english mt-1">
+                                Can I start in two weeks instead of next week?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Instructions -->
+        <div class="bg-gradient-to-r from-blue-100 to-indigo-100 border-2 border-blue-400 rounded-xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <i class="fas fa-lightbulb text-3xl text-blue-600"></i>
+                <h3 class="text-2xl font-bold text-gray-900">كيف تلعب؟</h3>
+            </div>
+            <ol class="list-decimal mr-6 text-gray-800 space-y-2">
+                <li>اختر شريكًا واقسموا الأدوار (مدير ومرشح للوظيفة)</li>
+                <li>ابدأ المدير بطرح الأسئلة من القائمة</li>
+                <li>المرشح يجيب ويفاوض باستخدام العبارات المفيدة</li>
+                <li>استخدم السيناريوهات لجعل المحادثة أكثر واقعية</li>
+                <li>بدّل الأدوار وكرر النشاط</li>
+            </ol>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 md:py-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-center">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <a href="../index.html" class="hover:opacity-80 transition">
+                    <i class="fas fa-brain text-xl md:text-2xl mr-2"></i>
+                    <span class="font-semibold text-sm md:text-base">Context Arabic</span>
+                </a>
+                <p class="text-xs md:text-sm opacity-90">&copy; 2025 - Learn Arabic in Context</p>
+                <a href="index.html" class="hover:opacity-80 transition">
+                    <span class="font-semibold text-sm md:text-base">Back to Games</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

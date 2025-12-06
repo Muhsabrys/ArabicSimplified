@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Negation in Egyptian Arabic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC; 
+        }
+        .font-cairo {
+            font-family: 'Cairo', sans-serif;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .rule-bg { background-color: #CAF0F8; }
+        .text-dark-blue { color: #03045E; }
+        .text-main-blue { color: #0077B6; }
+        .text-accent-blue { color: #00B4D8; }
+        .bg-main-blue { background-color: #0077B6; }
+        .bg-accent-blue { background-color: #00B4D8; }
+        .border-main-blue { border-color: #0077B6; }
+        .rtl { direction: rtl; }
+    </style>
+</head>
+<body class="text-dark-blue">
+
+    <header class="bg-main-blue text-white text-center py-12 px-4">
+        <h1 class="text-4xl md:text-5xl font-bold font-cairo mb-2">🇪🇬 النفي في العامية المصرية</h1>
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Negation in Egyptian Arabic Colloquial Speech</h2>
+        <p class="max-w-3xl mx-auto text-lg text-gray-200">
+            Mastering negation is key to speaking Egyptian Arabic fluently. It's simpler than you might think, primarily using two main patterns to say "no" or "not." Let's dive into how to negate verbs, nouns, and adjectives.
+        </p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="introduction" class="mb-16">
+            <h3 class="text-3xl font-bold text-center mb-8 font-cairo">مقدمة عن النفي (Introduction to Negation)</h3>
+            <div class="card p-6 md:p-8">
+                <p class="text-lg mb-4">In Egyptian Arabic, the two primary negation particles are <strong class="text-accent-blue text-xl">مش (mish)</strong> and the circumfix <strong class="text-accent-blue text-xl">ما...ـش (ma...-sh)</strong>.</p>
+                <p class="text-lg">The choice depends on what you're negating: **verbs** (and their tense) or **nominal sentences** (sentences with nouns or adjectives, but no explicit verb "to be").</p>
+            </div>
+        </section>
+
+        <section id="negating-verbs" class="mb-16">
+            <h3 class="text-3xl font-bold text-center mb-8 font-cairo">نفي الأفعال (Negating Verbs)</h3>
+            <p class="text-center text-lg max-w-2xl mx-auto mb-8">The way you negate a verb depends on its tense: past, present, or future.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card p-6">
+                    <h5 class="text-xl font-bold text-main-blue mb-3">الماضي (Past Tense)</h5>
+                    <p class="mb-4">Use the circumfix <code class="font-cairo text-lg">ما...ـش</code> around the past tense verb.</p>
+                    <div class="mt-4 p-3 rule-bg rounded-lg rtl mb-4">
+                        <p class="font-cairo text-lg">أنا <span class="font-bold text-red-500">ما</span> أكلت<span class="font-bold text-red-500">ش</span>.</p>
+                        <p class="text-sm text-gray-600 text-left">Ana <span class="font-bold">ma</span> akalt<span class="font-bold">ish</span>. (I didn't eat.)</p>
+                    </div>
+                    <div class="p-3 rule-bg rounded-lg rtl">
+                        <p class="font-cairo text-lg">هم <span class="font-bold text-red-500">ما</span> نامو<span class="font-bold text-red-500">ش</span> امبارح.</p>
+                        <p class="text-sm text-gray-600 text-left">Homma <span class="font-bold">ma</span> nāmu<span class="font-bold">sh</span> imbāreḥ. (They didn't sleep yesterday.)</p>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h5 class="text-xl font-bold text-main-blue mb-3">المضارع (Present Tense)</h5>
+                    <p class="mb-4">For habitual or continuous actions, use <code class="font-cairo text-lg">ما...ـش</code> around the present tense verb (often with the <code class="font-cairo">بـ</code> prefix).</p>
+                    <div class="mt-4 p-3 rule-bg rounded-lg rtl mb-4">
+                        <p class="font-cairo text-lg">أنا <span class="font-bold text-red-500">ما</span> بكتب<span class="font-bold text-red-500">ش</span>.</p>
+                        <p class="text-sm text-gray-600 text-left">Ana <span class="font-bold">ma</span> baktib<span class="font-bold">ish</span>. (I don't write.)</p>
+                    </div>
+                    <div class="p-3 rule-bg rounded-lg rtl">
+                        <p class="font-cairo text-lg">هي <span class="font-bold text-red-500">ما</span> بتشرب<span class="font-bold text-red-500">ش</span> قهوة.</p>
+                        <p class="text-sm text-gray-600 text-left">Heyya <span class="font-bold">ma</span> bitishrab<span class="font-bold">ish</span> ʾahwa. (She doesn't drink coffee.)</p>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h5 class="text-xl font-bold text-main-blue mb-3">المستقبل (Future Tense)</h5>
+                    <p class="mb-4">Use <code class="font-cairo text-lg">مش</code> before the future verb (which has the <code class="font-cairo">هـ</code> prefix).</p>
+                    <div class="mt-4 p-3 rule-bg rounded-lg rtl mb-4">
+                        <p class="font-cairo text-lg">أنا <span class="font-bold text-red-500">مش</span> هروح.</p>
+                        <p class="text-sm text-gray-600 text-left">Ana <span class="font-bold">mish</span> harūḥ. (I won't go.)</p>
+                    </div>
+                    <div class="p-3 rule-bg rounded-lg rtl">
+                        <p class="font-cairo text-lg">هما <span class="font-bold text-red-500">مش</span> هيسافروا بكرة.</p>
+                        <p class="text-sm text-gray-600 text-left">Homma <span class="font-bold">mish</span> hayisafru bokra. (They won't travel tomorrow.)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="negating-nominal" class="mb-16">
+            <h3 class="text-3xl font-bold text-center mb-8 font-cairo">نفي الجمل الاسمية (Negating Nominal Sentences)</h3>
+            <p class="text-center text-lg max-w-2xl mx-auto mb-8">Nominal sentences are those that use nouns or adjectives without an explicit verb "to be" (e.g., "He is tall," "She is a doctor"). In Egyptian Arabic, you simply use <strong class="text-accent-blue text-xl">مش (mish)</strong> to negate them. It doesn't change based on gender or number!</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card p-6">
+                    <h5 class="text-xl font-bold text-main-blue mb-3">نفي الأسماء (Negating Nouns)</h5>
+                    <p class="mb-4">Place <code class="font-cairo text-lg">مش</code> before the noun.</p>
+                    <div class="mt-4 p-3 rule-bg rounded-lg rtl mb-4">
+                        <p class="font-cairo text-lg">هو <span class="font-bold text-red-500">مش</span> دكتور.</p>
+                        <p class="text-sm text-gray-600 text-left">Howwa <span class="font-bold">mish</span> doktor. (He is not a doctor.)</p>
+                    </div>
+                    <div class="p-3 rule-bg rounded-lg rtl">
+                        <p class="font-cairo text-lg">دي <span class="font-bold text-red-500">مش</span> عربيتي.</p>
+                        <p class="text-sm text-gray-600 text-left">Di <span class="font-bold">mish</span> ʿarabīti. (This is not my car.)</p>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h5 class="text-xl font-bold text-main-blue mb-3">نفي الصفات (Negating Adjectives)</h5>
+                    <p class="mb-4">Place <code class="font-cairo text-lg">مش</code> before the adjective.</p>
+                    <div class="mt-4 p-3 rule-bg rounded-lg rtl mb-4">
+                        <p class="font-cairo text-lg">الجو <span class="font-bold text-red-500">مش</span> حر.</p>
+                        <p class="text-sm text-gray-600 text-left">El-gaww <span class="font-bold">mish</span> ḥarr. (The weather is not hot.)</p>
+                    </div>
+                    <div class="p-3 rule-bg rounded-lg rtl">
+                        <p class="font-cairo text-lg">هي <span class="font-bold text-red-500">مش</span> تعبانة.</p>
+                        <p class="text-sm text-gray-600 text-left">Heyya <span class="font-bold">mish</span> taʿbāna. (She is not tired.)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="other-negations" class="mb-8">
+            <h3 class="text-3xl font-bold text-center mb-8 font-cairo">تعبيرات نفي أخرى (Other Negative Expressions)</h3>
+            <p class="text-center text-lg max-w-2xl mx-auto mb-8">Here are some other common ways to express negation in Egyptian Arabic:</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4">🚫</div>
+                    <h5 class="text-xl font-bold text-main-blue mb-2">لأ (Laʾ) - No (as an answer)</h5>
+                    <p class="text-sm text-gray-600 mb-3">The direct answer to a yes/no question.</p>
+                    <div class="p-3 rule-bg rounded-lg rtl">
+                        <p class="font-cairo text-lg">هتيجي بكرة؟ <span class="font-bold text-main-blue">لأ</span>.</p>
+                        <p class="text-sm text-gray-600 text-left">Hateegi bokra? <span class="font-bold">Laʾ</span>. (Will you come tomorrow? No.)</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4">⏳❌</div>
+                    <h5 class="text-xl font-bold text-main-blue mb-2">أبداً (Abadan) - Never</h5>
+                    <p class="text-sm text-gray-600 mb-3">Used with future negation (<code class="font-cairo">مش</code>).</p>
+                    <div class="p-3 rule-bg rounded-lg rtl">
+                        <p class="font-cairo text-lg">مش هروح هناك <span class="font-bold text-main-blue">أبداً</span>.</p>
+                        <p class="text-sm text-gray-600 text-left">Mish harūḥ henāk <span class="font-bold">abadan</span>. (I will never go there.)</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4">👤❌</div>
+                    <h5 class="text-xl font-bold text-main-blue mb-2">محدش (Maḥaddish) - No One</h5>
+                    <p class="text-sm text-gray-600 mb-3">More colloquial than <code class="font-cairo">لا أحد</code>.</p>
+                    <div class="p-3 rule-bg rounded-lg rtl">
+                        <p class="font-cairo text-lg"><span class="font-bold text-main-blue">محدش</span> جه.</p>
+                        <p class="text-sm text-gray-600 text-left"><span class="font-bold">Maḥaddish</span> geh. (No one came.)</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-4">🗑️❌</div>
+                    <h5 class="text-xl font-bold text-main-blue mb-2">مفيش حاجة (Mafīsh ḥāga) - Nothing</h5>
+                    <p class="text-sm text-gray-600 mb-3">More colloquial than <code class="font-cairo">لا شيء</code>.</p>
+                    <div class="p-3 rule-bg rounded-lg rtl">
+                        <p class="font-cairo text-lg">معايا <span class="font-bold text-main-blue">مفيش حاجة</span>.</p>
+                        <p class="text-sm text-gray-600 text-left">Maʿāya <span class="font-bold">mafīsh ḥāga</span>. (I have nothing.)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cultural-insight" class="mb-8">
+             <div class="card p-8 bg-gradient-to-br from-blue-50 to-cyan-50 border-t-4 border-main-blue">
+                <h3 class="text-2xl font-bold text-center mb-4 font-cairo"><span class="text-yellow-500">🌟</span> لمسة ثقافية (Cultural Insight)</h3>
+                <p class="text-center text-lg max-w-2xl mx-auto mb-6">
+                    Beyond grammatical rules, Egyptian Arabic is rich with idioms that convey strong negation or impossibility. These phrases add color and depth to the language.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-4 bg-white rounded-lg shadow-inner rtl">
+                        <p class="font-cairo text-xl text-center mb-2">عشم إبليس في الجنة</p>
+                        <p class="text-sm text-gray-600 text-center text-left">(ʿasham Iblīs fel ganna)</p>
+                        <p class="text-lg font-bold text-main-blue text-center mt-2">"The devil's hope in heaven."</p>
+                        <p class="text-md text-gray-700 text-center">Meaning: **Never; absolutely impossible.** This idiom is used to express that something will never happen, as it's as impossible as the devil entering heaven.</p>
+                    </div>
+                    <div class="p-4 bg-white rounded-lg shadow-inner rtl">
+                        <p class="font-cairo text-xl text-center mb-2">لما يشوف حلمة ودنه</p>
+                        <p class="text-sm text-gray-600 text-center text-left">(lamma yishūf ḥelmet widnoh)</p>
+                        <p class="text-lg font-bold text-main-blue text-center mt-2">"When he sees his earlobe."</p>
+                        <p class="text-md text-gray-700 text-center">Meaning: **Never; when pigs fly.** This phrase implies an event is so unlikely, it will only happen when someone can see their own earlobe without a mirror – which is impossible.</p>
+                    </div>
+                </div>
+                <p class="text-center text-lg max-w-2xl mx-auto mt-6">
+                    Remember that <strong class="text-main-blue font-cairo text-xl">إن شاء الله (in shāʾ Allāh)</strong>, meaning "God willing," is used with **affirmative** future plans, not with negative statements. It expresses hope and reliance on a higher power for a positive outcome.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 px-4 bg-gray-800 text-gray-400">
+        <p>With these patterns, you're well on your way to negating like a native Egyptian speaker!</p>
+    </footer>
+
+</body>
+</html>

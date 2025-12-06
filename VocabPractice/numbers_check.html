@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الأرقام - Numbers Check</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        
+        .question-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .option-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+        
+        .option-btn:hover {
+            background: #e5e7eb;
+            border-color: #f59e0b;
+        }
+        
+        .option-btn.selected {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+        
+        .option-btn.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+            font-weight: bold;
+        }
+        
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        
+        .fill-blank-input {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            min-width: 250px;
+            text-align: center;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+        
+        .fill-blank-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+        
+        .fill-blank-input.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+        
+        .fill-blank-input.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .match-item {
+            background: #fef3c7;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 2px solid #f59e0b;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .match-item:hover {
+            background: #fde68a;
+            transform: scale(1.02);
+        }
+        
+        .match-item.selected {
+            background: #fbbf24;
+            border-color: #d97706;
+        }
+        
+        .match-item.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-amber-50">
+
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-calculator text-3xl"></i>
+                    <div class="text-right">
+                        <h1 class="text-xl md:text-2xl font-bold">اختبار الأرقام</h1>
+                        <p class="text-sm opacity-90 font-english">Numbers Check</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="py-8 md:py-12 text-center">
+        <div class="container mx-auto px-6">
+            <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-4">
+                <i class="fas fa-sort-numeric-up text-5xl text-orange-600"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-3">اختبار الأرقام العربية</h1>
+            <p class="text-xl text-gray-700 mb-2">Arabic Numbers Practice & Assessment</p>
+            <div class="mt-4 inline-block bg-orange-100 text-orange-800 px-6 py-2 rounded-full text-sm font-semibold">
+                <i class="fas fa-graduation-cap ml-1"></i> All Levels - جميع المستويات
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pb-12 max-w-5xl">
+
+        <!-- Section 1: Reading Numbers -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-book-reader text-orange-600 ml-2"></i>
+                القسم الأول: اختر القراءة الصحيحة للرقم
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١. وُلِدَ طفلٌ في المستشفى عام ١٩٩١. كيف تُقرأ السنة؟</p>
+                <button onclick="selectMCQ(this, 1)" data-question="1" data-correct="true" class="option-btn mcq-option">أ. ألفٌ وتسعمئةٌ وواحدٌ وتسعون</button>
+                <button onclick="selectMCQ(this, 1)" data-question="1" data-correct="false" class="option-btn mcq-option">ب. ألفٌ وتسعمئةٌ وتسعون وواحد</button>
+                <button onclick="selectMCQ(this, 1)" data-question="1" data-correct="false" class="option-btn mcq-option">ت. ألفٌ وتسعمئةٌ وتسعون</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٢. اشترى كريم درّاجةً بسعر ٢٣٤ دينارًا. كيف تُقرأ؟</p>
+                <button onclick="selectMCQ(this, 2)" data-question="2" data-correct="false" class="option-btn mcq-option">أ. مئتان وأربعةٌ وثلاثةٌ وثلاثون</button>
+                <button onclick="selectMCQ(this, 2)" data-question="2" data-correct="false" class="option-btn mcq-option">ب. مئتان وثلاثة وأربعون</button>
+                <button onclick="selectMCQ(this, 2)" data-question="2" data-correct="true" class="option-btn mcq-option">ت. مئتان وأربعةٌ وثلاثون</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٣. مشى سامي ١٧ دقيقة للوصول إلى المدرسة. ما القراءة الصحيحة؟</p>
+                <button onclick="selectMCQ(this, 3)" data-question="3" data-correct="false" class="option-btn mcq-option">أ. ستة عشر</button>
+                <button onclick="selectMCQ(this, 3)" data-question="3" data-correct="true" class="option-btn mcq-option">ب. سبعة عشر</button>
+                <button onclick="selectMCQ(this, 3)" data-question="3" data-correct="false" class="option-btn mcq-option">ت. ثمانية عشر</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٤. حضر في المسرح ٤٨ طالبًا. ما القراءة؟</p>
+                <button onclick="selectMCQ(this, 4)" data-question="4" data-correct="false" class="option-btn mcq-option">أ. ثمانيةٌ وأربعون ومئة</button>
+                <button onclick="selectMCQ(this, 4)" data-question="4" data-correct="true" class="option-btn mcq-option">ب. ثمانيةٌ وأربعون</button>
+                <button onclick="selectMCQ(this, 4)" data-question="4" data-correct="false" class="option-btn mcq-option">ت. ثمانيةٌ وثلاثون</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٥. بدأ الاجتماع في الساعة ١٣:٠٠. كيف تُقرأ؟</p>
+                <button onclick="selectMCQ(this, 5)" data-question="5" data-correct="true" class="option-btn mcq-option">أ. الثالثة عشرة</button>
+                <button onclick="selectMCQ(this, 5)" data-question="5" data-correct="false" class="option-btn mcq-option">ب. الحادية عشرة واثنى عشر دقيقة</button>
+                <button onclick="selectMCQ(this, 5)" data-question="5" data-correct="false" class="option-btn mcq-option">ت. الثانية عشرة وثلاثة عشر دقيقة</button>
+            </div>
+
+            <button onclick="checkMCQ()" class="bg-gradient-to-r from-orange-500 to-amber-600 text-white px-6 py-3 rounded-lg hover:from-orange-600 hover:to-amber-700 transition-all shadow-lg">
+                <i class="fas fa-check ml-2"></i>تحقق من الإجابات
+            </button>
+        </div>
+
+        <!-- Section 2: Convert Numbers -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-exchange-alt text-blue-600 ml-2"></i>
+                القسم الثاني: اكتب الرقم بالكلمات أو بالعكس
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    ١. سافر والدي إلى تركيا سنة 
+                    <input type="text" id="convert1" class="fill-blank-input" data-answer="1983" placeholder="اكتب بالأرقام">
+                </p>
+                <p class="text-sm text-gray-600">(اكتب: ألف وتسعمئة وثلاثة وثمانون بالأرقام)</p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    ٢. قرأتُ كتابًا مكوّنًا من 
+                    <input type="text" id="convert2" class="fill-blank-input" data-answer="مئتان وسبعة وتسعون" placeholder="اكتب بالكلمات">
+                    صفحة
+                </p>
+                <p class="text-sm text-gray-600">(اكتب ٢٩٧ بالكلمات)</p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    ٣. استغرق الفيلم 
+                    <input type="text" id="convert3" class="fill-blank-input" data-answer="45" placeholder="اكتب بالأرقام">
+                    دقيقة
+                </p>
+                <p class="text-sm text-gray-600">(اكتب: خمسة وأربعون رقمًا)</p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    ٤. افتُتِح المركز الثقافي سنة 
+                    <input type="text" id="convert4" class="fill-blank-input" data-answer="ألفان وثمانية" placeholder="اكتب بالكلمات">
+                </p>
+                <p class="text-sm text-gray-600">(اكتب ٢٠٠٨ بالكلمات)</p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    ٥. عملتُ في الشركة لمدة 
+                    <input type="text" id="convert5" class="fill-blank-input" data-answer="16" placeholder="اكتب بالأرقام">
+                    يومًا
+                </p>
+                <p class="text-sm text-gray-600">(اكتب: ستة عشر بالأرقام)</p>
+            </div>
+
+            <button onclick="checkConvert()" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg">
+                <i class="fas fa-pen ml-2"></i>تحقق من التحويل
+            </button>
+        </div>
+
+        <!-- Section 3: Matching -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-link text-green-600 ml-2"></i>
+                القسم الثالث: طابق الأرقام بالكلمات
+            </h2>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <p class="text-gray-700 mb-4 font-semibold">
+                    <i class="fas fa-info-circle text-orange-600 ml-2"></i>
+                    انقر على الرقم ثم انقر على الكلمات المطابقة
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-orange-700">الأرقام</h3>
+                        <div class="space-y-2" id="numbers-list">
+                            <div class="match-item" data-value="713" onclick="selectMatch(this, 'number')">٧١٣</div>
+                            <div class="match-item" data-value="52" onclick="selectMatch(this, 'number')">٥٢</div>
+                            <div class="match-item" data-value="1349" onclick="selectMatch(this, 'number')">١٣٤٩</div>
+                            <div class="match-item" data-value="31" onclick="selectMatch(this, 'number')">٣١</div>
+                            <div class="match-item" data-value="860" onclick="selectMatch(this, 'number')">٨٦٠</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-green-700">الكلمات</h3>
+                        <div class="space-y-2" id="words-list">
+                            <div class="match-item" data-value="31" onclick="selectMatch(this, 'word')">واحد وثلاثون</div>
+                            <div class="match-item" data-value="860" onclick="selectMatch(this, 'word')">ثمان مئة وستون</div>
+                            <div class="match-item" data-value="713" onclick="selectMatch(this, 'word')">سبعمئة وثلاثة عشر</div>
+                            <div class="match-item" data-value="1349" onclick="selectMatch(this, 'word')">ألف وثلاث مئة وتسعة وأربعين</div>
+                            <div class="match-item" data-value="52" onclick="selectMatch(this, 'word')">اثنين وخمسين</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <button onclick="checkMatching()" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition-all shadow-lg">
+                        <i class="fas fa-check-double ml-2"></i>تحقق من المطابقة
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Historical Events -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-history text-purple-600 ml-2"></i>
+                القسم الرابع: أحداث تاريخية عالمية
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    <i class="fas fa-rocket text-blue-500 ml-2"></i>
+                    ١. أُطلقت أول رحلة إلى القمر سنة ١٩٦٩.
+                </p>
+                <p class="text-gray-700 mb-2">اكتب السنة بالكلمات:</p>
+                <input type="text" id="history1" class="fill-blank-input w-full" data-answer="ألف وتسعمئة وتسعة وستون" placeholder="اكتب إجابتك">
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    <i class="fas fa-flag text-orange-500 ml-2"></i>
+                    ٢. استقلال الهند كان عام ألف وتسعمئة وسبعة وأربعون.
+                </p>
+                <p class="text-gray-700 mb-2">اكتب السنة بالأرقام:</p>
+                <input type="text" id="history2" class="fill-blank-input w-full" data-answer="1947" placeholder="اكتب إجابتك">
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    <i class="fas fa-building text-gray-500 ml-2"></i>
+                    ٣. بُني برج خليفة سنة ٢٠١٠.
+                </p>
+                <p class="text-gray-700 mb-2">اكتب السنة بالكلمات:</p>
+                <input type="text" id="history3" class="fill-blank-input w-full" data-answer="ألفان وعشرة" placeholder="اكتب إجابتك">
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    <i class="fas fa-ship text-blue-500 ml-2"></i>
+                    ٤. افتُتِحت قناة السويس الجديدة سنة ألفان وخمسة عشر.
+                </p>
+                <p class="text-gray-700 mb-2">اكتب السنة بالأرقام:</p>
+                <input type="text" id="history4" class="fill-blank-input w-full" data-answer="2015" placeholder="اكتب إجابتك">
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    <i class="fas fa-futbol text-green-500 ml-2"></i>
+                    ٥. استضافت روسيا كأس العالم سنة ٢٠١٨.
+                </p>
+                <p class="text-gray-700 mb-2">اكتب السنة بالكلمات:</p>
+                <input type="text" id="history5" class="fill-blank-input w-full" data-answer="ألفان وثمانية عشر" placeholder="اكتب إجابتك">
+            </div>
+
+            <button onclick="checkHistory()" class="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all shadow-lg">
+                <i class="fas fa-clock ml-2"></i>تحقق من التاريخ
+            </button>
+        </div>
+
+        <!-- Overall Score Display -->
+        <div id="overallScore" class="hidden bg-gradient-to-r from-green-400 to-emerald-500 text-white p-6 rounded-xl text-center shadow-lg">
+            <i class="fas fa-trophy text-4xl mb-2"></i>
+            <p class="text-2xl font-bold" id="overallScoreText"></p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 md:py-8 bg-gradient-to-r from-orange-500 to-amber-600 text-white text-center">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <a href="../index.html" class="hover:opacity-80 transition">
+                    <i class="fas fa-brain text-xl md:text-2xl mr-2"></i>
+                    <span class="font-semibold text-sm md:text-base">Context Arabic</span>
+                </a>
+                <p class="text-xs md:text-sm opacity-90">&copy; 2025 - Learn Arabic in Context</p>
+                <a href="index.html" class="hover:opacity-80 transition">
+                    <span class="font-semibold text-sm md:text-base">Back to Vocab Practice</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // MCQ Selection
+        const mcqAnswers = {};
+        let selectedNumber = null;
+        let selectedWord = null;
+        const matches = {};
+
+        function selectMCQ(btn, qnum) {
+            document.querySelectorAll(`[data-question="${qnum}"].mcq-option`).forEach(b => {
+                b.classList.remove('selected');
+            });
+            btn.classList.add('selected');
+            mcqAnswers[qnum] = (btn.dataset.correct === 'true');
+        }
+
+        function checkMCQ() {
+            let score = 0;
+            const total = 5;
+            
+            for (let i = 1; i <= total; i++) {
+                const buttons = document.querySelectorAll(`[data-question="${i}"].mcq-option`);
+                buttons.forEach(btn => {
+                    btn.classList.remove('correct', 'incorrect');
+                    const isCorrect = (btn.dataset.correct === 'true');
+                    if (isCorrect) {
+                        btn.classList.add('correct');
+                    } else if (btn.classList.contains('selected')) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+                if (mcqAnswers[i] === true) score++;
+            }
+            
+            alert(`القسم الأول: ${score} من ${total}`);
+        }
+
+        function checkConvert() {
+            const answers = [
+                { id: 'convert1', answer: '1983' },
+                { id: 'convert2', answer: 'مئتان وسبعة وتسعون' },
+                { id: 'convert3', answer: '45' },
+                { id: 'convert4', answer: 'ألفان وثمانية' },
+                { id: 'convert5', answer: '16' }
+            ];
+            
+            let score = 0;
+            answers.forEach(item => {
+                const input = document.getElementById(item.id);
+                const userAnswer = input.value.trim();
+                input.classList.remove('correct', 'incorrect');
+                
+                if (userAnswer === item.answer) {
+                    input.classList.add('correct');
+                    score++;
+                } else if (userAnswer !== '') {
+                    input.classList.add('incorrect');
+                }
+            });
+            
+            alert(`القسم الثاني: ${score} من ${answers.length}`);
+        }
+
+        function selectMatch(element, type) {
+            if (type === 'number') {
+                document.querySelectorAll('#numbers-list .match-item').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                element.classList.add('selected');
+                selectedNumber = element.dataset.value;
+            } else {
+                document.querySelectorAll('#words-list .match-item').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                element.classList.add('selected');
+                selectedWord = element.dataset.value;
+            }
+            
+            if (selectedNumber && selectedWord) {
+                matches[selectedNumber] = selectedWord;
+                selectedNumber = null;
+                selectedWord = null;
+                document.querySelectorAll('.match-item').forEach(el => {
+                    el.classList.remove('selected');
+                });
+            }
+        }
+
+        function checkMatching() {
+            let score = 0;
+            const correctMatches = {
+                '713': '713',
+                '52': '52',
+                '1349': '1349',
+                '31': '31',
+                '860': '860'
+            };
+            
+            Object.keys(correctMatches).forEach(key => {
+                if (matches[key] === correctMatches[key]) {
+                    score++;
+                    document.querySelectorAll(`[data-value="${key}"]`).forEach(el => {
+                        el.classList.add('correct');
+                    });
+                }
+            });
+            
+            alert(`القسم الثالث: ${score} من 5`);
+        }
+
+        function checkHistory() {
+            const answers = [
+                { id: 'history1', answer: 'ألف وتسعمئة وتسعة وستون' },
+                { id: 'history2', answer: '1947' },
+                { id: 'history3', answer: 'ألفان وعشرة' },
+                { id: 'history4', answer: '2015' },
+                { id: 'history5', answer: 'ألفان وثمانية عشر' }
+            ];
+            
+            let score = 0;
+            answers.forEach(item => {
+                const input = document.getElementById(item.id);
+                const userAnswer = input.value.trim();
+                input.classList.remove('correct', 'incorrect');
+                
+                if (userAnswer === item.answer) {
+                    input.classList.add('correct');
+                    score++;
+                } else if (userAnswer !== '') {
+                    input.classList.add('incorrect');
+                }
+            });
+            
+            alert(`القسم الرابع: ${score} من ${answers.length}`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كل يوم في مشكلة - Context Arabic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: '"'Cairo'"', sans-serif; }
+        .font-english { font-family: '"'Lato'"', sans-serif; }
+        .audio-player {
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            border-radius: 1rem;
+            padding: 2rem;
+            color: white;
+        }
+        .question-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .option-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+        .option-btn:hover {
+            background: #e5e7eb;
+            border-color: #22c55e;
+        }
+        .option-btn.selected {
+            background: #dbeafe;
+            border-color: #3b82f6;
+        }
+        .option-btn.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+            font-weight: bold;
+        }
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        .score-display {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-green-50">
+    
+    <!-- Navigation -->
+    <nav class="text-white shadow-lg sticky top-0 z-50" style="background: linear-gradient(135deg, #22c55e, #10b981);">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-exclamation-triangle text-3xl"></i>
+                    <div class="text-right">
+                        <h1 class="text-xl md:text-2xl font-bold">كل يوم في مشكلة</h1>
+                        <p class="text-sm opacity-90 font-english">Daily Problems</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="py-8 md:py-12 text-center">
+        <div class="container mx-auto px-6">
+            <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-4">
+                <i class="fas fa-exclamation-triangle text-5xl text-green-600"></i>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">كل يوم في مشكلة</h1>
+            <p class="text-lg text-gray-600 font-english mb-2">Daily Problems</p>
+            <div class="inline-block bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-semibold">
+                <i class="fas fa-fire ml-1"></i> Advanced - متقدم
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pb-12 max-w-4xl">
+
+        <!-- Audio Player -->
+        <div class="audio-player mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <i class="fas fa-headphones text-3xl mb-2"></i>
+                    <p class="text-lg">استمع إلى التسجيل الصوتي</p>
+                    <p class="text-sm opacity-90 font-english">Listen to the audio recording</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-2xl font-bold" id="playCount">0</div>
+                    <div class="text-sm opacity-90">مرات الاستماع</div>
+                </div>
+            </div>
+            <audio id="audioPlayer" controls class="w-full">
+                <source src="كل يوم في مشكلة.mp3" type="audio/mpeg">
+                متصفحك لا يدعم تشغيل الملفات الصوتية
+            </audio>
+        </div>
+
+        <!-- Instructions -->
+        <div class="bg-blue-50 border-r-4 border-blue-500 p-4 rounded-lg mb-8">
+            <h2 class="text-xl font-bold text-blue-900 mb-2">
+                <i class="fas fa-info-circle ml-2"></i>تعليمات
+            </h2>
+            <ul class="list-disc list-inside text-blue-800 space-y-1">
+                <li>استمع إلى التسجيل الصوتي بتركيز</li>
+                <li>يمكنك إعادة الاستماع أكثر من مرة</li>
+                <li>أجب على الأسئلة بعد الاستماع</li>
+                <li>اضغط على "تحقق من الإجابات" لمعرفة نتيجتك</li>
+            </ul>
+        </div>
+
+        <!-- MCQ Section -->
+        <div id="mcq-section" class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-list-ul text-blue-600 ml-2"></i>
+                أسئلة اختيار من متعدد
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١. ليه بيوصل الشغل متأخر كل يوم؟</p>
+                <button onclick="selectMCQ(this, 101)" data-question="101" data-correct="false" class="option-btn mcq-option">أ. لأنه بينام كتير</button>
+                <button onclick="selectMCQ(this, 101)" data-question="101" data-correct="false" class="option-btn mcq-option">ب. لأنه عنده مشاكل في الشغل</button>
+                <button onclick="selectMCQ(this, 101)" data-question="101" data-correct="true" class="option-btn mcq-option">ج. بسبب الزحمة</button>
+                <button onclick="selectMCQ(this, 101)" data-question="101" data-correct="false" class="option-btn mcq-option">د. لأنه ما يحب الشغل</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٢. ليه المدير طلب منه إنه يسهر لحد الساعة 8؟</p>
+                <button onclick="selectMCQ(this, 102)" data-question="102" data-correct="false" class="option-btn mcq-option">أ. عشان في تدريب جديد</button>
+                <button onclick="selectMCQ(this, 102)" data-question="102" data-correct="false" class="option-btn mcq-option">ب. عشان زميله غايب</button>
+                <button onclick="selectMCQ(this, 102)" data-question="102" data-correct="true" class="option-btn mcq-option">ج. عشان في شغل كتير اليومين دول</button>
+                <button onclick="selectMCQ(this, 102)" data-question="102" data-correct="false" class="option-btn mcq-option">د. عشان الشركة فتحت فرع جديد</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٣. ليه زعلت زميلته في الشغل؟</p>
+                <button onclick="selectMCQ(this, 103)" data-question="103" data-correct="false" class="option-btn mcq-option">أ. لأنه رفض يساعدها</button>
+                <button onclick="selectMCQ(this, 103)" data-question="103" data-correct="true" class="option-btn mcq-option">ب. لأنه قال لها لازم تاخدي كورس كمبيوتر</button>
+                <button onclick="selectMCQ(this, 103)" data-question="103" data-correct="false" class="option-btn mcq-option">ج. لأنها غلطت في الشغل</button>
+                <button onclick="selectMCQ(this, 103)" data-question="103" data-correct="false" class="option-btn mcq-option">د. لأنها اتأخرت</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٤. ليه راح يقابل البنت في الكافيه؟</p>
+                <button onclick="selectMCQ(this, 104)" data-question="104" data-correct="false" class="option-btn mcq-option">أ. لأنه كان عايز يتجوز</button>
+                <button onclick="selectMCQ(this, 104)" data-question="104" data-correct="false" class="option-btn mcq-option">ب. لأنه اتفق معاها قبل كده</button>
+                <button onclick="selectMCQ(this, 104)" data-question="104" data-correct="true" class="option-btn mcq-option">ج. عشان أمه كانت عايزة كده</button>
+                <button onclick="selectMCQ(this, 104)" data-question="104" data-correct="false" class="option-btn mcq-option">د. لأنه يعرفها كويس</button>
+            </div>
+
+        </div>
+
+        <!-- True/False Section -->
+        <div id="tf-section" class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-check-circle text-green-600 ml-2"></i>
+                أسئلة صح أو خطأ
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١. أول أسبوع في الشغل كان ماشي كويس.</p>
+                <div class="flex gap-2">
+                    <button onclick="selectTF(this, 1, '"'true'"')" data-question="1" data-answer="true" class="option-btn tf-option flex-1">
+                        <i class="fas fa-check ml-2"></i>صح
+                    </button>
+                    <button onclick="selectTF(this, 1, '"'false'"')" data-question="1" data-answer="false" class="option-btn tf-option flex-1">
+                        <i class="fas fa-times ml-2"></i>خطأ
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٢. هو بيحب يسهر في الشغل لحد الساعة 8.</p>
+                <div class="flex gap-2">
+                    <button onclick="selectTF(this, 2, '"'true'"')" data-question="2" data-answer="true" class="option-btn tf-option flex-1">
+                        <i class="fas fa-check ml-2"></i>صح
+                    </button>
+                    <button onclick="selectTF(this, 2, '"'false'"')" data-question="2" data-answer="false" class="option-btn tf-option flex-1">
+                        <i class="fas fa-times ml-2"></i>خطأ
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٣. زميلته كانت بتطلب مساعدته كل نص ساعة.</p>
+                <div class="flex gap-2">
+                    <button onclick="selectTF(this, 3, '"'true'"')" data-question="3" data-answer="true" class="option-btn tf-option flex-1">
+                        <i class="fas fa-check ml-2"></i>صح
+                    </button>
+                    <button onclick="selectTF(this, 3, '"'false'"')" data-question="3" data-answer="false" class="option-btn tf-option flex-1">
+                        <i class="fas fa-times ml-2"></i>خطأ
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٤. هو كان مبسوط إنه يقابل البنت اللي أمه رشحتها.</p>
+                <div class="flex gap-2">
+                    <button onclick="selectTF(this, 4, '"'true'"')" data-question="4" data-answer="true" class="option-btn tf-option flex-1">
+                        <i class="fas fa-check ml-2"></i>صح
+                    </button>
+                    <button onclick="selectTF(this, 4, '"'false'"')" data-question="4" data-answer="false" class="option-btn tf-option flex-1">
+                        <i class="fas fa-times ml-2"></i>خطأ
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٥. البنت وصلت الكافيه بعد نص ساعة.</p>
+                <div class="flex gap-2">
+                    <button onclick="selectTF(this, 5, '"'true'"')" data-question="5" data-answer="true" class="option-btn tf-option flex-1">
+                        <i class="fas fa-check ml-2"></i>صح
+                    </button>
+                    <button onclick="selectTF(this, 5, '"'false'"')" data-question="5" data-answer="false" class="option-btn tf-option flex-1">
+                        <i class="fas fa-times ml-2"></i>خطأ
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Submit Button -->
+        <button onclick="checkAnswers()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xl font-bold py-4 rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg">
+            <i class="fas fa-check-double ml-2"></i>تحقق من الإجابات
+        </button>
+
+        <!-- Score Display -->
+        <div id="scoreDisplay" class="hidden score-display">
+            <i class="fas fa-trophy ml-2"></i>
+            <span id="scoreText"></span>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 md:py-8 text-white text-center" style="background: linear-gradient(135deg, #22c55e, #10b981);">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <a href="../index.html" class="hover:opacity-80 transition">
+                    <i class="fas fa-brain text-xl md:text-2xl mr-2"></i>
+                    <span class="font-semibold text-sm md:text-base">Context Arabic</span>
+                </a>
+                <p class="text-xs md:text-sm opacity-90">&copy; 2025 - Learn Arabic in Context</p>
+                <a href="index.html" class="hover:opacity-80 transition">
+                    <span class="font-semibold text-sm md:text-base">Back to Listening</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Track play count
+        let playCount = 0;
+        const audioPlayer = document.getElementById('"'audioPlayer'"');
+        const playCountDisplay = document.getElementById('"'playCount'"');
+        
+        audioPlayer.addEventListener('"'play'"', () => {
+            playCount++;
+            playCountDisplay.textContent = playCount;
+        });
+
+        // Store answers
+        const tfAnswers = {};
+        const mcqAnswers = {};
+        
+        // Correct answers for T/F
+        const tfCorrect = {
+            1: true,   // صح
+            2: false,  // خطأ
+            3: true,   // صح
+            4: false,  // خطأ
+            5: false   // خطأ
+        };
+        
+        // MCQ correct answers stored in data-correct attribute
+        const mcqCorrect = {
+            101: true,
+            102: true,
+            103: true,
+            104: true
+        };
+
+        function selectTF(btn, qnum, answer) {
+            // Deselect other buttons in this question
+            document.querySelectorAll(`[data-question="${qnum}"].tf-option`).forEach(b => {
+                b.classList.remove('"'selected'"');
+            });
+            
+            btn.classList.add('"'selected'"');
+            tfAnswers[qnum] = (answer === '"'true'"');
+        }
+
+        function selectMCQ(btn, qnum) {
+            // Deselect other buttons in this question
+            document.querySelectorAll(`[data-question="${qnum}"].mcq-option`).forEach(b => {
+                b.classList.remove('"'selected'"');
+            });
+            
+            btn.classList.add('"'selected'"');
+            mcqAnswers[qnum] = (btn.dataset.correct === '"'true'"');
+        }
+
+        function checkAnswers() {
+            let tfScore = 0;
+            let mcqScore = 0;
+            
+            // Check T/F
+            Object.keys(tfCorrect).forEach(qnum => {
+                const buttons = document.querySelectorAll(`[data-question="${qnum}"].tf-option`);
+                const userAnswer = tfAnswers[qnum];
+                const correct = tfCorrect[qnum];
+                
+                buttons.forEach(btn => {
+                    btn.classList.remove('"'correct'"', '"'incorrect'"');
+                    const btnAnswer = (btn.dataset.answer === '"'true'"');
+                    
+                    if (btnAnswer === correct) {
+                        btn.classList.add('"'correct'"');
+                    } else if (btn.classList.contains('"'selected'"')) {
+                        btn.classList.add('"'incorrect'"');
+                    }
+                });
+                
+                if (userAnswer === correct) {
+                    tfScore++;
+                }
+            });
+            
+            // Check MCQ
+            Object.keys(mcqCorrect).forEach(qnum => {
+                const buttons = document.querySelectorAll(`[data-question="${qnum}"].mcq-option`);
+                const userAnswer = mcqAnswers[qnum];
+                
+                buttons.forEach(btn => {
+                    btn.classList.remove('"'correct'"', '"'incorrect'"');
+                    const isCorrect = (btn.dataset.correct === '"'true'"');
+                    
+                    if (isCorrect) {
+                        btn.classList.add('"'correct'"');
+                    } else if (btn.classList.contains('"'selected'"') && !isCorrect) {
+                        btn.classList.add('"'incorrect'"');
+                    }
+                });
+                
+                if (userAnswer === true) {
+                    mcqScore++;
+                }
+            });
+            
+            // Display score
+            const totalScore = tfScore + mcqScore;
+            const totalQuestions = Object.keys(tfCorrect).length + Object.keys(mcqCorrect).length;
+            const percentage = Math.round((totalScore / totalQuestions) * 100);
+            
+            const scoreDisplay = document.getElementById('"'scoreDisplay'"');
+            const scoreText = document.getElementById('"'scoreText'"');
+            
+            scoreText.textContent = `نتيجتك: ${totalScore} من ${totalQuestions} (${percentage}%)`;
+            scoreDisplay.classList.remove('"'hidden'"');
+            
+            // Scroll to score
+            scoreDisplay.scrollIntoView({ behavior: '"'smooth'"', block: '"'center'"' });
+        }
+    </script>
+</body>
+</html>

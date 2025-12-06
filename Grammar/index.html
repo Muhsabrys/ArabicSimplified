@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar - Context Arabic Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif'],
+                        'lato': ['Lato', 'sans-serif'],
+                    },
+                    colors: {
+                        'grammar-blue': '#0284c7',
+                        'grammar-cyan': '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        .font-arabic {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .grammar-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #06b6d4;
+        }
+        
+        .grammar-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #0284c7, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-cyan-50 min-h-screen">
+    
+    <div class="container mx-auto px-6 py-12">
+        <!-- Header -->
+        <div class="mb-12">
+            <a href="../index.html" class="inline-flex items-center text-cyan-600 hover:text-cyan-700 mb-6 transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i>
+                <span class="font-semibold">Back to Context Hub</span>
+            </a>
+            
+            <div class="flex items-center space-x-4 mb-4">
+                <div class="text-6xl text-cyan-600">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+                <div>
+                    <h1 class="text-5xl font-bold text-gray-900">Grammar</h1>
+                    <p class="font-arabic text-2xl text-blue-600 mt-2" dir="rtl">النحو والصرف</p>
+                </div>
+            </div>
+            <p class="text-xl text-gray-600 max-w-3xl">
+                Master Arabic structure through systematic study of grammar rules, patterns, and real-world usage
+            </p>
+        </div>
+
+        <!-- Grammar Topics Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Verb Tenses & Moods -->
+            <div class="bg-white rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-clock text-cyan-600 mr-3"></i>
+                    Verb Tenses & Moods
+                </h2>
+                <div class="space-y-2">
+                    <a href="futureEG.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Future Tense</div>
+                        <div class="text-sm text-gray-600">Egyptian Arabic future forms</div>
+                    </a>
+                    <a href="PstEgy.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Past Tense</div>
+                        <div class="text-sm text-gray-600">Egyptian Arabic past forms</div>
+                    </a>
+                    <a href="Subjunctive.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Subjunctive (المنصوب)</div>
+                        <div class="text-sm text-gray-600">Present subjunctive mood</div>
+                    </a>
+                    <a href="BeforeWantAfter.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Before, Want, After</div>
+                        <div class="text-sm text-gray-600">Tense expressions</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Verb Patterns & Roots -->
+            <div class="bg-white rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-sitemap text-cyan-600 mr-3"></i>
+                    Verb Patterns & Roots
+                </h2>
+                <div class="space-y-2">
+                    <a href="Awzan67.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Awzan (Forms 6 & 7)</div>
+                        <div class="text-sm text-gray-600">Verb pattern structures</div>
+                    </a>
+                    <a href="RootsandMasdar.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Roots & Masdar</div>
+                        <div class="text-sm text-gray-600">Root system & infinitives</div>
+                    </a>
+                    <a href="masdar.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Masdar (المصدر)</div>
+                        <div class="text-sm text-gray-600">The Arabic infinitive</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Cases & Endings -->
+            <div class="bg-white rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-i-cursor text-cyan-600 mr-3"></i>
+                    Cases & Endings
+                </h2>
+                <div class="space-y-2">
+                    <a href="CanvasARIU.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Canvas ARIU</div>
+                        <div class="text-sm text-gray-600">Case ending visualization</div>
+                    </a>
+                    <a href="accusative.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Accusative Case</div>
+                        <div class="text-sm text-gray-600">المنصوب - Object marking</div>
+                    </a>
+                    <a href="dual.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Dual Forms</div>
+                        <div class="text-sm text-gray-600">المثنى - Two of something</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Conjunctions & Particles -->
+            <div class="bg-white rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-link text-cyan-600 mr-3"></i>
+                    Conjunctions & Particles
+                </h2>
+                <div class="space-y-2">
+                    <a href="ConjunctionsEG.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Conjunctions</div>
+                        <div class="text-sm text-gray-600">Egyptian Arabic connectors</div>
+                    </a>
+                    <a href="because.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Because (لأن)</div>
+                        <div class="text-sm text-gray-600">Expressing causality</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Conditionals & Negation -->
+            <div class="bg-white rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-question-circle text-cyan-600 mr-3"></i>
+                    Conditionals & Negation
+                </h2>
+                <div class="space-y-2">
+                    <a href="if.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">If Statements</div>
+                        <div class="text-sm text-gray-600">Conditional sentences</div>
+                    </a>
+                    <a href="negationEG.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Negation</div>
+                        <div class="text-sm text-gray-600">Egyptian Arabic negation</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Advanced Topics -->
+            <div class="bg-white rounded-xl p-6 shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-graduation-cap text-cyan-600 mr-3"></i>
+                    Advanced Topics
+                </h2>
+                <div class="space-y-2">
+                    <a href="AdjectiveClause.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Adjective Clauses</div>
+                        <div class="text-sm text-gray-600">Relative clauses & descriptions</div>
+                    </a>
+                    <a href="compare.html" class="grammar-card block bg-cyan-50 p-3 rounded-lg hover:bg-cyan-100">
+                        <div class="font-semibold text-gray-800">Comparatives</div>
+                        <div class="text-sm text-gray-600">Comparing & contrasting</div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Learning Path Guide -->
+        <div class="mt-12 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-2xl p-8">
+            <h2 class="text-3xl font-bold mb-6">📚 Suggested Learning Path</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-3">🟢 Beginner</h3>
+                    <ul class="space-y-2 text-cyan-50">
+                        <li>• Verb Tenses (Past, Future)</li>
+                        <li>• Basic Conjunctions</li>
+                        <li>• Negation</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3">🟡 Intermediate</h3>
+                    <ul class="space-y-2 text-cyan-50">
+                        <li>• Dual Forms</li>
+                        <li>• Conditional Sentences</li>
+                        <li>• Masdar & Roots</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3">🔴 Advanced</h3>
+                    <ul class="space-y-2 text-cyan-50">
+                        <li>• Case Endings (ARIU)</li>
+                        <li>• Verb Patterns (Awzan)</li>
+                        <li>• Adjective Clauses</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

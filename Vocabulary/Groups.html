@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Group Creator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #334155;
+        }
+        .container {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .container {
+                max-width: 600px;
+            }
+        }
+        #results-container {
+            min-height: 200px;
+        }
+        .group-card {
+            background-color: #ffffff;
+            border-left: 4px solid #475569;
+            padding: 1.5rem;
+        }
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #10b981;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+        .message-box.error {
+            background-color: #dc2626;
+        }
+        input[type="radio"]:checked + label {
+            background-color: #475569;
+            color: white;
+            border-color: #475569;
+        }
+        /* Custom subtle hover effect for buttons and cards */
+        .hover-lift:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-slate-100 p-4">
+
+    <div id="message-box" class="message-box"></div>
+
+    <div class="container bg-white rounded-2xl shadow-xl p-6 sm:p-8 space-y-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-center text-slate-800 flex items-center justify-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 sm:w-10 sm:h-10 text-slate-600" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14.2c-2.42 0-4.75-.78-6.6-2.18.05-.72 1.35-1.74 4.54-2.83 2.16-1.12 3.73-2.61 4.79-4.22.42-.64.7-1.35.83-2.1l.14-.66c.15.52.41 1.01.78 1.48 1.46 1.83 3.63 3.12 6.07 3.63-2.67 2.22-6.19 3.57-9.98 3.57zM12 4c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"></path>
+            </svg>
+            Group Creator
+        </h1>
+        <p class="text-center text-slate-500 text-base">Enter a list of names, then choose your group size. Each name should be on a new line.</p>
+        
+        <textarea id="name-list" class="w-full h-40 p-4 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 transition duration-200 resize-none text-slate-700" placeholder="e.g.,
+Jane Smith
+John Doe
+Emily White
+David Brown"></textarea>
+        
+        <div class="space-y-4">
+            <h2 class="text-xl font-semibold text-slate-700">Choose Group Size Option:</h2>
+            <div id="options" class="flex flex-wrap gap-3 justify-center">
+                <!-- Radio buttons will be dynamically added here -->
+            </div>
+            <div id="custom-option" class="flex items-center gap-2">
+                <input type="radio" id="custom-size-radio" name="group-option" class="hidden">
+                <label for="custom-size-radio" class="cursor-pointer flex-grow text-center py-2 px-4 border border-slate-300 rounded-full transition duration-200 hover:bg-slate-200 text-slate-700 font-semibold">
+                    Custom Size
+                </label>
+                <input type="number" id="custom-size-input" class="w-20 p-2 border border-slate-300 rounded-full text-center focus:outline-none focus:ring-2 focus:ring-slate-500" placeholder="e.g., 5" min="2" disabled>
+            </div>
+        </div>
+        
+        <button id="create-groups" class="w-full bg-slate-700 hover:bg-slate-800 text-white font-bold py-3 rounded-full shadow-lg transition duration-300 hover-lift">
+            Create Groups
+        </button>
+        
+        <div id="results-container" class="space-y-4 p-4 rounded-lg bg-slate-50 border border-slate-200 transition-all duration-300">
+            <h2 class="text-center text-xl font-bold text-slate-700 mb-4">Results will appear here...</h2>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nameListTextarea = document.getElementById('name-list');
+            const optionsContainer = document.getElementById('options');
+            const createButton = document.getElementById('create-groups');
+            const resultsContainer = document.getElementById('results-container');
+            const customSizeInput = document.getElementById('custom-size-input');
+            const customSizeRadio = document.getElementById('custom-size-radio');
+            const messageBox = document.getElementById('message-box');
+
+            function showMessage(text, isError = false) {
+                messageBox.textContent = text;
+                messageBox.className = isError ? 'message-box error' : 'message-box';
+                messageBox.style.display = 'block';
+                setTimeout(() => {
+                    messageBox.style.display = 'none';
+                }, 3000);
+            }
+
+            function updateOptions() {
+                const names = nameListTextarea.value.split('\n').filter(name => name.trim() !== '');
+                const nameCount = names.length;
+                optionsContainer.innerHTML = '';
+                
+                const commonSizes = [2, 3, 4, 5];
+                commonSizes.forEach(size => {
+                    if (size <= nameCount) {
+                        const radioInput = document.createElement('input');
+                        radioInput.type = 'radio';
+                        radioInput.id = `group-size-${size}`;
+                        radioInput.name = 'group-option';
+                        radioInput.value = size;
+                        radioInput.className = 'hidden';
+
+                        const label = document.createElement('label');
+                        label.htmlFor = `group-size-${size}`;
+                        label.textContent = `Groups of ${size}`;
+                        label.className = 'cursor-pointer py-2 px-4 border border-slate-300 rounded-full transition duration-200 hover:bg-slate-200 text-slate-700 font-semibold';
+                        
+                        optionsContainer.appendChild(radioInput);
+                        optionsContainer.appendChild(label);
+                    }
+                });
+
+                // Clear selection if it's no longer valid
+                const selectedRadio = document.querySelector('input[name="group-option"]:checked');
+                if (selectedRadio && selectedRadio.value !== 'custom' && parseInt(selectedRadio.value) > nameCount) {
+                    selectedRadio.checked = false;
+                }
+            }
+
+            nameListTextarea.addEventListener('input', updateOptions);
+            updateOptions(); // Initial call to populate options
+
+            customSizeRadio.addEventListener('change', () => {
+                customSizeInput.disabled = !customSizeRadio.checked;
+            });
+            
+            document.querySelectorAll('input[name="group-option"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    customSizeInput.disabled = true;
+                });
+            });
+
+            createButton.addEventListener('click', () => {
+                const names = nameListTextarea.value.split('\n').filter(name => name.trim() !== '');
+                let groupSize = null;
+
+                const selectedOption = document.querySelector('input[name="group-option"]:checked');
+                if (selectedOption) {
+                    if (selectedOption.id === 'custom-size-radio') {
+                        groupSize = parseInt(customSizeInput.value, 10);
+                        if (isNaN(groupSize) || groupSize < 2) {
+                            showMessage('Please enter a valid group size of 2 or more.', true);
+                            return;
+                        }
+                    } else {
+                        groupSize = parseInt(selectedOption.value, 10);
+                    }
+                }
+
+                if (!groupSize) {
+                    showMessage('Please select a group size option.', true);
+                    return;
+                }
+
+                if (names.length < groupSize) {
+                    showMessage(`You need at least ${groupSize} names to create groups of this size.`, true);
+                    return;
+                }
+                
+                // Shuffle names randomly
+                for (let i = names.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [names[i], names[j]] = [names[j], names[i]];
+                }
+
+                // Create groups
+                resultsContainer.innerHTML = '';
+                const totalGroups = Math.ceil(names.length / groupSize);
+                let currentNameIndex = 0;
+
+                for (let i = 0; i < totalGroups; i++) {
+                    const groupNames = names.slice(currentNameIndex, currentNameIndex + groupSize);
+                    
+                    const groupDiv = document.createElement('div');
+                    groupDiv.className = 'group-card rounded-lg shadow-sm mb-4 transition-all duration-300 hover-lift';
+                    
+                    const groupTitle = document.createElement('h3');
+                    groupTitle.className = 'text-lg font-bold text-slate-700 mb-2';
+                    groupTitle.textContent = `Group ${i + 1}`;
+                    groupDiv.appendChild(groupTitle);
+                    
+                    const groupList = document.createElement('ul');
+                    groupList.className = 'list-none space-y-1 text-slate-600';
+                    
+                    groupNames.forEach(name => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `• ${name}`;
+                        groupList.appendChild(listItem);
+                    });
+                    
+                    groupDiv.appendChild(groupList);
+                    resultsContainer.appendChild(groupDiv);
+                    
+                    currentNameIndex += groupSize;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

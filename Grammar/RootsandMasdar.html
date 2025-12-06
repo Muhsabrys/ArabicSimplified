@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arabic Verb Forms & Masdar — Interactive</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --brand:#1A659E; --accent:#00A6A6; --warm:#F28F3B; --danger:#E03616; --violet:#593C8F; }
+    body{ font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#F8F9FA; }
+    /* Arabic segments render RTL but page stays LTR */
+    .arabic{ font-family:'Tajawal', sans-serif; direction:rtl; unicode-bidi:isolate; display:inline-block; }
+    .arabic-block{ font-family:'Tajawal', sans-serif; direction:rtl; unicode-bidi:isolate; display:block; text-align:right; }
+    .card-enter{ animation:card-enter .6s ease-out both; }
+    @keyframes card-enter{ from{ transform:translateY(24px); opacity:0 } to{ transform:translateY(0); opacity:1 } }
+    .pill{ @apply inline-flex items-center gap-2 rounded-full px-4 py-2 border text-base; }
+    .quiz-option{ cursor:pointer; transition:background-color .2s, border-color .2s, transform .05s; }
+    .quiz-option:hover{ background-color:#e6f7ff }
+    .quiz-option.selected{ background:#cceeff; border-color:#1A659E; font-weight:700 }
+    .quiz-option.correct{ background:#d4edda; border-color:#28a745; font-weight:700 }
+    .quiz-option.incorrect{ background:#f8d7da; border-color:#dc3545; font-weight:700 }
+    .droptarget{ min-height:3rem }
+  </style>
+</head>
+<body class="text-[#1A202C]">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <!-- Header -->
+    <header class="my-8 md:my-12 card-enter" style="animation-delay:.05s">
+      <h1 class="text-4xl md:text-6xl font-extrabold text-[var(--brand)]">Arabic Verb Forms & Masdar</h1>
+      <p class="mt-3 md:mt-4 text-xl md:text-2xl text-slate-700">Clear meanings, big text, rich interactivity.</p>
+    </header>
+
+    <!-- Key Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-14">
+      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-[var(--accent)] card-enter text-left" style="animation-delay:.1s">
+        <h3 class="text-2xl md:text-3xl font-extrabold text-[var(--accent)]">What is a <span class="arabic">مصدر</span>?</h3>
+        <p class="mt-3 text-lg md:text-xl">A noun that names the action. English: “writing, going, helping.” Arabic: <span class="arabic">كِتابة، ذَهاب، مُساعَدة</span>.</p>
+        <p class="mt-2 text-lg md:text-xl">Use it after like/love/want, and for general talk about the action.</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-[var(--warm)] card-enter text-left" style="animation-delay:.15s">
+        <h3 class="text-2xl md:text-3xl font-extrabold text-[var(--warm)]">What is a Form?</h3>
+        <p class="mt-3 text-lg md:text-xl">A pattern for the root. The pattern shapes the meaning. The root gives the core idea.</p>
+        <p class="mt-2 text-lg md:text-xl">This page highlights Form I, Form III, and Form VIII.</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-[var(--danger)] card-enter text-left" style="animation-delay:.2s">
+        <h3 class="text-2xl md:text-3xl font-extrabold text-[var(--danger)]">How to read patterns?</h3>
+        <p class="mt-3 text-lg md:text-xl">The template uses <span class="arabic">ف ع ل</span> as placeholders. Example: <span class="arabic">يَفْعُل</span> = “ya + root with u‑vowel.”</p>
+        <p class="mt-2 text-lg md:text-xl">Focus on sound and shape, not on heavy terms.</p>
+      </div>
+    </section>
+
+    <!-- Form Cards -->
+    <section class="space-y-10 mb-16">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--violet)] text-left">Forms in this lesson</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-4">
+        <!-- Form I -->
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-[var(--brand)] card-enter text-left" style="animation-delay:.05s">
+          <h3 class="text-2xl md:text-3xl font-extrabold text-[var(--brand)]">Form I</h3>
+          <p class="mt-2 text-lg md:text-xl">Meaning: basic action. No extra letters.</p>
+          <div class="mt-4 grid grid-cols-1 gap-3 text-lg md:text-xl">
+    <div class="p-3 rounded-xl bg-slate-50 border">
+        <div class="font-bold">Present patterns: <span class="arabic">يَفْعُل، يَفْعَل، يَفْعِل</span></div>
+    </div>
+    <div class="p-3 rounded-xl bg-slate-50 border">
+        <div class="font-bold">Examples:</div>
+        <div class="arabic">كَتَبَ/يَكْتُب ← الكِتابة</div>
+        <div>write → writing</div>
+    </div>
+    <div class="p-3 rounded-xl bg-slate-50 border">
+        <div class="arabic">ذَهَبَ/يَذْهَب ← الذَهاب</div>
+        <div>go → going</div>
+    </div>
+    <div class="p-3 rounded-xl bg-slate-50 border">
+        <div class="arabic">فَهِمَ/يَفْهَم ← الفَهْم</div>
+        <div>understand → understanding</div>
+    </div>
+</div>
+        </article>
+        <!-- Form III -->
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-[var(--accent)] card-enter text-left" style="animation-delay:.1s">
+          <h3 class="text-2xl md:text-3xl font-extrabold text-[var(--accent)]">Form III</h3>
+          <p class="mt-2 text-lg md:text-xl">Meaning: action with another person; interaction.</p>
+          <div class="mt-4 grid grid-cols-1 gap-3 text-lg md:text-xl">
+            <div class="p-3 rounded-xl bg-slate-50 border"><span class="font-bold">Present pattern:</span> <span class="arabic">يُفاعِل</span>; Masdar often <span class="arabic">مُفاعَلَة</span>.</div>
+            <div class="p-3 rounded-xl bg-slate-50 border">
+    <div class="arabic">ساعَدَ/يُساعِد ← المُساعَدة</div>
+    <div>help → assistance</div>
+</div>
+
+<div class="p-3 rounded-xl bg-slate-50 border">
+    <div class="arabic">شاهَدَ/يُشاهِد ← المُشاهَدة</div>
+    <div>watch → watching</div>
+</div>
+
+<div class="p-3 rounded-xl bg-slate-50 border">
+    <div class="arabic">شارَكَ/يُشارِك ← المُشارَكة</div>
+    <div>join → participation</div>
+</div>
+        </article>
+        <!-- Form VIII -->
+        <article class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-[var(--warm)] card-enter text-left" style="animation-delay:.15s">
+          <h3 class="text-2xl md:text-3xl font-extrabold text-[var(--warm)]">Form VIII</h3>
+          <p class="mt-2 text-lg md:text-xl">Meaning: inner effort; reflexive feel.</p>
+          <div class="mt-4 grid grid-cols-1 gap-3 text-lg md:text-xl">
+            <div class="p-3 rounded-xl bg-slate-50 border">
+    <div class="font-bold">Pattern: <span class="arabic">اِفْتَعَل – يَفْتَعِل</span>; Masdar <span class="arabic">اِفْتِعال</span>.</div>
+</div>
+<div class="p-3 rounded-xl bg-slate-50 border">
+    <div class="arabic">اِجْتَمَعَ/يَجْتَمِع ← الاِجْتِماع</div>
+    <div>meet → meeting</div>
+</div>
+<div class="p-3 rounded-xl bg-slate-50 border">
+    <div class="arabic">اِقْتَرَبَ/يَقْتَرِب ← الاِقْتِراب</div>
+    <div>come near → approach</div>
+</div>
+<div class="p-3 rounded-xl bg-slate-50 border">
+    <div class="arabic">اِلْتَحَقَ/يَلْتَحِق ← الاِلْتِحاق</div>
+    <div>join a place → enrollment</div>
+    </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Super Interactive Panel -->
+    <section class="mb-16 space-y-10">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--brand)] text-left">Interactive Practice</h2>
+
+      <!-- 1) Drag & Match: Verb → Masdar -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 card-enter text-left" style="animation-delay:.05s">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-2xl md:text-3xl font-extrabold">Match: Verb → Masdar</h3>
+          <button class="pill border-slate-300" onclick="resetDragMatch()">Reset</button>
+        </div>
+        <p class="text-xl text-slate-600 mb-4">Drag a verb card to the correct masdar box.</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="text-xl font-bold mb-2">Masdar boxes</h4>
+            <div id="drop-zone" class="grid grid-cols-1 gap-3"></div>
+          </div>
+          <div>
+            <h4 class="text-xl font-bold mb-2">Verb cards</h4>
+            <div id="drag-zone" class="grid grid-cols-1 gap-3"></div>
+          </div>
+        </div>
+        <div class="mt-4 text-xl font-bold" id="drag-score"></div>
+      </div>
+
+      <!-- 2) Build-a-Verb Sandbox -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 card-enter text-left" style="animation-delay:.1s">
+        <h3 class="text-2xl md:text-3xl font-extrabold mb-3">Build a verb</h3>
+        <p class="text-xl text-slate-600 mb-4">Pick a root and a form. The tool shows past, present, and masdar.</p>
+        <div class="grid md:grid-cols-3 gap-4 items-end">
+          <div>
+            <label class="block text-lg font-semibold mb-1">Root</label>
+            <select id="rootSel" class="w-full p-3 border rounded-xl text-lg">
+              <option value="كتب">ك-ت-ب</option>
+              <option value="ذهب">ذ-ه-ب</option>
+              <option value="فهم">ف-ه-م</option>
+              <option value="سعد">س-ع-د</option>
+              <option value="جمع">ج-م-ع</option>
+              <option value="قرب">ق-ر-ب</option>
+              <option value="لحق">ل-ح-ق</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-lg font-semibold mb-1">Form</label>
+            <select id="formSel" class="w-full p-3 border rounded-xl text-lg">
+              <option value="I">Form I</option>
+              <option value="III">Form III</option>
+              <option value="VIII">Form VIII</option>
+            </select>
+          </div>
+          <button class="px-6 py-3 rounded-xl text-white text-lg font-bold" style="background:var(--brand)" onclick="buildVerb()">Show</button>
+        </div>
+        <div id="buildOut" class="mt-5 grid md:grid-cols-3 gap-4 text-xl"></div>
+      </div>
+
+      <!-- 3) MCQ with instant feedback -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 card-enter text-left" style="animation-delay:.15s">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-2xl md:text-3xl font-extrabold">Quick Quiz</h3>
+          <button class="pill border-slate-300" onclick="resetMCQ()">Reset</button>
+        </div>
+        <ol id="mcqList" class="space-y-6"></ol>
+        <div class="mt-4 text-xl font-bold" id="mcqScore"></div>
+      </div>
+
+      <!-- Timed Challenge removed as requested -->
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-12 mb-10 py-6 border-t text-slate-600 text-lg">AI4Language_AR ©</footer>
+  </div>
+
+  <script>
+    // ===== Drag & Match =====
+    const DM = {
+      pairs:[
+        {verb:'ساعَدَ / يُساعِد', masdar:'المُساعَدة'},
+        {verb:'كَتَبَ / يَكْتُب', masdar:'الكِتابة'},
+        {verb:'فَهِمَ / يَفْهَم', masdar:'الفَهْم'},
+        {verb:'اِجْتَمَعَ / يَجْتَمِع', masdar:'الاِجْتِماع'},
+        {verb:'اِلْتَحَقَ / يَلْتَحِق', masdar:'الاِلْتِحاق'}
+      ]
+    };
+    function resetDragMatch(){
+      const drops = document.getElementById('drop-zone');
+      const drags = document.getElementById('drag-zone');
+      drops.innerHTML=''; drags.innerHTML='';
+      const shuffled = [...DM.pairs].sort(()=>Math.random()-0.5);
+      shuffled.forEach((p,i)=>{
+        // drop boxes
+        const box = document.createElement('div');
+        box.className='droptarget border-2 border-dashed rounded-xl p-3 text-xl flex items-center justify-between';
+        box.dataset.answer=p.verb;
+        box.innerHTML=`<span class="arabic font-bold">${p.masdar}</span><span class="text-slate-400">Drop verb →</span>`;
+        box.addEventListener('dragover',e=>e.preventDefault());
+        box.addEventListener('drop', e=>{ e.preventDefault(); boxDrop(box, e.dataTransfer.getData('text/plain'));});
+        drops.appendChild(box);
+      });
+      shuffled.sort(()=>Math.random()-0.5).forEach((p,i)=>{
+        const card = document.createElement('div');
+        card.className='bg-white border rounded-xl p-3 text-xl shadow quiz-option';
+        card.textContent=p.verb; card.draggable=true; card.id='verb-'+i;
+        card.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', p.verb); });
+        drags.appendChild(card);
+      });
+      document.getElementById('drag-score').textContent='';
+      DM.correct=0;
+    }
+    function boxDrop(box, text){
+      if(box.dataset.filled) return; // lock one per box
+      const need = box.dataset.answer;
+      if(text===need){
+        box.classList.remove('border-dashed');
+        box.classList.add('border-green-500','bg-green-50');
+        box.querySelector('span:nth-child(2)').textContent='✓ Correct';
+        box.dataset.filled='1';
+        DM.correct=(DM.correct||0)+1;
+        if(DM.correct===DM.pairs.length){ document.getElementById('drag-score').textContent='Great job! All correct.'; }
+      }else{
+        box.classList.add('border-red-500');
+        document.getElementById('drag-score').textContent='Try again on the red box.';
+        setTimeout(()=>box.classList.remove('border-red-500'),700);
+      }
+    }
+    resetDragMatch();
+
+    // ===== Build a Verb =====
+    const lexicon = {
+      'I':{
+        كتب:{ past:'كَتَبَ', pres:'يَكْتُب', masdar:'الكِتابة', gloss:'write' },
+        ذهب:{ past:'ذَهَبَ', pres:'يَذْهَب', masdar:'الذَهاب', gloss:'go' },
+        فهم:{ past:'فَهِمَ', pres:'يَفْهَم', masdar:'الفَهْم', gloss:'understand' }
+      },
+      'III':{
+        سعد:{ past:'ساعَدَ', pres:'يُساعِد', masdar:'المُساعَدة', gloss:'help (someone)' }
+      },
+      'VIII':{
+        جمع:{ past:'اِجْتَمَعَ', pres:'يَجْتَمِع', masdar:'الاِجْتِماع', gloss:'meet' },
+        قرب:{ past:'اِقْتَرَبَ', pres:'يَقْتَرِب', masdar:'الاِقْتِراب', gloss:'approach' },
+        لحق:{ past:'اِلْتَحَقَ', pres:'يَلْتَحِق', masdar:'الاِلْتِحاق', gloss:'enroll' }
+      }
+    };
+    function buildVerb(){
+      const r = document.getElementById('rootSel').value;
+      const f = document.getElementById('formSel').value;
+      const store = lexicon[f]||{};
+      const item = store[r];
+      const out = document.getElementById('buildOut');
+      out.innerHTML='';
+      if(!item){ out.innerHTML = `<div class='p-4 bg-yellow-50 border rounded-xl'>No entry for this pair yet.</div>`; return; }
+      const cells = [
+        {title:'Past', val:`<span class='arabic font-bold'>${item.past}</span>`},
+        {title:'Present', val:`<span class='arabic font-bold'>${item.pres}</span>`},
+        {title:'Masdar', val:`<span class='arabic font-bold'>${item.masdar}</span> — ${item.gloss}`}
+      ];
+      cells.forEach(c=>{
+        const d=document.createElement('div');
+        d.className='p-4 bg-slate-50 border rounded-xl';
+        d.innerHTML=`<div class='text-lg font-semibold mb-1'>${c.title}</div><div class='text-2xl'>${c.val}</div>`;
+        out.appendChild(d);
+      })
+    }
+
+    // ===== MCQ =====
+    const MCQ=[
+      {q:'Pick the usual meaning for Form III.', opts:['basic action','interaction with another person','request sense'], a:1},
+      {q:'Choose the correct masdar: <span class="arabic">اِلْتَحَقَ</span>', opts:['<span class="arabic">الاِلْتِحاق</span>','<span class="arabic">المُشارَكة</span>','<span class="arabic">الكِتابة</span>'], a:0},
+      {q:'Choose the correct present: <span class="arabic">فَهِمَ</span>', opts:['<span class="arabic">يَفْهَم</span>','<span class="arabic">يَفْعُم</span>','<span class="arabic">يُفاهِم</span>'], a:0},
+      {q:'Pick the form for pattern <span class="arabic">اِفْتَعَل</span>.', opts:['Form I','Form III','Form VIII'], a:2},
+      {q:'Pick the correct masdar: <span class="arabic">ساعَدَ</span>', opts:['<span class="arabic">المُساعَدة</span>','<span class="arabic">السَّماع</span>','<span class="arabic">الذَهاب</span>'], a:0},
+      {q:'Select the Form for <span class="arabic">يُشارِك</span>', opts:['Form I','Form III','Form VIII'], a:1},
+      {q:'Choose the present for <span class="arabic">كَتَبَ</span>', opts:['<span class="arabic">يَكْتُب</span>','<span class="arabic">يُكاتِب</span>','<span class="arabic">يَكْتِب</span>'], a:0},
+      {q:'Pick the masdar for <span class="arabic">اِقْتَرَبَ</span>', opts:['<span class="arabic">الاِقْتِراب</span>','<span class="arabic">الاِحْتِرام</span>','<span class="arabic">المُناقَشة</span>'], a:0}
+    ];
+    function renderMCQ(){
+      const list=document.getElementById('mcqList');
+      list.innerHTML='';
+      MCQ.forEach((it,i)=>{
+        const li=document.createElement('li');
+        li.className='border rounded-2xl p-4';
+        li.innerHTML=`<div class='text-xl font-bold mb-3'>${i+1}) ${it.q}</div>
+          <div class='grid md:grid-cols-3 gap-3'>
+            ${it.opts.map((o,j)=>`<div class='quiz-option bg-white border p-3 rounded-xl text-lg' data-i='${i}' data-v='${j}'>${o}</div>`).join('')}
+          </div>`;
+        list.appendChild(li);
+      });
+      document.querySelectorAll('.quiz-option').forEach(opt=>{
+        opt.addEventListener('click',function(){
+          const i=Number(this.dataset.i), v=Number(this.dataset.v);
+          const siblings=this.parentElement.querySelectorAll('.quiz-option');
+          siblings.forEach(s=>s.classList.remove('selected','correct','incorrect'));
+          this.classList.add('selected');
+          if(v===MCQ[i].a){ this.classList.add('correct'); } else { this.classList.add('incorrect'); }
+        })
+      })
+      document.getElementById('mcqScore').textContent='';
+    }
+    function resetMCQ(){ renderMCQ(); }
+    renderMCQ();
+  </script>
+</body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قصة مريم ووليد - Egyptian Arabic Reading</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        
+        .reading-text {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            line-height: 2;
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .option-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+        
+        .option-btn:hover {
+            background: #e5e7eb;
+            border-color: #f59e0b;
+        }
+        
+        .option-btn.selected {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+        
+        .option-btn.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+            font-weight: bold;
+        }
+        
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        
+        .vocab-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1rem 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        
+        .vocab-table th {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+        
+        .vocab-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .vocab-table tr:nth-child(even) {
+            background: #fef3c7;
+        }
+        
+        .fill-blank-input {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            width: 200px;
+            text-align: center;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .fill-blank-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+        
+        .fill-blank-input.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+        
+        .fill-blank-input.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        
+        .opinion-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 0.25rem;
+        }
+        
+        .opinion-btn:hover {
+            background: #e5e7eb;
+        }
+        
+        .opinion-btn.agree {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+        
+        .opinion-btn.disagree {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        
+        .opinion-btn.unsure {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-amber-50 to-orange-50">
+
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-heart text-3xl"></i>
+                    <div class="text-right">
+                        <h1 class="text-xl md:text-2xl font-bold">قصة مريم ووليد</h1>
+                        <p class="text-sm opacity-90 font-english">Mariam and Walid's Story</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="py-8 md:py-12 text-center">
+        <div class="container mx-auto px-6">
+            <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-4">
+                <i class="fas fa-book-reader text-5xl text-amber-600"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-3">🎧 قصة مريم ووليد</h1>
+            <p class="text-xl text-gray-700 mb-2">Egyptian Arabic Reading Practice</p>
+            <div class="mt-4 inline-block bg-amber-100 text-amber-800 px-6 py-2 rounded-full text-sm font-semibold">
+                <i class="fas fa-flag ml-1"></i> 🇪🇬 Egyptian Arabic - عامية مصرية
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pb-12 max-w-5xl">
+
+        <!-- Reading Text -->
+        <div class="reading-text">
+            <p class="mb-4">
+                أنا اسمي مريِم. والأسبوع الي فات اِتعَرَّفت على شاب اسمه وليد، قابلته في النادي. هو بيشتغل دكتور صيدلي وعنده صيدلية كبيرة قريبة من السوق الي جنب بيتنا. بصراحة، في البداية كان عندي شوية خجل عشان دي كانت أول مرة نتكلم، خصوصًا إني ماعنديش أي تجارب عاطفية قبل كده. لكن بعد ما اتكلمنا شوية، حسيت إن فيه حاجات كتير بيننا مشتركة.
+            </p>
+            <p class="mb-4">
+                وليد قالي إن هو كان بيحب بنت معاه في الجامعة، بس هي اِتخطبت لِحَد تاني وسافرت برا مصر. ومن يومها العلاقة اِتقطعت بينهم تمامًا. ومن يومها ماحدِّش فيهم كلّم التاني، وليد حس إنه مش عايز يدخل أي علاقة عاطفية جديدة، لكن بعد ما قابلني، بدأ يغير رأيه.
+            </p>
+            <p>
+                لما قررنا نخرج مع بعض أول مرة، اخترنا كافيه قريب من البحر، لأنه مكان عاطفي وهادي. عملنا جولة هناك على البحر واتكلمنا كتير عن الحياة. عرفت كمان إن وليد بيحب السفر والسياحة، وعنده هواية تسلق الجبال. اكتشفت إننا متشابهين جدًا في معظم الحاجات، ولما رجعت البيت حكيت لماما على كل حاجة. وماما طلبت تقابل وليد، قلتلها خلينا نخرج مع بعض كام مرة الأول قبل ما يقابلك أنتي وبابا.
+            </p>
+        </div>
+
+        <!-- Vocabulary Matching -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-language text-amber-600 ml-2"></i>
+                Vocabulary Matching
+            </h2>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <table class="vocab-table">
+                    <thead>
+                        <tr>
+                            <th class="text-right">Arabic Word</th>
+                            <th class="text-left font-english">English Meaning</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">اِتعَرَّفت</td>
+                            <td class="font-english">a. relationship</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">صيدلية</td>
+                            <td class="font-english">b. to meet / get to know</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">تجارب عاطفية</td>
+                            <td class="font-english">c. pharmacy</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">الي فات</td>
+                            <td class="font-english">d. shyness</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">العلاقة</td>
+                            <td class="font-english">e. emotional experiences</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">خجل</td>
+                            <td class="font-english">f. last/previous</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mt-4 bg-amber-50 p-4 rounded-lg">
+                    <p class="font-bold text-amber-900 mb-2">
+                        <i class="fas fa-key ml-2"></i>
+                        Answer Key:
+                    </p>
+                    <p class="text-amber-800">
+                        اِتعَرَّفت = b | صيدلية = c | تجارب عاطفية = e | الي فات = f | العلاقة = a | خجل = d
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- True/False Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-check-circle text-green-600 ml-2"></i>
+                True / False
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١. مريم اتعرفت على وليد في السوق.</p>
+                <div class="flex gap-2">
+                    <button onclick="selectTF(this, 1, 'true')" data-question="1" data-answer="true" class="option-btn tf-option flex-1">
+                        <i class="fas fa-check ml-2"></i>صح
+                    </button>
+                    <button onclick="selectTF(this, 1, 'false')" data-question="1" data-answer="false" class="option-btn tf-option flex-1">
+                        <i class="fas fa-times ml-2"></i>خطأ
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٢. وليد عنده صيدلية قريبة من بيت مريم.</p>
+                <div class="flex gap-2">
+                    <button onclick="selectTF(this, 2, 'true')" data-question="2" data-answer="true" class="option-btn tf-option flex-1">
+                        <i class="fas fa-check ml-2"></i>صح
+                    </button>
+                    <button onclick="selectTF(this, 2, 'false')" data-question="2" data-answer="false" class="option-btn tf-option flex-1">
+                        <i class="fas fa-times ml-2"></i>خطأ
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٣. مريم عندها تجارب عاطفية كثيرة.</p>
+                <div class="flex gap-2">
+                    <button onclick="selectTF(this, 3, 'true')" data-question="3" data-answer="true" class="option-btn tf-option flex-1">
+                        <i class="fas fa-check ml-2"></i>صح
+                    </button>
+                    <button onclick="selectTF(this, 3, 'false')" data-question="3" data-answer="false" class="option-btn tf-option flex-1">
+                        <i class="fas fa-times ml-2"></i>خطأ
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٤. وليد سافر إلى خارج مصر.</p>
+                <div class="flex gap-2">
+                    <button onclick="selectTF(this, 4, 'true')" data-question="4" data-answer="true" class="option-btn tf-option flex-1">
+                        <i class="fas fa-check ml-2"></i>صح
+                    </button>
+                    <button onclick="selectTF(this, 4, 'false')" data-question="4" data-answer="false" class="option-btn tf-option flex-1">
+                        <i class="fas fa-times ml-2"></i>خطأ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multiple Choice Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-list-ul text-blue-600 ml-2"></i>
+                Multiple Choice
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١. مريم قابلت وليد فين؟</p>
+                <button onclick="selectMCQ(this, 101)" data-question="101" data-correct="false" class="option-btn mcq-option">أ. في الكافيه</button>
+                <button onclick="selectMCQ(this, 101)" data-question="101" data-correct="true" class="option-btn mcq-option">ب. في النادي</button>
+                <button onclick="selectMCQ(this, 101)" data-question="101" data-correct="false" class="option-btn mcq-option">ج. في الصيدلية</button>
+                <button onclick="selectMCQ(this, 101)" data-question="101" data-correct="false" class="option-btn mcq-option">د. في الجامعة</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٢. إيه الي حصل للبنت التي كان بيحبها وليد؟</p>
+                <button onclick="selectMCQ(this, 102)" data-question="102" data-correct="false" class="option-btn mcq-option">أ. ماتت</button>
+                <button onclick="selectMCQ(this, 102)" data-question="102" data-correct="false" class="option-btn mcq-option">ب. تزوجت وليد</button>
+                <button onclick="selectMCQ(this, 102)" data-question="102" data-correct="true" class="option-btn mcq-option">ج. سافرت وخطبت لشخص آخر</button>
+                <button onclick="selectMCQ(this, 102)" data-question="102" data-correct="false" class="option-btn mcq-option">د. قابلت وليد في السوق</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٣. وليد بيحب ايه؟</p>
+                <button onclick="selectMCQ(this, 103)" data-question="103" data-correct="false" class="option-btn mcq-option">أ. السباحة</button>
+                <button onclick="selectMCQ(this, 103)" data-question="103" data-correct="true" class="option-btn mcq-option">ب. تسلق الجبال والسفر</button>
+                <button onclick="selectMCQ(this, 103)" data-question="103" data-correct="false" class="option-btn mcq-option">ج. مشاهدة الأفلام</button>
+                <button onclick="selectMCQ(this, 103)" data-question="103" data-correct="false" class="option-btn mcq-option">د. الرسم والموسيقى</button>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٤. ليه مريم ما قدمتهوش لمامتها مباشرة؟</p>
+                <button onclick="selectMCQ(this, 104)" data-question="104" data-correct="false" class="option-btn mcq-option">أ. لأنها لا تثق فيه</button>
+                <button onclick="selectMCQ(this, 104)" data-question="104" data-correct="false" class="option-btn mcq-option">ب. لأنها مشغولة</button>
+                <button onclick="selectMCQ(this, 104)" data-question="104" data-correct="true" class="option-btn mcq-option">ج. لأنها تحب الخروج معاه الأول</button>
+                <button onclick="selectMCQ(this, 104)" data-question="104" data-correct="false" class="option-btn mcq-option">د. لأنها هتسافر</button>
+            </div>
+        </div>
+
+        <!-- Fill in the Blank -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-pen text-purple-600 ml-2"></i>
+                Fill in the Blank
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    ١. وليد بيشتغل دكتور 
+                    <input type="text" id="fill1" class="fill-blank-input" data-answer="صيدلي">
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    ٢. أول مرة خرجوا فيها، راحوا كافيه جنب 
+                    <input type="text" id="fill2" class="fill-blank-input" data-answer="البحر">
+                </p>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg mb-3">
+                    ٣. ماما طلبت من مريم إنها 
+                    <input type="text" id="fill3" class="fill-blank-input" data-answer="تقابل">
+                    وليد.
+                </p>
+            </div>
+
+            <button onclick="checkFillBlanks()" class="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all shadow-lg">
+                <i class="fas fa-check ml-2"></i>
+                تحقق من الإجابات
+            </button>
+        </div>
+
+        <!-- Opinion Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-comment-dots text-pink-600 ml-2"></i>
+                ✅ موافق – ❌ مش موافق – 🤔 مش متأكد
+            </h2>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">١. من الأفضل أن مريم تحكي كل شيء لماما من أول مقابلة مع وليد.</p>
+                <div class="flex gap-2 flex-wrap">
+                    <button onclick="selectOpinion(this, 'agree')" class="opinion-btn">
+                        <i class="fas fa-thumbs-up ml-1"></i>✅ موافق
+                    </button>
+                    <button onclick="selectOpinion(this, 'disagree')" class="opinion-btn">
+                        <i class="fas fa-thumbs-down ml-1"></i>❌ مش موافق
+                    </button>
+                    <button onclick="selectOpinion(this, 'unsure')" class="opinion-btn">
+                        <i class="fas fa-question ml-1"></i>🤔 مش متأكد
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٢. النادي مكان كويس للتعارف.</p>
+                <div class="flex gap-2 flex-wrap">
+                    <button onclick="selectOpinion(this, 'agree')" class="opinion-btn">
+                        <i class="fas fa-thumbs-up ml-1"></i>✅ موافق
+                    </button>
+                    <button onclick="selectOpinion(this, 'disagree')" class="opinion-btn">
+                        <i class="fas fa-thumbs-down ml-1"></i>❌ مش موافق
+                    </button>
+                    <button onclick="selectOpinion(this, 'unsure')" class="opinion-btn">
+                        <i class="fas fa-question ml-1"></i>🤔 مش متأكد
+                    </button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <p class="text-lg font-semibold mb-3">٣. شيء كويس إن الإنسان يكون في علاقة مع حد عنده تجارب عاطفية قبل كده.</p>
+                <p class="text-sm text-gray-600 font-english mb-3">It's a good thing to be in a relationship with sb who had previous relationships</p>
+                <div class="flex gap-2 flex-wrap">
+                    <button onclick="selectOpinion(this, 'agree')" class="opinion-btn">
+                        <i class="fas fa-thumbs-up ml-1"></i>✅ موافق
+                    </button>
+                    <button onclick="selectOpinion(this, 'disagree')" class="opinion-btn">
+                        <i class="fas fa-thumbs-down ml-1"></i>❌ مش موافق
+                    </button>
+                    <button onclick="selectOpinion(this, 'unsure')" class="opinion-btn">
+                        <i class="fas fa-question ml-1"></i>🤔 مش متأكد
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 p-4 rounded-lg mt-4">
+                <p class="text-amber-900">
+                    <i class="fas fa-info-circle ml-2"></i>
+                    هذه أسئلة رأي شخصي - لا توجد إجابات صحيحة أو خاطئة!
+                </p>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button onclick="checkAnswers()" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white text-xl font-bold py-4 rounded-lg hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg">
+            <i class="fas fa-check-double ml-2"></i>تحقق من الإجابات
+        </button>
+
+        <!-- Score Display -->
+        <div id="scoreDisplay" class="hidden mt-6 bg-gradient-to-r from-green-400 to-emerald-500 text-white p-6 rounded-xl text-center shadow-lg">
+            <i class="fas fa-trophy text-4xl mb-2"></i>
+            <p class="text-2xl font-bold" id="scoreText"></p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 md:py-8 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-center">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <a href="../index.html" class="hover:opacity-80 transition">
+                    <i class="fas fa-brain text-xl md:text-2xl mr-2"></i>
+                    <span class="font-semibold text-sm md:text-base">Context Arabic</span>
+                </a>
+                <p class="text-xs md:text-sm opacity-90">&copy; 2025 - Learn Arabic in Context</p>
+                <a href="index.html" class="hover:opacity-80 transition">
+                    <span class="font-semibold text-sm md:text-base">Back to Egyptian Arabic</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Store answers
+        const tfAnswers = {};
+        const mcqAnswers = {};
+        
+        // Correct answers for T/F (False, True, False, False)
+        const tfCorrect = {
+            1: false,  // خطأ - في النادي
+            2: true,   // صح
+            3: false,  // خطأ - ماعندهاش
+            4: false   // خطأ - البنت هي الي سافرت
+        };
+
+        function selectTF(btn, qnum, answer) {
+            document.querySelectorAll(`[data-question="${qnum}"].tf-option`).forEach(b => {
+                b.classList.remove('selected');
+            });
+            
+            btn.classList.add('selected');
+            tfAnswers[qnum] = (answer === 'true');
+        }
+
+        function selectMCQ(btn, qnum) {
+            document.querySelectorAll(`[data-question="${qnum}"].mcq-option`).forEach(b => {
+                b.classList.remove('selected');
+            });
+            
+            btn.classList.add('selected');
+            mcqAnswers[qnum] = (btn.dataset.correct === 'true');
+        }
+
+        function selectOpinion(btn, type) {
+            // Remove previous selection
+            const siblings = btn.parentElement.querySelectorAll('.opinion-btn');
+            siblings.forEach(b => {
+                b.classList.remove('agree', 'disagree', 'unsure');
+            });
+            
+            btn.classList.add(type);
+        }
+
+        function checkFillBlanks() {
+            const fill1 = document.getElementById('fill1');
+            const fill2 = document.getElementById('fill2');
+            const fill3 = document.getElementById('fill3');
+
+            checkFillBlank(fill1, 'صيدلي');
+            checkFillBlank(fill2, 'البحر');
+            checkFillBlank(fill3, 'تقابل');
+        }
+
+        function checkFillBlank(input, correctAnswer) {
+            const userAnswer = input.value.trim();
+            input.classList.remove('correct', 'incorrect');
+            
+            if (userAnswer === correctAnswer) {
+                input.classList.add('correct');
+            } else if (userAnswer !== '') {
+                input.classList.add('incorrect');
+            }
+        }
+
+        function checkAnswers() {
+            let tfScore = 0;
+            let mcqScore = 0;
+            
+            // Check T/F
+            Object.keys(tfCorrect).forEach(qnum => {
+                const buttons = document.querySelectorAll(`[data-question="${qnum}"].tf-option`);
+                const userAnswer = tfAnswers[qnum];
+                const correct = tfCorrect[qnum];
+                
+                buttons.forEach(btn => {
+                    btn.classList.remove('correct', 'incorrect');
+                    const btnAnswer = (btn.dataset.answer === 'true');
+                    
+                    if (btnAnswer === correct) {
+                        btn.classList.add('correct');
+                    } else if (btn.classList.contains('selected')) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+                
+                if (userAnswer === correct) {
+                    tfScore++;
+                }
+            });
+            
+            // Check MCQ
+            const mcqQuestions = [101, 102, 103, 104];
+            mcqQuestions.forEach(qnum => {
+                const buttons = document.querySelectorAll(`[data-question="${qnum}"].mcq-option`);
+                const userAnswer = mcqAnswers[qnum];
+                
+                buttons.forEach(btn => {
+                    btn.classList.remove('correct', 'incorrect');
+                    const isCorrect = (btn.dataset.correct === 'true');
+                    
+                    if (isCorrect) {
+                        btn.classList.add('correct');
+                    } else if (btn.classList.contains('selected') && !isCorrect) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+                
+                if (userAnswer === true) {
+                    mcqScore++;
+                }
+            });
+            
+            // Display score
+            const totalScore = tfScore + mcqScore;
+            const totalQuestions = Object.keys(tfCorrect).length + mcqQuestions.length;
+            const percentage = Math.round((totalScore / totalQuestions) * 100);
+            
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreText = document.getElementById('scoreText');
+            
+            scoreText.textContent = `نتيجتك: ${totalScore} من ${totalQuestions} (${percentage}%)`;
+            scoreDisplay.classList.remove('hidden');
+            
+            // Scroll to score
+            scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>

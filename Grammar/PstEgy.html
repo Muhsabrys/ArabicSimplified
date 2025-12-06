@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> الأفعال المصرية </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral Harmony -->
+    <!-- Application Structure Plan: The application is designed as an interactive "Conjugation Explorer" followed by "Interactive Quizzes". The main structure includes a header, an introductory paragraph for the explorer, two primary control sections (verb and pronoun selectors), a dynamic conjugation display card, and then a dedicated quiz section. The quiz section is further divided into three distinct quiz types, each with its own set of questions, input fields, and control buttons (Check, Show Answers, Reset). This structure allows users to first explore conjugations freely and then test their knowledge directly within the same page, promoting a seamless learning and assessment experience. The flow is exploration -> self-assessment. -->
+    <!-- Visualization & Content Choices: Report Info: Table of 10 verbs, 8 pronouns, and their past-tense conjugations. -> Goal: Organize, Inform, Compare (Explorer); Assess, Reinforce (Quizzes). -> Viz/Presentation Method: Interactive display card (structured HTML/CSS) for exploration. For quizzes, interactive forms with text inputs and dynamic feedback (HTML/CSS/JS). -> Interaction: Explorer uses button clicks to filter and display data. Quizzes use text input, "Check Answers" for validation, "Show Answers" for revelation, and "Reset" for re-attempt. -> Justification: The interactive explorer makes learning verbs engaging by focusing on one conjugation at a time. Integrating quizzes directly provides immediate practice and self-assessment, reinforcing learning. The different quiz types target various aspects of verb knowledge (conjugation recall, usage in context, translation). -> Library/Method: Vanilla JS for state management and DOM manipulation. Tailwind CSS for styling. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Kufi Arabic', sans-serif;
+        }
+        .active-verb, .active-pronoun {
+            background-color: #14b8a6 !important; /* teal-500 */
+            color: white !important;
+            transform: scale(1.05);
+            box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
+        }
+        .control-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .quiz-input {
+            border: 1px solid #d1d5db; /* gray-300 */
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 250px;
+            text-align: center;
+        }
+        .correct-answer {
+            color: #059669; /* green-600 */
+            font-weight: 600;
+        }
+        .incorrect-answer {
+            color: #dc2626; /* red-600 */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+
+        <header class="text-center mb-6">
+            <h1 class="text-3xl md:text-5xl font-bold text-teal-700 mb-2"> الأفعال المصرية</h1>
+            <p class="text-md md:text-lg text-stone-600 max-w-2xl mx-auto">
+                تصريف الأفعال المصرية في الماضي
+            </p>
+        </header>
+
+        <main>
+            <section id="verb-selection" class="mb-8">
+                <h2 class="text-2xl font-semibold text-center mb-4 text-stone-700">١. اختر الفعل</h2>
+                <div id="verb-buttons" class="flex flex-wrap justify-center gap-3 md:gap-4">
+                    <!-- Verb buttons will be injected here by JS -->
+                </div>
+            </section>
+
+            <section id="pronoun-selection" class="mb-8">
+                <h2 class="text-2xl font-semibold text-center mb-4 text-stone-700">٢. اختر الضمير</h2>
+                <div id="pronoun-buttons" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 justify-center gap-3 md:gap-4">
+                    <!-- Pronoun buttons will be injected here by JS -->
+                </div>
+            </section>
+
+            <section id="display-area" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 min-h-[250px] flex flex-col justify-center items-center text-center mb-12">
+                <div id="conjugation-result" class="w-full">
+                    <p id="display-conjugation" class="text-4xl md:text-5xl font-bold text-teal-600 mb-4"></p>
+                    <p id="display-example" class="text-xl md:text-2xl text-stone-700 font-semibold mb-2"></p>
+                    <p id="display-translation" class="text-lg md:text-xl text-stone-500" dir="ltr"></p>
+                </div>
+            </section>
+
+            <section id="quizzes" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center text-teal-700 mb-6">اختبر معلوماتك!</h2>
+                <p class="text-md text-stone-600 text-center mb-8 max-w-2xl mx-auto">
+                    استخدم الاختبارات التالية لتقييم فهمك لتصريفات الأفعال. اكتب إجابتك في الفراغ ثم اضغط "تحقق" للحصول على التغذية الراجعة.
+                </p>
+
+                <!-- Quiz Type 1: Conjugation Match -->
+                <div class="mb-10 p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">اختبار ١: مطابقة التصريف</h3>
+                    <p class="text-stone-600 mb-4">أكمل التصريف الصحيح للفعل في زمن الماضي مع الضمير المعطى.</p>
+                    <div id="quiz1-questions">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button id="quiz1-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                        <button id="quiz1-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+                        <button id="quiz1-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Type 2: Fill in the Blank (Example Sentence) -->
+                <div class="mb-10 p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">اختبار ٢: أكمل الفراغ في الجملة</h3>
+                    <p class="text-stone-600 mb-4">أكمل الجملة بالفعل المصرف الصحيح في زمن الماضي.</p>
+                    <div id="quiz2-questions">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button id="quiz2-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                        <button id="quiz2-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+                        <button id="quiz2-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Type 3: Translation -->
+                <div class="p-6 border border-stone-200 rounded-xl">
+                    <h3 class="text-2xl font-semibold text-stone-700 mb-4">اختبار ٣: الترجمة</h3>
+                    <p class="text-stone-600 mb-4">اكتب التصريف الصحيح للفعل في زمن الماضي باللغة العربية المصرية، بناءً على المعنى الإنجليزي.</p>
+                    <div id="quiz3-questions">
+                        <!-- Questions will be injected here -->
+                    </div>
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button id="quiz3-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+                        <button id="quiz3-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+                        <button id="quiz3-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+    </div>
+
+    <script>
+        const verbData = {
+            "راح": {
+                "infinitive_en": "To Go",
+                "conjugations": {
+                    "هو": { "conjugation": "راح", "example": "هو راح السوق.", "translation": "He went to the market." },
+                    "هي": { "conjugation": "راحت", "example": "هي راحت الشغل.", "translation": "She went to work." },
+                    "أنا": { "conjugation": "رحت", "example": "أنا رحت إمبارح.", "translation": "I went yesterday." },
+                    "إنت": { "conjugation": "رحت", "example": "إنت رحت فين؟", "translation": "Where did you go? (m.)" },
+                    "إنتي": { "conjugation": "رحتي", "example": "إنتي رحتي فين؟", "translation": "Where did you go? (f.)" },
+                    "إحنا": { "conjugation": "رحنا", "example": "إحنا رحنا السينما.", "translation": "We went to the cinema." },
+                    "إنتو": { "conjugation": "رحتوا", "example": "إنتو رحتوا المدرسة؟", "translation": "Did you go to school? (pl.)" },
+                    "هم": { "conjugation": "راحوا", "example": "هم راحوا البيت.", "translation": "They went home." }
+                }
+            },
+            "شاف": {
+                "infinitive_en": "To See",
+                "conjugations": {
+                    "هو": { "conjugation": "شاف", "example": "هو شاف الفيلم.", "translation": "He saw the movie." },
+                    "هي": { "conjugation": "شافت", "example": "هي شافت القطة.", "translation": "She saw the cat." },
+                    "أنا": { "conjugation": "شفت", "example": "أنا شفتك هناك.", "translation": "I saw you there." },
+                    "إنت": { "conjugation": "شفت", "example": "إنت شفت ده؟", "translation": "Did you see this? (m.)" },
+                    "إنتي": { "conjugation": "شفتي", "example": "إنتي شفتي ده؟", "translation": "Did you see this? (f.)" },
+                    "إحنا": { "conjugation": "شفنا", "example": "إحنا شفنا الماتش.", "translation": "We saw the match." },
+                    "إنتو": { "conjugation": "شفتوا", "example": "إنتو شفتوا الممثل؟", "translation": "Did you see the actor? (pl.)" },
+                    "هم": { "conjugation": "شافوا", "example": "هم شافوا العربية.", "translation": "They saw the car." }
+                }
+            },
+            "قال": {
+                "infinitive_en": "To Say",
+                "conjugations": {
+                    "هو": { "conjugation": "قال", "example": "هو قال الحقيقة.", "translation": "He said the truth." },
+                    "هي": { "conjugation": "قالت", "example": "هي قالت لأ.", "translation": "She said no." },
+                    "أنا": { "conjugation": "قلت", "example": "أنا قلت كده.", "translation": "I said so." },
+                    "إنت": { "conjugation": "قلت", "example": "إنت قلت إيه؟", "translation": "What did you say? (m.)" },
+                    "إنتي": { "conjugation": "قلتي", "example": "إنتي قلتي إيه؟", "translation": "What did you say? (f.)" },
+                    "إحنا": { "conjugation": "قلنا", "example": "إحنا قلنا الحقيقة.", "translation": "We said the truth." },
+                    "إنتو": { "conjugation": "قلتوا", "example": "إنتو قلتوا كده؟", "translation": "Did you say so? (pl.)" },
+                    "هم": { "conjugation": "قالوا", "example": "هم قالوا كلام حلو.", "translation": "They said nice words." }
+                }
+            },
+            "عمل": {
+                "infinitive_en": "To Do/Make",
+                "conjugations": {
+                    "هو": { "conjugation": "عمل", "example": "هو عمل الواجب.", "translation": "He did the homework." },
+                    "هي": { "conjugation": "عملت", "example": "هي عملت الأكل.", "translation": "She made the food." },
+                    "أنا": { "conjugation": "عملت", "example": "أنا عملت كل حاجة.", "translation": "I did everything." },
+                    "إنت": { "conjugation": "عملت", "example": "إنت عملت إيه؟", "translation": "What did you do? (m.)" },
+                    "إنتي": { "conjugation": "عملتي", "example": "إنتي عملتي إيه؟", "translation": "What did you do? (f.)" },
+                    "إحنا": { "conjugation": "عملنا", "example": "إحنا عملنا كل حاجة.", "translation": "We did everything." },
+                    "إنتو": { "conjugation": "عملتوا", "example": "إنتو عملتوا إيه؟", "translation": "What did you do? (pl.)" },
+                    "هم": { "conjugation": "عملوا", "example": "هم عملوا شغلهم.", "translation": "They did their work." }
+                }
+            },
+            "أكل": {
+                "infinitive_en": "To Eat",
+                "conjugations": {
+                    "هو": { "conjugation": "أكل", "example": "هو أكل التفاحة.", "translation": "He ate the apple." },
+                    "هي": { "conjugation": "أكلت", "example": "هي أكلت الرز.", "translation": "She ate the rice." },
+                    "أنا": { "conjugation": "أكلت", "example": "أنا أكلت كتير.", "translation": "I ate a lot." },
+                    "إنت": { "conjugation": "أكلت", "example": "إنت أكلت خلاص؟", "translation": "Have you finished eating? (m.)" },
+                    "إنتي": { "conjugation": "أكلتي", "example": "إنتي أكلتي خلاص؟", "translation": "Have you finished eating? (f.)" },
+                    "إحنا": { "conjugation": "أكلنا", "example": "إحنا أكلنا سمك.", "translation": "We ate fish." },
+                    "إنتو": { "conjugation": "أكلتوا", "example": "إنتو أكلتوا كويس؟", "translation": "Did you eat well? (pl.)" },
+                    "هم": { "conjugation": "أكلوا", "example": "هم أكلوا الفاكهة.", "translation": "They ate the fruit." }
+                }
+            },
+            "شرب": {
+                "infinitive_en": "To Drink",
+                "conjugations": {
+                    "هو": { "conjugation": "شرب", "example": "هو شرب الماية.", "translation": "He drank the water." },
+                    "هي": { "conjugation": "شربت", "example": "هي شربت العصير.", "translation": "She drank the juice." },
+                    "أنا": { "conjugation": "شربت", "example": "أنا شربت قهوة.", "translation": "I drank coffee." },
+                    "إنت": { "conjugation": "شربت", "example": "إنت شربت إيه؟", "translation": "What did you drink? (m.)" },
+                    "إنتي": { "conjugation": "شربتي", "example": "إنتي شربتي إيه؟", "translation": "What did you drink? (f.)" },
+                    "إحنا": { "conjugation": "شربنا", "example": "إحنا شربنا شاي.", "translation": "We drank tea." },
+                    "إنتو": { "conjugation": "شربتوا", "example": "إنتو شربتوا لبن؟", "translation": "Did you drink milk? (pl.)" },
+                    "هم": { "conjugation": "شربوا", "example": "هم شربوا بيبسي.", "translation": "They drank Pepsi." }
+                }
+            },
+            "كتب": {
+                "infinitive_en": "To Write",
+                "conjugations": {
+                    "هو": { "conjugation": "كتب", "example": "هو كتب جواب.", "translation": "He wrote a letter." },
+                    "هي": { "conjugation": "كتبت", "example": "هي كتبت رسالة.", "translation": "She wrote a message." },
+                    "أنا": { "conjugation": "كتبت", "example": "أنا كتبت الدرس.", "translation": "I wrote the lesson." },
+                    "إنت": { "conjugation": "كتبت", "example": "إنت كتبت إيه؟", "translation": "What did you write? (m.)" },
+                    "إنتي": { "conjugation": "كتبتي", "example": "إنتي كتبتي إيه؟", "translation": "What did you write? (f.)" },
+                    "إحنا": { "conjugation": "كتبنا", "example": "إحنا كتبنا كل حاجة.", "translation": "We wrote everything." },
+                    "إنتو": { "conjugation": "كتبتوا", "example": "إنتو كتبتوا الواجب؟", "translation": "Did you write the homework? (pl.)" },
+                    "هم": { "conjugation": "كتبوا", "example": "هم كتبوا أسماءهم.", "translation": "They wrote their names." }
+                }
+            },
+            "فهم": {
+                "infinitive_en": "To Understand",
+                "conjugations": {
+                    "هو": { "conjugation": "فهم", "example": "هو فهم الشرح.", "translation": "He understood the explanation." },
+                    "هي": { "conjugation": "فهمت", "example": "هي فهمت الدرس.", "translation": "She understood the lesson." },
+                    "أنا": { "conjugation": "فهمت", "example": "أنا فهمت كلامك.", "translation": "I understood your words." },
+                    "إنت": { "conjugation": "فهمت", "example": "إنت فهمت ولا لأ؟", "translation": "Did you understand or not? (m.)" },
+                    "إنتي": { "conjugation": "فهمتي", "example": "إنتي فهمتي ولا لأ؟", "translation": "Did you understand or not? (f.)" },
+                    "إحنا": { "conjugation": "فهمنا", "example": "إحنا فهمنا كل حاجة.", "translation": "We understood everything." },
+                    "إنتو": { "conjugation": "فهمتوا", "example": "إنتو فهمتوا السؤال؟", "translation": "Did you understand the question? (pl.)" },
+                    "هم": { "conjugation": "فهموا", "example": "هم فهموا الموقف.", "translation": "They understood the situation." }
+                }
+            },
+            "قعد": {
+                "infinitive_en": "To Sit/Stay",
+                "conjugations": {
+                    "هو": { "conjugation": "قعد", "example": "هو قعد على الكرسي.", "translation": "He sat on the chair." },
+                    "هي": { "conjugation": "قعدت", "example": "هي قعدت في البيت.", "translation": "She stayed at home." },
+                    "أنا": { "conjugation": "قعدت", "example": "أنا قعدت كتير.", "translation": "I sat/stayed a lot." },
+                    "إنت": { "conjugation": "قعدت", "example": "إنت قعدت فين؟", "translation": "Where did you sit/stay? (m.)" },
+                    "إنتي": { "conjugation": "قعدتي", "example": "إنتي قعدتي فين؟", "translation": "Where did you sit/stay? (f.)" },
+                    "إحنا": { "conjugation": "قعدنا", "example": "إحنا قعدنا مع بعض.", "translation": "We sat together." },
+                    "إنتو": { "conjugation": "قعدتوا", "example": "إنتو قعدتوا هنا؟", "translation": "Did you sit/stay here? (pl.)" },
+                    "هم": { "conjugation": "قعدوا", "example": "هم قعدوا في القهوة.", "translation": "They sat in the cafe." }
+                }
+            },
+            "جاب": {
+                "infinitive_en": "To Bring",
+                "conjugations": {
+                    "هو": { "conjugation": "جاب", "example": "هو جاب الكتاب.", "translation": "He brought the book." },
+                    "هي": { "conjugation": "جابت", "example": "هي جابت الأكل.", "translation": "She brought the food." },
+                    "أنا": { "conjugation": "جبت", "example": "أنا جبت هدية.", "translation": "I brought a gift." },
+                    "إنت": { "conjugation": "جبت", "example": "إنت جبت إيه؟", "translation": "What did you bring? (m.)" },
+                    "إنتي": { "conjugation": "جبتي", "example": "إنتي جبتي إيه؟", "translation": "What did you bring? (f.)" },
+                    "إحنا": { "conjugation": "جبنا", "example": "إحنا جبنا كل حاجة.", "translation": "We brought everything." },
+                    "إنتو": { "conjugation": "جبتوا", "example": "إنتو جبتوا العصير؟", "translation": "Did you bring the juice? (pl.)" },
+                    "هم": { "conjugation": "جابوا", "example": "هم جابوا صحابهم.", "translation": "They brought their friends." }
+                }
+            }
+        };
+
+        let selectedVerb = Object.keys(verbData)[0];
+        let selectedPronoun = Object.keys(verbData[selectedVerb].conjugations)[0];
+
+        const verbButtonsContainer = document.getElementById('verb-buttons');
+        const pronounButtonsContainer = document.getElementById('pronoun-buttons');
+        
+        const displayConjugation = document.getElementById('display-conjugation');
+        const displayExample = document.getElementById('display-example');
+        const displayTranslation = document.getElementById('display-translation');
+
+        function createButtons() {
+            verbButtonsContainer.innerHTML = '';
+            Object.keys(verbData).forEach(verb => {
+                const button = document.createElement('button');
+                button.className = 'control-button text-lg font-semibold py-2 px-5 bg-white text-teal-700 rounded-full shadow-md hover:bg-stone-100';
+                button.textContent = verb;
+                button.dataset.verb = verb;
+                verbButtonsContainer.appendChild(button);
+                button.addEventListener('click', () => {
+                    selectedVerb = verb;
+                    updateDisplay();
+                });
+            });
+
+            pronounButtonsContainer.innerHTML = '';
+            const pronouns = ["هو", "هي", "أنا", "إنت", "إنتي", "إحنا", "إنتو", "هم"];
+            pronouns.forEach(pronoun => {
+                const button = document.createElement('button');
+                button.className = 'control-button text-lg font-semibold py-2 px-4 bg-white text-teal-700 rounded-full shadow-md hover:bg-stone-100';
+                button.textContent = pronoun;
+                button.dataset.pronoun = pronoun;
+                pronounButtonsContainer.appendChild(button);
+                button.addEventListener('click', () => {
+                    selectedPronoun = pronoun;
+                    updateDisplay();
+                });
+            });
+        }
+        
+        function updateDisplay() {
+            const data = verbData[selectedVerb].conjugations[selectedPronoun];
+
+            displayConjugation.textContent = data.conjugation;
+            displayExample.textContent = data.example;
+            displayTranslation.textContent = data.translation;
+            
+            document.querySelectorAll('[data-verb]').forEach(btn => {
+                btn.classList.toggle('active-verb', btn.dataset.verb === selectedVerb);
+            });
+            
+            document.querySelectorAll('[data-pronoun]').forEach(btn => {
+                btn.classList.toggle('active-pronoun', btn.dataset.pronoun === selectedPronoun);
+            });
+        }
+
+        // Quiz Data
+        const quizQuestions = {
+            quiz1: [ // Conjugation Match
+                { verb: "شرب", pronoun: "إحنا", answer: "شربنا" },
+                { verb: "كتب", pronoun: "هي", answer: "كتبت" },
+                { verb: "فهم", pronoun: "إنت", answer: "فهمت" },
+                { verb: "قعد", pronoun: "هم", answer: "قعدوا" },
+                { verb: "جاب", pronoun: "أنا", answer: "جبت" }
+            ],
+            quiz2: [ // Fill in the Blank (Example Sentence)
+                { sentence: "أنا __________ قهوة.", verb: "شرب", pronoun: "أنا", answer: "شربت" },
+                { sentence: "هي __________ رسالة.", verb: "كتب", pronoun: "هي", answer: "كتبت" },
+                { sentence: "هم __________ الموقف.", verb: "فهم", pronoun: "هم", answer: "فهموا" },
+                { sentence: "إنتو __________ هنا؟", verb: "قعد", pronoun: "إنتو", answer: "قعدتوا" },
+                { sentence: "هو __________ الكتاب.", verb: "جاب", pronoun: "هو", answer: "جاب" }
+            ],
+            quiz3: [ // Translation
+                { english: "To Drink (She)", verb: "شرب", pronoun: "هي", answer: "شربت" },
+                { english: "To Write (We)", verb: "كتب", pronoun: "إحنا", answer: "كتبنا" },
+                { english: "To Understand (He)", verb: "فهم", pronoun: "هو", answer: "فهم" },
+                { english: "To Sit/Stay (You - F.S.)", verb: "قعد", pronoun: "إنتي", answer: "قعدتي" },
+                { english: "To Bring (They)", verb: "جاب", pronoun: "هم", answer: "جابوا" }
+            ]
+        };
+
+        function generateQuiz(quizId, questions, containerId, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ''; // Clear previous questions
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'mb-4 flex flex-col sm:flex-row items-center justify-between gap-3';
+                let questionText = '';
+                if (type === 'conjugation-match') {
+                    questionText = `<span class="text-lg font-medium text-stone-700"> ${index + 1}. الفعل: ${q.verb} (To ${verbData[q.verb].infinitive_en}) - الضمير: ${q.pronoun} </span>`;
+                } else if (type === 'fill-in-blank') {
+                    questionText = `<span class="text-lg font-medium text-stone-700"> ${index + 1}. ${q.sentence.replace('__________', '_____')} </span>`;
+                } else if (type === 'translation') {
+                    questionText = `<span class="text-lg font-medium text-stone-700" dir="ltr"> ${index + 1}. ${q.english}: </span>`;
+                }
+
+                questionDiv.innerHTML = `
+                    ${questionText}
+                    <input type="text" class="quiz-input" data-question-index="${index}" placeholder="اكتب الإجابة هنا">
+                    <span class="quiz-feedback text-sm mt-1 sm:mt-0" data-feedback-index="${index}"></span>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkQuizAnswers(quizId) {
+            const inputs = document.querySelectorAll(`#${quizId}-questions .quiz-input`);
+            inputs.forEach(input => {
+                const index = parseInt(input.dataset.questionIndex);
+                const userAnswer = input.value.trim();
+                let correctAnswer;
+
+                if (quizId === 'quiz1') {
+                    correctAnswer = quizQuestions.quiz1[index].answer;
+                } else if (quizId === 'quiz2') {
+                    correctAnswer = quizQuestions.quiz2[index].answer;
+                } else if (quizId === 'quiz3') {
+                    correctAnswer = quizQuestions.quiz3[index].answer;
+                }
+
+                const feedbackSpan = document.querySelector(`#${quizId}-questions .quiz-feedback[data-feedback-index="${index}"]`);
+
+                if (userAnswer === correctAnswer) {
+                    feedbackSpan.textContent = 'صحيح! ✅';
+                    feedbackSpan.className = 'quiz-feedback text-sm mt-1 sm:mt-0 correct-answer';
+                } else {
+                    feedbackSpan.textContent = 'خطأ ❌';
+                    feedbackSpan.className = 'quiz-feedback text-sm mt-1 sm:mt-0 incorrect-answer';
+                }
+            });
+        }
+
+        function showQuizAnswers(quizId) {
+            const inputs = document.querySelectorAll(`#${quizId}-questions .quiz-input`);
+            inputs.forEach(input => {
+                const index = parseInt(input.dataset.questionIndex);
+                let correctAnswer;
+
+                if (quizId === 'quiz1') {
+                    correctAnswer = quizQuestions.quiz1[index].answer;
+                } else if (quizId === 'quiz2') {
+                    correctAnswer = quizQuestions.quiz2[index].answer;
+                } else if (quizId === 'quiz3') {
+                    correctAnswer = quizQuestions.quiz3[index].answer;
+                }
+                
+                input.value = correctAnswer;
+                const feedbackSpan = document.querySelector(`#${quizId}-questions .quiz-feedback[data-feedback-index="${index}"]`);
+                feedbackSpan.textContent = `الإجابة: ${correctAnswer}`;
+                feedbackSpan.className = 'quiz-feedback text-sm mt-1 sm:mt-0 text-blue-600 font-semibold';
+            });
+        }
+
+        function resetQuiz(quizId) {
+            const inputs = document.querySelectorAll(`#${quizId}-questions .quiz-input`);
+            inputs.forEach(input => {
+                input.value = '';
+                const feedbackSpan = document.querySelector(`#${quizId}-questions .quiz-feedback[data-feedback-index="${index}"]`);
+                feedbackSpan.textContent = '';
+                feedbackSpan.className = 'quiz-feedback text-sm mt-1 sm:mt-0';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createButtons();
+            updateDisplay();
+
+            // Generate Quizzes
+            generateQuiz('quiz1', quizQuestions.quiz1, 'quiz1-questions', 'conjugation-match');
+            generateQuiz('quiz2', quizQuestions.quiz2, 'quiz2-questions', 'fill-in-blank');
+            generateQuiz('quiz3', quizQuestions.quiz3, 'quiz3-questions', 'translation');
+
+            // Attach Event Listeners for Quizzes
+            document.getElementById('quiz1-check').addEventListener('click', () => checkQuizAnswers('quiz1'));
+            document.getElementById('quiz1-show-answers').addEventListener('click', () => showQuizAnswers('quiz1'));
+            document.getElementById('quiz1-reset').addEventListener('click', () => resetQuiz('quiz1'));
+
+            document.getElementById('quiz2-check').addEventListener('click', () => checkQuizAnswers('quiz2'));
+            document.getElementById('quiz2-show-answers').addEventListener('click', () => showQuizAnswers('quiz2'));
+            document.getElementById('quiz2-reset').addEventListener('click', () => resetQuiz('quiz2'));
+
+            document.getElementById('quiz3-check').addEventListener('click', () => checkQuizAnswers('quiz3'));
+            document.getElementById('quiz3-show-answers').addEventListener('click', () => showQuizAnswers('quiz3'));
+            document.getElementById('quiz3-reset').addEventListener('click', () => resetQuiz('quiz3'));
+        });
+    </script>
+</body>
+</html>

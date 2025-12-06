@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورقة عمل تفاعلية: عايز والتعبيرات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-feedback {
+            margin-top: 8px;
+            font-weight: 600;
+        }
+        .correct {
+            color: #10B981; /* Green-500 */
+        }
+        .incorrect {
+            color: #EF4444; /* Red-500 */
+        }
+        .quiz-option input[type="radio"]:checked + label {
+            background-color: #DBEAFE; /* Blue-100 */
+            border-color: #2563EB; /* Blue-600 */
+        }
+        .quiz-option label {
+            display: block;
+            padding: 10px 15px;
+            border: 1px solid #D1D5DB; /* Gray-300 */
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .quiz-option label:hover {
+            background-color: #F3F4F6; /* Gray-100 */
+        }
+        .quiz-input {
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            padding: 8px 12px;
+            width: 100%;
+            max-width: 250px;
+            transition: border-color 0.2s ease-in-out;
+        }
+        .quiz-input:focus {
+            outline: none;
+            border-color: #2563EB;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .quiz-select {
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            padding: 8px 12px;
+            width: 100%;
+            max-width: 250px;
+            background-color: white;
+            appearance: none; /* Remove default arrow */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 0.75rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem; /* Space for the custom arrow */
+            transition: border-color 0.2s ease-in-out;
+        }
+        .quiz-select:focus {
+            outline: none;
+            border-color: #2563EB;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-right">
+    <div class="max-w-4xl mx-auto p-6 bg-white shadow-md mt-10 rounded-xl">
+        <h1 class="text-4xl font-extrabold mb-6 text-center text-blue-700">🌟 ورقة عمل تفاعلية: "عايز" والتعبيرات المفيدة 🌟</h1>
+
+        <!-- Section: Conjugation of "عايز" -->
+        <section class="mb-8 p-4 border border-blue-200 rounded-lg bg-blue-50">
+            <h2 class="text-2xl font-bold mb-4 text-blue-800">👨‍🏫 فعل "عايز" مع الضمائر</h2>
+            <table class="table-auto w-full mb-6 border-collapse border border-blue-300 rounded-lg overflow-hidden">
+                <thead>
+                    <tr class="bg-blue-200 text-blue-900">
+                        <th class="px-4 py-3 border border-blue-300">الضمير (Pronoun)</th>
+                        <th class="px-4 py-3 border border-blue-300">التصريف (Conjugation)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="border border-blue-300 px-4 py-2">أنا (I)</td><td class="border border-blue-300 px-4 py-2">عايز (m) / عايزة (f)</td></tr>
+                    <tr><td class="border border-blue-300 px-4 py-2">إنتَ (You - m)</td><td class="border border-blue-300 px-4 py-2">عايز</td></tr>
+                    <tr><td class="border border-blue-300 px-4 py-2">إنتِ (You - f)</td><td class="border border-blue-300 px-4 py-2">عايزة</td></tr>
+                    <tr><td class="border border-blue-300 px-4 py-2">هو (He)</td><td class="border border-blue-300 px-4 py-2">عايز</td></tr>
+                    <tr><td class="border border-blue-300 px-4 py-2">هي (She)</td><td class="border border-blue-300 px-4 py-2">عايزة</td></tr>
+                    <tr><td class="border border-blue-300 px-4 py-2">إحنا (We)</td><td class="border border-blue-300 px-4 py-2">عايزين</td></tr>
+                    <tr><td class="border border-blue-300 px-4 py-2">إنتو (You - pl)</td><td class="border border-blue-300 px-4 py-2">عايزين</td></tr>
+                    <tr><td class="border border-blue-300 px-4 py-2">هم (They)</td><td class="border border-blue-300 px-4 py-2">عايزين</td></tr>
+                </tbody>
+            </table>
+
+            <h3 class="text-xl font-semibold mb-3 text-blue-700">أمثلة إضافية:</h3>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li>🔸 <strong>مثال ١:</strong> أنا عايز أنام 😴 (I want to sleep)</li>
+                <li>🔸 <strong>مثال ٢:</strong> هي عايزة تشرب قهوة ☕ (She wants to drink coffee)</li>
+                <li>🔸 <strong>مثال ٣:</strong> هم عايزين يروحوا السينما 🎬 (They want to go to the cinema)</li>
+                <li>🔸 <strong>مثال ٤:</strong> أنا عايز أكل تفاح 🍎 (I want to eat an apple)</li>
+                <li>🔸 <strong>مثال ٥:</strong> إنتَ عايز تشرب مياه؟ 💧 (Do you (m) want to drink water?)</li>
+                <li>🔸 <strong>مثال ٦:</strong> إنتِ عايزة تشتري فستان جديد؟ 👗 (Do you (f) want to buy a new dress?)</li>
+                <li>🔸 <strong>مثال ٧:</strong> هو عايز يسافر بكرة ✈️ (He wants to travel tomorrow)</li>
+                <li>🔸 <strong>مثال ٨:</strong> إحنا عايزين نروح البحر 🏖️ (We want to go to the beach)</li>
+            </ul>
+        </section>
+
+        <!-- Section: Important Expressions -->
+        <section class="mb-8 p-4 border border-green-200 rounded-lg bg-green-50">
+            <h2 class="text-2xl font-bold mb-4 text-green-800">🧩 تعبيرات مهمة</h2>
+            <ul class="list-disc list-inside space-y-3 text-gray-700">
+                <li><strong>💡 قبل ما</strong> = قبل أن (Before) ➡️ مثال: لازم تذاكر قبل ما تخرج 🎒 (You must study before you go out)
+                    <br>أمثلة إضافية:
+                    <ul class="list-circle list-inside ml-5">
+                        <li>لازم تنام كويس قبل ما تبدأ الشغل. (You must sleep well before starting work.)</li>
+                        <li>اشرب مياه قبل ما تجري. (Drink water before you run.)</li>
+                    </ul>
+                </li>
+                <li><strong>💡 بعد ما</strong> = بعد أن (After) ➡️ مثال: اتغديت بعد ما رجعت من الشغل 🍲 (I had lunch after I returned from work)
+                    <br>أمثلة إضافية:
+                    <ul class="list-circle list-inside ml-5">
+                        <li>هنتفرج على الفيلم بعد ما نخلص الأكل. (We will watch the movie after we finish eating.)</li>
+                        <li>هكلمك بعد ما أوصل البيت. (I'll call you after I arrive home.)</li>
+                    </ul>
+                </li>
+                <li><strong>💡 زي</strong> = مثل (Like / As) ➡️ مثال: هو بيتكلم زي أبوه تمامًا 🗣️ (He speaks exactly like his father)
+                    <br>أمثلة إضافية:
+                    <ul class="list-circle list-inside ml-5">
+                        <li>صوته زي صوت أخوه. (His voice is like his brother's voice.)</li>
+                        <li>هي بتطبخ زي أمها. (She cooks like her mother.)</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Quiz 1: MCQ for "عايز" Conjugation -->
+        <section class="mb-8 p-4 border border-purple-200 rounded-lg bg-purple-50">
+            <h2 class="text-2xl font-bold mb-4 text-purple-800">📝 Quiz 1: اختار التصريف الصحيح لـ "عايز"</h2>
+            <form id="quiz1-form" class="space-y-4">
+                <div class="space-y-2">
+                    <p class="font-medium">1. (أنا) ______ أروح النادي.</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q1_1a" name="q1_1" value="عايز" class="hidden">
+                        <label for="q1_1a">عايز</label>
+                        <input type="radio" id="q1_1b" name="q1_1" value="عايزة" class="hidden">
+                        <label for="q1_1b">عايزة</label>
+                        <input type="radio" id="q1_1c" name="q1_1" value="عايزين" class="hidden">
+                        <label for="q1_1c">عايزين</label>
+                    </div>
+                    <div id="q1_1-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">2. (هي) ______ تاكل بيتزا.</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q1_2a" name="q1_2" value="عايز" class="hidden">
+                        <label for="q1_2a">عايز</label>
+                        <input type="radio" id="q1_2b" name="q1_2" value="عايزة" class="hidden">
+                        <label for="q1_2b">عايزة</label>
+                        <input type="radio" id="q1_2c" name="q1_2" value="عايزين" class="hidden">
+                        <label for="q1_2c">عايزين</label>
+                    </div>
+                    <div id="q1_2-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">3. (إنتو) ______ تذاكروا ولا لأ؟</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q1_3a" name="q1_3" value="عايز" class="hidden">
+                        <label for="q1_3a">عايز</label>
+                        <input type="radio" id="q1_3b" name="q1_3" value="عايزة" class="hidden">
+                        <label for="q1_3b">عايزة</label>
+                        <input type="radio" id="q1_3c" name="q1_3" value="عايزين" class="hidden">
+                        <label for="q1_3c">عايزين</label>
+                    </div>
+                    <div id="q1_3-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">4. (هم) ______ يشتروا لبس جديد.</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q1_4a" name="q1_4" value="عايز" class="hidden">
+                        <label for="q1_4a">عايز</label>
+                        <input type="radio" id="q1_4b" name="q1_4" value="عايزة" class="hidden">
+                        <label for="q1_4b">عايزة</label>
+                        <input type="radio" id="q1_4c" name="q1_4" value="عايزين" class="hidden">
+                        <label for="q1_4c">عايزين</label>
+                    </div>
+                    <div id="q1_4-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">5. (إنتِ) ______ تشوفي الفيلم؟</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q1_5a" name="q1_5" value="عايز" class="hidden">
+                        <label for="q1_5a">عايز</label>
+                        <input type="radio" id="q1_5b" name="q1_5" value="عايزة" class="hidden">
+                        <label for="q1_5b">عايزة</label>
+                        <input type="radio" id="q1_5c" name="q1_5" value="عايزين" class="hidden">
+                        <label for="q1_5c">عايزين</label>
+                    </div>
+                    <div id="q1_5-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">6. (هو) ______ يشرب شاي.</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q1_6a" name="q1_6" value="عايز" class="hidden">
+                        <label for="q1_6a">عايز</label>
+                        <input type="radio" id="q1_6b" name="q1_6" value="عايزة" class="hidden">
+                        <label for="q1_6b">عايزة</label>
+                        <input type="radio" id="q1_6c" name="q1_6" value="عايزين" class="hidden">
+                        <label for="q1_6c">عايزين</label>
+                    </div>
+                    <div id="q1_6-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">7. (إحنا) ______ نسافر الصيف ده.</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q1_7a" name="q1_7" value="عايز" class="hidden">
+                        <label for="q1_7a">عايز</label>
+                        <input type="radio" id="q1_7b" name="q1_7" value="عايزة" class="hidden">
+                        <label for="q1_7b">عايزة</label>
+                        <input type="radio" id="q1_7c" name="q1_7" value="عايزين" class="hidden">
+                        <label for="q1_7c">عايزين</label>
+                    </div>
+                    <div id="q1_7-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="flex gap-4 mt-6">
+                    <button type="button" onclick="checkQuiz(1)" class="px-6 py-3 bg-purple-600 text-white font-bold rounded-lg shadow-md hover:bg-purple-700 transition-colors">تحقق من الإجابات</button>
+                    <button type="button" onclick="resetQuiz(1)" class="px-6 py-3 bg-gray-300 text-gray-800 font-bold rounded-lg shadow-md hover:bg-gray-400 transition-colors">إعادة تعيين</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Quiz 2: Fill in the Blanks -->
+        <section class="mb-8 p-4 border border-orange-200 rounded-lg bg-orange-50">
+            <h2 class="text-2xl font-bold mb-4 text-orange-800">📝 Quiz 2: أكمل الجملة باستخدام "قبل ما" أو "بعد ما" أو "زي"</h2>
+            <form id="quiz2-form" class="space-y-4">
+                <div class="space-y-2">
+                    <p class="font-medium">1. غسل إيده <input type="text" id="q2_1" class="quiz-input inline-block w-auto max-w-[150px] text-center" placeholder="..."> أكل.</p>
+                    <div id="q2_1-feedback" class="quiz-feedback"></div>
+                </div>
+                <div class="space-y-2">
+                    <p class="font-medium">2. خرج من البيت <input type="text" id="q2_2" class="quiz-input inline-block w-auto max-w-[150px] text-center" placeholder="..."> لبس الجاكت.</p>
+                    <div id="q2_2-feedback" class="quiz-feedback"></div>
+                </div>
+                <div class="space-y-2">
+                    <p class="font-medium">3. أنا دايمًا بصحى <input type="text" id="q2_3" class="quiz-input inline-block w-auto max-w-[150px] text-center" placeholder="..."> المنبّه يرن.</p>
+                    <div id="q2_3-feedback" class="quiz-feedback"></div>
+                </div>
+                <div class="space-y-2">
+                    <p class="font-medium">4. هنشرب شاي <input type="text" id="q2_4" class="quiz-input inline-block w-auto max-w-[150px] text-center" placeholder="..."> العشا.</p>
+                    <div id="q2_4-feedback" class="quiz-feedback"></div>
+                </div>
+                <div class="space-y-2">
+                    <p class="font-medium">5. <input type="text" id="q2_5" class="quiz-input inline-block w-auto max-w-[150px] text-center" placeholder="..."> تذاكر، لازم تنظف مكتبك.</p>
+                    <div id="q2_5-feedback" class="quiz-feedback"></div>
+                </div>
+                <div class="space-y-2">
+                    <p class="font-medium">6. بتكلم مع صحابي <input type="text" id="q2_6" class="quiz-input inline-block w-auto max-w-[150px] text-center" placeholder="..."> أروح الشغل.</p>
+                    <div id="q2_6-feedback" class="quiz-feedback"></div>
+                </div>
+                <div class="space-y-2">
+                    <p class="font-medium">7. هتفرج على التلفزيون <input type="text" id="q2_7" class="quiz-input inline-block w-auto max-w-[150px] text-center" placeholder="..."> أخلص الواجب.</p>
+                    <div id="q2_7-feedback" class="quiz-feedback"></div>
+                </div>
+                <div class="space-y-2">
+                    <p class="font-medium">8. الجو حر <input type="text" id="q2_8" class="quiz-input inline-block w-auto max-w-[150px] text-center" placeholder="..."> الصيف.</p>
+                    <div id="q2_8-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="flex gap-4 mt-6">
+                    <button type="button" onclick="checkQuiz(2)" class="px-6 py-3 bg-orange-600 text-white font-bold rounded-lg shadow-md hover:bg-orange-700 transition-colors">تحقق من الإجابات</button>
+                    <button type="button" onclick="resetQuiz(2)" class="px-6 py-3 bg-gray-300 text-gray-800 font-bold rounded-lg shadow-md hover:bg-gray-400 transition-colors">إعادة تعيين</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Quiz 3: Matching Quiz -->
+        <section class="mb-8 p-4 border border-teal-200 rounded-lg bg-teal-50">
+            <h2 class="text-2xl font-bold mb-4 text-teal-800">📝 Quiz 3: مطابقة (Match the expression with its meaning)</h2>
+            <form id="quiz3-form" class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+                    <p class="font-medium mb-2 sm:mb-0">1. عايز</p>
+                    <select id="q3_1" class="quiz-select">
+                        <option value="">اختار المعنى</option>
+                        <option value="Before">Before</option>
+                        <option value="After">After</option>
+                        <option value="Like / As">Like / As</option>
+                        <option value="Want">Want</option>
+                    </select>
+                    <div id="q3_1-feedback" class="quiz-feedback sm:mr-4"></div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+                    <p class="font-medium mb-2 sm:mb-0">2. قبل ما</p>
+                    <select id="q3_2" class="quiz-select">
+                        <option value="">اختار المعنى</option>
+                        <option value="Before">Before</option>
+                        <option value="After">After</option>
+                        <option value="Like / As">Like / As</option>
+                        <option value="Want">Want</option>
+                    </select>
+                    <div id="q3_2-feedback" class="quiz-feedback sm:mr-4"></div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+                    <p class="font-medium mb-2 sm:mb-0">3. بعد ما</p>
+                    <select id="q3_3" class="quiz-select">
+                        <option value="">اختار المعنى</option>
+                        <option value="Before">Before</option>
+                        <option value="After">After</option>
+                        <option value="Like / As">Like / As</option>
+                        <option value="Want">Want</option>
+                    </select>
+                    <div id="q3_3-feedback" class="quiz-feedback sm:mr-4"></div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+                    <p class="font-medium mb-2 sm:mb-0">4. زي</p>
+                    <select id="q3_4" class="quiz-select">
+                        <option value="">اختار المعنى</option>
+                        <option value="Before">Before</option>
+                        <option value="After">After</option>
+                        <option value="Like / As">Like / As</option>
+                        <option value="Want">Want</option>
+                    </select>
+                    <div id="q3_4-feedback" class="quiz-feedback sm:mr-4"></div>
+                </div>
+
+                <div class="flex gap-4 mt-6">
+                    <button type="button" onclick="checkQuiz(3)" class="px-6 py-3 bg-teal-600 text-white font-bold rounded-lg shadow-md hover:bg-teal-700 transition-colors">تحقق من الإجابات</button>
+                    <button type="button" onclick="resetQuiz(3)" class="px-6 py-3 bg-gray-300 text-gray-800 font-bold rounded-lg shadow-md hover:bg-gray-400 transition-colors">إعادة تعيين</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Quiz 4: Mixed MCQ -->
+        <section class="mb-8 p-4 border border-red-200 rounded-lg bg-red-50">
+            <h2 class="text-2xl font-bold mb-4 text-red-800">📝 Quiz 4: اختار الكلمة المناسبة</h2>
+            <form id="quiz4-form" class="space-y-4">
+                <div class="space-y-2">
+                    <p class="font-medium">1. أنا ______ أروح السينما.</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q4_1a" name="q4_1" value="عايز" class="hidden">
+                        <label for="q4_1a">عايز</label>
+                        <input type="radio" id="q4_1b" name="q4_1" value="عايزة" class="hidden">
+                        <label for="q4_1b">عايزة</label>
+                        <input type="radio" id="q4_1c" name="q4_1" value="عايزين" class="hidden">
+                        <label for="q4_1c">عايزين</label>
+                    </div>
+                    <div id="q4_1-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">2. هي بتشتغل ______ النملة.</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q4_2a" name="q4_2" value="قبل ما" class="hidden">
+                        <label for="q4_2a">قبل ما</label>
+                        <input type="radio" id="q4_2b" name="q4_2" value="بعد ما" class="hidden">
+                        <label for="q4_2b">بعد ما</label>
+                        <input type="radio" id="q4_2c" name="q4_2" value="زي" class="hidden">
+                        <label for="q4_2c">زي</label>
+                    </div>
+                    <div id="q4_2-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">3. لازم تخلص شغلك ______ تنام.</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q4_3a" name="q4_3" value="قبل ما" class="hidden">
+                        <label for="q4_3a">قبل ما</label>
+                        <input type="radio" id="q4_3b" name="q4_3" value="بعد ما" class="hidden">
+                        <label for="q4_3b">بعد ما</label>
+                        <input type="radio" id="q4_3c" name="q4_3" value="زي" class="hidden">
+                        <label for="q4_3c">زي</label>
+                    </div>
+                    <div id="q4_3-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">4. هكلمك ______ أوصل البيت.</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q4_4a" name="q4_4" value="قبل ما" class="hidden">
+                        <label for="q4_4a">قبل ما</label>
+                        <input type="radio" id="q4_4b" name="q4_4" value="بعد ما" class="hidden">
+                        <label for="q4_4b">بعد ما</label>
+                        <input type="radio" id="q4_4c" name="q4_4" value="زي" class="hidden">
+                        <label for="q4_4c">زي</label>
+                    </div>
+                    <div id="q4_4-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-medium">5. إنتَ ______ تاكل إيه؟</p>
+                    <div class="flex flex-col space-y-2 quiz-option">
+                        <input type="radio" id="q4_5a" name="q4_5" value="عايز" class="hidden">
+                        <label for="q4_5a">عايز</label>
+                        <input type="radio" id="q4_5b" name="q4_5" value="عايزة" class="hidden">
+                        <label for="q4_5b">عايزة</label>
+                        <input type="radio" id="q4_5c" name="q4_5" value="عايزين" class="hidden">
+                        <label for="q4_5c">عايزين</label>
+                    </div>
+                    <div id="q4_5-feedback" class="quiz-feedback"></div>
+                </div>
+
+                <div class="flex gap-4 mt-6">
+                    <button type="button" onclick="checkQuiz(4)" class="px-6 py-3 bg-red-600 text-white font-bold rounded-lg shadow-md hover:bg-red-700 transition-colors">تحقق من الإجابات</button>
+                    <button type="button" onclick="resetQuiz(4)" class="px-6 py-3 bg-gray-300 text-gray-800 font-bold rounded-lg shadow-md hover:bg-gray-400 transition-colors">إعادة تعيين</button>
+                </div>
+            </form>
+        </section>
+
+    </div>
+
+    <script>
+        // Quiz answers
+        const quizAnswers = {
+            quiz1: {
+                'q1_1': ['عايز', 'عايزة'], // أنا can be masculine or feminine
+                'q1_2': 'عايزة',
+                'q1_3': 'عايزين',
+                'q1_4': 'عايزين',
+                'q1_5': 'عايزة',
+                'q1_6': 'عايز',
+                'q1_7': 'عايزين'
+            },
+            quiz2: {
+                'q2_1': 'قبل ما',
+                'q2_2': 'بعد ما',
+                'q2_3': 'قبل ما',
+                'q2_4': 'بعد ما',
+                'q2_5': 'قبل ما',
+                'q2_6': 'قبل ما',
+                'q2_7': 'بعد ما',
+                'q2_8': 'زي'
+            },
+            quiz3: {
+                'q3_1': 'Want',
+                'q3_2': 'Before',
+                'q3_3': 'After',
+                'q3_4': 'Like / As'
+            },
+            quiz4: {
+                'q4_1': ['عايز', 'عايزة'], // أنا can be masculine or feminine
+                'q4_2': 'زي',
+                'q4_3': 'قبل ما',
+                'q4_4': 'بعد ما',
+                'q4_5': 'عايز'
+            }
+        };
+
+        // Function to check quiz answers
+        function checkQuiz(quizNum) {
+            const formId = `quiz${quizNum}-form`;
+            const form = document.getElementById(formId);
+            const answers = quizAnswers[`quiz${quizNum}`];
+
+            for (const questionId in answers) {
+                const feedbackElement = document.getElementById(`${questionId}-feedback`);
+                let isCorrect = false;
+
+                if (quizNum === 1 || quizNum === 4) { // MCQ quizzes
+                    const selectedOption = form.querySelector(`input[name="${questionId}"]:checked`);
+                    if (selectedOption) {
+                        const correctAnswer = answers[questionId];
+                        if (Array.isArray(correctAnswer)) {
+                            isCorrect = correctAnswer.includes(selectedOption.value);
+                        } else {
+                            isCorrect = selectedOption.value === correctAnswer;
+                        }
+                    }
+                } else if (quizNum === 2) { // Fill in the blanks
+                    const inputElement = document.getElementById(questionId);
+                    if (inputElement) {
+                        // Normalize input by trimming whitespace and converting to lowercase for comparison
+                        const userAnswer = inputElement.value.trim();
+                        // Assuming answers are exact matches, case-sensitive for Arabic words
+                        isCorrect = userAnswer === answers[questionId];
+                    }
+                } else if (quizNum === 3) { // Matching quiz (dropdowns)
+                    const selectElement = document.getElementById(questionId);
+                    if (selectElement) {
+                        isCorrect = selectElement.value === answers[questionId];
+                    }
+                }
+
+                // Provide feedback
+                if (feedbackElement) {
+                    feedbackElement.textContent = isCorrect ? '✅ إجابة صحيحة!' : '❌ إجابة خاطئة. حاول مرة أخرى.';
+                    feedbackElement.classList.remove('correct', 'incorrect');
+                    feedbackElement.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+            }
+        }
+
+        // Function to reset quiz
+        function resetQuiz(quizNum) {
+            const formId = `quiz${quizNum}-form`;
+            const form = document.getElementById(formId);
+
+            if (quizNum === 1 || quizNum === 4) { // MCQ quizzes
+                const radioButtons = form.querySelectorAll('input[type="radio"]');
+                radioButtons.forEach(radio => radio.checked = false);
+            } else if (quizNum === 2) { // Fill in the blanks
+                const inputElements = form.querySelectorAll('input[type="text"]');
+                inputElements.forEach(input => input.value = '');
+            } else if (quizNum === 3) { // Matching quiz (dropdowns)
+                const selectElements = form.querySelectorAll('select');
+                selectElements.forEach(select => select.value = '');
+            }
+
+            // Clear feedback
+            const feedbackElements = form.querySelectorAll('.quiz-feedback');
+            feedbackElements.forEach(feedback => {
+                feedback.textContent = '';
+                feedback.classList.remove('correct', 'incorrect');
+            });
+        }
+    </script>
+</body>
+</html>

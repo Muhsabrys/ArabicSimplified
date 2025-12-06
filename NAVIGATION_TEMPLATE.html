@@ -1,0 +1,147 @@
+<!-- 
+CONTEXT ARABIC - NAVIGATION TEMPLATE
+====================================
+Copy the NAVIGATION section below and paste it right after <body> tag
+Copy the FOOTER section and paste it right before </body> tag
+
+Replace MODULE_NAME and colors based on the module:
+- Reading: primary=#64748b, accent=#f97316
+- Listening: primary=#22c55e, accent=#10b981
+- Vocabulary: primary=#a78bfa, accent=#ec4899
+- Grammar: primary=#0ea5e9, accent=#06b6d4
+- Quizzes: primary=#eab308, accent=#f59e0b
+- Games: primary=#ef4444, accent=#f59e0b
+- Culture: primary=#d97706, accent=#fbbf24
+- EgyptianArabicModule: primary=#22c55e, accent=#10b981
+-->
+
+<!-- ============= ADD TO <head> IF NOT PRESENT ============= -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<!-- ============= NAVIGATION (paste after <body>) ============= -->
+    <!-- Context Arabic Navigation -->
+    <nav class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, PRIMARY_COLOR, ACCENT_COLOR);">
+        <div class="container mx-auto px-4 md:px-6 py-3 md:py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-2 text-white hover:opacity-80 transition">
+                    <i class="fas fa-home text-xl md:text-2xl"></i>
+                    <span class="font-semibold text-sm md:text-lg hidden sm:inline">Home</span>
+                </a>
+                <div class="text-center flex-1 px-4">
+                    <span class="text-lg md:text-2xl font-bold text-white">MODULE_NAME - LESSON_TITLE</span>
+                </div>
+                <a href="index.html" class="flex items-center gap-2 text-white hover:opacity-80 transition">
+                    <span class="font-semibold text-sm md:text-lg hidden sm:inline">MODULE_NAME Module</span>
+                    <i class="fas fa-arrow-right text-xl md:text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+<!-- ============= FOOTER (paste before </body>) ============= -->
+    <!-- Context Arabic Footer -->
+    <footer class="mt-16 py-6 md:py-8 text-white text-center" style="background: linear-gradient(135deg, PRIMARY_COLOR, ACCENT_COLOR);">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <a href="../index.html" class="hover:opacity-80 transition">
+                    <i class="fas fa-brain text-xl md:text-2xl mr-2"></i>
+                    <span class="font-semibold text-sm md:text-base">Context Arabic</span>
+                </a>
+                <p class="text-xs md:text-sm opacity-90">&copy; 2025 - Learn Arabic in Context</p>
+                <a href="index.html" class="hover:opacity-80 transition">
+                    <span class="font-semibold text-sm md:text-base">Back to MODULE_NAME</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+<!-- ============= EXAMPLES FOR EACH MODULE ============= -->
+
+<!-- GRAMMAR MODULE EXAMPLE -->
+<!--
+    Colors: primary=#0ea5e9, accent=#06b6d4
+    <nav class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, #0ea5e9, #06b6d4);">
+        ...
+        <span class="text-lg md:text-2xl font-bold text-white">Grammar - Lesson Title</span>
+        ...
+        <span class="font-semibold text-sm md:text-lg hidden sm:inline">Grammar Module</span>
+        ...
+    </nav>
+-->
+
+<!-- VOCABULARY MODULE EXAMPLE -->
+<!--
+    Colors: primary=#a78bfa, accent=#ec4899
+    <nav class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, #a78bfa, #ec4899);">
+        ...
+        <span class="text-lg md:text-2xl font-bold text-white">Vocabulary - Lesson Title</span>
+        ...
+        <span class="font-semibold text-sm md:text-lg hidden sm:inline">Vocabulary Module</span>
+        ...
+    </nav>
+-->
+
+<!-- READING MODULE EXAMPLE -->
+<!--
+    Colors: primary=#64748b, accent=#f97316
+    <nav class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, #64748b, #f97316);">
+        ...
+        <span class="text-lg md:text-2xl font-bold text-white">Reading - Lesson Title</span>
+        ...
+        <span class="font-semibold text-sm md:text-lg hidden sm:inline">Reading Module</span>
+        ...
+    </nav>
+-->
+
+<!-- LISTENING MODULE EXAMPLE -->
+<!--
+    Colors: primary=#22c55e, accent=#10b981
+    <nav class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, #22c55e, #10b981);">
+        ...
+        <span class="text-lg md:text-2xl font-bold text-white">Listening - Lesson Title</span>
+        ...
+        <span class="font-semibold text-sm md:text-lg hidden sm:inline">Listening Module</span>
+        ...
+    </nav>
+-->
+
+<!-- GAMES MODULE EXAMPLE -->
+<!--
+    Colors: primary=#ef4444, accent=#f59e0b
+    <nav class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">
+        ...
+        <span class="text-lg md:text-2xl font-bold text-white">Games - Game Title</span>
+        ...
+        <span class="font-semibold text-sm md:text-lg hidden sm:inline">Games Module</span>
+        ...
+    </nav>
+-->
+
+<!-- CULTURE MODULE EXAMPLE -->
+<!--
+    Colors: primary=#d97706, accent=#fbbf24
+    <nav class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, #d97706, #fbbf24);">
+        ...
+        <span class="text-lg md:text-2xl font-bold text-white">Culture - Topic Title</span>
+        ...
+        <span class="font-semibold text-sm md:text-lg hidden sm:inline">Culture Module</span>
+        ...
+    </nav>
+-->
+
+<!-- EGYPTIAN ARABIC MODULE EXAMPLE -->
+<!--
+    Colors: primary=#22c55e, accent=#10b981
+    <nav class="sticky top-0 z-50 shadow-lg" style="background: linear-gradient(135deg, #22c55e, #10b981);">
+        ...
+        <span class="text-lg md:text-2xl font-bold text-white">Egyptian Arabic - Lesson Title</span>
+        ...
+        <span class="font-semibold text-sm md:text-lg hidden sm:inline">Egyptian Arabic Module</span>
+        ...
+    </nav>
+-->

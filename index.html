@@ -3,105 +3,396 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Arabic Grammar Insights</title>
-    <!-- Chosen Palette: Desert Sage - Simplified for inline CSS -->
-    <!-- Application Structure Plan: This is the primary entry point to the learning platform. It welcomes students and provides top-level navigation to Weekly modules. Each Weekly button links to a dedicated 'index.html' file within its respective Week's folder, which will then serve as an overview for lessons within that Week. This clear, hierarchical structure ensures intuitive navigation for students progressing through the course. -->
-    <!-- Visualization & Content Choices: Goal: Inform and Navigate. Method: Textual introduction and interactive buttons for course modules. Justification: A clean, direct landing page is optimal for guiding users to structured content. No complex visualizations are required. Library/Method: Pure HTML for structure, inline CSS for styling, standard hyperlinks for navigation. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <title>Context - Your Arabic Learning Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif'],
+                        'lato': ['Lato', 'sans-serif'],
+                    },
+                    colors: {
+                        'context-primary': '#2563eb',
+                        'context-secondary': '#7c3aed',
+                        'context-accent': '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
         body {
-            font-family: sans-serif; /* Fallback font */
-            background-color: #FDFCF9;
-            margin: 0;
-            padding: 20px;
-            color: #57534E;
-            line-height: 1.6;
+            font-family: 'Lato', sans-serif;
         }
-        .container {
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 2rem 1rem;
-            text-align: center;
-        }
-        .mb-8 { margin-bottom: 2rem; }
-        .mb-12 { margin-bottom: 3rem; }
-        .mt-4 { margin-top: 1rem; }
-        .text-4xl { font-size: 2.25rem; }
-        .text-5xl { font-size: 3rem; }
-        .text-2xl { font-size: 1.5rem; }
-        .text-lg { font-size: 1.125rem; }
-        .font-bold { font-weight: 700; }
-        .font-semibold { font-weight: 600; }
-        .text-stone-900 { color: #1C1917; }
-        .text-stone-500 { color: #78716C; }
-        .text-stone-600 { color: #57534E; }
-        .arabic-text {
-            font-family: serif;
-            direction: rtl;
-            font-size: 1.5rem;
-            color: #57534E;
+        .font-arabic {
+            font-family: 'Cairo', sans-serif;
         }
         
-        .module-button {
+        .gradient-text {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .context-logo {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .module-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(124, 58, 237, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .module-card:hover::before {
+            opacity: 1;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.25);
+        }
+        
+        .context-icon {
             display: inline-block;
-            background-color: #4A6C6F;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            text-decoration: none;
-            font-size: 1.25rem;
-            font-weight: 600;
-            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-            margin: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: float-context 4s ease-in-out infinite;
         }
-        .module-button:hover {
-            background-color: #3B5759;
-            transform: translateY(-2px);
+        
+        @keyframes float-context {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
-        .module-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        @media (min-width: 768px) {
-            .md\:text-5xl { font-size: 3rem; }
+        
+        .brain-network {
+            background-image: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
         }
     </style>
 </head>
-<body>
-
-    <div class="container">
-
-        <header class="mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-stone-900">أَهْلاً وَسَهْلاً!</h1>
-            <p class="arabic-text text-2xl mt-2 text-stone-500">Welcome to Arabic Grammar Insights</p>
-        </header>
-
-        <main>
-            <p class="mb-8 text-lg text-stone-600">
-                Are you eager to dive deeper into the beauty and logic of Arabic grammar? You've come to the right place! This platform is designed to make complex Arabic concepts easy to understand and fun to explore. Whether you're a beginner or looking to solidify your knowledge, our interactive guides are here to help.
-            </p>
-            <p class="mb-12 text-lg text-stone-600">
-                Start your journey by selecting a Weekly module below:
-            </p>
-
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="Week1/" class="module-button">
-                    Week 1
-                </a>
-                <a href="Week2/" class="module-button">
-                    Second Week
-                </a>
-                <a href="EgyptianArabic/" class="module-button">
-                    Egyptian Arabic Material
-                </a>
-                <!-- Add more links to future Weekly modules here -->
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 min-h-screen">
+    
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-blue-100">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-brain text-3xl text-blue-600 context-icon"></i>
+                    <h1 class="text-3xl font-bold context-logo">Context</h1>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#modules" class="text-gray-700 hover:text-blue-600 transition-colors">Modules</a>
+                    <a href="#about" class="text-gray-700 hover:text-blue-600 transition-colors">About</a>
+                    <a href="#stats" class="text-gray-700 hover:text-blue-600 transition-colors">Progress</a>
+                </div>
             </div>
-        </main>
+        </div>
+    </nav>
 
-    </div>
+    <!-- Hero Section -->
+    <section class="py-16 brain-network">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto">
+                <div class="inline-block mb-6">
+                    <i class="fas fa-brain text-7xl gradient-text context-icon"></i>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                    Learn Arabic in <span class="gradient-text">Context</span>
+                </h2>
+                <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                    Understanding language through meaningful connections, cultural immersion, and interactive experiences.
+                    <br><span class="font-arabic text-2xl mt-2 block text-blue-600" dir="rtl">تعلّم العربية في سياقها الحقيقي</span>
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#modules" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl transition-all transform hover:scale-105">
+                        <i class="fas fa-play-circle mr-2"></i>Start Learning
+                    </a>
+                    <a href="#about" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all border-2 border-blue-600">
+                        <i class="fas fa-info-circle mr-2"></i>Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Learning Modules Section -->
+    <section id="modules" class="py-20 bg-white/50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Learning Pathways</h2>
+                <p class="text-xl text-gray-600">Seven contextual approaches to master Arabic</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Reading Module -->
+                <a href="Reading/index.html" class="module-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-slate-200 hover:border-orange-400 transition-all">
+                    <div class="text-5xl mb-4 text-slate-600">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Reading</h3>
+                    <p class="font-arabic text-lg text-blue-600 mb-3" dir="rtl">القراءة</p>
+                    <p class="text-gray-600">Explore literature, stories, and articles in authentic contexts</p>
+                    <div class="mt-6 flex items-center text-orange-600 font-semibold">
+                        <span>Explore</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+
+                <!-- Listening Module -->
+                <a href="Listening/index.html" class="module-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-green-200 hover:border-green-400 transition-all">
+                    <div class="text-5xl mb-4 text-green-600">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Listening</h3>
+                    <p class="font-arabic text-lg text-blue-600 mb-3" dir="rtl">الاستماع</p>
+                    <p class="text-gray-600">Train your ear with authentic conversations and audio</p>
+                    <div class="mt-6 flex items-center text-green-600 font-semibold">
+                        <span>Listen</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+
+                <!-- Vocabulary Module -->
+                <a href="Vocabulary/index.html" class="module-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-purple-200 hover:border-purple-400 transition-all">
+                    <div class="text-5xl mb-4 text-purple-600">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Vocabulary</h3>
+                    <p class="font-arabic text-lg text-blue-600 mb-3" dir="rtl">المفردات</p>
+                    <p class="text-gray-600">Build your word bank with thematic, contextual learning</p>
+                    <div class="mt-6 flex items-center text-purple-600 font-semibold">
+                        <span>Learn Words</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+
+                <!-- Grammar Module -->
+                <a href="Grammar/index.html" class="module-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-cyan-200 hover:border-cyan-400 transition-all">
+                    <div class="text-5xl mb-4 text-cyan-600">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Grammar</h3>
+                    <p class="font-arabic text-lg text-blue-600 mb-3" dir="rtl">النحو</p>
+                    <p class="text-gray-600">Master structure through real-world usage patterns</p>
+                    <div class="mt-6 flex items-center text-cyan-600 font-semibold">
+                        <span>Study Rules</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+
+                <!-- Quizzes Module -->
+                <a href="Quizzes/index.html" class="module-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-yellow-200 hover:border-yellow-400 transition-all">
+                    <div class="text-5xl mb-4 text-yellow-600">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Quizzes</h3>
+                    <p class="font-arabic text-lg text-blue-600 mb-3" dir="rtl">الاختبارات</p>
+                    <p class="text-gray-600">Test your knowledge with contextual assessments</p>
+                    <div class="mt-6 flex items-center text-yellow-600 font-semibold">
+                        <span>Take Quiz</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+
+                <!-- Games Module -->
+                <a href="Games/index.html" class="module-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-red-200 hover:border-red-400 transition-all">
+                    <div class="text-5xl mb-4 text-red-600">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Games</h3>
+                    <p class="font-arabic text-lg text-blue-600 mb-3" dir="rtl">الألعاب</p>
+                    <p class="text-gray-600">Learn through play with interactive challenges</p>
+                    <div class="mt-6 flex items-center text-red-600 font-semibold">
+                        <span>Play Now</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+
+                <!-- Culture Module -->
+                <a href="Culture/index.html" class="module-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-amber-200 hover:border-amber-400 transition-all">
+                    <div class="text-5xl mb-4 text-amber-600">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Culture</h3>
+                    <p class="font-arabic text-lg text-blue-600 mb-3" dir="rtl">الثقافة</p>
+                    <p class="text-gray-600">Immerse yourself in Arab heritage and traditions</p>
+                    <div class="mt-6 flex items-center text-amber-600 font-semibold">
+                        <span>Discover</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+
+                <!-- Egyptian Arabic Module -->
+                <a href="EgyptianArabicModule/index.html" class="module-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border-2 border-emerald-200 hover:border-emerald-400 transition-all">
+                    <div class="text-5xl mb-4 text-emerald-600">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Egyptian Arabic</h3>
+                    <p class="font-arabic text-lg text-blue-600 mb-3" dir="rtl">العامية المصرية</p>
+                    <p class="text-gray-600">Master the most widely understood Arabic dialect</p>
+                    <div class="mt-6 flex items-center text-emerald-600 font-semibold">
+                        <span>Start Speaking</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="transform hover:scale-110 transition-transform">
+                    <div class="text-5xl font-bold mb-2">7</div>
+                    <div class="text-blue-100">Learning Pathways</div>
+                </div>
+                <div class="transform hover:scale-110 transition-transform">
+                    <div class="text-5xl font-bold mb-2">45+</div>
+                    <div class="text-blue-100">Interactive Lessons</div>
+                </div>
+                <div class="transform hover:scale-110 transition-transform">
+                    <div class="text-5xl font-bold mb-2">500+</div>
+                    <div class="text-blue-100">Vocabulary Words</div>
+                </div>
+                <div class="transform hover:scale-110 transition-transform">
+                    <div class="text-5xl font-bold mb-2">∞</div>
+                    <div class="text-blue-100">Learning Contexts</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-center text-gray-900 mb-12">Why Context Matters</h2>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center p-6">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-lightbulb text-2xl text-blue-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Meaningful Learning</h3>
+                        <p class="text-gray-600">Understand words and grammar through real-world usage, not just isolated rules</p>
+                    </div>
+                    
+                    <div class="text-center p-6">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-network-wired text-2xl text-purple-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Connected Knowledge</h3>
+                        <p class="text-gray-600">Build neural pathways by linking language to culture, stories, and experiences</p>
+                    </div>
+                    
+                    <div class="text-center p-6">
+                        <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-globe-americas text-2xl text-amber-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Cultural Immersion</h3>
+                        <p class="text-gray-600">Experience Arabic as it's truly spoken across different regions and situations</p>
+                    </div>
+                </div>
+
+                <div class="mt-12 p-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border-2 border-blue-200">
+                    <p class="text-lg text-gray-700 text-center leading-relaxed">
+                        <i class="fas fa-quote-left text-blue-400 mr-2"></i>
+                        Language is not learned in isolation. Every word carries context, every phrase tells a story, 
+                        and every conversation bridges cultures. Context is your guide to understanding Arabic 
+                        the way it's actually lived and spoken.
+                        <i class="fas fa-quote-right text-purple-400 ml-2"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-brain text-2xl text-blue-400"></i>
+                        <h3 class="text-xl font-bold text-white">Context</h3>
+                    </div>
+                    <p class="text-sm text-gray-400">Learning Arabic through meaningful connections</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#modules" class="hover:text-blue-400 transition-colors">All Modules</a></li>
+                        <li><a href="#about" class="hover:text-blue-400 transition-colors">About Context</a></li>
+                        <li><a href="#stats" class="hover:text-blue-400 transition-colors">Progress</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-white mb-4">Learning Paths</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="Reading/index.html" class="hover:text-blue-400 transition-colors">Reading</a></li>
+                        <li><a href="Vocabulary/index.html" class="hover:text-blue-400 transition-colors">Vocabulary</a></li>
+                        <li><a href="Grammar/index.html" class="hover:text-blue-400 transition-colors">Grammar</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-white mb-4">Practice</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="Quizzes/index.html" class="hover:text-blue-400 transition-colors">Quizzes</a></li>
+                        <li><a href="Games/index.html" class="hover:text-blue-400 transition-colors">Games</a></li>
+                        <li><a href="Culture/index.html" class="hover:text-blue-400 transition-colors">Culture</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2025 Context - Arabic Learning Hub. Learn with purpose.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

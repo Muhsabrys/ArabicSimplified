@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egyptian Arabic - Context Arabic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .font-arabic { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        
+        .egyptian-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: 4px solid transparent;
+        }
+        
+        .egyptian-card:hover {
+            transform: translateX(-8px) scale(1.02);
+            border-left-color: #22c55e;
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.3);
+        }
+        
+        @keyframes pyramid-float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        
+        .pyramid-icon {
+            animation: pyramid-float 3s ease-in-out infinite;
+        }
+        
+        .nile-gradient {
+            background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'egyptian-green': '#22c55e',
+                        'nile': '#065f46',
+                    },
+                    fontFamily: {
+                        'arabic': ['Cairo', 'sans-serif'],
+                        'english': ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 font-arabic">
+    
+    <!-- Navigation -->
+    <nav class="nile-gradient text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-flag pyramid-icon text-3xl"></i>
+                    <h1 class="text-3xl font-bold">العامية المصرية</h1>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 text-center">
+        <div class="container mx-auto px-6">
+            <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-6">
+                <i class="fas fa-flag text-6xl text-egyptian-green pyramid-icon"></i>
+            </div>
+            <h2 class="text-5xl font-bold text-gray-800 mb-4 font-arabic">
+                Egyptian Arabic Module
+            </h2>
+            <p class="text-xl text-gray-600 font-english max-w-2xl mx-auto">
+                Master the most widely understood Arabic dialect in the Middle East
+            </p>
+        </div>
+    </section>
+
+    <!-- Topics Grid -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Lesson 9 -->
+                <a href="lesson9.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-book-open text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Lesson 9</h3>
+                            <p class="text-sm text-gray-500 font-english">Core Lesson</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Essential Egyptian Arabic phrases and expressions</p>
+                </a>
+
+                <!-- Kahooty -->
+                <a href="kahooty.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">كاهوتي</h3>
+                            <p class="text-sm text-gray-500 font-english">Vocabulary Practice</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Interactive vocabulary exercises and games</p>
+                </a>
+
+                <!-- Before Want After -->
+                <a href="BeforeWantAfter.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clock text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Before, Want, After</h3>
+                            <p class="text-sm text-gray-500 font-english">Time Expressions</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Master time-related expressions in Egyptian Arabic</p>
+                </a>
+
+                <!-- Conjunctions -->
+                <a href="ConjunctionsEG.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-link text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Conjunctions</h3>
+                            <p class="text-sm text-gray-500 font-english">Grammar</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Egyptian Arabic connectors and linking words</p>
+                </a>
+
+                <!-- Future Tense -->
+                <a href="futureEG.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-teal-400 to-green-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-forward text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Future Tense</h3>
+                            <p class="text-sm text-gray-500 font-english">Verb Forms</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Express future actions in Egyptian dialect</p>
+                </a>
+
+                <!-- Negation -->
+                <a href="negationEG.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-pink-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-times-circle text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Negation</h3>
+                            <p class="text-sm text-gray-500 font-english">Grammar</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">How to negate sentences in Egyptian Arabic</p>
+                </a>
+
+                <!-- Conditionals -->
+                <a href="if.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-question-circle text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Conditionals</h3>
+                            <p class="text-sm text-gray-500 font-english">If Statements</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Learn conditional sentences and hypotheticals</p>
+                </a>
+
+                <!-- Compare -->
+                <a href="compare.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-balance-scale text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Comparisons</h3>
+                            <p class="text-sm text-gray-500 font-english">Grammar</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Make comparisons in Egyptian Arabic</p>
+                </a>
+
+                <!-- Numbers -->
+                <a href="Numbers.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-teal-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-hashtag text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Numbers</h3>
+                            <p class="text-sm text-gray-500 font-english">Essential Vocabulary</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Egyptian Arabic numbers and counting</p>
+                </a>
+
+                <!-- Ordinals -->
+                <a href="ordinals.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-rose-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-list-ol text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Ordinal Numbers</h3>
+                            <p class="text-sm text-gray-500 font-english">Vocabulary</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">First, second, third... in Egyptian dialect</p>
+                </a>
+
+                <!-- Time -->
+                <a href="Time.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clock text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Telling Time</h3>
+                            <p class="text-sm text-gray-500 font-english">Essential Skills</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Tell time and talk about schedules</p>
+                </a>
+
+                <!-- Tafkheem -->
+                <a href="tafkheem.html" class="egyptian-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-volume-up text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Tafkheem</h3>
+                            <p class="text-sm text-gray-500 font-english">Pronunciation</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 font-english">Master the emphatic sounds in Egyptian Arabic</p>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">Why Egyptian Arabic?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="inline-block p-4 bg-green-100 rounded-full mb-4">
+                        <i class="fas fa-users text-4xl text-egyptian-green"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">Most Understood</h4>
+                    <p class="text-gray-600 font-english">Spoken by 100+ million and understood across the Arab world</p>
+                </div>
+                <div class="text-center">
+                    <div class="inline-block p-4 bg-green-100 rounded-full mb-4">
+                        <i class="fas fa-film text-4xl text-egyptian-green"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">Media Influence</h4>
+                    <p class="text-gray-600 font-english">Dominant in Arabic movies, music, and entertainment</p>
+                </div>
+                <div class="text-center">
+                    <div class="inline-block p-4 bg-green-100 rounded-full mb-4">
+                        <i class="fas fa-globe text-4xl text-egyptian-green"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">Cultural Gateway</h4>
+                    <p class="text-gray-600 font-english">Access rich Egyptian culture, history, and traditions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="nile-gradient text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="font-english">&copy; 2025 Context Arabic - Egyptian Arabic Module</p>
+            <p class="mt-2 text-sm opacity-80">مصر أم الدنيا - Egypt, Mother of the World</p>
+        </div>
+    </footer>
+
+</body>
+</html>

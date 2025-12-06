@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شخصيات مؤثرة - Context Arabic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        .question-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .option-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+        .option-btn:hover {
+            background: #e5e7eb;
+            border-color: #059669;
+        }
+        .option-btn.selected {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            font-weight: bold;
+        }
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        .score-display {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 to-teal-100">
+
+    <!-- Navigation -->
+    <nav class="text-white shadow-lg sticky top-0 z-50" style="background: linear-gradient(135deg, #10b981, #059669);">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-users text-3xl"></i>
+                    <div class="text-right">
+                        <h1 class="text-xl md:text-2xl font-bold">شخصيات مؤثرة</h1>
+                        <p class="text-sm opacity-90 font-english">Influential Figures</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 max-w-4xl">
+
+        <!-- Reading Sections -->
+        <div class="space-y-12">
+            <!-- Mother Teresa -->
+            <article id="teresa" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg prose prose-lg max-w-none text-right leading-relaxed">
+                <h1 class="text-3xl font-bold text-center mb-6 text-teal-800">الأم تريزا</h1>
+                <p>الأم تريزا هي راهبة مشهورة أصلها من ألبانيا وعاشت في الهند. حصلت هذه السيدة العظيمة على جائزة نوبل للسلام في عام 1979. توفيت الأم تريزا في مدينة كلكتا بتاريخ 5 سبتمبر 1997 بعد أن كانت مريضة جداً لفترة طويلة. اسمها الحقيقي عند الولادة كان "آغنيس غونكزا بوجاكسيو". ولدت في تاريخ 26 أغسطس 1910 في مدينة تسمى إسكوبية (وهي اليوم عاصمة دولة مقدونيا). كانت مدينتها تتبع الدولة العثمانية قديماً. نشأت في عائلة مسيحية متدينة جداً تحب الكنيسة، وكان أصلهم من ألبانيا. بعد فترة، سافرت عائلتها لتعيش في يوغسلافيا، وهناك عملوا في الزراعة والفلاحة.</p>
+                <p>درست آغنيس في صغرها في مدرسة دينية. وعندما صار عمرها 10 سنوات، مات والدها، فزادت محبتها لله وتمسكها بالدين. في شهر نوفمبر 1928، سافرت إلى دبلن في أيرلندا لتتعلم كيف تكون راهبة. وفي عام 1929، سافرت إلى منطقة البنغال لتعمل في مكان اسمه "دير لوريتو".</p>
+                <p>في عام 1931، أصبحت آغنيس راهبة رسمياً واختارت لنفسها اسم "الأخت تريزا". ثم في عام 1937، أصبحت تسمى "الأم تريزا" بعد أن نذرت حياتها للعمل.</p>
+                <p>في عام 1948، بدأت تهتم بمساعدة الأطفال الفقراء واليتامى. بسبب هذا العمل، غيرت ملابس الراهبات ولبست "الساري الهندي" المصنوع من القطن، وكان لونه أبيض مع خطوط زرقاء، وهو اللباس الذي عرفها الناس به دائماً. ذهبت في البداية إلى مكان أمريكي يقدم العلاج، لكن المسؤولين هناك لم يوافقوا على طريقتها، فقررت الاعتماد على نفسها. بعد ذلك، حصلت على تبرعات من نساء أخريات، وقامت بتأسيس "جمعية راهبات المحبة" في عام 1950، وكانت الجمعية تساعد الأطفال الذين ليس لديهم بيوت وكبار السن المرضى.</p>
+                <p>في عام 1957، بدأت تهتم بعلاج مرضى "الجذام" وساعدتهم كثيراً. وعندما كبر عملها، أسست جمعية أخرى للرجال (الرهبان) تسمى "أخوة المحبة" في عام 1963.</p>
+                <p>عندما وصل عمرها إلى 75 سنة، سافرت إلى دولة إثيوبيا لتساعد الناس هناك، لأن المجاعة كانت قوية جداً وتشرد الآلاف بسبب الجوع.</p>
+                <p>رغم كل هذا، كان هناك ناس انتقدوا الأم تريزا (تكلموا عنها بشكل سلبي). قالوا إن فريقها لم يكن يعرف الطب بشكل جيد، وإنهم لم يهتموا بقواعد النظافة الصحية، مثل استخدام "الحقن" (الإبر) أكثر من مرة بدون تنظيف جيد. أيضاً شكك البعض في عدد الناس الذين ساعدتهم.</p>
+                <p>كان رد الأم تريزا بسيطاً وجميلاً على هذا الكلام، حيث قالت: "إن النجاح ليس هو المقياس المهم، بل الصدق والأمانة والإخلاص في العمل هي المقياس الحقيقي".</p>
+            </article>
+
+            <!-- Nelson Mandela -->
+            <article id="mandela" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg prose prose-lg max-w-none text-right leading-relaxed">
+                <h1 class="text-3xl font-bold text-center mb-6 text-teal-800">نيلسون مانديلا</h1>
+                <p>نيلسون روليهلاهلا مانديلا هو قائد وبطل سياسي حارب ضد الظلم والعنصرية في بلاده. ولد هذا الرجل العظيم في تاريخ 18 يوليو 1918، وتوفي في 5 ديسمبر 2013. هو أول رئيس أسمر البشرة يحكم جنوب أفريقيا، وقد شغل منصب الرئيس في الفترة من عام 1994 إلى عام 1999. تم اختياره في أول انتخابات شارك فيها جميع الناس من مختلف الأعراق والألوان.</p>
+                <p>كان هدف حكومته هو القضاء على الفقر والتمييز العنصري، ونشر التسامح بين الناس. سياسياً، قاد مانديلا حزب "المؤتمر الوطني الأفريقي" في الفترة من 1991 إلى 1997. كما كان له دور دولي مهم، حيث عمل أميناً عاماً لـ "حركة عدم الانحياز" بين عامي 1998 و 1999.</p>
+                <p>ولد مانديلا في عائلة ملكية لقبيلة تسمى "الهوسا". درس القانون في الجامعة وعاش في مدينة جوهانسبورغ. هناك، بدأ العمل السياسي لمحاربة الاستعمار. عندما وصل الحزب الحاكم للسلطة في عام 1948 وبدأ يطبق نظام "الفصل العنصري" القاسي، قاوم مانديلا ذلك بشجاعة. ظهر كقائد بارز في حملة عام 1952، وأشرف على تجمع شعبي كبير في عام 1955.</p>
+                <p>عمل مانديلا كمحامٍ للدفاع عن الناس، لكن الشرطة ألقت القبض عليه مرات كثيرة. حوكم مع زملائه في قضية "الخيانة" التي استمرت من 1956 إلى 1961، وحصل على البراءة في النهاية.</p>
+                <p>في البداية كان يدعو للمقاومة السلمية (بدون عنف)، لكنه لاحقاً شارك في تأسيس مجموعة عسكرية في عام 1961. تم القبض عليه واتهامه بمحاولة قلب نظام الحكم. وفي عام 1962، حكمت عليه المحكمة بالسجن مدى الحياة.</p>
+                <p>قضى مانديلا 27 عاماً طويلاً داخل السجن، وتنقل بين سجن "جزيرة روبن آيلاند" وسجون أخرى. في ذلك الوقت، كانت هناك حملات عالمية تطالب بحريته. وبسبب هذا الضغط، تم إطلاق سراحه أخيراً في عام 1990.</p>
+                <p>بعد خروجه، قاد المفاوضات مع الرئيس "دي كليرك" لإنهاء العنصرية. وفي عام 1994، أقيمت انتخابات حرة فاز فيها حزبه، وأصبح رئيساً للبلاد، حيث شكل حكومة وحدة وطنية ليعيش الجميع بسلام.</p>
+            </article>
+
+            <!-- Mohamed Salah -->
+            <article id="salah" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg prose prose-lg max-w-none text-right leading-relaxed">
+                <h1 class="text-3xl font-bold text-center mb-6 text-teal-800">محمد صلاح</h1>
+                <p>محمد صلاح حامد محروس غالي، المولود في تاريخ 15 يونيو 1992، هو لاعب كرة قدم مصري عالمي ومشهور جداً. يلعب صلاح حالياً في مركز الجناح الأيمن مع نادي ليفربول في الدوري الإنجليزي الممتاز، كما يمثل منتخب مصر الوطني. يُعتبر محمد صلاح واحداً من أهم وأبرز اللاعبين العرب والأفارقة في التاريخ، حيث نجح في حصد عدد كبير من الجوائز الفردية المرموقة.</p>
+                <p>من أهم إنجازاته حصوله على جائزة "أفضل لاعب في إنجلترا" في المواسم 2017–18، و 2021–22، و 2024–25. كما حصل على نفس الجائزة من "اتحاد كتاب كرة القدم" في نفس السنوات. بالإضافة إلى ذلك، فاز بجائزة "الحذاء الذهبي" كأفضل هداف في الدوري الإنجليزي في أعوام 2018، و 2019، و 2022. وعلى المستوى القاري، فاز بجائزة أفضل لاعب في أفريقيا لعامي 2017 و 2018. وتقديراً لتأثيره الكبير، اختارته مجلة "تايم" الأمريكية في عام 2019 ليكون ضمن قائمة أكثر 100 شخصية مؤثرة في العالم.</p>
+                <p>بدأت مسيرة صلاح الكروية في مصر مع نادي المقاولون العرب، ثم انتقل للاحتراف في أوروبا. انضم أولاً لنادي بازل السويسري، وحقق معه لقب الدوري في موسم 2012–2013، وجائزة أفضل لاعب في سويسرا لعام 2013. بعدها انتقل إلى نادي تشيلسي الإنجليزي وفاز معهم بالدوري وكأس الرابطة في موسم 2014–15، لكنه لم يشارك بصفة أساسية.</p>
+                <p>انتقل صلاح بعد ذلك إلى إيطاليا، ولعب لنادي فيورنتينا، ثم تألق بشدة مع نادي روما. شارك مع روما طوال موسمي 2015–16 و 2016–17 في 83 مباراة، ونجح في تسجيل 34 هدفاً.</p>
+                <p>وفي عام 2017، حدثت النقلة الكبرى بانضمامه لنادي ليفربول في صفقة بلغت قيمتها 42 مليون يورو، بالإضافة إلى 8 ملايين يورو كحوافز. أصبح وقتها أغلى لاعب عربي وأفريقي في التاريخ، وثاني أغلى لاعب في تاريخ النادي. حقق مع ليفربول موسماً أولاً خيالياً، حيث تم اختياره "لاعب الشهر" 3 مرات، وسجل 44 هدفاً في موسم واحد. وفي موسمه الثاني، واصل التألق وسجل 27 هدفاً وقام بصناعة 10 أهداف، وساهم بشكل رئيسي في تتويج فريقه بلقب دوري أبطال أوروبا.</p>
+            </article>
+        </div>
+
+        <!-- Exercises -->
+        <div class="mt-12">
+            <!-- Mother Teresa Questions -->
+            <div id="teresa-questions" class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b-2 pb-2 border-teal-300">
+                    <i class="fas fa-question-circle text-teal-600 ml-2"></i>أسئلة الأم تريزا
+                </h2>
+                <div class="question-card">
+                    <p class="font-semibold">١. ما أصل الأم تريزا؟ وأين عاشت؟</p>
+                    <p class="font-semibold">٢. متى حصلت على جائزة نوبل؟</p>
+                    <p class="font-semibold">٣. ما اسمها الحقيقي؟ وأين ولدت؟</p>
+                    <p class="font-semibold">٤. كيف أثّرت وفاة والدها عليها؟</p>
+                    <p class="font-semibold">٥. أين درست في صغرها؟</p>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">١. وُلِدت الأم تريزا في سنة:</p>
+                    <button onclick="selectOption(this, 't1')" data-correct="true" class="option-btn">أ) 1910</button>
+                    <button onclick="selectOption(this, 't1')" data-correct="false" class="option-btn">ب) 1928</button>
+                    <button onclick="selectOption(this, 't1')" data-correct="false" class="option-btn">ج) 1948</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٢. حصلت على جائزة نوبل في سنة:</p>
+                    <button onclick="selectOption(this, 't2')" data-correct="false" class="option-btn">أ) 1937</button>
+                    <button onclick="selectOption(this, 't2')" data-correct="true" class="option-btn">ب) 1979</button>
+                    <button onclick="selectOption(this, 't2')" data-correct="false" class="option-btn">ج) 1997</button>
+                </div>
+                 <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٣. توفيت الأم تريزا في تاريخ:</p>
+                    <button onclick="selectOption(this, 't3')" data-correct="true" class="option-btn">أ) 5 سبتمبر 1997</button>
+                    <button onclick="selectOption(this, 't3')" data-correct="false" class="option-btn">ب) 26 أغسطس 1910</button>
+                    <button onclick="selectOption(this, 't3')" data-correct="false" class="option-btn">ج) 1950</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٤. أسست "جمعية راهبات المحبة" في سنة:</p>
+                    <button onclick="selectOption(this, 't4')" data-correct="true" class="option-btn">أ) 1950</button>
+                    <button onclick="selectOption(this, 't4')" data-correct="false" class="option-btn">ب) 1931</button>
+                    <button onclick="selectOption(this, 't4')" data-correct="false" class="option-btn">ج) 1963</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٥. بدأت علاج مرضى الجذام في سنة:</p>
+                    <button onclick="selectOption(this, 't5')" data-correct="false" class="option-btn">أ) 1948</button>
+                    <button onclick="selectOption(this, 't5')" data-correct="true" class="option-btn">ب) 1957</button>
+                    <button onclick="selectOption(this, 't5')" data-correct="false" class="option-btn">ج) 1975</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٦. أسست جمعية الرجال "أخوة المحبة" في سنة:</p>
+                    <button onclick="selectOption(this, 't6')" data-correct="true" class="option-btn">أ) 1963</button>
+                    <button onclick="selectOption(this, 't6')" data-correct="false" class="option-btn">ب) 1957</button>
+                    <button onclick="selectOption(this, 't6')" data-correct="false" class="option-btn">ج) 1979</button>
+                </div>
+            </div>
+
+            <!-- Nelson Mandela Questions -->
+            <div id="mandela-questions" class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b-2 pb-2 border-teal-300">
+                    <i class="fas fa-question-circle text-teal-600 ml-2"></i>أسئلة نيلسون مانديلا
+                </h2>
+                <div class="question-card">
+                    <p class="font-semibold">١. ما الهدف الذي كان مانديلا يسعى إليه في بلاده؟</p>
+                    <p class="font-semibold">٢. متى ولد مانديلا؟ ومتى توفي؟</p>
+                    <p class="font-semibold">٣. ما اسم الحزب الذي قاده مانديلا؟ وفي أي فترة؟</p>
+                    <p class="font-semibold">٤. ما المنصب الدولي الذي شغله مانديلا بين عامي 1998 و1999؟</p>
+                    <p class="font-semibold">٥. ما خلفيته العائلية؟ وأين عاش خلال دراسته؟</p>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">١. وُلِد نيلسون مانديلا في سنة:</p>
+                    <button onclick="selectOption(this, 'm1')" data-correct="true" class="option-btn">أ) 1918</button>
+                    <button onclick="selectOption(this, 'm1')" data-correct="false" class="option-btn">ب) 1925</button>
+                    <button onclick="selectOption(this, 'm1')" data-correct="false" class="option-btn">ج) 1948</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٢. توفي نيلسون مانديلا في تاريخ:</p>
+                    <button onclick="selectOption(this, 'm2')" data-correct="true" class="option-btn">أ) 5 ديسمبر 2013</button>
+                    <button onclick="selectOption(this, 'm2')" data-correct="false" class="option-btn">ب) 18 يوليو 1999</button>
+                    <button onclick="selectOption(this, 'm2')" data-correct="false" class="option-btn">ج) 1990</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٣. أصبح مانديلا رئيسًا لجنوب أفريقيا في سنة:</p>
+                    <button onclick="selectOption(this, 'm3')" data-correct="true" class="option-btn">أ) 1994</button>
+                    <button onclick="selectOption(this, 'm3')" data-correct="false" class="option-btn">ب) 1999</button>
+                    <button onclick="selectOption(this, 'm3')" data-correct="false" class="option-btn">ج) 1962</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٤. بدأ الحزب الحاكم تطبيق نظام الفصل العنصري في سنة:</p>
+                    <button onclick="selectOption(this, 'm4')" data-correct="true" class="option-btn">أ) 1948</button>
+                    <button onclick="selectOption(this, 'm4')" data-correct="false" class="option-btn">ب) 1955</button>
+                    <button onclick="selectOption(this, 'm4')" data-correct="false" class="option-btn">ج) 1961</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٥. حوكم مانديلا في قضية "الخيانة" في الفترة:</p>
+                    <button onclick="selectOption(this, 'm5')" data-correct="true" class="option-btn">أ) 1956–1961</button>
+                    <button onclick="selectOption(this, 'm5')" data-correct="false" class="option-btn">ب) 1948–1952</button>
+                    <button onclick="selectOption(this, 'm5')" data-correct="false" class="option-btn">ج) 1991–1997</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٦. أُطلِق سراح مانديلا من السجن في سنة:</p>
+                    <button onclick="selectOption(this, 'm6')" data-correct="true" class="option-btn">أ) 1990</button>
+                    <button onclick="selectOption(this, 'm6')" data-correct="false" class="option-btn">ب) 1962</button>
+                    <button onclick="selectOption(this, 'm6')" data-correct="false" class="option-btn">ج) 1998</button>
+                </div>
+            </div>
+
+            <!-- Mohamed Salah Questions -->
+            <div id="salah-questions" class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b-2 pb-2 border-teal-300">
+                    <i class="fas fa-question-circle text-teal-600 ml-2"></i>أسئلة محمد صلاح
+                </h2>
+                <div class="question-card">
+                    <p class="font-semibold">١. ما المركز الذي يلعب فيه محمد صلاح حالياً؟ ومع أي نادٍ؟</p>
+                    <p class="font-semibold">٢. ما أهم الجوائز الفردية التي حصل عليها صلاح في الدوري الإنجليزي؟</p>
+                    <p class="font-semibold">٣. متى اختارته مجلة "تايم" ضمن قائمة أكثر 100 شخصية مؤثرة؟</p>
+                    <p class="font-semibold">٤. أين بدأ محمد صلاح مسيرته الكروية؟ وما أول نادٍ احترف معه في أوروبا؟</p>
+                    <p class="font-semibold">٥. ما البطولات التي فاز بها محمد صلاح مع نادي تشيلسي؟</p>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">١. وُلِد محمد صلاح في سنة:</p>
+                    <button onclick="selectOption(this, 's1')" data-correct="false" class="option-btn">أ) 1990</button>
+                    <button onclick="selectOption(this, 's1')" data-correct="true" class="option-btn">ب) 1992</button>
+                    <button onclick="selectOption(this, 's1')" data-correct="false" class="option-btn">ج) 1994</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٢. حصل محمد صلاح على جائزة أفضل لاعب في إنجلترا لأول مرة في موسم:</p>
+                    <button onclick="selectOption(this, 's2')" data-correct="false" class="option-btn">أ) 2014–15</button>
+                    <button onclick="selectOption(this, 's2')" data-correct="false" class="option-btn">ب) 2016–17</button>
+                    <button onclick="selectOption(this, 's2')" data-correct="true" class="option-btn">ج) 2017–18</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٣. فاز محمد صلاح بجائزة أفضل لاعب في أفريقيا في عامي:</p>
+                    <button onclick="selectOption(this, 's3')" data-correct="false" class="option-btn">أ) 2015 و2016</button>
+                    <button onclick="selectOption(this, 's3')" data-correct="true" class="option-btn">ب) 2017 و2018</button>
+                    <button onclick="selectOption(this, 's3')" data-correct="false" class="option-btn">ج) 2019 و2020</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٤. فاز محمد صلاح بـ "الحذاء الذهبي" في الدوري الإنجليزي في الأعوام:</p>
+                    <button onclick="selectOption(this, 's4')" data-correct="false" class="option-btn">أ) 2015 و2017 و2018</button>
+                    <button onclick="selectOption(this, 's4')" data-correct="false" class="option-btn">ب) 2020 و2021 و2022</button>
+                    <button onclick="selectOption(this, 's4')" data-correct="true" class="option-btn">ج) 2018 و2019 و2022</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٥. عدد المباريات التي لعبها محمد صلاح مع روما في موسمي 2015–16 و2016–17:</p>
+                    <button onclick="selectOption(this, 's5')" data-correct="false" class="option-btn">أ) 74</button>
+                    <button onclick="selectOption(this, 's5')" data-correct="true" class="option-btn">ب) 83</button>
+                    <button onclick="selectOption(this, 's5')" data-correct="false" class="option-btn">ج) 91</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٦. انضم محمد صلاح إلى نادي ليفربول في صفقة قيمتها الأساسية:</p>
+                    <button onclick="selectOption(this, 's6')" data-correct="false" class="option-btn">أ) 35 مليون يورو</button>
+                    <button onclick="selectOption(this, 's6')" data-correct="false" class="option-btn">ب) 50 مليون يورو</button>
+                    <button onclick="selectOption(this, 's6')" data-correct="true" class="option-btn">ج) 42 مليون يورو</button>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button onclick="checkAllAnswers()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-700 text-white text-xl font-bold py-4 rounded-lg hover:from-emerald-700 hover:to-teal-800 transition-all shadow-lg">
+                <i class="fas fa-check-double ml-2"></i>تحقق من كل الإجابات
+            </button>
+
+            <!-- Score Display -->
+            <div id="scoreDisplay" class="hidden score-display">
+                <i class="fas fa-trophy ml-2"></i>
+                <span id="scoreText"></span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 text-white text-center" style="background: linear-gradient(135deg, #10b981, #059669);">
+        <div class="container mx-auto px-6">
+            <a href="index.html" class="hover:opacity-80 transition">
+                <span class="font-semibold text-sm md:text-base">Back to Reading</span>
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const userSelections = {};
+
+        function selectOption(btn, qName) {
+            document.querySelectorAll(`button[onclick*="${qName}"]`).forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            userSelections[qName] = btn;
+        }
+
+        function checkAllAnswers() {
+            let totalScore = 0;
+            let totalQuestions = 0;
+
+            Object.values(userSelections).forEach(btn => {
+                const isCorrect = btn.dataset.correct === 'true';
+                btn.classList.remove('correct', 'incorrect');
+                if (isCorrect) {
+                    btn.classList.add('correct');
+                    totalScore++;
+                } else {
+                    btn.classList.add('incorrect');
+                }
+                const qName = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+                document.querySelector(`button[onclick*="${qName}"][data-correct="true"]`).classList.add('correct');
+            });
+            totalQuestions = Object.keys(userSelections).length;
+
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreText = document.getElementById('scoreText');
+            const percentage = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
+            
+            scoreText.textContent = `نتيجتك: ${totalScore} من ${totalQuestions} (${percentage}%)`;
+            scoreDisplay.classList.remove('hidden');
+            scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+
+</body>
+</html>

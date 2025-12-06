@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الروتين اليومي - Daily Routine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .font-arabic { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        .activity-card { transition: transform 0.3s, box-shadow 0.3s; }
+        .activity-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .option-btn { transition: all 0.2s; }
+        .option-btn.selected { background-color: #3b82f6; color: white; }
+        .option-btn.correct { background-color: #22c55e; color: white; border-color: #16a34a; }
+        .option-btn.incorrect { background-color: #ef4444; color: white; border-color: #dc2626; }
+        .question-card { border-right: 4px solid transparent; }
+        .question-card.correct-border { border-right-color: #22c55e; }
+        .question-card.incorrect-border { border-right-color: #ef4444; }
+        .progress-bar-inner { transition: width 0.5s ease-in-out; }
+        .reading-gradient { background: linear-gradient(135deg, #6d28d9 0%, #9f1239 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 font-arabic text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="reading-gradient text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                <i class="fas fa-arrow-right text-2xl"></i>
+                <span class="font-english text-xl">Back to Reading</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <i class="fas fa-book-open text-2xl"></i>
+                <h1 class="text-3xl font-bold">الروتين اليومي</h1>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            
+            <!-- Reading Text -->
+            <div class="lg:col-span-2">
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-clock text-3xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-bold text-purple-800">روتيني اليومي</h2>
+                            <p class="font-english text-lg text-gray-500">My Daily Routine</p>
+                        </div>
+                    </div>
+                    <article class="prose prose-lg max-w-none text-2xl leading-relaxed space-y-6 text-justify">
+                        <p>اسمي خالد وأنا أعيش في القاهرة. كل يوم، أستيقظ في الساعة السادسة صباحًا. أولاً، أتوضأ وأصلي الفجر. بعد ذلك، أرتدي ملابسي الرياضية وأذهب للجري في الحديقة القريبة من منزلي لمدة نصف ساعة. أحب أن أبدأ يومي بنشاط وحيوية.</p>
+                        <p>عندما أعود إلى المنزل، آخذ حمامًا سريعًا ثم أجهز وجبة الإفطار. عادةً ما يكون إفطاري بسيطًا وصحيًا، يتكون من بيض مسلوق، قطعة من الجبن، وبعض الخضروات مع كوب من الشاي. أثناء تناول الإفطار، أقرأ الأخبار على هاتفي لأعرف ما يحدث في العالم.</p>
+                        <p>أذهب إلى عملي في الساعة الثامنة صباحًا. أنا أعمل مهندس برمجيات في شركة كبيرة. يستغرق الطريق إلى العمل حوالي ٤٥ دقيقة بالسيارة. في العمل، أقضي معظم وقتي في كتابة الأكواد وحل المشكلات البرمجية. لدي اجتماع يومي مع فريقي لمناقشة تقدم المشاريع. أتوقف لتناول الغداء في الساعة الواحدة ظهرًا مع زملائي في كافتيريا الشركة.</p>
+                        <p>أنهي عملي في الساعة الخامسة مساءً وأعود إلى المنزل. بعد العودة، أرتاح قليلاً ثم أذهب إلى النادي الرياضي (الجيم) لمدة ساعة. التمرين يساعدني على التخلص من ضغط العمل. في المساء، أقضي وقتًا مع عائلتي، نتحدث ونشاهد التلفزيون معًا. أحيانًا، أقرأ كتابًا أو أتعلم شيئًا جديدًا عبر الإنترنت. أخيرًا، أذهب إلى الفراش في حوالي الساعة الحادية عشرة مساءً لأكون مستعدًا ليوم جديد.</p>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Vocabulary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-2xl shadow-lg sticky top-28">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center gap-3 text-purple-800"><i class="fas fa-list-alt"></i>مفردات هامة</h3>
+                    <ul class="space-y-3 font-english text-lg">
+                        <li class="flex justify-between items-center p-2 rounded-lg bg-purple-50"><span>To wake up</span> <span class="font-arabic font-semibold">يستيقظ</span></li>
+                        <li class="flex justify-between items-center p-2 rounded-lg bg-gray-50"><span>To wear</span> <span class="font-arabic font-semibold">يرتدي</span></li>
+                        <li class="flex justify-between items-center p-2 rounded-lg bg-purple-50"><span>Jogging</span> <span class="font-arabic font-semibold">الجري</span></li>
+                        <li class="flex justify-between items-center p-2 rounded-lg bg-gray-50"><span>Healthy</span> <span class="font-arabic font-semibold">صحي</span></li>
+                        <li class="flex justify-between items-center p-2 rounded-lg bg-purple-50"><span>Software engineer</span> <span class="font-arabic font-semibold">مهندس برمجيات</span></li>
+                        <li class="flex justify-between items-center p-2 rounded-lg bg-gray-50"><span>To solve problems</span> <span class="font-arabic font-semibold">حل المشكلات</span></li>
+                        <li class="flex justify-between items-center p-2 rounded-lg bg-purple-50"><span>Colleagues</span> <span class="font-arabic font-semibold">زملاء</span></li>
+                        <li class="flex justify-between items-center p-2 rounded-lg bg-gray-50"><span>Work pressure</span> <span class="font-arabic font-semibold">ضغط العمل</span></li>
+                        <li class="flex justify-between items-center p-2 rounded-lg bg-purple-50"><span>Bed</span> <span class="font-arabic font-semibold">الفراش</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercises -->
+        <div id="exercises" class="mt-12 bg-white p-8 rounded-2xl shadow-lg">
+            <h2 class="text-3xl font-bold mb-8 text-center text-purple-800">التمارين</h2>
+            
+            <div class="space-y-8">
+                <!-- Question 1: True/False -->
+                <div class="question-card bg-gray-50 p-6 rounded-xl shadow-sm" data-type="tf">
+                    <p class="text-xl font-semibold mb-4">١. خالد يستيقظ في الساعة السابعة صباحًا.</p>
+                    <div class="flex gap-4">
+                        <button class="option-btn flex-1 py-3 px-4 border-2 border-gray-300 rounded-lg text-lg font-bold" data-correct="false" onclick="selectOption(this)">خطأ</button>
+                        <button class="option-btn flex-1 py-3 px-4 border-2 border-gray-300 rounded-lg text-lg font-bold" data-correct="true" onclick="selectOption(this)">صح</button>
+                    </div>
+                </div>
+
+                <!-- Question 2: MCQ -->
+                <div class="question-card bg-gray-50 p-6 rounded-xl shadow-sm" data-type="mcq">
+                    <p class="text-xl font-semibold mb-4">٢. ماذا يفعل خالد بعد صلاة الفجر مباشرة؟</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button class="option-btn py-3 px-4 border-2 border-gray-300 rounded-lg text-lg text-right" data-correct="false" onclick="selectOption(this)">يقرأ الأخبار</button>
+                        <button class="option-btn py-3 px-4 border-2 border-gray-300 rounded-lg text-lg text-right" data-correct="true" onclick="selectOption(this)">يذهب للجري</button>
+                        <button class="option-btn py-3 px-4 border-2 border-gray-300 rounded-lg text-lg text-right" data-correct="false" onclick="selectOption(this)">يأخذ حمامًا</button>
+                        <button class="option-btn py-3 px-4 border-2 border-gray-300 rounded-lg text-lg text-right" data-correct="false" onclick="selectOption(this)">يذهب للعمل</button>
+                    </div>
+                </div>
+
+                <!-- Question 3: Fill in the blank -->
+                <div class="question-card bg-gray-50 p-6 rounded-xl shadow-sm" data-type="fill">
+                    <p class="text-xl font-semibold mb-4">٣. يعمل خالد <input type="text" class="fill-in-blank border-b-2 border-gray-400 focus:border-purple-500 outline-none bg-transparent text-center w-48 mx-2" data-correct="مهندس برمجيات"> في شركة كبيرة.</p>
+                </div>
+
+                <!-- Question 4: MCQ -->
+                <div class="question-card bg-gray-50 p-6 rounded-xl shadow-sm" data-type="mcq">
+                    <p class="text-xl font-semibold mb-4">٤. متى ينهي خالد عمله؟</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button class="option-btn py-3 px-4 border-2 border-gray-300 rounded-lg text-lg text-right" data-correct="false" onclick="selectOption(this)">الساعة الرابعة مساءً</button>
+                        <button class="option-btn py-3 px-4 border-2 border-gray-300 rounded-lg text-lg text-right" data-correct="true" onclick="selectOption(this)">الساعة الخامسة مساءً</button>
+                        <button class="option-btn py-3 px-4 border-2 border-gray-300 rounded-lg text-lg text-right" data-correct="false" onclick="selectOption(this)">الساعة السادسة مساءً</button>
+                        <button class="option-btn py-3 px-4 border-2 border-gray-300 rounded-lg text-lg text-right" data-correct="false" onclick="selectOption(this)">الساعة السابعة مساءً</button>
+                    </div>
+                </div>
+                
+                <!-- Question 5: True/False -->
+                <div class="question-card bg-gray-50 p-6 rounded-xl shadow-sm" data-type="tf">
+                    <p class="text-xl font-semibold mb-4">٥. خالد لا يحب ممارسة الرياضة بعد العمل.</p>
+                    <div class="flex gap-4">
+                        <button class="option-btn flex-1 py-3 px-4 border-2 border-gray-300 rounded-lg text-lg font-bold" data-correct="true" onclick="selectOption(this)">خطأ</button>
+                        <button class="option-btn flex-1 py-3 px-4 border-2 border-gray-300 rounded-lg text-lg font-bold" data-correct="false" onclick="selectOption(this)">صح</button>
+                    </div>
+                </div>
+
+                <!-- Question 6: Fill in the blank -->
+                <div class="question-card bg-gray-50 p-6 rounded-xl shadow-sm" data-type="fill">
+                    <p class="text-xl font-semibold mb-4">٦. في المساء، يقضي خالد وقتاً مع <input type="text" class="fill-in-blank border-b-2 border-gray-400 focus:border-purple-500 outline-none bg-transparent text-center w-32 mx-2" data-correct="عائلته">.</p>
+                </div>
+            </div>
+
+            <!-- Check Answers Button & Score -->
+            <div class="mt-10 text-center">
+                <button id="check-btn" class="bg-purple-600 text-white font-bold py-4 px-10 rounded-full text-xl hover:bg-purple-700 transition-transform transform hover:scale-105 shadow-lg" onclick="checkAllAnswers()">
+                    <i class="fas fa-check-circle mr-2"></i>تحقق من إجاباتك
+                </button>
+                <div id="score-container" class="mt-6 text-2xl font-bold" style="display: none;">
+                    <div class="w-full bg-gray-200 rounded-full h-8">
+                        <div id="progress-bar" class="progress-bar-inner bg-green-500 h-8 rounded-full text-white flex items-center justify-center" style="width: 0%;"></div>
+                    </div>
+                    <p class="mt-2">نتيجتك: <span id="score"></span>%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="reading-gradient text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="font-english">&copy; 2025 Context Arabic - Reading Module</p>
+        </div>
+    </footer>
+
+    <script>
+        function selectOption(btn) {
+            const questionCard = btn.closest('.question-card');
+            if (questionCard.classList.contains('answered')) return;
+
+            const options = questionCard.querySelectorAll('.option-btn');
+            options.forEach(opt => opt.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function checkAllAnswers() {
+            const questions = document.querySelectorAll('.question-card');
+            let correctAnswers = 0;
+            
+            questions.forEach(question => {
+                question.classList.add('answered');
+                const type = question.dataset.type;
+                let isCorrect = false;
+
+                if (type === 'tf' || type === 'mcq') {
+                    const selected = question.querySelector('.option-btn.selected');
+                    if (selected) {
+                        isCorrect = selected.dataset.correct === 'true';
+                        selected.classList.add(isCorrect ? 'correct' : 'incorrect');
+                        question.classList.add(isCorrect ? 'correct-border' : 'incorrect-border');
+                    }
+                } else if (type === 'fill') {
+                    const input = question.querySelector('.fill-in-blank');
+                    const correctAnswer = input.dataset.correct.trim();
+                    const userAnswer = input.value.trim();
+                    isCorrect = userAnswer === correctAnswer;
+                    input.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    input.disabled = true;
+                    question.classList.add(isCorrect ? 'correct-border' : 'incorrect-border');
+                }
+
+                if (isCorrect) {
+                    correctAnswers++;
+                }
+            });
+
+            const totalQuestions = questions.length;
+            const scorePercentage = Math.round((correctAnswers / totalQuestions) * 100);
+
+            const scoreContainer = document.getElementById('score-container');
+            const scoreElement = document.getElementById('score');
+            const progressBar = document.getElementById('progress-bar');
+            
+            scoreElement.textContent = scorePercentage;
+            progressBar.style.width = scorePercentage + '%';
+            progressBar.textContent = scorePercentage + '%';
+            scoreContainer.style.display = 'block';
+
+            document.getElementById('check-btn').disabled = true;
+            document.getElementById('check-btn').classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    </script>
+
+</body>
+</html>

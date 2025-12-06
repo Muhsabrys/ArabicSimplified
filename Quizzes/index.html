@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzes | Al-Manara Arabic Learning Hub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        quiz: {
+                            50: '#fef3c7',
+                            100: '#fde68a',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                            800: '#78350f',
+                            900: '#451a03',
+                        },
+                        correct: '#10b981',
+                        wrong: '#ef4444',
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .rtl { direction: rtl; }
+        .quiz-card { transition: all 0.3s ease; }
+        .quiz-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(234, 179, 8, 0.15); }
+        .progress-ring { transition: stroke-dashoffset 0.3s ease; }
+        @keyframes pulse-glow { 
+            0%, 100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(234, 179, 8, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-quiz-50 via-white to-yellow-50 text-quiz-800 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-quiz-800 text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                    <span class="font-bold">Back to Home</span>
+                </a>
+                <div class="text-center">
+                    <h1 class="text-2xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-quiz-100"></i>
+                        <span class="font-arabic">اختبارات | Quizzes</span>
+                    </h1>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-quiz-800 via-quiz-700 to-amber-600 text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <i class="fa-solid fa-trophy text-6xl text-white mb-4"></i>
+                <h2 class="text-4xl font-bold mb-4 font-arabic">اختبر معلوماتك</h2>
+                <h3 class="text-3xl font-bold mb-4">Test Your Knowledge</h3>
+                <p class="text-yellow-50 text-lg">
+                    Challenge yourself with interactive quizzes designed to reinforce your learning and track your progress.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-16">
+        
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-quiz-900 mb-2">Assessment Hub</h2>
+            <p class="text-quiz-600">Measure your knowledge and identify areas for improvement</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+
+            <!-- Vocabulary Quiz -->
+            <div class="quiz-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-200 rounded-lg">
+                        <i class="fa-solid fa-spell-check text-quiz-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Vocabulary Quiz</h3>
+                        <p class="text-sm text-quiz-600 font-arabic">اختبار المفردات</p>
+                    </div>
+                </div>
+                <p class="text-quiz-700 mb-4">Test your vocabulary with multiple-choice questions.</p>
+                <div class="mb-4">
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                        <span>Difficulty:</span>
+                        <span>Mixed</span>
+                    </div>
+                    <div class="flex justify-between text-xs mb-2">
+                        <span>Questions: 20</span>
+                        <span>Time: 10 min</span>
+                    </div>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-quiz-600 hover:bg-quiz-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Start Quiz <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Grammar Mastery -->
+            <div class="quiz-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-amber-200 rounded-lg">
+                        <i class="fa-solid fa-pen-nib text-quiz-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Grammar Mastery</h3>
+                        <p class="text-sm text-quiz-600 font-arabic">اختبار القواعد</p>
+                    </div>
+                </div>
+                <p class="text-quiz-700 mb-4">Challenge your understanding of Arabic grammar rules.</p>
+                <div class="mb-4">
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                        <span>Difficulty:</span>
+                        <span>Advanced</span>
+                    </div>
+                    <div class="flex justify-between text-xs mb-2">
+                        <span>Questions: 25</span>
+                        <span>Time: 15 min</span>
+                    </div>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-quiz-600 hover:bg-quiz-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Start Quiz <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Comprehension Check -->
+            <div class="quiz-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-300 rounded-lg">
+                        <i class="fa-solid fa-book-open text-quiz-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Comprehension Check</h3>
+                        <p class="text-sm text-quiz-600 font-arabic">فهم النصوص</p>
+                    </div>
+                </div>
+                <p class="text-quiz-700 mb-4">Answer questions based on reading and listening passages.</p>
+                <div class="mb-4">
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                        <span>Difficulty:</span>
+                        <span>Intermediate</span>
+                    </div>
+                    <div class="flex justify-between text-xs mb-2">
+                        <span>Questions: 15</span>
+                        <span>Time: 12 min</span>
+                    </div>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-quiz-600 hover:bg-quiz-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Start Quiz <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Pronunciation Challenge -->
+            <div class="quiz-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-100 rounded-lg">
+                        <i class="fa-solid fa-microphone text-quiz-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Pronunciation Challenge</h3>
+                        <p class="text-sm text-quiz-600 font-arabic">اختبار النطق</p>
+                    </div>
+                </div>
+                <p class="text-quiz-700 mb-4">Match words to their correct pronunciations.</p>
+                <div class="mb-4">
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                        <span>Difficulty:</span>
+                        <span>Beginner</span>
+                    </div>
+                    <div class="flex justify-between text-xs mb-2">
+                        <span>Questions: 18</span>
+                        <span>Time: 8 min</span>
+                    </div>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-quiz-600 hover:bg-quiz-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Start Quiz <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Writing Assessment -->
+            <div class="quiz-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-amber-300 rounded-lg">
+                        <i class="fa-solid fa-pencil text-quiz-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Writing Assessment</h3>
+                        <p class="text-sm text-quiz-600 font-arabic">اختبار الكتابة</p>
+                    </div>
+                </div>
+                <p class="text-quiz-700 mb-4">Write responses in Arabic to demonstrate your writing skills.</p>
+                <div class="mb-4">
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                        <span>Difficulty:</span>
+                        <span>All Levels</span>
+                    </div>
+                    <div class="flex justify-between text-xs mb-2">
+                        <span>Questions: 5</span>
+                        <span>Time: 20 min</span>
+                    </div>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-quiz-600 hover:bg-quiz-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Start Quiz <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+
+            <!-- Dialect Challenge -->
+            <div class="quiz-card bg-white rounded-xl shadow-md p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-4 bg-yellow-200 rounded-lg">
+                        <i class="fa-solid fa-globe text-quiz-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl">Dialect Challenge</h3>
+                        <p class="text-sm text-quiz-600 font-arabic">تحدي اللهجات</p>
+                    </div>
+                </div>
+                <p class="text-quiz-700 mb-4">Identify different dialects and regional expressions.</p>
+                <div class="mb-4">
+                    <div class="flex justify-between text-xs font-semibold mb-1">
+                        <span>Difficulty:</span>
+                        <span>Advanced</span>
+                    </div>
+                    <div class="flex justify-between text-xs mb-2">
+                        <span>Questions: 16</span>
+                        <span>Time: 10 min</span>
+                    </div>
+                </div>
+                <a href="#" class="inline-block w-full text-center bg-quiz-600 hover:bg-quiz-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    Start Quiz <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Progress Tracker -->
+        <section class="bg-white rounded-lg shadow-md p-12 mb-12">
+            <h3 class="text-2xl font-bold text-quiz-900 mb-8 text-center">Your Progress</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-quiz-600 mb-2">0</div>
+                    <p class="text-quiz-700 font-semibold">Quizzes Completed</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-correct mb-2">0%</div>
+                    <p class="text-quiz-700 font-semibold">Average Score</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-quiz-500 mb-2">0</div>
+                    <p class="text-quiz-700 font-semibold">Day Streak</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="bg-gradient-to-r from-quiz-700 to-amber-600 text-white rounded-lg p-12 text-center">
+            <h3 class="text-2xl font-bold mb-4">Ready to Test Yourself?</h3>
+            <p class="text-yellow-50 mb-6 max-w-2xl mx-auto">
+                Quizzes are an effective way to reinforce learning and track your progress. Start with an assessment today!
+            </p>
+            <a href="#" class="inline-block bg-white text-quiz-800 font-bold py-3 px-8 rounded-lg hover:bg-yellow-100 transition">
+                View All Quizzes <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-quiz-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-yellow-100">&copy; 2025 Al-Manara Arabic Learning Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رحلة التعيين في الأستاذية - Context Arabic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        .question-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .option-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+        .option-btn:hover {
+            background: #e5e7eb;
+            border-color: #3b82f6;
+        }
+        .option-btn.selected {
+            background: #dbeafe;
+            border-color: #60a5fa;
+        }
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            font-weight: bold;
+        }
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        .score-display {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+        }
+        .vocab-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .vocab-item {
+            background-color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100">
+
+    <!-- Navigation -->
+    <nav class="text-white shadow-lg sticky top-0 z-50" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-graduation-cap text-3xl"></i>
+                    <div class="text-right">
+                        <h1 class="text-xl md:text-2xl font-bold">رحلة التعيين</h1>
+                        <p class="text-sm opacity-90 font-english">The Appointment Journey</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 max-w-4xl">
+
+        <!-- Reading Text -->
+        <article class="bg-white p-6 md:p-8 rounded-2xl shadow-lg prose prose-lg max-w-none text-right leading-relaxed">
+            <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 text-indigo-800">رحلة التعيين في الأستاذية</h1>
+            
+            <h2 class="text-2xl font-bold text-indigo-700 mt-8 mb-4">أخبار مهمة</h2>
+            <p>عُيِّنْتُ أستاذاً مساعداً في قسم الأدب العربي بجامعة القاهرة، وما زلت أتذكر اليوم الذي عَلِمْتُ فيه بِهذا الخبر الرائع. المُدير الأكاديمي اتصل بي شخصياً وقال لي إن الجامعة أَخَذَت القَرار النهائي بتعييني. طَبْعاً كانت مفاجأة سعيدة، فقد قَضَيْتُ سنوات طويلة في التَّحضير لهذه اللحظة المهمة في حياتي المهنية.</p>
+
+            <h2 class="text-2xl font-bold text-indigo-700 mt-8 mb-4">الإعداد والانتظار</h2>
+            <p>في الحقيقة، لم أُسافِر كثيراً خلال السنوات الماضية بسبب التَّركيز الشديد على البحث والدراسة. قَرَّرْتُ منذ البداية أن أُكرِّسَ كل وقتي للتَّأهيل العلمي، وكان هذا القَرار صعباً أحياناً. تَغَيَّبْتُ عَن كثير من المناسبات الاجتماعية وكُنتُ دائمًا مشغولًا مُقارَنةً بأصدقائي وأقاربي الذين سافروا وتَمتَّعوا بِإجازات طويلة.</p>
+
+            <h2 class="text-2xl font-bold text-indigo-700 mt-8 mb-4">تفاصيل التعيين والمزايا</h2>
+            <p>الجامعة وَفَّرَتْ لي حزمة مزايا ممتازة. بِالإضافة إلى الراتب الأساسي الجيد، سأحصل على مِنْحة بحث سنوية قدرها عشرة آلاف جنيه للتَّطوير المهني والتَّدريب المستمر. كما منحتني الإدارة إجازة صيفية مدفوعة الأجر لمدة شهرين كاملين، وهذا شيءٌ رائع للاستراحة والتَّجديد.</p>
+            <p>المُدير أوضَحَ لي أيضاً أن الجامعة تُخطِّط لتَنظيم رحلات علمية دولية، وسأتمكن من السفر إلى مؤتمرات في أوروبا وأمريكا. هذه فرصة ذهبية للتَّواصل مع الباحثين العالميين.</p>
+
+            <h2 class="text-2xl font-bold text-indigo-700 mt-8 mb-4">اللحظات الأولى والمشاعر</h2>
+            <p>عندما زارَني أهلي وأصدقائي جَميعاً في البيت للتهنئة، كُنت في قمة سعادتي. والدي، رحمه الله، كان دائماً يحلم أن يراني أستاذاً جامعياً، ولولا وَفاتُه العام الماضي لكان أسعد الناس بهذا الخبر. طَبْعاً تذكرت كلماته الأخيرة حين نَصَحَني بعدم التَّخلي عن الحلم مهما كانت الصعوبات.</p>
+
+            <h2 class="text-2xl font-bold text-indigo-700 mt-8 mb-4">التحديات القادمة والخطط</h2>
+            <p>في الأسبوع القادِم سأبدأ التَّدريس هُنا في القاهرة، ولكن عائلتي ستبقى هُناك في الإسكندرية حتى نهاية العام الدراسي. هذا التَّنظيم المؤقت ضروري للتَّكيُّف مع المسؤوليات الجديدة. أحياناً أشعُر بالقلق من البعد عن عائلتي، لكن زوجتي تُشجِّعني دائماً وتفهم طبيعة العمل الأكاديمي.</p>
+        </article>
+
+        <!-- Exercises -->
+        <div class="mt-12">
+            <!-- Pattern Matching Section -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-shapes text-blue-600 ml-2"></i>استخرج من القراءة كلمات على هذه الأوزان</h2>
+                <div class="question-card">
+                    <p class="text-lg">ابحث في النص عن كلمات تطابق الأوزان التالية واكتبها.</p>
+                    <!-- This section is for manual student work -->
+                </div>
+            </div>
+
+            <!-- True/False Section -->
+            <div id="tf-section" class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-check-circle text-green-600 ml-2"></i>True or False Questions</h2>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">1. The academic director called the author’s friend to inform him about the appointment.</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf1')" data-correct="false" class="option-btn flex-1">True</button><button onclick="selectOption(this, 'tf1')" data-correct="true" class="option-btn flex-1">False</button></div>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">2. The author did not travel much because he decided to focus on academic preparation.</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf2')" data-correct="true" class="option-btn flex-1">True</button><button onclick="selectOption(this, 'tf2')" data-correct="false" class="option-btn flex-1">False</button></div>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">3. The university granted the author a research scholarship worth twenty thousand pounds.</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf3')" data-correct="false" class="option-btn flex-1">True</button><button onclick="selectOption(this, 'tf3')" data-correct="true" class="option-btn flex-1">False</button></div>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">4. The author will begin teaching in Alexandria next week.</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf4')" data-correct="false" class="option-btn flex-1">True</button><button onclick="selectOption(this, 'tf4')" data-correct="true" class="option-btn flex-1">False</button></div>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">5. The author’s wife supports him and understands the nature of academic work.</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf5')" data-correct="true" class="option-btn flex-1">True</button><button onclick="selectOption(this, 'tf5')" data-correct="false" class="option-btn flex-1">False</button></div>
+                </div>
+            </div>
+
+            <!-- MCQ Section -->
+            <div id="mcq-section" class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-list-ul text-blue-600 ml-2"></i>Multiple Choice Questions</h2>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">1. Who informed the author about the appointment decision?</p>
+                    <button onclick="selectOption(this, 'mcq1')" data-correct="false" class="option-btn text-left font-english">A. His friend</button>
+                    <button onclick="selectOption(this, 'mcq1')" data-correct="true" class="option-btn text-left font-english">B. The academic director</button>
+                    <button onclick="selectOption(this, 'mcq1')" data-correct="false" class="option-btn text-left font-english">C. His former professor</button>
+                    <button onclick="selectOption(this, 'mcq1')" data-correct="false" class="option-btn text-left font-english">D. The dean of the college</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">2. Why did the author miss many social events?</p>
+                    <button onclick="selectOption(this, 'mcq2')" data-correct="false" class="option-btn text-left font-english">A. Because of travel</button>
+                    <button onclick="selectOption(this, 'mcq2')" data-correct="true" class="option-btn text-left font-english">B. Because of his academic focus</button>
+                    <button onclick="selectOption(this, 'mcq2')" data-correct="false" class="option-btn text-left font-english">C. Because of illness</button>
+                    <button onclick="selectOption(this, 'mcq2')" data-correct="false" class="option-btn text-left font-english">D. Because of family problems</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">3. How much is the annual research grant?</p>
+                    <button onclick="selectOption(this, 'mcq3')" data-correct="false" class="option-btn text-left font-english">A. 5,000 pounds</button>
+                    <button onclick="selectOption(this, 'mcq3')" data-correct="false" class="option-btn text-left font-english">B. 15,000 pounds</button>
+                    <button onclick="selectOption(this, 'mcq3')" data-correct="true" class="option-btn text-left font-english">C. 10,000 pounds</button>
+                    <button onclick="selectOption(this, 'mcq3')" data-correct="false" class="option-btn text-left font-english">D. 20,000 pounds</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">4. What was the author’s feeling after the news of the appointment?</p>
+                    <button onclick="selectOption(this, 'mcq4')" data-correct="false" class="option-btn text-left font-english">A. Sadness</button>
+                    <button onclick="selectOption(this, 'mcq4')" data-correct="false" class="option-btn text-left font-english">B. Hesitation</button>
+                    <button onclick="selectOption(this, 'mcq4')" data-correct="true" class="option-btn text-left font-english">C. Happiness</button>
+                    <button onclick="selectOption(this, 'mcq4')" data-correct="false" class="option-btn text-left font-english">D. Fear</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3 text-left font-english">5. Where will the author’s family stay temporarily?</p>
+                    <button onclick="selectOption(this, 'mcq5')" data-correct="false" class="option-btn text-left font-english">A. In Cairo</button>
+                    <button onclick="selectOption(this, 'mcq5')" data-correct="true" class="option-btn text-left font-english">B. In Alexandria</button>
+                    <button onclick="selectOption(this, 'mcq5')" data-correct="false" class="option-btn text-left font-english">C. In Tanta</button>
+                    <button onclick="selectOption(this, 'mcq5')" data-correct="false" class="option-btn text-left font-english">D. In Europe</button>
+                </div>
+            </div>
+
+            <!-- Vocabulary Section -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-book-open text-yellow-600 ml-2"></i>Vocabulary</h2>
+                <div class="vocab-table">
+                    <div class="vocab-item"><strong>مفاجأة:</strong> <span class="font-english">Surprise</span></div>
+                    <div class="vocab-item"><strong>التَّركيز الشديد:</strong> <span class="font-english">Intense focus</span></div>
+                    <div class="vocab-item"><strong>قَرَّرَ:</strong> <span class="font-english">Decided</span></div>
+                    <div class="vocab-item"><strong>أُكرِّسَ:</strong> <span class="font-english">I dedicate</span></div>
+                    <div class="vocab-item"><strong>حزمة مزايا:</strong> <span class="font-english">Benefits package</span></div>
+                    <div class="vocab-item"><strong>للتَّأهيل العلمي:</strong> <span class="font-english">For academic qualification</span></div>
+                    <div class="vocab-item"><strong>المناسبات الاجتماعية:</strong> <span class="font-english">Social occasions</span></div>
+                    <div class="vocab-item"><strong>نَصَحَني:</strong> <span class="font-english">He advised me</span></div>
+                    <div class="vocab-item"><strong>شخصياً:</strong> <span class="font-english">Personally</span></div>
+                    <div class="vocab-item"><strong>قدرها:</strong> <span class="font-english">Its amount</span></div>
+                    <div class="vocab-item"><strong>اللحظة:</strong> <span class="font-english">The moment</span></div>
+                    <div class="vocab-item"><strong>للتَّطوير المهني:</strong> <span class="font-english">For professional development</span></div>
+                    <div class="vocab-item"><strong>المهنية:</strong> <span class="font-english">Professional</span></div>
+                    <div class="vocab-item"><strong>والتَّدريب المستمر:</strong> <span class="font-english">And ongoing training</span></div>
+                    <div class="vocab-item"><strong>خلال:</strong> <span class="font-english">During</span></div>
+                    <div class="vocab-item"><strong>تُخطِّط:</strong> <span class="font-english">Plans</span></div>
+                    <div class="vocab-item"><strong>رحلات علمية:</strong> <span class="font-english">Academic trips</span></div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button onclick="checkAllAnswers()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-xl font-bold py-4 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition-all shadow-lg">
+                <i class="fas fa-check-double ml-2"></i>تحقق من الإجابات
+            </button>
+
+            <!-- Score Display -->
+            <div id="scoreDisplay" class="hidden score-display">
+                <i class="fas fa-trophy ml-2"></i>
+                <span id="scoreText"></span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 text-white text-center" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
+        <div class="container mx-auto px-6">
+            <a href="index.html" class="hover:opacity-80 transition">
+                <span class="font-semibold text-sm md:text-base">Back to Reading</span>
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const userSelections = {};
+
+        function selectOption(btn, qName) {
+            document.querySelectorAll(`button[onclick*="${qName}"]`).forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            userSelections[qName] = btn;
+        }
+
+        function checkAllAnswers() {
+            let totalScore = 0;
+            let totalQuestions = 0;
+
+            Object.values(userSelections).forEach(btn => {
+                const isCorrect = btn.dataset.correct === 'true';
+                btn.classList.remove('correct', 'incorrect');
+                if (isCorrect) {
+                    btn.classList.add('correct');
+                    totalScore++;
+                } else {
+                    btn.classList.add('incorrect');
+                }
+                const qName = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+                document.querySelector(`button[onclick*="${qName}"][data-correct="true"]`).classList.add('correct');
+            });
+            totalQuestions = Object.keys(userSelections).length;
+
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreText = document.getElementById('scoreText');
+            const percentage = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
+            
+            scoreText.textContent = `Your score: ${totalScore} out of ${totalQuestions} (${percentage}%)`;
+            scoreDisplay.classList.remove('hidden');
+            scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+
+</body>
+</html>

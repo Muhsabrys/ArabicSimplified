@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الزواج في ثلاث ثقافات عربية - Context Arabic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        .question-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .option-btn {
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: right;
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+        .option-btn:hover {
+            background: #e5e7eb;
+            border-color: #6d28d9;
+        }
+        .option-btn.selected {
+            background: #ede9fe;
+            border-color: #8b5cf6;
+        }
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            font-weight: bold;
+        }
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        .fill-in-input {
+            border: 2px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            width: 150px;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+        .fill-in-input:focus {
+            outline: none;
+            border-color: #6d28d9;
+        }
+        .fill-in-input.correct {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+        }
+        .fill-in-input.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+        .score-display {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-violet-100">
+
+    <!-- Navigation -->
+    <nav class="text-white shadow-lg sticky top-0 z-50" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl hidden md:inline">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-ring text-3xl"></i>
+                    <div class="text-right">
+                        <h1 class="text-xl md:text-2xl font-bold">الزواج في ثلاث ثقافات</h1>
+                        <p class="text-sm opacity-90 font-english">Marriage in Three Cultures</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12 max-w-4xl">
+
+        <!-- Reading Text -->
+        <article class="bg-white p-6 md:p-8 rounded-2xl shadow-lg prose prose-lg max-w-none text-right leading-relaxed">
+            <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 text-violet-800">👰 الزواج في ثلاث ثقافات عربية</h1>
+            
+            <p class="text-lg text-gray-700">الزواج مهم في كلّ المجتمعات. في العالم العربي، الزواج ليس فقط بين رجل وامرأة، بل هو أيضًا علاقة بين عائلتين. العادات تختلف من بلد إلى بلد، ولكن الحب، والاحترام، والتعاون موجود في كلّ مكان.</p>
+
+            <div class="my-8 border-t-2 border-violet-200"></div>
+
+            <h2 class="text-2xl font-bold text-violet-700 mt-8 mb-4">الزواج في المغرب</h2>
+            <p>الزواج في المغرب جميل، ويستمرّ عدّة أيام. في البداية، يكون هناك عقد القِران. في هذا اليوم، يذهب العريس والعروس مع أهلهما إلى المحكمة، ويوقّعون عقد الزواج مع شخص اسمه "العدول".</p>
+            <p>بعد ذلك، تبدأ أيام الاحتفال. في يوم الحمّام، تذهب العروس إلى الحمّام مع صديقاتها. هناك تنظّف جسمها، وتضع عطرًا، وتستعدّ للزفاف.</p>
+            <p>في اليوم التالي، يكون هناك ليلة الحنّة. في هذا اليوم، ترسم النساء الحنّة على أيديهن وأرجلهن. الحنّة عادة مهمة في المغرب، وتعني الفرح. في هذه الليلة، هناك غناء ورقص وطعام.</p>
+            <p>ثم يأتي يوم الزفاف. الضيوف يشربون الشاي بالنعناع ويأكلون الحلويات. العروس تدخل وهي تجلس في كرسي اسمه "العمارية"، ويحملها رجال. بعد ذلك، تجلس مع العريس في مكان اسمه "الكوشة".</p>
+            <p>العروس تغيّر ملابسها أكثر من مرة. تلبس القفطان، والتكشيطة، وملابس من مناطق مغربية مختلفة. العريس يلبس بدلة، ثم يلبس اللباس المغربي التقليدي "الجابادور".</p>
+            <p>بعد الزفاف، يذهب العروسان إلى بيت العريس. هناك، تستقبلهم عائلته بالحليب والتمر. هذه عادة جميلة للدعاء بالسعادة.</p>
+
+            <div class="my-8 border-t-2 border-violet-200"></div>
+
+            <h2 class="text-2xl font-bold text-violet-700 mt-8 mb-4">الزواج في السعودية</h2>
+            <p>أولًا، يذهب العريس (الرجل) مع عائلته إلى بيت العروس (البنت) ليتحدّث مع والدها. إذا وافق الأب، يقرأ الجميع الفاتحة (من القرآن). هذا يعني أن الخطوبة بدأت. بعد ذلك يرى العريس العروس لأول مرة، بحضور الأهل. هذا اللقاء بسيط وقصير، لكنّه مهمّ. إذا أحبّ كل واحد الآخر، يستمر التحضير للزواج. ثمّ يتفق الجميع على المهر. المهر هو مبلغ من المال يُقدّمه العريس للعروس. المبلغ يختلف من عائلة لأخرى، حسب الاتفاق.</p>
+            <p>أحيانًا مع المهر، يُعطي العريس هدايا إضافية. بعد الاتفاق على المهر، يأتي كتب الكتاب. في هذا اليوم، يكتب الإمام أو الشيخ عقد الزواج، بحضور العريس والعروس والشهود.</p>
+            <p>قبل الزفاف، هناك حفل الشبكة. في هذا الحفل، يُقدّم العريس خاتمًا ومجوهرات للعروس.</p>
+            <p>أيضًا، قبل الزفاف، يكون هناك حفلة الغُمرة. هذه حفلة فيها العروس فقط مع صديقاتها وقريباتها. يضعن الحنّة على اليدين والرجلين، وتلبس العروس فستانًا تقليديًا. تغني النساء، وترقصن، ويأكلن الحلوى. في نفس الليلة، يكون عند العريس حفلة خاصة مع أصدقائه.</p>
+            <p>ثمّ يأتي حفل الزفاف، وهو أكبر وأجمل حفلة. في السعودية، حفلة الرجال وحفلة النساء تكونان منفصلتين. في حفلة الرجال، هناك طعام كثير، وموسيقى شعبية، ورقص بالسيوف. في حفلة النساء، العروس تلبس فستانًا أبيض، وتجتمع مع أقاربها وصديقاتها. وبعد ذلك تدخل مع العريس في مكان واحد.</p>
+
+            <div class="my-8 border-t-2 border-violet-200"></div>
+
+            <h2 class="text-2xl font-bold text-violet-700 mt-8 mb-4">الزواج في فلسطين</h2>
+            <p>الزواج في فلسطين له عادات قديمة، والناس ما زالوا يحافظون عليها. في العادة، أم العريس تبحث عن فتاة مناسبة. إذا أعجبتها فتاة، تذهب مع قريبتها لزيارتها. الفتاة تقدّم القهوة، وإذا أعجبت أم العريس، يُحدَّد موعد جديد ليرى العريس العروس. إذا وافق الطرفان، تُقرأ الفاتحة.</p>
+            <p>بعد ذلك، العائلتان تتفقان على المهر وموعد الخطوبة. الخطوبة تكون في بيت العروس، ويتمّ فيها لبس الخواتم، وتقديم الحلوى مثل الكنافة أو البقلاوة.</p>
+            <p>ثم يُكتب عقد الزواج في البيت أو في المحكمة، بحضور الشهود. بعدها، أهل العريس يُحضِرون الكسوة للعروس، وهي ملابس وهدايا. النساء يغنين ويرقصن في بيت العروس.</p>
+            <p>قبل الزفاف، هناك ليلة الحنّة. العروس تضع الحنّة في يدها، وتغني النساء أغاني شعبية. في يوم الزفاف، يُحضِّر أهل العريس الطعام، ويرقص الرجال الدبكة. العريس يذهب إلى بيت العروس، ثم يعودان معًا إلى البيت الجديد.</p>
+            <p>في اليوم التالي، يأتي أهل العروس في زيارة اسمها الصباحية. وبعدها، يزور الناس العروسين ليقولوا "مبروك".</p>
+        </article>
+
+        <!-- Exercises -->
+        <div class="mt-12">
+            <!-- MCQ Section -->
+            <div id="mcq-section" class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-list-ul text-violet-600 ml-2"></i>اختر الإجابة الصحيحة</h2>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">١. في المغرب، من الذي يوقّع عقد الزواج مع العريس والعروس؟</p>
+                    <button onclick="selectOption(this, 'mcq1')" data-correct="false" class="option-btn">أ. القاضي</button>
+                    <button onclick="selectOption(this, 'mcq1')" data-correct="true" class="option-btn">ب. العدول</button>
+                    <button onclick="selectOption(this, 'mcq1')" data-correct="false" class="option-btn">ج. الإمام</button>
+                    <button onclick="selectOption(this, 'mcq1')" data-correct="false" class="option-btn">د. الشيخ</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٢. ماذا تعني حفلة "الغُمرة" في السعودية؟</p>
+                    <button onclick="selectOption(this, 'mcq2')" data-correct="false" class="option-btn">أ. حفلة الرجال</button>
+                    <button onclick="selectOption(this, 'mcq2')" data-correct="true" class="option-btn">ب. حفلة فيها العروس مع صديقاتها</button>
+                    <button onclick="selectOption(this, 'mcq2')" data-correct="false" class="option-btn">ج. حفل كتب الكتاب</button>
+                    <button onclick="selectOption(this, 'mcq2')" data-correct="false" class="option-btn">د. حفلة الشاي</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٣. ما هو اللباس التقليدي الذي يلبسه العريس في المغرب؟</p>
+                    <button onclick="selectOption(this, 'mcq3')" data-correct="false" class="option-btn">أ. القفطان</button>
+                    <button onclick="selectOption(this, 'mcq3')" data-correct="false" class="option-btn">ب. الجلابية</button>
+                    <button onclick="selectOption(this, 'mcq3')" data-correct="true" class="option-btn">ج. الجابادور</button>
+                    <button onclick="selectOption(this, 'mcq3')" data-correct="false" class="option-btn">د. الكوفية</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٤. في أي بلد تُقرأ الفاتحة عندما يوافق والد العروس؟</p>
+                    <button onclick="selectOption(this, 'mcq4')" data-correct="false" class="option-btn">أ. المغرب</button>
+                    <button onclick="selectOption(this, 'mcq4')" data-correct="false" class="option-btn">ب. فلسطين</button>
+                    <button onclick="selectOption(this, 'mcq4')" data-correct="true" class="option-btn">ج. السعودية</button>
+                    <button onclick="selectOption(this, 'mcq4')" data-correct="false" class="option-btn">د. مصر</button>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٥. ما اسم الزيارة التي تقوم بها عائلة العروس بعد الزفاف في فلسطين؟</p>
+                    <button onclick="selectOption(this, 'mcq5')" data-correct="false" class="option-btn">أ. الزيارة</button>
+                    <button onclick="selectOption(this, 'mcq5')" data-correct="false" class="option-btn">ب. الهناء</button>
+                    <button onclick="selectOption(this, 'mcq5')" data-correct="true" class="option-btn">ج. الصباحية</button>
+                    <button onclick="selectOption(this, 'mcq5')" data-correct="false" class="option-btn">د. التهنئة</button>
+                </div>
+            </div>
+
+            <!-- True/False Section -->
+            <div id="tf-section" class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-check-circle text-green-600 ml-2"></i>صح أم خطأ؟</h2>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">١. في السعودية، يقدّم العريس المجوهرات للعروس في حفلة "الشبكة".</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf1')" data-correct="true" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf1')" data-correct="false" class="option-btn flex-1">خطأ</button></div>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٢. في فلسطين، عقد الزواج يُكتب دائمًا في المحكمة فقط.</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf2')" data-correct="false" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf2')" data-correct="true" class="option-btn flex-1">خطأ</button></div>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٣. في المغرب، العروس تلبس قفطانًا واحدًا فقط خلال العرس.</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf3')" data-correct="false" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf3')" data-correct="true" class="option-btn flex-1">خطأ</button></div>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٤. في حفلة الرجال بالسعودية، يُرقَص بالسيوف.</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf4')" data-correct="true" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf4')" data-correct="false" class="option-btn flex-1">خطأ</button></div>
+                </div>
+                <div class="question-card">
+                    <p class="text-lg font-semibold mb-3">٥. الحنّة في المغرب تُستخدم فقط في يوم الزفاف.</p>
+                    <div class="flex gap-2"><button onclick="selectOption(this, 'tf5')" data-correct="false" class="option-btn flex-1">صح</button><button onclick="selectOption(this, 'tf5')" data-correct="true" class="option-btn flex-1">خطأ</button></div>
+                </div>
+            </div>
+
+            <!-- Fill-in-the-blanks Section -->
+            <div id="fill-section" class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-pen-alt text-blue-600 ml-2"></i>املأ الفراغات</h2>
+                <div class="question-card space-y-4">
+                    <p class="text-lg">١. في المغرب، العروس تجلس في كرسي اسمه <input id="fill1" data-answer="العمارية" class="fill-in-input"> ويحملها الرجال.</p>
+                    <p class="text-lg">٢. في السعودية، المبلغ الذي يُقدّمه العريس للعروس يسمى <input id="fill2" data-answer="المهر" class="fill-in-input">.</p>
+                    <p class="text-lg">٣. في فلسطين، النساء يغنين ويرقصن في بيت العروس بعد تقديم <input id="fill3" data-answer="الكسوة" class="fill-in-input">.</p>
+                    <p class="text-lg">٤. في المغرب، العريس يلبس اللباس التقليدي المعروف باسم <input id="fill4" data-answer="الجابادور" class="fill-in-input">.</p>
+                    <p class="text-lg">٥. في السعودية، يُقرأ <input id="fill5" data-answer="الفاتحة" class="fill-in-input"> بعد موافقة والد العروس.</p>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button onclick="checkAllAnswers()" class="w-full bg-gradient-to-r from-violet-600 to-purple-700 text-white text-xl font-bold py-4 rounded-lg hover:from-violet-700 hover:to-purple-800 transition-all shadow-lg">
+                <i class="fas fa-check-double ml-2"></i>تحقق من كل الإجابات
+            </button>
+
+            <!-- Score Display -->
+            <div id="scoreDisplay" class="hidden score-display">
+                <i class="fas fa-trophy ml-2"></i>
+                <span id="scoreText"></span>
+            </div>
+
+            <!-- Discussion Section -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4"><i class="fas fa-comments text-teal-600 ml-2"></i>أسئلة للنقاش</h2>
+                <div class="bg-white p-6 rounded-lg shadow-md space-y-4">
+                    <p class="text-lg">١. ما رأيك في أن يكون الزواج علاقة بين عائلتين، وليس فقط بين شخصين؟</p>
+                    <p class="text-lg">٢. هل تحب أن تحضر حفلة زفاف مغربية؟ لماذا؟</p>
+                    <p class="text-lg">٣. ما الفرق بين الزواج في بلدك والزواج في فلسطين؟</p>
+                    <p class="text-lg">٤. لماذا تعتقد أن الحنّة مهمة في كثير من الأعراس العربية؟</p>
+                    <p class="text-lg">٥. ما أكثر جزء أعجبك في تقاليد الزواج في السعودية؟ ولماذا؟</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 text-white text-center" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+        <div class="container mx-auto px-6">
+            <a href="index.html" class="hover:opacity-80 transition">
+                <span class="font-semibold text-sm md:text-base">Back to Reading</span>
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const userSelections = {};
+
+        function selectOption(btn, qName) {
+            document.querySelectorAll(`button[onclick*="${qName}"]`).forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            userSelections[qName] = btn;
+        }
+
+        function checkAllAnswers() {
+            let totalScore = 0;
+            let totalQuestions = 0;
+
+            // Check MCQs and T/F
+            Object.values(userSelections).forEach(btn => {
+                const isCorrect = btn.dataset.correct === 'true';
+                btn.classList.remove('correct', 'incorrect');
+                if (isCorrect) {
+                    btn.classList.add('correct');
+                    totalScore++;
+                } else {
+                    btn.classList.add('incorrect');
+                }
+                // Also mark the correct answer for the user
+                const qName = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+                document.querySelector(`button[onclick*="${qName}"][data-correct="true"]`).classList.add('correct');
+            });
+            totalQuestions += Object.keys(userSelections).length;
+
+            // Check Fill-in-the-blanks
+            const fillInputs = document.querySelectorAll('.fill-in-input');
+            fillInputs.forEach(input => {
+                const correctAnswer = input.dataset.answer.trim();
+                input.classList.remove('correct', 'incorrect');
+                if (input.value.trim() === correctAnswer) {
+                    input.classList.add('correct');
+                    totalScore++;
+                } else {
+                    input.classList.add('incorrect');
+                    const feedback = document.createElement('span');
+                    feedback.textContent = ` (${correctAnswer})`;
+                    feedback.className = 'text-green-600 font-semibold';
+                    if (!input.nextElementSibling || input.nextElementSibling.tagName !== 'SPAN') {
+                        input.parentNode.insertBefore(feedback, input.nextSibling);
+                    }
+                }
+            });
+            totalQuestions += fillInputs.length;
+
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreText = document.getElementById('scoreText');
+            const percentage = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
+            
+            scoreText.textContent = `نتيجتك: ${totalScore} من ${totalQuestions} (${percentage}%)`;
+            scoreDisplay.classList.remove('hidden');
+            scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening - Context Arabic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .font-arabic { font-family: 'Cairo', sans-serif; }
+        .font-english { font-family: 'Lato', sans-serif; }
+        
+        .sound-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-right: 4px solid transparent;
+        }
+        
+        .sound-card:hover {
+            transform: translateX(-8px) scale(1.02);
+            border-right-color: #22c55e;
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.3);
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+        
+        .wave-bar {
+            animation: wave 0.8s ease-in-out infinite;
+        }
+        
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+        
+        .listening-gradient {
+            background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .level-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .level-beginner { background: #dbeafe; color: #1e40af; }
+        .level-intermediate { background: #fef3c7; color: #92400e; }
+        .level-advanced { background: #fecaca; color: #991b1b; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'listening-green': '#22c55e',
+                        'pulse': '#10b981',
+                    },
+                    fontFamily: {
+                        'arabic': ['Cairo', 'sans-serif'],
+                        'english': ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-green-50 font-arabic">
+    
+    <!-- Navigation -->
+    <nav class="listening-gradient text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <i class="fas fa-arrow-right text-2xl"></i>
+                    <span class="font-english text-xl">Back to Home</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <div class="flex gap-1">
+                        <div class="wave-bar w-1 h-6 bg-white rounded-full"></div>
+                        <div class="wave-bar w-1 h-8 bg-white rounded-full"></div>
+                        <div class="wave-bar w-1 h-6 bg-white rounded-full"></div>
+                        <div class="wave-bar w-1 h-10 bg-white rounded-full"></div>
+                    </div>
+                    <h1 class="text-3xl font-bold">الاستماع - Listening</h1>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 text-center">
+        <div class="container mx-auto px-6">
+            <div class="inline-block p-4 bg-white rounded-full shadow-lg mb-6">
+                <i class="fas fa-headphones text-6xl text-listening-green"></i>
+            </div>
+            <h2 class="text-5xl font-bold text-gray-800 mb-4 font-arabic">
+                Listening Practice
+            </h2>
+            <p class="text-xl text-gray-600 font-english max-w-2xl mx-auto">
+                Train your ear with authentic Arabic conversations and comprehension exercises
+            </p>
+        </div>
+    </section>
+
+    <!-- Lessons Grid -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            
+            <!-- Beginner Lessons -->
+            <div class="mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                    <i class="fas fa-signal text-blue-500"></i>
+                    <span>Beginner - مبتدئ</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Lesson 1: Cinema -->
+                    <a href="cinema_friends.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-film text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-beginner">Beginner</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">محمود وخالد في السينما</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">Mahmoud and Khaled at the Cinema</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            حوار بين صديقين في السينما
+                        </p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle ml-1"></i>10 أسئلة
+                            </span>
+                            <div class="flex items-center text-listening-green font-semibold">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                <span>استمع وأجب</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Lesson 2: Wednesday -->
+                    <a href="wednesday.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-calendar-day text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-beginner">Beginner</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">يوم الأربعاء</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">Wednesday</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            قصة عن يوم عادي
+                        </p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle ml-1"></i>10 أسئلة
+                            </span>
+                            <div class="flex items-center text-listening-green font-semibold">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                <span>استمع وأجب</span>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Intermediate Lessons -->
+            <div class="mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                    <i class="fas fa-chart-line text-yellow-600"></i>
+                    <span>Intermediate - متوسط</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Lesson 3: Hotel Reservation Mariam -->
+                    <a href="hotel_reservation_mariam.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-hotel text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-intermediate">Intermediate</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">حجز غرفة في فندق - مريم</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">Hotel Reservation - Mariam</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            مريم تحجز غرفة في فندق
+                        </p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle ml-1"></i>15 أسئلة
+                            </span>
+                            <div class="flex items-center text-listening-green font-semibold">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                <span>استمع وأجب</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Lesson 4: Hotel Booking -->
+                    <a href="hotel_booking.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-bed text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-intermediate">Intermediate</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">حجز فندق</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">Hotel Booking</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            محادثة حجز فندق
+                        </p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle ml-1"></i>10 أسئلة
+                            </span>
+                            <div class="flex items-center text-listening-green font-semibold">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                <span>استمع وأجب</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Lesson 5: New Car -->
+                    <a href="new_car.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-car text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-intermediate">Intermediate</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">عربية جديدة</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">New Car</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            قصة شراء سيارة جديدة
+                        </p>
+                        <div class="mt-4 flex items-center text-listening-green font-semibold">
+                            <i class="fas fa-play-circle ml-2"></i>
+                            <span>استمع وأجب</span>
+                        </div>
+                    </a>
+
+                    <!-- Weather -->
+                    <a href="weather.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-cloud-sun text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-intermediate">Intermediate</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">الطقس</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">The Weather</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            محادثة عن أحوال الطقس
+                        </p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle ml-1"></i>10 أسئلة
+                            </span>
+                            <div class="flex items-center text-listening-green font-semibold">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                <span>استمع وأجب</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Hobbies -->
+                    <a href="hobbies.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-puzzle-piece text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-intermediate">Intermediate</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">الهوايات</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">Hobbies</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            محادثة عن هوايات أفراد العائلة
+                        </p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle ml-1"></i>15 أسئلة
+                            </span>
+                            <div class="flex items-center text-listening-green font-semibold">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                <span>استمع وأجب</span>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Advanced Lessons -->
+            <div class="mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                    <i class="fas fa-fire text-red-500"></i>
+                    <span>Advanced - متقدم</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Lesson 6: Sara's Story -->
+                    <a href="sara_story.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-book-reader text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-advanced">Advanced</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">قصة سارة</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">Sara's Story</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            قصة أخلاقية عن سارة
+                        </p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle ml-1"></i>12 أسئلة
+                            </span>
+                            <div class="flex items-center text-listening-green font-semibold">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                <span>استمع وأجب</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Lesson 7: Daily Problems -->
+                    <a href="daily_problems.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-advanced">Advanced</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">كل يوم في مشكلة</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">Daily Problems</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            قصة عن المشاكل اليومية
+                        </p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle ml-1"></i>9 أسئلة
+                            </span>
+                            <div class="flex items-center text-listening-green font-semibold">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                <span>استمع وأجب</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Lesson 8: What Would You Do -->
+                    <a href="if_you_were_me.html" class="sound-card bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-14 h-14 listening-gradient rounded-lg flex items-center justify-center">
+                                <i class="fas fa-question-circle text-white text-2xl"></i>
+                            </div>
+                            <span class="level-badge level-advanced">Advanced</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">ماذا ستفعل لو كنت مكاني</h3>
+                        <p class="text-gray-600 font-english text-sm mb-3">What Would You Do If You Were Me</p>
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-headphones text-listening-green ml-2"></i>
+                            محادثة عن موقف صعب
+                        </p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle ml-1"></i>9 أسئلة
+                            </span>
+                            <div class="flex items-center text-listening-green font-semibold">
+                                <i class="fas fa-play-circle ml-2"></i>
+                                <span>استمع وأجب</span>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">Listening Features</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="inline-block p-4 bg-green-100 rounded-full mb-4">
+                        <i class="fas fa-volume-up text-4xl text-listening-green"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">Authentic Audio</h4>
+                    <p class="text-gray-600 font-english">Real Arabic conversations with native speakers</p>
+                </div>
+                <div class="text-center">
+                    <div class="inline-block p-4 bg-green-100 rounded-full mb-4">
+                        <i class="fas fa-tasks text-4xl text-listening-green"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">Auto-Graded Quizzes</h4>
+                    <p class="text-gray-600 font-english">Instant feedback on comprehension questions</p>
+                </div>
+                <div class="text-center">
+                    <div class="inline-block p-4 bg-green-100 rounded-full mb-4">
+                        <i class="fas fa-redo text-4xl text-listening-green"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">Unlimited Replays</h4>
+                    <p class="text-gray-600 font-english">Listen as many times as you need</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="listening-gradient text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="font-english">&copy; 2025 Context Arabic - Listening Module</p>
+            <p class="mt-2 text-sm opacity-80">تعلّم العربية بالسياق - Learn Arabic in Context</p>
+        </div>
+    </footer>
+
+</body>
+</html>

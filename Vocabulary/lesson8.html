@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مفردات الكتاب: الدرس الثامن</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Noto Kufi Arabic', sans-serif; }
+    .control-button {
+      transition: all 0.2s ease-in-out;
+      background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      border: none; cursor: pointer;
+    }
+    .control-button:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+    .quiz-input {
+      border: 1px solid #d1d5db; padding: 0.5rem 0.75rem; border-radius: 0.5rem;
+      width: 100%; max-width: 250px; text-align: center; direction: rtl;
+    }
+    .quiz-input[data-lang="en"] { direction: ltr; text-align: left; }
+    .correct-answer { color: #059669; font-weight: 600; }
+    .incorrect-answer { color: #dc2626; font-weight: 600; }
+    .vocab-table th, .vocab-table td { padding: 0.75rem; border-bottom: 1px solid #e5e7eb; text-align: right; }
+    .vocab-table th { background-color: #f3f4f6; font-weight: 600; color: #374151; }
+    .vocab-table tr:last-child td { border-bottom: none; }
+    .vocab-table tbody tr:hover { background-color: #f9fafb; }
+
+    /* Flashcard styles */
+    .flashcard-container { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; }
+    .flashcard { width: 280px; height: 180px; perspective: 1000px; cursor: pointer; }
+    .flashcard-inner { width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; position: relative; border-radius: 1rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+    .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+    .flashcard-front, .flashcard-back {
+      position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+      display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 700; text-align: center; border-radius: 1rem; padding: 1rem;
+    }
+    .flashcard-front { background-color: #e0f2f7; color: #264653; }
+    .flashcard-back { background-color: #2a9d8f; color: white; transform: rotateY(180deg); font-size: 1.1rem; direction: ltr; }
+    .flashcard-type {
+      position: absolute; top: 0.75rem; left: 0.75rem; font-size: 0.75rem; font-weight: 400;
+      color: #6b7280; background-color: rgba(255,255,255,0.7); padding: 0.25rem 0.5rem; border-radius: 0.5rem;
+    }
+    .flashcard-back .flashcard-type { color: #e5e7eb; background-color: rgba(0,0,0,0.3); }
+    .flashcard[tabindex]{ outline: none; }
+    .flashcard:focus .flashcard-front { box-shadow: 0 0 0 3px rgba(45,212,191,0.6); }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+  <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+    <header class="text-center mb-6">
+      <h1 class="text-3xl md:text-5xl font-bold text-teal-700 mb-2">مفردات الكتاب: الدرس الثامن</h1>
+      <p class="text-md md:text-lg text-stone-600 max-w-2xl mx-auto">اقرأ المفردات الجديدة وتدرّب عليها</p>
+    </header>
+
+    <main>
+      <section id="vocabulary-introduction" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-12">
+        <h2 class="text-2xl font-semibold text-center mb-6 text-stone-700">١. الكلمات في سياقها</h2>
+        <div class="overflow-x-auto">
+          <table id="vocab-table" class="min-w-full vocab-table rounded-lg overflow-hidden">
+            <thead>
+              <tr>
+                <th class="py-3 px-4 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">الكلمة العربية</th>
+                <th class="py-3 px-4 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">معنى الكلمة (الإنجليزية)</th>
+                <th class="py-3 px-4 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">الجملة السياقية (العربية)</th>
+                <th class="py-3 px-4 bg-gray-100 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">ترجمة الجملة (الإنجليزية)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="flashcards-section" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-12">
+        <h2 class="text-2xl font-semibold text-center mb-6 text-stone-700">٢. بطاقات المفردات</h2>
+        <p class="text-md text-stone-600 text-center mb-8 max-w-2xl mx-auto">انقر على البطاقة لتقليبها ورؤية المعنى أو التصريف.</p>
+
+        <h3 class="text-xl font-semibold text-stone-700 mb-4 text-center">المفردات الأساسية</h3>
+        <div id="word-flashcards-container" class="flashcard-container"></div>
+
+        <h3 class="text-xl font-semibold text-stone-700 mb-4 text-center mt-8">تصريفات الأفعال والجمع</h3>
+        <div id="derivation-flashcards-container" class="flashcard-container"></div>
+      </section>
+
+      <section id="quizzes" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        <h2 class="text-3xl font-bold text-center text-teal-700 mb-6">اختبر معلوماتك!</h2>
+        <p class="text-md text-stone-600 text-center mb-8 max-w-2xl mx-auto">استخدم الاختبارات التالية لتقييم فهمك للمفردات.</p>
+
+        <!-- Quiz 1 -->
+        <div class="mb-10 p-6 border border-stone-200 rounded-xl">
+          <h3 class="text-2xl font-semibold text-stone-700 mb-4">النشاط ١: أكمل الفراغ في الجملة (بالعربية)</h3>
+          <p class="text-stone-600 mb-4">أكمل الجملة بالكلمة العربية الصحيحة من المفردات التي تعلمتها.</p>
+          <div id="quiz1-questions"></div>
+          <div class="flex flex-wrap justify-center gap-4 mt-6">
+            <button id="quiz1-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+            <button id="quiz1-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+            <button id="quiz1-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+          </div>
+        </div>
+
+        <!-- Quiz 2 -->
+        <div class="mb-10 p-6 border border-stone-200 rounded-xl">
+          <h3 class="text-2xl font-semibold text-stone-700 mb-4">النشاط ٢: الترجمة (الإنجليزية إلى العربية)</h3>
+          <p class="text-stone-600 mb-4">اكتب الكلمة العربية الصحيحة بناءً على المعنى الإنجليزي.</p>
+          <div id="quiz2-questions"></div>
+          <div class="flex flex-wrap justify-center gap-4 mt-6">
+            <button id="quiz2-check" class="control-button bg-teal-600 text-white py-2 px-6 rounded-full shadow-md hover:bg-teal-700">تحقق من الإجابات</button>
+            <button id="quiz2-show-answers" class="control-button bg-stone-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-stone-600">أظهر الإجابات</button>
+            <button id="quiz2-reset" class="control-button bg-red-500 text-white py-2 px-6 rounded-full shadow-md hover:bg-red-600">إعادة تعيين</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // ===== Data =====
+    const vocabulary = [
+      { word_ar: "أم", translation_en: "mother", sentence_ar: "أمي هي أفضل أم في العالم.", sentence_en: "My mother is the best mother in the world." },
+      { word_ar: "بعد أن", translation_en: "after", sentence_ar: "<b>بعد أن</b> انتهيت من العمل، ذهبت إلى المنزل.", sentence_en: "<b>After</b> I finished work, I went home." },
+      { word_ar: "ميلادي (AD)", translation_en: "AD / CE", sentence_ar: "عام 2000 <b>ميلادي (AD)</b> كان عامًا مميزًا.", sentence_en: "The year 2000 <b>AD</b> was a special year." },
+      { word_ar: "حصلت على", translation_en: "I obtained", sentence_ar: "<b>حصلت على</b> شهادة جامعية.", sentence_en: "<b>I obtained</b> a university degree." },
+      { word_ar: "حكومة", translation_en: "government", sentence_ar: "الشعب ينتخب <b>الحكومة</b>.", sentence_en: "The people elect the <b>government</b>." },
+      { word_ar: "دخلت", translation_en: "I entered", sentence_ar: "<b>دخلت</b> إلى الصف متأخرًا.", sentence_en: "<b>I entered</b> the class late." },
+      { word_ar: "يدخل", translation_en: "to enter", sentence_ar: "هل يمكنني أن <b>أدخل</b>؟", sentence_en: "Can I <b>enter</b>?" },
+      { word_ar: "دولة", translation_en: "nation-state", sentence_ar: "الكويت <b>دولة</b> عربية.", sentence_en: "Kuwait is an Arab <b>state</b>." },
+      { word_ar: "دولي/ة", translation_en: "international", sentence_ar: "هذه منظمة <b>دولية</b>.", sentence_en: "This is an <b>international</b> organization." },
+      { word_ar: "يذاكر", translation_en: "to study, go over material, review lessons", sentence_ar: "أخي <b>يذاكر</b> دروسه كل يوم.", sentence_en: "My brother <b>studies</b> his lessons every day." },
+      { word_ar: "رئيس", translation_en: "president, head", sentence_ar: "الرئيس الجديد سيلقي خطابًا.", sentence_en: "The new <b>president</b> will give a speech." },
+      { word_ar: "رئيس الوزراء", translation_en: "prime minister", sentence_ar: "<b>رئيس الوزراء</b> سيزور الولايات المتحدة.", sentence_en: "The <b>prime minister</b> will visit the United States." },
+      { word_ar: "رأي", translation_en: "opinion about", sentence_ar: "ما هو <b>رأيك</b> في هذا الفيلم؟", sentence_en: "What is your <b>opinion</b> about this movie?" },
+      { word_ar: "رفض", translation_en: "he refused", sentence_ar: "<b>رفض</b> العرض لأنه لم يكن جيدًا.", sentence_en: "<b>He refused</b> the offer because it was not good." },
+      { word_ar: "يرفض", translation_en: "to refuse", sentence_ar: "لا يمكن أن <b>ترفض</b> المساعدة.", sentence_en: "You cannot <b>refuse</b> help." },
+      { word_ar: "أراد أن", translation_en: "he wanted to", sentence_ar: "<b>أراد أن</b> يسافر إلى الخارج.", sentence_en: "<b>He wanted to</b> travel abroad." },
+      { word_ar: "يريد أن", translation_en: "he wants to", sentence_ar: "<b>يريد أن</b> يتعلم اللغة العربية.", sentence_en: "<b>He wants to</b> learn Arabic." },
+      { word_ar: "يساعد", translation_en: "to help (someone) with", sentence_ar: "<b>أساعد</b> صديقي في دراسته.", sentence_en: "<b>I help</b> my friend with his studies." },
+      { word_ar: "طوال", translation_en: "throughout", sentence_ar: "سافرنا <b>طوال</b> الليل.", sentence_en: "We traveled <b>throughout</b> the night." },
+      { word_ar: "بفضل", translation_en: "thanks to", sentence_ar: "نجحت <b>بفضل</b> مساعدة أستاذي.", sentence_en: "I succeeded <b>thanks to</b> my teacher's help." },
+      { word_ar: "مستقبل", translation_en: "future", sentence_ar: "أنا متفائل بمستقبلي.", sentence_en: "I am optimistic about my <b>future</b>." },
+      { word_ar: "كما", translation_en: "as", sentence_ar: "افعل <b>كما</b> علمتك.", sentence_en: "Do <b>as</b> I taught you." },
+      { word_ar: "التحق بـ", translation_en: "he joined, entered", sentence_ar: "<b>التحق بـ</b>الجيش في سن مبكرة.", sentence_en: "<b>He joined</b> the army at an early age." },
+      { word_ar: "يلتحق بـ", translation_en: "to join, enter", sentence_ar: "هل تنوي أن <b>تلتحق بـ</b>الجامعة؟", sentence_en: "Do you intend to <b>join</b> the university?" },
+      { word_ar: "مثل", translation_en: "like", sentence_ar: "هذا الكتاب <b>مثل</b> ذاك.", sentence_en: "This book is <b>like</b> that one." },
+      { word_ar: "الماضي/ة", translation_en: "past, last", sentence_ar: "الجمعة <b>الماضية</b> سافرت.", sentence_en: "<b>Last</b> Friday, I traveled." },
+      { word_ar: "نجحت في", translation_en: "I succeeded in, passed", sentence_ar: "<b>نجحت في</b> الامتحان.", sentence_en: "<b>I succeeded in</b> the exam." },
+      { word_ar: "ينجح في", translation_en: "to succeed, pass", sentence_ar: "أتمنى أن <b>تنجح في</b> حياتك.", sentence_en: "I hope you <b>succeed in</b> your life." }
+    ];
+
+    const derivations = [
+      { base_word_ar: "أم", type_en: "Plural", derived_ar: ["أمهات"], derived_en: ["mothers"] },
+      { base_word_ar: "حكومة", type_en: "Plural", derived_ar: ["حكومات"], derived_en: ["governments"] },
+      { base_word_ar: "دخل", type_en: "Verb Forms / Noun", derived_ar: ["يدخل", "الدخول"], derived_en: ["to enter", "enter (noun)"] },
+      { base_word_ar: "دولة", type_en: "Plural", derived_ar: ["دول"], derived_en: ["states"] },
+      { base_word_ar: "يذاكر", type_en: "Noun", derived_ar: ["المذاكرة"], derived_en: ["study (noun)"] },
+      { base_word_ar: "رئيس", type_en: "Plural", derived_ar: ["رؤساء"], derived_en: ["presidents"] },
+      { base_word_ar: "رأي", type_en: "Plural", derived_ar: ["آراء"], derived_en: ["opinions"] },
+      { base_word_ar: "رفض", type_en: "Verb Forms / Noun", derived_ar: ["يرفض", "الرفض"], derived_en: ["to refuse", "refusal (noun)"] },
+      { base_word_ar: "أراد", type_en: "Verb Form", derived_ar: ["يريد"], derived_en: ["he wants to"] },
+      { base_word_ar: "يساعد", type_en: "Noun", derived_ar: ["المساعدة"], derived_en: ["help (noun)"] },
+      { base_word_ar: "التحق", type_en: "Verb Forms / Noun", derived_ar: ["يلتحق", "الالتحاق"], derived_en: ["to join", "enlistment (noun)"] },
+      { base_word_ar: "نجح", type_en: "Verb Forms / Noun", derived_ar: ["ينجح", "النجاح"], derived_en: ["to succeed", "success (noun)"] }
+    ];
+
+    // Quiz 1 — fixed prompts (كلها فيها ____ الآن)
+    const quiz1Questions = [
+      { sentence_ar: "الطفل يحب ____ كثيراً.", correct_answer_ar: "أمه", hint_en: "The child loves his mother very much." },
+      { sentence_ar: "سأسافر ____ أنهي كل أعمالي.", correct_answer_ar: "بعد أن", hint_en: "I will travel after I finish all my work." },
+      { sentence_ar: "تم بناء هذا المبنى عام 1990 ____.", correct_answer_ar: "ميلادي (AD)", hint_en: "This building was built in 1990 AD." },
+      { sentence_ar: "لقد ____ على شهادة في الطب.", correct_answer_ar: "حصلت", hint_en: "I obtained a certificate in medicine." },
+      { sentence_ar: "كل دولة لها ____ الخاصة.", correct_answer_ar: "حكومتها", hint_en: "Every nation has its own government." },
+      { sentence_ar: "____ إلى المنزل بعد العمل.", correct_answer_ar: "دخلت", hint_en: "I entered the house after work." },
+      { sentence_ar: "هل يمكنني أن ____ إلى الغرفة؟", correct_answer_ar: "أدخل", hint_en: "Can I enter the room?" },
+      { sentence_ar: "الأمم المتحدة منظمة ____.", correct_answer_ar: "دولية", hint_en: "The United Nations is an international organization." },
+      { sentence_ar: "يجب على الطلاب أن ____ دروسهم كل يوم.", correct_answer_ar: "يذاكروا", hint_en: "Students must study their lessons every day." },
+      { sentence_ar: "انتخبوا ____ جديدًا للشركة.", correct_answer_ar: "رئيسًا", hint_en: "They elected a new president for the company." },
+      { sentence_ar: "اجتمع ____ مع الوزراء.", correct_answer_ar: "رئيس الوزراء", hint_en: "The prime minister met with the ministers." },
+      { sentence_ar: "لدي ____ مختلف عنك.", correct_answer_ar: "رأي", hint_en: "I have a different opinion than you." },
+      { sentence_ar: "هو ____ عرض العمل الجديد.", correct_answer_ar: "رفض", hint_en: "He refused the new job offer." },
+      { sentence_ar: "لا ____ أن يذهب إلى الحفلة.", correct_answer_ar: "يريد أن", hint_en: "He does not want to go to the party." },
+      { sentence_ar: "____ أصدقائي في واجباتهم المدرسية.", correct_answer_ar: "أساعد", hint_en: "I help my friends with their school assignments." },
+      { sentence_ar: "عملت في هذا المشروع ____ الأسبوع.", correct_answer_ar: "طوال", hint_en: "I worked on this project throughout the week." },
+      { sentence_ar: "تحسنت حالتي ____ الطبيب.", correct_answer_ar: "بفضل", hint_en: "My condition improved thanks to the doctor." },
+      { sentence_ar: "أتمنى أن يكون ____ مشرقاً.", correct_answer_ar: "مستقبلي", hint_en: "I hope my future is bright." },
+      { sentence_ar: "افعل ____ أمرتك.", correct_answer_ar: "كما", hint_en: "Do as I commanded you." },
+      { sentence_ar: "لقد ____ بالجامعة العام الماضي.", correct_answer_ar: "التحق", hint_en: "He joined the university last year." },
+      { sentence_ar: "كتاب القواعد هذا ____ ذلك.", correct_answer_ar: "مثل", hint_en: "This grammar book is like that one." },
+      { sentence_ar: "في العام ____ سافرت.", correct_answer_ar: "الماضي", hint_en: "Last year, I traveled." },
+      { sentence_ar: "____ في الامتحان بتقدير ممتاز.", correct_answer_ar: "نجحت", hint_en: "I succeeded in the exam with an excellent grade." }
+    ];
+
+    const quiz2Questions = [
+      { question_en: "mother", correct_answer_ar: "أم" },
+      { question_en: "after", correct_answer_ar: "بعد أن" },
+      { question_en: "I obtained", correct_answer_ar: "حصلت على" },
+      { question_en: "government", correct_answer_ar: "حكومة" },
+      { question_en: "to enter", correct_answer_ar: "يدخل" },
+      { question_en: "nation-state", correct_answer_ar: "دولة" },
+      { question_en: "international", correct_answer_ar: "دولي/ة" },
+      { question_en: "to study lessons", correct_answer_ar: "يذاكر" },
+      { question_en: "president", correct_answer_ar: "رئيس" },
+      { question_en: "prime minister", correct_answer_ar: "رئيس الوزراء" },
+      { question_en: "opinion about", correct_answer_ar: "رأي" },
+      { question_en: "he refused", correct_answer_ar: "رفض" },
+      { question_en: "he wants to", correct_answer_ar: "يريد أن" },
+      { question_en: "to help", correct_answer_ar: "يساعد" },
+      { question_en: "throughout", correct_answer_ar: "طوال" },
+      { question_en: "thanks to", correct_answer_ar: "بفضل" },
+      { question_en: "future", correct_answer_ar: "مستقبل" },
+      { question_en: "as", correct_answer_ar: "كما" },
+      { question_en: "he joined", correct_answer_ar: "التحق بـ" },
+      { question_en: "like", correct_answer_ar: "مثل" },
+      { question_en: "past", correct_answer_ar: "الماضي/ة" },
+      { question_en: "I succeeded in", correct_answer_ar: "نجحت في" }
+    ];
+
+    // ===== Helpers =====
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // تطبيع عربي بسيط للمقارنة المرنة
+    function normalizeArabic(str) {
+      if (!str) return "";
+      return str
+        .trim()
+        .replace(/\u0640/g, "")                 // إزالة التطويل
+        .replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]/g, "") // إزالة التشكيل
+        .replace(/[ـ\u200c\u200f\u202a-\u202e]/g, "") // مسافات/تحكم ثنائية
+        .replace(/[إأآٱ]/g, "ا")
+        .replace(/ى/g, "ي")
+        .replace(/ؤ/g, "و")
+        .replace(/ئ/g, "ي")
+        .replace(/ة/g, "ه")                     // قبول التاء المربوطة كهاء
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+    }
+
+    // مقارنة مرنة + بدائل
+    function equalsAr(user, gold, extras = []) {
+      const u = normalizeArabic(user);
+      const g = normalizeArabic(gold);
+      if (u === g) return true;
+      for (const alt of extras) {
+        if (u === normalizeArabic(alt)) return true;
+      }
+      return false;
+    }
+
+    // ===== Table =====
+    function populateVocabularyTable() {
+      const tbody = document.querySelector('#vocab-table tbody');
+      tbody.innerHTML = '';
+      vocabulary.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="py-2 px-4">${item.word_ar}</td>
+          <td class="py-2 px-4 text-left" dir="ltr">${item.translation_en}</td>
+          <td class="py-2 px-4">${item.sentence_ar}</td>
+          <td class="py-2 px-4 text-left" dir="ltr">${item.sentence_en}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // ===== Flashcards =====
+    function createFlashcard(frontText, backText, type) {
+      const flashcard = document.createElement('div');
+      flashcard.className = 'flashcard';
+      flashcard.setAttribute('tabindex', '0');
+      flashcard.setAttribute('role', 'button');
+      flashcard.setAttribute('aria-label', 'اقلب البطاقة');
+
+      flashcard.innerHTML = `
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <span class="flashcard-type">${type}</span>
+            ${frontText}
+          </div>
+          <div class="flashcard-back" dir="ltr">
+            <span class="flashcard-type">${type}</span>
+            ${backText}
+          </div>
+        </div>
+      `;
+      const toggle = () => flashcard.classList.toggle('flipped');
+      flashcard.addEventListener('click', toggle);
+      flashcard.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+      return flashcard;
+    }
+
+    function populateFlashcards() {
+      const wordFlashcardsContainer = document.getElementById('word-flashcards-container');
+      const derivationFlashcardsContainer = document.getElementById('derivation-flashcards-container');
+      wordFlashcardsContainer.innerHTML = '';
+      derivationFlashcardsContainer.innerHTML = '';
+
+      vocabulary.forEach(item => {
+        const flashcard = createFlashcard(item.word_ar, item.translation_en, 'Word');
+        wordFlashcardsContainer.appendChild(flashcard);
+      });
+
+      derivations.forEach(item => {
+        const frontContent = item.base_word_ar;
+        const backContent = item.derived_ar.map((d, i) => `${d} (${item.derived_en[i]})`).join('<br>');
+        const flashcard = createFlashcard(frontContent, backContent, item.type_en);
+        derivationFlashcardsContainer.appendChild(flashcard);
+      });
+    }
+
+    // ===== Quiz 1 =====
+    function renderQuiz1() {
+      const quizContainer = document.getElementById('quiz1-questions');
+      quizContainer.innerHTML = '';
+      shuffleArray([...quiz1Questions]).forEach((q, index) => {
+        const blanked = q.sentence_ar.includes('____')
+          ? q.sentence_ar.replace(
+              '____',
+              `<input aria-label="إجابة السؤال ${index+1}" type="text" class="quiz-input inline-block w-32 mx-2 text-center" data-index="${index}" data-correct="${q.correct_answer_ar}">`
+            )
+          : `${q.sentence_ar} <input aria-label="إجابة السؤال ${index+1}" type="text" class="quiz-input inline-block w-32 mx-2 text-center" data-index="${index}" data-correct="${q.correct_answer_ar}">`;
+
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'mb-4 p-4 border border-stone-100 rounded-lg bg-stone-50';
+        questionDiv.innerHTML = `
+          <p class="text-lg text-right mb-2" dir="rtl">${index + 1}. ${blanked}</p>
+          <p class="text-sm text-stone-500 text-right" dir="ltr">(${q.hint_en})</p>
+          <div class="feedback mt-2 text-center" data-index="${index}"></div>
+        `;
+        quizContainer.appendChild(questionDiv);
+      });
+    }
+
+    function checkQuiz1Answers() {
+      document.querySelectorAll('#quiz1-questions input').forEach(input => {
+        const userAnswer = input.value;
+        const gold = input.dataset.correct;
+
+        // بدائل لبعض العناصر:
+        const extras = [];
+        if (normalizeArabic(gold).includes(normalizeArabic("ميلادي"))) {
+          extras.push("AD","CE","ميلادي","ميلادي (CE)");
+        }
+        if (normalizeArabic(gold) === normalizeArabic("يذاكروا")) {
+          extras.push("يذاكرون"); // قبول الإعراب القياسي
+        }
+
+        const ok = equalsAr(userAnswer, gold, extras);
+        const fb = document.querySelector(`#quiz1-questions .feedback[data-index="${input.dataset.index}"]`);
+        if (ok) {
+          input.classList.remove('border-red-400'); input.classList.add('border-green-400');
+          fb.innerHTML = '<span class="correct-answer">صحيح!</span>';
+        } else {
+          input.classList.remove('border-green-400'); input.classList.add('border-red-400');
+          fb.innerHTML = `<span class="incorrect-answer">خطأ. الإجابة الصحيحة: ${gold}</span>`;
+        }
+      });
+    }
+
+    function showQuiz1Answers() {
+      document.querySelectorAll('#quiz1-questions input').forEach(input => {
+        input.value = input.dataset.correct;
+        input.classList.remove('border-red-400','border-green-400');
+        input.classList.add('border-blue-400');
+        const fb = document.querySelector(`#quiz1-questions .feedback[data-index="${input.dataset.index}"]`);
+        if (fb) fb.innerHTML = '';
+      });
+    }
+
+    function resetQuiz1() {
+      document.querySelectorAll('#quiz1-questions input').forEach(input => {
+        input.value = '';
+        input.classList.remove('border-red-400','border-green-400','border-blue-400');
+        const fb = document.querySelector(`#quiz1-questions .feedback[data-index="${input.dataset.index}"]`);
+        if (fb) fb.innerHTML = '';
+      });
+    }
+
+    // ===== Quiz 2 =====
+    function renderQuiz2() {
+      const quizContainer = document.getElementById('quiz2-questions');
+      quizContainer.innerHTML = '';
+      shuffleArray([...quiz2Questions]).forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'mb-4 p-4 border border-stone-100 rounded-lg bg-stone-50';
+        questionDiv.innerHTML = `
+          <p class="text-lg text-left mb-2" dir="ltr">${index + 1}. ${q.question_en}: 
+            <input aria-label="Answer ${index+1}" type="text" class="quiz-input inline-block w-48 mx-2 text-center" data-index="${index}" data-correct="${q.correct_answer_ar}">
+          </p>
+          <div class="feedback mt-2 text-center" data-index="${index}"></div>
+        `;
+        quizContainer.appendChild(questionDiv);
+      });
+    }
+
+    function checkQuiz2Answers() {
+      document.querySelectorAll('#quiz2-questions input').forEach(input => {
+        const userAnswer = input.value;
+        const gold = input.dataset.correct;
+
+        // بدائل معقولة:
+        const extras = [];
+        if (normalizeArabic(gold) === normalizeArabic("التحق بـ")) {
+          extras.push("التحق ب", "التحق بال"); // قبول صيغ كتابة بدون شدة أو مع وصل
+        }
+
+        const ok = equalsAr(userAnswer, gold, extras);
+        const fb = document.querySelector(`#quiz2-questions .feedback[data-index="${input.dataset.index}"]`);
+        if (ok) {
+          input.classList.remove('border-red-400'); input.classList.add('border-green-400');
+          fb.innerHTML = '<span class="correct-answer">صحيح!</span>';
+        } else {
+          input.classList.remove('border-green-400'); input.classList.add('border-red-400');
+          fb.innerHTML = `<span class="incorrect-answer">خطأ. الإجابة الصحيحة: ${gold}</span>`;
+        }
+      });
+    }
+
+    function showQuiz2Answers() {
+      document.querySelectorAll('#quiz2-questions input').forEach(input => {
+        input.value = input.dataset.correct;
+        input.classList.remove('border-red-400','border-green-400');
+        input.classList.add('border-blue-400');
+        const fb = document.querySelector(`#quiz2-questions .feedback[data-index="${input.dataset.index}"]`);
+        if (fb) fb.innerHTML = '';
+      });
+    }
+
+    function resetQuiz2() {
+      document.querySelectorAll('#quiz2-questions input').forEach(input => {
+        input.value = '';
+        input.classList.remove('border-red-400','border-green-400','border-blue-400');
+        const fb = document.querySelector(`#quiz2-questions .feedback[data-index="${input.dataset.index}"]`);
+        if (fb) fb.innerHTML = '';
+      });
+    }
+
+    // ===== Init =====
+    document.addEventListener('DOMContentLoaded', () => {
+      populateVocabularyTable();
+      populateFlashcards();
+      renderQuiz1();
+      renderQuiz2();
+
+      document.getElementById('quiz1-check').addEventListener('click', checkQuiz1Answers);
+      document.getElementById('quiz1-show-answers').addEventListener('click', showQuiz1Answers);
+      document.getElementById('quiz1-reset').addEventListener('click', resetQuiz1);
+
+      document.getElementById('quiz2-check').addEventListener('click', checkQuiz2Answers);
+      document.getElementById('quiz2-show-answers').addEventListener('click', showQuiz2Answers);
+      document.getElementById('quiz2-reset').addEventListener('click', resetQuiz2);
+    });
+  </script>
+</body>
+</html>
