@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقدمة في أقليات الشرق الأوسط | عرض تعليمي تفاعلي</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --sidebar-bg: #ffffff;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-soft: #eff6ff;
+            --sidebar-width: 300px;
+            --font-main: 'Noto Sans Arabic', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-size: 19px; /* Requested large base font */
+        }
+
+        /* Layout Structure */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar - Left side as requested */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-left: 1px solid var(--border-color); /* Note: RTL makes border-left the inner divider */
+            position: fixed;
+            height: 100vh;
+            right: auto;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .nav-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+            border-right: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--accent-soft);
+        }
+
+        .nav-item.active {
+            background: var(--accent-soft);
+            border-right: 4px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-num {
+            font-family: serif; /* For traditional Arabic numeral look if desired, otherwise standard */
+            opacity: 0.6;
+            min-width: 2rem;
+        }
+
+        /* Content Area */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 100%;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: #e2e8f0;
+            z-index: 1100;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Slide Styling */
+        .slide {
+            width: 100%;
+            max-width: 1000px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .callout {
+            background: var(--accent-soft);
+            border-right: 5px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        /* Map Styles */
+        #map-container {
+            height: 600px;
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .map-ui {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .search-box {
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            flex-grow: 1;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        /* Navigation Controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: auto;
+            padding-top: 2rem;
+        }
+
+        /* Source Section */
+        .sources-section {
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .sources-toggle {
+            cursor: pointer;
+            padding: 0.8rem 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            user-select: none;
+        }
+
+        .sources-content {
+            display: none;
+            padding: 1rem;
+            background: #f1f5f9;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .sources-content ul {
+            list-style: disc;
+            margin-right: 1.5rem;
+        }
+
+        .sources-content a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Mobile Adjustments */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 2000;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%); /* Hidden on mobile */
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            body { font-size: 18px; }
+            h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <button class="mobile-toggle" onclick="toggleSidebar()">القائمة</button>
+
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>دراسات الشرق الأوسط</h1>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">الأقليات: تنوع وحقوق</p>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <!-- Navigation items injected via JS -->
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <!-- Slide 1: Introduction -->
+            <section class="slide active" id="slide-0">
+                <div class="card">
+                    <h2>المقدمة: مفهوم الأقلية</h2>
+                    <p>يعد الشرق الأوسط مهداً لأقدم الحضارات في العالم، مما جعله فسيفساء معقدة من المجموعات الدينية والعرقية واللغوية. </p>
+                    <div class="callout">
+                        <strong>تعريف الأمم المتحدة:</strong> "مجموعة من الأشخاص يقطنون في دولة معينة، يمتلكون خصائص إثنية أو دينية أو لغوية تختلف عن بقية السكان، ويبدون رغبة في الحفاظ على ثقافتهم أو تقاليدهم أو دينهم أو لغتهم."
+                    </div>
+                    <div class="grid-2">
+                        <div class="card" style="padding: 1.5rem; margin-bottom: 0; border-color: #d1d5db;">
+                            <h4 style="margin-bottom: 0.5rem;">الأقليات العددية</h4>
+                            <p style="font-size: 0.95rem;">مجموعات تقل نسبتها عن 50% من إجمالي السكان الوطنيين.</p>
+                        </div>
+                        <div class="card" style="padding: 1.5rem; margin-bottom: 0; border-color: #d1d5db;">
+                            <h4 style="margin-bottom: 0.5rem;">الأقليات الثقافية</h4>
+                            <p style="font-size: 0.95rem;">مجموعات تمتاز بهوية تاريخية مستمرة رغم التحولات السياسية.</p>
+                        </div>
+                    </div>
+                    <div class="sources-section">
+                        <div class="sources-toggle" onclick="toggleSources(0)">+ المصادر والمراجع</div>
+                        <div class="sources-content" id="sources-0">
+                            <ul>
+                                <li>الأمم المتحدة: <a href="https://www.ohchr.org/ar/minorities/about-minorities-and-human-rights" target="_blank">صحيفة الوقائع رقم 18: الأقليات وحقوق الإنسان</a></li>
+                                <li>Minority Rights Group International: <a href="https://minorityrights.org/" target="_blank">World Directory of Minorities</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Legal Framework -->
+            <section class="slide" id="slide-1">
+                <div class="card">
+                    <h2>الإطار القانوني والحقوقي</h2>
+                    <p>تستند حماية الأقليات في المنطقة إلى معايير دولية تهدف إلى منع التمييز وضمان المساواة أمام القانون.</p>
+                    <ul>
+                        <li><span class="badge">المادة 27</span> من العهد الدولي الخاص بالحقوق المدنية والسياسية (ICCPR).</li>
+                        <li><span class="badge">إعلان 1992</span> بشأن حقوق الأشخاص المنتمين إلى أقليات قومية أو إثنية وإلى أقليات دينية ولغوية.</li>
+                    </ul>
+                    <div class="grid-2">
+                        <div>
+                            <p><strong>عدم التمييز:</strong> حق الأفراد في عدم التعرض للتهميش بناءً على خلفيتهم.</p>
+                        </div>
+                        <div>
+                            <p><strong>المشاركة السياسية:</strong> حق الأقليات في التمثيل العادل في مؤسسات صنع القرار.</p>
+                        </div>
+                    </div>
+                    <div class="sources-section">
+                        <div class="sources-toggle" onclick="toggleSources(1)">+ المصادر والمراجع</div>
+                        <div class="sources-content" id="sources-1">
+                            <ul>
+                                <li>مكتب مفوض الأمم المتحدة السامي لحقوق الإنسان: <a href="https://www.ohchr.org/ar/instruments-mechanisms/instruments/declaration-rights-persons-belonging-national-or-ethnic-religious" target="_blank">إعلان حقوق الأقليات 1992</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Interactive Map -->
+            <section class="slide" id="slide-2">
+                <div class="card">
+                    <h2>الخارطة التفاعلية للتوزيع</h2>
+                    <p>استخدم الخارطة لاستكشاف الدول وأهم الأقليات المتواجدة فيها. (اضغط على الدولة للحصول على تفاصيل).</p>
+                    
+                    <div class="map-ui">
+                        <input type="text" id="map-search" class="search-box" placeholder="ابحث عن دولة (مثلاً: مصر، العراق)...">
+                        <button class="btn" onclick="searchCountry()">بحث</button>
+                        <button class="btn btn-outline" onclick="resetMap()">إعادة ضبط</button>
+                        <button class="btn btn-outline" onclick="toggleLabels()">إظهار/إخفاء الأسماء</button>
+                    </div>
+
+                    <div id="map-container"></div>
+
+                    <div class="sources-section">
+                        <div class="sources-toggle" onclick="toggleSources(2)">+ المصادر والمراجع</div>
+                        <div class="sources-content" id="sources-2">
+                            <ul>
+                                <li>بيانات تقديرية بناءً على تقارير <a href="https://minorityrights.org/country-profiles/" target="_blank">Minority Rights Group International</a></li>
+                                <li>تقديرات CIA World Factbook حول التكوين العرقي والديني.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Religious Minorities -->
+            <section class="slide" id="slide-3">
+                <div class="card">
+                    <h2>التنوع الديني في المنطقة</h2>
+                    <p>يعد الشرق الأوسط مركزاً للتعددية الدينية، حيث تعيش فيه مجموعات تحافظ على تقاليدها منذ آلاف السنين.</p>
+                    <div class="grid-2">
+                        <div class="callout">
+                            <strong>الأقباط في مصر:</strong> يشكلون أكبر أقلية مسيحية في المنطقة، بتقديرات تتراوح بين 10-15% من السكان.
+                        </div>
+                        <div class="callout">
+                            <strong>الإيزيديون في العراق:</strong> مجموعة دينية تاريخية تتركز في سنجار، تعرضت لتحديات وجودية كبيرة في السنوات الأخيرة.
+                        </div>
+                        <div class="callout">
+                            <strong>البهائيون في إيران:</strong> أقلية دينية تواجه قيوداً قانونية واجتماعية في ممارسة شعائرها.
+                        </div>
+                        <div class="callout">
+                            <strong>الدروز:</strong> يتواجدون في لبنان وسوريا وفلسطين، ولهم نظام ديني واجتماعي فريد.
+                        </div>
+                    </div>
+                    <div class="sources-section">
+                        <div class="sources-toggle" onclick="toggleSources(3)">+ المصادر والمراجع</div>
+                        <div class="sources-content" id="sources-3">
+                            <ul>
+                                <li>تقرير الحرية الدينية الدولي (الخارجية الأمريكية): <a href="https://www.state.gov/reports/2022-report-on-international-religious-freedom/" target="_blank">International Religious Freedom Report 2022</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Ethnic Minorities -->
+            <section class="slide" id="slide-4">
+                <div class="card">
+                    <h2>التنوع العرقي والإثني</h2>
+                    <p>بالإضافة للتنوع الديني، هناك مجموعات عرقية كبرى تساهم في النسيج الثقافي للشرق الأوسط.</p>
+                    <div class="grid-2">
+                        <div>
+                            <h4>الأكراد</h4>
+                            <p style="font-size: 0.95rem;">أكبر مجموعة عرقية بلا دولة مستقلة، يتوزعون بين العراق وسوريا وتركيا وإيران. يقدر عددهم بنحو 30-35 مليون نسمة.</p>
+                        </div>
+                        <div>
+                            <h4>الأمازيغ</h4>
+                            <p style="font-size: 0.95rem;">السكان الأصليون لشمال أفريقيا (المغرب، الجزائر، تونس، ليبيا). ناضلوا طويلاً للاعتراف بلغتهم "التمازيغية" كلغة رسمية.</p>
+                        </div>
+                        <div>
+                            <h4>التركمان</h4>
+                            <p style="font-size: 0.95rem;">يتواجدون بشكل رئيسي في العراق وسوريا، ولهم روابط ثقافية وتاريخية مع الشعوب التركية.</p>
+                        </div>
+                        <div>
+                            <h4>النوبيون</h4>
+                            <p style="font-size: 0.95rem;">حضارة قديمة تمتد بين جنوب مصر وشمال السودان، تمتاز بلغة وثقافة فريدة مرتبطة بالنيل.</p>
+                        </div>
+                    </div>
+                    <div class="sources-section">
+                        <div class="sources-toggle" onclick="toggleSources(4)">+ المصادر والمراجع</div>
+                        <div class="sources-content" id="sources-4">
+                            <ul>
+                                <li><a href="https://www.un.org/development/desa/indigenouspeoples/" target="_blank">الأمم المتحدة: منتدى الشعوب الأصيلة</a></li>
+                                <li>المعهد الكردي في باريس: <a href="https://www.institutkurde.org/" target="_blank">The Kurdish Population</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Challenges -->
+            <section class="slide" id="slide-5">
+                <div class="card">
+                    <h2>التحديات والآفاق المستقبلية</h2>
+                    <p>تواجه الأقليات في الشرق الأوسط تحديات متعددة في القرن الحادي والعشرين:</p>
+                    <div class="grid-2">
+                        <div class="callout" style="border-right-color: #ef4444;">
+                            <strong>الهجرة والنزوح:</strong> التغيرات الديموغرافية بسبب النزاعات أدت لتقلص أعداد بعض المجموعات (مثل مسيحيي العراق).
+                        </div>
+                        <div class="callout" style="border-right-color: #10b981;">
+                            <strong>الاعتراف الثقافي:</strong> هناك توجه إيجابي في بعض الدول (مثل المغرب والعراق) نحو الاعتراف باللغات والهويات المحلية.
+                        </div>
+                    </div>
+                    <p>إن بناء "دولة المواطنة" التي تساوي بين جميع الأفراد بغض النظر عن انتماءاتهم هو المفتاح لضمان استقرار المنطقة وتنوعها.</p>
+                    <div class="sources-section">
+                        <div class="sources-toggle" onclick="toggleSources(5)">+ المصادر والمراجع</div>
+                        <div class="sources-content" id="sources-5">
+                            <ul>
+                                <li>تقرير منظمة هيومن رايتس ووتش: <a href="https://www.hrw.org/ar/middle-east/n-africa" target="_blank">أوضاع حقوق الإنسان في الشرق الأوسط</a></li>
+                                <li>برنامج الأمم المتحدة الإنمائي: <a href="https://www.undp.org/ar/arab-states" target="_blank">تقارير التنمية الإنسانية العربية</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="controls">
+                <button class="btn btn-outline" id="prev-btn" onclick="prevSlide()">السابق</button>
+                <button class="btn" id="next-btn" onclick="nextSlide()">التالي</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        // Slides Configuration
+        const slides = [
+            { title: "المقدمة" },
+            { title: "الإطار القانوني" },
+            { title: "الخارطة التفاعلية" },
+            { title: "التنوع الديني" },
+            { title: "التنوع العرقي" },
+            { title: "التحديات والآفاق" }
+        ];
+
+        let currentSlide = 0;
+        let map;
+        let markers = [];
+        let tooltipsVisible = true;
+
+        // Arabic Numbers Helper
+        function toArabicNum(n) {
+            const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+            return n.toString().split("").map(x => arabicNumbers[parseInt(x)]).join("");
+        }
+
+        function initNavigation() {
+            const navList = document.getElementById('nav-list');
+            slides.forEach((slide, index) => {
+                const li = document.createElement('li');
+                li.className = `nav-item ${index === 0 ? 'active' : ''}`;
+                li.id = `nav-${index}`;
+                li.onclick = () => goToSlide(index);
+                
+                const num = (index + 1).toString().padStart(2, '0');
+                li.innerHTML = `<span class="nav-num">${toArabicNum(num)}</span> ${slide.title}`;
+                navList.appendChild(li);
+            });
+            updateProgress();
+        }
+
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            
+            // Hide current slide
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            // Show new slide
+            currentSlide = index;
+            document.getElementById(`slide-${currentSlide}`).classList.add('active');
+            document.getElementById(`nav-${currentSlide}`).classList.add('active');
+            
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // If map slide, invalidate size to fix leaflet rendering
+            if (currentSlide === 2) {
+                setTimeout(() => {
+                    if (map) map.invalidateSize();
+                }, 100);
+            }
+
+            // Sidebar auto-close on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        function updateProgress() {
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            // Toggle buttons visibility
+            document.getElementById('prev-btn').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+            document.getElementById('next-btn').innerText = currentSlide === slides.length - 1 ? 'نهاية العرض' : 'التالي';
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function toggleSources(id) {
+            const content = document.getElementById(`sources-${id}`);
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Map Functionality
+        const countryData = [
+            {
+                name: "مصر",
+                coords: [26.8206, 30.8025],
+                minorities: ["الأقباط (10-15%)", "النوبيون (جنوباً)", "الأمازيغ (واحة سيوة)", "البدو"],
+                links: ["https://minorityrights.org/country/egypt/"]
+            },
+            {
+                name: "العراق",
+                coords: [33.3152, 44.3661],
+                minorities: ["الأكراد (إقليم كردستان)", "التركمان", "الإيزيديون", "المسيحيون (آشوريون، كلدان)", "الصابئة المندائيون"],
+                links: ["https://minorityrights.org/country/iraq/"]
+            },
+            {
+                name: "سوريا",
+                coords: [34.8021, 38.9968],
+                minorities: ["الأكراد (شمالاً)", "الدروز (السويداء)", "العلويون", "الأرمن", "الآشوريون", "الشركس"],
+                links: ["https://minorityrights.org/country/syria/"]
+            },
+            {
+                name: "لبنان",
+                coords: [33.8547, 35.8623],
+                minorities: ["المسيحيون (موارنة، أرثوذكس، أرمن)", "الدروز", "العلويون"],
+                links: ["https://minorityrights.org/country/lebanon/"]
+            },
+            {
+                name: "إيران",
+                coords: [32.4279, 53.6880],
+                minorities: ["الأذريون", "الأكراد", "البلوش", "العرب (الأهواز)", "البهائيون", "الأرمن"],
+                links: ["https://minorityrights.org/country/iran/"]
+            },
+            {
+                name: "المغرب",
+                coords: [31.7917, -7.0926],
+                minorities: ["الأمازيغ (يشكلون نسبة كبيرة من الهوية الوطنية)", "اليهود المغاربة"],
+                links: ["https://minorityrights.org/country/morocco/"]
+            },
+            {
+                name: "الجزائر",
+                coords: [28.0339, 1.6596],
+                minorities: ["الأمازيغ (القبائل، الشاوية، التوارق)"],
+                links: ["https://minorityrights.org/country/algeria/"]
+            },
+            {
+                name: "تركيا",
+                coords: [38.9637, 35.2433],
+                minorities: ["الأكراد", "العلويون", "الأرمن", "اليونانيون", "السريان"],
+                links: ["https://minorityrights.org/country/turkey/"]
+            },
+            {
+                name: "السعودية",
+                coords: [23.8859, 45.0792],
+                minorities: ["الشيعة (المنطقة الشرقية، نجران)", "الإسماعيلية"],
+                links: ["https://minorityrights.org/country/saudi-arabia/"]
+            }
+        ];
+
+        function initMap() {
+            map = L.map('map-container').setView([30, 35], 4);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            countryData.forEach(country => {
+                const marker = L.marker(country.coords).addTo(map);
+                
+                const popupContent = `
+                    <div style="direction: rtl; text-align: right; font-family: 'Noto Sans Arabic', sans-serif;">
+                        <h3 style="margin: 0 0 5px 0;">${country.name}</h3>
+                        <p style="margin-bottom: 5px;"><strong>الأقليات البارزة:</strong></p>
+                        <ul style="padding-right: 15px; margin: 0 0 10px 0;">
+                            ${country.minorities.map(m => `<li>${m}</li>`).join('')}
+                        </ul>
+                        <a href="${country.links[0]}" target="_blank" style="color: blue; text-decoration: underline; font-size: 0.8rem;">رابط المصدر (Minority Rights)</a>
+                    </div>
+                `;
+                
+                marker.bindPopup(popupContent);
+                
+                // Add permanent label (tooltip)
+                marker.bindTooltip(country.name, {
+                    permanent: true,
+                    direction: 'top',
+                    opacity: 0.9,
+                    className: 'country-label'
+                });
+
+                markers.push({ name: country.name, marker: marker });
+            });
+        }
+
+        function searchCountry() {
+            const query = document.getElementById('map-search').value.trim();
+            const found = markers.find(m => m.name.includes(query));
+            if (found) {
+                map.setView(found.marker.getLatLng(), 6);
+                found.marker.openPopup();
+            }
+        }
+
+        function resetMap() {
+            map.setView([30, 35], 4);
+            map.closePopup();
+        }
+
+        function toggleLabels() {
+            tooltipsVisible = !tooltipsVisible;
+            markers.forEach(m => {
+                if (tooltipsVisible) m.marker.openTooltip();
+                else m.marker.closeTooltip();
+            });
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') prevSlide();
+            if (e.key === 'ArrowLeft') nextSlide();
+        });
+
+        // Initialize everything on load
+        window.onload = () => {
+            initNavigation();
+            initMap();
+        };
+
+    </script>
+</body>
+</html>
