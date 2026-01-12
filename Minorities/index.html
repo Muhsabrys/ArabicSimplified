@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كورس أقليات الشرق الأوسط | الصفحة الرئيسية</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-soft: #eff6ff;
+            --font-main: 'Noto Sans Arabic', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 18px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* Class Grid */
+        .classes-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Class Card */
+        .class-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .class-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .class-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 0;
+            background: var(--primary);
+            transition: height 0.3s ease;
+        }
+
+        .class-card:hover::before {
+            height: 100%;
+        }
+
+        .class-num {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .class-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .class-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .badge-new {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero { padding: 3rem 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#" class="nav-brand">أقليات الشرق الأوسط</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>مرحباً بكم في مقرر دراسات الأقليات</h1>
+            <p>رحلة أكاديمية لاستكشاف الفسيفساء الحضارية في الشرق الأوسط، وفهم التحديات والحقوق والهوية في عالم متغير.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="#classes" class="class-card" style="background: var(--primary); color: white; padding: 1rem 2.5rem; border: none; flex-direction: row; align-items: center; border-radius: 50px;">
+                    ابدأ التعلم الآن
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="classes-section" id="classes">
+        <div class="container">
+            <div class="section-title">
+                <h2>المحاضرات والمواد الدراسية</h2>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">اختر الدرس الذي ترغب في مراجعته اليوم</p>
+            </div>
+
+            <div class="grid">
+                <!-- Class 1 -->
+                <a href="presentation.html" class="class-card">
+                    <span class="class-num">المحاضرة ٠١ <span class="badge-new">متاح حالياً</span></span>
+                    <h3>مقدمة في مفهوم الأقليات</h3>
+                    <p>تعريف الأقليات حسب المعايير الدولية، الإطار القانوني، واستعراض الخارطة التفاعلية لتوزيع المجموعات في المنطقة.</p>
+                    <span class="btn-link">فتح الدرس ←</span>
+                </a>
+
+                <!-- Class 2 (Placeholder) -->
+                <div class="class-card" style="opacity: 0.7; cursor: not-allowed;">
+                    <span class="class-num" style="color: var(--text-muted);">المحاضرة ٠٢</span>
+                    <h3>الأقليات الدينية وتطورها</h3>
+                    <p>دراسة معمقة للمجموعات الدينية التاريخية: الأقباط، الإيزيديين، الدروز، والبهائيين وتاريخهم الاجتماعي.</p>
+                    <span class="btn-link" style="color: var(--text-muted);">قريباً...</span>
+                </div>
+
+                <!-- Class 3 (Placeholder) -->
+                <div class="class-card" style="opacity: 0.7; cursor: not-allowed;">
+                    <span class="class-num" style="color: var(--text-muted);">المحاضرة ٠٣</span>
+                    <h3>الهويات العرقية العابرة للحدود</h3>
+                    <p>التركيز على القضايا الكردية والأمازيغية والتركمانية في السياق السياسي الإقليمي المعاصر.</p>
+                    <span class="btn-link" style="color: var(--text-muted);">قريباً...</span>
+                </div>
+
+                <!-- Class 4 (Placeholder) -->
+                <div class="class-card" style="opacity: 0.7; cursor: not-allowed;">
+                    <span class="class-num" style="color: var(--text-muted);">المحاضرة ٠٤</span>
+                    <h3>اللغة، التعليم، والمواطنة</h3>
+                    <p>كيف تساهم الأنظمة التعليمية في صياغة الهوية الوطنية ومدى الاعتراف باللغات الأم للأقليات.</p>
+                    <span class="btn-link" style="color: var(--text-muted);">قريباً...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© ٢٠٢٦ مقرر دراسات الشرق الأوسط - جميع الحقوق محفوظة.</p>
+            <p style="margin-top: 0.5rem;">تم التصميم لأغراض تعليمية أكاديمية.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
