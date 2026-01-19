@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دراسة الأقليات في الشرق الأوسط: لغة الأكاديميا</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #d4af37;
+            --light-bg: #f8f9fa;
+            --success: #27ae60;
+            --error: #c0392b;
+            --white: #ffffff;
+            --border: #dee2e6;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--primary);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        h1 { margin: 0; color: var(--primary); font-size: 2rem; }
+        h2 { color: var(--secondary); border-right: 5px solid var(--accent); padding-right: 15px; margin-top: 40px; font-size: 1.5rem; }
+
+        /* Lesson Cards */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            background: #fff;
+            transition: transform 0.2s;
+        }
+
+        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+        .term-title { font-weight: bold; color: var(--secondary); font-size: 1.2rem; display: block; margin-bottom: 5px; }
+        .meaning-en { color: #666; font-size: 0.9rem; margin-bottom: 15px; display: block; border-bottom: 1px solid #eee; }
+        
+        .example-list { padding-right: 20px; margin: 0; font-size: 0.95rem; }
+        .example-list li { margin-bottom: 8px; color: #444; }
+
+        /* Style Swap */
+        .swap-container {
+            background: #fff9e6;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #ffeeba;
+        }
+
+        .swap-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .swap-box:last-child { border-bottom: none; }
+
+        .swap-content {
+            flex: 1;
+        }
+
+        .swap-label {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .swap-text {
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            min-height: 80px;
+            border-right: 4px solid var(--accent);
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        button:hover { background: var(--secondary); }
+
+        @media (max-width: 768px) {
+            .grid-cards { grid-template-columns: 1fr; }
+            .swap-box { flex-direction: column; align-items: stretch; }
+            button { margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>الأقليات في الشرق الأوسط: صياغة المحتوى الأكاديمي</h1>
+        <p>تطوير المهارات اللغوية في التعريف والتصنيف وأساليب الصياغة الرصينة</p>
+    </header>
+
+    <!-- Section 1: Definition & Classification -->
+    <section>
+        <h2>أولاً: التعريف والتصنيف (Definition & Classification)</h2>
+        <div class="grid-cards">
+            <div class="card">
+                <span class="term-title">يُعرَّف / يُقصد بـ</span>
+                <span class="meaning-en">Is defined as / What is meant by...</span>
+                <ul class="example-list">
+                    <li>يُعرَّف "عديمو الجنسية" بأنهم أفراد لا تعتبرهم أي دولة مواطنين لديها.</li>
+                    <li>يُقصد بالأقليات اللغوية المجموعات التي تتحدث لغة تختلف عن اللغة الرسمية للدولة.</li>
+                    <li>يُعرَّف التعدد الثقافي بأنه وجود جماعات متنوعة ضمن نسيج اجتماعي واحد.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="term-title">يتمثّل في / يندرج ضمن</span>
+                <span class="meaning-en">Is represented by / Falls under...</span>
+                <ul class="example-list">
+                    <li>يتمثّل التنوع العرقي في المنطقة في وجود العرب والكرد والأمازيغ وغيرهم.</li>
+                    <li>تندرج قضية الأرمن في الشرق الأوسط ضمن دراسات الهجرة والتهجير القسري.</li>
+                    <li>تتمثّل أهمية اللغة النوبية في كونها ركيزة للهوية الثقافية في جنوب مصر.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="term-title">يُصنَّف إلى / يُميَّز بين</span>
+                <span class="meaning-en">Is classified into / Distinguishes between...</span>
+                <ul class="example-list">
+                    <li>يُصنَّف المجتمع من الناحية الدينية إلى أغلبية وأقليات دينية متنوعة.</li>
+                    <li>يُميَّز بين "الأقلية الوافدة" و"الأقلية الأصيلة" بناءً على الجذور التاريخية.</li>
+                    <li>يمكن تقسيم الأقليات في العراق وفقاً لمعايير جغرافية أو إثنية.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Reporting Verbs -->
+    <section>
+        <h2>ثانياً: أفعال النسبة والإسناد (Reporting Verbs)</h2>
+        <div class="grid-cards">
+            <div class="card">
+                <span class="term-title">أفعال التأكيد والتوضيح</span>
+                <span class="meaning-en">Verbs of asserting and clarifying</span>
+                <ul class="example-list">
+                    <li><b>يؤكد:</b> يؤكد الباحث أن التماسك الاجتماعي يعتمد على الاعتراف بالحقوق.</li>
+                    <li><b>يوضح:</b> يوضح التقرير الفوارق بين الإحصائيات الرسمية والواقعية.</li>
+                    <li><b>يلفت:</b> يلفت الكاتب النظر إلى ضرورة حماية اللغات المهددة بالانقراض.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="term-title">أفعال الرأي والتحليل</span>
+                <span class="meaning-en">Verbs of opinion and analysis</span>
+                <ul class="example-list">
+                    <li><b>يرى:</b> يرى علماء الاجتماع أن الدمج لا يعني صهر الهويات.</li>
+                    <li><b>يشير:</b> يشير النص إلى الجذور التاريخية للتواجد السرياني في سوريا.</li>
+                    <li><b>ينتقد:</b> ينتقد الأكاديميون غياب التثقيف بالتنوع في المناهج الدراسية.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="term-title">أفعال الاستنتاج والادعاء</span>
+                <span class="meaning-en">Verbs of concluding and claiming</span>
+                <ul class="example-list">
+                    <li><b>يزعم:</b> يزعم بعض المؤرخين أن الهجرات تمت لأسباب اقتصادية حصراً.</li>
+                    <li><b>يخلص إلى:</b> يخلص البحث إلى أن الاعتراف الثقافي يعزز الانتماء الوطني.</li>
+                    <li><b>يستنتج:</b> يستنتج القارئ أن القوانين الحالية تحتاج إلى تعديلات جوهرية.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Style Swap - SIMPLIFIED BUT ACADEMIC -->
+    <section>
+        <h2>ثالثاً: محول الأساليب الأكاديمية (Style Swap Tool)</h2>
+        <p>استخدم الأداة أدناه لاستكشاف كيفية تحويل الجمل من المستوى البسيط إلى مستوى أكاديمي واقعي يستخدم تعبيرات الإسناد والتحفظ (Hedging).</p>
+        
+        <div class="swap-container">
+            <!-- Example 1 -->
+            <div class="swap-box">
+                <div class="swap-content">
+                    <span class="swap-label" id="label-1">الأسلوب المباشر (Direct Style)</span>
+                    <div id="swap-1" class="swap-text">
+                        يقول الكاتب إن الأقليات تعاني من التهميش في هذه المنطقة.
+                    </div>
+                </div>
+                <button onclick="toggleSwap(1)">ترقية الأسلوب</button>
+            </div>
+
+            <!-- Example 2 -->
+            <div class="swap-box">
+                <div class="swap-content">
+                    <span class="swap-label" id="label-2">الأسلوب المباشر (Direct Style)</span>
+                    <div id="swap-2" class="swap-text">
+                        الأكراد يعيشون في عدة دول بالمنطقة منذ زمن طويل.
+                    </div>
+                </div>
+                <button onclick="toggleSwap(2)">ترقية الأسلوب</button>
+            </div>
+
+            <!-- Example 3 -->
+            <div class="swap-box">
+                <div class="swap-content">
+                    <span class="swap-label" id="label-3">الأسلوب المباشر (Direct Style)</span>
+                    <div id="swap-3" class="swap-text">
+                        الدولة يجب أن تحمي الجميع لكي يستقر المجتمع.
+                    </div>
+                </div>
+                <button onclick="toggleSwap(3)">ترقية الأسلوب</button>
+            </div>
+
+            <!-- Example 4 -->
+            <div class="swap-box">
+                <div class="swap-content">
+                    <span class="swap-label" id="label-4">الأسلوب المباشر (Direct Style)</span>
+                    <div id="swap-4" class="swap-text">
+                        هناك خلاف كبير بين الباحثين حول أصل بعض المجموعات.
+                    </div>
+                </div>
+                <button onclick="toggleSwap(4)">ترقية الأسلوب</button>
+            </div>
+
+            <!-- Example 5 -->
+            <div class="swap-box">
+                <div class="swap-content">
+                    <span class="swap-label" id="label-5">الأسلوب المباشر (Direct Style)</span>
+                    <div id="swap-5" class="swap-text">
+                        اللغات القديمة تموت لأن الشباب لا يتكلمونها.
+                    </div>
+                </div>
+                <button onclick="toggleSwap(5)">ترقية الأسلوب</button>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    const swapData = {
+        1: {
+            state: 0,
+            labels: ["الأسلوب المباشر (Direct Style)", "الأسلوب الأكاديمي - إسناد رصين"],
+            options: [
+                "يقول الكاتب إن الأقليات تعاني من التهميش في هذه المنطقة.",
+                "يشير الكاتب إلى وجود مظاهر تهميش اجتماعي تعاني منها بعض المجموعات في السياق الإقليمي الراهن."
+            ]
+        },
+        2: {
+            state: 0,
+            labels: ["الأسلوب المباشر (Direct Style)", "الأسلوب الأكاديمي - تصنيف جغرافي"],
+            options: [
+                "الأكراد يعيشون في عدة دول بالمنطقة منذ زمن طويل.",
+                "يتوزع السكان الكرد جغرافياً في عدة دول، ويندرجون ضمن المكونات التاريخية المتجذرة في المنطقة."
+            ]
+        },
+        3: {
+            state: 0,
+            labels: ["الأسلوب المباشر (Direct Style)", "الأسلوب الأكاديمي - صياغة تحليلية"],
+            options: [
+                "الدولة يجب أن تحمي الجميع لكي يستقر المجتمع.",
+                "يؤكد الباحث أن استقرار النسيج المجتمعي يرتبط بمدى توفر الحماية القانونية والحقوقية لجميع المكونات."
+            ]
+        },
+        4: {
+            state: 0,
+            labels: ["الأسلوب المباشر (Direct Style)", "الأسلوب الأكاديمي - عرض آراء متباينة"],
+            options: [
+                "هناك خلاف كبير بين الباحثين حول أصل بعض المجموعات.",
+                "يرى الأكاديميون أن هناك اختلافاً في وجهات النظر حيال الجذور التاريخية لبعض الجماعات الإثنية."
+            ]
+        },
+        5: {
+            state: 0,
+            labels: ["الأسلوب المباشر (Direct Style)", "الأسلوب الأكاديمي - تعليل وتصنيف"],
+            options: [
+                "اللغات القديمة تموت لأن الشباب لا يتكلمونها.",
+                "يوضح التقرير أن انحسار اللغات التراثية يندرج ضمن ظاهرة تراجع الممارسة اللسانية لدى الأجيال الجديدة."
+            ]
+        }
+    };
+
+    function toggleSwap(id) {
+        const item = swapData[id];
+        item.state = item.state === 0 ? 1 : 0;
+        
+        const textElement = document.getElementById(`swap-${id}`);
+        const labelElement = document.getElementById(`label-${id}`);
+        const btn = textElement.parentElement.nextElementSibling;
+
+        textElement.innerText = item.options[item.state];
+        labelElement.innerText = item.labels[item.state];
+        btn.innerText = item.state === 0 ? "ترقية الأسلوب" : "العودة للأصل";
+        
+        // Visual feedback for change
+        textElement.style.backgroundColor = "#e8f4fd";
+        setTimeout(() => {
+            textElement.style.backgroundColor = "white";
+        }, 300);
+    }
+</script>
+
+</body>
+</html>
