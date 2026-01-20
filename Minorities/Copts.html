@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأقباط في مصر: الهوية، التاريخ، والثقافة</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --sidebar-bg: #1e293b;
+            --sidebar-text: #f8fafc;
+            --primary: #c2410c; /* Deep terracotta/coptic red */
+            --primary-hover: #9a3412;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-soft: #fff7ed;
+            --sidebar-width: 320px;
+            --font-main: 'Noto Sans Arabic', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            font-size: 20px; 
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 2.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            color: #fbbf24;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+            border-right: 4px solid transparent;
+            font-size: 1.1rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-item.active {
+            background: rgba(251, 191, 36, 0.1);
+            border-right: 4px solid #fbbf24;
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .nav-num {
+            opacity: 0.5;
+            min-width: 2.2rem;
+            font-weight: 300;
+        }
+
+        /* Content */
+        .main-content {
+            margin-right: 0;
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #cbd5e1;
+            z-index: 1100;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1100px;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            border-bottom: 4px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            margin: 1.5rem 0 1rem;
+            color: #1e40af;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .callout {
+            background: var(--accent-soft);
+            border-right: 6px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+
+        .vocab-box {
+            background: #f8fafc;
+            border: 1px dashed #64748b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .vocab-item {
+            display: inline-block;
+            background: #e2e8f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            margin: 0.3rem;
+            font-size: 0.95rem;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        /* Map */
+        #map-container {
+            height: 550px;
+            width: 100%;
+            border-radius: 16px;
+            border: 2px solid var(--border-color);
+            margin: 1.5rem 0;
+        }
+
+        /* Navigation */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1100px;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #64748b;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(100%); left: auto; right: 0; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .mobile-nav-btn {
+            display: none;
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 2000;
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-nav-btn { display: block; }
+        }
+
+        /* Table Style for Academic Arabic */
+        .arabic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .arabic-table th, .arabic-table td {
+            border: 1px solid #cbd5e1;
+            padding: 1rem;
+            text-align: right;
+        }
+        .arabic-table th {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <button class="mobile-nav-btn" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>الأقباط في مصر</h1>
+                <p style="font-size: 0.9rem; color: #94a3b8;">دراسة في التعددية والوحدة</p>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <!-- Injected via JS -->
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <!-- Slide 0: Identity and Origins -->
+            <section class="slide active" id="slide-0">
+                <div class="card">
+                    <h2>الهوية والجذور التاريخية</h2>
+                    <p>يُستخدم مصطلح «قبط» تاريخيًا للدلالة على «المصريين»، ثمّ تضيق استعماله تدريجيًا ليشير في الغالب إلى المسيحيين المصريين. ويربط كثير من الأقباط هويتهم بتاريخ مصر القديم، ضمن سردية استمرارية ثقافية في الذاكرة الجماعية تعود لآلاف السنين.</p>
+                    
+                    <div class="callout">
+                        "الهوية القبطية ليست مجرد انتماء ديني، بل هي تعبير عن تفاعل تاريخي طويل يربط بين الجغرافيا المصرية والروحانية المسيحية المشرقية."
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card" style="padding: 1.5rem; background: #fef2f2;">
+                            <h4 style="color: #991b1b;">المفهوم الديموغرافي</h4>
+                            <p style="font-size: 0.95rem;">يمثل الأقباط أكبر تجمع مسيحي في الشرق الأوسط، ويُعدون جزءًا أصيلاً من النسيج الوطني المصري الذي تشكل عبر تعاقب الحضارات.</p>
+                        </div>
+                        <div class="card" style="padding: 1.5rem; background: #eff6ff;">
+                            <h4 style="color: #1e40af;">الأساس العقدي</h4>
+                            <p style="font-size: 0.95rem;">ينتمي أغلب الأقباط إلى الكنيسة القبطية الأرثوذكسية، وهي كنيسة وطنية حافظت على تقاليدها اللاهوتية الخاصة منذ مطلع العصر المسيحي.</p>
+                        </div>
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.5rem;">مصطلحات أكاديمية:</h4>
+                        <span class="vocab-item">السردية الهوياتية</span>
+                        <span class="vocab-item">الاستمرارية الثقافية</span>
+                        <span class="vocab-item">الذاكرة الجماعية</span>
+                        <span class="vocab-item">التعددية الدينية</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 1: Etymology -->
+            <section class="slide" id="slide-1">
+                <div class="card">
+                    <h2>الأصل اللغوي والاشتقاق</h2>
+                    <p>كلمة "قبطي" هي التحوير اللساني للاسم اليوناني لمصر وأهلها. إليكم تسلسل التطور اللغوي للمصطلح وفق الدراسات التاريخية:</p>
+                    
+                    <table class="arabic-table">
+                        <thead>
+                            <tr>
+                                <th>المرحلة التاريخية</th>
+                                <th>الأصل اللغوي</th>
+                                <th>المعنى والدلالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>مصر القديمة</td>
+                                <td>Hwt-ka-Ptah</td>
+                                <td>"مقر قرين الإله بتاح" (أحد أسماء مدينة منف القديمة)</td>
+                            </tr>
+                            <tr>
+                                <td>العصر اليوناني</td>
+                                <td>Aigyptos / Aigyptios</td>
+                                <td>الاسم اليوناني لمصر (Aigyptos) وساكنها (Aigyptios)</td>
+                            </tr>
+                            <tr>
+                                <td>العصر الإسلامي</td>
+                                <td>قِـبـط</td>
+                                <td>تعريب للاسم اليوناني، وكان يشير لكل المصريين قبل تخصيصه لاحقاً</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout">
+                        <strong>تدقيق لغوي:</strong> المصطلح اليوناني <em>Aigyptios</em> هو الجد المباشر للكلمة اللاتينية <em>Coptus</em>، والتي تحولت لاحقاً إلى "قبطي" في العربية و <em>Copt</em> في الإنجليزية.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Historical Development -->
+            <section class="slide" id="slide-2">
+                <div class="card">
+                    <h2>المسار التاريخي للهوية القبطية</h2>
+                    <p>تشكلت الشخصية القبطية عبر سلسلة من التحولات السياسية والعقدية الكبرى:</p>
+                    
+                    <div class="grid-2">
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">الانقسام الكنسي (451م)</h3>
+                            <p style="font-size: 0.95rem;">أدّت قرارات مجمع خلقيدونية إلى انقسامٍ كنسيٍّ طويل الأمد بين مؤيدين لخلقيدونية ومعارضين لها في مصر، مما منح الكنيسة المصرية طابعاً استقلالياً.</p>
+                        </div>
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">عصر الاستشهاد</h3>
+                            <p style="font-size: 0.95rem;">شهد القرن الثالث اضطهاداً رومانياً عنيفاً (عهد دقلديانوس)، وهو ما جعل الكنيسة تبدأ تقويمها الخاص (تقويم الشهداء) تخليداً لذكراهم.</p>
+                        </div>
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">العصر الإسلامي والتعريب</h3>
+                            <p style="font-size: 0.95rem;">شهدت أوضاع الجماعات المسيحية عبر القرون تفاوتًا بين فترات استقرار وفترات توتر بحسب السياق السياسي، مع شيوع العربية لغةً للثقافة والطقوس.</p>
+                        </div>
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">النهضة الحديثة</h3>
+                            <p style="font-size: 0.95rem;">برز دور الأقباط كشركاء في بناء الدولة الوطنية الحديثة منذ عهد محمد علي وصولاً لثورة 1919 التي كرست شعار "الدين لله والوطن للجميع".</p>
+                        </div>
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.5rem;">تعبيرات ربط وتدقيق:</h4>
+                        <span class="vocab-item">في سياق متصل...</span>
+                        <span class="vocab-item">تفاوتت الأوضاع بين...</span>
+                        <span class="vocab-item">أفضى الانقسام إلى...</span>
+                        <span class="vocab-item">تأسيساً على مخرجات...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Geographic Distribution -->
+            <section class="slide" id="slide-3">
+                <div class="card">
+                    <h2>التوزيع الجغرافي والديموغرافي</h2>
+                    <p>ينتشر الأقباط في كافة ربوع مصر، مع وجود تركزات ديموغرافية بارزة في المناطق التالية:</p>
+                    
+                    <div id="map-container"></div>
+                    
+                    <div class="grid-2">
+                        <div class="callout" style="background: #f8fafc; border-right-color: #64748b;">
+                            <strong>محافظات الصعيد:</strong> تُعد المنيا من أبرز مناطق الحضور القبطي في صعيد مصر، إلى جانب محافظات أسيوط وسوهاج وقنا.
+                        </div>
+                        <div class="callout" style="background: #f8fafc; border-right-color: #64748b;">
+                            <strong>الكتل الحضرية:</strong> يتركز الأقباط بكثافة في القاهرة الكبرى والإسكندرية، حيث المراكز الإدارية والتعليمية الكبرى للكنيسة.
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 0; background: #fffbeb; border: 1px solid #fde68a;">
+                        <h4>لماذا أرقام الأقباط محل جدل؟</h4>
+                        <p style="font-size: 0.9rem;">تختلف تقديرات نسبة المسيحيين في مصر بين مصادر بحثية تعتمد بيانات مسحية وبين تقديرات متداولة في الخطاب العام؛ لذا تُعرض الأرقام عادةً بوصفها تقديرات تقريبية تتراوح بين 5% إلى 15%، دون وجود إحصاء رسمي نهائي حديث منشور بالتفصيل.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Culture and Language -->
+            <section class="slide" id="slide-4">
+                <div class="card">
+                    <h2>الملامح الثقافية والروحية</h2>
+                    <p>تُعد الثقافة القبطية رافداً أساسياً من روافد الهوية المصرية، وتتميز بعناصر فنية ولغوية فريدة.</p>
+                    
+                    <div class="grid-2">
+                        <div>
+                            <h3>الرهبنة: فخر مصر المسيحية</h3>
+                            <p style="font-size: 0.95rem;">تُعتبر مصر مهد الرهبنة في العالم المسيحي؛ حيث أسس القديس أنطونيوس والقديس باخوميوس أولى النظم الرهبانية التي انتقلت لاحقاً إلى أوروبا والشرق.</p>
+                        </div>
+                        <div>
+                            <h3>الموسيقى والألحان</h3>
+                            <p style="font-size: 0.95rem;">يرى بعض الباحثين أنّ هناك فرضيات تربط بعض خصائص الترتيل القبطي بتقاليد أقدم في مصر، لكن هذا المجال لا يزال محل نقاشٍ علميٍّ واسع بين علماء الموسيقى.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid-2" style="margin-top: 0;">
+                        <div style="background: #fdf2f8; padding: 1.5rem; border-radius: 12px;">
+                            <h4>اللغة القبطية</h4>
+                            <p style="font-size: 0.9rem;">هي المرحلة الأخيرة من تطور اللغة المصرية القديمة. استوعبت مفردات يونانية واسعة وتُكتب بحروف يونانية مضافاً إليها 7 حروف من الديموطيقية.</p>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 12px;">
+                            <h4>الفن القبطي</h4>
+                            <p style="font-size: 0.9rem;">فن شعبي يبتعد عن المحاكاة الواقعية لصالح "الرمزية الروحية". تبرز الأيقونات كأهم تجلياته، إلى جانب صناعة المنسوجات والأشغال الخشبية.</p>
+                        </div>
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.5rem;">مصطلحات البحث الثقافي:</h4>
+                        <span class="vocab-item">النظام الرهباني</span>
+                        <span class="vocab-item">الفرضية العلمية</span>
+                        <span class="vocab-item">الرمزية الروحية</span>
+                        <span class="vocab-item">الموروث الشفاهي</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Contemporary Issues -->
+            <section class="slide" id="slide-5">
+                <div class="card">
+                    <h2>القضايا المعاصرة والمواطنة</h2>
+                    <p>يرتكز وضع الأقباط في مصر الحديثة على مبادئ المواطنة المتساوية، مع وجود إطار قانوني ينظم شؤونهم:</p>
+                    
+                    <div class="grid-2">
+                        <div class="callout" style="border-right-color: #3b82f6; background: #f0f9ff;">
+                            <h4>الإطار الدستوري والقانوني</h4>
+                            <p style="font-size: 0.9rem;">تنص المادة (3) من الدستور المصري على أن مبادئ شرائع المصريين من المسيحيين واليهود هي المصدر الرئيسي للتشريعات المنظمة لأحوالهم الشخصية وشؤونهم الدينية.</p>
+                        </div>
+                        <div class="callout" style="border-right-color: #8b5cf6; background: #f5f3ff;">
+                            <h4>قانون بناء الكنائس</h4>
+                            <p style="font-size: 0.9rem;">صدر القانون رقم 80 لسنة 2016 لتنظيم بناء وترميم الكنائس، وهو خطوة تشريعية تهدف لتقنين أوضاع دور العبادة وتيسير بنائها ضمن ضوابط قانونية موحدة.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div>
+                            <h4>التنوع الداخلي</h4>
+                            <p style="font-size: 0.95rem;">رغم أن الأغلبية تتبع الكنيسة الأرثوذكسية، إلا أن هناك تنوعاً طائفياً يشمل الأقباط الكاثوليك، والأقباط الإنجيليين، وطوائف أخرى تساهم في التعددية المسيحية المصرية.</p>
+                        </div>
+                        <div>
+                            <h4>المشاركة الوطنية</h4>
+                            <p style="font-size: 0.95rem;">تؤكد الرؤية الوطنية المعاصرة على دمج كافة الأطياف في عملية التنمية، مع مواجهة التحديات المرتبطة بالخطاب الديني المتطرف لضمان السلم المجتمعي.</p>
+                        </div>
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.5rem;">قاموس المواطنة والحقوق:</h4>
+                        <span class="vocab-item">الأحوال الشخصية</span>
+                        <span class="vocab-item">تقنين الأوضاع</span>
+                        <span class="vocab-item">الشرعية الدستورية</span>
+                        <span class="vocab-item">التنوع الطائفي</span>
+                        <span class="vocab-item">الاندماج السياسي</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="controls">
+                <button class="btn btn-secondary" id="prev-btn" onclick="prevSlide()">السابق</button>
+                <button class="btn" id="next-btn" onclick="nextSlide()">التالي</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        const slides = [
+            { title: "الهوية والجذور" },
+            { title: "الأصل اللغوي" },
+            { title: "المسار التاريخي" },
+            { title: "التوزيع الجغرافي" },
+            { title: "الثقافة والروحية" },
+            { title: "المواطنة والحقوق" }
+        ];
+
+        let currentSlide = 0;
+        let map;
+
+        function toArabicNum(n) {
+            const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+            return n.toString().split("").map(x => arabicNumbers[parseInt(x)]).join("");
+        }
+
+        function initNavigation() {
+            const navList = document.getElementById('nav-list');
+            slides.forEach((slide, index) => {
+                const li = document.createElement('li');
+                li.className = `nav-item ${index === 0 ? 'active' : ''}`;
+                li.id = `nav-${index}`;
+                li.onclick = () => goToSlide(index);
+                
+                const num = (index + 1).toString().padStart(2, '0');
+                li.innerHTML = `<span class="nav-num">${toArabicNum(num)}</span> ${slide.title}`;
+                navList.appendChild(li);
+            });
+            updateProgress();
+        }
+
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            currentSlide = index;
+            document.getElementById(`slide-${currentSlide}`).classList.add('active');
+            document.getElementById(`nav-${currentSlide}`).classList.add('active');
+            
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (currentSlide === 3) {
+                setTimeout(() => { if (map) map.invalidateSize(); }, 200);
+            }
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        function updateProgress() {
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            document.getElementById('prev-btn').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+            document.getElementById('next-btn').innerText = currentSlide === slides.length - 1 ? 'نهاية العرض' : 'التالي';
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function initMap() {
+            map = L.map('map-container').setView([27.0, 31.0], 6);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            const locations = [
+                { name: "القاهرة (الكاتدرائية المرقسية)", coords: [30.0444, 31.2357], info: "مقر البابا وبطريركية الكرازة المرقسية." },
+                { name: "المنيا", coords: [28.0871, 30.7618], info: "من أبرز مناطق الحضور القبطي في صعيد مصر." },
+                { name: "أسيوط", coords: [27.1783, 31.1859], info: "مركز ثقيل تاريخياً وكنسياً وتراثياً." },
+                { name: "الإسكندرية", coords: [31.2001, 29.9187], info: "الكرسي المرقسي التاريخي ومقر الكنيسة الأول." },
+                { name: "وادي النطرون", coords: [30.4000, 30.3167], info: "مركز الرهبنة المصرية القديمة (دير الأنبا مقار، البراموس، السريان، الأنبا بيشوي)." }
+            ];
+
+            locations.forEach(loc => {
+                const marker = L.marker(loc.coords).addTo(map);
+                marker.bindPopup(`<div style="direction: rtl; text-align: right; font-family: 'Noto Sans Arabic', sans-serif;"><b>${loc.name}</b><br>${loc.info}</div>`);
+            });
+        }
+
+        window.onload = () => {
+            initNavigation();
+            initMap();
+        };
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+</body>
+</html>
