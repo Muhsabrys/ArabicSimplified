@@ -296,6 +296,35 @@
             background: #f1f5f9;
             color: var(--primary);
         }
+
+        /* Small footnotes */
+        .footnotes {
+            margin-top: 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .footnotes ol { padding-right: 1.2rem; }
+        .footnotes li { margin: 0.35rem 0; }
+        .footnotes a { color: #1e40af; text-decoration: none; }
+        .footnotes a:hover { text-decoration: underline; }
+        .note-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+        }
+        .badge {
+            display: inline-block;
+            font-size: 0.85rem;
+            background: #e2e8f0;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            margin-left: 0.4rem;
+            color: #334155;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -318,208 +347,305 @@
         </aside>
 
         <main class="main-content">
-            <!-- Slide 0: Identity and Origins -->
+            <!-- Slide 0: Identity and Origins (REVISED) -->
             <section class="slide active" id="slide-0">
                 <div class="card">
                     <h2>الهوية والجذور التاريخية</h2>
-                    <p>يُستخدم مصطلح «قبط» تاريخيًا للدلالة على «المصريين»، ثمّ تضيق استعماله تدريجيًا ليشير في الغالب إلى المسيحيين المصريين. ويربط كثير من الأقباط هويتهم بتاريخ مصر القديم، ضمن سردية استمرارية ثقافية في الذاكرة الجماعية تعود لآلاف السنين.</p>
-                    
+
+                    <p>
+                        يُستخدم مصطلح «قبط» تاريخيًا للدلالة على «المصريين»، ثمّ تضيق استعماله تدريجيًا ليشير في الغالب إلى المسيحيين المصريين.
+                        وفي الوعي الجمعي القبطي، تُصاغ الهوية القبطية بوصفها امتدادًا لتاريخ مصر عبر طبقاتٍ متعاقبة (لغويًا وثقافيًا ودينيًا)،
+                        مع حضورٍ قويٍّ للسردية المسيحية المبكرة في مصر.
+                    </p>
+
                     <div class="callout">
-                        "الهوية القبطية ليست مجرد انتماء ديني، بل هي تعبير عن تفاعل تاريخي طويل يربط بين الجغرافيا المصرية والروحانية المسيحية المشرقية."
+                        "الهوية القبطية لا تُفهم بوصفها انتماءً دينيًا فقط، بل كذاكرة تاريخية ولغوية وثقافية تشكّلت عبر قرونٍ طويلة ضمن المجتمع المصري."
                     </div>
 
                     <div class="grid-2">
                         <div class="card" style="padding: 1.5rem; background: #fef2f2;">
                             <h4 style="color: #991b1b;">المفهوم الديموغرافي</h4>
-                            <p style="font-size: 0.95rem;">يمثل الأقباط أكبر تجمع مسيحي في الشرق الأوسط، ويُعدون جزءًا أصيلاً من النسيج الوطني المصري الذي تشكل عبر تعاقب الحضارات.</p>
+                            <p style="font-size: 0.95rem;">
+                                يُعدّ الأقباط من أكبر التجمعات المسيحية في الشرق الأوسط. ومع ذلك، تختلف التقديرات بشأن حجمهم النسبي بسبب تباين مصادر البيانات وأساليب القياس.
+                            </p>
                         </div>
                         <div class="card" style="padding: 1.5rem; background: #eff6ff;">
-                            <h4 style="color: #1e40af;">الأساس العقدي</h4>
-                            <p style="font-size: 0.95rem;">ينتمي أغلب الأقباط إلى الكنيسة القبطية الأرثوذكسية، وهي كنيسة وطنية حافظت على تقاليدها اللاهوتية الخاصة منذ مطلع العصر المسيحي.</p>
+                            <h4 style="color: #1e40af;">الخريطة الكنسية</h4>
+                            <p style="font-size: 0.95rem;">
+                                ينتمي أغلب الأقباط إلى الكنيسة القبطية الأرثوذكسية (إحدى الكنائس الشرقية غير الخلقيدونية). وإلى جانبها توجد طوائف قبطية أخرى مثل الكنيسة القبطية الكاثوليكية.
+                            </p>
                         </div>
                     </div>
 
                     <div class="vocab-box">
                         <h4 style="margin-bottom: 0.5rem;">مصطلحات أكاديمية:</h4>
-                        <span class="vocab-item">السردية الهوياتية</span>
-                        <span class="vocab-item">الاستمرارية الثقافية</span>
-                        <span class="vocab-item">الذاكرة الجماعية</span>
-                        <span class="vocab-item">التعددية الدينية</span>
+                        <span class="vocab-item">الهوية الجمعية</span>
+                        <span class="vocab-item">التاريخ الاجتماعي</span>
+                        <span class="vocab-item">النسيج الوطني</span>
+                        <span class="vocab-item">التماسك الاجتماعي</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>حول تطور مصطلح «قبط» وتضيق استعماله: <a href="https://www.britannica.com/topic/Copt" target="_blank" rel="noopener">Encyclopaedia Britannica — Copt</a></li>
+                            <li>حول تباين تقديرات أعداد المسيحيين في مصر: <a href="https://www.pewresearch.org/religion/2011/12/19/global-christianity-exec/" target="_blank" rel="noopener">Pew Research Center — Global Christianity (2011)</a></li>
+                            <li>حول الكنيسة القبطية الكاثوليكية (بوصفها مثالًا على التنوع الداخلي): <a href="https://www.britannica.com/topic/Coptic-Catholic-Church" target="_blank" rel="noopener">Encyclopaedia Britannica — Coptic Catholic Church</a></li>
+                        </ol>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 1: Etymology -->
+            <!-- Slide 1: Etymology (REVISED) -->
             <section class="slide" id="slide-1">
                 <div class="card">
                     <h2>الأصل اللغوي والاشتقاق</h2>
-                    <p>كلمة "قبطي" هي التحوير اللساني للاسم اليوناني لمصر وأهلها. إليكم تسلسل التطور اللغوي للمصطلح وفق الدراسات التاريخية:</p>
-                    
+                    <p>
+                        كلمة "قبطي" (Copt) هي كلمة ذات دلالة <strong>جغرافية/سكانية</strong> في الأصل قبل أن تتحول إلى دلالة دينية وثقافية.
+                        يوضّح الجدول التالي تسلسلًا مبسّطًا للتطور اللغوي للمصطلح (مع الإشارة إلى أن التفاصيل الدقيقة قد تختلف باختلاف الدراسات):
+                    </p>
+
                     <table class="arabic-table">
                         <thead>
                             <tr>
                                 <th>المرحلة التاريخية</th>
                                 <th>الأصل اللغوي</th>
-                                <th>المعنى والدلالة</th>
+                                <th>المعنى</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>مصر القديمة</td>
-                                <td>Hwt-ka-Ptah</td>
-                                <td>"مقر قرين الإله بتاح" (أحد أسماء مدينة منف القديمة)</td>
+                                <td><strong>Hwt-ka-Ptah</strong> (Hut-ka-Ptah)</td>
+                                <td>تعبير مرتبط بمنف ("حِرْم/بيت كا بتاح")</td>
                             </tr>
                             <tr>
                                 <td>العصر اليوناني</td>
-                                <td>Aigyptos / Aigyptios</td>
-                                <td>الاسم اليوناني لمصر (Aigyptos) وساكنها (Aigyptios)</td>
+                                <td><strong>Aigyptos</strong> / <strong>Aigyptios</strong></td>
+                                <td>اسم مصر/المصري في اليونانية (مع تطورات صوتية لاحقة)</td>
                             </tr>
                             <tr>
                                 <td>العصر الإسلامي</td>
                                 <td>قِـبـط</td>
-                                <td>تعريب للاسم اليوناني، وكان يشير لكل المصريين قبل تخصيصه لاحقاً</td>
+                                <td>استعمال عربي تاريخي ارتبط بسكان مصر، ثم ضاق لاحقًا ليشير غالبًا إلى المسيحيين المصريين</td>
                             </tr>
                         </tbody>
                     </table>
 
                     <div class="callout">
-                        <strong>تدقيق لغوي:</strong> المصطلح اليوناني <em>Aigyptios</em> هو الجد المباشر للكلمة اللاتينية <em>Coptus</em>، والتي تحولت لاحقاً إلى "قبطي" في العربية و <em>Copt</em> في الإنجليزية.
+                        <strong>ملاحظة لغوية:</strong>
+                        في مراحل مبكرة من التاريخ الإسلامي، ارتبط «القبط» في الاستعمال العربي بسكان مصر، ثم أخذ الاستعمال الشائع يضيق عبر الزمن ليشير في الغالب إلى المسيحيين المصريين.
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>خلفية اشتقاقية عامة وتطور الاستعمال: <a href="https://www.britannica.com/topic/Copt" target="_blank" rel="noopener">Encyclopaedia Britannica — Copt</a></li>
+                            <li>شرح مبسط لمسارات الاسم عبر العصور: <a href="https://education.nationalgeographic.org/resource/copt/" target="_blank" rel="noopener">National Geographic Education — Copt</a></li>
+                        </ol>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 2: Historical Development -->
+            <!-- Slide 2: Historical Development (REVISED) -->
             <section class="slide" id="slide-2">
                 <div class="card">
                     <h2>المسار التاريخي للهوية القبطية</h2>
-                    <p>تشكلت الشخصية القبطية عبر سلسلة من التحولات السياسية والعقدية الكبرى:</p>
-                    
+                    <p>مرت الشخصية القبطية بتحولات تاريخية كبرى ساهمت في صقل ملامحها ضمن السياق المصري الأوسع:</p>
+
                     <div class="grid-2">
                         <div>
-                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">الانقسام الكنسي (451م)</h3>
-                            <p style="font-size: 0.95rem;">أدّت قرارات مجمع خلقيدونية إلى انقسامٍ كنسيٍّ طويل الأمد بين مؤيدين لخلقيدونية ومعارضين لها في مصر، مما منح الكنيسة المصرية طابعاً استقلالياً.</p>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">العصر الهلنستي والروماني</h3>
+                            <p style="font-size: 0.95rem;">
+                                ارتبطت الذاكرة الكنسية بدخول المسيحية إلى مصر في القرن الأول، ثم شهدت بعض المراحل توترات واضطهادات في العهد الروماني؛
+                                وهو ما يرتبط في التراث القبطي بظهور "تقويم الشهداء".
+                            </p>
                         </div>
+
                         <div>
-                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">عصر الاستشهاد</h3>
-                            <p style="font-size: 0.95rem;">شهد القرن الثالث اضطهاداً رومانياً عنيفاً (عهد دقلديانوس)، وهو ما جعل الكنيسة تبدأ تقويمها الخاص (تقويم الشهداء) تخليداً لذكراهم.</p>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">العصر البيزنطي</h3>
+                            <p style="font-size: 0.95rem;">
+                                شهدت هذه المرحلة صراعات لاهوتية كبرى.
+                                وقد أدّت قرارات مجمع خلقيدونية (451م) إلى انقسامٍ كنسيٍّ طويل الأمد بين مؤيدين لخلقيدونية ومعارضين لها في مصر.
+                            </p>
                         </div>
+
                         <div>
-                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">العصر الإسلامي والتعريب</h3>
-                            <p style="font-size: 0.95rem;">شهدت أوضاع الجماعات المسيحية عبر القرون تفاوتًا بين فترات استقرار وفترات توتر بحسب السياق السياسي، مع شيوع العربية لغةً للثقافة والطقوس.</p>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">العصر الإسلامي</h3>
+                            <p style="font-size: 0.95rem;">
+                                دخلت الجماعات المسيحية في مصر ضمن نظام الدولة الإسلامية،
+                                وتفاوتت الأوضاع عبر القرون بين فترات استقرار وفترات توتر بحسب السياق السياسي.
+                                كما انتشرت العربية تدريجيًا في الحياة العامة، وبقيت القبطية حيّة أساسًا في الطقوس.
+                            </p>
                         </div>
+
                         <div>
-                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">النهضة الحديثة</h3>
-                            <p style="font-size: 0.95rem;">برز دور الأقباط كشركاء في بناء الدولة الوطنية الحديثة منذ عهد محمد علي وصولاً لثورة 1919 التي كرست شعار "الدين لله والوطن للجميع".</p>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">العصر الحديث</h3>
+                            <p style="font-size: 0.95rem;">
+                                تبلور خطاب "المواطنة" في لحظات مفصلية من التاريخ المصري الحديث، ومن ذلك ثورة 1919 بوصفها رمزًا للوحدة الوطنية.
+                            </p>
                         </div>
                     </div>
 
+                    <div class="note-box">
+                        <div style="font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">
+                            مصر والرهبنة المبكرة <span class="badge">إضافة</span>
+                        </div>
+                        <p style="font-size: 0.95rem;">
+                            تُعد مصر من أهم البيئات التاريخية التي ارتبطت بنشأة الرهبنة المسيحية المبكرة وتطورها،
+                            ويُشار كثيرًا إلى تقاليد رهبانية مبكرة في الصحراء المصرية.
+                        </p>
+                    </div>
+
                     <div class="vocab-box">
-                        <h4 style="margin-bottom: 0.5rem;">تعبيرات ربط وتدقيق:</h4>
-                        <span class="vocab-item">في سياق متصل...</span>
-                        <span class="vocab-item">تفاوتت الأوضاع بين...</span>
-                        <span class="vocab-item">أفضى الانقسام إلى...</span>
-                        <span class="vocab-item">تأسيساً على مخرجات...</span>
+                        <h4 style="margin-bottom: 0.5rem;">تعبيرات ربط (Cohesive Devices):</h4>
+                        <span class="vocab-item">في أعقاب ذلك...</span>
+                        <span class="vocab-item">تأسيساً على ما سبق...</span>
+                        <span class="vocab-item">من منظور تاريخي...</span>
+                        <span class="vocab-item">مما أدى إلى...</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>مجمع خلقيدونية والانقسامات الكنسية: <a href="https://www.britannica.com/topic/Council-of-Chalcedon" target="_blank" rel="noopener">Encyclopaedia Britannica — Council of Chalcedon</a></li>
+                            <li>نبذة عن الأقباط تاريخيًا: <a href="https://www.britannica.com/topic/Copt" target="_blank" rel="noopener">Encyclopaedia Britannica — Copt</a></li>
+                            <li>عن الرهبنة المسيحية المبكرة ومصر: <a href="https://www.britannica.com/topic/monasticism" target="_blank" rel="noopener">Encyclopaedia Britannica — Monasticism</a></li>
+                        </ol>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 3: Geographic Distribution -->
+            <!-- Slide 3: Geographic Distribution (REVISED minor) -->
             <section class="slide" id="slide-3">
                 <div class="card">
                     <h2>التوزيع الجغرافي والديموغرافي</h2>
-                    <p>ينتشر الأقباط في كافة ربوع مصر، مع وجود تركزات ديموغرافية بارزة في المناطق التالية:</p>
-                    
-                    <div id="map-container"></div>
-                    
-                    <div class="grid-2">
-                        <div class="callout" style="background: #f8fafc; border-right-color: #64748b;">
-                            <strong>محافظات الصعيد:</strong> تُعد المنيا من أبرز مناطق الحضور القبطي في صعيد مصر، إلى جانب محافظات أسيوط وسوهاج وقنا.
-                        </div>
-                        <div class="callout" style="background: #f8fafc; border-right-color: #64748b;">
-                            <strong>الكتل الحضرية:</strong> يتركز الأقباط بكثافة في القاهرة الكبرى والإسكندرية، حيث المراكز الإدارية والتعليمية الكبرى للكنيسة.
-                        </div>
-                    </div>
+                    <p>ينتشر الأقباط في كافة ربوع مصر، إلا أن هناك تركزات تاريخية وديموغرافية تعكس عمق وجودهم:</p>
 
-                    <div class="card" style="margin-bottom: 0; background: #fffbeb; border: 1px solid #fde68a;">
-                        <h4>لماذا أرقام الأقباط محل جدل؟</h4>
-                        <p style="font-size: 0.9rem;">تختلف تقديرات نسبة المسيحيين في مصر بين مصادر بحثية تعتمد بيانات مسحية وبين تقديرات متداولة في الخطاب العام؛ لذا تُعرض الأرقام عادةً بوصفها تقديرات تقريبية تتراوح بين 5% إلى 15%، دون وجود إحصاء رسمي نهائي حديث منشور بالتفصيل.</p>
+                    <div id="map-container"></div>
+
+                    <div class="grid-2">
+                        <div class="callout">
+                            <strong>صعيد مصر:</strong> يمثل إحدى أهم المناطق التاريخية لحضور الأقباط، خاصة في محافظات مثل المنيا وأسيوط وسوهاج وغيرها.
+                        </div>
+                        <div class="callout">
+                            <strong>المدن الكبرى:</strong> هناك حضور واضح في القاهرة والإسكندرية، حيث توجد مؤسسات كنسية وثقافية مهمة.
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 4: Culture and Language -->
+            <!-- Slide 4: Culture and Language (REVISED) -->
             <section class="slide" id="slide-4">
                 <div class="card">
-                    <h2>الملامح الثقافية والروحية</h2>
-                    <p>تُعد الثقافة القبطية رافداً أساسياً من روافد الهوية المصرية، وتتميز بعناصر فنية ولغوية فريدة.</p>
-                    
-                    <div class="grid-2">
-                        <div>
-                            <h3>الرهبنة: فخر مصر المسيحية</h3>
-                            <p style="font-size: 0.95rem;">تُعتبر مصر مهد الرهبنة في العالم المسيحي؛ حيث أسس القديس أنطونيوس والقديس باخوميوس أولى النظم الرهبانية التي انتقلت لاحقاً إلى أوروبا والشرق.</p>
-                        </div>
-                        <div>
-                            <h3>الموسيقى والألحان</h3>
-                            <p style="font-size: 0.95rem;">يرى بعض الباحثين أنّ هناك فرضيات تربط بعض خصائص الترتيل القبطي بتقاليد أقدم في مصر، لكن هذا المجال لا يزال محل نقاشٍ علميٍّ واسع بين علماء الموسيقى.</p>
-                        </div>
-                    </div>
+                    <h2>الملامح الثقافية واللغوية</h2>
+                    <p>تتميز الثقافة القبطية بكونها <strong>ثقافة مركبة</strong> تتداخل فيها عناصر دينية وفنون شعبية مصرية وذاكرة تاريخية محلية.</p>
 
-                    <div class="grid-2" style="margin-top: 0;">
-                        <div style="background: #fdf2f8; padding: 1.5rem; border-radius: 12px;">
-                            <h4>اللغة القبطية</h4>
-                            <p style="font-size: 0.9rem;">هي المرحلة الأخيرة من تطور اللغة المصرية القديمة. استوعبت مفردات يونانية واسعة وتُكتب بحروف يونانية مضافاً إليها 7 حروف من الديموطيقية.</p>
-                        </div>
-                        <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 12px;">
+                    <h3>اللغة القبطية</h3>
+                    <p>
+                        تُعد القبطية المرحلة الأخيرة من تطور اللغة المصرية القديمة.
+                        وتُكتب بحروف يونانية مع مجموعة حروف إضافية مشتقة من الديموطيقية.
+                        وتُستخدم اليوم في المقام الأول داخل <strong>الطقوس الليتورجية</strong> إلى جانب العربية.
+                    </p>
+
+                    <div class="grid-2">
+                        <div style="background: #fdf2f8; padding: 1rem; border-radius: 12px;">
                             <h4>الفن القبطي</h4>
-                            <p style="font-size: 0.9rem;">فن شعبي يبتعد عن المحاكاة الواقعية لصالح "الرمزية الروحية". تبرز الأيقونات كأهم تجلياته، إلى جانب صناعة المنسوجات والأشغال الخشبية.</p>
+                            <p style="font-size: 0.9rem;">يتميز بتقاليد الأيقونة ذات الطابع الرمزي، والمنسوجات، وعمارة كنسية تتنوع بين البساطة والوظيفية والرمزية.</p>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 1rem; border-radius: 12px;">
+                            <h4>الألحان والطقوس</h4>
+                            <p style="font-size: 0.9rem;">
+                                تُعد الألحان القبطية من أقدم تقاليد الموسيقى الكنسية.
+                                ويطرح بعض الباحثين فرضيات تربط بعض خصائصها بتقاليد أقدم في مصر، غير أن هذا المجال محل نقاشٍ علميٍّ واسع.
+                            </p>
                         </div>
                     </div>
 
                     <div class="vocab-box">
-                        <h4 style="margin-bottom: 0.5rem;">مصطلحات البحث الثقافي:</h4>
-                        <span class="vocab-item">النظام الرهباني</span>
-                        <span class="vocab-item">الفرضية العلمية</span>
-                        <span class="vocab-item">الرمزية الروحية</span>
-                        <span class="vocab-item">الموروث الشفاهي</span>
+                        <h4 style="margin-bottom: 0.5rem;">مصطلحات فنية ولغوية:</h4>
+                        <span class="vocab-item">الطقوس الليتورجية</span>
+                        <span class="vocab-item">الرمزية الفنية</span>
+                        <span class="vocab-item">الموروث الشعبي</span>
+                        <span class="vocab-item">ثقافة مركبة</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>عن القبطية بوصفها المرحلة الأخيرة من المصرية القديمة: <a href="https://www.britannica.com/topic/Coptic-language" target="_blank" rel="noopener">Encyclopaedia Britannica — Coptic language</a></li>
+                            <li>حول نقاشات الربط بين الترتيل القبطي وتقاليد أقدم: <a href="https://www.loc.gov/item/ihas.200198456/" target="_blank" rel="noopener">Library of Congress — Coptic Chant (overview)</a></li>
+                        </ol>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 5: Contemporary Issues -->
+            <!-- Slide 5: Contemporary Issues (REVISED + legal anchor + demographics note) -->
             <section class="slide" id="slide-5">
                 <div class="card">
                     <h2>القضايا المعاصرة والمواطنة</h2>
-                    <p>يرتكز وضع الأقباط في مصر الحديثة على مبادئ المواطنة المتساوية، مع وجود إطار قانوني ينظم شؤونهم:</p>
-                    
-                    <div class="grid-2">
-                        <div class="callout" style="border-right-color: #3b82f6; background: #f0f9ff;">
-                            <h4>الإطار الدستوري والقانوني</h4>
-                            <p style="font-size: 0.9rem;">تنص المادة (3) من الدستور المصري على أن مبادئ شرائع المصريين من المسيحيين واليهود هي المصدر الرئيسي للتشريعات المنظمة لأحوالهم الشخصية وشؤونهم الدينية.</p>
+                    <p>
+                        في إطار دراسة الأقليات، يطرح وضع الأقباط في مصر نموذجًا لتحولات "المواطنة" والتحديات التي قد تواجه التعددية في المجتمع الحديث.
+                        ويُستحسن عند تناول هذه القضايا التفريق بين: <strong>الإطار القانوني</strong>، و<strong>الممارسة الاجتماعية</strong>، و<strong>السياقات السياسية</strong> التي تتغير عبر الزمن.
+                    </p>
+
+                    <div class="note-box">
+                        <div style="font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">
+                            لماذا تختلف تقديرات الأعداد؟ <span class="badge">إضافة</span>
                         </div>
-                        <div class="callout" style="border-right-color: #8b5cf6; background: #f5f3ff;">
-                            <h4>قانون بناء الكنائس</h4>
-                            <p style="font-size: 0.9rem;">صدر القانون رقم 80 لسنة 2016 لتنظيم بناء وترميم الكنائس، وهو خطوة تشريعية تهدف لتقنين أوضاع دور العبادة وتيسير بنائها ضمن ضوابط قانونية موحدة.</p>
-                        </div>
+                        <p style="font-size: 0.95rem;">
+                            تختلف تقديرات نسبة المسيحيين في مصر بين مصادر بحثية تعتمد بيانات مسحية/تعدادات وبين تقديرات متداولة في الخطاب العام؛
+                            لذلك تُعرض الأرقام عادةً بوصفها <strong>تقديرات</strong> لا إحصاءً نهائيًا.
+                        </p>
                     </div>
 
                     <div class="grid-2">
                         <div>
-                            <h4>التنوع الداخلي</h4>
-                            <p style="font-size: 0.95rem;">رغم أن الأغلبية تتبع الكنيسة الأرثوذكسية، إلا أن هناك تنوعاً طائفياً يشمل الأقباط الكاثوليك، والأقباط الإنجيليين، وطوائف أخرى تساهم في التعددية المسيحية المصرية.</p>
+                            <h4>المشاركة السياسية</h4>
+                            <p style="font-size: 0.95rem;">
+                                شهد تمثيل الأقباط في مؤسسات الدولة تغيرات عبر مراحل مختلفة.
+                                وفي المقاربة الأكاديمية، يركز التحليل على ضمان حقوق المواطنة المتساوية وحياد الدولة تجاه الانتماءات الدينية.
+                            </p>
                         </div>
                         <div>
-                            <h4>المشاركة الوطنية</h4>
-                            <p style="font-size: 0.95rem;">تؤكد الرؤية الوطنية المعاصرة على دمج كافة الأطياف في عملية التنمية، مع مواجهة التحديات المرتبطة بالخطاب الديني المتطرف لضمان السلم المجتمعي.</p>
+                            <h4>قضايا مدنية وقانونية</h4>
+                            <p style="font-size: 0.95rem;">
+                                تُثار في النقاشات العامة قضايا مثل تنظيم بناء الكنائس، وبعض جوانب الأحوال الشخصية،
+                                إضافةً إلى أثر خطابات الكراهية أو التطرف على السلم المجتمعي.
+                            </p>
                         </div>
+                    </div>
+
+                    <div class="note-box">
+                        <div style="font-weight: 800; color: #1e40af; margin-bottom: 0.5rem;">
+                            مرجعان قانونيان/مؤسسيان (للتأطير) <span class="badge">مرساة</span>
+                        </div>
+                        <ul style="margin-right: 1.2rem; font-size: 0.95rem;">
+                            <li>
+                                ينص الدستور المصري (المادة 3) على أن مبادئ شرائع المسيحيين واليهود هي المصدر الرئيسي للتشريعات المنظمة لأحوالهم الشخصية وشؤونهم الدينية.
+                            </li>
+                            <li>
+                                ينظم قانون 80 لسنة 2016 بعض إجراءات بناء الكنائس وترميمها؛ وتختلف تقييمات أثره بين مقاربات رسمية/قانونية ومقاربات حقوقية.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="callout" style="border-right-color: #10b981;">
+                        <strong>الرؤية المستقبلية:</strong>
+                        تُطرح الوحدة الوطنية في الخطاب المصري الحديث عبر عبارات وشعارات تؤكد الشراكة في الوطن، مع استمرار الحاجة إلى سياسات عملية تعزز المساواة وسيادة القانون.
                     </div>
 
                     <div class="vocab-box">
-                        <h4 style="margin-bottom: 0.5rem;">قاموس المواطنة والحقوق:</h4>
-                        <span class="vocab-item">الأحوال الشخصية</span>
-                        <span class="vocab-item">تقنين الأوضاع</span>
-                        <span class="vocab-item">الشرعية الدستورية</span>
-                        <span class="vocab-item">التنوع الطائفي</span>
-                        <span class="vocab-item">الاندماج السياسي</span>
+                        <h4 style="margin-bottom: 0.5rem;">قاموس العلوم السياسية (عربي):</h4>
+                        <span class="vocab-item">دولة المواطنة</span>
+                        <span class="vocab-item">السلم المجتمعي</span>
+                        <span class="vocab-item">التعددية الثقافية</span>
+                        <span class="vocab-item">المساواة القانونية</span>
+                        <span class="vocab-item">سيادة القانون</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>تباين التقديرات السكانية في الأدبيات: <a href="https://www.pewresearch.org/religion/2011/12/19/global-christianity-exec/" target="_blank" rel="noopener">Pew Research Center — Global Christianity (2011)</a></li>
+                            <li>الدستور المصري (مادة 3): <a href="https://www.constituteproject.org/constitution/Egypt_2014" target="_blank" rel="noopener">Constitute Project — Egypt’s Constitution (2014)</a></li>
+                            <li>قانون بناء الكنائس 2016 (عرض مؤسسي): <a href="https://www.loc.gov/item/global-legal-monitor/2016-09-20/egypt-law-regulating-construction-and-renovation-of-churches/" target="_blank" rel="noopener">Library of Congress — Egypt: Law Regulating Construction and Renovation of Churches (2016)</a></li>
+                        </ol>
                     </div>
                 </div>
             </section>
@@ -540,8 +666,8 @@
             { title: "الأصل اللغوي" },
             { title: "المسار التاريخي" },
             { title: "التوزيع الجغرافي" },
-            { title: "الثقافة والروحية" },
-            { title: "المواطنة والحقوق" }
+            { title: "الثقافة واللغة" },
+            { title: "القضايا المعاصرة" }
         ];
 
         let currentSlide = 0;
@@ -593,7 +719,7 @@
             document.getElementById('progress-bar').style.width = `${progress}%`;
             
             document.getElementById('prev-btn').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
-            document.getElementById('next-btn').innerText = currentSlide === slides.length - 1 ? 'نهاية العرض' : 'التالي';
+            document.getElementById('next-btn').innerText = currentSlide === slides.length - 1 ? 'نهاية المحاضرة' : 'التالي';
         }
 
         function toggleSidebar() {
@@ -610,14 +736,14 @@
             const locations = [
                 { name: "القاهرة (الكاتدرائية المرقسية)", coords: [30.0444, 31.2357], info: "مقر البابا وبطريركية الكرازة المرقسية." },
                 { name: "المنيا", coords: [28.0871, 30.7618], info: "من أبرز مناطق الحضور القبطي في صعيد مصر." },
-                { name: "أسيوط", coords: [27.1783, 31.1859], info: "مركز ثقيل تاريخياً وكنسياً وتراثياً." },
-                { name: "الإسكندرية", coords: [31.2001, 29.9187], info: "الكرسي المرقسي التاريخي ومقر الكنيسة الأول." },
-                { name: "وادي النطرون", coords: [30.4000, 30.3167], info: "مركز الرهبنة المصرية القديمة (دير الأنبا مقار، البراموس، السريان، الأنبا بيشوي)." }
+                { name: "أسيوط", coords: [27.1783, 31.1859], info: "إحدى مناطق الحضور القبطي في الصعيد، مع وجود مؤسسات كنسية وتعليمية." },
+                { name: "الإسكندرية", coords: [31.2001, 29.9187], info: "ترتبط تاريخيًا بالسرديات الكنسية حول بدايات المسيحية في مصر." },
+                { name: "وادي النطرون", coords: [30.4000, 30.3167], info: "منطقة الأديرة الأثرية (من أهم مراكز الرهبنة القبطية)." }
             ];
 
             locations.forEach(loc => {
                 const marker = L.marker(loc.coords).addTo(map);
-                marker.bindPopup(`<div style="direction: rtl; text-align: right; font-family: 'Noto Sans Arabic', sans-serif;"><b>${loc.name}</b><br>${loc.info}</div>`);
+                marker.bindPopup(`<div style="direction: rtl; text-align: right; font-family: sans-serif;"><b>${loc.name}</b><br>${loc.info}</div>`);
             });
         }
 
