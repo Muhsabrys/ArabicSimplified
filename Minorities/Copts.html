@@ -18,7 +18,7 @@
             --bg-color: #f1f5f9;
             --sidebar-bg: #1e293b;
             --sidebar-text: #f8fafc;
-            --primary: #c2410c; /* Deep terracotta/coptic red */
+            --primary: #c2410c;
             --primary-hover: #9a3412;
             --text-main: #0f172a;
             --text-muted: #475569;
@@ -27,6 +27,8 @@
             --accent-soft: #fff7ed;
             --sidebar-width: 320px;
             --font-main: 'Noto Sans Arabic', sans-serif;
+            --danger: #dc2626;
+            --danger-soft: #fef2f2;
         }
 
         * {
@@ -44,7 +46,6 @@
             font-size: 20px; 
         }
 
-        /* Layout */
         .app-container {
             display: flex;
             min-height: 100vh;
@@ -91,7 +92,7 @@
             gap: 1rem;
             transition: all 0.2s;
             border-right: 4px solid transparent;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
         .nav-item:hover {
@@ -111,7 +112,6 @@
             font-weight: 300;
         }
 
-        /* Content */
         .main-content {
             margin-right: 0;
             margin-left: var(--sidebar-width);
@@ -214,7 +214,6 @@
             font-weight: 600;
         }
 
-        /* Map */
         #map-container {
             height: 550px;
             width: 100%;
@@ -223,7 +222,6 @@
             margin: 1.5rem 0;
         }
 
-        /* Navigation */
         .controls {
             display: flex;
             justify-content: space-between;
@@ -253,7 +251,6 @@
             background: #64748b;
         }
 
-        /* Responsive */
         @media (max-width: 1024px) {
             .sidebar { transform: translateX(100%); left: auto; right: 0; }
             .sidebar.open { transform: translateX(0); }
@@ -281,7 +278,6 @@
             .mobile-nav-btn { display: block; }
         }
 
-        /* Table Style for Academic Arabic */
         .arabic-table {
             width: 100%;
             border-collapse: collapse;
@@ -297,7 +293,6 @@
             color: var(--primary);
         }
 
-        /* Small footnotes */
         .footnotes {
             margin-top: 1.25rem;
             color: var(--text-muted);
@@ -308,6 +303,7 @@
         .footnotes li { margin: 0.35rem 0; }
         .footnotes a { color: #1e40af; text-decoration: none; }
         .footnotes a:hover { text-decoration: underline; }
+        
         .note-box {
             background: #f8fafc;
             border: 1px solid var(--border-color);
@@ -315,6 +311,7 @@
             padding: 1.25rem;
             margin: 1.25rem 0;
         }
+        
         .badge {
             display: inline-block;
             font-size: 0.85rem;
@@ -324,6 +321,109 @@
             margin-left: 0.4rem;
             color: #334155;
             font-weight: 700;
+        }
+
+        /* Incident Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-right: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--danger);
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--danger-soft);
+            border-radius: 12px;
+            border: 1px solid #fecaca;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -2.5rem;
+            top: 1.8rem;
+            width: 12px;
+            height: 12px;
+            background: var(--danger);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--danger);
+        }
+        
+        .timeline-date {
+            font-weight: 700;
+            color: var(--danger);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-desc {
+            font-size: 0.95rem;
+            color: #7f1d1d;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .stat-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        
+        .stat-source {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .warning-box {
+            background: #fffbeb;
+            border: 1px solid #fbbf24;
+            border-right: 6px solid #f59e0b;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        
+        .warning-box strong {
+            color: #b45309;
         }
     </style>
 </head>
@@ -342,12 +442,11 @@
                 <p style="font-size: 0.9rem; color: #94a3b8;">دراسة في التعددية والوحدة</p>
             </div>
             <ul class="nav-list" id="nav-list">
-                <!-- Injected via JS -->
             </ul>
         </aside>
 
         <main class="main-content">
-            <!-- Slide 0: Identity and Origins (REVISED) -->
+            <!-- Slide 0: Identity and Origins -->
             <section class="slide active" id="slide-0">
                 <div class="card">
                     <h2>الهوية والجذور التاريخية</h2>
@@ -355,7 +454,7 @@
                     <p>
                         يُستخدم مصطلح «قبط» تاريخيًا للدلالة على «المصريين»، ثمّ تضيق استعماله تدريجيًا ليشير في الغالب إلى المسيحيين المصريين.
                         وفي الوعي الجمعي القبطي، تُصاغ الهوية القبطية بوصفها امتدادًا لتاريخ مصر عبر طبقاتٍ متعاقبة (لغويًا وثقافيًا ودينيًا)،
-                        مع حضورٍ قويٍّ للسردية المسيحية المبكرة في مصر.
+                        مع حضورٍ قويٍّ للسردية المسيحية المبكرة في مصر.
                     </p>
 
                     <div class="callout">
@@ -389,19 +488,19 @@
                         <ol>
                             <li>حول تطور مصطلح «قبط» وتضيق استعماله: <a href="https://www.britannica.com/topic/Copt" target="_blank" rel="noopener">Encyclopaedia Britannica — Copt</a></li>
                             <li>حول تباين تقديرات أعداد المسيحيين في مصر: <a href="https://www.pewresearch.org/religion/2011/12/19/global-christianity-exec/" target="_blank" rel="noopener">Pew Research Center — Global Christianity (2011)</a></li>
-                            <li>حول الكنيسة القبطية الكاثوليكية (بوصفها مثالًا على التنوع الداخلي): <a href="https://www.britannica.com/topic/Coptic-Catholic-Church" target="_blank" rel="noopener">Encyclopaedia Britannica — Coptic Catholic Church</a></li>
+                            <li>حول الكنيسة القبطية الكاثوليكية: <a href="https://www.britannica.com/topic/Coptic-Catholic-Church" target="_blank" rel="noopener">Encyclopaedia Britannica — Coptic Catholic Church</a></li>
                         </ol>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 1: Etymology (REVISED) -->
+            <!-- Slide 1: Etymology -->
             <section class="slide" id="slide-1">
                 <div class="card">
                     <h2>الأصل اللغوي والاشتقاق</h2>
                     <p>
                         كلمة "قبطي" (Copt) هي كلمة ذات دلالة <strong>جغرافية/سكانية</strong> في الأصل قبل أن تتحول إلى دلالة دينية وثقافية.
-                        يوضّح الجدول التالي تسلسلًا مبسّطًا للتطور اللغوي للمصطلح (مع الإشارة إلى أن التفاصيل الدقيقة قد تختلف باختلاف الدراسات):
+                        يوضّح الجدول التالي تسلسلًا مبسّطًا للتطور اللغوي للمصطلح:
                     </p>
 
                     <table class="arabic-table">
@@ -421,7 +520,7 @@
                             <tr>
                                 <td>العصر اليوناني</td>
                                 <td><strong>Aigyptos</strong> / <strong>Aigyptios</strong></td>
-                                <td>اسم مصر/المصري في اليونانية (مع تطورات صوتية لاحقة)</td>
+                                <td>اسم مصر/المصري في اليونانية</td>
                             </tr>
                             <tr>
                                 <td>العصر الإسلامي</td>
@@ -445,7 +544,7 @@
                 </div>
             </section>
 
-            <!-- Slide 2: Historical Development (REVISED) -->
+            <!-- Slide 2: Historical Development -->
             <section class="slide" id="slide-2">
                 <div class="card">
                     <h2>المسار التاريخي للهوية القبطية</h2>
@@ -464,7 +563,7 @@
                             <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">العصر البيزنطي</h3>
                             <p style="font-size: 0.95rem;">
                                 شهدت هذه المرحلة صراعات لاهوتية كبرى.
-                                وقد أدّت قرارات مجمع خلقيدونية (451م) إلى انقسامٍ كنسيٍّ طويل الأمد بين مؤيدين لخلقيدونية ومعارضين لها في مصر.
+                                وقد أدّت قرارات مجمع خلقيدونية (451م) إلى انقسامٍ كنسيٍّ طويل الأمد بين مؤيدين لخلقيدونية ومعارضين لها في مصر.
                             </p>
                         </div>
 
@@ -513,7 +612,7 @@
                 </div>
             </section>
 
-            <!-- Slide 3: Geographic Distribution (REVISED minor) -->
+            <!-- Slide 3: Geographic Distribution (ENHANCED) -->
             <section class="slide" id="slide-3">
                 <div class="card">
                     <h2>التوزيع الجغرافي والديموغرافي</h2>
@@ -523,17 +622,102 @@
 
                     <div class="grid-2">
                         <div class="callout">
-                            <strong>صعيد مصر:</strong> يمثل إحدى أهم المناطق التاريخية لحضور الأقباط، خاصة في محافظات مثل المنيا وأسيوط وسوهاج وغيرها.
+                            <strong>صعيد مصر:</strong> يمثل إحدى أهم المناطق التاريخية لحضور الأقباط، خاصة في محافظات مثل المنيا وأسيوط وسوهاج. تشير بعض الدراسات إلى أن نسب المسيحيين في بعض مناطق الصعيد قد تصل إلى 15-20% أو أكثر.
                         </div>
                         <div class="callout">
-                            <strong>المدن الكبرى:</strong> هناك حضور واضح في القاهرة والإسكندرية، حيث توجد مؤسسات كنسية وثقافية مهمة.
+                            <strong>المدن الكبرى:</strong> هناك حضور واضح في القاهرة والإسكندرية، حيث توجد مؤسسات كنسية وثقافية مهمة، بما في ذلك الكاتدرائية المرقسية الكبرى.
                         </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <strong>ملاحظة منهجية:</strong> لم تتضمن التعدادات السكانية المصرية سؤالاً عن الدين منذ عام 1986، مما يجعل التقديرات الدقيقة صعبة. تعتمد معظم الأرقام المتداولة على مسوح عينية أو تقديرات مؤسسية.
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>حول التركز في الصعيد: <a href="https://minorityrights.org/communities/copts/" target="_blank" rel="noopener">Minority Rights Group — Copts</a></li>
+                            <li>بيانات ديموغرافية تاريخية: <a href="https://www.capmas.gov.eg/" target="_blank" rel="noopener">الجهاز المركزي للتعبئة العامة والإحصاء (CAPMAS)</a></li>
+                            <li>دراسة أكاديمية حول التوزيع الجغرافي: <a href="https://www.researchgate.net/figure/Geographic-clusters-of-Copts-in-Egypt-Clusters-1-Minya-Assuit-2-Assuit-Souhag-3_fig3_256295601" target="_blank" rel="noopener">ResearchGate — Geographic clusters of Copts in Egypt</a></li>
+                        </ol>
                     </div>
                 </div>
             </section>
 
-            <!-- Slide 4: Culture and Language (REVISED) -->
+            <!-- Slide 4: Population Estimates (NEW) -->
             <section class="slide" id="slide-4">
+                <div class="card">
+                    <h2>إشكالية التقديرات السكانية</h2>
+                    <p>
+                        تُعد مسألة أعداد الأقباط من أكثر القضايا الديموغرافية إثارة للجدل في مصر، 
+                        ويرجع ذلك أساسًا إلى <strong>غياب سؤال الدين من التعدادات الرسمية منذ عام 1986</strong>.
+                    </p>
+
+                    <h3>تباين التقديرات حسب المصدر</h3>
+                    
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-source">الحكومة المصرية (CAPMAS)</div>
+                            <div class="stat-number">~5 مليون</div>
+                            <div class="stat-note">5-6% من السكان</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">مركز بيو للأبحاث (2011)</div>
+                            <div class="stat-number">4-5 مليون</div>
+                            <div class="stat-note">~5.1% من السكان</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">CIA World Factbook</div>
+                            <div class="stat-number">~10 مليون</div>
+                            <div class="stat-note">~10% من السكان</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">وزارة الخارجية الأمريكية</div>
+                            <div class="stat-number">9-10 مليون</div>
+                            <div class="stat-note">9-10% من السكان</div>
+                        </div>
+                        <div class="stat-card" style="border: 2px solid var(--primary);">
+                            <div class="stat-source">الكنيسة القبطية الأرثوذكسية</div>
+                            <div class="stat-number">15-18 مليون</div>
+                            <div class="stat-note">البابا تواضروس الثاني: 15 مليون في مصر</div>
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <div style="font-weight: 800; color: #1e40af; margin-bottom: 0.5rem;">
+                            لماذا هذا التباين الكبير؟
+                        </div>
+                        <p style="font-size: 0.95rem;">
+                            تتعدد العوامل المؤثرة: اختلاف منهجيات القياس (تعداد شامل vs مسوح عينية)، 
+                            غياب البيانات الرسمية الحديثة، الأبعاد السياسية للأرقام، 
+                            واختلاف تعريف "القبطي" (ديني فقط أم ثقافي أيضًا).
+                        </p>
+                    </div>
+
+                    <div class="callout">
+                        <strong>للتأمل:</strong> كيف يؤثر غياب البيانات الدقيقة على صياغة السياسات العامة المتعلقة بحقوق الأقليات وتمثيلها؟
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.5rem;">مصطلحات ديموغرافية:</h4>
+                        <span class="vocab-item">التعداد السكاني</span>
+                        <span class="vocab-item">المسح العيني</span>
+                        <span class="vocab-item">التقدير الإحصائي</span>
+                        <span class="vocab-item">هامش الخطأ</span>
+                        <span class="vocab-item">التصنيف الديموغرافي</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>تقديرات مركز بيو: <a href="https://www.pewresearch.org/religion/2011/12/19/global-christianity-exec/" target="_blank" rel="noopener">Pew Research Center — Global Christianity (2011)</a></li>
+                            <li>تصريحات البابا تواضروس الثاني: <a href="https://en.wikipedia.org/wiki/Copts" target="_blank" rel="noopener">Wikipedia — Copts (Demographics section)</a></li>
+                            <li>تقرير وزارة الخارجية الأمريكية: <a href="https://www.state.gov/reports/2022-report-on-international-religious-freedom/egypt/" target="_blank" rel="noopener">U.S. State Department — International Religious Freedom Report: Egypt</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Culture and Language -->
+            <section class="slide" id="slide-5">
                 <div class="card">
                     <h2>الملامح الثقافية واللغوية</h2>
                     <p>تتميز الثقافة القبطية بكونها <strong>ثقافة مركبة</strong> تتداخل فيها عناصر دينية وفنون شعبية مصرية وذاكرة تاريخية محلية.</p>
@@ -554,7 +738,7 @@
                             <h4>الألحان والطقوس</h4>
                             <p style="font-size: 0.9rem;">
                                 تُعد الألحان القبطية من أقدم تقاليد الموسيقى الكنسية.
-                                ويطرح بعض الباحثين فرضيات تربط بعض خصائصها بتقاليد أقدم في مصر، غير أن هذا المجال محل نقاشٍ علميٍّ واسع.
+                                ويطرح بعض الباحثين فرضيات تربط بعض خصائصها بتقاليد أقدم في مصر، غير أن هذا المجال محل نقاشٍ علميٍّ واسع.
                             </p>
                         </div>
                     </div>
@@ -576,24 +760,108 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Contemporary Issues (REVISED + legal anchor + demographics note) -->
-            <section class="slide" id="slide-5">
+            <!-- Slide 6: Sectarian Violence (NEW) -->
+            <section class="slide" id="slide-6">
+                <div class="card">
+                    <h2>العنف الطائفي: حوادث مأساوية متكررة</h2>
+                    <p>
+                        شهدت العقود الأخيرة سلسلة من الحوادث الطائفية المأساوية التي استهدفت الأقباط في مصر.
+                        وتتنوع هذه الحوادث بين اشتباكات مجتمعية وهجمات إرهابية منظمة، مما يعكس تحديات جوهرية في مجال التماسك الاجتماعي.
+                    </p>
+
+                    <div class="warning-box">
+                        <strong>تنبيه:</strong> يتضمن هذا القسم معلومات عن أحداث عنف. الهدف هو التوثيق الأكاديمي وليس الإثارة.
+                    </div>
+
+                    <h3>أبرز الحوادث المسجلة</h3>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">1999-2000</div>
+                            <div class="timeline-title">أحداث الكشح (صعيد مصر)</div>
+                            <div class="timeline-desc">
+                                اشتباكات طائفية في قرية الكشح بمحافظة سوهاج أسفرت عن مقتل نحو 20 قبطيًا. 
+                                تُعد من أولى الحوادث الكبرى التي لفتت الانتباه الدولي لأوضاع الأقباط.
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">1 يناير 2011</div>
+                            <div class="timeline-title">تفجير كنيسة القديسين بالإسكندرية</div>
+                            <div class="timeline-desc">
+                                هجوم انتحاري أمام كنيسة القديسين (كنيسة مارمرقس ومار بطرس) في الإسكندرية أثناء قداس رأس السنة، 
+                                أسفر عن مقتل 23 شخصًا وإصابة العشرات.
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">9 أكتوبر 2011</div>
+                            <div class="timeline-title">مذبحة ماسبيرو</div>
+                            <div class="timeline-desc">
+                                قُتل 27-28 قبطيًا خلال مظاهرة سلمية أمام مبنى التلفزيون المصري (ماسبيرو) احتجاجًا على هدم كنيسة.
+                                بثّ التلفزيون الرسمي نداءات للمواطنين "لحماية الجيش من الحشد القبطي العنيف" - وهو ما أثار انتقادات واسعة.
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">9 أبريل 2017</div>
+                            <div class="timeline-title">تفجيرات أحد الشعانين</div>
+                            <div class="timeline-desc">
+                                تفجيران متزامنان استهدفا كنيستين في طنطا والإسكندرية أثناء قداس أحد الشعانين، 
+                                أسفرا عن مقتل 47 شخصًا. تبنى تنظيم داعش المسؤولية.
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">26 مايو 2017</div>
+                            <div class="timeline-title">هجوم المنيا</div>
+                            <div class="timeline-desc">
+                                هجوم مسلح على حافلة تقل حجاجًا أقباطًا متجهين إلى دير الأنبا صموئيل في المنيا، 
+                                أسفر عن مقتل 28 شخصًا من بينهم أطفال.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <div style="font-weight: 800; color: #1e40af; margin-bottom: 0.5rem;">
+                            للتحليل الأكاديمي
+                        </div>
+                        <p style="font-size: 0.95rem;">
+                            تتطلب دراسة هذه الحوادث التمييز بين: (1) الاشتباكات المجتمعية المحلية، 
+                            (2) الهجمات الإرهابية المنظمة، (3) العنف المؤسسي أو شبه المؤسسي.
+                            كما ينبغي فهم السياقات السياسية والاجتماعية لكل حادثة.
+                        </p>
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.5rem;">مصطلحات أكاديمية:</h4>
+                        <span class="vocab-item">العنف الطائفي</span>
+                        <span class="vocab-item">الاستهداف الممنهج</span>
+                        <span class="vocab-item">الإرهاب</span>
+                        <span class="vocab-item">الإفلات من العقاب</span>
+                        <span class="vocab-item">التوتر المجتمعي</span>
+                        <span class="vocab-item">المصالحة العرفية</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>توثيق أحداث الكشح: <a href="https://en.wikipedia.org/wiki/El_Kosheh_massacre" target="_blank" rel="noopener">Wikipedia — El Kosheh massacre</a></li>
+                            <li>تقارير منظمة Minority Rights Group: <a href="https://minorityrights.org/communities/copts/" target="_blank" rel="noopener">Minority Rights Group — Copts</a></li>
+                            <li>تقارير هيومن رايتس ووتش: <a href="https://www.hrw.org/middle-east/north-africa/egypt" target="_blank" rel="noopener">Human Rights Watch — Egypt</a></li>
+                            <li>أرشيف BBC العربي للحوادث: <a href="https://www.bbc.com/arabic/topics/c95y3qjgq1xt" target="_blank" rel="noopener">BBC Arabic — Egypt</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Contemporary Issues -->
+            <section class="slide" id="slide-7">
                 <div class="card">
                     <h2>القضايا المعاصرة والمواطنة</h2>
                     <p>
                         في إطار دراسة الأقليات، يطرح وضع الأقباط في مصر نموذجًا لتحولات "المواطنة" والتحديات التي قد تواجه التعددية في المجتمع الحديث.
-                        ويُستحسن عند تناول هذه القضايا التفريق بين: <strong>الإطار القانوني</strong>، و<strong>الممارسة الاجتماعية</strong>، و<strong>السياقات السياسية</strong> التي تتغير عبر الزمن.
+                        ويُستحسن عند تناول هذه القضايا التفريق بين: <strong>الإطار القانوني</strong>، و<strong>الممارسة الاجتماعية</strong>، و<strong>السياقات السياسية</strong>.
                     </p>
-
-                    <div class="note-box">
-                        <div style="font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">
-                            لماذا تختلف تقديرات الأعداد؟ <span class="badge">إضافة</span>
-                        </div>
-                        <p style="font-size: 0.95rem;">
-                            تختلف تقديرات نسبة المسيحيين في مصر بين مصادر بحثية تعتمد بيانات مسحية/تعدادات وبين تقديرات متداولة في الخطاب العام؛
-                            لذلك تُعرض الأرقام عادةً بوصفها <strong>تقديرات</strong> لا إحصاءً نهائيًا.
-                        </p>
-                    </div>
 
                     <div class="grid-2">
                         <div>
@@ -614,7 +882,7 @@
 
                     <div class="note-box">
                         <div style="font-weight: 800; color: #1e40af; margin-bottom: 0.5rem;">
-                            مرجعان قانونيان/مؤسسيان (للتأطير) <span class="badge">مرساة</span>
+                            مرجعان قانونيان/مؤسسيان <span class="badge">مرساة</span>
                         </div>
                         <ul style="margin-right: 1.2rem; font-size: 0.95rem;">
                             <li>
@@ -632,7 +900,7 @@
                     </div>
 
                     <div class="vocab-box">
-                        <h4 style="margin-bottom: 0.5rem;">قاموس العلوم السياسية (عربي):</h4>
+                        <h4 style="margin-bottom: 0.5rem;">قاموس العلوم السياسية:</h4>
                         <span class="vocab-item">دولة المواطنة</span>
                         <span class="vocab-item">السلم المجتمعي</span>
                         <span class="vocab-item">التعددية الثقافية</span>
@@ -642,9 +910,9 @@
 
                     <div class="footnotes">
                         <ol>
-                            <li>تباين التقديرات السكانية في الأدبيات: <a href="https://www.pewresearch.org/religion/2011/12/19/global-christianity-exec/" target="_blank" rel="noopener">Pew Research Center — Global Christianity (2011)</a></li>
-                            <li>الدستور المصري (مادة 3): <a href="https://www.constituteproject.org/constitution/Egypt_2014" target="_blank" rel="noopener">Constitute Project — Egypt’s Constitution (2014)</a></li>
-                            <li>قانون بناء الكنائس 2016 (عرض مؤسسي): <a href="https://www.loc.gov/item/global-legal-monitor/2016-09-20/egypt-law-regulating-construction-and-renovation-of-churches/" target="_blank" rel="noopener">Library of Congress — Egypt: Law Regulating Construction and Renovation of Churches (2016)</a></li>
+                            <li>الدستور المصري (مادة 3): <a href="https://www.constituteproject.org/constitution/Egypt_2014" target="_blank" rel="noopener">Constitute Project — Egypt's Constitution (2014)</a></li>
+                            <li>قانون بناء الكنائس 2016: <a href="https://www.loc.gov/item/global-legal-monitor/2016-09-20/egypt-law-regulating-construction-and-renovation-of-churches/" target="_blank" rel="noopener">Library of Congress — Egypt: Law Regulating Construction and Renovation of Churches (2016)</a></li>
+                            <li>تقرير الحرية الدينية: <a href="https://www.state.gov/reports/2022-report-on-international-religious-freedom/egypt/" target="_blank" rel="noopener">U.S. State Department — International Religious Freedom Report: Egypt</a></li>
                         </ol>
                     </div>
                 </div>
@@ -666,7 +934,9 @@
             { title: "الأصل اللغوي" },
             { title: "المسار التاريخي" },
             { title: "التوزيع الجغرافي" },
+            { title: "إشكالية التقديرات السكانية" },
             { title: "الثقافة واللغة" },
+            { title: "العنف الطائفي" },
             { title: "القضايا المعاصرة" }
         ];
 
@@ -735,10 +1005,12 @@
 
             const locations = [
                 { name: "القاهرة (الكاتدرائية المرقسية)", coords: [30.0444, 31.2357], info: "مقر البابا وبطريركية الكرازة المرقسية." },
-                { name: "المنيا", coords: [28.0871, 30.7618], info: "من أبرز مناطق الحضور القبطي في صعيد مصر." },
+                { name: "المنيا", coords: [28.0871, 30.7618], info: "من أبرز مناطق الحضور القبطي في صعيد مصر. شهدت حادث الحافلة 2017." },
                 { name: "أسيوط", coords: [27.1783, 31.1859], info: "إحدى مناطق الحضور القبطي في الصعيد، مع وجود مؤسسات كنسية وتعليمية." },
-                { name: "الإسكندرية", coords: [31.2001, 29.9187], info: "ترتبط تاريخيًا بالسرديات الكنسية حول بدايات المسيحية في مصر." },
-                { name: "وادي النطرون", coords: [30.4000, 30.3167], info: "منطقة الأديرة الأثرية (من أهم مراكز الرهبنة القبطية)." }
+                { name: "الإسكندرية", coords: [31.2001, 29.9187], info: "ترتبط تاريخيًا بالسرديات الكنسية. شهدت تفجير 2011 وتفجير 2017." },
+                { name: "وادي النطرون", coords: [30.4000, 30.3167], info: "منطقة الأديرة الأثرية (من أهم مراكز الرهبنة القبطية)." },
+                { name: "سوهاج (الكشح)", coords: [26.5591, 31.6948], info: "شهدت أحداث الكشح الطائفية 1999-2000." },
+                { name: "طنطا", coords: [30.7865, 31.0004], info: "شهدت تفجير كنيسة مارجرجس في أحد الشعانين 2017." }
             ];
 
             locations.forEach(loc => {
@@ -752,7 +1024,6 @@
             initMap();
         };
 
-        // Keyboard support
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
