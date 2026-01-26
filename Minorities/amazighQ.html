@@ -1,1 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أسئلة للنقاش: الأمازيغ - الهوية والتاريخ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0891b2;
+            --secondary: #eab308;
+            --accent: #134e4a;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.9;
+            font-size: 18px;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 16px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .section-title h2 {
+            color: var(--accent);
+            font-size: 1.4rem;
+        }
+
+        .question {
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            background: #f1f5f9;
+            border-radius: 12px;
+            border-right: 4px solid var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            background: #e2e8f0;
+            transform: translateX(-5px);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--accent);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-left: 0.75rem;
+        }
+
+        .question-text {
+            display: inline;
+            font-weight: 500;
+        }
+
+        .sub-questions {
+            margin-top: 0.75rem;
+            padding-right: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .sub-questions li {
+            margin-bottom: 0.4rem;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .activity-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tips-box {
+            background: #fef3c7;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tips-box h3 {
+            color: #92400e;
+            margin-bottom: 1rem;
+        }
+
+        .tips-box ul {
+            padding-right: 1.5rem;
+        }
+
+        .tips-box li {
+            margin-bottom: 0.5rem;
+            color: #78350f;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media print {
+            body { padding: 1rem; font-size: 14px; }
+            .section { break-inside: avoid; box-shadow: none; }
+            header { background: var(--accent); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>أسئلة للنقاش والتفكير النقدي</h1>
+            <p>الأمازيغ: السكان الأصليون والهوية العابرة للحدود</p>
+        </header>
+
+        <!-- Section 1: Identity -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon">١</div>
+                <h2>الهوية والتسمية</h2>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١</span>
+                <span class="question-text">لماذا يفضل الأمازيغ تسمية "أمازيغ" على "بربر"؟ وما الفرق بين التسمية الذاتية والتسمية الخارجية للشعوب؟</span>
+                <ul class="sub-questions">
+                    <li>هل يمكنك التفكير في أمثلة أخرى لشعوب رفضت تسميات أُطلقت عليها من الخارج؟</li>
+                    <li>ما أهمية أن يختار الشعب اسمه بنفسه؟</li>
+                </ul>
+            </div>
+
+            <div class="question">
+                <span class="question-number">٢</span>
+                <span class="question-text">يقول الأمازيغ إن كلمة "أمازيغ" تعني "الإنسان الحر". كيف يمكن لاسم شعبٍ ما أن يعكس قيمه وتاريخه؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">٣</span>
+                <span class="question-text">ما الفرق بين الهوية العرقية والهوية الثقافية والهوية اللغوية؟ وهل يمكن لشخص أن يكون "أمازيغياً" دون أن يتحدث الأمازيغية؟</span>
+            </div>
+        </div>
+
+        <!-- Section 2: History -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon">٢</div>
+                <h2>التاريخ والذاكرة</h2>
+            </div>
+
+            <div class="question">
+                <span class="question-number">٤</span>
+                <span class="question-text">أسس الأمازيغ دولاً إسلامية كبرى مثل المرابطين والموحدين. كيف يمكن التوفيق بين الهوية الأمازيغية والهوية الإسلامية؟ هل هما متناقضتان أم متكاملتان؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">٥</span>
+                <span class="question-text">يحتفل الأمازيغ بـ"ينّاير" (رأس السنة الأمازيغية) منذ عام 950 ق.م تقريباً. ما أهمية التقويم الخاص لأي شعب؟ وما الذي يرمز إليه اختيار تتويج شيشنق الأول كنقطة بداية؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">٦</span>
+                <span class="question-text">ساهم طارق بن زياد الأمازيغي في فتح الأندلس، لكن كتب التاريخ العربية قلّما تذكر أصله الأمازيغي. لماذا برأيك؟ وكيف يؤثر ذلك على فهمنا للتاريخ؟</span>
+            </div>
+
+            <div class="activity-box">
+                <h4>🔍 نشاط بحثي:</h4>
+                <p>ابحث عن شخصية تاريخية أمازيغية لم تُذكر في العرض التقديمي (مثل: الملكة ديهيا، يوسف بن تاشفين، ابن خلدون) واكتب فقرة قصيرة عن إسهاماتها.</p>
+            </div>
+        </div>
+
+        <!-- Section 3: Language -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon">٣</div>
+                <h2>اللغة والثقافة</h2>
+            </div>
+
+            <div class="question">
+                <span class="question-number">٧</span>
+                <span class="question-text">خط تيفيناغ من أقدم أنظمة الكتابة في العالم (أكثر من 2500 سنة). لماذا برأيك لم ينتشر مثل الأبجدية اللاتينية أو العربية؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">٨</span>
+                <span class="question-text">هناك عدة لهجات أمازيغية (القبايلية، الريفية، تاشلحيت، الطارقية...) قد لا يفهم متحدثوها بعضهم البعض. هل هذا التنوع نقطة قوة أم ضعف للهوية الأمازيغية؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">٩</span>
+                <span class="question-text">ما العلاقة بين اللغة والهوية؟ إذا اندثرت لغة ما، هل تندثر معها الهوية المرتبطة بها؟</span>
+                <ul class="sub-questions">
+                    <li>ما الذي يمكن فعله لحماية اللغات المهددة بالانقراض؟</li>
+                    <li>هل التكنولوجيا (الإنترنت، التطبيقات) تساعد أم تضر باللغات الأقلية؟</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 4: Politics -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon">٤</div>
+                <h2>السياسة والحقوق</h2>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١٠</span>
+                <span class="question-text">بعد استقلال دول شمال أفريقيا، تبنّت حكوماتها سياسة "التعريب". ما الأسباب التي دفعتها لذلك؟ وما تأثير هذه السياسة على الأمازيغ؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١١</span>
+                <span class="question-text">اعترفت المغرب (2011) والجزائر (2016) بالأمازيغية لغة رسمية. ما الفرق بين الاعتراف الدستوري والتطبيق الفعلي؟ ولماذا لا يكفي النص القانوني وحده؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١٢</span>
+                <span class="question-text">"الربيع الأمازيغي" (1980) و"الربيع الأسود" (2001) كانا نقطتي تحول في تاريخ الحركة الأمازيغية. قارن بين الحدثين من حيث: الأسباب، الأساليب، والنتائج.</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١٣</span>
+                <span class="question-text">هل يحق للدولة أن تفرض لغة واحدة على جميع مواطنيها؟ ما إيجابيات وسلبيات التعددية اللغوية الرسمية؟</span>
+            </div>
+        </div>
+
+        <!-- Section 5: Contemporary Issues -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon">٥</div>
+                <h2>القضايا المعاصرة</h2>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١٤</span>
+                <span class="question-text">تختلف التقديرات الرسمية لعدد الأمازيغ (24.8% في المغرب مثلاً) عن تقديرات الجمعيات الأمازيغية (65-85%). لماذا هذا التفاوت الكبير؟ ومن يحدد "من هو الأمازيغي"؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١٥</span>
+                <span class="question-text">زين الدين زيدان، أحد أشهر لاعبي كرة القدم في التاريخ، قال: "أنا أولاً قبايلي من لاكاستيلان". كيف يمكن للمشاهير من أصول أمازيغية أن يؤثروا على الوعي بالقضية الأمازيغية؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١٦</span>
+                <span class="question-text">اغتيل الفنان معتوب لونيس عام 1998 بسبب نشاطه الثقافي والسياسي. ما دور الفن والموسيقى في الحركات الاجتماعية والمطالبة بالحقوق؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١٧</span>
+                <span class="question-text">يعيش الأمازيغ في عدة دول (المغرب، الجزائر، ليبيا، تونس، مالي، النيجر، مصر...). ما تحديات بناء هوية جامعة لشعب موزع على حدود سياسية مختلفة؟</span>
+            </div>
+        </div>
+
+        <!-- Section 6: Critical Thinking -->
+        <div class="section">
+            <div class="section-title">
+                <div class="section-icon">٦</div>
+                <h2>التفكير النقدي والمقارنة</h2>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١٨</span>
+                <span class="question-text">قارن بين وضع الأمازيغ في شمال أفريقيا ووضع الأكراد في الشرق الأوسط أو السكان الأصليين في أمريكا. ما أوجه التشابه والاختلاف؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">١٩</span>
+                <span class="question-text">يرى البعض أن المطالبة بحقوق الأمازيغ تهدد "الوحدة الوطنية"، بينما يرى آخرون أن الاعتراف بالتنوع يعززها. ما رأيك؟ وكيف يمكن تحقيق التوازن؟</span>
+            </div>
+
+            <div class="question">
+                <span class="question-number">٢٠</span>
+                <span class="question-text">في عصر العولمة، هل من الممكن الحفاظ على الهويات المحلية والأقليات الثقافية؟ أم أن الاندماج في ثقافة عالمية موحدة أمر حتمي؟</span>
+            </div>
+
+            <div class="activity-box">
+                <h4>💭 نشاط تأملي:</h4>
+                <p>فكّر في هويتك الخاصة: ما اللغات التي تتحدثها؟ ما التقاليد التي تمارسها؟ هل هناك جوانب من ثقافتك معرضة للاندثار؟ كيف تشعر حيال ذلك؟</p>
+            </div>
+        </div>
+
+        <!-- Tips Box -->
+        <div class="tips-box">
+            <h3>💡 إرشادات للنقاش الفعّال:</h3>
+            <ul>
+                <li><strong>استمع بانفتاح:</strong> قد تختلف الآراء، وهذا طبيعي ومفيد للتعلم.</li>
+                <li><strong>ادعم رأيك بالأدلة:</strong> استخدم معلومات من العرض التقديمي أو مصادر موثوقة.</li>
+                <li><strong>تجنب التعميم:</strong> الأمازيغ ليسوا كتلة واحدة، بل مجموعات متنوعة.</li>
+                <li><strong>فرّق بين الرأي والحقيقة:</strong> "أعتقد أن..." تختلف عن "الإحصائيات تُظهر أن..."</li>
+                <li><strong>اطرح أسئلة:</strong> السؤال الجيد أهم من الإجابة الجاهزة.</li>
+                <li><strong>احترم التجارب المختلفة:</strong> قد يكون بعض زملائك من أصول أمازيغية أو لديهم تجارب شخصية مع الموضوع.</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>أسئلة مُعدّة لمرافقة العرض التقديمي: "الأمازيغ: السكان الأصليون والهوية العابرة للحدود"</p>
+            <p style="margin-top: 0.5rem;">للاستخدام الأكاديمي والتعليمي</p>
+        </footer>
+    </div>
+</body>
+</html>
