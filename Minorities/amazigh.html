@@ -1,0 +1,899 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأمازيغ: السكان الأصليون والهوية العابرة للحدود</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --sidebar-bg: #134e4a; /* Deep Teal/Green for Amazigh theme */
+            --sidebar-text: #f0fdf4;
+            --primary: #0891b2; /* Cyan/Blue from Amazigh flag */
+            --primary-hover: #0e7490;
+            --secondary: #eab308; /* Yellow from Amazigh flag */
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-soft: #ecfdf5;
+            --sidebar-width: 320px;
+            --font-main: 'Noto Sans Arabic', sans-serif;
+            --danger: #be123c;
+            --danger-soft: #fff1f2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            font-size: 20px;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 2.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+            border-right: 4px solid transparent;
+            font-size: 1.05rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-item.active {
+            background: rgba(234, 179, 8, 0.1);
+            border-right: 4px solid var(--secondary);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .nav-num {
+            opacity: 0.5;
+            min-width: 2.2rem;
+            font-weight: 300;
+        }
+
+        .main-content {
+            margin-right: 0;
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #cbd5e1;
+            z-index: 1100;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1100px;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            border-bottom: 4px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            margin: 1.5rem 0 1rem;
+            color: #134e4a;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .callout {
+            background: var(--accent-soft);
+            border-right: 6px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .vocab-box {
+            background: #f8fafc;
+            border: 1px dashed #64748b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .vocab-item {
+            display: inline-block;
+            background: #e2e8f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            margin: 0.3rem;
+            font-size: 0.95rem;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        #map-container {
+            height: 550px;
+            width: 100%;
+            border-radius: 16px;
+            border: 2px solid var(--border-color);
+            margin: 1.5rem 0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1100px;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #64748b;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(100%); left: auto; right: 0; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .mobile-nav-btn {
+            display: none;
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 2000;
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-nav-btn { display: block; }
+        }
+
+        .arabic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .arabic-table th, .arabic-table td {
+            border: 1px solid #cbd5e1;
+            padding: 1rem;
+            text-align: right;
+        }
+        .arabic-table th {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .footnotes {
+            margin-top: 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .footnotes ol { padding-right: 1.2rem; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .stat-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .timeline {
+            position: relative;
+            padding-right: 2rem;
+            margin: 2rem 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--danger);
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--danger-soft);
+            border-radius: 12px;
+            border: 1px solid #fecaca;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -2.5rem;
+            top: 1.8rem;
+            width: 12px;
+            height: 12px;
+            background: var(--danger);
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        .timeline-date {
+            font-weight: 700;
+            color: var(--danger);
+        }
+
+        .note-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.85rem;
+            background: var(--secondary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            margin-left: 0.4rem;
+            color: #1e293b;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <button class="mobile-nav-btn" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>الأمازيغ: الهوية والتاريخ</h1>
+                <p style="font-size: 0.9rem; color: #94a3b8;">دراسة في جذور شمال أفريقيا</p>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <!-- Navigation items will be injected by JS -->
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <!-- Slide 0: Identity and Origins -->
+            <section class="slide active" id="slide-0">
+                <div class="card">
+                    <h2>الأمازيغ: الإنسان الحر</h2>
+                    <p>
+                        يُطلق الأمازيغ على أنفسهم اسم «إيمازيغن» (Imazighen)، والتي تعني في لغتهم «الرجال الأحرار» أو «الناس الأحرار». وهم السكان الأصليون لمنطقة شمال أفريقيا، الممتدة من واحة سيوة في مصر شرقاً إلى جزر الكناري غرباً، ومن البحر المتوسط شمالاً إلى الصحراء الكبرى جنوباً. يُقدّر عددهم بأكثر من 30 مليون نسمة موزعين على عدة دول.
+                    </p>
+
+                    <div class="callout">
+                        "الهوية الأمازيغية هي هوية مركبة تجمع بين الأرض واللغة والتاريخ، صمدت عبر آلاف السنين أمام موجات الهجرة والغزو المتلاحقة من الفينيقيين والرومان والعرب والأتراك والأوروبيين."
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card" style="padding: 1.5rem; background: #ecfdf5;">
+                            <h4 style="color: #065f46;">تامازغا (Tamazgha)</h4>
+                            <p style="font-size: 0.95rem;">
+                                هو المصطلح الجغرافي الذي يستخدمه الناشطون الأمازيغ للإشارة إلى موطنهم التاريخي في شمال أفريقيا، ويمتد على أكثر من 7 ملايين كيلومتر مربع.
+                            </p>
+                        </div>
+                        <div class="card" style="padding: 1.5rem; background: #eff6ff;">
+                            <h4 style="color: #1e40af;">التنوع الثقافي</h4>
+                            <p style="font-size: 0.95rem;">
+                                يضم الأمازيغ مجموعات متنوعة مثل القبايل والشاوية والمزاب في الجزائر، والريفيين والشلوح والسوسيين في المغرب، والطوارق في الصحراء الكبرى، والنفوسيين في ليبيا.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.5rem;">مصطلحات أكاديمية:</h4>
+                        <span class="vocab-item">السكان الأصليون (Indigenous Peoples)</span>
+                        <span class="vocab-item">تامازغا (Tamazgha)</span>
+                        <span class="vocab-item">الإثنية (Ethnicity)</span>
+                        <span class="vocab-item">الاستمرارية الثقافية (Cultural Continuity)</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>حول تعريف الأمازيغ: <a href="https://www.britannica.com/topic/Berber" target="_blank">Encyclopaedia Britannica — Berber</a></li>
+                            <li>مفهوم تامازغا في الخطاب الثقافي: <a href="https://minorityrights.org/communities/berbers-imazighen/" target="_blank">Minority Rights Group — Berbers</a></li>
+                            <li>الشعوب الأصلية في شمال أفريقيا: <a href="https://iwgia.org/en/morocco.html" target="_blank">IWGIA — Morocco</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 1: Etymology -->
+            <section class="slide" id="slide-1">
+                <div class="card">
+                    <h2>بين "بربر" و"أمازيغ": رحلة المصطلح</h2>
+                    <p>
+                        غالباً ما يُستخدم مصطلح "البربر" في اللغات الأجنبية والمدونات التاريخية العربية، لكنه يحمل دلالات خارجية تختلف عن التسمية الذاتية التي يفضلها أبناء هذا الشعب.
+                    </p>
+
+                    <table class="arabic-table">
+                        <thead>
+                            <tr>
+                                <th>المصطلح</th>
+                                <th>الأصل</th>
+                                <th>المعنى / السياق</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>أمازيغ (Amazigh)</strong></td>
+                                <td>لغة تامازيغت</td>
+                                <td>"الإنسان الحر" أو "النبيل" - التسمية الذاتية المفضلة والمعترف بها دولياً.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>بربر (Berber)</strong></td>
+                                <td>يوناني/لاتيني (Barbaros)</td>
+                                <td>أطلقه الرومان واليونان على من لا يتحدث لغتهم. يعتبره الكثيرون مصطلحاً استعمارياً ذا دلالات سلبية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>لوبيون (Libyans)</strong></td>
+                                <td>مصر القديمة / اليونانية</td>
+                                <td>الاسم القديم الذي أطلقه المصريون القدماء على سكان شمال أفريقيا غرب النيل منذ 3000 ق.م.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>إيمازيغن (Imazighen)</strong></td>
+                                <td>صيغة الجمع الأمازيغية</td>
+                                <td>جمع "أمازيغ"، تُستخدم للإشارة إلى الشعب ككل.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout">
+                        <strong>ملاحظة هامة:</strong> يفضل الناشطون والباحثون المعاصرون استخدام "أمازيغ" بدلاً من "بربر" نظراً للدلالات السلبية التاريخية المرتبطة بالمصطلح الأخير. وقد تبنّت المؤسسات الدولية مثل الأمم المتحدة هذا المصطلح في وثائقها الرسمية.
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>حول أصل مصطلح "بربر": <a href="https://en.wikipedia.org/wiki/Berbers" target="_blank">Wikipedia — Berbers</a></li>
+                            <li>الحركة الثقافية الأمازيغية: <a href="https://www.britannica.com/topic/Berber" target="_blank">Britannica — Berber Identity</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Historical Trajectory -->
+            <section class="slide" id="slide-2">
+                <div class="card">
+                    <h2>المسار التاريخي: من الممالك القديمة إلى الدول الحديثة</h2>
+                    <p>شهد التاريخ الأمازيغي صراعات وتحالفات شكلت هوية المنطقة عبر آلاف السنين:</p>
+
+                    <div class="grid-2">
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">العصور القديمة</h3>
+                            <p style="font-size: 0.95rem;">
+                                تأسيس ممالك أمازيغية قوية مثل "نوميديا" و"موريتانيا الطنجية". شخصيات مثل الملك ماسينيسا (238-148 ق.م) الذي وحّد نوميديا، ويوغرطة الذي قاوم الرومان في حرب دامت 7 سنوات (112-105 ق.م).
+                            </p>
+                        </div>
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">الفتح الإسلامي (القرن 7م)</h3>
+                            <p style="font-size: 0.95rem;">
+                                اعتنق الأمازيغ الإسلام وساهموا بشكل محوري في فتح الأندلس عام 711م بقيادة طارق بن زياد الأمازيغي، لكنهم حافظوا على خصوصيتهم الثقافية واللغوية.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">الدول الأمازيغية الإسلامية</h3>
+                            <p style="font-size: 0.95rem;">
+                                ظهور إمبراطوريات كبرى وحدت شمال أفريقيا والأندلس: المرابطون (1040-1147م)، الموحدون (1121-1269م)، المرينيون (1244-1465م)، والزيانيون والحفصيون.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">المقاومة والاستقلال</h3>
+                            <p style="font-size: 0.95rem;">
+                                لعب الأمازيغ دوراً ريادياً في مقاومة الاستعمار: ثورة الريف بقيادة محمد بن عبد الكريم الخطابي (1921-1926) التي أسست أول جمهورية في شمال أفريقيا.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <div style="font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">
+                            السنة الأمازيغية (Yennayer / ينّاير) <span class="badge">معلومة</span>
+                        </div>
+                        <p style="font-size: 0.95rem;">
+                            يبدأ التقويم الأمازيغي من عام 950 قبل الميلاد تقريباً، وهو التاريخ الذي اعتلى فيه الملك الأمازيغي شيشنق الأول (Sheshonq I) من قبيلة الماشواش عرش مصر الفرعونية مؤسساً الأسرة الثانية والعشرين. قام الباحث الجزائري عمار نقادي بتقنين هذا التقويم عام 1980م. يُحتفل بينّاير في 12-13 يناير من كل عام.
+                        </p>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>حول شيشنق الأول: <a href="https://www.britannica.com/biography/Sheshonk-I" target="_blank">Britannica — Sheshonk I</a></li>
+                            <li>التقويم الأمازيغي: <a href="https://www.middleeasteye.net/discover/yennayer-what-you-need-know-about-amazigh-new-year" target="_blank">Middle East Eye — Yennayer</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Geographic Distribution -->
+            <section class="slide" id="slide-3">
+                <div class="card">
+                    <h2>التوزيع الجغرافي المعاصر</h2>
+                    <p>ينتشر الأمازيغ في عدة دول بتركيزات متفاوتة، وتشكل جبال الأطلس والصحراء الكبرى معاقلهم الرئيسية:</p>
+                    
+                    <div id="map-container"></div>
+
+                    <div class="grid-2">
+                        <div class="callout">
+                            <strong>بلاد المغرب (المغرب والجزائر):</strong> تتركز فيها الكتلة الكبرى من السكان الأمازيغ، مع تنوع لهجي وجغرافي واسع يشمل: القبايلية، الشاوية، الريفية، تاشلحيت، وتامازيغت الأطلس المتوسط.
+                        </div>
+                        <div class="callout">
+                            <strong>الصحراء والساحل:</strong> موطن "الطوارق" (إيموهاغ)، المعروفين بـ"الرجال الزرق" نسبة لأزيائهم النيلية، والذين يتوزعون على مالي والنيجر والجزائر وليبيا وبوركينا فاسو.
+                        </div>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>التوزيع الجغرافي: <a href="https://www.britannica.com/topic/Berber" target="_blank">Britannica — Berber Geographic Distribution</a></li>
+                            <li>الطوارق: <a href="https://www.britannica.com/topic/Tuareg" target="_blank">Britannica — Tuareg</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Demographic Estimates -->
+            <section class="slide" id="slide-4">
+                <div class="card">
+                    <h2>التقديرات السكانية واللغوية</h2>
+                    <p>تعتبر الإحصائيات العرقية في دول شمال أفريقيا قضية حساسة وسياسية، مما يؤدي إلى تباين كبير في التقديرات بين المصادر الرسمية والجمعيات الأمازيغية:</p>
+
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-source">المغرب</div>
+                            <div class="stat-number">24.8%</div>
+                            <div class="stat-note">يتحدثون الأمازيغية (إحصاء 2024)، بينما تقدّر الجمعيات الأمازيغية النسبة بـ65-85%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">الجزائر</div>
+                            <div class="stat-number">~12 مليون</div>
+                            <div class="stat-note">يتركزون في القبايل والأوراس والمزاب وتامنغست (ثلث السكان تقريباً)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">ليبيا</div>
+                            <div class="stat-number">5-10%</div>
+                            <div class="stat-note">يتركزون في جبل نفوسة وزوارة وغدامس</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">تونس</div>
+                            <div class="stat-number">~1%</div>
+                            <div class="stat-note">قرى معزولة في الجنوب (مطماطة) وجزيرة جربة</div>
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <p style="font-size: 0.95rem;">
+                            <strong>تحدي الإحصاء:</strong> العديد من سكان شمال أفريقيا هم من أصول أمازيغية "مُعرّبة" ثقافياً ولغوياً (تخلوا عن اللغة لكن حافظوا على الجينات وبعض التقاليد). تُظهر الدراسات الجينية (مثل مشروع ناشيونال جيوغرافيك الجينوغرافي) غلبة "الجينوم الأمازيغي" بين سكان شمال أفريقيا، مما يجعل الفصل بين "عربي" و"أمازيغي" صعباً من الناحية البيولوجية.
+                        </p>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>إحصاء المغرب 2024: <a href="https://iwgia.org/en/morocco/5632-iw-2025-morocco.html" target="_blank">IWGIA — Morocco 2025</a></li>
+                            <li>تقديرات الجزائر: <a href="https://iwgia.org/en/algeria/5347-iw-2024-algeria.html" target="_blank">IWGIA — Algeria 2024</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Culture, Language and Tifinagh -->
+            <section class="slide" id="slide-5">
+                <div class="card">
+                    <h2>اللغة والخط: تيفيناغ (Tifinagh / ⵜⵉⴼⵉⵏⴰⵖ)</h2>
+                    <p>اللغة الأمازيغية (تامازيغت) هي لغة أفرو-آسيوية قريبة من المصرية القديمة والعربية والعبرية، وتملك واحداً من أقدم أنظمة الكتابة في العالم.</p>
+
+                    <div class="grid-2">
+                        <div style="background: #fdf2f8; padding: 1.5rem; border-radius: 12px;">
+                            <h4>خط تيفيناغ</h4>
+                            <p style="font-size: 1.4rem; margin: 1rem 0; color: var(--primary); font-family: sans-serif; letter-spacing: 0.3rem;">
+                                ⴰ ⴱ ⴳ ⴷ ⴻ ⴼ ⴽ ⵀ ⵉ ⵊ ⴽ ⵍ ⵎ ⵏ ⵓ ⵔ ⵙ ⵜ ⵡ ⵢ ⵣ
+                            </p>
+                            <p style="font-size: 0.9rem;">
+                                هو الخط الأصلي الذي استخدمه الأمازيغ منذ أكثر من 2500 سنة، وتُظهره النقوش الصخرية في الصحراء. حافظ عليه الطوارق عبر القرون. تمت إعادة تقنينه من قبل المعهد الملكي للثقافة الأمازيغية (IRCAM) واعتماده رسمياً في المغرب والجزائر.
+                            </p>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 12px;">
+                            <h4>العلم الأمازيغي ⵣ</h4>
+                            <p style="font-size: 0.9rem;">
+                                صممه الناشط الجزائري القبايلي <strong>محند أعراب بسعود</strong> (Mohand Arav Bessaoud) مؤسس الأكاديمية الأمازيغية عام 1970م، واعتُمد رسمياً في المؤتمر العالمي الأمازيغي بجزر الكناري عام 1997م. يرمز <strong>الأزرق</strong> للبحر الأبيض المتوسط والمحيط الأطلسي، <strong>الأخضر</strong> للجبال والطبيعة، و<strong>الأصفر</strong> للصحراء. يتوسطه حرف "الزاي" أو "أزا" (ⵣ) باللون <strong>الأحمر</strong> الذي يرمز للمقاومة والشهداء والإنسان الحر.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="vocab-box">
+                        <span class="vocab-item">تيفيناغ (Tifinagh)</span>
+                        <span class="vocab-item">المعهد الملكي للثقافة الأمازيغية (IRCAM)</span>
+                        <span class="vocab-item">اللغة الرسمية (Official Language)</span>
+                        <span class="vocab-item">التراث الشفهي (Oral Heritage)</span>
+                        <span class="vocab-item">اللهجات الأمازيغية (Berber Dialects)</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>العلم الأمازيغي: <a href="https://en.wikipedia.org/wiki/Berber_flag" target="_blank">Wikipedia — Berber Flag</a></li>
+                            <li>خط تيفيناغ: <a href="https://www.britannica.com/topic/Tifinagh" target="_blank">Britannica — Tifinagh</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Notable Figures -->
+            <section class="slide" id="slide-6">
+                <div class="card">
+                    <h2>شخصيات أمازيغية أثرت في التاريخ</h2>
+                    <p>لم يقتصر إسهام الأمازيغ على المستوى المحلي، بل امتد ليكون عالمياً في السياسة والدين والفكر والرياضة والفن.</p>
+
+                    <div class="grid-2">
+                        <div class="stat-card" style="text-align: right;">
+                            <h4 style="color: #1e40af;">القديس أوغسطينوس (Augustine)</h4>
+                            <p style="font-size: 0.9rem;">(354-430 م)</p>
+                            <p style="font-size: 0.95rem;">فيلسوف ولاهوتي مسيحي من أصل أمازيغي، ولد في "طاغاست" (سوق أهراس الحالية بالجزائر). يعد من أعظم آباء الكنيسة الغربية وأكثرهم تأثيراً في الفكر المسيحي.</p>
+                        </div>
+                        <div class="stat-card" style="text-align: right;">
+                            <h4 style="color: #059669;">ابن بطوطة (Ibn Battuta)</h4>
+                            <p style="font-size: 0.9rem;">(1304-1368/1369 م)</p>
+                            <p style="font-size: 0.95rem;">أشهر رحالة في التاريخ، ينتمي لقبيلة "لواتة" الأمازيغية في طنجة. قطع أكثر من 120,000 كم في 30 عاماً، متفوقاً على ماركو بولو.</p>
+                        </div>
+                        <div class="stat-card" style="text-align: right;">
+                            <h4 style="color: #d97706;">زين الدين زيدان (Zinedine Zidane)</h4>
+                            <p style="font-size: 0.9rem;">(مواليد 1972)</p>
+                            <p style="font-size: 0.95rem;">أسطورة كرة القدم العالمية، ينحدر من عائلة أمازيغية قبايلية من قرية أقمون (Aguemoune) بولاية بجاية، هاجرت إلى فرنسا عام 1953. قال عن نفسه: "أنا أولاً قبايلي من لاكاستيلان، ثم جزائري من مارسيليا، ثم فرنسي."</p>
+                        </div>
+                        <div class="stat-card" style="text-align: right;">
+                            <h4 style="color: #be123c;">معتوب لونيس (Matoub Lounès)</h4>
+                            <p style="font-size: 0.9rem;">(1956-1998)</p>
+                            <p style="font-size: 0.95rem;">شاعر ومغني وناشط أمازيغي قبايلي جزائري، وهب حياته للدفاع عن الهوية الأمازيغية والعلمانية. اغتيل في 25 يونيو 1998 في ظروف غامضة، وأثار مقتله موجة احتجاجات واسعة.</p>
+                        </div>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>ابن بطوطة: <a href="https://en.wikipedia.org/wiki/Ibn_Battuta" target="_blank">Wikipedia — Ibn Battuta</a></li>
+                            <li>زين الدين زيدان: <a href="https://en.wikipedia.org/wiki/Zinedine_Zidane" target="_blank">Wikipedia — Zinedine Zidane</a></li>
+                            <li>معتوب لونيس: <a href="https://en.wikipedia.org/wiki/Loun%C3%A8s_Matoub" target="_blank">Wikipedia — Lounès Matoub</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Struggle and Recognition -->
+            <section class="slide" id="slide-7">
+                <div class="card">
+                    <h2>نضال الهوية: من التهميش إلى الدسترة</h2>
+                    <p>مرت القضية الأمازيغية بمحطات نضالية قاسية في مواجهة سياسات "التعريب القسري" التي انتهجتها الدول المغاربية بعد الاستقلال.</p>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">10 مارس 1980</div>
+                            <div class="timeline-title">الربيع الأمازيغي (Tafsut Imazighen / ⵜⴰⴼⵙⵓⵜ ⵏ ⵉⵎⴰⵣⵉⵖⵏ)</div>
+                            <div class="timeline-desc">منع السلطات الجزائرية محاضرة للكاتب مولود معمري حول الشعر القبايلي القديم بجامعة تيزي وزو، مما أشعل مظاهرات عارمة استمرت حتى يونيو. في 20 أبريل اقتحم الجيش الجامعة واعتقل المئات. تُعد نقطة انطلاق الوعي الأمازيغي المعاصر.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">أبريل 2001</div>
+                            <div class="timeline-title">الربيع الأسود (Tafsut Taberkant / ⵜⴰⴼⵙⵓⵜ ⵜⴰⴱⵔⴽⴰⵏⵜ)</div>
+                            <div class="timeline-desc">انتفاضة دموية في الجزائر بعد مقتل الطالب ماسينيسا قرماح على يد الدرك، أسفرت عن أكثر من 120 قتيلاً ومئات الجرحى. أدت إلى الاعتراف بالأمازيغية لغة وطنية عام 2002.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2011</div>
+                            <div class="timeline-title">دسترة الأمازيغية في المغرب</div>
+                            <div class="timeline-desc">في سياق حراك 20 فبراير والربيع العربي، أقر الدستور المغربي الجديد الأمازيغية لغة رسمية إلى جانب العربية (الفصل الخامس).</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2016</div>
+                            <div class="timeline-title">الترسيم في الجزائر</div>
+                            <div class="timeline-desc">التعديل الدستوري في الجزائر يقر الأمازيغية لغة رسمية للدولة إلى جانب العربية (المادة 4).</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2018</div>
+                            <div class="timeline-title">يناير عيداً وطنياً</div>
+                            <div class="timeline-desc">الجزائر تصبح أول دولة تعترف بيناير (رأس السنة الأمازيغية) عطلة رسمية وطنية.</div>
+                        </div>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>الربيع الأمازيغي: <a href="https://en.wikipedia.org/wiki/Berber_Spring" target="_blank">Wikipedia — Berber Spring</a></li>
+                            <li>الربيع الأسود: <a href="https://www.france24.com/en/live-news/20210418-berbers-mark-20-years-since-algeria-s-black-spring-protests" target="_blank">France 24 — Black Spring</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Future and Citizenship -->
+            <section class="slide" id="slide-8">
+                <div class="card">
+                    <h2>المواطنة والتحديات المعاصرة</h2>
+                    <p>رغم الاعتراف الدستوري، لا تزال هناك فجوة كبيرة بين النص القانوني والتطبيق الفعلي:</p>
+
+                    <div class="grid-2">
+                        <div>
+                            <h4>التعليم والإعلام</h4>
+                            <p style="font-size: 0.95rem;">تواجه عملية تعميم تدريس الأمازيغية صعوبات لوجستية وبيروقراطية: نقص المعلمين المؤهلين، غياب المناهج الموحدة، والطابع الاختياري للتعليم في كثير من المناطق. كما تبقى حصة الأمازيغية ضعيفة في الإعلام الرسمي.</p>
+                        </div>
+                        <div>
+                            <h4>التنمية المجالية</h4>
+                            <p style="font-size: 0.95rem;">تعاني المناطق الأمازيغية (الجبلية والقروية) غالباً من ضعف البنية التحتية ونسب بطالة مرتفعة. حراك الريف في المغرب (2016-2017) وحراك الجزائر (2019) سلطا الضوء على هذه التفاوتات.</p>
+                        </div>
+                        <div>
+                            <h4>الأسماء والهوية</h4>
+                            <p style="font-size: 0.95rem;">لا تزال بعض الدول ترفض تسجيل أسماء أمازيغية تقليدية للمواليد الجدد، رغم التقدم الملحوظ في السنوات الأخيرة.</p>
+                        </div>
+                        <div>
+                            <h4>الأراضي الجماعية</h4>
+                            <p style="font-size: 0.95rem;">تواجه الأراضي الجماعية (أراضي القبائل) ضغوطاً متزايدة نحو الخصخصة، مما يهدد نمط الحياة التقليدي ويثير مخاوف المجتمعات المحلية.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout" style="border-right-color: #10b981;">
+                        <strong>الخلاصة:</strong> لم تعد القضية الأمازيغية مجرد مطلب لغوي وثقافي، بل أصبحت جزءاً لا يتجزأ من النقاش الأوسع حول "الديمقراطية" و"حقوق الإنسان" و"التعددية الثقافية" و"حقوق الشعوب الأصلية" في دول شمال أفريقيا والعالم.
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>تقرير حقوق الأمازيغ: <a href="https://iwgia.org/en/morocco/5632-iw-2025-morocco.html" target="_blank">IWGIA — Indigenous World 2025</a></li>
+                            <li>إنجازات الأمازيغ في الجزائر: <a href="https://www.washingtoninstitute.org/policy-analysis/what-have-amazigh-achieved-algeria" target="_blank">Washington Institute — Amazigh Achievements</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <div class="controls">
+                <button class="btn btn-secondary" id="prev-btn" onclick="prevSlide()">السابق</button>
+                <button class="btn" id="next-btn" onclick="nextSlide()">التالي</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script>
+        const slides = [
+            { title: "الإنسان الحر" },
+            { title: "رحلة المصطلح" },
+            { title: "المسار التاريخي" },
+            { title: "التوزيع الجغرافي" },
+            { title: "إحصائيات السكان" },
+            { title: "اللغة والخط" },
+            { title: "شخصيات بارزة" },
+            { title: "نضال الهوية" },
+            { title: "المستقبل والمواطنة" }
+        ];
+
+        let currentSlide = 0;
+        let map;
+
+        function toArabicNum(n) {
+            const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+            return n.toString().split("").map(x => arabicNumbers[parseInt(x)]).join("");
+        }
+
+        function initNavigation() {
+            const navList = document.getElementById('nav-list');
+            slides.forEach((slide, index) => {
+                const li = document.createElement('li');
+                li.className = `nav-item ${index === 0 ? 'active' : ''}`;
+                li.id = `nav-${index}`;
+                li.onclick = () => goToSlide(index);
+                
+                const num = (index + 1).toString().padStart(2, '0');
+                li.innerHTML = `<span class="nav-num">${toArabicNum(num)}</span> ${slide.title}`;
+                navList.appendChild(li);
+            });
+            updateProgress();
+        }
+
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            currentSlide = index;
+            document.getElementById(`slide-${currentSlide}`).classList.add('active');
+            document.getElementById(`nav-${currentSlide}`).classList.add('active');
+            
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (currentSlide === 3) {
+                setTimeout(() => { if (map) map.invalidateSize(); }, 200);
+            }
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        function updateProgress() {
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            document.getElementById('prev-btn').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+            document.getElementById('next-btn').innerText = currentSlide === slides.length - 1 ? 'نهاية الدرس' : 'التالي';
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function initMap() {
+            // Centered on North Africa
+            map = L.map('map-container').setView([28.0, 5.0], 5);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            const regions = [
+                { name: "منطقة القبايل (الجزائر)", coords: [36.7, 4.0], info: "معقل الحراك الثقافي الأمازيغي واللغة القبايلية (تاقبايليت). حوالي 6 ملايين نسمة." },
+                { name: "منطقة الأوراس (الجزائر)", coords: [35.3, 6.5], info: "موطن الشاوية (إيشاويين). تاريخ عريق في المقاومة منذ الملكة ديهيا." },
+                { name: "منطقة الريف (المغرب)", coords: [35.2, -3.9], info: "يتحدثون التاريفيت. مقر ثورة الريف بقيادة عبد الكريم الخطابي (1921-1926)." },
+                { name: "سوس وأكادير (المغرب)", coords: [30.4, -9.5], info: "مركز تجاري وثقافي يتحدثون تاشلحيت، أكبر لهجة أمازيغية انتشاراً." },
+                { name: "الأطلس المتوسط (المغرب)", coords: [33.0, -5.5], info: "يتحدثون تامازيغت الأطلس المتوسط. منطقة جبلية ذات طبيعة خلابة." },
+                { name: "جبل نفوسة (ليبيا)", coords: [31.8, 12.0], info: "أكبر تجمع للأمازيغ في ليبيا، حافظوا على لغتهم (تانفوسيت) رغم التهميش." },
+                { name: "زوارة (ليبيا)", coords: [32.9, 12.1], info: "مدينة ساحلية أمازيغية، تاريخ بحري عريق." },
+                { name: "واحة سيوة (مصر)", coords: [29.2, 25.5], info: "أقصى امتداد شرقي للأمازيغ، يتحدثون السيوية. حوالي 30,000 نسمة." },
+                { name: "المزاب (الجزائر)", coords: [32.5, 3.7], info: "يتحدثون تومزابت. معروفون بعمارتهم الفريدة ونظامهم الاجتماعي المتماسك." },
+                { name: "الطوارق (الصحراء الكبرى)", coords: [22.0, 5.0], info: "شعب الصحراء (إيموهاغ)، يحافظون على خط تيفيناغ منذ القدم. يتوزعون على 5 دول." }
+            ];
+
+            regions.forEach(loc => {
+                const marker = L.marker(loc.coords).addTo(map);
+                marker.bindPopup(`<div style="direction: rtl; text-align: right; font-family: sans-serif; max-width: 250px;"><b>${loc.name}</b><br>${loc.info}</div>`);
+            });
+        }
+
+        window.onload = () => {
+            initNavigation();
+            initMap();
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') prevSlide();
+            if (e.key === 'ArrowLeft') nextSlide();
+        });
+    </script>
+</body>
+</html>
