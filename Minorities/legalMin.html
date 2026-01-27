@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Legal Language: Minorities in the Middle East</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2a5298;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #1e3c72;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2a5298;
+        }
+
+        h3 {
+            color: #2a5298;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+
+        .term-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .term-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .arabic {
+            font-size: 1.8em;
+            color: #1e3c72;
+            margin-bottom: 8px;
+            direction: rtl;
+            font-weight: bold;
+        }
+
+        .transliteration {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .translation {
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 3px solid #ffc107;
+        }
+
+        .example-ar {
+            direction: rtl;
+            font-size: 1.2em;
+            color: #1e3c72;
+            margin-bottom: 8px;
+        }
+
+        .example-en {
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .category-tag {
+            display: inline-block;
+            background: #2a5298;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .note strong {
+            color: #856404;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .filter-buttons {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .filter-btn {
+            background: #e9ecef;
+            border: 2px solid #2a5298;
+            color: #2a5298;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #2a5298;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Arabic Legal Language</h1>
+            <div class="subtitle">Terminology for Discussing Minorities in the Middle East</div>
+        </header>
+
+        <div class="content">
+            <div class="intro">
+                <p><strong>Welcome!</strong> This resource introduces essential Arabic legal and administrative terminology used when discussing minority communities in the Middle East. These expressions are commonly found in legal documents, human rights reports, constitutional texts, and academic discourse.</p>
+            </div>
+
+            <!-- Section 1: Core Legal Terms -->
+            <div class="section">
+                <h2>1. Core Legal Terms for Minorities</h2>
+
+                <div class="term-card">
+                    <div class="category-tag">Fundamental Term</div>
+                    <div class="arabic">الأقليات / الأقلية</div>
+                    <div class="transliteration">al-aqliyyāt / al-aqliyya</div>
+                    <div class="translation">Minorities / Minority (singular)</div>
+                    <div class="example">
+                        <div class="example-ar">حماية حقوق الأقليات جزء أساسي من النظام الديمقراطي</div>
+                        <div class="example-en">The protection of minority rights is an essential part of the democratic system</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Legal Status</div>
+                    <div class="arabic">الأقليات القومية</div>
+                    <div class="transliteration">al-aqliyyāt al-qawmiyya</div>
+                    <div class="translation">National/ethnic minorities</div>
+                    <div class="example">
+                        <div class="example-ar">تتمتع الأقليات القومية بحقوق ثقافية ولغوية مكفولة بموجب القانون</div>
+                        <div class="example-en">National minorities enjoy cultural and linguistic rights guaranteed by law</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Legal Status</div>
+                    <div class="arabic">الأقليات الدينية / المذهبية</div>
+                    <div class="transliteration">al-aqliyyāt al-dīniyya / al-madhhābiyya</div>
+                    <div class="translation">Religious minorities / Sectarian minorities</div>
+                    <div class="example">
+                        <div class="example-ar">تكفل الدولة حرية العبادة للأقليات الدينية</div>
+                        <div class="example-en">The state guarantees freedom of worship for religious minorities</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Legal Status</div>
+                    <div class="arabic">الأقليات اللغوية</div>
+                    <div class="transliteration">al-aqliyyāt al-lughawiyya</div>
+                    <div class="translation">Linguistic minorities</div>
+                    <div class="example">
+                        <div class="example-ar">يحق للأقليات اللغوية استخدام لغاتهم في التعليم والإدارة المحلية</div>
+                        <div class="example-en">Linguistic minorities have the right to use their languages in education and local administration</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Rights and Protections -->
+            <div class="section">
+                <h2>2. Rights and Legal Protections</h2>
+
+                <div class="grid">
+                    <div class="term-card">
+                        <div class="arabic">حقوق الأقليات</div>
+                        <div class="transliteration">ḥuqūq al-aqliyyāt</div>
+                        <div class="translation">Minority rights</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">الحماية القانونية</div>
+                        <div class="transliteration">al-ḥimāya al-qānūniyya</div>
+                        <div class="translation">Legal protection</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">المساواة أمام القانون</div>
+                        <div class="transliteration">al-musāwāh amāma al-qānūn</div>
+                        <div class="translation">Equality before the law</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">عدم التمييز</div>
+                        <div class="transliteration">ʿadam al-tamyīz</div>
+                        <div class="translation">Non-discrimination</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">الحقوق الثقافية</div>
+                        <div class="transliteration">al-ḥuqūq al-thaqāfiyya</div>
+                        <div class="translation">Cultural rights</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">الحقوق اللغوية</div>
+                        <div class="transliteration">al-ḥuqūq al-lughawiyya</div>
+                        <div class="translation">Linguistic rights</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Key Collocation</div>
+                    <div class="arabic">حماية حقوق الأقليات</div>
+                    <div class="transliteration">ḥimāyat ḥuqūq al-aqliyyāt</div>
+                    <div class="translation">Protection of minority rights</div>
+                    <div class="example">
+                        <div class="example-ar">تلتزم الدولة بحماية حقوق الأقليات وفقاً للمعايير الدولية</div>
+                        <div class="example-en">The state is committed to protecting minority rights in accordance with international standards</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Key Collocation</div>
+                    <div class="arabic">احترام التنوع الثقافي</div>
+                    <div class="transliteration">iḥtirām al-tanawwuʿ al-thaqāfī</div>
+                    <div class="translation">Respect for cultural diversity</div>
+                    <div class="example">
+                        <div class="example-ar">يقوم النظام الديمقراطي على احترام التنوع الثقافي والتعددية</div>
+                        <div class="example-en">The democratic system is based on respect for cultural diversity and pluralism</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Constitutional and Legal Expressions -->
+            <div class="section">
+                <h2>3. Constitutional and Legal Expressions</h2>
+
+                <div class="term-card">
+                    <div class="category-tag">Constitutional Language</div>
+                    <div class="arabic">يكفل الدستور</div>
+                    <div class="transliteration">yakfulu al-dustūr</div>
+                    <div class="translation">The constitution guarantees</div>
+                    <div class="example">
+                        <div class="example-ar">يكفل الدستور حرية المعتقد لجميع المواطنين دون تمييز</div>
+                        <div class="example-en">The constitution guarantees freedom of belief for all citizens without discrimination</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Constitutional Language</div>
+                    <div class="arabic">تضمن الدولة</div>
+                    <div class="transliteration">taḍmanu al-dawla</div>
+                    <div class="translation">The state guarantees/ensures</div>
+                    <div class="example">
+                        <div class="example-ar">تضمن الدولة حق الأقليات في المشاركة السياسية الكاملة</div>
+                        <div class="example-en">The state ensures the right of minorities to full political participation</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Legal Obligation</div>
+                    <div class="arabic">بموجب القانون</div>
+                    <div class="transliteration">bi-mūjib al-qānūn</div>
+                    <div class="translation">Under the law / In accordance with the law</div>
+                    <div class="example">
+                        <div class="example-ar">الحقوق الثقافية للأقليات محمية بموجب القانون الدولي</div>
+                        <div class="example-en">The cultural rights of minorities are protected under international law</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Legal Obligation</div>
+                    <div class="arabic">وفقاً لـ / طبقاً لـ</div>
+                    <div class="transliteration">wifqan li- / ṭibqan li-</div>
+                    <div class="translation">In accordance with / According to</div>
+                    <div class="example">
+                        <div class="example-ar">وفقاً للمعايير الدولية، يجب احترام الهوية الثقافية للأقليات</div>
+                        <div class="example-en">In accordance with international standards, the cultural identity of minorities must be respected</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Legal Framework</div>
+                    <div class="arabic">الإطار القانوني</div>
+                    <div class="transliteration">al-iṭār al-qānūnī</div>
+                    <div class="translation">The legal framework</div>
+                    <div class="example">
+                        <div class="example-ar">يحتاج الإطار القانوني لحماية الأقليات إلى تطوير وتحديث</div>
+                        <div class="example-en">The legal framework for protecting minorities needs development and updating</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Discrimination and Violations -->
+            <div class="section">
+                <h2>4. Discrimination and Violations</h2>
+
+                <div class="grid">
+                    <div class="term-card">
+                        <div class="arabic">التمييز العنصري</div>
+                        <div class="transliteration">al-tamyīz al-ʿunṣurī</div>
+                        <div class="translation">Racial discrimination</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">التمييز الديني</div>
+                        <div class="transliteration">al-tamyīz al-dīnī</div>
+                        <div class="translation">Religious discrimination</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">الاضطهاد</div>
+                        <div class="transliteration">al-iḍṭihād</div>
+                        <div class="translation">Persecution</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">انتهاك الحقوق</div>
+                        <div class="transliteration">intihāk al-ḥuqūq</div>
+                        <div class="translation">Violation of rights</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">التهميش</div>
+                        <div class="transliteration">al-tahmīsh</div>
+                        <div class="translation">Marginalization</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">الإقصاء</div>
+                        <div class="transliteration">al-iqṣāʾ</div>
+                        <div class="translation">Exclusion</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Violation Expression</div>
+                    <div class="arabic">انتهاك حقوق الإنسان</div>
+                    <div class="transliteration">intihāk ḥuqūq al-insān</div>
+                    <div class="translation">Human rights violation</div>
+                    <div class="example">
+                        <div class="example-ar">التمييز ضد الأقليات يعتبر انتهاكاً لحقوق الإنسان</div>
+                        <div class="example-en">Discrimination against minorities is considered a human rights violation</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Political and Social Participation -->
+            <div class="section">
+                <h2>5. Political and Social Participation</h2>
+
+                <div class="term-card">
+                    <div class="category-tag">Participation</div>
+                    <div class="arabic">المشاركة السياسية</div>
+                    <div class="transliteration">al-mushāraka al-siyāsiyya</div>
+                    <div class="translation">Political participation</div>
+                    <div class="example">
+                        <div class="example-ar">تشجع الدولة المشاركة السياسية للأقليات في جميع مستويات الحكم</div>
+                        <div class="example-en">The state encourages political participation of minorities at all levels of government</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Participation</div>
+                    <div class="arabic">التمثيل النيابي</div>
+                    <div class="transliteration">al-tamthīl al-niyābī</div>
+                    <div class="translation">Parliamentary representation</div>
+                    <div class="example">
+                        <div class="example-ar">يجب ضمان التمثيل النيابي العادل للأقليات في البرلمان</div>
+                        <div class="example-en">Fair parliamentary representation for minorities in parliament must be ensured</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Social Integration</div>
+                    <div class="arabic">الاندماج الاجتماعي</div>
+                    <div class="transliteration">al-indimāj al-ijtimāʿī</div>
+                    <div class="translation">Social integration</div>
+                    <div class="example">
+                        <div class="example-ar">تعزيز الاندماج الاجتماعي مع الحفاظ على الهوية الثقافية للأقليات</div>
+                        <div class="example-en">Promoting social integration while preserving the cultural identity of minorities</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Governance</div>
+                    <div class="arabic">الحكم الذاتي</div>
+                    <div class="transliteration">al-ḥukm al-dhātī</div>
+                    <div class="translation">Self-governance / Autonomy</div>
+                    <div class="example">
+                        <div class="example-ar">منح الأقليات درجة من الحكم الذاتي في المناطق ذات الأغلبية</div>
+                        <div class="example-en">Granting minorities a degree of self-governance in majority areas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Common Formulaic Structures -->
+            <div class="section">
+                <h2>6. Common Formulaic Structures</h2>
+
+                <div class="note">
+                    <strong>Note:</strong> These are standard expressions frequently used in legal documents and official discourse.
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">يحق لـ... أن...</div>
+                    <div class="transliteration">yaḥiqqu li-... an...</div>
+                    <div class="translation">... has the right to...</div>
+                    <div class="example">
+                        <div class="example-ar">يحق للأقليات أن تحافظ على لغتها وثقافتها الخاصة</div>
+                        <div class="example-en">Minorities have the right to preserve their own language and culture</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">لا يجوز...</div>
+                    <div class="transliteration">lā yajūzu...</div>
+                    <div class="translation">It is not permissible... / ... is prohibited</div>
+                    <div class="example">
+                        <div class="example-ar">لا يجوز التمييز ضد أي مواطن على أساس العرق أو الدين</div>
+                        <div class="example-en">Discrimination against any citizen on the basis of race or religion is prohibited</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">يُحظر على...</div>
+                    <div class="transliteration">yuḥẓaru ʿalā...</div>
+                    <div class="translation">It is forbidden for... / ... is banned from</div>
+                    <div class="example">
+                        <div class="example-ar">يُحظر على السلطات ممارسة أي شكل من أشكال التمييز</div>
+                        <div class="example-en">Authorities are banned from practicing any form of discrimination</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">تلتزم الدولة بـ...</div>
+                    <div class="transliteration">taltazimu al-dawla bi-...</div>
+                    <div class="translation">The state is committed to... / The state undertakes to...</div>
+                    <div class="example">
+                        <div class="example-ar">تلتزم الدولة بحماية الهوية الثقافية للأقليات</div>
+                        <div class="example-en">The state is committed to protecting the cultural identity of minorities</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">من حق... أن...</div>
+                    <div class="transliteration">min ḥaqq... an...</div>
+                    <div class="translation">It is the right of... to...</div>
+                    <div class="example">
+                        <div class="example-ar">من حق كل مواطن أن يتمتع بجميع الحقوق دون تمييز</div>
+                        <div class="example-en">It is the right of every citizen to enjoy all rights without discrimination</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">على قدم المساواة مع</div>
+                    <div class="transliteration">ʿalā qadam al-musāwāh maʿa</div>
+                    <div class="translation">On equal footing with / On an equal basis with</div>
+                    <div class="example">
+                        <div class="example-ar">تتمتع الأقليات بالحقوق المدنية على قدم المساواة مع الأغلبية</div>
+                        <div class="example-en">Minorities enjoy civil rights on equal footing with the majority</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: International Legal Terms -->
+            <div class="section">
+                <h2>7. International Legal Standards</h2>
+
+                <div class="grid">
+                    <div class="term-card">
+                        <div class="arabic">المعايير الدولية</div>
+                        <div class="transliteration">al-maʿāyīr al-duwaliyya</div>
+                        <div class="translation">International standards</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">حقوق الإنسان</div>
+                        <div class="transliteration">ḥuqūq al-insān</div>
+                        <div class="translation">Human rights</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">الإعلان العالمي لحقوق الإنسان</div>
+                        <div class="transliteration">al-iʿlān al-ʿālamī li-ḥuqūq al-insān</div>
+                        <div class="translation">Universal Declaration of Human Rights</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">الاتفاقيات الدولية</div>
+                        <div class="transliteration">al-ittifāqiyyāt al-duwaliyya</div>
+                        <div class="translation">International conventions</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">الأمم المتحدة</div>
+                        <div class="transliteration">al-umam al-muttaḥida</div>
+                        <div class="translation">United Nations</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">القانون الدولي</div>
+                        <div class="transliteration">al-qānūn al-duwalī</div>
+                        <div class="translation">International law</div>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="category-tag">Key Expression</div>
+                    <div class="arabic">الالتزامات الدولية</div>
+                    <div class="transliteration">al-iltizāmāt al-duwaliyya</div>
+                    <div class="translation">International obligations</div>
+                    <div class="example">
+                        <div class="example-ar">يجب على الدول الوفاء بالتزاماتها الدولية تجاه حماية حقوق الأقليات</div>
+                        <div class="example-en">States must fulfill their international obligations toward protecting minority rights</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: Useful Verbs -->
+            <div class="section">
+                <h2>8. Essential Legal Verbs</h2>
+
+                <div class="grid">
+                    <div class="term-card">
+                        <div class="arabic">يكفل / يضمن</div>
+                        <div class="transliteration">yakfulu / yaḍmanu</div>
+                        <div class="translation">To guarantee / to ensure</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">يحمي</div>
+                        <div class="transliteration">yaḥmī</div>
+                        <div class="translation">To protect</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">يحترم</div>
+                        <div class="transliteration">yaḥtarimu</div>
+                        <div class="translation">To respect</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">ينتهك</div>
+                        <div class="transliteration">yantahiku</div>
+                        <div class="translation">To violate</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">يميز ضد</div>
+                        <div class="transliteration">yumayyizu ḍidda</div>
+                        <div class="translation">To discriminate against</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">يُقر / يعترف بـ</div>
+                        <div class="transliteration">yuqirru / yaʿtarifu bi-</div>
+                        <div class="translation">To recognize / to acknowledge</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">يُعزز</div>
+                        <div class="transliteration">yuʿazzizu</div>
+                        <div class="translation">To promote / to strengthen</div>
+                    </div>
+
+                    <div class="term-card">
+                        <div class="arabic">يُهمش</div>
+                        <div class="transliteration">yuhammashu</div>
+                        <div class="translation">To marginalize</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 9: Additional Useful Collocations -->
+            <div class="section">
+                <h2>9. Additional Useful Collocations</h2>
+
+                <div class="term-card">
+                    <div class="arabic">صون الهوية الثقافية</div>
+                    <div class="transliteration">ṣawn al-huwiyya al-thaqāfiyya</div>
+                    <div class="translation">Preservation of cultural identity</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">التعايش السلمي</div>
+                    <div class="transliteration">al-taʿāyush al-silmī</div>
+                    <div class="translation">Peaceful coexistence</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">التعددية الثقافية / الدينية</div>
+                    <div class="transliteration">al-taʿaddudiyya al-thaqāfiyya / al-dīniyya</div>
+                    <div class="translation">Cultural / religious pluralism</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">حرية العقيدة / المعتقد</div>
+                    <div class="transliteration">ḥurriyyat al-ʿaqīda / al-muʿtaqad</div>
+                    <div class="translation">Freedom of religion / belief</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">العدالة الاجتماعية</div>
+                    <div class="transliteration">al-ʿadāla al-ijtimāʿiyya</div>
+                    <div class="translation">Social justice</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">تكافؤ الفرص</div>
+                    <div class="transliteration">takāfuʾ al-furaṣ</div>
+                    <div class="translation">Equal opportunities</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">سيادة القانون</div>
+                    <div class="transliteration">siyādat al-qānūn</div>
+                    <div class="translation">Rule of law</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="arabic">الكرامة الإنسانية</div>
+                    <div class="transliteration">al-karāma al-insāniyya</div>
+                    <div class="translation">Human dignity</div>
+                </div>
+            </div>
+
+            <div class="note" style="margin-top: 40px;">
+                <strong>Study Tips:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Practice reading these terms in context by finding real legal documents and news articles</li>
+                    <li>Pay attention to the prepositions that follow certain verbs (e.g., يميز ضد "discriminate against")</li>
+                    <li>Notice how certain phrases always appear together (collocations)</li>
+                    <li>The passive voice (المبني للمجهول) is very common in legal Arabic</li>
+                    <li>Many legal terms use the verbal noun pattern (المصدر) extensively</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>This educational resource provides an introduction to Arabic legal terminology for discussing minorities.</p>
+            <p style="margin-top: 10px;">For more comprehensive study, consult official legal texts and human rights documentation in Arabic.</p>
+        </footer>
+    </div>
+</body>
+</html>
