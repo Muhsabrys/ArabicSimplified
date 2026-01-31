@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الثقافة الأمازيغية: حراس التراث العريق</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --indigo-deep: #1A2B4A;
+            --indigo-rich: #2D4263;
+            --saffron-gold: #E8B55F;
+            --terracotta: #C85A4A;
+            --desert-ochre: #D4956C;
+            --silver-moon: #B8C5D6;
+            --ivory: #F5F1E8;
+            --charcoal: #1F1F1F;
+            --olive-deep: #5A6B4A;
+            --azure: #4A7B9D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            background: var(--ivory);
+            color: var(--charcoal);
+            line-height: 1.9;
+            overflow-x: hidden;
+        }
+
+        /* نمط هندسي خلفية */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.04;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, var(--indigo-deep) 35px, var(--indigo-deep) 36px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--terracotta) 35px, var(--terracotta) 36px);
+        }
+
+        /* قسم البطل */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--indigo-deep) 0%, var(--indigo-rich) 50%, var(--olive-deep) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(232, 181, 95, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(74, 123, 157, 0.15) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero-symbol {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            animation: rotateIn 1.5s ease;
+        }
+
+        .hero h1 {
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 800;
+            color: var(--ivory);
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            color: var(--saffron-gold);
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: var(--silver-moon);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 2;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--saffron-gold);
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            display: block;
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        /* التنقل */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(26, 43, 74, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-logo {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--saffron-gold);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--ivory);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--saffron-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--saffron-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* تنسيق الأقسام */
+        section {
+            padding: 5rem 2rem;
+            position: relative;
+        }
+
+        .section-header {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .section-number {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            color: var(--terracotta);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--indigo-deep);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .section-intro {
+            font-size: 1.4rem;
+            color: var(--indigo-rich);
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 2.1;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* خلفيات متناوبة للأقسام */
+        section:nth-child(even) {
+            background: linear-gradient(to bottom, var(--ivory) 0%, rgba(232, 181, 95, 0.05) 100%);
+        }
+
+        /* قسم اللغة */
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .language-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 0;
+            box-shadow: 
+                -8px 8px 0 var(--saffron-gold),
+                -8px 8px 0 2px var(--indigo-deep);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .language-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--terracotta), var(--saffron-gold));
+        }
+
+        .language-card:hover {
+            transform: translate(4px, -4px);
+            box-shadow: 
+                -12px 12px 0 var(--saffron-gold),
+                -12px 12px 0 2px var(--indigo-deep);
+        }
+
+        .language-card h3 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.9rem;
+            color: var(--indigo-deep);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .tifinagh-display {
+            font-size: 3rem;
+            color: var(--terracotta);
+            margin: 1.5rem 0;
+            text-align: center;
+            letter-spacing: 0.3rem;
+            padding: 1.5rem;
+            background: rgba(232, 181, 95, 0.1);
+        }
+
+        /* قسم التقاليد */
+        .traditions-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .tradition-feature {
+            background: white;
+            padding: 3rem;
+            border-right: 8px solid var(--terracotta);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tradition-feature::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(232, 181, 95, 0.15), transparent);
+            transform: translate(-30%, -30%);
+        }
+
+        .tradition-feature h3 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 2rem;
+            color: var(--indigo-deep);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .tradition-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .tradition-list li {
+            padding: 0.8rem 0;
+            padding-right: 2rem;
+            position: relative;
+            font-size: 1.15rem;
+            line-height: 1.9;
+        }
+
+        .tradition-list li::before {
+            content: '◆';
+            position: absolute;
+            right: 0;
+            color: var(--saffron-gold);
+            font-size: 1.2rem;
+        }
+
+        /* قسم الملابس */
+        .clothing-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .clothing-item {
+            background: white;
+            overflow: hidden;
+            border: 3px solid var(--indigo-deep);
+            position: relative;
+            aspect-ratio: 3/4;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .clothing-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--desert-ochre) 0%, var(--terracotta) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .clothing-info {
+            position: relative;
+            background: rgba(26, 43, 74, 0.95);
+            padding: 1.5rem;
+            color: white;
+            transform: translateY(calc(100% - 60px));
+            transition: transform 0.4s ease;
+        }
+
+        .clothing-item:hover .clothing-info {
+            transform: translateY(0);
+        }
+
+        .clothing-info h4 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--saffron-gold);
+            font-weight: 700;
+        }
+
+        .clothing-info p {
+            font-size: 1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        /* قسم الموسيقى */
+        .music-instruments {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .instrument-card {
+            background: linear-gradient(135deg, white 0%, rgba(232, 181, 95, 0.1) 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .instrument-card:hover {
+            border-color: var(--saffron-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .instrument-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .instrument-card h4 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.6rem;
+            color: var(--indigo-deep);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        /* قسم الفنون */
+        .art-patterns {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .pattern-box {
+            aspect-ratio: 1;
+            background: white;
+            border: 3px solid var(--indigo-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pattern-box:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .pattern-1 {
+            background: 
+                repeating-linear-gradient(45deg, var(--saffron-gold) 0px, var(--saffron-gold) 10px, white 10px, white 20px),
+                repeating-linear-gradient(-45deg, var(--terracotta) 0px, var(--terracotta) 10px, transparent 10px, transparent 20px);
+        }
+
+        .pattern-2 {
+            background: 
+                radial-gradient(circle at center, var(--indigo-deep) 2px, transparent 2px),
+                radial-gradient(circle at center, var(--terracotta) 2px, transparent 2px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        .pattern-3 {
+            background: linear-gradient(135deg, var(--saffron-gold) 25%, transparent 25%) -10px 0,
+                linear-gradient(225deg, var(--saffron-gold) 25%, transparent 25%) -10px 0,
+                linear-gradient(315deg, var(--saffron-gold) 25%, transparent 25%),
+                linear-gradient(45deg, var(--saffron-gold) 25%, transparent 25%);
+            background-size: 20px 20px;
+            background-color: var(--indigo-deep);
+        }
+
+        .pattern-4 {
+            background: 
+                linear-gradient(90deg, var(--terracotta) 2px, transparent 2px),
+                linear-gradient(0deg, var(--terracotta) 2px, transparent 2px),
+                linear-gradient(90deg, var(--saffron-gold) 1px, transparent 1px),
+                linear-gradient(0deg, var(--saffron-gold) 1px, transparent 1px);
+            background-size: 40px 40px, 40px 40px, 10px 10px, 10px 10px;
+        }
+
+        .pattern-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background: rgba(26, 43, 74, 0.9);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .pattern-box:hover .pattern-overlay {
+            transform: translateY(0);
+        }
+
+        /* العادات الاجتماعية */
+        .customs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .custom-card {
+            background: white;
+            padding: 2.5rem;
+            position: relative;
+            border-top: 5px solid var(--saffron-gold);
+            border-bottom: 5px solid var(--indigo-deep);
+        }
+
+        .custom-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--terracotta);
+        }
+
+        .custom-card h3 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.9rem;
+            color: var(--indigo-deep);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .custom-highlight {
+            background: rgba(232, 181, 95, 0.15);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-right: 4px solid var(--saffron-gold);
+            font-style: italic;
+            font-size: 1.15rem;
+            line-height: 1.9;
+        }
+
+        /* الخط الزمني */
+        .timeline {
+            position: relative;
+            padding: 3rem 0;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--terracotta), var(--saffron-gold), var(--indigo-deep));
+            transform: translateX(50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: white;
+            padding: 2rem;
+            border: 3px solid var(--indigo-deep);
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        .timeline-date {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--terracotta);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            right: 50%;
+            width: 30px;
+            height: 30px;
+            background: var(--saffron-gold);
+            border: 5px solid var(--indigo-deep);
+            border-radius: 50%;
+            transform: translateX(50%);
+            z-index: 10;
+        }
+
+        /* صندوق الاقتباس */
+        .quote-feature {
+            background: linear-gradient(135deg, var(--indigo-deep), var(--indigo-rich));
+            color: white;
+            padding: 4rem 3rem;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-feature::before {
+            content: '"';
+            font-size: 15rem;
+            font-family: 'Amiri', serif;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            color: rgba(232, 181, 95, 0.1);
+            line-height: 1;
+        }
+
+        .quote-feature blockquote {
+            position: relative;
+            font-size: 2rem;
+            font-family: 'Amiri', serif;
+            font-style: italic;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .quote-author {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1.3rem;
+            color: var(--saffron-gold);
+            font-style: normal;
+        }
+
+        /* صناديق المعلومات */
+        .info-box {
+            background: white;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border-right: 8px solid var(--azure);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .info-box h3 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.7rem;
+            color: var(--indigo-deep);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .info-box ul {
+            list-style: none;
+            margin-right: 1rem;
+        }
+
+        .info-box li {
+            padding: 0.6rem 0;
+            position: relative;
+            padding-right: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .info-box li::before {
+            content: '◂';
+            position: absolute;
+            right: 0;
+            color: var(--azure);
+        }
+
+        /* قسم الإحصائيات */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background: linear-gradient(135deg, var(--terracotta), var(--desert-ochre));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .stat-number {
+            font-family: 'Cairo', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.95;
+        }
+
+        /* التذييل */
+        footer {
+            background: var(--indigo-deep);
+            color: var(--ivory);
+            padding: 4rem 2rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--saffron-gold);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* الرسوم المتحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-180deg) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0) scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        /* التصميم المتجاوب */
+        @media (max-width: 968px) {
+            .traditions-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .clothing-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .customs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                right: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: row-reverse !important;
+            }
+
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-right: 80px !important;
+            }
+
+            .timeline-marker {
+                right: 30px;
+            }
+
+            .nav-links {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .clothing-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .quote-feature blockquote {
+                font-size: 1.5rem;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        /* التمرير السلس */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* التحديد */
+        ::selection {
+            background: var(--saffron-gold);
+            color: var(--indigo-deep);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+
+    <!-- قسم البطل -->
+    <section class="hero">
+        <div class="hero-content">
+            <svg class="hero-symbol" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#E8B55F" stroke-width="2"/>
+                <path d="M30 50 L50 30 L70 50 L50 70 Z" fill="none" stroke="#E8B55F" stroke-width="3"/>
+                <circle cx="50" cy="50" r="15" fill="#C85A4A" opacity="0.6"/>
+                <text x="50" y="57" text-anchor="middle" fill="white" font-size="20" font-weight="bold">ⵣ</text>
+            </svg>
+            
+            <h1>الأمازيغ</h1>
+            <p class="hero-subtitle">الإنسان الحر</p>
+            <p class="hero-description">
+                رحلة في نسيج الثقافة الأمازيغية الغني، حيث تلتقي التقاليد القديمة بالفن الخالد،
+                وتحمل رياح الصحراء قصص الصمود والإبداع والتراث العميق
+            </p>
+            
+            <div class="scroll-indicator">استكشف الثقافة</div>
+        </div>
+    </section>
+
+    <!-- التنقل -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">الثقافة الأمازيغية</a>
+            <ul class="nav-links">
+                <li><a href="#language">اللغة</a></li>
+                <li><a href="#traditions">التقاليد</a></li>
+                <li><a href="#clothing">الملابس</a></li>
+                <li><a href="#music">الموسيقى</a></li>
+                <li><a href="#art">الفنون</a></li>
+                <li><a href="#customs">العادات</a></li>
+                <li><a href="#history">التاريخ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- قسم اللغة -->
+    <section id="language">
+        <div class="section-header">
+            <div class="section-number">٠١ — اللغة</div>
+            <h2 class="section-title">تمازيغت: صوت الأحرار</h2>
+            <p class="section-intro">
+                اللغة الأمازيغية، المعروفة باسم تمازيغت، هي واحدة من أقدم اللغات الحية في شمال أفريقيا،
+                وتمتد جذورها لآلاف السنين. إنها لا تمثل فقط وسيلة تواصل، بل هوية ومقاومة واستمرارية ثقافية
+            </p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="language-grid">
+                <div class="language-card">
+                    <h3>عائلة اللغة</h3>
+                    <p>تنتمي اللغة الأمازيغية إلى عائلة اللغات الأفروآسيوية، تحديداً الفرع البربري. تشمل العديد من اللهجات والتنوعات الإقليمية عبر شمال أفريقيا، من المغرب إلى مصر، ومن البحر المتوسط إلى منطقة الساحل.</p>
+                    <div class="info-box">
+                        <h3>اللهجات الرئيسية</h3>
+                        <ul>
+                            <li><strong>تاشلحيت</strong> — جنوب المغرب (٣-٤ مليون متحدث)</li>
+                            <li><strong>تمازيغت</strong> — وسط المغرب (٣ مليون متحدث)</li>
+                            <li><strong>تاريفيت</strong> — شمال المغرب (١.٥ مليون متحدث)</li>
+                            <li><strong>القبائلية</strong> — الجزائر (٥-٧ مليون متحدث)</li>
+                            <li><strong>الشاوية</strong> — شرق الجزائر (٢ مليون متحدث)</li>
+                            <li><strong>تماهق/تماشق</strong> — مناطق الطوارق (١-٢ مليون متحدث)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3>خط تيفيناغ</h3>
+                    <div class="tifinagh-display">ⵜⵉⴼⵉⵏⴰⵖ</div>
+                    <p>تيفيناغ هو نظام الكتابة القديم للشعب الأمازيغي، وهو أحد أقدم الأبجديات في أفريقيا. يعود تاريخه إلى القرن الثالث قبل الميلاد على الأقل، وقد تم الحفاظ عليه بشكل أساسي من قبل شعب الطوارق وإحياؤه في العصر الحديث.</p>
+                    <p style="margin-top: 1.5rem;">يتكون الخط من رموز هندسية، كل منها يمثل حرفاً ساكناً أو صائتاً. في عام ٢٠٠٣، اعتمد المغرب رسمياً خط النيو-تيفيناغ لكتابة الأمازيغية في التعليم والوثائق الرسمية.</p>
+                </div>
+
+                <div class="language-card">
+                    <h3>عبارات شائعة</h3>
+                    <div style="margin-top: 1.5rem; line-height: 2.5;">
+                        <p><strong>ⴰⵣⵓⵍ (أزول)</strong> — مرحباً / السلام عليكم</p>
+                        <p><strong>ⵜⴰⵏⵎⵎⵉⵔⵜ (تانميرت)</strong> — شكراً</p>
+                        <p><strong>ⵎⴰⵏⵉⴽ ⵜⴻⵜⵜⵉⴷⴷ؟ (مانيك تتيد؟)</strong> — كيف حالك؟</p>
+                        <p><strong>ⵍⴰⴱⴰⵙ (لاباس)</strong> — بخير</p>
+                        <p><strong>ⴰⵔ ⵜⵉⵎⵍⵍⵉⵜ (أر تيمليت)</strong> — وداعاً</p>
+                        <p><strong>ⵜⴰⵎⴰⵣⵉⵖⵜ (تامازيغت)</strong> — اللغة الأمازيغية</p>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3>الاعتراف الحديث</h3>
+                    <p>بعد عقود من التهميش والنشاط الحقوقي، حققت اللغة الأمازيغية اعترافاً رسمياً في عدة دول شمال أفريقية:</p>
+                    <ul style="margin-top: 1rem; list-style: none;">
+                        <li style="padding: 0.5rem 0;">🇲🇦 <strong>المغرب (٢٠١١):</strong> لغة رسمية إلى جانب العربية</li>
+                        <li style="padding: 0.5rem 0;">🇩🇿 <strong>الجزائر (٢٠١٦):</strong> وضع لغة رسمية</li>
+                        <li style="padding: 0.5rem 0;">🇱🇾 <strong>ليبيا (٢٠١١):</strong> اعتراف بالحقوق الثقافية واللغوية</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem;">تُدرّس الأمازيغية الآن في المدارس، وتُستخدم في البرامج الإعلامية، وتتزايد حضورها في الفضاءات الرقمية، مما يمثل نهضة ثقافية.</p>
+                </div>
+            </div>
+
+            <div class="quote-feature">
+                <blockquote>
+                    اللغة ليست مجرد كلمات وقواعد—إنها روح الشعب، 
+                    حافظة قصصه، والجسر بين الأسلاف والأحفاد
+                </blockquote>
+                <div class="quote-author">— مثل أمازيغي</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم التقاليد -->
+    <section id="traditions">
+        <div class="section-header">
+            <div class="section-number">٠٢ — التقاليد</div>
+            <h2 class="section-title">عادات عريقة، تراث حي</h2>
+            <p class="section-intro">
+                تجذرت التقاليد الأمازيغية بعمق في إيقاعات الطبيعة والزراعة والحياة المجتمعية.
+                هذه العادات توارثتها الأجيال، متكيفة لكن صامدة
+            </p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="traditions-showcase">
+                <div class="tradition-feature">
+                    <h3>ينّاير — رأس السنة الأمازيغية</h3>
+                    <p>يُحتفل به في ١٣ يناير، يمثل ينّاير بداية التقويم الزراعي والسنة الأمازيغية الجديدة. يعود الاحتفال إلى العصور القديمة، حيث يوافق عام ٢٠٢٤ السنة ٢٩٧٤ في التقويم الأمازيغي.</p>
+                    <ul class="tradition-list">
+                        <li>وجبات خاصة تتضمن الكسكس والفواكه المجففة والمكسرات</li>
+                        <li>أطعمة رمزية تمثل الوفرة والازدهار</li>
+                        <li>تجمعات عائلية ومهرجانات مجتمعية</li>
+                        <li>عروض موسيقية وراقصة تقليدية</li>
+                        <li>جلسات حكي للحفاظ على التاريخ الشفوي</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem;">في عام ٢٠١٨، اعترفت الجزائر رسمياً بينّاير كعطلة وطنية، وهو انتصار كبير للاعتراف الثقافي.</p>
+                </div>
+
+                <div class="tradition-feature">
+                    <h3>الأكادير — المخازن الجماعية</h3>
+                    <p>الأكادير (الجمع: إكودار) هو مخزن جماعي محصّن بُني في المناطق الجبلية، يعمل كمكان للتخزين وكمركز تجمع للمجتمع.</p>
+                    <ul class="tradition-list">
+                        <li>حكم ديمقراطي من قبل شيوخ القرية</li>
+                        <li>قواعد صارمة لحماية البضائع المخزنة</li>
+                        <li>عقود اجتماعية وحل النزاعات</li>
+                        <li>تحف معمارية متكيفة مع التضاريس</li>
+                        <li>رمز للتضامن والمساعدة المتبادلة</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem;">لا تزال بعض الأكاديرات في المغرب والجزائر تعمل حتى اليوم، ممثلة أحد أقدم أشكال التنظيم التعاوني في العالم.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>نظام التقويم الأمازيغي</h3>
+                <p>يقوم التقويم الأمازيغي على الدورة الزراعية القديمة، حيث تُوافق السنة ١ عام ٩٥٠ قبل الميلاد عندما أصبح الملك الأمازيغي شيشنق الأول فرعوناً لمصر. يعكس هذا التقويم الجذور الزراعية العميقة للمجتمع الأمازيغي وارتباطه بالأرض.</p>
+            </div>
+
+            <div class="traditions-showcase">
+                <div class="tradition-feature">
+                    <h3>الوشم وفن الجسد</h3>
+                    <p>الوشم الأمازيغي التقليدي يحمل معاني رمزية عميقة، حيث يعمل كحماية وعلامات هوية وتعبير فني. عادة ما كانت هذه التصاميم الهندسية توضع على وجوه النساء وأيديهن وأقدامهن.</p>
+                    <ul class="tradition-list">
+                        <li>الحماية من الشر والمصائب</li>
+                        <li>علامات الهوية القبلية والإقليمية</li>
+                        <li>انتقالات مراحل الحياة (الزواج، الأمومة)</li>
+                        <li>الارتباط بالرموز البربرية القديمة</li>
+                        <li>تراث فني يتوارث عبر الأجيال</li>
+                    </ul>
+                </div>
+
+                <div class="tradition-feature">
+                    <h3>مراسم الزواج</h3>
+                    <p>حفلات الزفاف الأمازيغية هي احتفالات متعددة الأيام غنية بالرمزية والموسيقى والرقص والمشاركة الجماعية.</p>
+                    <ul class="tradition-list">
+                        <li>مراسم الحناء بتصاميم معقدة</li>
+                        <li>ملابس ومجوهرات الزفاف التقليدية</li>
+                        <li>رقصات أحيدوس وأحواش الجماعية</li>
+                        <li>تبادل الهدايا الرمزية</li>
+                        <li>ولائم وأفراح جماعية</li>
+                        <li>طقوس البركة وتلاوة الشعر</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الملابس -->
+    <section id="clothing">
+        <div class="section-header">
+            <div class="section-number">٠٣ — الملابس</div>
+            <h2 class="section-title">هوية منسوجة: الزي التقليدي</h2>
+            <p class="section-intro">
+                تعكس الملابس الأمازيغية التنوع الجغرافي والمناخي لشمال أفريقيا، من القرى الجبلية
+                إلى رحاب الصحراء. كل قطعة ملابس تحكي قصة مكان ومكانة وهوية ثقافية
+            </p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="clothing-gallery">
+                <div class="clothing-item">
+                    <div class="clothing-placeholder">👘</div>
+                    <div class="clothing-info">
+                        <h4>التكشيطة</h4>
+                        <p>فستان أنيق من قطعتين ترتديه النساء الأمازيغيات في المغرب، مصنوع عادة من أقمشة فاخرة مع تطريز معقد. ترتدى التكشيطة في المناسبات الخاصة والأعراس، وتمثل التطور والفخر الثقافي.</p>
+                    </div>
+                </div>
+
+                <div class="clothing-item">
+                    <div class="clothing-placeholder">🧥</div>
+                    <div class="clothing-info">
+                        <h4>الجلابة</h4>
+                        <p>رداء طويل فضفاض بقلنسوة، يرتديه الرجال والنساء عبر شمال أفريقيا. مصنوع من الصوف أو القطن حسب المناخ، يوفر الحماية من الشمس والبرد مع السماح بتدوير الهواء.</p>
+                    </div>
+                </div>
+
+                <div class="clothing-item">
+                    <div class="clothing-placeholder">🎽</div>
+                    <div class="clothing-info">
+                        <h4>اللثام (تاكلموست)</h4>
+                        <p>العمامة النيلية الشهيرة التي يرتديها رجال الطوارق، وطولها غالباً ١٥ قدماً. تحمي اللثام من رمال الصحراء والشمس، بينما يمثل الصبغ النيلي تقليدياً النبالة. معروف باسم "حجاب الرجال الزرق".</p>
+                    </div>
+                </div>
+
+                <div class="clothing-item">
+                    <div class="clothing-placeholder">👗</div>
+                    <div class="clothing-info">
+                        <h4>الحنديرة</h4>
+                        <p>بطانية زفاف أمازيغية تقليدية مصنوعة من الصوف، تتميز بأنماط هندسية وزخارف ترصيعية. ترتديها العرائس وتُستخدم لاحقاً كقطعة زينة، ترمز للحماية والرخاء.</p>
+                    </div>
+                </div>
+
+                <div class="clothing-item">
+                    <div class="clothing-placeholder">🧣</div>
+                    <div class="clothing-info">
+                        <h4>التبنيق</h4>
+                        <p>حزام منسوج ترتديه النساء الأمازيغيات، غالباً ما يتميز بأنماط معقدة وألوان زاهية. يعمل التبنيق لأغراض عملية وزخرفية، ممثلاً الهوية الإقليمية والحرفية.</p>
+                    </div>
+                </div>
+
+                <div class="clothing-item">
+                    <div class="clothing-placeholder">💍</div>
+                    <div class="clothing-info">
+                        <h4>الفيبولا (تيزرزاي)</h4>
+                        <p>دبابيس فضية كبيرة تُستخدم لتثبيت الملابس، خاصة العباءات والفساتين. هذه القطع المزخرفة تتميز بتصاميم هندسية وتعتبر قطعاً أثرية مهمة تتوارث عبر الأجيال.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 3rem;">
+                <h3>الرمزية في المجوهرات الأمازيغية</h3>
+                <p>المجوهرات الفضية الأمازيغية مشهورة بحرفيتها المعقدة ومعناها الرمزي. الزخارف الشائعة تشمل:</p>
+                <ul>
+                    <li><strong>المثلثات:</strong> تمثل الأنوثة والثبات والثالوث المقدس</li>
+                    <li><strong>الصلبان:</strong> رموز قديمة تسبق المسيحية، تمثل الاتجاهات الأربعة الأساسية</li>
+                    <li><strong>الأهلة:</strong> رموز قمرية مرتبطة بالحماية والأنوثة</li>
+                    <li><strong>الأنماط الهندسية:</strong> تربط بعلم الكونيات البربري القديم والهوية</li>
+                    <li><strong>المرجان والكهرمان:</strong> أحجار شبه كريمة يُعتقد أنها توفر الحماية</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الموسيقى -->
+    <section id="music">
+        <div class="section-header">
+            <div class="section-number">٠٤ — الموسيقى</div>
+            <h2 class="section-title">إيقاعات الأطلس والصحراء</h2>
+            <p class="section-intro">
+                تتميز الموسيقى الأمازيغية بإيقاعات معقدة وأداء جماعي وارتباط عميق
+                بالحياة الاجتماعية والروحية. من احتفالات الجبال إلى قوافل الصحراء، الموسيقى هي
+                نبض الثقافة الأمازيغية
+            </p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="music-instruments">
+                <div class="instrument-card">
+                    <span class="instrument-icon">🥁</span>
+                    <h4>البندير</h4>
+                    <p>طبلة إطارية ذات رأس جلدي ممدود على إطار خشبي، غالباً مع أوتار داخلية. يوفر البندير الأساس الإيقاعي للموسيقى الأمازيغية، ويُعزف في الاحتفالات والمراسم الروحية.</p>
+                </div>
+
+                <div class="instrument-card">
+                    <span class="instrument-icon">🎸</span>
+                    <h4>الكمبري</h4>
+                    <p>عود باس ثلاثي الأوتار بصوت عميق مميز. الكمبري محوري في موسيقى كناوة (التي لها جذور أمازيغية-أفريقية) وينتج أنماطاً إيقاعية منومة.</p>
+                </div>
+
+                <div class="instrument-card">
+                    <span class="instrument-icon">🎺</span>
+                    <h4>الناي (المزمار)</h4>
+                    <p>مزمار قصب تقليدي ينتج ألحاناً آسرة تتردد عبر الجبال والصحاري. يُستخدم الناي في الموسيقى الشعبية والممارسات الصوفية الروحية.</p>
+                </div>
+
+                <div class="instrument-card">
+                    <span class="instrument-icon">🎵</span>
+                    <h4>الطبل</h4>
+                    <p>طبول كبيرة ذات رأسين تُعزف بعصي، تخلق أنماطاً إيقاعية قوية. أساسية في عروض أحيدوس واحتفالات المهرجانات.</p>
+                </div>
+
+                <div class="instrument-card">
+                    <span class="instrument-icon">🎶</span>
+                    <h4>اللوتار</h4>
+                    <p>آلة وترية صغيرة تشبه العود، شائعة في مناطق الريف والأطلس. يصاحب اللوتار الغناء والحكي.</p>
+                </div>
+
+                <div class="instrument-card">
+                    <span class="instrument-icon">🔔</span>
+                    <h4>القراقب</h4>
+                    <p>صنوج معدنية كبيرة تخلق أصوات نقر حادة وإيقاعية. تُستخدم بكثرة في مراسم كناوة وتقاليد موسيقى النشوة.</p>
+                </div>
+            </div>
+
+            <div class="quote-feature">
+                <blockquote>
+                    في الجبال، نرقص أحيدوس في دوائر—رجال ونساء معاً، 
+                    الأكتاف تتحرك كواحد، الأصوات ترتفع إلى النجوم. هكذا نصبح كاملين
+                </blockquote>
+                <div class="quote-author">— قول تقليدي عن رقصة أحيدوس</div>
+            </div>
+
+            <div class="info-box" style="margin-top: 3rem;">
+                <h3>أشكال الرقص التقليدية</h3>
+                <ul>
+                    <li><strong>أحيدوس:</strong> رقصة جماعية من جبال الأطلس تُؤدى في دوائر مع حركات متزامنة ودوس وترديد. تمثل الوحدة والتماسك الاجتماعي.</li>
+                    <li><strong>أحواش:</strong> مشابهة لأحيدوس لكن خاصة بمناطق معينة، تتميز بأنماط نداء واستجابة بين الراقصين والموسيقيين.</li>
+                    <li><strong>كدرة:</strong> رقصة روحية نشوة تؤديها النساء، خاصة بين مجتمعات الطوارق، تتضمن حركات جثو وإيماءات يد.</li>
+                    <li><strong>تسكيوين:</strong> رقصة مستوحاة من الفنون القتالية من جنوب غرب المغرب، تتميز بحركات بهلوانية وقتال وهمي.</li>
+                </ul>
+            </div>
+
+            <div class="custom-highlight" style="margin-top: 2rem;">
+                <p><strong>اعتراف اليونسكو:</strong> في عام ٢٠١٧، أدرجت اليونسكو رقصة أحواش في القائمة التمثيلية للتراث الثقافي غير المادي للإنسانية، معترفة بأهميتها الثقافية والحاجة للحفاظ عليها.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الفنون -->
+    <section id="art">
+        <div class="section-header">
+            <div class="section-number">٠٥ — الفنون</div>
+            <h2 class="section-title">الشعر الهندسي: الفنون البصرية</h2>
+            <p class="section-intro">
+                تتميز الفنون البصرية الأمازيغية بأنماط هندسية جريئة ورموز رمزية وألوان نابضة.
+                تظهر هذه التصاميم في المنسوجات والفخار والعمارة وفن الجسد، حاملة معانٍ
+                تتجاوز مجرد الزخرفة
+            </p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="art-patterns">
+                <div class="pattern-box pattern-1">
+                    <div class="pattern-overlay">نمط الماس — الحماية والوحدة</div>
+                </div>
+                <div class="pattern-box pattern-2">
+                    <div class="pattern-overlay">مصفوفة النقاط — النجوم والكون</div>
+                </div>
+                <div class="pattern-box pattern-3">
+                    <div class="pattern-overlay">تكرار المثلث — الأنوثة</div>
+                </div>
+                <div class="pattern-box pattern-4">
+                    <div class="pattern-overlay">خطوط الشبكة — النظام والبنية</div>
+                </div>
+                <div class="pattern-box" style="background: linear-gradient(135deg, #E8B55F 0%, #C85A4A 100%);">
+                    <div class="pattern-overlay">تدرجات الألوان — الأرض والشمس</div>
+                </div>
+                <div class="pattern-box" style="background: repeating-conic-gradient(from 0deg, #1A2B4A 0deg 90deg, #E8B55F 90deg 180deg);">
+                    <div class="pattern-overlay">التناظر الشعاعي — التوازن</div>
+                </div>
+            </div>
+
+            <div class="traditions-showcase" style="margin-top: 4rem;">
+                <div class="tradition-feature">
+                    <h3>نسج السجاد</h3>
+                    <p>السجاد والبُسط الأمازيغية مشهورة عالمياً بتصاميمها الهندسية المميزة، حيث طورت كل منطقة أساليب ولوحات ألوان فريدة. تخدم هذه المنسوجات أغراضاً عملية بينما ترمز معرفة ثقافية.</p>
+                    <ul class="tradition-list">
+                        <li><strong>بني وراين:</strong> تصاميم بسيطة كريمية وسوداء من الأطلس المتوسط</li>
+                        <li><strong>أزيلال:</strong> أنماط معبرة ملونة من الأطلس الكبير</li>
+                        <li><strong>بوشرويط:</strong> سجاد من قماش معاد تدويره بتصاميم جريئة ومجردة</li>
+                        <li><strong>الكليم:</strong> منسوجات مسطحة بأنماط معقدة</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem;">كل سجادة فريدة، حيث تدمج النساجات قصصاً شخصية ورموزاً إقليمية وأنماطاً أجدادية تُتناقل عبر التقليد الشفوي.</p>
+                </div>
+
+                <div class="tradition-feature">
+                    <h3>الفخار والسيراميك</h3>
+                    <p>يجمع الفخار الأمازيغي بين الوظيفة والتعبير الفني، متميزاً بأشكال ونقوش زخرفية تختلف حسب المنطقة.</p>
+                    <ul class="tradition-list">
+                        <li>بناء يدوي بدون عجلة فخار باستخدام تقنية اللف</li>
+                        <li>زخارف هندسية ومجردة</li>
+                        <li>أصباغ طبيعية من المعادن والنباتات</li>
+                        <li>أوعية نفعية لتخزين الماء والطبخ</li>
+                        <li>زخارف رمزية للحماية والرخاء</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem;">صناعة الفخار تقليدياً عمل نسائي، حيث تتوارث التقنيات والتصاميم من الأم إلى الابنة.</p>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 3rem;">
+                <h3>المعاني الرمزية في الفن الأمازيغي</h3>
+                <p>الأنماط الهندسية الأمازيغية ليست مجرد زخرفة—بل تحمل معانٍ رمزية عميقة:</p>
+                <ul>
+                    <li><strong>العيون (آيت):</strong> الحماية من الشر، اليقظة</li>
+                    <li><strong>الخطوط المتعرجة:</strong> الماء، الحياة، الحركة، الرحلة</li>
+                    <li><strong>الصلبان:</strong> العناصر الأربعة، الاتجاهات الأساسية، النظام الكوني</li>
+                    <li><strong>المثلثات:</strong> الجبال، الخيام، الأنوثة، الخصوبة</li>
+                    <li><strong>الماسات:</strong> عين الله، الحماية، دفع العين الشريرة</li>
+                    <li><strong>الشيفرونات:</strong> تدفق الماء، الأنهار، قوة الحياة</li>
+                </ul>
+            </div>
+
+            <div class="quote-feature">
+                <blockquote>
+                    كل خط أنسجه يحمل صوت جدتي، 
+                    حكمة أمي، وأحلام بناتي
+                </blockquote>
+                <div class="quote-author">— ناسجة سجاد أمازيغية</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم العادات الاجتماعية -->
+    <section id="customs">
+        <div class="section-header">
+            <div class="section-number">٠٦ — العادات الاجتماعية</div>
+            <h2 class="section-title">القيم الجماعية والبنية الاجتماعية</h2>
+            <p class="section-intro">
+                يُبنى المجتمع الأمازيغي على مبادئ المسؤولية الجماعية والضيافة واتخاذ
+                القرار الديمقراطي. العادات الاجتماعية تؤكد على رفاه المجتمع والتكامل بين الجنسين واحترام
+                الشيوخ والتقاليد
+            </p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="customs-grid">
+                <div class="custom-card">
+                    <h3>تويزي — العمل الجماعي</h3>
+                    <p>تويزي هي ممارسة تقليدية للعمل الجماعي حيث يجتمع أفراد المجتمع لمساعدة بعضهم البعض في المهام الكبرى مثل الحصاد أو البناء أو التحضير للاحتفالات.</p>
+                    <p style="margin-top: 1rem;">تجسد هذه الممارسة قيم التضامن والمساعدة المتبادلة التي هي محورية في الثقافة الأمازيغية. لا يُتوقع دفع؛ المشاركة تقوم على الروابط الاجتماعية والالتزام المتبادل.</p>
+                    <div class="custom-highlight">
+                        "ما لا يستطيع الفرد فعله وحده، يحققه المجتمع معاً"
+                    </div>
+                </div>
+
+                <div class="custom-card">
+                    <h3>الضيافة — واجب مقدس</h3>
+                    <p>الضيافة تُعتبر واجباً مقدساً في الثقافة الأمازيغية. الضيوف يُعاملون بأقصى درجات الاحترام، ويُقدم لهم أفضل الطعام والإقامة، ويُحمون تحت رعاية المضيف.</p>
+                    <ul style="margin-top: 1rem; list-style: none;">
+                        <li>• مراسم الشاي كطقس ترحيبي</li>
+                        <li>• الضيف يحصل على أفضل أجزاء الوجبات</li>
+                        <li>• الحماية والملاذ للمسافرين</li>
+                        <li>• رفض قبول دفع من الضيوف</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">المثل يقول: "الضيف هدية من الله، حتى لو وصل كعدو".</p>
+                </div>
+
+                <div class="custom-card">
+                    <h3>المجلس الديمقراطي — تاجماعت</h3>
+                    <p>التاجماعت (أو الجماعة) هي جمعية قروية حيث تُتخذ قرارات المجتمع ديمقراطياً. جميع الأعضاء البالغين يمكنهم المشاركة في المناقشات وصنع القرار.</p>
+                    <p style="margin-top: 1rem;">هذا الشكل القديم من الديمقراطية التشاركية يسبق الأنظمة الديمقراطية الحديثة ولا يزال يعمل في العديد من المجتمعات الأمازيغية اليوم.</p>
+                    <div class="custom-highlight">
+                        القرارات تُتخذ بالإجماع، ويُختار القادة بناءً على الحكمة والجدارة بدلاً من الوراثة
+                    </div>
+                </div>
+
+                <div class="custom-card">
+                    <h3>مكانة المرأة</h3>
+                    <p>تقليدياً، تمتعت النساء الأمازيغيات بقوة اجتماعية واقتصادية كبيرة، خاصة مقارنة بالعديد من المجتمعات ما قبل الحديثة الأخرى. كن يدرن الشؤون المالية المنزلية، يرثن الممتلكات، ويلعبن أدواراً حاسمة في قرارات المجتمع.</p>
+                    <ul style="margin-top: 1rem; list-style: none;">
+                        <li>• حقوق ملكية وإرث الممتلكات</li>
+                        <li>• السيطرة على الإنتاج الزراعي</li>
+                        <li>• المشاركة في الأنشطة الاقتصادية</li>
+                        <li>• الاحترام كحافظات للمعرفة الثقافية</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">التقاليد الأمومية لمجتمع الطوارق ملحوظة بشكل خاص، حيث تحافظ النساء على مكانة عالية وسلطة ثقافية.</p>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 3rem;">
+                <h3>قانون الشرف — القيم الأمازيغية</h3>
+                <p>القيم الأساسية التي توجه السلوك الاجتماعي الأمازيغي تشمل:</p>
+                <ul>
+                    <li><strong>تايري (الحب/الوحدة):</strong> التضامن والروابط الجماعية</li>
+                    <li><strong>أسكان (الصدق):</strong> الصدق والنزاهة في جميع التعاملات</li>
+                    <li><strong>أدابو (الاحترام):</strong> احترام الشيوخ والضيوف والمجتمع</li>
+                    <li><strong>تاموسني (المعرفة):</strong> تقدير الحكمة والتعلم</li>
+                    <li><strong>تيدوكلا (التضامن):</strong> الدعم والتعاون المتبادل</li>
+                    <li><strong>أزاروك (الحماية):</strong> واجب حماية الضعفاء</li>
+                </ul>
+            </div>
+
+            <div class="traditions-showcase" style="margin-top: 3rem;">
+                <div class="tradition-feature">
+                    <h3>الولادة والتسمية</h3>
+                    <p>الولادة في الثقافة الأمازيغية تُحتفل بها بطقوس وعادات محددة مصممة لحماية المولود والترحيب به في المجتمع.</p>
+                    <ul class="tradition-list">
+                        <li>مراسم التسمية (عادة بعد ٧ أيام من الولادة)</li>
+                        <li>استخدام أسماء تقليدية ذات دلالة ثقافية</li>
+                        <li>تمائم حماية وزخارف الحناء</li>
+                        <li>احتفال مجتمعي وتقديم الهدايا</li>
+                        <li>أطعمة طقوسية وقرابين رمزية</li>
+                    </ul>
+                </div>
+
+                <div class="tradition-feature">
+                    <h3>التقليد الشفوي</h3>
+                    <p>سرد القصص هو شكل فني حيوي في الثقافة الأمازيغية، حيث يعمل كوسيلة رئيسية للحفاظ على التاريخ وتعليم القيم وترفيه المجتمعات.</p>
+                    <ul class="tradition-list">
+                        <li>شعر ملحمي عن الأبطال التاريخيين</li>
+                        <li>الأمثال وأقوال الحكمة</li>
+                        <li>حكايات شعبية وقصص أخلاقية</li>
+                        <li>أنساب وتواريخ العائلات</li>
+                        <li>الألغاز والألعاب اللفظية</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem;">الإمديازن (الشعراء ورواة القصص المحترفون) كانوا يحتلون مناصب مشرفة في المجتمع الأمازيغي، يسافرون بين المجتمعات لمشاركة الأخبار والقصص والمعرفة الثقافية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم التاريخ -->
+    <section id="history">
+        <div class="section-header">
+            <div class="section-number">٠٧ — التاريخ</div>
+            <h2 class="section-title">آلاف السنين من الصمود</h2>
+            <p class="section-intro">
+                الشعب الأمازيغي هم السكان الأصليون لشمال أفريقيا، بتاريخ يمتد
+                آلاف السنين. رغم موجات متعاقبة من الغزو والاستعمار، حافظوا
+                على هويتهم المميزة وممارساتهم الثقافية
+            </p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">العصر القديم</div>
+                        <h3>شمال أفريقيا الأصلي (ما قبل ٣٠٠٠ ق.م)</h3>
+                        <p>تظهر الأدلة الأثرية وجود الأمازيغ في شمال أفريقيا يعود إلى عصور ما قبل التاريخ. الرسومات الكهفية في الصحراء تصور مجتمعات رعوية، مما يشير إلى ثقافة متطورة متكيفة مع بيئة المنطقة.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">٨١٤ ق.م - ٤٠ م</div>
+                        <h3>الممالك الأمازيغية</h3>
+                        <p><strong>نوميديا:</strong> مملكة أمازيغية قوية تحت حكم ماسينيسا (٢٣٨-١٤٨ ق.م) الذي وحد القبائل الأمازيغية وحالف روما ضد قرطاج. عاصمته، سيرتا، أصبحت مركزاً للتعلم والثقافة.</p>
+                        <p style="margin-top: 1rem;"><strong>موريتانيا:</strong> مملكة أمازيغية مهمة أخرى في المغرب والجزائر الحاليتين، تحافظ على الاستقلال والهوية الثقافية.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">٤٠ - ٤٣٩ م</div>
+                        <h3>الفترة الرومانية</h3>
+                        <p>الغزو الروماني جلب شمال أفريقيا تحت السيطرة الإمبراطورية، لكن الثقافة الأمازيغية صمدت. ظهرت شخصيات أمازيغية بارزة، بما في ذلك الإمبراطور سبتيموس سيفيروس والقديس أوغسطين من هيبو.</p>
+                        <p style="margin-top: 1rem;">حافظت المجتمعات الأمازيغية على لغاتها وعاداتها حتى تحت الحكم الروماني، مع تبني بعضهم المسيحية بينما يحافظون على المعتقدات الأصلية.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">٦٤٧ - ٧١٠ م</div>
+                        <h3>الفتح العربي والمقاومة</h3>
+                        <p>الفتح العربي لشمال أفريقيا واجه مقاومة أمازيغية شرسة، قادها شخصيات مثل كسيلة والملكة المحاربة الشهيرة الكاهنة (ديهيا)، التي حاربت للحفاظ على الاستقلال الأمازيغي.</p>
+                        <p style="margin-top: 1rem;">تدريجياً، اعتنق معظم الأمازيغ الإسلام مع الحفاظ على لغتهم وممارساتهم الثقافية المميزة، مما خلق تركيبة أمازيغية-إسلامية فريدة.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">١٠٤٠ - ١٢٦٩ م</div>
+                        <h3>السلالات الأمازيغية</h3>
+                        <p><strong>المرابطون (١٠٤٠-١١٤٧):</strong> سلالة أمازيغية سيطرت على أراضٍ من السنغال إلى إسبانيا، مؤسسة مراكش كعاصمة لها.</p>
+                        <p style="margin-top: 1rem;"><strong>الموحدون (١١٢١-١٢٦٩):</strong> سلالة أمازيغية قوية أخرى وحدت شمال أفريقيا والأندلس، معززة للمنح الإسلامية والابتكار المعماري.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">١٨٣٠ - ١٩٦٢</div>
+                        <h3>الفترة الاستعمارية</h3>
+                        <p>الاستعمار الفرنسي والإسباني لشمال أفريقيا جلب قمع اللغة والثقافة الأمازيغية. رغم ذلك، شنت المجتمعات الأمازيغية مقاومة شرسة، مثل حرب الريف لعبد الكريم الخطابي (١٩٢١-١٩٢٦).</p>
+                        <p style="margin-top: 1rem;">حاولت السياسات الاستعمارية تقسيم السكان الأمازيغ والعرب، مما خلق توترات لا تزال قائمة حتى اليوم.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">الستينيات - الحاضر</div>
+                        <h3>النهضة الثقافية</h3>
+                        <p>بعد الاستقلال، ناضلت الحركات الثقافية الأمازيغية من أجل الاعتراف والحقوق. الربيع الأمازيغي عام ١٩٨٠ في الجزائر والربيع الأسود عام ٢٠٠١ مثلا نقاط تحول رئيسية.</p>
+                        <p style="margin-top: 1rem;">شهدت العقود الأخيرة اعترافاً دستورياً بالأمازيغية كلغة رسمية في المغرب (٢٠١١) والجزائر (٢٠١٦)، مما يمثل انتصارات للنشاط الثقافي.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-container" style="margin-top: 4rem;">
+                <div class="stat-card">
+                    <span class="stat-number">+٥٠٠٠</span>
+                    <span class="stat-label">سنة من التاريخ</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">+٣٠م</span>
+                    <span class="stat-label">متحدثو الأمازيغية</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">٦</span>
+                    <span class="stat-label">دول (رئيسية)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">+٢٠٠</span>
+                    <span class="stat-label">لهجة وتنوع</span>
+                </div>
+            </div>
+
+            <div class="quote-feature" style="margin-top: 4rem;">
+                <blockquote>
+                    نحن لسنا أقلية—نحن الشعب الأصلي لهذه الأرض.
+                    جذورنا أعمق من أي إمبراطورية، لغتنا أقدم من أي غزو.
+                    نحن أمازيغ، ونحن نصمد
+                </blockquote>
+                <div class="quote-author">— ناشط أمازيغي معاصر</div>
+            </div>
+
+            <div class="info-box" style="margin-top: 3rem;">
+                <h3>شخصيات أمازيغية تاريخية بارزة</h3>
+                <ul>
+                    <li><strong>ماسينيسا (٢٣٨-١٤٨ ق.م):</strong> ملك وحّد نوميديا</li>
+                    <li><strong>يوغرطة (١٦٠-١٠٤ ق.م):</strong> ملك نوميدي قاوم روما</li>
+                    <li><strong>الكاهنة/ديهيا (القرن ٧ م):</strong> ملكة محاربة قاومت الفتح العربي</li>
+                    <li><strong>طارق بن زياد (٦٧٠-٧٢٠ م):</strong> قائد فتح إيبيريا</li>
+                    <li><strong>ابن بطوطة (١٣٠٤-١٣٧٧):</strong> أعظم رحالة وجغرافي في العصور الوسطى</li>
+                    <li><strong>سبتيموس سيفيروس (١٤٥-٢١١ م):</strong> إمبراطور روماني من أصل أمازيغي</li>
+                    <li><strong>القديس أوغسطين (٣٥٤-٤٣٠ م):</strong> لاهوتي وفيلسوف مسيحي</li>
+                    <li><strong>عبد الكريم الخطابي (١٨٨٢-١٩٦٣):</strong> قائد مقاومة الريف</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer>
+        <div class="footer-content">
+            <svg style="width: 80px; height: 80px; margin: 0 auto 2rem; display: block;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#E8B55F" stroke-width="2"/>
+                <path d="M30 50 L50 30 L70 50 L50 70 Z" fill="none" stroke="#E8B55F" stroke-width="3"/>
+                <circle cx="50" cy="50" r="15" fill="#E8B55F" opacity="0.3"/>
+            </svg>
+
+            <h3 style="font-family: 'Cairo', sans-serif; font-size: 2rem; color: #E8B55F; margin-bottom: 1rem;">
+                الثقافة الأمازيغية
+            </h3>
+            <p style="max-width: 700px; margin: 0 auto 2rem; line-height: 2;">
+                هذه الصفحة تحتفي بالتراث الثقافي الغني للشعب الأمازيغي—لغتهم،
+                تقاليدهم، فنونهم، وروحهم الصامدة التي صمدت لآلاف السنين عبر شمال أفريقيا
+            </p>
+
+            <div class="footer-links">
+                <a href="#language">اللغة</a>
+                <a href="#traditions">التقاليد</a>
+                <a href="#clothing">الملابس</a>
+                <a href="#music">الموسيقى</a>
+                <a href="#art">الفنون</a>
+                <a href="#customs">العادات</a>
+                <a href="#history">التاريخ</a>
+            </div>
+
+            <p style="margin-top: 3rem; font-size: 0.95rem; opacity: 0.7;">
+                أُنشئ باحترام وإعجاب للثقافة الأمازيغية<br>
+                © ٢٠٢٤ — مورد تعليمي
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // التمرير السلس للتنقل
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // مراقب التقاطع لرسوم التمرير المتحركة
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // مراقبة العناصر للرسوم المتحركة
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll(
+                '.language-card, .tradition-feature, .clothing-item, ' +
+                '.instrument-card, .custom-card, .timeline-item, .stat-card'
+            );
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // تفاعلات صندوق النمط
+        document.querySelectorAll('.pattern-box').forEach(box => {
+            box.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
