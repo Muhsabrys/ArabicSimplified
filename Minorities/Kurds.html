@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأكراد: أمة الجبال والبحث عن الكيان</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --sidebar-bg: #14532d;
+            --sidebar-text: #f0fdf4;
+            --primary: #991b1b;
+            --primary-hover: #7f1d1d;
+            --secondary: #facc15;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-soft: #fefce8;
+            --sidebar-width: 320px;
+            --font-main: 'Noto Sans Arabic', sans-serif;
+            --danger: #b91c1c;
+            --danger-soft: #fef2f2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            font-size: 18px;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            position: fixed;
+            height: 100vh;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 2.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+            border-left: 4px solid transparent;
+            font-size: 1rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-item.active {
+            background: rgba(250, 204, 21, 0.1);
+            border-left: 4px solid var(--secondary);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .nav-num {
+            opacity: 0.5;
+            min-width: 2.2rem;
+            font-weight: 300;
+        }
+
+        .main-content {
+            margin-right: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 6px;
+            background: #cbd5e1;
+            z-index: 1100;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1000px;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            border-right: 6px solid var(--secondary);
+            padding-right: 1rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .callout {
+            background: var(--accent-soft);
+            border-right: 6px solid var(--primary);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+
+        .vocab-box {
+            background: #f8fafc;
+            border: 1px dashed #94a3b8;
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .vocab-item {
+            display: inline-block;
+            background: #e2e8f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            margin: 0.3rem;
+            font-size: 0.9rem;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        #map-container {
+            height: 500px;
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin: 1.5rem 0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.8rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #64748b;
+        }
+
+        .mobile-nav-btn {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 2000;
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            border: none;
+        }
+
+        .arabic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+        .arabic-table th, .arabic-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.8rem;
+            text-align: right;
+        }
+        .arabic-table th {
+            background: #f8fafc;
+            color: var(--primary);
+        }
+
+        .timeline {
+            position: relative;
+            padding-right: 1.5rem;
+            margin: 2rem 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--secondary);
+        }
+        .timeline-item {
+            position: relative;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+        }
+        .timeline-date {
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .references {
+            background: #f1f5f9;
+            border-right: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+        }
+
+        .references h4 {
+            color: #1e40af;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .references ol {
+            margin-right: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .references li {
+            margin-bottom: 0.5rem;
+            color: #475569;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(100%); right: 0; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-right: 0; width: 100%; padding: 1.5rem; }
+            .mobile-nav-btn { display: block; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .flag-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .flag-color {
+            width: 40px;
+            height: 25px;
+            border-radius: 3px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <button class="mobile-nav-btn" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>الكرد: التاريخ والجغرافيا</h1>
+                <p style="font-size: 0.85rem; color: #cbd5e1;">أكبر أمة بلا دولة في العالم</p>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <!-- Navigation items injected by JS -->
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            
+            <!-- Slide 0: Introduction -->
+            <section class="slide active" id="slide-0">
+                <div class="card">
+                    <h2>من هم الكرد؟</h2>
+                    <p>
+                        الأكراد أو الكرد هم شعوب تقطن المنطقة الجبلية الممتدة في أجزاء من تركيا وإيران والعراق وسوريا، وهي المنطقة المعروفة تاريخياً باسم «كردستان». يُقدّر عددهم بما يتراوح بين <strong>30 إلى 45 مليون نسمة</strong>، مما يجعلهم أكبر مجموعة عرقية في العالم لا تملك دولة قومية مستقلة خاصة بها.
+                    </p>
+
+                    <div class="callout">
+                        "الجبال هي الصديق الوحيد للكرد" — مثل كردي شهير يعكس العلاقة الوثيقة بين هذا الشعب وتضاريس أرضه التي كانت ملاذه الدائم عبر التاريخ.
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card" style="padding: 1.2rem; background: #f0fdf4; border:none;">
+                            <h4 style="color: #166534;">الهوية واللغة</h4>
+                            <p style="font-size: 0.9rem;">
+                                ينتمي الكرد إلى المجموعة الهندوأوروبية، ويتحدثون اللغة الكردية بلهجاتها المختلفة (الكرمانجية والسورانية والبهدينانية)، ولهم ثقافة وتاريخ يمتد لآلاف السنين.
+                            </p>
+                        </div>
+                        <div class="card" style="padding: 1.2rem; background: #fffbeb; border:none;">
+                            <h4 style="color: #92400e;">كردستان العراق</h4>
+                            <p style="font-size: 0.9rem;">
+                                يمثل إقليم كردستان العراق النموذج الوحيد حالياً لكيان كردي معترف به دستورياً ويتمتع بحكم ذاتي واسع النطاق في الشرق الأوسط.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.5rem;">مفاهيم أساسية:</h4>
+                        <span class="vocab-item">حق تقرير المصير</span>
+                        <span class="vocab-item">الحكم الذاتي (Autonomy)</span>
+                        <span class="vocab-item">الفيدرالية</span>
+                        <span class="vocab-item">القومية العابرة للحدود</span>
+                    </div>
+
+                    <div class="references">
+                        <h4>المراجع:</h4>
+                        <ol>
+                            <li>Kurdish Population - Wikipedia (2025)</li>
+                            <li>EBSCO Research Starters: Kurdish People (2024) - "With a world population of approximately forty-five million people in 2024"</li>
+                            <li>Institut Kurde de Paris - Kurdish Population Statistics</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 1: Etymology & Roots -->
+            <section class="slide" id="slide-1">
+                <div class="card">
+                    <h2>أصل التسمية والجذور</h2>
+                    <p>
+                        تتعدد النظريات حول أصل كلمة "كرد"، لكن معظم الباحثين يربطونها بجذور قديمة تعود لشعوب سكنت الجبال منذ آلاف السنين.
+                    </p>
+
+                    <table class="arabic-table">
+                        <thead>
+                            <tr>
+                                <th>الحقبة / النظرية</th>
+                                <th>التسمية</th>
+                                <th>السياق التاريخي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>العصور القديمة</strong></td>
+                                <td>كوتي (Guti) / كاردوخوي</td>
+                                <td>شعوب سكنت جبال زاغروس وتوروس، ذكرهم المؤرخ اليوناني زينوفون في "رحلة العشرة آلاف" (401 ق.م).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>العصر الوسيط</strong></td>
+                                <td>الأكراد</td>
+                                <td>استخدم العرب والفرس هذا المصطلح للإشارة إلى القبائل الجبلية في المنطقة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>النظرية الميدية</strong></td>
+                                <td>الميديون (Medes)</td>
+                                <td>يعتبر الكثير من الكرد أنفسهم أحفاد الميديين الذين أسسوا إمبراطورية قوية في القرن السابع ق.م.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout">
+                        يعتبر عيد <strong>"نوروز"</strong> (21 آذار) الرمز الأكبر للهوية الكردية، حيث يرتبط بأسطورة "كاوه الحداد" وانتصاره على الظلم. هذا العيد مدرج في قائمة اليونسكو للتراث الثقافي غير المادي، ويحتفل به أكثر من 300 مليون شخص في آسيا الوسطى والشرق الأوسط.
+                    </div>
+
+                    <div class="references">
+                        <h4>المراجع:</h4>
+                        <ol>
+                            <li>Xenophon - Anabasis (The March of the Ten Thousand)</li>
+                            <li>UNESCO - Nowruz, Intangible Cultural Heritage of Humanity</li>
+                            <li>McDowall, David. "A Modern History of the Kurds" (2004)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Geographic Distribution -->
+            <section class="slide" id="slide-2">
+                <div class="card">
+                    <h2>الجغرافيا السياسية: "كردستان الكبرى"</h2>
+                    <p>تتوزع جغرافيا الكرد على أربع دول رئيسية، وتختلف تسميات هذه المناطق في الأدبيات الكردية:</p>
+                    
+                    <div id="map-container"></div>
+
+                    <div class="grid-2">
+                        <div style="background: #f8fafc; padding: 1rem; border-radius: 8px;">
+                            <strong>باشور (Başûr):</strong> كردستان العراق (الجنوب) - أكثر من 6.37 مليون نسمة.
+                            <br><strong>باكور (Bakûr):</strong> كردستان تركيا (الشمال) - 15-20 مليون نسمة.
+                        </div>
+                        <div style="background: #f8fafc; padding: 1rem; border-radius: 8px;">
+                            <strong>روجهلات (Rojhelat):</strong> كردستان إيران (الشرق) - 8-10 مليون نسمة.
+                            <br><strong>روجافا (Rojava):</strong> كردستان سوريا (الغرب) - 2-3 مليون نسمة.
+                        </div>
+                    </div>
+
+                    <div class="callout" style="border-right-color: #16a34a;">
+                        <strong>ملاحظة:</strong> المصطلحات الكردية للاتجاهات (باشور = جنوب، باكور = شمال، روجهلات = شرق، روجافا = غرب) تعكس النظرة الجيوسياسية الكردية لوطنهم التاريخي.
+                    </div>
+
+                    <div class="references">
+                        <h4>المراجع:</h4>
+                        <ol>
+                            <li>Kurdistan Region Statistics Office (2024) - Population Census</li>
+                            <li>Institut Kurde de Paris - Geographic Distribution (2024)</li>
+                            <li>World Population Review - Kurdish Population by Country (2026)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Kurds in Iraq -->
+            <section class="slide" id="slide-3">
+                <div class="card">
+                    <h2>الأكراد في العراق: رحلة من النضال</h2>
+                    <p>تميز تاريخ الكرد في العراق بالثورات المستمرة للحصول على حقوقهم الثقافية والسياسية منذ تأسيس الدولة العراقية عام 1921.</p>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span class="timeline-date">1922 - 1924</span>
+                            <strong>مملكة كردستان</strong>
+                            <p>إعلان الشيخ محمود الحفيد نفسه ملكاً على كردستان في السليمانية ومقاومته للانتداب البريطاني.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">11 آذار 1970</span>
+                            <strong>اتفاقية الحكم الذاتي</strong>
+                            <p>أول اعتراف رسمي بحقوق الكرد في العراق بين الحكومة المركزية والملا مصطفى البارزاني.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">شباط - أيلول 1988</span>
+                            <strong>حملة الأنفال</strong>
+                            <p>ثماني مراحل من الإبادة الجماعية المنظمة بقيادة علي حسن المجيد "علي الكيماوي". قُتل ما بين 50,000 إلى 182,000 كردي، ودُمرت أكثر من 4,500 قرية كردية.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">16 آذار 1988</span>
+                            <strong>مذبحة حلبجة</strong>
+                            <p>أكبر هجوم كيماوي على مدنيين في التاريخ. قُتل حوالي 5,000 شخص في يوم واحد باستخدام غاز الخردل وغازات الأعصاب (السارين وVX). حدثت خلال فترة الأنفال لكنها تُدرس كحدث منفصل لأهميتها الخاصة.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">1991</span>
+                            <strong>الانتفاضة الكبرى</strong>
+                            <p>انتفاضة الشعب الكردي وتأسيس "منطقة حظر طيران" دولية أدت لنشوء كيان شبه مستقل.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2005</span>
+                            <strong>الدستور العراقي الجديد</strong>
+                            <p>الاعتراف بإقليم كردستان ككيان فيدرالي ضمن العراق الموحد.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">2010</span>
+                            <strong>الاعتراف بالإبادة الجماعية</strong>
+                            <p>المحكمة الجنائية العراقية العليا تعترف رسمياً بحملة الأنفال كإبادة جماعية.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout" style="background: #fef2f2; border-right-color: #991b1b;">
+                        <strong>حقيقة تاريخية:</strong> تُعد حملة الأنفال (فبراير-سبتمبر 1988) واحدة من أبشع جرائم القرن العشرين. استخدمت الأسلحة الكيماوية ضد المدنيين، ونُفذت عمليات إعدام جماعية، واختفى قسرياً عشرات الآلاف من الرجال الكرد الذين تتراوح أعمارهم بين 15-70 عاماً.
+                    </div>
+
+                    <div class="references">
+                        <h4>المراجع:</h4>
+                        <ol>
+                            <li>Human Rights Watch (1993). "Iraq's Crime of Genocide: The Anfal Campaign Against the Kurds"</li>
+                            <li>OPCW - Commemoration of the 1988 Halabja Chemical Weapons Attack</li>
+                            <li>PBS Frontline - "Saddam's Road to Hell" (2006)</li>
+                            <li>Kurdistan Regional Government - Anfal Campaign Documentation</li>
+                            <li>Iraqi Supreme Court Ruling on Anfal Genocide (2010)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Demographics -->
+            <section class="slide" id="slide-4">
+                <div class="card">
+                    <h2>إحصائيات وتقديرات (2024-2025)</h2>
+                    <p>توزيع الأكراد تقديرياً في المنطقة (الأرقام تختلف حسب المصادر نظراً لغياب الإحصاءات الرسمية العرقية في معظم الدول):</p>
+
+                    <div class="grid-2">
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: var(--primary);">15 - 20 مليون</div>
+                            <div class="stat-label">في تركيا (حوالي 18-25% من السكان)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: #16a34a;">6.37+ مليون</div>
+                            <div class="stat-label">في إقليم كردستان العراق (إحصاء 2024)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: #ca8a04;">8 - 10 مليون</div>
+                            <div class="stat-label">في إيران (حوالي 10% من السكان)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: #2563eb;">2 - 3 مليون</div>
+                            <div class="stat-label">في سوريا (حوالي 10-15% من السكان)</div>
+                        </div>
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.8rem;">الشتات الكردي:</h4>
+                        <p style="margin-bottom: 0.5rem;"><strong>أوروبا:</strong> حوالي 1.5 مليون كردي، منهم أكثر من مليون في ألمانيا وحدها.</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>أمريكا الشمالية:</strong> ناشفيل، تينيسي تُلقب بـ"كردستان الصغيرة" لاحتوائها على أكبر جالية كردية في الولايات المتحدة (8,000-11,000 شخص).</p>
+                        <p><strong>إسطنبول:</strong> تُعتبر أكبر مدينة كردية في العالم من حيث عدد السكان الكرد (أكثر من 3 مليون).</p>
+                    </div>
+
+                    <div class="callout" style="border-right-color: #3b82f6;">
+                        <strong>التحول الديموغرافي:</strong> تحول المجتمع الكردي من مجتمع ريفي (قبل الستينيات) إلى مجتمع حضري بنسبة تزيد عن 75%، نتيجة تدمير القرى الممنهج في تركيا والعراق خلال الثمانينيات والتسعينيات.
+                    </div>
+
+                    <div class="references">
+                        <h4>المراجع:</h4>
+                        <ol>
+                            <li>Kurdistan Region Statistics Office - Preliminary Census Results (November 2024)</li>
+                            <li>Institut Kurde de Paris - The Kurdish Population (2024)</li>
+                            <li>World Population Review - Kurdish Population by Country (2026)</li>
+                            <li>Turkish Statistical Institute & KONDA Research (2024)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Culture & Flag -->
+            <section class="slide" id="slide-5">
+                <div class="card">
+                    <h2>رموز الهوية الكردية</h2>
+                    <div class="grid-2">
+                        <div>
+                            <h4>علم كردستان</h4>
+                            <p style="font-size: 0.95rem;">
+                                يتكون من ثلاثة ألوان أفقية: 
+                                <br><span style="color:red; font-weight: bold;">● الأحمر</span> يرمز للثورة ودماء الشهداء.
+                                <br><span style="color:white; font-weight: bold; background: #ccc; padding: 0 4px;">● الأبيض</span> يرمز للسلام والأمان.
+                                <br><span style="color:green; font-weight: bold;">● الأخضر</span> يرمز لطبيعة كردستان الخلابة والحياة.
+                                <br>تتوسطه <strong>شمس صفراء</strong> لها 21 شعاعاً ترمز ليوم 21 آذار (نوروز) والديانة الزرادشتية القديمة.
+                            </p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid #eee; border-radius: 12px; background: #fafafa;">
+                            <svg width="200" height="120" viewBox="0 0 300 180">
+                                <rect width="300" height="60" fill="#ED1C24" />
+                                <rect y="60" width="300" height="60" fill="#FFFFFF" />
+                                <rect y="120" width="300" height="60" fill="#278E43" />
+                                <circle cx="150" cy="90" r="25" fill="#F8E71C" />
+                                <g fill="#F8E71C">
+                                    <rect x="148" y="55" width="4" height="70" />
+                                    <rect x="148" y="55" width="4" height="70" transform="rotate(45 150 90)" />
+                                    <rect x="148" y="55" width="4" height="70" transform="rotate(90 150 90)" />
+                                    <rect x="148" y="55" width="4" height="70" transform="rotate(135 150 90)" />
+                                </g>
+                            </svg>
+                            <p style="font-size: 0.8rem; margin-top: 5px;">علم إقليم كردستان الرسمي</p>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 1.5rem;">البيشمركة (Pêşmerge)</h4>
+                    <p>
+                        تعني حرفياً <strong>"الذين يواجهون الموت"</strong>، وهي القوات العسكرية الرسمية لإقليم كردستان العراق. تحولت من مجموعات مقاومة جبلية إلى قوة نظامية لعبت دوراً حاسماً في محاربة تنظيم داعش (2014-2017) وحماية الإقليم والأقليات الدينية.
+                    </p>
+
+                    <div class="callout">
+                        <strong>الدين والتنوع:</strong> معظم الكرد مسلمون سنة (المذهب الشافعي)، لكن توجد أقليات كردية تعتنق الإسلام الشيعي (خاصة العلويين)، والإيزيدية، واليارسانية، والمسيحية، واليهودية. هذا التنوع الديني يعكس غنى النسيج الاجتماعي الكردي.
+                    </div>
+
+                    <div class="references">
+                        <h4>المراجع:</h4>
+                        <ol>
+                            <li>Kurdistan Regional Government - Official Symbols</li>
+                            <li>Barzani, Masoud. "Mustafa Barzani and the Kurdish Liberation Movement" (2003)</li>
+                            <li>Knights, Michael & Mello, Alex. "The Peshmerga: History and Strategy" (2017)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Notable Figures -->
+            <section class="slide" id="slide-6">
+                <div class="card">
+                    <h2>شخصيات كردية خالدة</h2>
+                    <div class="grid-2">
+                        <div class="timeline-item">
+                            <h4 style="color: var(--primary);">صلاح الدين الأيوبي</h4>
+                            <p style="font-size: 0.9rem;">(1137-1138 - 1193 م) مؤسس الدولة الأيوبية وبطل معركة حطين. ولد في تكريت لعائلة كردية من قبيلة الروادية المنحدرة من منطقة دوين في أرمينيا. فتح القدس عام 1187م واشتهر بفروسيته ورحمته حتى بين أعدائه الصليبيين.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 style="color: var(--primary);">الملا مصطفى البارزاني</h4>
+                            <p style="font-size: 0.9rem;">(1903 - 1979 م) القائد التاريخي للحركة التحررية الكردية في العراق ومؤسس الحزب الديمقراطي الكردستاني. لُقب بـ"البارزاني الخالد" ويُعتبر الأب الروحي لكردستان العراق الحديثة.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 style="color: var(--primary);">جلال طالباني</h4>
+                            <p style="font-size: 0.9rem;">(1933 - 2017 م) مؤسس الاتحاد الوطني الكردستاني، وأول رئيس كردي لجمهورية العراق (2005-2014). لُقب بـ"مام جلال" (العم جلال) ولعب دوراً محورياً في السياسة العراقية.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 style="color: var(--primary);">شيركو بيكس</h4>
+                            <p style="font-size: 0.9rem;">(1940 - 2013 م) أحد أعظم الشعراء الكرد المعاصرين، عُرف بلقب "إمبراطور الشعر الكردي". كتب أكثر من 30 ديواناً وترجمت قصائده لأكثر من 20 لغة.</p>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 1.5rem;">قيادات نسائية بارزة:</h4>
+                    <div class="timeline-item">
+                        <h4 style="color: #7c3aed;">مارغريت جورج (مارغريت شيلو)</h4>
+                        <p style="font-size: 0.9rem;">مناضلة كردية وإحدى أوائل النساء اللواتي انضممن للبيشمركة في الستينيات. أصبحت رمزاً للمرأة الكردية المقاتلة.</p>
+                    </div>
+
+                    <div class="references">
+                        <h4>المراجع:</h4>
+                        <ol>
+                            <li>Saladin Biography - Britannica & Multiple Historical Sources</li>
+                            <li>McDowall, David. "A Modern History of the Kurds" (2004)</li>
+                            <li>Talabani, Nouri. "Jalal Talabani: Kurdish Statesman and Iraqi Leader" (2012)</li>
+                            <li>Hassanpour, Amir. "The Kurdish Experience" - International Journal of Kurdish Studies (2003)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Kurdish Women -->
+            <section class="slide" id="slide-7">
+                <div class="card">
+                    <h2>المرأة الكردية: نضال ومقاومة</h2>
+                    <p>
+                        لعبت المرأة الكردية دوراً محورياً في تاريخ الشعب الكردي، من المقاومة المسلحة إلى القيادة السياسية والنضال من أجل حقوق الإنسان.
+                    </p>
+
+                    <div class="grid-2">
+                        <div class="timeline-item">
+                            <h4 style="color: #7c3aed;">ليلى قاسم</h4>
+                            <p style="font-size: 0.9rem;">مناضلة كردية (1952-1974) أُعدمت من قبل نظام صدام حسين وهي في الثانية والعشرين من عمرها. أصبحت رمزاً للمقاومة الكردية ضد القمع.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 style="color: #7c3aed;">نسرين عبد الله</h4>
+                            <p style="font-size: 0.9rem;">قائدة عسكرية سورية كردية، لعبت دوراً بارزاً في قيادة قوات سوريا الديمقراطية ضد تنظيم داعش.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout" style="background: #faf5ff; border-right-color: #7c3aed;">
+                        <strong>حركة "المرأة، الحياة، الحرية" (2022):</strong> انطلقت الاحتجاجات الإيرانية الكبرى بعد وفاة جينا مهسا أميني الكردية (22 عاماً) في حجز شرطة الأخلاق الإيرانية في سبتمبر 2022. أصبحت قضيتها رمزاً عالمياً للنضال ضد القمع، وتحول شعار "زن، زندگی، آزادی" (المرأة، الحياة، الحرية) إلى صرخة احتجاج دولية.
+                    </div>
+
+                    <h4 style="margin-top: 1.5rem;">المشاركة السياسية:</h4>
+                    <p>
+                        يُعتبر إقليم كردستان العراق من أكثر المناطق في الشرق الأوسط تقدماً في مشاركة المرأة السياسية، حيث يضمن الدستور <strong>30% كوتا للنساء في البرلمان</strong>، وتشغل النساء مناصب وزارية ومناصب قيادية في الحكومة الإقليمية.
+                    </p>
+
+                    <div class="references">
+                        <h4>المراجع:</h4>
+                        <ol>
+                            <li>EBSCO Research - Kurdish People: "Jina Mahsa Amini died September 2022 while in the custody of Iran's morality police"</li>
+                            <li>Human Rights Watch - Women's Rights in Iraqi Kurdistan (2023)</li>
+                            <li>Al-Ali, Nadje & Pratt, Nicola. "Women and War in the Middle East" (2009)</li>
+                            <li>Kurdistan Regional Government - Women's Empowerment Policies</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Challenges and Future -->
+            <section class="slide" id="slide-8">
+                <div class="card">
+                    <h2>التحديات المعاصرة والمستقبل</h2>
+                    <p>رغم المكاسب في العراق، لا يزال الكرد يواجهون تحديات وجودية وسياسية معقدة:</p>
+                    
+                    <div class="grid-2">
+                        <div class="card" style="border: 1px solid #fee2e2; background: #fff1f1;">
+                            <h4 style="color: #991b1b;">المناطق المتنازع عليها</h4>
+                            <p style="font-size: 0.9rem;">تعد مدينة "كركوك" مركز الخلاف الرئيسي بين بغداد وأربيل. يعتبرها الكرد "قدس كردستان" تاريخياً وجغرافياً، وهي غنية بالنفط مما يزيد من تعقيد الوضع.</p>
+                        </div>
+                        <div class="card" style="border: 1px solid #fef9c3; background: #fefce8;">
+                            <h4 style="color: #854d0e;">استفتاء الاستقلال 2017</h4>
+                            <p style="font-size: 0.9rem;">أجرى الإقليم استفتاءً على الاستقلال في 25 سبتمبر 2017، صوت فيه 92.73% من المشاركين (72.16% من الناخبين المؤهلين) لصالح الانفصال عن العراق، لكنه جوبه برفض دولي وإقليمي واسع.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" style="background: #fef2f2; border-color: #fecaca;">
+                        <h4 style="color: #991b1b;">تداعيات الاستفتاء</h4>
+                        <p style="font-size: 0.9rem;">
+                            • فرضت بغداد وتركيا وإيران عقوبات اقتصادية قاسية<br>
+                            • استعادت القوات العراقية السيطرة على كركوك في أكتوبر 2017<br>
+                            • فقد الإقليم حوالي 40% من أراضيه الخاضعة للسيطرة<br>
+                            • استقال الرئيس مسعود البارزاني في نوفمبر 2017<br>
+                            • حكمت المحكمة العليا العراقية بعدم دستورية الاستفتاء
+                        </p>
+                    </div>
+
+                    <div class="callout" style="border-right-color: #16a34a;">
+                        <strong>نظرة للمستقبل:</strong> يمثل الأكراد في العراق اليوم ركيزة أساسية للاستقرار والنمو الاقتصادي في المنطقة. تجربتهم في الحكم الذاتي هي محط أنظار الكرد في جميع أنحاء العالم. التحدي الأكبر يكمن في تحقيق التوازن بين الطموحات القومية والواقع الجيوسياسي المعقد.
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.8rem;">قضايا رئيسية تواجه الكرد اليوم:</h4>
+                        <span class="vocab-item">الاستقرار السياسي الداخلي</span>
+                        <span class="vocab-item">التنويع الاقتصادي</span>
+                        <span class="vocab-item">العلاقة مع بغداد</span>
+                        <span class="vocab-item">حقوق الإنسان</span>
+                        <span class="vocab-item">الحفاظ على الهوية الثقافية</span>
+                    </div>
+
+                    <div class="references">
+                        <h4>المراجع:</h4>
+                        <ol>
+                            <li>International Crisis Group - "After Iraqi Kurdistan's Thwarted Independence Bid" (2019)</li>
+                            <li>Washington Institute for Near East Policy - Kurdish Referendum Analysis (2018)</li>
+                            <li>European Parliament - Iraqi Kurdistan's Independence Referendum Report (2017)</li>
+                            <li>Carnegie Endowment - Internal Divides Behind the Kurdistan Referendum (2017)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Final Bibliography -->
+            <section class="slide" id="slide-9">
+                <div class="card">
+                    <h2>المراجع الشاملة والمصادر</h2>
+                    
+                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                        <h3 style="color: #1e40af; margin-bottom: 1rem; font-size: 1.3rem;">المراجع الأكاديمية والبحثية:</h3>
+                        <ol style="line-height: 2; margin-right: 1.5rem;">
+                            <li><strong>Human Rights Watch (1993).</strong> "Iraq's Crime of Genocide: The Anfal Campaign Against the Kurds" - Yale University Press</li>
+                            <li><strong>McDowall, David (2004).</strong> "A Modern History of the Kurds" - I.B. Tauris Publishers</li>
+                            <li><strong>Bozarslan, Hamit et al.</strong> "The Cambridge History of the Kurds" - Cambridge University Press</li>
+                            <li><strong>Van Bruinessen, Martin (1992).</strong> "Agha, Shaikh and State: The Social and Political Structures of Kurdistan"</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                        <h3 style="color: #166534; margin-bottom: 1rem; font-size: 1.3rem;">المصادر الرسمية والحكومية:</h3>
+                        <ol style="line-height: 2; margin-right: 1.5rem;">
+                            <li><strong>Kurdistan Regional Government (KRG)</strong> - Official Statistics and Documentation (2024)</li>
+                            <li><strong>Kurdistan Region Statistics Office</strong> - Population Census (November 2024)</li>
+                            <li><strong>Organisation for the Prohibition of Chemical Weapons (OPCW)</strong> - Halabja Commemoration Documentation</li>
+                            <li><strong>Iraqi Supreme Court</strong> - Anfal Genocide Recognition Ruling (2010)</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: #fffbeb; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                        <h3 style="color: #92400e; margin-bottom: 1rem; font-size: 1.3rem;">مراكز الأبحاث والمعاهد:</h3>
+                        <ol style="line-height: 2; margin-right: 1.5rem;">
+                            <li><strong>Institut Kurde de Paris</strong> - Kurdish Population Studies and Geographic Distribution</li>
+                            <li><strong>International Crisis Group</strong> - Reports on Iraqi Kurdistan (2017-2024)</li>
+                            <li><strong>Washington Institute for Near East Policy</strong> - Kurdish Politics Analysis</li>
+                            <li><strong>European Parliament Research Service</strong> - Kurdistan Independence Referendum Reports</li>
+                            <li><strong>Carnegie Endowment for International Peace</strong> - Middle East Studies</li>
+                        </ol>
+                    </div>
+
+                    <div style="background: #fef2f2; padding: 1.5rem; border-radius: 12px;">
+                        <h3 style="color: #991b1b; margin-bottom: 1rem; font-size: 1.3rem;">وثائق تاريخية وإعلامية:</h3>
+                        <ol style="line-height: 2; margin-right: 1.5rem;">
+                            <li><strong>PBS Frontline</strong> - "Saddam's Road to Hell: A Journey into the Killing Fields" (2006)</li>
+                            <li><strong>UNESCO</strong> - Nowruz: Intangible Cultural Heritage of Humanity</li>
+                            <li><strong>Xenophon</strong> - Anabasis (The March of the Ten Thousand) - Historical References to Carduchi</li>
+                            <li><strong>World Population Review</strong> - Kurdish Population by Country (2026)</li>
+                        </ol>
+                    </div>
+
+                    <div class="callout" style="margin-top: 2rem; background: #e0f2fe; border-right-color: #0284c7;">
+                        <strong>ملاحظة منهجية:</strong> تم التحقق من جميع المعلومات الواردة في هذا العرض من مصادر متعددة ومتنوعة لضمان الدقة والموضوعية. الإحصائيات السكانية تحديداً تختلف بين المصادر نظراً لغياب إحصاءات رسمية في معظم الدول، لذا تم الاعتماد على نطاقات تقديرية من مصادر موثوقة.
+                    </div>
+                </div>
+            </section>
+
+            <div class="controls">
+                <button class="btn btn-secondary" id="prev-btn" onclick="prevSlide()">السابق</button>
+                <button class="btn" id="next-btn" onclick="nextSlide()">التالي</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script>
+        const slides = [
+            { title: "من هم الكرد؟" },
+            { title: "الأصل واللغة" },
+            { title: "خريطة كردستان" },
+            { title: "نضال كرد العراق" },
+            { title: "إحصائيات السكان" },
+            { title: "الثقافة والرموز" },
+            { title: "شخصيات بارزة" },
+            { title: "المرأة الكردية" },
+            { title: "المستقبل والتحديات" },
+            { title: "المراجع والمصادر" }
+        ];
+
+        let currentSlide = 0;
+        let map;
+
+        function toArabicNum(n) {
+            const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+            return n.toString().split("").map(x => arabicNumbers[parseInt(x)]).join("");
+        }
+
+        function initNavigation() {
+            const navList = document.getElementById('nav-list');
+            slides.forEach((slide, index) => {
+                const li = document.createElement('li');
+                li.className = `nav-item ${index === 0 ? 'active' : ''}`;
+                li.id = `nav-${index}`;
+                li.onclick = () => goToSlide(index);
+                
+                const num = (index + 1).toString().padStart(2, '0');
+                li.innerHTML = `<span class="nav-num">${toArabicNum(num)}</span> ${slide.title}`;
+                navList.appendChild(li);
+            });
+            updateProgress();
+        }
+
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            currentSlide = index;
+            document.getElementById(`slide-${currentSlide}`).classList.add('active');
+            document.getElementById(`nav-${currentSlide}`).classList.add('active');
+            
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (currentSlide === 2) {
+                setTimeout(() => { if (map) map.invalidateSize(); }, 300);
+            }
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        function updateProgress() {
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            document.getElementById('prev-btn').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+            document.getElementById('next-btn').innerText = currentSlide === slides.length - 1 ? 'نهاية المحتوى' : 'التالي';
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function initMap() {
+            map = L.map('map-container').setView([36.5, 43.5], 5);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            const regions = [
+                { name: "أربيل (إقليم كردستان)", coords: [36.19, 44.01], info: "عاصمة الإقليم ومركز الثقل السياسي، تشتهر بقلعتها التاريخية المدرجة في قائمة اليونسكو." },
+                { name: "السليمانية (باشور)", coords: [35.55, 45.43], info: "العاصمة الثقافية للأكراد في العراق ومركز للأدب والفنون." },
+                { name: "دهوك (باشور)", coords: [36.86, 42.99], info: "مدينة جبلية خلابة وبوابة العراق نحو تركيا." },
+                { name: "ديار بكر (باكور)", coords: [37.91, 40.21], info: "أكبر مدينة كردية في تركيا وتعتبر الرمز السياسي للأكراد هناك." },
+                { name: "مهاباد (روجهلات)", coords: [36.76, 45.72], info: "عاصمة جمهورية مهاباد الكردية القصيرة الأمد (1946) في إيران." },
+                { name: "القامشلي (روجافا)", coords: [37.05, 41.22], info: "المركز الإداري للأكراد في شمال شرق سوريا." },
+                { name: "حلبجة", coords: [35.17, 45.98], info: "رمز المأساة الكردية، شهدت أكبر هجوم كيماوي على مدنيين في التاريخ (16 آذار 1988)." },
+                { name: "كركوك", coords: [35.46, 44.39], info: "مدينة غنية بالنفط وتعتبر منطقة متنازع عليها ذات أهمية قصوى للأكراد." }
+            ];
+
+            regions.forEach(loc => {
+                const marker = L.marker(loc.coords).addTo(map);
+                marker.bindPopup(`<div style="direction: rtl; text-align: right; font-family: 'Noto Sans Arabic', sans-serif;"><b>${loc.name}</b><br>${loc.info}</div>`);
+            });
+        }
+
+        window.onload = () => {
+            initNavigation();
+            initMap();
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') nextSlide();
+            if (e.key === 'ArrowRight') prevSlide();
+        });
+    </script>
+</body>
+</html>
