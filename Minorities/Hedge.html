@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuance in Narrative: Generalization and Scope</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;600;800&family=Noto+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #f1f5f9; /* Slate-100 */
+            color: #334155;
+        }
+        .ar-text {
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            direction: rtl;
+        }
+        .marker-highlight {
+            color: #0f766e; /* Teal-700 */
+            font-weight: 800;
+            background-color: #ccfbf1;
+            /* Reduced vertical padding to prevent overlap with line above */
+            padding: 0px 8px; 
+            border-radius: 6px;
+            border-bottom: 2px solid #0d9488;
+            /* Ensures proper rendering if highlight wraps across two lines */
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+        }
+        .section-header {
+            position: relative;
+            padding-bottom: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 5px;
+            background-color: #0d9488;
+            border-radius: 4px;
+        }
+        /* Custom card spacing for better breathability */
+        .card-content {
+            padding: 2rem;
+        }
+        /* Extra leading specifically for the Arabic display text to handle the highlights */
+        .leading-extra-loose {
+            line-height: 2.3 !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-900 text-white py-16 px-6 border-b-8 border-teal-500 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')]"></div>
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-wide text-teal-50">Nuance in Narrative</h1>
+            <h2 class="text-xl md:text-3xl text-teal-400 font-light mb-8">Advanced Scope & Generalization</h2>
+            <div class="ar-text text-3xl md:text-5xl font-bold mt-6 leading-relaxed" lang="ar">أدوات التَدقيق: التَعْميم والنِّطَاق</div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-6 py-16 max-w-7xl">
+
+        <!-- Context Framework -->
+        <section class="bg-white rounded-2xl shadow-lg p-10 mb-20 border-l-8 border-teal-500 mx-auto max-w-5xl">
+            <h3 class="text-3xl font-bold text-slate-800 mb-6">The Framework: Contextual Hedging</h3>
+            <p class="text-slate-600 leading-loose mb-6 text-xl">
+                In advanced Arabic discourse, specifically when discussing minorities (ethnic, religious, or linguistic), a naked statement is often a false statement. To speak accurately, you must categorize your generalization.
+            </p>
+            <p class="text-slate-600 leading-loose text-xl">
+                Are you limiting your statement by <strong class="text-teal-700">Quantity</strong> (how many?), <strong class="text-teal-700">Frequency</strong> (how often?), <strong class="text-teal-700">Domain</strong> (in what field?), or <strong class="text-teal-700">Probability</strong> (how likely?).
+            </p>
+        </section>
+
+        <!-- Categorized Toolkit -->
+        <section class="mb-24">
+            <div class="section-header max-w-5xl mx-auto">
+                <h3 class="text-4xl font-bold text-slate-800">1. Structural Classification</h3>
+                <p class="text-slate-500 mt-3 text-lg">Select the correct category to nuance your argument.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                
+                <!-- Category 1: Quantity -->
+                <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div class="bg-indigo-50 p-6 border-b border-indigo-100 flex justify-between items-center">
+                        <h4 class="text-indigo-800 font-bold text-xl">A. Quantity & Demographics</h4>
+                        <span class="ar-text text-indigo-900 font-bold text-xl">الكم والعدد</span>
+                    </div>
+                    <div class="p-8 space-y-6">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">قِطاع واسِع مِن</span>
+                            <span class="text-base text-slate-500 italic">A wide sector of...</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">شَريحَة لا يُستَهان بِها</span>
+                            <span class="text-base text-slate-500 italic">A significant segment</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">السَّواد الأَعْظَم</span>
+                            <span class="text-base text-slate-500 italic">The vast majority</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">قِلَّة قَليلة</span>
+                            <span class="text-base text-slate-500 italic">A tiny minority</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 2: Domain/Perspective -->
+                <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div class="bg-emerald-50 p-6 border-b border-emerald-100 flex justify-between items-center">
+                        <h4 class="text-emerald-800 font-bold text-xl">B. Domain & Perspective</h4>
+                        <span class="ar-text text-emerald-900 font-bold text-xl">المجال والزاوية</span>
+                    </div>
+                    <div class="p-8 space-y-6">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">مِن النَّاحِية القَانُونيَّة</span>
+                            <span class="text-base text-slate-500 italic">Legally speaking</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">عَلى الصَّعيد الاجتِمَاعي</span>
+                            <span class="text-base text-slate-500 italic">On the social level</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">نَظَرياً ... لَكِن عَمَلياً</span>
+                            <span class="text-base text-slate-500 italic">Theoretically... but practically...</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">في سِياق مُخْتَلِف</span>
+                            <span class="text-base text-slate-500 italic">In a different context</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 3: Frequency -->
+                <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div class="bg-amber-50 p-6 border-b border-amber-100 flex justify-between items-center">
+                        <h4 class="text-amber-800 font-bold text-xl">C. Frequency & Occurrence</h4>
+                        <span class="ar-text text-amber-900 font-bold text-xl">التكرار والشيوع</span>
+                    </div>
+                    <div class="p-8 space-y-6">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">في كَثيرٍ مِن الأَحْيَان</span>
+                            <span class="text-base text-slate-500 italic">In many cases / Often</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">نادِراً ما</span>
+                            <span class="text-base text-slate-500 italic">Rarely (followed by verb)</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">لَيْسَ دَائِماً</span>
+                            <span class="text-base text-slate-500 italic">Not always</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 4: Probability -->
+                <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div class="bg-sky-50 p-6 border-b border-sky-100 flex justify-between items-center">
+                        <h4 class="text-sky-800 font-bold text-xl">D. Probability & Certainty</h4>
+                        <span class="ar-text text-sky-900 font-bold text-xl">الاحتمالية والترجيح</span>
+                    </div>
+                    <div class="p-8 space-y-6">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">مِن المُرجَّح أَن</span>
+                            <span class="text-base text-slate-500 italic">It is likely that...</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline border-b border-slate-50 pb-4">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">يَبْدُو أَنَّ</span>
+                            <span class="text-base text-slate-500 italic">It seems / appears that...</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline">
+                            <span class="ar-text text-xl font-bold text-slate-700 mb-1 sm:mb-0">قَد + (فعل مضارع)</span>
+                            <span class="text-base text-slate-500 italic">May / Might (Possibility)</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Deep Dive Section -->
+        <section class="mb-24">
+            <div class="section-header max-w-5xl mx-auto">
+                <h3 class="text-4xl font-bold text-slate-800">2. Deep Dive: Applied Analysis</h3>
+                <p class="text-slate-500 mt-3 text-lg">Real-world examples analyzing minority status through specific lenses.</p>
+            </div>
+
+            <div class="space-y-8 max-w-5xl mx-auto">
+                
+                <!-- Example 1 -->
+                <div class="bg-white border-r-8 border-emerald-500 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <span class="text-sm font-bold tracking-widest text-emerald-600 uppercase mb-4 block">Focus: Domain (Theory vs Practice)</span>
+                    <div class="ar-text text-2xl md:text-3xl text-slate-800 leading-extra-loose mb-6" lang="ar">
+                        <span class="marker-highlight">من الناحية الدستورية</span>، يتمتع الجميع بحقوق متساوية، ولكن <span class="marker-highlight">على أرض الواقع</span>، قد تواجه الأقليات عوائق بيروقراطية.
+                    </div>
+                    <p class="text-slate-600 text-lg border-t border-slate-100 pt-4 mt-2 font-light">
+                        "<strong>Constitutionally speaking</strong>, everyone enjoys equal rights, but <strong>on the ground (in reality)</strong>, minorities may face bureaucratic obstacles."
+                    </p>
+                </div>
+
+                <!-- Example 2 -->
+                <div class="bg-white border-r-8 border-indigo-500 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <span class="text-sm font-bold tracking-widest text-indigo-600 uppercase mb-4 block">Focus: Quantity (Significant Portion)</span>
+                    <div class="ar-text text-2xl md:text-3xl text-slate-800 leading-extra-loose mb-6" lang="ar">
+                        لا يزال <span class="marker-highlight">قطاع واسع من</span> الدروز يقطنون في المناطق الجبلية، إلا أن هناك هجرة <span class="marker-highlight">متزايدة</span> نحو المدن الكبرى.
+                    </div>
+                    <p class="text-slate-600 text-lg border-t border-slate-100 pt-4 mt-2 font-light">
+                        "<strong>A wide sector of</strong> the Druze still inhabit mountainous regions, yet there is an <strong>increasing</strong> migration towards major cities."
+                    </p>
+                </div>
+
+                <!-- Example 3 -->
+                <div class="bg-white border-r-8 border-amber-500 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <span class="text-sm font-bold tracking-widest text-amber-600 uppercase mb-4 block">Focus: Nuance (Social Integration)</span>
+                    <div class="ar-text text-2xl md:text-3xl text-slate-800 leading-extra-loose mb-6" lang="ar">
+                        قد يواجه المسيحيون تحديات سياسية في بعض الفترات، إلا أنهم <span class="marker-highlight">من الناحية الاجتماعية والاقتصادية</span> يُعتبرون جزءاً أصيلاً من هوية الشرق الأوسط.
+                    </div>
+                    <p class="text-slate-600 text-lg border-t border-slate-100 pt-4 mt-2 font-light">
+                        "Christians may face political challenges in some periods, yet <strong>from a social and economic perspective</strong>, they are considered an authentic part of the Middle East's identity."
+                    </p>
+                </div>
+
+                <!-- Example 4 -->
+                <div class="bg-white border-r-8 border-sky-500 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <span class="text-sm font-bold tracking-widest text-sky-600 uppercase mb-4 block">Focus: Probability & Trend</span>
+                    <div class="ar-text text-2xl md:text-3xl text-slate-800 leading-extra-loose mb-6" lang="ar">
+                         <span class="marker-highlight">من المرجح أن</span> يؤدي الاعتراف الرسمي باللغات المحلية إلى تعزيز الشعور بالانتماء الوطني لدى الأقليات اللغوية.
+                    </div>
+                    <p class="text-slate-600 text-lg border-t border-slate-100 pt-4 mt-2 font-light">
+                        "<strong>It is likely that</strong> official recognition of local languages will lead to strengthening the sense of national belonging among linguistic minorities."
+                    </p>
+                </div>
+
+                 <!-- Example 5 -->
+                 <div class="bg-white border-r-8 border-rose-500 p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <span class="text-sm font-bold tracking-widest text-rose-600 uppercase mb-4 block">Focus: Defining the Exception</span>
+                    <div class="ar-text text-2xl md:text-3xl text-slate-800 leading-extra-loose mb-6" lang="ar">
+                        تتعايش الطوائف بسلام <span class="marker-highlight">في الغالب</span>، وتبقى النزاعات محصورة <span class="marker-highlight">في سياقات سياسية محددة</span> وليست دينية.
+                    </div>
+                    <p class="text-slate-600 text-lg border-t border-slate-100 pt-4 mt-2 font-light">
+                        "Sects coexist peacefully <strong>for the most part</strong>, and conflicts remain confined <strong>to specific political contexts</strong> rather than religious ones."
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Final Challenge: Expanded -->
+        <section class="bg-slate-800 rounded-2xl p-10 text-white max-w-6xl mx-auto">
+            <h3 class="text-3xl font-bold mb-8 border-b border-slate-600 pb-4">3. Quick Check: Replace the Broad Generalization</h3>
+            
+            <div class="space-y-12">
+                
+                <!-- Challenge 1 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="bg-slate-700/50 p-6 rounded-xl border border-slate-600">
+                        <p class="text-red-300 font-bold mb-3 uppercase tracking-wider text-sm">Avoid (Too Broad)</p>
+                        <div class="ar-text text-2xl mb-2" lang="ar">الأكراد يريدون الانفصال.</div>
+                        <p class="text-base text-slate-400">"The Kurds want separation."</p>
+                    </div>
+                    <div class="bg-slate-700 p-6 rounded-xl border-l-4 border-teal-400 shadow-lg">
+                        <p class="text-teal-300 font-bold mb-3 uppercase tracking-wider text-sm">Prefer (Nuanced)</p>
+                        <div class="ar-text text-2xl leading-extra-loose mb-2" lang="ar">
+                            بينما تطالب <span class="text-teal-300 font-bold">أحزاب سياسية معينة</span> بالانفصال، يسعى <span class="text-teal-300 font-bold">قطاع آخر</span> إلى حكم ذاتي موسع ضمن الدولة.
+                        </div>
+                        <p class="text-base text-slate-300 leading-relaxed">"While <strong>certain political parties</strong> demand separation, <strong>another sector</strong> seeks expanded autonomy within the state."</p>
+                    </div>
+                </div>
+
+                <!-- Challenge 2 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="bg-slate-700/50 p-6 rounded-xl border border-slate-600">
+                        <p class="text-red-300 font-bold mb-3 uppercase tracking-wider text-sm">Avoid (Too Broad)</p>
+                        <div class="ar-text text-2xl mb-2" lang="ar">الشباب العربي يتخلى عن التقاليد.</div>
+                        <p class="text-base text-slate-400">"Arab youth are abandoning traditions."</p>
+                    </div>
+                    <div class="bg-slate-700 p-6 rounded-xl border-l-4 border-teal-400 shadow-lg">
+                        <p class="text-teal-300 font-bold mb-3 uppercase tracking-wider text-sm">Prefer (Nuanced)</p>
+                        <div class="ar-text text-2xl leading-extra-loose mb-2" lang="ar">
+                            بينما تؤثر العولمة على نمط الحياة، <span class="text-teal-300 font-bold">يعيد كثير من الشباب تفسير</span> التقاليد بدلاً من التخلي عنها <span class="text-teal-300 font-bold">تماماً</span>.
+                        </div>
+                        <p class="text-base text-slate-300 leading-relaxed">"While globalization influences lifestyle, <strong>many youth reinterpret</strong> traditions rather than abandoning them <strong>completely</strong>."</p>
+                    </div>
+                </div>
+
+                <!-- Challenge 3 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="bg-slate-700/50 p-6 rounded-xl border border-slate-600">
+                        <p class="text-red-300 font-bold mb-3 uppercase tracking-wider text-sm">Avoid (Too Broad)</p>
+                        <div class="ar-text text-2xl mb-2" lang="ar">النساء في الشرق الأوسط لا يعملن.</div>
+                        <p class="text-base text-slate-400">"Women in the Middle East do not work."</p>
+                    </div>
+                    <div class="bg-slate-700 p-6 rounded-xl border-l-4 border-teal-400 shadow-lg">
+                        <p class="text-teal-300 font-bold mb-3 uppercase tracking-wider text-sm">Prefer (Nuanced)</p>
+                        <div class="ar-text text-2xl leading-extra-loose mb-2" lang="ar">
+                            <span class="text-teal-300 font-bold">تتفاوت</span> مشاركة المرأة في سوق العمل <span class="text-teal-300 font-bold">حسب الدولة</span>، حيث تكون مرتفعة في مناطق معينة رغم التحديات.
+                        </div>
+                        <p class="text-base text-slate-300 leading-relaxed">"Female participation in the labor market <strong>varies by country</strong>, being high in certain areas despite challenges."</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-500 py-10 text-center border-t border-slate-800">
+        <p class="text-sm">Developed for Advanced Arabic Curricula © 2024</p>
+    </footer>
+
+</body>
+</html>
