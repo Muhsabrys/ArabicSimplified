@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأكراد في سوريا: روجافا - الثورة والتحديات</title>
-    
+    <title>الأكراد في سوريا: روجافا/شمال وشرق سوريا - التاريخ والتحولات (حتى 2026)</title>
+
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,11 +33,7 @@
             --warning: #ea580c;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: var(--font-main);
@@ -47,10 +44,7 @@
             font-size: 18px;
         }
 
-        .app-container {
-            display: flex;
-            min-height: 100vh;
-        }
+        .app-container { display: flex; min-height: 100vh; }
 
         .sidebar {
             width: var(--sidebar-width);
@@ -72,7 +66,7 @@
         }
 
         .sidebar-header h1 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             color: var(--secondary);
             font-weight: 700;
             margin-bottom: 0.5rem;
@@ -96,9 +90,7 @@
             font-size: 0.95rem;
         }
 
-        .nav-item:hover {
-            background: rgba(255,255,255,0.05);
-        }
+        .nav-item:hover { background: rgba(255,255,255,0.05); }
 
         .nav-item.active {
             background: rgba(250, 204, 21, 0.15);
@@ -107,11 +99,7 @@
             font-weight: 600;
         }
 
-        .nav-num {
-            opacity: 0.5;
-            min-width: 2.2rem;
-            font-weight: 300;
-        }
+        .nav-num { opacity: 0.5; min-width: 2.2rem; font-weight: 300; }
 
         .main-content {
             margin-right: var(--sidebar-width);
@@ -147,9 +135,7 @@
             animation: slideIn 0.5s ease-out;
         }
 
-        .slide.active {
-            display: block;
-        }
+        .slide.active { display: block; }
 
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -196,20 +182,9 @@
             font-style: italic;
         }
 
-        .callout.success {
-            background: #f0fdf4;
-            border-right-color: var(--success);
-        }
-
-        .callout.warning {
-            background: #fff7ed;
-            border-right-color: var(--warning);
-        }
-
-        .callout.danger {
-            background: #fef2f2;
-            border-right-color: var(--primary);
-        }
+        .callout.success { background: #f0fdf4; border-right-color: var(--success); }
+        .callout.warning { background: #fff7ed; border-right-color: var(--warning); }
+        .callout.danger { background: #fef2f2; border-right-color: var(--primary); }
 
         .vocab-box {
             background: #f8fafc;
@@ -258,14 +233,8 @@
             font-weight: 600;
         }
 
-        .btn:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: #64748b;
-        }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn-secondary { background: #64748b; }
 
         .mobile-nav-btn {
             display: none;
@@ -282,11 +251,7 @@
             border: none;
         }
 
-        .timeline {
-            position: relative;
-            padding-right: 1.5rem;
-            margin: 2rem 0;
-        }
+        .timeline { position: relative; padding-right: 1.5rem; margin: 2rem 0; }
         .timeline::before {
             content: '';
             position: absolute;
@@ -317,7 +282,7 @@
             padding: 1.5rem;
             border-radius: 8px;
             margin-top: 2rem;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         .references h4 {
@@ -326,15 +291,8 @@
             font-size: 1rem;
         }
 
-        .references ol {
-            margin-right: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .references li {
-            margin-bottom: 0.5rem;
-            color: #475569;
-        }
+        .references ul { margin-right: 1.2rem; line-height: 1.9; }
+        .references li { margin-bottom: 0.5rem; color: #475569; }
 
         .hero-image {
             width: 100%;
@@ -359,26 +317,8 @@
             text-align: center;
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .flag-container {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background: #f8fafc;
-            border-radius: 12px;
-        }
+        .stat-number { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .stat-label { color: var(--text-muted); font-size: 0.95rem; }
 
         .battle-card {
             background: #fef2f2;
@@ -386,6 +326,16 @@
             padding: 1.5rem;
             border-radius: 12px;
             margin: 1rem 0;
+        }
+
+        .note-box {
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            color: #1e3a8a;
+            font-size: 0.95rem;
         }
 
         @media (max-width: 1024px) {
@@ -399,758 +349,844 @@
 </head>
 <body>
 
-    <div class="progress-container">
-        <div id="progress-bar"></div>
-    </div>
+<div class="progress-container">
+    <div id="progress-bar"></div>
+</div>
 
-    <button class="mobile-nav-btn" onclick="toggleSidebar()">☰</button>
+<button class="mobile-nav-btn" onclick="toggleSidebar()">☰</button>
 
-    <div class="app-container">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h1>الأكراد في سوريا</h1>
-                <p style="font-size: 0.85rem; color: #cbd5e1;">روجافا: ثورة في قلب الأزمة السورية</p>
+<div class="app-container">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h1>الأكراد في سوريا</h1>
+            <p style="font-size: 0.85rem; color: #cbd5e1;">
+                روجافا/شمال وشرق سوريا: تاريخٌ طويل وتحولاتٌ سريعة (حتى 2026)
+            </p>
+        </div>
+        <ul class="nav-list" id="nav-list"></ul>
+    </aside>
+
+    <main class="main-content">
+
+        <!-- Slide 0: Introduction -->
+        <section class="slide active" id="slide-0">
+            <div class="hero-image">روجافا</div>
+            <div class="card">
+                <h2>الأكراد في سوريا: نظرة عامة دقيقة</h2>
+                <p>
+                    يُعدّ الأكراد من أكبر المكوّنات غير العربية في سوريا. تقديرات نسبتهم تختلف حسب المصدر، لكن
+                    <strong>رقماً شائعاً في تقارير السياسات العامة هو نحو 10% من السكان</strong> (على أساس تقديرات سكانية تقارب 24 مليوناً).
+                    تُقدَّر أعدادهم غالباً في نطاق <strong>نحو 2–3 ملايين</strong> (مع هامش اختلاف بين الدراسات والتقارير).
+                </p>
+
+                <div class="grid-3">
+                    <div class="stat-card">
+                        <div class="stat-number" style="color: var(--primary);">≈ 2–3 ملايين</div>
+                        <div class="stat-label">تقديرات عدد الأكراد</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" style="color: var(--success);">≈ 10%</div>
+                        <div class="stat-label">نسبة تقريبية من السكان</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" style="color: #2563eb;">3 كتل</div>
+                        <div class="stat-label">مناطق تاريخية رئيسية</div>
+                    </div>
+                </div>
+
+                <p>
+                    ينتشر الأكراد تاريخياً في ثلاث كتل غير متصلة تماماً: <strong>عفرين</strong> في الشمال الغربي،
+                    <strong>كوباني</strong> (عين العرب) على الحدود التركية، و<strong>الجزيرة</strong> في الشمال الشرقي
+                    (الحسكة/القامشلي/المالكية ومحيطها).
+                </p>
+
+                <div class="callout">
+                    <strong>روجافا (Rojava):</strong>
+                    تعني بالكردية “الغرب”. وفي السياق السوري الحديث ارتبط المصطلح بتجربة الحكم المحلي/الإدارة الذاتية التي برزت منذ 2012،
+                    ثم توسّع الخطاب ليستخدم أيضاً تسمية أكثر شمولاً: <strong>“شمال وشرق سوريا”</strong>.
+                </div>
+
+                <div class="vocab-box">
+                    <h4 style="margin-bottom: 0.5rem;">مصطلحات أساسية:</h4>
+                    <span class="vocab-item">روجافا (Rojava)</span>
+                    <span class="vocab-item">YPG - وحدات حماية الشعب</span>
+                    <span class="vocab-item">YPJ - وحدات حماية المرأة</span>
+                    <span class="vocab-item">SDF - قوات سوريا الديمقراطية</span>
+                    <span class="vocab-item">DAANES/AANES - الإدارة الذاتية لشمال وشرق سوريا</span>
+                </div>
+
+                <div class="references">
+                    <h4>مراجع أساسية (غير موسوعية):</h4>
+                    <ul>
+                        <li>UK Home Office – CPIN: Syria (2025): Kurds, Kurdish areas, and the post-2024 transition context.</li>
+                        <li>Human Rights Watch (2009) – Group Denial (للحقوق السياسية والثقافية قبل 2011).</li>
+                        <li>Jordi Tejel (2008) – Syria’s Kurds: History, Politics and Society.</li>
+                    </ul>
+                </div>
             </div>
-            <ul class="nav-list" id="nav-list">
-                <!-- Navigation items injected by JS -->
-            </ul>
-        </aside>
+        </section>
 
-        <main class="main-content">
-            
-            <!-- Slide 0: Introduction -->
-            <section class="slide active" id="slide-0">
-                <div class="hero-image">
-                    روجافا
-                </div>
-                <div class="card">
-                    <h2>الأكراد في سوريا: نظرة عامة</h2>
-                    <p>
-                        يشكل الأكراد في سوريا حوالي <strong>10-15% من السكان</strong> (تقديرات تتراوح بين 2-3.5 مليون نسمة)، وهم ينتشرون بشكل رئيسي في ثلاث مناطق غير متصلة جغرافياً في شمال سوريا: <strong>عفرين</strong> في الشمال الغربي، <strong>كوباني</strong> (عين العرب) على الحدود التركية، و<strong>الجزيرة</strong> في الشمال الشرقي.
-                    </p>
+        <!-- Slide 1: Historical Context -->
+        <section class="slide" id="slide-1">
+            <div class="card">
+                <h2>تاريخ التمييز: الأكراد وسياسات الدولة قبل 2011</h2>
+                <p>
+                    قبل الحرب السورية، واجه كثير من الأكراد قيوداً سياسية وثقافية، وتوتراً دائماً بين مطالب الاعتراف
+                    واللغة والتمثيل من جهة، وبنية الدولة المركزية وسياسات التعريب/التقييد من جهة أخرى.
+                </p>
 
-                    <div class="grid-3">
-                        <div class="stat-card">
-                            <div class="stat-number" style="color: var(--primary);">2-3.5 مليون</div>
-                            <div class="stat-label">الأكراد في سوريا</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" style="color: var(--success);">10-15%</div>
-                            <div class="stat-label">نسبتهم من السكان</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" style="color: #2563eb;">3 مناطق</div>
-                            <div class="stat-label">رئيسية تاريخياً</div>
-                        </div>
-                    </div>
-
-                    <div class="callout">
-                        <strong>روجافا (Rojava):</strong> تعني بالكردية "الغرب" أو "حيث تغرب الشمس"، وهو الاسم الذي أطلقه الأكراد على مناطقهم في سوريا باعتبارها جزءاً من "كردستان الكبرى". بعد 2012، أصبح المصطلح مرادفاً للإدارة الذاتية الكردية في شمال شرق سوريا.
-                    </div>
-
-                    <div class="vocab-box">
-                        <h4 style="margin-bottom: 0.5rem;">مصطلحات أساسية:</h4>
-                        <span class="vocab-item">روجافا (Rojava)</span>
-                        <span class="vocab-item">YPG - وحدات حماية الشعب</span>
-                        <span class="vocab-item">YPJ - وحدات حماية المرأة</span>
-                        <span class="vocab-item">SDF - قوات سوريا الديمقراطية</span>
-                        <span class="vocab-item">DAANES - الإدارة الذاتية</span>
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Syrian Kurdistan - Wikipedia (2026)</li>
-                            <li>UK Government - Country Policy: Kurds and Kurdish Areas, Syria (December 2025)</li>
-                            <li>Democratic Autonomous Administration of North and East Syria - Official Documentation</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 1: Historical Context -->
-            <section class="slide" id="slide-1">
-                <div class="card">
-                    <h2>تاريخ القمع: الأكراد تحت حكم البعث</h2>
-                    <p>
-                        عانى الأكراد السوريون من التمييز الممنهج والقمع طوال عقود حكم حزب البعث العربي الاشتراكي. حُرموا من الجنسية السورية، وحُظرت لغتهم وثقافتهم، وواجهوا سياسات التعريب القسرية.
-                    </p>
-
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <span class="timeline-date">1962</span>
-                            <strong>الإحصاء الاستثنائي</strong>
-                            <p>إحصاء سكاني استثنائي في محافظة الحسكة أدى إلى تجريد حوالي <strong>120,000 كردي</strong> من الجنسية السورية، وتصنيفهم كـ"أجانب" أو "مكتومين".</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">1963 فصاعداً</span>
-                            <strong>سياسات التعريب</strong>
-                            <p>تطبيق سياسات منهجية لتعريب المناطق الكردية، بما في ذلك مصادرة الأراضي ونقل عائلات عربية إلى المناطق الكردية.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">1973</span>
-                            <strong>"الحزام العربي"</strong>
-                            <p>مشروع لإنشاء "حزام عربي" على طول الحدود التركية لفصل الأكراد السوريين عن الأكراد الأتراك.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">حتى 2011</span>
-                            <strong>حظر اللغة والثقافة</strong>
-                            <p>منع تدريس اللغة الكردية، حظر الاحتفال بالأعياد الكردية مثل نوروز، ومنع تسجيل الأطفال بأسماء كردية.</p>
-                        </div>
-                    </div>
-
-                    <div class="callout danger">
-                        <strong>انتفاضة قامشلي (2004):</strong> بدأت خلال مباراة كرة قدم عندما رفع مشجعون أكراد صوراً لعبد الله أوجلان. تطورت إلى احتجاجات واسعة قُمعت بعنف، مما أسفر عن مقتل العشرات وإصابة المئات واعتقال الآلاف.
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Tejel, Jordi. "Syria's Kurds: History, Politics and Society" (2008)</li>
-                            <li>Human Rights Watch - "Group Denial: Repression of Kurdish Political and Cultural Rights in Syria" (2009)</li>
-                            <li>Gunter, Michael M. "Out of Nowhere: The Kurds of Syria in Peace and War" (2014)</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 2: Geographic Distribution -->
-            <section class="slide" id="slide-2">
-                <div class="card">
-                    <h2>الجغرافيا: المناطق الكردية الثلاث</h2>
-                    <p>تتوزع المناطق الكردية في سوريا على ثلاث كتل جغرافية منفصلة، مما خلق تحديات في التواصل والتنسيق:</p>
-                    
-                    <div id="map-container"></div>
-
-                    <div class="grid-3">
-                        <div class="card" style="background: #f0fdf4; border: none; padding: 1.2rem;">
-                            <h4 style="color: #166534;">عفرين (Afrin)</h4>
-                            <p style="font-size: 0.9rem;">
-                                في الشمال الغربي، بالقرب من حلب. منطقة جبلية خصبة معروفة بزيتونها. <strong>احتُلت من قبل تركيا والجيش الوطني السوري في 2018</strong> (عملية غصن الزيتون).
-                            </p>
-                        </div>
-                        <div class="card" style="background: #fffbeb; border: none; padding: 1.2rem;">
-                            <h4 style="color: #92400e;">كوباني (Kobanî)</h4>
-                            <p style="font-size: 0.9rem;">
-                                على الحدود التركية-السورية مباشرة. <strong>موقع معركة تاريخية ضد داعش (2014-2015)</strong> التي أصبحت رمزاً للمقاومة الكردية.
-                            </p>
-                        </div>
-                        <div class="card" style="background: #fef2f2; border: none; padding: 1.2rem;">
-                            <h4 style="color: #991b1b;">الجزيرة (Jazira)</h4>
-                            <p style="font-size: 0.9rem;">
-                                في الشمال الشرقي، تشمل مدن القامشلي والحسكة والمالكية. <strong>المنطقة الأكثر كثافة سكانية كردياً</strong> وغنية بالموارد الطبيعية.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="callout warning">
-                        <strong>تحدي الجغرافيا:</strong> عدم الترابط الجغرافي بين المناطق الكردية الثلاث جعل من الصعب إنشاء كيان كردي موحد، وسهّل على الحكومة السورية والقوى الإقليمية تطبيق سياسة "فرّق تسد".
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Lowe, Robert & Stansfield, Gareth. "The Kurdish Policy Imperative" (2010)</li>
-                            <li>Schmidinger, Thomas. "Rojava: Revolution, War and the Future of Syria's Kurds" (2018)</li>
-                            <li>Rojava Information Center - Geographic Data (2024)</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 3: Syrian Civil War -->
-            <section class="slide" id="slide-3">
-                <div class="card">
-                    <h2>الثورة السورية والحكم الذاتي الكردي</h2>
-                    <p>
-                        مع اندلاع الثورة السورية في 2011، اتخذ الأكراد موقفاً براغماتياً: لم ينحازوا بالكامل إلى الأسد، ولم ينضموا بالكامل إلى المعارضة السورية المسلحة. بدلاً من ذلك، سعوا لبناء حكمهم الذاتي.
-                    </p>
-
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <span class="timeline-date">19 يوليو 2012</span>
-                            <strong>الانسحاب الحكومي</strong>
-                            <p>انسحبت القوات الحكومية السورية من معظم المناطق الكردية دون قتال، مما سمح لـ<strong>وحدات حماية الشعب (YPG)</strong> بالسيطرة على كوباني والمناطق المحيطة.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">يناير 2014</span>
-                            <strong>إعلان روجافا</strong>
-                            <p>إعلان الإدارة الذاتية في ثلاثة كانتونات: عفرين، كوباني، والجزيرة. تبنّي "عقد اجتماعي" (دستور) يؤكد على التعددية العرقية والدينية والمساواة بين الجنسين.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">2013-2014</span>
-                            <strong>صراعات مع الجماعات الإسلامية</strong>
-                            <p>معارك ضد جبهة النصرة وغيرها من الجماعات الإسلامية التي حاولت السيطرة على المناطق الكردية.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">2014 فصاعداً</span>
-                            <strong>الحرب ضد داعش</strong>
-                            <p>بداية المعركة الطويلة ضد تنظيم الدولة الإسلامية (داعش)، التي وضعت الأكراد السوريين في مركز الصراع الدولي.</p>
-                        </div>
-                    </div>
-
-                    <div class="callout success">
-                        <strong>النموذج السياسي:</strong> تبنت روجافا نموذجاً سياسياً يُعرف بـ"الكونفدرالية الديمقراطية" (مستوحى من أفكار عبد الله أوجلان)، يركز على اللامركزية، المساواة بين الجنسين، التعددية العرقية والدينية، والديمقراطية المباشرة.
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Rojava Revolution - Wikipedia (2026)</li>
-                            <li>Knapp, Michael et al. "Revolution in Rojava: Democratic Autonomy and Women's Liberation in Syrian Kurdistan" (2016)</li>
-                            <li>Democratic Autonomous Administration - Social Contract (2014)</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 4: Battle of Kobani -->
-            <section class="slide" id="slide-4">
-                <div class="card">
-                    <h2>معركة كوباني: "ستالينغراد الكردية"</h2>
-                    <p>
-                        من <strong>13 سبتمبر 2014 إلى 26 يناير 2015</strong>، شهدت مدينة كوباني إحدى أعنف معارك الحرب السورية. حاصر تنظيم داعش المدينة لمدة <strong>134 يوماً</strong> في محاولة للسيطرة عليها، لكن المقاومة الكردية الشرسة، مدعومة بضربات جوية أمريكية، حولتها إلى نقطة تحول تاريخية.
-                    </p>
-
-                    <div class="battle-card">
-                        <h3 style="color: var(--primary); margin-bottom: 1rem;">وقائع المعركة:</h3>
-                        <div class="grid-2">
-                            <div>
-                                <strong style="color: #b91c1c;">قوات داعش:</strong>
-                                <ul style="margin-right: 1.5rem; margin-top: 0.5rem;">
-                                    <li>حوالي 4,000-5,000 مقاتل</li>
-                                    <li>دبابات وعربات مصفحة أمريكية مسروقة</li>
-                                    <li>أسلحة ثقيلة ومدفعية</li>
-                                    <li>الخسائر: 1,000-3,710 قتيل</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong style="color: #16a34a;">المدافعون الأكراد:</strong>
-                                <ul style="margin-right: 1.5rem; margin-top: 0.5rem;">
-                                    <li>1,000-2,000 مقاتل من YPG/YPJ</li>
-                                    <li>أسلحة خفيفة ومتوسطة فقط في البداية</li>
-                                    <li>دعم جوي أمريكي-كثيف (2,025 صاروخ)</li>
-                                    <li>الخسائر: 324 قتيل</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <span class="timeline-date">سبتمبر-أكتوبر 2014</span>
-                            <strong>الحصار الأولي</strong>
-                            <p>سيطر داعش على 350 قرية حول كوباني، ونزح 300,000-400,000 كردي إلى تركيا. سيطر التنظيم على 60% من المدينة بحلول أكتوبر.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">أكتوبر-ديسمبر 2014</span>
-                            <strong>التدخل الدولي</strong>
-                            <p>بدأ التحالف الدولي بقيادة أمريكا شن ضربات جوية مكثفة. <strong>75% من جميع الضربات الجوية في سوريا</strong> في هذه الفترة كانت على كوباني.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">26 يناير 2015</span>
-                            <strong>التحرير</strong>
-                            <p>رفعت YPG علماً كردياً طوله 75 متراً على تل ميستنور المطل على المدينة، معلنةً تحرير كوباني بالكامل.</p>
-                        </div>
-                    </div>
-
-                    <div class="callout">
-                        <strong>"ستالينغراد الكردية":</strong> لُقبت المعركة بهذا الاسم لشراستها وأهميتها الرمزية. كانت أول هزيمة كبرى لداعش، وكسرت أسطورة "لا يُقهر" التي بناها التنظيم. كما أظهرت للعالم قدرة المقاومة الكردية وشجاعة المقاتلات الكرديات.
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Siege of Kobanî - Wikipedia (December 2025)</li>
-                            <li>Air & Space Forces Magazine - "The Siege of Kobani" (2019)</li>
-                            <li>Carnegie Endowment - "Why the Victory in Kobane Matters" (2015)</li>
-                            <li>Combating Terrorism Center at West Point - "The Battle for Kobani Comes to the Fore" (2018)</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 5: YPJ Women Fighters -->
-            <section class="slide" id="slide-5">
-                <div class="card">
-                    <h2>وحدات حماية المرأة (YPJ): ثورة النساء</h2>
-                    <p>
-                        تُعتبر <strong>وحدات حماية المرأة (YPJ - Yekîneyên Parastina Jin)</strong> التي تأسست عام 2013، واحدة من أكبر التشكيلات العسكرية النسائية في العالم. تشكل النساء حوالي <strong>30-40%</strong> من قوات سوريا الديمقراطية، وهي نسبة غير مسبوقة في أي جيش في المنطقة.
-                    </p>
-
-                    <div class="grid-2">
-                        <div class="card" style="background: #fef2f2; border: none; padding: 1.5rem;">
-                            <h3 style="color: #991b1b; font-size: 1.3rem;">الأيديولوجيا</h3>
-                            <ul style="margin-right: 1.5rem; line-height: 2;">
-                                <li><strong>المساواة الكاملة:</strong> ليست مجرد مشاركة رمزية، بل قيادة حقيقية في جميع المستويات</li>
-                                <li><strong>نظام الرئاسة المشتركة:</strong> كل منصب قيادي له رئيسان (رجل وامرأة)</li>
-                                <li><strong>كوتا 40%:</strong> ضمان مشاركة المرأة في جميع مستويات الحكم</li>
-                                <li><strong>محاكم نسائية:</strong> لحل قضايا العنف المنزلي والتمييز</li>
-                            </ul>
-                        </div>
-                        <div class="card" style="background: #f0fdf4; border: none; padding: 1.5rem;">
-                            <h3 style="color: #166534; font-size: 1.3rem;">الإنجازات</h3>
-                            <ul style="margin-right: 1.5rem; line-height: 2;">
-                                <li>قيادة عمليات عسكرية كبرى ضد داعش</li>
-                                <li>تحرير آلاف النساء الإيزيديات من العبودية</li>
-                                <li>إلهام حركات نسوية عالمية</li>
-                                <li>تغيير صورة المرأة في الشرق الأوسط</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="callout success">
-                        <strong>الرمزية:</strong> مقاتلات YPJ أصبحن رمزاً عالمياً لتحرر المرأة ومقاومة التطرف. التقارير الإعلامية الدولية ركزت على شجاعتهن في مواجهة داعش، الذي يؤمن بدونية المرأة. حقيقة أن مقاتلي داعش يخشون القتل على يد امرأة (اعتقاداً أنهم لن يدخلوا الجنة) أعطت YPJ ميزة نفسية إضافية.
-                    </div>
-
-                    <div class="vocab-box">
-                        <h4 style="margin-bottom: 0.8rem;">قياديات بارزات في YPJ:</h4>
-                        <p><strong>نسرين عبد الله (Nesrin Abdullah):</strong> القائدة العامة لـYPJ، لعبت دوراً محورياً في معركة كوباني.</p>
-                        <p><strong>آرين ميركان (Arin Mirkan):</strong> مقاتلة استشهدت في كوباني عام 2014 بعد تفجير نفسها لإيقاف هجوم لداعش، وأصبحت رمزاً للتضحية.</p>
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Holmes, Amy Austin. "Statelet of Survivors: The Making of a Semi-Autonomous Region in Northeast Syria" - Oxford University Press (2024)</li>
-                            <li>Knapp, Michael et al. "Revolution in Rojava" - Pluto Press (2016)</li>
-                            <li>Harvard Weatherhead Center - "Survival and Self-Determination in Northeast Syria" Interview with Amy Austin Holmes</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 6: SDF Formation -->
-            <section class="slide" id="slide-6">
-                <div class="card">
-                    <h2>قوات سوريا الديمقراطية (SDF)</h2>
-                    <p>
-                        في <strong>أكتوبر 2015</strong>، تم تشكيل <strong>قوات سوريا الديمقراطية (SDF)</strong> كتحالف متعدد الأعراق يضم الأكراد والعرب والسريان والآشوريين والتركمان وغيرهم. كان الهدف إنشاء قوة عسكرية أكثر شمولية لمحاربة داعش والحصول على دعم أمريكي أوسع.
-                    </p>
-
-                    <div class="grid-2">
-                        <div class="stat-card">
-                            <div class="stat-number" style="color: var(--primary);">50,000+</div>
-                            <div class="stat-label">إجمالي المقاتلين (تقديرات 2017)</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" style="color: var(--success);">60%</div>
-                            <div class="stat-label">نسبة المقاتلين العرب</div>
-                        </div>
-                    </div>
-
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <span class="timeline-date">2016</span>
-                            <strong>تحرير منبج</strong>
-                            <p>معركة شرسة لتحرير مدينة منبج ذات الأغلبية العربية من داعش، استمرت شهرين وأسفرت عن مقتل المئات.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">2017</span>
-                            <strong>تحرير الرقة</strong>
-                            <p>عاصمة "خلافة" داعش المعلنة. معركة استمرت 4 أشهر (يونيو-أكتوبر 2017) ودمرت المدينة بالكامل تقريباً، لكنها أنهت السيطرة الإقليمية لداعش.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">مارس 2019</span>
-                            <strong>سقوط باغوز</strong>
-                            <p>آخر معاقل داعش في سوريا. إعلان نهاية "الخلافة" الإقليمية لتنظيم الدولة الإسلامية.</p>
-                        </div>
-                    </div>
-
-                    <div class="callout warning">
-                        <strong>التحدي الديموغرافي:</strong> مع توسع SDF وسيطرتها على مناطق ذات أغلبية عربية (الرقة، دير الزور)، برزت تحديات في الحكم والشرعية. بعض السكان العرب اعترضوا على القيادة الكردية، مما خلق توترات داخلية.
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Syrian Democratic Forces - Wikipedia</li>
-                            <li>Combating Terrorism Center - "The Battle for Raqqa and the Challenges after Liberation" (2017)</li>
-                            <li>International Crisis Group - Reports on SDF (2017-2024)</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 7: DAANES -->
-            <section class="slide" id="slide-7">
-                <div class="card">
-                    <h2>الإدارة الذاتية (DAANES)</h2>
-                    <p>
-                        في <strong>مارس 2016</strong>، تم إعلان <strong>الإدارة الذاتية الديمقراطية لشمال وشرق سوريا (DAANES)</strong> رسمياً، متخلية عن اسم "روجافا" لصالح اسم أكثر شمولية يعكس التنوع العرقي في المنطقة.
-                    </p>
-
-                    <div class="grid-2">
-                        <div class="card" style="background: #fffbeb; border: none; padding: 1.5rem;">
-                            <h3 style="color: #92400e; font-size: 1.2rem;">الهيكل السياسي</h3>
-                            <ul style="margin-right: 1.5rem; margin-top: 0.8rem;">
-                                <li><strong>الرئاسة المشتركة:</strong> رجل وامرأة في كل منصب قيادي</li>
-                                <li><strong>مجالس محلية:</strong> ديمقراطية مباشرة على مستوى الأحياء والقرى</li>
-                                <li><strong>تمثيل الأقليات:</strong> كوتا مضمونة لجميع المجموعات العرقية والدينية</li>
-                                <li><strong>3 جامعات:</strong> جامعة روجافا (قامشلي)، جامعة كوباني، جامعة الشرق (الرقة)</li>
-                            </ul>
-                        </div>
-                        <div class="card" style="background: #f0fdf4; border: none; padding: 1.5rem;">
-                            <h3 style="color: #166534; font-size: 1.2rem;">التنوع السكاني</h3>
-                            <ul style="margin-right: 1.5rem; margin-top: 0.8rem;">
-                                <li><strong>الأكراد:</strong> الأغلبية في الجزيرة وكوباني</li>
-                                <li><strong>العرب:</strong> الأغلبية في الرقة ودير الزور</li>
-                                <li><strong>السريان والآشوريون:</strong> مسيحيون أصليون</li>
-                                <li><strong>الإيزيديون:</strong> أقلية دينية كردية</li>
-                                <li><strong>التركمان والشركس والأرمن</strong></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="callout">
-                        <strong>الاقتصاد:</strong> تتبنى DAANES نموذجاً اقتصادياً يجمع بين التعاونيات والملكية الخاصة، يُعرف بـ"اقتصاد الشعب". تسيطر على حقول نفط مهمة في دير الزور، لكنها تواجه عقوبات وحصاراً اقتصادياً من تركيا.
-                    </div>
-
-                    <div class="vocab-box">
-                        <h4 style="margin-bottom: 0.8rem;">التحديات الرئيسية:</h4>
-                        <span class="vocab-item">الاعتراف الدولي</span>
-                        <span class="vocab-item">التوترات العربية-الكردية</span>
-                        <span class="vocab-item">التهديد التركي</span>
-                        <span class="vocab-item">الموارد المحدودة</span>
-                        <span class="vocab-item">إعادة الإعمار</span>
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Democratic Autonomous Administration of North and East Syria - Wikipedia (2026)</li>
-                            <li>Harmoon Center - "Northern Syria: A Mosaic of Towns" (May 2024)</li>
-                            <li>Rojava Information Center - Official Reports</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 8: Turkish Attacks -->
-            <section class="slide" id="slide-8">
-                <div class="card">
-                    <h2>التهديد التركي: عمليات عسكرية متكررة</h2>
-                    <p>
-                        تعتبر تركيا YPG/SDF امتداداً لحزب العمال الكردستاني (PKK)، الذي تصنفه كمنظمة إرهابية. منذ 2016، شنت تركيا عدة عمليات عسكرية في شمال سوريا لإنشاء "منطقة آمنة" وطرد الأكراد.
-                    </p>
-
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <span class="timeline-date">أغسطس 2016</span>
-                            <strong>عملية درع الفرات</strong>
-                            <p>السيطرة على جرابلس والباب، منع الاتصال الجغرافي بين كوباني وعفرين.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">يناير-مارس 2018</span>
-                            <strong>عملية غصن الزيتون</strong>
-                            <p>احتلال عفرين بالكامل. نزوح 150,000-300,000 كردي. تقارير واسعة عن انتهاكات حقوق الإنسان والتطهير العرقي.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">أكتوبر 2019</span>
-                            <strong>عملية نبع السلام</strong>
-                            <p>احتلال تل أبيض ورأس العين بعد انسحاب القوات الأمريكية. نزوح 300,000 شخص.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-date">نوفمبر-ديسمبر 2024</span>
-                            <strong>هجمات ما بعد سقوط الأسد</strong>
-                            <p>استغلت تركيا والجيش الوطني السوري (SNA) سقوط الأسد للهجوم على مناطق SDF، والسيطرة على تل رفعت ومنبج. نزوح أكثر من 200,000 كردي.</p>
-                        </div>
-                    </div>
-
-                    <div class="callout danger">
-                        <strong>الوضع الحالي (2025-2026):</strong> بعد سقوط نظام الأسد في ديسمبر 2024، تصاعدت الهجمات التركية بشكل كبير. الرئيس التركي أردوغان يطالب بـ"القضاء على YPG" ويهدد بتدخل عسكري واسع النطاق. أكثر من 100,000 كردي نزحوا، والوضع يزداد خطورة يومياً.
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Turkish-Syrian National Army Offensive in Northern Syria (2024-2025) - Wikipedia</li>
-                            <li>UK Government - Syria Country Policy (December 2025)</li>
-                            <li>Stiftung Wissenschaft und Politik - "The Fall of the Assad Regime: Regional Power Shifts" (2024)</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 9: Current Situation -->
-            <section class="slide" id="slide-9">
-                <div class="card">
-                    <h2>الوضع الراهن: بعد سقوط الأسد (2024-2026)</h2>
-                    <p>
-                        في <strong>8 ديسمبر 2024</strong>، سقط نظام بشار الأسد بعد هجوم خاطف من قبل هيئة تحرير الشام (HTS) والمعارضة السورية. بينما احتفل السوريون بنهاية 50 عاماً من حكم عائلة الأسد، واجه الأكراد <strong>تهديداً وجودياً جديداً</strong>.
-                    </p>
-
-                    <div class="battle-card">
-                        <h3 style="color: var(--primary); margin-bottom: 1rem;">التحديات الحالية:</h3>
-                        
-                        <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                            <strong style="color: #991b1b;">1. الهجمات التركية المتصاعدة</strong>
-                            <p style="margin-top: 0.5rem;">تركيا والجيش الوطني السوري يشنون هجمات واسعة على مناطق SDF. أكثر من 200,000 نازح من تل رفعت، منبج، والشهباء. تركيا تطالب بـ"القضاء التام على YPG".</p>
-                        </div>
-
-                        <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                            <strong style="color: #991b1b;">2. الحكومة الانتقالية المعادية</strong>
-                            <p style="margin-top: 0.5rem;">القيادة الجديدة في دمشق (HTS تحت أحمد الشرع) قريبة من تركيا ومعادية للحكم الذاتي الكردي. تطالب بدمج SDF في الجيش السوري، لكن الأكراد يخشون فقدان حقوقهم.</p>
-                        </div>
-
-                        <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                            <strong style="color: #991b1b;">3. مستقبل الدعم الأمريكي غير واضح</strong>
-                            <p style="margin-top: 0.5rem;">بايدن يؤكد دعمه للأكراد، لكن ترامب سبق أن سحب القوات الأمريكية في 2019. مستقبل التحالف الأمريكي-الكردي غير مؤكد.</p>
-                        </div>
-
-                        <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                            <strong style="color: #991b1b;">4. اتفاق الدمج المتعثر</strong>
-                            <p style="margin-top: 0.5rem;">في 10 مارس 2025، وقعت SDF اتفاقاً للاندماج في مؤسسات الدولة، لكن التطبيق متعثر والاشتباكات مستمرة في حلب ومنبج.</p>
-                        </div>
-                    </div>
-
-                    <div class="callout warning">
-                        <strong>الوضع الإنساني:</strong> حوالي <strong>1.1 مليون نازح</strong> في شمال شرق سوريا نتيجة الصراعات الأخيرة. الأمم المتحدة تقدر أن 16.5 مليون سوري بحاجة للمساعدات الإنسانية في 2025. روجافا تواجه أزمة إنسانية متصاعدة.
-                    </div>
-
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Fall of the Assad Regime - Wikipedia (2026)</li>
-                            <li>PRIF Blog - "Rojava Under Pressure After the Fall of Assad" (January 2025)</li>
-                            <li>Jacobin - "Rojava Is Fighting for Its Survival" (January 2026)</li>
-                            <li>UK House of Commons - "Syria after Assad: Consequences and Interim Authorities" (2025)</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 10: Future & Conclusion -->
-            <section class="slide" id="slide-10">
-                <div class="card">
-                    <h2>المستقبل: بين البقاء والاندثار</h2>
-                    <p>
-                        يقف الأكراد السوريون الآن عند مفترق طرق تاريخي. بعد سنوات من بناء حكم ذاتي ناجح نسبياً، ومحاربة داعش نيابة عن العالم، يواجهون خطر فقدان كل ما حققوه.
-                    </p>
-
-                    <div class="grid-2">
-                        <div class="card" style="background: #fef2f2; border: 2px solid #fecaca; padding: 1.5rem;">
-                            <h3 style="color: #991b1b;">السيناريوهات المحتملة:</h3>
-                            <ul style="margin-right: 1.5rem; margin-top: 0.8rem; line-height: 2;">
-                                <li><strong>1. الغزو التركي الكامل:</strong> تركيا تشن عملية عسكرية واسعة وتحتل كامل مناطق SDF</li>
-                                <li><strong>2. الدمج القسري:</strong> حل SDF وإنهاء الحكم الذاتي تحت ضغط دمشق وأنقرة</li>
-                                <li><strong>3. الفيدرالية:</strong> اتفاق على نظام فيدرالي في سوريا الجديدة (الأقل احتمالاً)</li>
-                                <li><strong>4. الوضع الراهن الهش:</strong> استمرار الصراع منخفض الحدة مع بقاء الأكراد تحت تهديد مستمر</li>
-                            </ul>
-                        </div>
-                        <div class="card" style="background: #f0fdf4; border: 2px solid #bbf7d0; padding: 1.5rem;">
-                            <h3 style="color: #166534;">الإنجازات والإرث:</h3>
-                            <ul style="margin-right: 1.5rem; margin-top: 0.8rem; line-height: 2;">
-                                <li>هزيمة داعش وحماية الشرق الأوسط من التطرف</li>
-                                <li>نموذج فريد للحكم متعدد الأعراق والأديان</li>
-                                <li>ثورة في حقوق المرأة والمساواة بين الجنسين</li>
-                                <li>إنقاذ آلاف الإيزيديين من الإبادة الجماعية</li>
-                                <li>إلهام حركات ديمقراطية في المنطقة</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="callout">
-                        <strong>كلمات من روجافا:</strong> "إذا لم يتحرك المجتمع الدولي، سيقومون بمذبحة ضد كل شعب روجافا. لكننا نعرف أن الأكراد عانوا من مذابح كثيرة، ودائماً نهضوا من جديد. نحن نريد السلام والديمقراطية." - لافا من عفرين (2026)
-                    </div>
-
-                    <div class="vocab-box" style="background: #fef9c3; border-color: #fbbf24;">
-                        <h4 style="margin-bottom: 0.8rem; color: #92400e;">خلاصة:</h4>
-                        <p style="line-height: 1.8;">
-                            تجربة الأكراد السوريين في روجافا تمثل واحدة من أكثر التجارب السياسية جرأة وإبداعاً في الشرق الأوسط الحديث. رغم كل التحديات والتهديدات، نجحوا في بناء نموذج للتعايش والديمقراطية في منطقة مزقتها الحروب. مستقبلهم الآن يعتمد على الإرادة الدولية لحماية من حارب الإرهاب نيابة عن العالم، وعلى قدرتهم على التفاوض والبقاء في عالم جيوسياسي معقد ومعادٍ في كثير من الأحيان.
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-date">1962</span>
+                        <strong>الإحصاء الاستثنائي في الحسكة</strong>
+                        <p>
+                            أدّى الإحصاء إلى تجريد عشرات الآلاف من الأكراد من الجنسية (تُذكر في التقارير أرقام تأسيسية مثل
+                            <strong>نحو 120 ألفاً</strong> كبداية تاريخية للأزمة، ثم اتسعت آثارها عبر الأبناء والأحفاد).
                         </p>
                     </div>
 
-                    <div class="references">
-                        <h4>المراجع:</h4>
-                        <ol>
-                            <li>Holmes, Amy Austin. "Statelet of Survivors" - Oxford University Press (2024)</li>
-                            <li>Schmidinger, Thomas. "Rojava: Revolution, War and the Future of Syria's Kurds" (2018)</li>
-                            <li>International Crisis Group - Syria Reports (2024-2026)</li>
-                            <li>All previous cited sources</li>
-                        </ol>
+                    <div class="timeline-item">
+                        <span class="timeline-date">الستينيات–السبعينيات</span>
+                        <strong>سياسات تعريب وتغيير إداري/سكاني</strong>
+                        <p>
+                            ارتبطت المرحلة بسياسات “تعريب” في مناطق شمالية، وتغييرات إدارية وتسموية، وتوترات حول الأراضي والملكية والتمثيل.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">1973</span>
+                        <strong>“الحزام العربي” (كمشروع/سياسة)</strong>
+                        <p>
+                            تُستخدم التسمية للإشارة إلى مشاريع/سياسات هدفت إلى إعادة هندسة الشريط الحدودي شمالاً بما يضعف الترابط السكاني الكردي.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">حتى 2011</span>
+                        <strong>قيود ثقافية/لغوية</strong>
+                        <p>
+                            تفاوتت القيود عملياً عبر الفترات، لكن ظلّت اللغة الكردية والتعليم والاحتفالات والرموز محل نزاع مع الدولة وأجهزتها.
+                        </p>
                     </div>
                 </div>
-            </section>
 
-            <!-- Slide 11: Bibliography -->
-            <section class="slide" id="slide-11">
-                <div class="card">
-                    <h2>المراجع الشاملة والببليوغرافيا</h2>
-                    
-                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
-                        <h3 style="color: #1e40af; margin-bottom: 1rem;">الكتب والدراسات الأكاديمية:</h3>
-                        <ol style="line-height: 2; margin-right: 1.5rem;">
-                            <li>Holmes, Amy Austin. "Statelet of Survivors: The Making of a Semi-Autonomous Region in Northeast Syria" - Oxford University Press (2024)</li>
-                            <li>Schmidinger, Thomas. "Rojava: Revolution, War and the Future of Syria's Kurds" - Pluto Press (2018)</li>
-                            <li>Knapp, Michael, Flach, Anja & Ayboga, Ercan. "Revolution in Rojava: Democratic Autonomy and Women's Liberation in Syrian Kurdistan" - Pluto Press (2016)</li>
-                            <li>Gunter, Michael M. "Out of Nowhere: The Kurds of Syria in Peace and War" - Hurst Publishers (2014)</li>
-                            <li>Tejel, Jordi. "Syria's Kurds: History, Politics and Society" - Routledge (2008)</li>
-                        </ol>
-                    </div>
-
-                    <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
-                        <h3 style="color: #166534; margin-bottom: 1rem;">التقارير والوثائق الرسمية:</h3>
-                        <ol style="line-height: 2; margin-right: 1.5rem;">
-                            <li>UK Government - "Country Policy and Information Note: Kurds and Kurdish Areas, Syria" (December 2025)</li>
-                            <li>Human Rights Watch - "Group Denial: Repression of Kurdish Political and Cultural Rights in Syria" (2009)</li>
-                            <li>Democratic Autonomous Administration of North and East Syria - Social Contract (2014)</li>
-                            <li>Rojava Information Center - Official Reports and Statistics (2024-2025)</li>
-                            <li>International Crisis Group - Multiple Reports on Syria and Rojava (2017-2026)</li>
-                        </ol>
-                    </div>
-
-                    <div style="background: #fffbeb; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
-                        <h3 style="color: #92400e; margin-bottom: 1rem;">المراكز البحثية والمؤسسات:</h3>
-                        <ol style="line-height: 2; margin-right: 1.5rem;">
-                            <li>Combating Terrorism Center at West Point - Studies on Kobani and SDF</li>
-                            <li>Carnegie Endowment for International Peace - Middle East Program Reports</li>
-                            <li>Harmoon Center for Contemporary Studies - Northern Syria Reports</li>
-                            <li>Stiftung Wissenschaft und Politik (SWP) - German Institute for International Affairs</li>
-                            <li>Peace Research Institute Frankfurt (PRIF)</li>
-                        </ol>
-                    </div>
-
-                    <div style="background: #fef2f2; padding: 1.5rem; border-radius: 12px;">
-                        <h3 style="color: #991b1b; margin-bottom: 1rem;">المصادر الإعلامية والوثائقية:</h3>
-                        <ol style="line-height: 2; margin-right: 1.5rem;">
-                            <li>Wikipedia - Multiple Articles on Syrian Kurds, Rojava, SDF, YPG/YPJ (2025-2026)</li>
-                            <li>Air & Space Forces Magazine - "The Siege of Kobani" (2019)</li>
-                            <li>Deutsche Welle - Syria Coverage (2024-2025)</li>
-                            <li>Al Jazeera, Reuters, Euronews - Current Affairs Coverage</li>
-                            <li>Jacobin Magazine - "Rojava Is Fighting for Its Survival" (2026)</li>
-                        </ol>
-                    </div>
-
-                    <div class="callout" style="margin-top: 2rem; background: #e0f2fe; border-right-color: #0284c7;">
-                        <strong>ملاحظة:</strong> جميع المعلومات الواردة في هذا العرض التقديمي تم التحقق منها من مصادر متعددة وموثوقة. نظراً للطبيعة المتغيرة للوضع في سوريا، بعض المعلومات قد تتطلب تحديثاً مستمراً.
-                    </div>
+                <div class="callout danger">
+                    <strong>انتفاضة/أحداث القامشلي (2004):</strong>
+                    بدأت في سياق توتر جماهيري ثم توسعت إلى احتجاجات وقمع أمني. تختلف الأرقام الدقيقة للضحايا بين المصادر،
+                    لكن كثيراً من التقارير تتحدث عن <strong>مقتل وإصابة واعتقال أعداد كبيرة</strong> وتداعيات سياسية طويلة.
                 </div>
-            </section>
 
-            <div class="controls">
-                <button class="btn btn-secondary" id="prev-btn" onclick="prevSlide()">السابق</button>
-                <button class="btn" id="next-btn" onclick="nextSlide()">التالي</button>
+                <div class="references">
+                    <h4>مراجع:</h4>
+                    <ul>
+                        <li>Tejel, Jordi (2008).</li>
+                        <li>Human Rights Watch (2009).</li>
+                        <li>Gunter, Michael (2014) – Out of Nowhere: The Kurds of Syria in Peace and War.</li>
+                    </ul>
+                </div>
             </div>
-        </main>
-    </div>
+        </section>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
-    <script>
-        const slides = [
-            { title: "مقدمة: من هم الأكراد السوريون؟" },
-            { title: "التاريخ: القمع تحت البعث" },
-            { title: "الجغرافيا: المناطق الثلاث" },
-            { title: "الثورة السورية والحكم الذاتي" },
-            { title: "معركة كوباني التاريخية" },
-            { title: "YPJ: ثورة النساء" },
-            { title: "قوات سوريا الديمقراطية" },
-            { title: "الإدارة الذاتية (DAANES)" },
-            { title: "التهديد التركي" },
-            { title: "الوضع الحالي 2024-2026" },
-            { title: "المستقبل والخلاصة" },
-            { title: "المراجع والمصادر" }
+        <!-- Slide 2: Geographic Distribution -->
+        <section class="slide" id="slide-2">
+            <div class="card">
+                <h2>الجغرافيا: ثلاث كتل تاريخية وتحدي عدم الترابط</h2>
+                <p>
+                    وجود الأكراد في ثلاث كتل غير متصلة تماماً خلق تحديات للتواصل والتنظيم السياسي،
+                    وسهّل على القوى المتصارعة توظيف الجغرافيا في الصراع.
+                </p>
+
+                <div id="map-container"></div>
+
+                <div class="grid-3">
+                    <div class="card" style="background: #f0fdf4; border: none; padding: 1.2rem;">
+                        <h4 style="color: #166534;">عفرين (Afrin)</h4>
+                        <p style="font-size: 0.95rem;">
+                            منطقة شمال غربي قرب حلب، معروفة بالزيتون. منذ <strong>2018</strong> خضعت لسيطرة تركيا وفصائل سورية حليفة لها
+                            (عملية <strong>غصن الزيتون</strong>)، مع سجالات واسعة حول الانتهاكات والتغيير السكاني.
+                        </p>
+                    </div>
+
+                    <div class="card" style="background: #fffbeb; border: none; padding: 1.2rem;">
+                        <h4 style="color: #92400e;">كوباني (Kobanî)</h4>
+                        <p style="font-size: 0.95rem;">
+                            مدينة حدودية أصبحت رمزاً بعد معركة 2014–2015 ضد تنظيم الدولة الإسلامية، وتحولت إلى أيقونة للمقاومة الكردية.
+                        </p>
+                    </div>
+
+                    <div class="card" style="background: #fef2f2; border: none; padding: 1.2rem;">
+                        <h4 style="color: #991b1b;">الجزيرة (Jazira)</h4>
+                        <p style="font-size: 0.95rem;">
+                            الشمال الشرقي (الحسكة/القامشلي/المالكية). منطقة متعددة الإثنيات، وفيها موارد (زراعة/نفط) وحساسية حدودية
+                            مع تركيا والعراق.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="callout warning">
+                    <strong>تحدي الجغرافيا:</strong>
+                    عدم الترابط بين الكتل الثلاث جعل بناء كيان سياسي موحّد أكثر صعوبة، ورفع كلفة الدفاع/الإدارة،
+                    خاصة في مراحل الحرب وتبدّل خرائط السيطرة.
+                </div>
+
+                <div class="references">
+                    <h4>مراجع:</h4>
+                    <ul>
+                        <li>Schmidinger, Thomas (2018) – Rojava: Revolution, War and the Future of Syria’s Kurds.</li>
+                        <li>تقارير سياسات عامة/حقوقية متعددة عن عفرين وما بعدها (2018–2025).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Syrian Civil War -->
+        <section class="slide" id="slide-3">
+            <div class="card">
+                <h2>2011–2016: الثورة والحكم المحلي وتحوّل الأولويات</h2>
+                <p>
+                    مع اندلاع الثورة السورية، لم يكن الموقف الكردي كتلة واحدة: تنوعت القوى والتيارات،
+                    لكن <strong>الأولوية العملية</strong> لكثير من الفاعلين المحليين أصبحت
+                    بناء إدارة أمنية/مدنية محلية وحماية المدن في ظل فراغ الدولة وتعدد الفصائل.
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-date">2012</span>
+                        <strong>فراغ/انسحابات وتبدّل السيطرة محلياً</strong>
+                        <p>
+                            شهدت مناطق كردية عدة تغيّراً في الوجود الأمني للدولة، وصعود قوى محلية مسلحة أبرزها وحدات حماية الشعب/المرأة.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2014</span>
+                        <strong>إعلان إدارة ذاتية (كانتونات)</strong>
+                        <p>
+                            برزت إدارة محلية في الجزيرة/كوباني/عفرين مع “عقد اجتماعي” وإطار إداري يؤكد مبادئ اللامركزية والتعددية والمساواة.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2015–2016</span>
+                        <strong>توسع التحالفات وإعادة التسمية</strong>
+                        <p>
+                            مع التحالف ضد داعش وتوسع مناطق السيطرة، اتسع الخطاب من “روجافا” إلى “شمال وشرق سوريا”
+                            لتأكيد شمول مكوّنات عربية وسريانية/آشورية وغيرها.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="callout success">
+                    <strong>الفكرة السياسية:</strong>
+                    من الخطابات المؤثرة في التجربة مفهوم “الكونفدرالية الديمقراطية” (اللامركزية/المجالس/تمثيل النساء)
+                    لكنه يبقى موضوع جدل حول قابلية التطبيق، وحدود الاستقلال، وعلاقته بالدولة السورية وبالإقليم.
+                </div>
+
+                <div class="references">
+                    <h4>مراجع:</h4>
+                    <ul>
+                        <li>Knapp, Flach, Ayboga (2016) – Revolution in Rojava.</li>
+                        <li>دراسات وتقارير حول الإدارة الذاتية وتحوّل “روجافا” إلى “شمال وشرق سوريا”.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Battle of Kobani -->
+        <section class="slide" id="slide-4">
+            <div class="card">
+                <h2>معركة كوباني (2014–2015): نقطة تحوّل ضد داعش</h2>
+                <p>
+                    بين <strong>13 سبتمبر 2014</strong> و<strong>26 يناير 2015</strong>، شهدت كوباني واحدة من أعنف المعارك ضد تنظيم الدولة.
+                    تحولت المعركة إلى <strong>رمز عالمي</strong> بسبب شدة القتال، وتغطية الإعلام، ودور الدعم الجوي للتحالف.
+                </p>
+
+                <div class="battle-card">
+                    <h3 style="color: var(--primary); margin-bottom: 1rem;">ملامح عامة (بدون أرقام مبالغ فيها):</h3>
+                    <div class="grid-2">
+                        <div>
+                            <strong style="color: #b91c1c;">داعش:</strong>
+                            <ul style="margin-right: 1.5rem; margin-top: 0.5rem;">
+                                <li>حشد قوات كبيرة وأسلحة ثقيلة</li>
+                                <li>سيطرة سريعة على ريف واسع في البداية</li>
+                                <li>خسائر بشرية كبيرة خلال أشهر القتال</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: #16a34a;">المدافعون:</strong>
+                            <ul style="margin-right: 1.5rem; margin-top: 0.5rem;">
+                                <li>YPG/YPJ كقوة دفاع محلية أساسية</li>
+                                <li>دعم جوي كثيف من التحالف بقيادة الولايات المتحدة</li>
+                                <li>مع نهاية المعركة تم كسر اندفاعة داعش في الشمال السوري</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="callout">
+                    <strong>الأهمية:</strong>
+                    المعركة ساهمت في تثبيت صورة الأكراد السوريين كشريك رئيسي في محاربة داعش، وفتحت الباب لتشكيلات أوسع لاحقاً (SDF).
+                </div>
+
+                <div class="references">
+                    <h4>مراجع:</h4>
+                    <ul>
+                        <li>Carnegie Endowment (2015) – تحليلات حول أثر كوباني.</li>
+                        <li>CTC at West Point – دراسات عن تطور القتال ضد داعش (تشمل كوباني ضمن السياق).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: YPJ Women Fighters -->
+        <section class="slide" id="slide-5">
+            <div class="card">
+                <h2>YPJ: حضور نسائي مسلّح وإطار “الرئاسة المشتركة”</h2>
+                <p>
+                    تأسست <strong>وحدات حماية المرأة (YPJ)</strong> عام <strong>2013</strong> كقوة عسكرية نسائية مرتبطة بالبنية الأوسع
+                    لقوات الحماية. ارتبط حضورها بتجربة سياسية أوسع داخل الإدارة الذاتية تؤكد على
+                    <strong>الرئاسة المشتركة</strong> وتمثيل النساء في الإدارة.
+                </p>
+
+                <div class="grid-2">
+                    <div class="card" style="background: #fef2f2; border: none; padding: 1.5rem;">
+                        <h3 style="color: #991b1b; font-size: 1.3rem;">المبادئ/الخطاب</h3>
+                        <ul style="margin-right: 1.5rem; line-height: 2;">
+                            <li><strong>الرئاسة المشتركة:</strong> نموذج إداري واسع الاستخدام في مؤسسات محلية</li>
+                            <li><strong>تمثيل النساء:</strong> آليات حصص/تمثيل داخل المجالس (تختلف بنودها حسب المؤسسة والمرحلة)</li>
+                            <li><strong>مقاربة اجتماعية:</strong> ربط الأمن المحلي بإصلاحات اجتماعية/قانونية</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #f0fdf4; border: none; padding: 1.5rem;">
+                        <h3 style="color: #166534; font-size: 1.3rem;">الأثر</h3>
+                        <ul style="margin-right: 1.5rem; line-height: 2;">
+                            <li>دور بارز في القتال ضد داعش ضمن إطار التحالف الأوسع</li>
+                            <li>حضور رمزي قوي في الإعلام العالمي</li>
+                            <li>جدل مستمر حول التسييس والحوكمة وحقوق الإنسان في مناطق السيطرة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="callout success">
+                    <strong>تنبيه دقّة:</strong>
+                    نسب مشاركة النساء داخل القوات تختلف حسب الفترة والمصدر. في مادة تعليمية عامة، الأفضل قول:
+                    “نسبة ملحوظة/مرتفعة مقارنة بالإقليم” بدل تثبيت رقم واحد دون مرجع محدد.
+                </div>
+
+                <div class="vocab-box">
+                    <h4 style="margin-bottom: 0.8rem;">أمثلة رمزية معروفة في الخطاب العام:</h4>
+                    <p><strong>آرين ميركان (Arîn Mîrkan):</strong> ارتبط اسمها بسرديات كوباني عام 2014 وأصبح رمزاً في الذاكرة العامة.</p>
+                </div>
+
+                <div class="references">
+                    <h4>مراجع:</h4>
+                    <ul>
+                        <li>Holmes, Amy Austin (2024) – Statelet of Survivors (Oxford University Press).</li>
+                        <li>Knapp et al. (2016).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: SDF Formation -->
+        <section class="slide" id="slide-6">
+            <div class="card">
+                <h2>قوات سوريا الديمقراطية (SDF): تحالف متعدد المكوّنات</h2>
+                <p>
+                    في <strong>أكتوبر 2015</strong> تشكّلت <strong>قوات سوريا الديمقراطية</strong> كتحالف يضم مكوّنات كردية وعربية وسريانية/آشورية وغيرها،
+                    بهدف توسيع الشرعية المحلية والتحالف الدولي ضد داعش.
+                </p>
+
+                <div class="grid-2">
+                    <div class="stat-card">
+                        <div class="stat-number" style="color: var(--primary);">عشرات الآلاف</div>
+                        <div class="stat-label">حجم القوة (تقديرات تتغير حسب الفترة)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" style="color: var(--success);">مكوّن عربي كبير</div>
+                        <div class="stat-label">خصوصاً بعد توسع السيطرة جنوباً وشرقاً</div>
+                    </div>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-date">2016</span>
+                        <strong>منبج</strong>
+                        <p>عملية عسكرية واسعة ضد داعش؛ لاحقاً أصبحت المنطقة حساسة بسبب الصراع التركي–SDF.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2017</span>
+                        <strong>الرقة</strong>
+                        <p>سقوط مركز “الخلافة” الإقليمية في الرقة أنهى سيطرة داعش على المدينة، مع كلفة إنسانية/عمرانية كبيرة.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2019</span>
+                        <strong>الباغوز</strong>
+                        <p>نهاية السيطرة الإقليمية لداعش في سوريا (مع بقاء خطر الخلايا والتمرد).</p>
+                    </div>
+                </div>
+
+                <div class="callout warning">
+                    <strong>تحديات الشرعية والحوكمة:</strong>
+                    مع توسع السيطرة إلى مناطق ذات أغلبية عربية (الرقة/دير الزور)، برزت توترات حول الإدارة والتمثيل وتوزيع الموارد.
+                </div>
+
+                <div class="references">
+                    <h4>مراجع:</h4>
+                    <ul>
+                        <li>International Crisis Group – تقارير متعددة عن شرق سوريا، داعش، وإشكاليات الحكم المحلي.</li>
+                        <li>تقارير سياسات/كونغرس أمريكي عن الشراكة مع SDF ومخاطر داعش ومراكز الاحتجاز.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: DAANES -->
+        <section class="slide" id="slide-7">
+            <div class="card">
+                <h2>الإدارة الذاتية لشمال وشرق سوريا: بنية حكم محلي وتحديات دولة</h2>
+                <p>
+                    منذ 2016 تكرّس استخدام تسمية <strong>“الإدارة الذاتية لشمال وشرق سوريا”</strong> كإطار أكثر شمولاً من “روجافا”.
+                    في <strong>ديسمبر 2023</strong> أُعلن عن <strong>تحديث للعقد الاجتماعي</strong> (بصفته وثيقة حاكمة محلية) لتعزيز مواد
+                    الحقوق والحوكمة والتمثيل.
+                </p>
+
+                <div class="grid-2">
+                    <div class="card" style="background: #fffbeb; border: none; padding: 1.5rem;">
+                        <h3 style="color: #92400e; font-size: 1.2rem;">سمات مؤسسية</h3>
+                        <ul style="margin-right: 1.5rem; margin-top: 0.8rem; line-height: 2;">
+                            <li><strong>مجالس محلية:</strong> من القرى/الأحياء إلى مستويات أعلى</li>
+                            <li><strong>الرئاسة المشتركة:</strong> نموذج إداري واسع</li>
+                            <li><strong>تمثيل مكوّنات:</strong> آليات تمثيل لمكونات غير كردية</li>
+                            <li><strong>مؤسسات تعليم/لغة:</strong> موضوع حساس سياسياً واجتماعياً</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #f0fdf4; border: none; padding: 1.5rem;">
+                        <h3 style="color: #166534; font-size: 1.2rem;">اقتصاد وموارد</h3>
+                        <ul style="margin-right: 1.5rem; margin-top: 0.8rem; line-height: 2;">
+                            <li>زراعة ومياه وخدمات محلية</li>
+                            <li>مناطق نفط/غاز في الشرق (مع تعقيدات سياسية واقتصادية)</li>
+                            <li>أثر العقوبات/الحدود/النزاع على الاستثمار وإعادة الإعمار</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="callout">
+                    <strong>ملاحظة دقة:</strong>
+                    “العقد الاجتماعي” وثيقة محلية وليست دستوراً وطنياً. قيمته العملية مرتبطة بميزان القوة والاعتراف والاتفاقات مع دمشق
+                    ومع القوى الإقليمية.
+                </div>
+
+                <div class="vocab-box">
+                    <h4 style="margin-bottom: 0.8rem;">تحديات ثابتة:</h4>
+                    <span class="vocab-item">الاعتراف الدولي</span>
+                    <span class="vocab-item">التوترات العربية–الكردية</span>
+                    <span class="vocab-item">الضغط التركي</span>
+                    <span class="vocab-item">خطر داعش (خلايا/مخيمات/سجون)</span>
+                    <span class="vocab-item">إعادة الإعمار والخدمات</span>
+                </div>
+
+                <div class="references">
+                    <h4>مراجع:</h4>
+                    <ul>
+                        <li>وثائق الإدارة الذاتية حول العقد الاجتماعي (نسخة 2023).</li>
+                        <li>تقارير أممية/حقوقية عن التعليم واللغة والحوكمة المحلية.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Turkish Attacks -->
+        <section class="slide" id="slide-8">
+            <div class="card">
+                <h2>تركيا والعمليات العسكرية: من 2016 إلى ما بعد 2024</h2>
+                <p>
+                    تعتبر تركيا YPG/SDF امتداداً لحزب العمال الكردستاني (PKK)، وتتعامل مع وجودهم الحدودي كتهديد أمني.
+                    لذلك نفذت عمليات عسكرية متكررة في شمال سوريا، ودعمت فصائل سورية حليفة لها.
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-date">أغسطس 2016</span>
+                        <strong>عملية درع الفرات</strong>
+                        <p>سيطرة على جرابلس–الباب، وقطع مسارات ترابط محتملة بين مناطق كردية.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">يناير–مارس 2018</span>
+                        <strong>عملية غصن الزيتون (عفرين)</strong>
+                        <p>سيطرة تركيا وفصائل حليفة على عفرين، مع موجات نزوح وتقارير حقوقية واسعة عن انتهاكات.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">أكتوبر 2019</span>
+                        <strong>عملية نبع السلام</strong>
+                        <p>سيطرة تركيا وفصائل حليفة على شريط حدودي (تل أبيض/رأس العين) وتغيّر خطوط السيطرة.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-date">ديسمبر 2024</span>
+                        <strong>بعد سقوط نظام الأسد: تصعيد وخريطة أكثر سيولة</strong>
+                        <p>
+                            في سياق انهيار الدولة القديمة، تصاعد القتال في الشمال. وثّقت تقارير سياسات عامة سقوط <strong>تل رفعت</strong>
+                            بيد قوات مرتبطة بتركيا/الجيش الوطني السوري، وتزايد الضغط حول مناطق أخرى شمالاً.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="callout danger">
+                    <strong>تصحيح مهم (منبج):</strong>
+                    لا يوجد توصيف واحد ثابت يقرّ به الجميع حول “من يسيطر” على منبج في كل لحظة بعد ديسمبر 2024.
+                    ما هو موثّق بوضوح: <strong>قتال شديد، ضغط تركي/فصائلي، ومساعي وقف إطلاق نار/ترتيبات أمنية</strong>.
+                    لذلك من الأفضل في العرض التعليمي استخدام صياغة “منطقة نزاع/ضغط” بدل “احتلال محسوم” إلا إذا ذكرت مصدراً محدداً لحظةً بلحظة.
+                </div>
+
+                <div class="references">
+                    <h4>مراجع:</h4>
+                    <ul>
+                        <li>UK Home Office – CPIN (2025): توثيق سياق ديسمبر 2024 وسقوط تل رفعت بعد انهيار النظام السابق.</li>
+                        <li>تحليلات أمنية (AEI/ISW-CTP) عن القتال قرب منبج وتل رفعت في ديسمبر 2024.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+<!-- Slide 9: Current Situation - UPDATED WITH VERIFIED DETAILS -->
+<section class="slide" id="slide-9">
+    <div class="card">
+        <h2>الوضع الراهن: انهيار الحكم الذاتي والاندماج القسري (يناير–فبراير 2026)</h2>
+
+        <p>
+            بعد انهيار نظام الأسد في <strong>8 ديسمبر 2024</strong>، فشلت مفاوضات اتفاق مارس 2025 بين دمشق وSDF في الوصول إلى تنفيذ قبل نهاية العام. في <strong>يناير 2026</strong>، شنّت الحكومة الانتقالية هجوماً عسكرياً سريعاً أدى إلى انهيار سيطرة SDF على معظم مناطقها خلال أيام، وانتهى باتفاق اندماج شامل فرضته موازين القوى الجديدة.
+        </p>
+
+        <div class="battle-card">
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">التسلسل الزمني المُوثَّق:</h3>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-date">13 يناير 2026</span>
+                    <strong>بدء الهجوم الحكومي</strong>
+                    <p>أطلقت الحكومة الانتقالية هجوماً على مناطق SDF في شرق حلب (دير حافر والمسكنة). أعلن الجيش السوري المنطقة "منطقة عسكرية مغلقة".</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-date">17 يناير 2026</span>
+                    <strong>توسع الهجوم + انشقاقات عربية</strong>
+                    <p>توسع الهجوم إلى الرقة ودير الزور والحسكة. انشقت عناصر عربية وقبلية من SDF وانضمت لدمشق. سيطرت القوات الحكومية على الطبقة ودخلت الرقة.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-date">18 يناير 2026</span>
+                    <strong>اتفاق الـ14 نقطة</strong>
+                    <p>اتفاق وقف إطلاق نار بوساطة المبعوث الأمريكي توم باراك. يقضي بـ: انسحاب SDF شرق الفرات، تسليم الرقة ودير الزور فوراً، تسليم حقول النفط والمعابر ومعسكرات داعش، دمج مقاتلي SDF كأفراد (لا كوحدات) في الجيش السوري، طرد عناصر PKK غير السوريين.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-date">20 يناير 2026</span>
+                    <strong>تصريح باراك الحاسم</strong>
+                    <p>"الولايات المتحدة ليس لها مصلحة في وجود عسكري طويل الأمد... الهدف الأصلي لـSDF كقوة لمحاربة داعش قد انتهى إلى حد كبير." دعا الأكراد للاستفادة من "نافذة فريدة" للاندماج.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-date">30 يناير 2026</span>
+                    <strong>الاتفاق الشامل النهائي</strong>
+                    <p>تشكيل فرقة عسكرية من 3 ألوية SDF + لواء في كوباني تابع لحلب. دخول قوات الداخلية إلى الحسكة والقامشلي. دمج مؤسسات الإدارة الذاتية في الدولة. بقاء الآسايش كقوة أمن محلية. ضمانات لعودة نازحي عفرين والشيخ مقصود.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-date">3 فبراير 2026</span>
+                    <strong>دخول القامشلي</strong>
+                    <p>دخلت قوات وزارة الداخلية القامشلي بعد الحسكة. استقبال من السكان العرب، وصمت حذر من الأكراد. تسليم مباني الآسايش للقوات الحكومية.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-3">
+            <div class="stat-card">
+                <div class="stat-number" style="color: var(--primary);">~80%</div>
+                <div class="stat-label">من أراضي DAANES فُقدت</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: var(--warning);">130,000+</div>
+                <div class="stat-label">نازح (90% نساء وأطفال)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: var(--success);">90%</div>
+                <div class="stat-label">من سكان الشيخ مقصود عادوا</div>
+            </div>
+        </div>
+
+        <div class="callout danger">
+            <strong>ردود الفعل الكردية:</strong>
+            وصف أكاديميون هذه التطورات بـ"الهزيمة الكبرى" للتطلعات الكردية. أثار الحصار ذكريات حصار كوباني 2014-2015، وخوفاً من "المحو الديموغرافي والسياسي". لكن موجة تضامن كردي عابرة للحدود (تظاهرات في السليمانية وأربيل) أعادت تأكيد الهوية الجماعية.
+        </div>
+
+        <div class="callout warning">
+            <strong>الوضع في منتصف فبراير 2026:</strong>
+            في 14 فبراير، التقى مظلوم عبدي بوزير الخارجية الأمريكي ماركو روبيو ووزير الخارجية السوري أسعد الشيباني في ميونخ. وصف عبدي الاجتماع بـ"المثمر جداً". الوضع الأمني هادئ نسبياً، لكن الوضع الاقتصادي تدهور بشدة في المناطق الكردية مع فقدان الوظائف المرتبطة بالإدارة الذاتية.
+        </div>
+
+        <div class="references">
+            <h4>المراجع:</h4>
+            <ol>
+                <li>2026 northeastern Syria offensive - Wikipedia (فبراير 2026)</li>
+                <li>Al Jazeera - "Kurdish-led SDF agrees integration with Syrian government forces" (30 يناير 2026)</li>
+                <li>Chatham House - "What recent developments in Syria mean for the Kurds" (فبراير 2026)</li>
+                <li>UN News - "Syria transition gains ground with Kurdish deal" (13 فبراير 2026)</li>
+                <li>Syria Direct - "No guarantees: What do Kurds think of the Damascus-SDF agreement?" (12 فبراير 2026)</li>
+                <li>Middle East Council on Global Affairs - "How Damascus Reclaimed Syria's Northeast" (فبراير 2026)</li>
+                <li>Washington Times - "In Syria, a Kurdish-majority neighborhood recovers" (15 فبراير 2026)</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 10: Legal Changes - UPDATED WITH VERIFIED DETAILS -->
+<section class="slide" id="slide-10">
+    <div class="card">
+        <h2>المرسوم الرئاسي رقم 13: أول اعتراف رسمي بالحقوق الكردية منذ 1946</h2>
+
+        <p>
+            في <strong>16 يناير 2026</strong>، وفي خضم الهجوم العسكري، أصدر الرئيس أحمد الشرع <strong>المرسوم رقم 13</strong> الذي يُعد أول اعتراف رسمي بالحقوق القومية الكردية منذ استقلال سوريا. المرسوم صدر "بناءً على أحكام الإعلان الدستوري ومتطلبات المصلحة الوطنية العليا".
+        </p>
+
+        <div class="card" style="background:#f0fdf4; border:2px solid #bbf7d0; padding:1.5rem; margin: 1.5rem 0;">
+            <h3 style="color:#166534; font-size:1.2rem;">نص المواد الرئيسية للمرسوم:</h3>
+            
+            <div class="grid-2" style="margin-top: 1rem;">
+                <div>
+                    <p><strong>المادة 1:</strong> المواطنون السوريون من أصل كردي جزء أصيل من الشعب السوري، وهويتهم الثقافية واللغوية عنصر لا يتجزأ من الهوية الوطنية السورية الشاملة.</p>
+                    <p style="margin-top: 1rem;"><strong>المادة 2:</strong> تلتزم الدولة بحماية التنوع الثقافي واللغوي وضمان حق المواطنين الأكراد في الحفاظ على تراثهم وفنونهم وتطوير لغتهم الأم.</p>
+                    <p style="margin-top: 1rem;"><strong>المادة 3:</strong> تُعترف باللغة الكردية <strong>لغةً وطنية</strong>. يُسمح بتدريسها في المدارس العامة والخاصة في المناطق ذات الكثافة الكردية، كمادة اختيارية أو نشاط ثقافي.</p>
+                </div>
+                <div>
+                    <p><strong>المادة 4:</strong> تُلغى جميع القوانين والإجراءات الاستثنائية الناتجة عن إحصاء الحسكة 1962. تُمنح الجنسية السورية لجميع المقيمين من أصل كردي، بمن فيهم <strong>"المكتومون"</strong>، مع المساواة الكاملة في الحقوق والواجبات.</p>
+                    <p style="margin-top: 1rem;"><strong>المادة 5:</strong> يُعلن عيد نوروز (21 مارس) <strong>عيداً وطنياً رسمياً مدفوع الأجر</strong> في جميع أنحاء سوريا.</p>
+                    <p style="margin-top: 1rem;"><strong>المادة 6:</strong> تلتزم وسائل الإعلام والمؤسسات التعليمية الحكومية بخطاب وطني شامل. يُحظر التمييز على أساس عرقي أو لغوي، ويُعاقب التحريض على الفتنة.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card" style="background:#fffbeb; border:2px solid #fde68a; padding:1.5rem;">
+                <h3 style="color:#92400e; font-size:1.1rem;">خطوات التنفيذ:</h3>
+                <div class="timeline" style="margin-top: 0.5rem;">
+                    <div class="timeline-item" style="padding: 0.8rem;">
+                        <span class="timeline-date">26 يناير</span>
+                        <p>وزارة التعليم تصدر تعليمات لتفعيل مناهج كردية وتدريب معلمين.</p>
+                    </div>
+                    <div class="timeline-item" style="padding: 0.8rem;">
+                        <span class="timeline-date">28 يناير</span>
+                        <p>وزير الداخلية أنس خطاب يأمر بالتنفيذ الفوري لبند الجنسية، مع موعد نهائي <strong>5 فبراير</strong>.</p>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem;"><strong>تصريح الرئيس الشرع للأكراد:</strong></p>
+                <p style="font-style: italic;">"لا تصدقوا روايات الفتنة... من آذاكم فهو خصمنا إلى يوم القيامة"</p>
+            </div>
+            <div class="card" style="background:#fef2f2; border:2px solid #fecaca; padding:1.5rem;">
+                <h3 style="color:#b91c1c; font-size:1.1rem;">ردود الفعل الكردية:</h3>
+                <p style="margin-top: 0.5rem;"><strong>الإدارة الذاتية:</strong></p>
+                <p>"خطوة أولى، لكنها لا تلبي تطلعات الشعب السوري. أي مرسوم لا يشكل ضماناً ما لم يكن جزءاً من إطار دستوري شامل يعترف بحقوق جميع المكونات."</p>
+                <p style="margin-top: 1rem;"><strong>إلهام أحمد (30 يناير):</strong></p>
+                <p>"المرسوم الرئاسي ليس دستوراً. حقوقنا الكاملة يجب أن تُدرج في الدستور. سنواصل المفاوضات."</p>
+                <p style="margin-top: 1rem;"><strong>المخاوف:</strong> أي مرسوم رئاسي قابل للإلغاء بقرار تنفيذي لاحق.</p>
+            </div>
+        </div>
+
+        <div class="callout">
+            <strong>أسئلة معلقة:</strong>
+            هل "اللغة الوطنية" تعني لغة رسمية؟ المادة 4 من الإعلان الدستوري الانتقالي تنص على العربية كلغة رسمية وحيدة. هل ستُصدر وثائق حكومية بالكردية؟ هل سيكون التدريس بالكردية أم تدريس الكردية كمادة؟ هذه التفاصيل ستحدد القيمة الفعلية للمرسوم.
+        </div>
+
+        <div class="callout success">
+            <strong>الأهمية التاريخية:</strong>
+            رغم التحفظات، يمثل المرسوم انعطافاً تاريخياً: أول اعتراف رسمي بالهوية الكردية منذ 1946، وأول إلغاء لإجراءات 1962 التي جرّدت عشرات الآلاف من الجنسية. كما أنه يحوّل نوروز من عيد "ممنوع" إلى عيد وطني سوري.
+        </div>
+
+        <div class="references">
+            <h4>المراجع:</h4>
+            <ol>
+                <li>Al Jazeera - "Syria decree grants Kurds new rights, formally recognising Kurdish language" (17 يناير 2026)</li>
+                <li>SANA - "From marginalization to citizenship: Syria's historic decree for Kurds" (17 يناير 2026)</li>
+                <li>Kurdistan24 - "Syrian Interim President Issues Decree Affirming Kurdish Identity And Rights"</li>
+                <li>Anadolu Agency - "Syria moves to grant citizenship to Kurds under new presidential decree" (28 يناير 2026)</li>
+                <li>The National - "Syria's Al Shara recognises Kurdish citizenship, language and Nowruz festival"</li>
+                <li>Middle East Forum - "Syrian Presidential Decree on Kurdish Rights" - تحليل نقدي للمرسوم</li>
+                <li>Levant24 - "Presidential Decree Expands Kurdish Rights" (يناير 2026)</li>
+            </ol>
+        </div>
+    </div>
+</section>
+        
+        <!-- Slide 11: Bibliography -->
+        <section class="slide" id="slide-11">
+            <div class="card">
+                <h2>ببليوغرافيا مُحكَمة ومصادر متابعة (حتى 2026)</h2>
+
+                <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                    <h3 style="color: #1e40af; margin-bottom: 0.8rem;">كتب ودراسات أكاديمية:</h3>
+                    <ul style="line-height: 2; margin-right: 1.2rem;">
+                        <li>Tejel, Jordi. <em>Syria’s Kurds: History, Politics and Society</em>. Routledge, 2008.</li>
+                        <li>Gunter, Michael M. <em>Out of Nowhere: The Kurds of Syria in Peace and War</em>. Hurst, 2014.</li>
+                        <li>Schmidinger, Thomas. <em>Rojava: Revolution, War and the Future of Syria’s Kurds</em>. 2018.</li>
+                        <li>Holmes, Amy Austin. <em>Statelet of Survivors</em>. Oxford University Press, 2024.</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                    <h3 style="color: #166534; margin-bottom: 0.8rem;">تقارير سياسات/حقوق إنسان:</h3>
+                    <ul style="line-height: 2; margin-right: 1.2rem;">
+                        <li>UK Home Office – CPIN: Syria (2025): Kurds, Kurdish areas, and transition context.</li>
+                        <li>Human Rights Watch (2009): Group Denial (حقوق سياسية وثقافية قبل 2011).</li>
+                        <li>International Crisis Group: تقارير عن شرق سوريا، داعش، وخيارات الحكم المحلي.</li>
+                    </ul>
+                </div>
+
+                <div style="background: #fffbeb; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                    <h3 style="color: #92400e; margin-bottom: 0.8rem;">مصادر أممية/متابعة انتقالية:</h3>
+                    <ul style="line-height: 2; margin-right: 1.2rem;">
+                        <li>UN Office at Geneva / UN briefings (Feb 2026): اتفاق دمشق–SDF ومرسوم 13.</li>
+                        <li>UN OCHA: تحديثات إنسانية عن شمال وشرق سوريا (للإحصاءات الميدانية والنزوح).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="controls">
+            <button class="btn btn-secondary" id="prev-btn" onclick="prevSlide()">السابق</button>
+            <button class="btn" id="next-btn" onclick="nextSlide()">التالي</button>
+        </div>
+
+    </main>
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+    const slides = [
+        { title: "مقدمة: من هم الأكراد السوريون؟" },
+        { title: "التاريخ: سياسات ما قبل 2011" },
+        { title: "الجغرافيا: الكتل الثلاث" },
+        { title: "2011–2016: الحكم المحلي والتحولات" },
+        { title: "كوباني: نقطة تحوّل ضد داعش" },
+        { title: "YPJ: حضور نسائي وإطار تمثيل" },
+        { title: "SDF: التحالف متعدد المكوّنات" },
+        { title: "الإدارة الذاتية: الحكم المحلي" },
+        { title: "تركيا والعمليات العسكرية" },
+        { title: "الوضع الراهن 2025–فبراير 2026" },
+        { title: "الحقوق والاعتراف: مرسوم 13 واتفاق 2026" },
+        { title: "الببليوغرافيا والمصادر" }
+    ];
+
+    let currentSlide = 0;
+    let map;
+
+    function toArabicNum(n) {
+        const arabicNumbers = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+        return n.toString().split("").map(x => arabicNumbers[parseInt(x)]).join("");
+    }
+
+    function initNavigation() {
+        const navList = document.getElementById('nav-list');
+        slides.forEach((slide, index) => {
+            const li = document.createElement('li');
+            li.className = `nav-item ${index === 0 ? 'active' : ''}`;
+            li.id = `nav-${index}`;
+            li.onclick = () => goToSlide(index);
+
+            const num = (index + 1).toString().padStart(2, '0');
+            li.innerHTML = `<span class="nav-num">${toArabicNum(num)}</span> ${slide.title}`;
+            navList.appendChild(li);
+        });
+        updateProgress();
+    }
+
+    function goToSlide(index) {
+        if (index < 0 || index >= slides.length) return;
+
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+        currentSlide = index;
+        document.getElementById(`slide-${currentSlide}`).classList.add('active');
+        document.getElementById(`nav-${currentSlide}`).classList.add('active');
+
+        updateProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (currentSlide === 2) {
+            setTimeout(() => { if (map) map.invalidateSize(); }, 300);
+        }
+    }
+
+    function nextSlide() { goToSlide(currentSlide + 1); }
+    function prevSlide() { goToSlide(currentSlide - 1); }
+
+    function updateProgress() {
+        const progress = ((currentSlide + 1) / slides.length) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
+
+        document.getElementById('prev-btn').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+        document.getElementById('next-btn').innerText = currentSlide === slides.length - 1 ? 'نهاية المحتوى' : 'التالي';
+    }
+
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    function initMap() {
+        map = L.map('map-container').setView([36.5, 40.5], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        const locations = [
+            { name: "عفرين (Afrin)", coords: [36.51, 36.87],
+              info: "منذ 2018 تحت سيطرة تركيا وفصائل سورية حليفة لها (غصن الزيتون).", color: "#dc2626" },
+
+            { name: "كوباني (Kobanî)", coords: [36.89, 38.35],
+              info: "رمز معركة 2014–2015 ضد داعش.", color: "#16a34a" },
+
+            { name: "القامشلي (Qamishli)", coords: [37.05, 41.23],
+              info: "مدينة محورية في الجزيرة؛ حساسة سياسياً وأمنياً.", color: "#2563eb" },
+
+            { name: "الحسكة (Al-Hasakah)", coords: [36.50, 40.75],
+              info: "مركز رئيسي في الشمال الشرقي ضمن منطقة الجزيرة.", color: "#2563eb" },
+
+            { name: "منبج (Manbij)", coords: [36.53, 37.95],
+              info: "منطقة نزاع/ضغط بعد ديسمبر 2024: قتال ومساعي وقف نار وترتيبات أمنية؛ لا توصيف واحد ثابت للسيطرة.", color: "#ea580c" },
+
+            { name: "تل رفعت (Tel Rifaat)", coords: [36.47, 37.10],
+              info: "سقطت بيد قوات مرتبطة بتركيا/الجيش الوطني السوري في سياق تصعيد ديسمبر 2024.", color: "#dc2626" },
+
+            { name: "الرقة (Raqqa)", coords: [35.95, 39.01],
+              info: "عاصمة داعش السابقة؛ سقطت في 2017. تحديات إعادة إعمار وخدمات.", color: "#facc15" },
+
+            { name: "دير الزور (Deir ez-Zor)", coords: [35.33, 40.14],
+              info: "منطقة غنية بالموارد وذات تعقيد عشائري/أمني؛ خطر خلايا داعش مستمر.", color: "#facc15" }
         ];
 
-        let currentSlide = 0;
-        let map;
-
-        function toArabicNum(n) {
-            const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-            return n.toString().split("").map(x => arabicNumbers[parseInt(x)]).join("");
-        }
-
-        function initNavigation() {
-            const navList = document.getElementById('nav-list');
-            slides.forEach((slide, index) => {
-                const li = document.createElement('li');
-                li.className = `nav-item ${index === 0 ? 'active' : ''}`;
-                li.id = `nav-${index}`;
-                li.onclick = () => goToSlide(index);
-                
-                const num = (index + 1).toString().padStart(2, '0');
-                li.innerHTML = `<span class="nav-num">${toArabicNum(num)}</span> ${slide.title}`;
-                navList.appendChild(li);
-            });
-            updateProgress();
-        }
-
-        function goToSlide(index) {
-            if (index < 0 || index >= slides.length) return;
-            
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
-            currentSlide = index;
-            document.getElementById(`slide-${currentSlide}`).classList.add('active');
-            document.getElementById(`nav-${currentSlide}`).classList.add('active');
-            
-            updateProgress();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            if (currentSlide === 2) {
-                setTimeout(() => { if (map) map.invalidateSize(); }, 300);
-            }
-        }
-
-        function nextSlide() { goToSlide(currentSlide + 1); }
-        function prevSlide() { goToSlide(currentSlide - 1); }
-
-        function updateProgress() {
-            const progress = ((currentSlide + 1) / slides.length) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
-            
-            document.getElementById('prev-btn').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
-            document.getElementById('next-btn').innerText = currentSlide === slides.length - 1 ? 'نهاية المحتوى' : 'التالي';
-        }
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-        }
-
-        function initMap() {
-            map = L.map('map-container').setView([36.5, 40.5], 7);
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap'
+        locations.forEach(loc => {
+            const marker = L.circleMarker(loc.coords, {
+                radius: 8,
+                fillColor: loc.color,
+                color: "#fff",
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.85
             }).addTo(map);
 
-            const locations = [
-                { name: "عفرين (Afrin)", coords: [36.51, 36.87], info: "المنطقة الكردية الغربية. احتُلت من قبل تركيا في 2018.", color: "#dc2626" },
-                { name: "كوباني (Kobanî)", coords: [36.89, 38.35], info: "موقع المعركة التاريخية ضد داعش (2014-2015).", color: "#16a34a" },
-                { name: "القامشلي (Qamishli)", coords: [37.05, 41.23], info: "عاصمة الإدارة الذاتية الفعلية.", color: "#2563eb" },
-                { name: "الحسكة (Al-Hasakah)", coords: [36.50, 40.75], info: "مدينة رئيسية في منطقة الجزيرة.", color: "#2563eb" },
-                { name: "منبج (Manbij)", coords: [36.53, 37.95], info: "احتُلت من قبل SNA التركي في ديسمبر 2024.", color: "#dc2626" },
-                { name: "تل رفعت (Tell Rifaat)", coords: [36.47, 37.10], info: "احتُلت من قبل SNA في ديسمبر 2024.", color: "#dc2626" },
-                { name: "الرقة (Raqqa)", coords: [35.95, 39.01], info: "عاصمة داعش السابقة، حُررت في 2017.", color: "#facc15" },
-                { name: "دير الزور (Deir ez-Zor)", coords: [35.33, 40.14], info: "منطقة غنية بالنفط، ذات أغلبية عربية.", color: "#facc15" }
-            ];
-
-            locations.forEach(loc => {
-                const marker = L.circleMarker(loc.coords, {
-                    radius: 8,
-                    fillColor: loc.color,
-                    color: "#fff",
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                }).addTo(map);
-                
-                marker.bindPopup(`<div style="direction: rtl; text-align: right; font-family: 'Noto Sans Arabic', sans-serif;"><b>${loc.name}</b><br>${loc.info}</div>`);
-            });
-        }
-
-        window.onload = () => {
-            initNavigation();
-            initMap();
-        };
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') nextSlide();
-            if (e.key === 'ArrowRight') prevSlide();
+            marker.bindPopup(
+                `<div style="direction: rtl; text-align: right; font-family: 'Noto Sans Arabic', sans-serif;">
+                    <b>${loc.name}</b><br>${loc.info}
+                 </div>`
+            );
         });
-    </script>
+    }
+
+    window.onload = () => {
+        initNavigation();
+        initMap();
+    };
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') nextSlide();
+        if (e.key === 'ArrowRight') prevSlide();
+    });
+</script>
 </body>
 </html>
