@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Lexicon: Minorities & Statelessness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+        .glossary-card:hover {
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
+        .passive-tag {
+            background-color: #fee2e2;
+            color: #991b1b;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        .quant-tag {
+            background-color: #dcfce7;
+            color: #166534;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        .correct-answer {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #166534 !important;
+        }
+        .wrong-answer {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+        .builder-btn {
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            text-align: right;
+            border: 1px solid #e2e8f0;
+            line-height: 1.4;
+        }
+        .builder-btn:hover {
+            border-color: #818cf8;
+            background-color: #f5f3ff;
+        }
+        .builder-btn.active {
+            background-color: #4f46e5;
+            color: white;
+            border-color: #4338ca;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-bold text-slate-900 mb-4">قاموس الأقليات وانعدام الجنسية في الشرق الأوسط</h1>
+            <p class="text-lg text-slate-600">دليل المصطلحات الأكاديمية والتعابير المؤسساتية للدراسات الإقليمية</p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <a href="#lexicon" class="bg-slate-800 text-white px-4 py-2 rounded-full text-sm hover:bg-slate-700 transition shadow-sm">المعجم الأساسي</a>
+                <a href="#strategy" class="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-500 transition shadow-sm">مخطط بناء الحجة</a>
+                <a href="#quiz" class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm hover:bg-blue-500 transition shadow-sm">الاختبار التفاعلي</a>
+                <a href="#resources" class="bg-slate-800 text-white px-4 py-2 rounded-full text-sm hover:bg-slate-700 transition shadow-sm">مصادر بحثية</a>
+            </div>
+        </header>
+
+        <!-- Quick Filters -->
+        <div id="lexicon" class="mb-8 flex flex-wrap gap-4 justify-center">
+            <input type="text" id="searchInput" placeholder="بحث سريع في المصطلحات..." 
+                   class="p-4 border-2 border-slate-200 rounded-2xl w-full md:w-96 shadow-sm focus:ring-4 focus:ring-blue-100 outline-none transition-all">
+        </div>
+
+        <!-- Main Lexicon Table -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-12 border border-slate-200">
+            <div class="bg-slate-800 p-4 text-white font-bold flex justify-between items-center">
+                <span>المتلازمات اللفظية المختارة (21 مصطلحاً)</span>
+                <span class="text-xs font-normal opacity-80 italic">الأمثلة أدناه تختلف كلياً عن أسئلة الاختبار لضمان جودة التعلم</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-right" id="lexiconTable">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200">
+                            <th class="p-4">المصطلح (Collocation)</th>
+                            <th class="p-4">الترجمة (English)</th>
+                            <th class="p-4">مثال الجدول (Table Context)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <!-- Data populated via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Interactive Visual Strategy Section (Expanded) -->
+        <div id="strategy" class="bg-indigo-50 p-6 md:p-10 rounded-3xl shadow-inner mb-12 border border-indigo-100">
+            <h2 class="text-2xl font-bold mb-4 text-center text-indigo-900">مخطط بناء الحجة الأكاديمية (النسخة المطورة)</h2>
+            <p class="text-center text-indigo-700 mb-10">قم بتركيب جملتك عبر اختيار تعبير واحد من كل عمود:</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+                <!-- Step 1: Context -->
+                <div class="space-y-3">
+                    <div class="text-center font-bold text-indigo-800 text-xs uppercase tracking-widest mb-2">1. السياق (Context)</div>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(0, 'استناداً إلى التقارير الحقوقية الموثقة مؤخراً،', this)">استناداً إلى التقارير الموثقة...</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(0, 'في ظل غياب الشفافية في الإحصائيات الرسمية،', this)">في ظل غياب الشفافية...</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(0, 'بناءً على المعطيات الميدانية التي تم جمعها،', this)">بناءً على المعطيات الميدانية...</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(0, 'نظراً لتزايد حالات انعدام الهوية القانونية،', this)">نظراً لتزايد حالات انعدام الهوية...</button>
+                </div>
+                <!-- Step 2: Subject -->
+                <div class="space-y-3">
+                    <div class="text-center font-bold text-indigo-800 text-xs uppercase tracking-widest mb-2">2. الفئة (Affected Subject)</div>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(1, 'يُحرم الآلاف من الأفراد عديمي الجنسية', this)">يُحرم الآلاف من عديمي الجنسية...</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(1, 'تُقيَّد حركة أبناء الفئات المهمشة إدارياً', this)">تُقيَّد حركة أبناء المهمشين...</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(1, 'تُفرض قيود قانونية صارمة على المبعدين', this)">تُفرض قيود على المبعدين...</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(1, 'يُمنع الأشخاص الذين يفتقرون للوثائق الثبوتية', this)">يُمنع الأشخاص بلا وثائق...</button>
+                </div>
+                <!-- Step 3: Action/Constraint -->
+                <div class="space-y-3">
+                    <div class="text-center font-bold text-indigo-800 text-xs uppercase tracking-widest mb-2">3. القيد (Constraint)</div>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(2, 'من ممارسة أبسط حقوقهم في التملك،', this)">من ممارسة حقوق التملك...</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(2, 'من استخراج الأوراق الثبوتية الأساسية،', this)">من استخراج الأوراق الأساسية...</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(2, 'من الحصول على الرعاية الصحية والتعليم،', this)">من الحصول على الخدمات...</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(2, 'من تسوية وضعهم القانوني أمام القضاء،', this)">من تسوية وضعهم القانوني...</button>
+                </div>
+                <!-- Step 4: Impact -->
+                <div class="space-y-3">
+                    <div class="text-center font-bold text-indigo-800 text-xs uppercase tracking-widest mb-2">4. الأثر (Resulting Impact)</div>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(3, 'الأمر الذي يفاقم الأزمة الإنسانية بالمنطقة.', this)">تفاقم الأزمة الإنسانية</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(3, 'مما يؤدي إلى حالة من الإقصاء الاجتماعي.', this)">الإقصاء الاجتماعي</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(3, 'وهو ما يتنافى مع مبادئ القانون الدولي.', this)">منافاة القانون الدولي</button>
+                    <button class="builder-btn bg-white p-3 rounded-xl w-full shadow-sm" onclick="build(3, 'مما يستوجب مراجعة فورية للتشريعات الوطنية.', this)">استيجاب مراجعة التشريعات</button>
+                </div>
+            </div>
+
+            <div class="p-8 bg-indigo-900 text-white rounded-3xl text-center shadow-2xl relative border-4 border-indigo-700">
+                <div class="absolute top-0 right-0 p-3 opacity-30 text-[10px] uppercase font-bold tracking-widest">المخرجات الأكاديمية (Output)</div>
+                <div id="finalSentence" class="text-lg md:text-2xl font-medium leading-relaxed italic">
+                    يرجى اختيار عنصر واحد من كل عمود أعلاه لبناء جملة مؤسساتية...
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <button onclick="resetBuilder()" class="text-indigo-600 hover:text-indigo-800 font-bold border-b-2 border-indigo-200 pb-1">إعادة تعيين المخطط</button>
+            </div>
+        </div>
+
+        <!-- Interactive Quiz Section -->
+        <div id="quiz" class="bg-white p-6 md:p-10 rounded-3xl shadow-xl mb-12 border-2 border-blue-100">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-blue-900">اختبار الكفاءة اللغوية</h2>
+                    <p class="text-sm text-slate-500 mt-2">الاختبار يتضمن 20 سؤالاً بسياقات أكاديمية جديدة كلياً</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="bg-blue-50 px-6 py-3 rounded-2xl border border-blue-100 shadow-sm text-center">
+                        <span class="block text-[10px] text-blue-400 font-bold">النتيجة الحالية</span>
+                        <span id="quizScore" class="text-2xl font-black text-blue-800">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="quizContainer" class="max-w-3xl mx-auto text-center">
+                <div id="quizTypeDisplay" class="text-[10px] text-blue-600 font-black uppercase tracking-widest mb-4 bg-blue-100 inline-block px-4 py-1 rounded-full border border-blue-200">---</div>
+                <p id="quizQuestion" class="text-xl md:text-2xl mb-10 font-medium leading-relaxed text-slate-800 text-right"></p>
+                
+                <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Options populated by JS -->
+                </div>
+                
+                <div id="quizFeedback" class="mt-10 font-bold hidden p-6 rounded-2xl shadow-inner border animate-pulse"></div>
+                
+                <button id="nextQuestion" class="mt-12 bg-blue-700 text-white px-12 py-4 rounded-2xl hover:bg-blue-800 font-bold w-full md:w-auto shadow-xl transition transform active:scale-95">السؤال التالي</button>
+            </div>
+        </div>
+
+        <!-- Research Resources -->
+        <div id="resources" class="mb-12">
+            <h2 class="text-2xl font-bold mb-8 text-slate-800 border-r-8 border-slate-800 pr-4">مصادر بحثية موصى بها للمساق</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:border-blue-200 transition group">
+                    <h3 class="font-bold text-blue-800 mb-3 group-hover:text-blue-600">تقارير المفوضية السامية (UNHCR)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">المصدر الأوثق للبيانات المتعلقة بانعدام الجنسية عالمياً وفي المنطقة العربية.</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:border-blue-200 transition group">
+                    <h3 class="font-bold text-blue-800 mb-3 group-hover:text-blue-600">هيومن رايتس ووتش (HRW)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">تحليلات معمقة لسياسات سحب الجنسية والتمييز ضد الأقليات في دول الخليج والشام.</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:border-blue-200 transition group">
+                    <h3 class="font-bold text-blue-800 mb-3 group-hover:text-blue-600">الشبكة العالمية (ISI)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">معهد متخصص في الجوانب القانونية والأكاديمية لمكتومي القيد وحقوق الهوية.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-16 text-center text-slate-400 text-xs pb-12 border-t pt-10">
+            تم تطوير هذا المحتوى التعليمي التفاعلي لمساق "الأقليات في الشرق الأوسط" | الإصدار الأكاديمي المطور 2024
+        </footer>
+    </div>
+
+    <script>
+        // Updated Data with High-Quality Non-Repetitive Questions
+        const data = [
+            { 
+                ar: "عديم الجنسية", 
+                en: "Stateless person", 
+                ex: "يُصنف الفرد عديماً للجنسية إذا افتقر إلى الرابطة القانونية مع أي دولة.",
+                quizEx: "يُعرف القانون الدولي الـ __________ بأنه الشخص الذي لا تعتبره أي دولة مواطناً فيها بمقتضى تشريعها."
+            },
+            { 
+                ar: "سحب الجنسية", 
+                en: "Revocation of citizenship", 
+                ex: "يُمنع القانون الدولي سحب الجنسية الذي يؤدي إلى انعدام الهوية.",
+                quizEx: "رصدت المنظمات الحقوقية اتجاهاً مقلقاً نحو __________ من أفراد ينتمون لمعارضة سلمية."
+            },
+            { 
+                ar: "الأوراق الثبوتية", 
+                en: "Identification documents", 
+                ex: "تُفرض قيود صارمة على من لا يمتلكون الأوراق الثبوتية عند الحواجز.",
+                quizEx: "غالباً ما يفقد النازحون قسرياً جميع __________ الخاصة بهم أثناء رحلة اللجوء، مما يضعهم في مأزق قانوني."
+            },
+            { 
+                ar: "شهادة الميلاد", 
+                en: "Birth certificate", 
+                ex: "يُعد عدم إصدار شهادة الميلاد المسبب الأول لانعدام الجنسية في المنطقة.",
+                quizEx: "بدون استخراج __________ رسمية، يظل الطفل غير مرئي في سجلات الدولة وغير مؤهل للخدمات الأساسية."
+            },
+            { 
+                ar: "تجديد الإقامة", 
+                en: "Residency renewal", 
+                ex: "تُقيَّد سبل العيش حين يتم ربط العمل بآلية تجديد الإقامة المعقدة.",
+                quizEx: "تؤدي الرسوم المرتفعة المطلوب دفعها عند __________ إلى دفع العائلات الفقيرة نحو العيش في الخفاء."
+            },
+            { 
+                ar: "الوضع القانوني", 
+                en: "Legal status", 
+                ex: "يجب تسوية الوضع القانوني للأقليات لضمان وصولهم إلى الخدمات الأساسية.",
+                quizEx: "تسعى الأمم المتحدة للضغط على الحكومات لتسوية __________ للمهاجرين غير المسجلين منذ عقود."
+            },
+            { 
+                ar: "منتهي الصلاحية", 
+                en: "Expired", 
+                ex: "يُحرم الأفراد من الحركة في حال كان مستند الهوية منتهي الصلاحية.",
+                quizEx: "يتم احتجاز المسافرين في المطارات إذا تبين أن جواز سفرهم قد أصبح __________ وغير صالح للاستخدام."
+            },
+            { 
+                ar: "استخراج الوثائق", 
+                en: "Issuance of documents", 
+                ex: "يُصعب إجراء استخراج الوثائق بسبب البيروقراطية في الدوائر الحكومية.",
+                quizEx: "تضع السلطات شروطاً تعجيزية أمام الأمهات المواطنات عند محاولتهن __________ لأبنائهن من آباء أجانب."
+            },
+            { 
+                ar: "يُحرم من", 
+                en: "Is deprived of", 
+                ex: "يُحرم أبناء الأقليات من حق الانتخاب والتمثيل السياسي في عدة دول.",
+                quizEx: "بموجب القوانين التمييزية، __________ الفرد الذي لا يحمل قيداً مدنياً من حقه في التعليم الجامعي."
+            },
+            { 
+                ar: "يُمنع من السفر", 
+                en: "Is banned from travel", 
+                ex: "يُمنع عديمو الجنسية من السفر عبر الحدود الدولية لغياب جوازات السفر.",
+                quizEx: "في كثير من الحالات، __________ الناشط الحقوقي كنوع من العقوبة الإدارية دون حكم قضائي."
+            },
+            { 
+                ar: "يُقيَّد التحرك", 
+                en: "Movement is restricted", 
+                ex: "يُقيَّد التحرك داخل المدن بناءً على الانتماء الإثني في مناطق النزاع.",
+                quizEx: "في المناطق التي تشهد توترات أمنية، __________ بشكل صارم عبر نقاط تفتيش دائمة."
+            },
+            { 
+                ar: "تُفرض قيود", 
+                en: "Restrictions are imposed", 
+                ex: "تُفرض قيود قانونية تمنع الأجانب من توريث العقارات لأبنائهم.",
+                quizEx: "عادة ما __________ إدارية على تمويل المنظمات التي تعنى بشؤون الأقليات غير الموثقة."
+            },
+            { 
+                ar: "الحق في التملك", 
+                en: "Right to own property", 
+                ex: "يُحرم اللاجئون في بعض الدول المضيفة من الحق في التملك العقاري.",
+                quizEx: "يناضل المطرودون من أراضيهم لاستعادة __________ الذي سلب منهم خلال النزاعات العرقية."
+            },
+            { 
+                ar: "وفقاً للمعطيات", 
+                en: "According to the data", 
+                ex: "وفقاً للمعطيات الميدانية، تعاني الأقليات من تهميش نظامي وممنهج.",
+                quizEx: "__________ المتوفرة من منظمات حقوق الإنسان، فإن 40% من الأسر تعيش تحت خط الفقر المدقع."
+            },
+            { 
+                ar: "النسبة المئوية", 
+                en: "Percentage", 
+                ex: "بلغت النسبة المئوية للأطفال غير المسجلين مستويات قياسية نتيجة النزوح.",
+                quizEx: "ارتفعت __________ للأمية بين المجتمعات المهمشة بسبب غياب المدارس المخصصة لهم."
+            },
+            { 
+                ar: "معدل الفقر", 
+                en: "Poverty rate", 
+                ex: "يُلاحظ ارتفاع معدل الفقر في المناطق التي تسكنها أقليات غير موثقة.",
+                quizEx: "يُعزى ارتفاع __________ إلى غياب الحماية القانونية وعدم القدرة على العمل في القطاع الرسمي."
+            },
+            { 
+                ar: "تقديرات أولية", 
+                en: "Preliminary estimates", 
+                ex: "تشير تقديرات أولية إلى وجود آلاف الأشخاص الذين يعيشون دون قيود رسمية.",
+                quizEx: "تشير __________ إلى أن الأزمة قد تتفاقم إذا لم يتم تعديل قانون الجنسية الحالي."
+            },
+            { 
+                ar: "إحصائيات رسمية", 
+                en: "Official statistics", 
+                ex: "لا تعكس الإحصائيات الرسمية دائماً الحجم الحقيقي لمعاناة مكتومي الهوية.",
+                quizEx: "في غياب الـ __________ الدقيقة، تضطر المنظمات الدولية للاعتماد على مسوحات ميدانية مستقلة."
+            },
+            { 
+                ar: "الفئات المهمشة", 
+                en: "Marginalized groups", 
+                ex: "تُستهدف الفئات المهمشة عبر سياسات إقصائية تمنع وصولها للعدالة.",
+                quizEx: "يجب أن تركز خطط التنمية على دمج __________ لضمان استقرار السلم المجتمعي."
+            },
+            { 
+                ar: "تعداد السكان", 
+                en: "Population census", 
+                ex: "تم استبعاد بعض الإثنيات من تعداد السكان الأخير لأسباب ديمغرافية.",
+                quizEx: "غالباً ما يُستخدم __________ كأداة سياسية للتلاعب بالتمثيل النيابي لمناطق الأقليات."
+            },
+            { 
+                ar: "تفاقم الأزمة", 
+                en: "Exacerbation of the crisis", 
+                ex: "أدى غياب الحلول السياسية إلى تفاقم الأزمة الحقوقية للأقليات.",
+                quizEx: "ساهم الجمود التشريعي في __________ الإنسانية التي يعاني منها مكتومو الهوية منذ عقود."
+            }
+        ];
+
+        // 1. Lexicon Table Logic
+        const tableBody = document.querySelector('#lexiconTable tbody');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderTable(items) {
+            tableBody.innerHTML = items.map(item => `
+                <tr class="hover:bg-blue-50 transition-colors">
+                    <td class="p-4 font-bold text-blue-900 border-l">${item.ar}</td>
+                    <td class="p-4 text-slate-500 font-mono text-[10px] border-l">${item.en}</td>
+                    <td class="p-4 text-slate-700 text-sm italic leading-relaxed">${item.ex}</td>
+                </tr>
+            `).join('');
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = data.filter(item => 
+                item.ar.includes(term) || 
+                item.en.toLowerCase().includes(term) || 
+                item.ex.includes(term)
+            );
+            renderTable(filtered);
+        });
+
+        // 2. Multi-Option Sentence Builder Logic
+        let currentSegments = ["...", "...", "...", "..."];
+        function build(step, text, btn) {
+            // Visual Update
+            const siblings = btn.parentElement.querySelectorAll('.builder-btn');
+            siblings.forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Data Update
+            currentSegments[step] = text;
+            document.getElementById('finalSentence').textContent = currentSegments.join(' ');
+        }
+        function resetBuilder() {
+            currentSegments = ["...", "...", "...", "..."];
+            document.getElementById('finalSentence').textContent = "يرجى اختيار عنصر واحد من كل عمود أعلاه لبناء جملة مؤسساتية...";
+            document.querySelectorAll('.builder-btn').forEach(b => b.classList.remove('active'));
+        }
+
+        // 3. Advanced Quiz Logic
+        let quizState = {
+            score: 0,
+            count: 0,
+            max: 20,
+            answer: null
+        };
+
+        function setupQuiz() {
+            if (quizState.count >= quizState.max) {
+                renderFinal();
+                return;
+            }
+
+            quizState.count++;
+            const type = Math.random() > 0.4 ? 'fill' : 'trans';
+            const idx = Math.floor(Math.random() * data.length);
+            const item = data[idx];
+            
+            const qEl = document.getElementById('quizQuestion');
+            const oDiv = document.getElementById('quizOptions');
+            const tDisp = document.getElementById('quizTypeDisplay');
+            const fdbk = document.getElementById('quizFeedback');
+            
+            oDiv.innerHTML = '';
+            fdbk.classList.add('hidden');
+            document.getElementById('nextQuestion').classList.add('hidden');
+
+            if (type === 'fill') {
+                tDisp.textContent = "كمال الفراغ: سياق أكاديمي جديد";
+                qEl.innerHTML = `اختر المصطلح الأنسب للجملة التالية: <br><span class="text-slate-600 font-normal italic mt-4 block p-4 bg-slate-50 rounded-xl border border-slate-100">"${item.quizEx}"</span>`;
+                quizState.answer = item.ar;
+                
+                const opts = data.filter(d => d.ar !== item.ar).sort(() => 0.5 - Math.random()).slice(0, 3).map(d => d.ar);
+                [...opts, item.ar].sort(() => 0.5 - Math.random()).forEach(o => addBtn(o, o === item.ar));
+            } else {
+                tDisp.textContent = "ترجمة المصطلحات المؤسساتية";
+                qEl.innerHTML = `ما هو المصطلح العربي المقابل للتعريف التالي: <br><span class="text-indigo-700 font-black text-4xl mt-4 block tracking-tight uppercase">${item.en}</span>`;
+                quizState.answer = item.ar;
+                
+                const opts = data.filter(d => d.ar !== item.ar).sort(() => 0.5 - Math.random()).slice(0, 3).map(d => d.ar);
+                [...opts, item.ar].sort(() => 0.5 - Math.random()).forEach(o => addBtn(o, o === item.ar));
+            }
+        }
+
+        function addBtn(txt, correct) {
+            const b = document.createElement('button');
+            b.className = "p-5 border-2 border-slate-100 rounded-3xl hover:bg-indigo-50 hover:border-indigo-200 transition-all text-right font-bold text-slate-700 shadow-sm";
+            b.textContent = txt;
+            b.onclick = () => selectAnswer(txt, correct, b);
+            document.getElementById('quizOptions').appendChild(b);
+        }
+
+        function selectAnswer(sel, correct, btn) {
+            const f = document.getElementById('quizFeedback');
+            const opts = document.querySelectorAll('#quizOptions button');
+            opts.forEach(o => o.disabled = true);
+            
+            f.classList.remove('hidden');
+            if (correct) {
+                quizState.score++;
+                document.getElementById('quizScore').textContent = quizState.score;
+                btn.classList.add('correct-answer');
+                f.innerHTML = "✓ إجابة دقيقة. لقد استخدمت المصطلح في سياقه الأكاديمي الصحيح.";
+                f.className = "mt-10 font-bold text-green-700 bg-green-50 p-6 rounded-3xl border border-green-200";
+            } else {
+                btn.classList.add('wrong-answer');
+                f.innerHTML = `✗ غير دقيق. المصطلح المطلوب هو: <span class="text-2xl underline">${quizState.answer}</span>`;
+                f.className = "mt-10 font-bold text-red-700 bg-red-50 p-6 rounded-3xl border border-red-200";
+                opts.forEach(o => { if (o.textContent === quizState.answer) o.classList.add('correct-answer'); });
+            }
+            document.getElementById('nextQuestion').classList.remove('hidden');
+        }
+
+        function renderFinal() {
+            const pct = (quizState.score / quizState.max) * 100;
+            let msg = pct > 85 ? "خبير في السياسات اللغوية" : pct > 60 ? "مستوى أكاديمي جيد" : "ننصح بمراجعة القاموس مرة أخرى";
+            document.getElementById('quizContainer').innerHTML = `
+                <div class="py-12 bg-indigo-50 rounded-[40px] border-2 border-indigo-100 shadow-inner px-6">
+                    <h3 class="text-3xl font-black mb-4 text-slate-800 italic">اكتمل التقييم!</h3>
+                    <div class="text-6xl font-black mb-6 text-indigo-900">${quizState.score} / ${quizState.max}</div>
+                    <p class="text-indigo-600 font-bold text-xl mb-10 tracking-wide underline decoration-4 underline-offset-8">${msg}</p>
+                    <button onclick="location.reload()" class="bg-indigo-600 text-white px-14 py-5 rounded-[20px] hover:bg-indigo-700 font-black shadow-2xl transition hover:scale-105 active:scale-95">بدء جولة تدريبية جديدة</button>
+                </div>
+            `;
+        }
+
+        document.getElementById('nextQuestion').onclick = setupQuiz;
+
+        // Init
+        renderTable(data);
+        setupQuiz();
+    </script>
+</body>
+</html>
