@@ -1,0 +1,1264 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأرمن في الشرق الأوسط: دراسة تاريخية ومعاصرة</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --sidebar-bg: #7c2d12;
+            --sidebar-text: #fef3c7;
+            --primary: #ea580c;
+            --primary-hover: #c2410c;
+            --secondary: #fbbf24;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-soft: #fff7ed;
+            --sidebar-width: 320px;
+            --font-main: 'Noto Sans Arabic', sans-serif;
+            --danger: #dc2626;
+            --danger-soft: #fee2e2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            font-size: 20px;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 2.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+            border-right: 4px solid transparent;
+            font-size: 1.05rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-item.active {
+            background: rgba(251, 191, 36, 0.1);
+            border-right: 4px solid var(--secondary);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .nav-num {
+            opacity: 0.5;
+            min-width: 2.2rem;
+            font-weight: 300;
+        }
+
+        .main-content {
+            margin-right: 0;
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #cbd5e1;
+            z-index: 1100;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1100px;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            border-bottom: 4px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            margin: 1.5rem 0 1rem;
+            color: #7c2d12;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .callout {
+            background: var(--accent-soft);
+            border-right: 6px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .vocab-box {
+            background: #f8fafc;
+            border: 1px dashed #64748b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .vocab-item {
+            display: inline-block;
+            background: #e2e8f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            margin: 0.3rem;
+            font-size: 0.95rem;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        #map-container {
+            height: 550px;
+            width: 100%;
+            border-radius: 16px;
+            border: 2px solid var(--border-color);
+            margin: 1.5rem 0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1100px;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #64748b;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(100%); left: auto; right: 0; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .mobile-nav-btn {
+            display: none;
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 2000;
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-nav-btn { display: block; }
+        }
+
+        .arabic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .arabic-table th, .arabic-table td {
+            border: 1px solid #cbd5e1;
+            padding: 1rem;
+            text-align: right;
+        }
+        .arabic-table th {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .footnotes {
+            margin-top: 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .footnotes ol { padding-right: 1.2rem; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .stat-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-source {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .stat-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-right: 2rem;
+            margin: 2rem 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--danger);
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--danger-soft);
+            border-radius: 12px;
+            border: 1px solid #fecaca;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -2.5rem;
+            top: 1.8rem;
+            width: 12px;
+            height: 12px;
+            background: var(--danger);
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        .timeline-date {
+            font-weight: 700;
+            color: var(--danger);
+        }
+        .timeline-title {
+            font-weight: 600;
+            margin: 0.5rem 0 0.5rem;
+        }
+        .timeline-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .note-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.85rem;
+            background: var(--secondary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            margin-left: 0.4rem;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .church-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .church-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fff7ed 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .church-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .church-name {
+            font-weight: 700;
+            color: #7c2d12;
+            margin-bottom: 0.5rem;
+        }
+        .church-detail {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .figure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .figure-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .figure-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+        .figure-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        .figure-dates {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.7rem;
+        }
+        .figure-bio {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .alphabet-display {
+            font-size: 2rem;
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            letter-spacing: 0.3rem;
+            color: #7c2d12;
+            font-family: 'Noto Sans Armenian', 'Noto Sans', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <button class="mobile-nav-btn" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>الأرمن في الشرق الأوسط</h1>
+                <p style="font-size: 0.9rem; color: #94a3b8;">دراسة تاريخية – جغرافية – ديموغرافية</p>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <!-- Navigation items will be injected by JS -->
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <!-- Slide 0: Identity and Origins -->
+            <section class="slide active" id="slide-0">
+                <div class="card">
+                    <h2>الأرمن: الهوية والأصول</h2>
+                    <p>
+                        الأرمن (Armenians / Հայեր Hayer) هم مجموعة إثنية لغوية تنتمي إلى عائلة اللغات الهندو-أوروبية، وهم من أقدم الشعوب المسيحية في التاريخ. نشأت الهوية الأرمنية في هضبة أرمينيا التاريخية (المنطقة الجبلية التي تشمل شرق الأناضول الحالي، جنوب القوقاز، وشمال غرب إيران)، حيث شكّلوا ممالك وإمبراطوريات لأكثر من 2500 سنة.
+                    </p>
+
+                    <div class="callout">
+                        في عام <strong>301 ميلادي</strong>، أصبحت أرمينيا أول دولة في العالم تعتمد المسيحية ديناً رسمياً للدولة، قبل الإمبراطورية الرومانية (مرسوم ميلانو 313 م) وقبل أن يعتنقها قسطنطين الأول. تم ذلك على يد الملك تيريدات الثالث (Tiridates III) بتأثير القديس غريغوريوس المنوّر (Gregory the Illuminator)، مؤسس الكنيسة الأرمنية الرسولية.
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card" style="padding: 1.5rem; background: #fef3c7;">
+                            <h4 style="color: #7c2d12;">هضبة أرمينيا التاريخية</h4>
+                            <p style="font-size: 0.95rem;">
+                                منطقة جبلية تقع حول جبل أرارات (5,137 م)، وتمتد من بحيرة وان غرباً إلى بحر قزوين شرقاً، ومن القوقاز شمالاً إلى بلاد الرافدين جنوباً. تُعرف أيضاً باسم "أرمينيا الكبرى" (Մեծ Հայք).
+                            </p>
+                        </div>
+                        <div class="card" style="padding: 1.5rem; background: #fed7aa;">
+                            <h4 style="color: #7c2d12;">المملكة الأرمنية القديمة</h4>
+                            <p style="font-size: 0.95rem;">
+                                بلغت أوجها في عهد الملك تيغران الثاني (Tigranes the Great، 95-55 ق.م) الذي وسّع حدود المملكة لتشمل أجزاء من سوريا، لبنان، وفلسطين، مما أدى إلى وجود أرمني قديم في بلاد الشام.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="vocab-box">
+                        <h4 style="margin-bottom: 0.5rem;">مصطلحات أساسية:</h4>
+                        <span class="vocab-item">الهوية الإثنية (Ethnic Identity)</span>
+                        <span class="vocab-item">المسيحية الشرقية (Eastern Christianity)</span>
+                        <span class="vocab-item">أرمينيا التاريخية (Historic Armenia)</span>
+                        <span class="vocab-item">الشتات الأرمني (Armenian Diaspora)</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>تاريخ تنصير أرمينيا: <a href="https://www.britannica.com/place/Armenia/History" target="_blank">Britannica — Armenia History</a></li>
+                            <li>الكنيسة الأرمنية الرسولية: <a href="https://en.wikipedia.org/wiki/Armenian_Apostolic_Church" target="_blank">Wikipedia — Armenian Apostolic Church</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 1: Etymology -->
+            <section class="slide" id="slide-1">
+                <div class="card">
+                    <h2>أصل التسمية: "أرمن" و"هاي"</h2>
+                    <p>
+                        يُطلق الأرمن على أنفسهم اسم <strong>"هاي" (Հայ Hay)</strong> وعلى بلادهم <strong>"هاياستان" (Հայաստան Hayastan)</strong>، بينما تستخدم اللغات الأجنبية والعربية تسميات مشتقة من الجذر "أرمن" أو "Armenia".
+                    </p>
+
+                    <table class="arabic-table">
+                        <thead>
+                            <tr>
+                                <th>التسمية</th>
+                                <th>الأصل اللغوي</th>
+                                <th>المعنى / السياق</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>هاي (Հայ Hay)</strong></td>
+                                <td>أرمني أصيل</td>
+                                <td>التسمية الذاتية التي يطلقها الأرمن على أنفسهم. تعود إلى أسطورة "هايك" (Hayk)، الجد الأسطوري للأرمن، الذي ثار على الطاغية البابلي بيل (Bel) حوالي 2492 ق.م حسب التقويم الأرمني التقليدي.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>أرمينيا (Armenia)</strong></td>
+                                <td>يوناني/فارسي (Armina)</td>
+                                <td>أُطلق من قبل الفرس واليونان على المنطقة. قد يكون مشتقاً من اسم "أرمينو" (Armeno)، ملك أو قائد محلي قديم، أو من اسم الدولة الأورارتية القديمة (Urartu / Ararat).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>أرمن (عربي)</strong></td>
+                                <td>من اليونانية/الفارسية</td>
+                                <td>دخل إلى العربية عبر السريانية والفارسية، واستُخدم في المصادر الإسلامية للإشارة إلى المنطقة وسكانها.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>هاياستان (Հայաստան Hayastan)</strong></td>
+                                <td>أرمني (Hay + ستان)</td>
+                                <td>"أرض الهاي"، الاسم الرسمي لجمهورية أرمينيا باللغة الأرمنية.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout">
+                        <strong>ملاحظة:</strong> استخدم الأرمن تقويماً خاصاً بهم يبدأ من عام 552 ميلادي، وهو العام الذي وضع فيه القديس <strong>مسروب ماشتوتس</strong> (Mesrop Mashtots) الأبجدية الأرمنية. ومع ذلك، تشير الأساطير إلى تقويم أسطوري أقدم يبدأ من معركة هايك ضد بيل.
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>أصل التسمية: <a href="https://en.wikipedia.org/wiki/Name_of_Armenia" target="_blank">Wikipedia — Name of Armenia</a></li>
+                            <li>أسطورة هايك: <a href="https://en.wikipedia.org/wiki/Hayk" target="_blank">Wikipedia — Hayk</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Historical Trajectory (Ancient to Ottoman) -->
+            <section class="slide" id="slide-2">
+                <div class="card">
+                    <h2>المسار التاريخي: من الممالك القديمة إلى الحكم العثماني</h2>
+                    <p>مرّ الأرمن بمحطات تاريخية حاسمة شكلت مصيرهم ووزعتهم جغرافياً:</p>
+
+                    <div class="grid-2">
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">العصور القديمة والوسطى</h3>
+                            <p style="font-size: 0.95rem;">
+                                <strong>المملكة الأرمنية (331 ق.م – 428 م):</strong> تأسست بعد سقوط الإمبراطورية الأخمينية الفارسية، وبلغت ذروتها في عهد تيغران الثاني. تعرضت للغزو الروماني ثم الفارسي، وانقسمت أخيراً بين بيزنطة والساسانيين.<br><br>
+                                <strong>العصر البيزنطي والإسلامي (428-1045 م):</strong> سقطت المملكة الأرمنية رسمياً عام 428 م، لكن استمرت إمارات أرمنية شبه مستقلة. بعد الفتح الإسلامي (القرن 7 م)، عاش الأرمن كأهل ذمة تحت الحكم الأموي والعباسي، مع احتفاظهم بكنائسهم وأديرتهم.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">مملكة أرمينيا الصغرى (كيليكيا)</h3>
+                            <p style="font-size: 0.95rem;">
+                                <strong>1080-1375 م:</strong> بعد سقوط أرمينيا الكبرى في يد السلاجقة الأتراك (معركة ملاذكرد 1071)، هاجر العديد من الأرمن جنوباً وأسسوا "مملكة أرمينيا الصغرى" في كيليكيا (جنوب شرق تركيا الحالية). لعبت دوراً مهماً في الحروب الصليبية كحليف للصليبيين. سقطت على يد المماليك عام 1375 م، مما أدى إلى موجات هجرة أرمنية إلى قبرص وبلاد الشام.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">الحكم العثماني (1453-1918)</h3>
+                            <p style="font-size: 0.95rem;">
+                                بعد فتح القسطنطينية 1453 وضم الأناضول، أصبح معظم الأرمن تحت الحكم العثماني. نُظموا في "ملّة أرمنية" (Millet-i Ermeniyan) يرأسها البطريرك الأرمني في القسطنطينية، مما منحهم حكماً ذاتياً دينياً وثقافياً. كانوا يُعرفون بـ"الملّة المخلصة" (Millet-i Sadıka) لولائهم للإمبراطورية.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 style="border-right: 4px solid var(--primary); padding-right: 10px;">القرن 19: التنظيمات والمسألة الأرمنية</h3>
+                            <p style="font-size: 0.95rem;">
+                                شهد القرن 19 إصلاحات عثمانية (التنظيمات 1839-1876) منحت الأرمن مزيداً من الحقوق، لكن تطبيقها كان ضعيفاً. مع صعود القومية الأرمنية والأحزاب السياسية (الطاشناق، الهنشاق)، اندلعت صراعات دموية: مذابح حميد (1894-1896) التي قُتل فيها ما بين 100,000-300,000 أرمني.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>تاريخ أرمينيا: <a href="https://www.britannica.com/place/Armenia/History" target="_blank">Britannica — Armenia History</a></li>
+                            <li>مملكة أرمينيا الصغرى: <a href="https://en.wikipedia.org/wiki/Armenian_Kingdom_of_Cilicia" target="_blank">Wikipedia — Armenian Kingdom of Cilicia</a></li>
+                            <li>نظام الملل العثماني: <a href="https://en.wikipedia.org/wiki/Millet_(Ottoman_Empire)" target="_blank">Wikipedia — Millet System</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: The Armenian Genocide (1915-1923) -->
+            <section class="slide" id="slide-3">
+                <div class="card">
+                    <h2>الإبادة الأرمنية (1915-1923)</h2>
+                    <p>
+                        تُعد <strong>الإبادة الأرمنية</strong> (Armenian Genocide / Մեծ Եղեռն Mets Yeghern "الجريمة الكبرى") من أكثر الأحداث المأساوية في التاريخ الحديث. بدأت رسمياً في <strong>24 أبريل 1915</strong> باعتقال وإعدام نحو 250 مثقفاً وقيادياً أرمنياً في القسطنطينية، وتصاعدت إلى حملة منهجية من القتل الجماعي والترحيل القسري استمرت حتى 1923.
+                    </p>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">24 أبريل 1915</div>
+                            <div class="timeline-title">بداية الإبادة</div>
+                            <div class="timeline-desc">اعتقال وإعدام 250 مثقفاً أرمنياً في اسطنبول. يُحيي الأرمن حول العالم هذا التاريخ كيوم ذكرى الإبادة.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">مايو – يونيو 1915</div>
+                            <div class="timeline-title">قانون الترحيل (Tehcir Law)</div>
+                            <div class="timeline-desc">أصدرت حكومة الاتحاد والترقي العثمانية قانون الترحيل المؤقت، الذي سمح بترحيل الأرمن من الولايات الشرقية بذريعة "الأمن القومي" خلال الحرب العالمية الأولى.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1915-1916</div>
+                            <div class="timeline-title">مسيرات الموت</div>
+                            <div class="timeline-desc">رُحّل مئات الآلاف من الأرمن في مسيرات قسرية عبر الصحراء السورية (دير الزور) دون طعام أو ماء. تعرضوا للقتل والاغتصاب والتعذيب. قُتل الذكور البالغون غالباً في بداية المسيرة.</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1918-1923</div>
+                            <div class="timeline-title">استمرار العنف</div>
+                            <div class="timeline-desc">رغم انتهاء الحرب العالمية الأولى، استمرت المجازر في مناطق كيليكيا والأناضول خلال حرب الاستقلال التركية. مذبحة سميل (1918) ومذابح مرعش (1920) وغيرها.</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-source">التقديرات التاريخية</div>
+                            <div class="stat-number">1.5 مليون</div>
+                            <div class="stat-note">عدد الضحايا الأرمن التقديري (600,000 – 1.5 مليون حسب المصدر)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">ما قبل 1915</div>
+                            <div class="stat-number">~2 مليون</div>
+                            <div class="stat-note">عدد الأرمن في الإمبراطورية العثمانية قبل الحرب</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">الناجون</div>
+                            <div class="stat-number">~500,000</div>
+                            <div class="stat-note">هربوا إلى روسيا، بلاد الشام، مصر، اليونان، والعراق</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">الاعتراف الدولي</div>
+                            <div class="stat-number">34 دولة</div>
+                            <div class="stat-note">اعترفت رسمياً بالإبادة الأرمنية (حتى 2024)</div>
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <strong>موقف تركيا:</strong> تنكر الحكومة التركية حتى اليوم وصف الأحداث بـ"الإبادة الجماعية"، وتصفها بـ"المآسي المتبادلة" خلال فترة حرب، مشيرة إلى مقتل أتراك أيضاً. معظم المؤرخين والمنظمات الدولية (الأمم المتحدة، البرلمان الأوروبي، مجلس النواب الأمريكي 2019) يصنفون الأحداث كإبادة جماعية وفقاً لاتفاقية منع جريمة الإبادة الجماعية (1948).
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>الإبادة الأرمنية: <a href="https://encyclopedia.ushmm.org/content/en/article/the-armenian-genocide-1915-16-overview" target="_blank">US Holocaust Memorial Museum</a></li>
+                            <li>الاعتراف الدولي: <a href="https://en.wikipedia.org/wiki/Armenian_genocide_recognition" target="_blank">Wikipedia — Recognition</a></li>
+                            <li>مسيرات الموت: <a href="https://www.genocide1915.info/history/1915/" target="_blank">Armenian Genocide Timeline</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Migration to the Middle East -->
+            <section class="slide" id="slide-4">
+                <div class="card">
+                    <h2>الهجرة إلى الشرق الأوسط (1915-1930)</h2>
+                    <p>
+                        بعد الإبادة، تدفق مئات الآلاف من الأرمن الناجين إلى دول الشرق الأوسط، خاصة في المناطق الخاضعة للانتداب الفرنسي (سوريا ولبنان) والبريطاني (العراق وفلسطين). استقر اللاجئون في مخيمات مؤقتة ثم في أحياء خاصة بهم في المدن الكبرى.
+                    </p>
+
+                    <div class="grid-2">
+                        <div class="callout">
+                            <h4>سوريا ولبنان</h4>
+                            <p style="font-size: 0.95rem;">
+                                أكبر تجمع للاجئين الأرمن. استقر معظمهم في <strong>حلب</strong> (التي أصبحت تضم أكبر جالية أرمنية بالشرق الأوسط قبل الحرب السورية: 80,000-100,000)، <strong>بيروت</strong> (برج حمود، الأشرفية)، ودمشق. قدّمت سلطات الانتداب الفرنسي دعماً نسبياً للاجئين.
+                            </p>
+                        </div>
+                        <div class="callout">
+                            <h4>الأردن وفلسطين/القدس</h4>
+                            <p style="font-size: 0.95rem;">
+                                استقرت جالية أرمنية صغيرة لكن تاريخية في <strong>القدس</strong> (الحي الأرمني منذ القرن 4 م)، وفي عمّان بعد 1948. بلغ تعدادهم في القدس نحو 2,000-3,000 قبل 1948، وتقلص اليوم إلى أقل من 1,500 بسبب الهجرة.
+                            </p>
+                        </div>
+                        <div class="callout">
+                            <h4>العراق</h4>
+                            <p style="font-size: 0.95rem;">
+                                استقبل العراق (تحت الانتداب البريطاني) نحو 25,000 أرمني استقروا في بغداد والموصل والبصرة. كانوا يشكلون أقلية مسيحية مزدهرة، لكن أعدادهم تقلصت بشدة بعد حرب الخليج 1991 وغزو 2003.
+                            </p>
+                        </div>
+                        <div class="callout">
+                            <h4>مصر</h4>
+                            <p style="font-size: 0.95rem;">
+                                كانت هناك جالية أرمنية قديمة في مصر منذ العصور الوسطى، لكنها تضخمت بعد 1915. استقر الأرمن في القاهرة والإسكندرية وعملوا في التجارة والصناعة. تقلصت الجالية بعد ثورة 1952 وتأميم 1961 إلى نحو 6,000 اليوم.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <strong>دور المنظمات الدولية:</strong> قدمت منظمات مثل "اللجنة الدولية للصليب الأحمر" و"جمعية الشرق الأدنى للإغاثة" (Near East Relief – NER) مساعدات طبية وغذائية للاجئين الأرمن في المخيمات، خاصة في سوريا ولبنان. تأسست دور أيتام وملاجئ للنساء والأطفال الناجين.
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>الأرمن في الشرق الأوسط: <a href="https://en.wikipedia.org/wiki/Armenians_in_the_Middle_East" target="_blank">Wikipedia — Armenians in the Middle East</a></li>
+                            <li>حلب الأرمنية: <a href="https://cnewa.org/magazine/aleppo-a-syrian-mosaic-33430/" target="_blank">CNEWA — Aleppo</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Geographic Distribution and Map -->
+            <section class="slide" id="slide-5">
+                <div class="card">
+                    <h2>التوزيع الجغرافي المعاصر في الشرق الأوسط</h2>
+                    <p>
+                        اليوم، يعيش معظم الأرمن في الشتات (Diaspora) خارج جمهورية أرمينيا. يُقدّر إجمالي الشتات الأرمني بـ<strong>5-7 ملايين</strong> شخص (مقابل 3 ملايين في أرمينيا نفسها). في الشرق الأوسط، تركزت الجاليات الأرمنية في عدة دول، لكن أعدادها تقلصت بسبب الحروب والهجرة إلى أوروبا وأمريكا.
+                    </p>
+                    
+                    <div id="map-container"></div>
+
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-source">لبنان</div>
+                            <div class="stat-number">~150,000</div>
+                            <div class="stat-note">4% من السكان (قبل الحرب الأهلية كانوا أكثر)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">سوريا (ما قبل 2011)</div>
+                            <div class="stat-number">~100,000</div>
+                            <div class="stat-note">تركزوا في حلب (70,000-80,000)، دمشق، القامشلي</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">سوريا (2024)</div>
+                            <div class="stat-number">~15,000-30,000</div>
+                            <div class="stat-note">هاجر الغالبية بسبب الحرب إلى أرمينيا ولبنان وأوروبا</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">إيران</div>
+                            <div class="stat-number">~80,000-100,000</div>
+                            <div class="stat-note">تتركز في طهران وأصفهان وتبريز (أقلية معترف بها دستورياً)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">الأردن</div>
+                            <div class="stat-number">~5,000</div>
+                            <div class="stat-note">عمّان (معظمهم لاجئون من سوريا بعد 2011)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">مصر</div>
+                            <div class="stat-number">~6,000</div>
+                            <div class="stat-note">القاهرة والإسكندرية</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">فلسطين/القدس</div>
+                            <div class="stat-number">~1,000-1,500</div>
+                            <div class="stat-note">الحي الأرمني في البلدة القديمة</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-source">العراق</div>
+                            <div class="stat-number">~3,000-5,000</div>
+                            <div class="stat-note">تقلصوا من 25,000 بعد 2003</div>
+                        </div>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>التوزيع الديموغرافي: <a href="https://en.wikipedia.org/wiki/Armenians_in_the_Middle_East" target="_blank">Wikipedia — Armenians in the Middle East</a></li>
+                            <li>اللاجئون السوريون الأرمن: <a href="https://www.migrationpolicy.org/article/development-through-diversity-engaging-armenia%E2%80%99s-new-and-old-diaspora" target="_blank">Migration Policy Institute</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Demographic Estimates -->
+            <section class="slide" id="slide-6">
+                <div class="card">
+                    <h2>التقديرات السكانية: الأعداد والتحديات</h2>
+                    <p>
+                        لا توجد إحصاءات دقيقة وموحدة للأرمن في الشرق الأوسط، لعدة أسباب: غياب التعدادات العرقية الرسمية في معظم الدول، الهجرة المستمرة، والوضع السياسي غير المستقر. معظم الأرقام تأتي من تقديرات الكنائس الأرمنية والجمعيات المجتمعية.
+                    </p>
+
+                    <table class="arabic-table">
+                        <thead>
+                            <tr>
+                                <th>الدولة</th>
+                                <th>العدد المقدّر (2024)</th>
+                                <th>النسبة من السكان</th>
+                                <th>ملاحظات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>لبنان</strong></td>
+                                <td>~150,000</td>
+                                <td>~4%</td>
+                                <td>أكبر جالية في العالم العربي. يتمتعون بتمثيل برلماني (6 مقاعد). بيروت (برج حمود) وأنطلياس معاقل رئيسية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>سوريا</strong></td>
+                                <td>~15,000-30,000</td>
+                                <td><1%</td>
+                                <td>كان العدد 100,000 قبل الحرب (2011). دُمرت أحياء أرمنية بالكامل في حلب. هاجر معظمهم إلى أرمينيا ولبنان وأوروبا.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>إيران</strong></td>
+                                <td>~80,000-100,000</td>
+                                <td>~0.1%</td>
+                                <td>معترف بهم دستورياً كأقلية دينية مع مقعد برلماني مخصص. لهم حرية دينية نسبية وكنائس ومدارس خاصة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الأردن</strong></td>
+                                <td>~5,000</td>
+                                <td><0.1%</td>
+                                <td>معظمهم لاجئون من سوريا بعد 2011. استقروا في عمّان.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>مصر</strong></td>
+                                <td>~6,000</td>
+                                <td><0.01%</td>
+                                <td>انخفض من 40,000 في أربعينيات القرن 20 بسبب الهجرة بعد ثورة 1952 والتأميم.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>فلسطين/القدس</strong></td>
+                                <td>~1,000-1,500</td>
+                                <td>-</td>
+                                <td>يسكنون الحي الأرمني في البلدة القديمة منذ القرن 4 م. يديرون كنائس وأديرة ومدارس.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>العراق</strong></td>
+                                <td>~3,000-5,000</td>
+                                <td><0.01%</td>
+                                <td>انخفض من 25,000 بعد 2003 بسبب العنف الطائفي والهجرة.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="note-box">
+                        <p style="font-size: 0.95rem;">
+                            <strong>اتجاهات الهجرة:</strong> شهدت العقود الأخيرة هجرة أرمنية مكثفة من الشرق الأوسط إلى أرمينيا (خاصة من سوريا بعد 2011)، روسيا، أوروبا (فرنسا، ألمانيا)، أمريكا الشمالية (الولايات المتحدة، كندا)، وأستراليا. منذ 2018، سجلت أرمينيا صافي هجرة إيجابي لأول مرة منذ الاستقلال، جزئياً بسبب عودة أرمن الشتات.
+                        </p>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>الأرمن في لبنان: <a href="https://en.wikipedia.org/wiki/Armenians_in_Lebanon" target="_blank">Wikipedia — Armenians in Lebanon</a></li>
+                            <li>الهجرة إلى أرمينيا: <a href="https://www.repatarmenia.org/article/publications/mapping-the-armenian-diaspora-who-they-are-where-they-are-and-what-they-want" target="_blank">Repat Armenia</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Language and Alphabet -->
+            <section class="slide" id="slide-7">
+                <div class="card">
+                    <h2>اللغة والأبجدية الأرمنية</h2>
+                    <p>
+                        اللغة الأرمنية (Հայերեն Hayeren) هي لغة هندو-أوروبية تشكل فرعاً مستقلاً. تنقسم إلى <strong>أرمنية شرقية</strong> (Eastern Armenian، المستخدمة في جمهورية أرمينيا وإيران) و<strong>أرمنية غربية</strong> (Western Armenian، المستخدمة في الشتات، خاصة لبنان وسوريا).
+                    </p>
+
+                    <div class="grid-2">
+                        <div style="background: #fef3c7; padding: 1.5rem; border-radius: 12px;">
+                            <h4>مسروب ماشتوتس والأبجدية</h4>
+                            <p style="font-size: 0.95rem;">
+                                في عام <strong>405 ميلادي</strong>، ابتكر القديس <strong>مسروب ماشتوتس</strong> (Mesrop Mashtots، 362-440 م) الأبجدية الأرمنية المكونة من 36 حرفاً (أُضيف حرفان لاحقاً). كان الهدف ترجمة الكتاب المقدس إلى الأرمنية وتعزيز الهوية المسيحية الأرمنية. تُعتبر هذه اللحظة من أهم الأحداث في التاريخ الأرمني، وأدت إلى "العصر الذهبي للأدب الأرمني" (القرن 5 م).
+                            </p>
+                        </div>
+                        <div style="background: #fed7aa; padding: 1.5rem; border-radius: 12px;">
+                            <h4>الحروف الأرمنية</h4>
+                            <div class="alphabet-display">
+                                Ա Բ Գ Դ Ե Զ Է Ը Թ Ժ Ի Լ Խ Ծ Կ Հ Ձ Ղ Ճ Մ Յ Ն Շ Ո Չ Պ Ջ Ռ Ս Վ Տ Ր Ց Ւ Փ Ք Օ Ֆ
+                            </div>
+                            <p style="font-size: 0.9rem; text-align: center;">
+                                الأبجدية الأرمنية (38 حرفاً في النسخة الحديثة)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <strong>الفرق بين الشرقية والغربية:</strong> الأرمنية الغربية كانت لغة أرمن الإمبراطورية العثمانية، وهي اليوم مهددة بالانقراض (صنفتها اليونسكو كلغة مهددة بشدة). يتحدثها أرمن لبنان وسوريا والشتات الغربي. الأرمنية الشرقية هي اللغة الرسمية لجمهورية أرمينيا ويستخدمها أرمن إيران. الفروق بينهما لغوية (نطق، قواعد) وليست جذرية.
+                    </div>
+
+                    <div class="vocab-box">
+                        <span class="vocab-item">الأبجدية الأرمنية (Armenian Alphabet)</span>
+                        <span class="vocab-item">مسروب ماشتوتس (Mesrop Mashtots)</span>
+                        <span class="vocab-item">الأرمنية الشرقية (Eastern Armenian)</span>
+                        <span class="vocab-item">الأرمنية الغربية (Western Armenian)</span>
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>مسروب ماشتوتس: <a href="https://www.worldhistory.org/Mesrop_Mashtots/" target="_blank">World History Encyclopedia</a></li>
+                            <li>اللغة الأرمنية: <a href="https://en.wikipedia.org/wiki/Armenian_language" target="_blank">Wikipedia — Armenian Language</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Armenian Churches -->
+            <section class="slide" id="slide-8">
+                <div class="card">
+                    <h2>الكنائس الأرمنية: البنية والتنظيم</h2>
+                    <p>
+                        الغالبية العظمى من الأرمن ينتمون إلى <strong>الكنيسة الأرمنية الرسولية</strong> (Armenian Apostolic Church)، وهي كنيسة أرثوذكسية شرقية مستقلة (غير خلقيدونية) تأسست في القرن الرابع الميلادي. توجد أيضاً أقليات كاثوليكية وإنجيلية.
+                    </p>
+
+                    <div class="church-grid">
+                        <div class="church-card">
+                            <div class="church-icon">✟</div>
+                            <div class="church-name">الكنيسة الأرمنية الرسولية</div>
+                            <div class="church-detail">الأغلبية (~93%). يرأسها الكاثوليكوس في إتشميادزين (أرمينيا) وكاثوليكوس كيليكيا (لبنان).</div>
+                        </div>
+                        <div class="church-card">
+                            <div class="church-icon">†</div>
+                            <div class="church-name">الكنيسة الأرمنية الكاثوليكية</div>
+                            <div class="church-detail">~5%. في شركة كاملة مع روما. يرأسها بطريرك – كاثوليكوس الأرمن الكاثوليك (مقره بيروت).</div>
+                        </div>
+                        <div class="church-card">
+                            <div class="church-icon">✝</div>
+                            <div class="church-name">الكنيسة الإنجيلية الأرمنية</div>
+                            <div class="church-detail">~2%. بروتستانتية، تأسست في القرن 19. اتحاد الكنائس الإنجيلية الأرمنية في الشرق الأدنى (1924) مقره بيروت.</div>
+                        </div>
+                    </div>
+
+                    <h3>التسلسل الهرمي للكنيسة الأرمنية الرسولية</h3>
+                    <table class="arabic-table">
+                        <thead>
+                            <tr>
+                                <th>المنصب</th>
+                                <th>الوصف</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>الكاثوليكوس (Catholicos)</strong></td>
+                                <td>أعلى منصب في الكنيسة الأرمنية، يعني "القائد العام". يوجد كاثوليكوسان رئيسيان: <strong>كاثوليكوس كل الأرمن</strong> في إتشميادزين (أرمينيا) – الأعلى مرتبة، و<strong>كاثوليكوس كيليكيا الكبرى</strong> في أنطلياس (لبنان).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>البطريرك (Patriarch)</strong></td>
+                                <td>يرأس الكراسي البطريركية التاريخية: <strong>بطريركية القدس</strong> (دير القديس يعقوب، تأسست القرن 14) و<strong>بطريركية القسطنطينية</strong> (اسطنبول، تأسست 1461). البطاركة مستقلون إدارياً لكنهم يعترفون بالسيادة الروحية للكاثوليكوس.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الأسقف (Bishop / Վարդապետ Vardapet)</strong></td>
+                                <td>يُعيّن لإدارة الأبرشيات في مختلف البلدان. يُرسم من قبل مجلس من 12 أسقفاً.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الكاهن (Priest / Քահանա Kahana)</strong></td>
+                                <td>يخدم في الرعايا المحلية ويدير الأسرار المقدسة.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout">
+                        <strong>إتشميادزين (Etchmiadzin):</strong> تُعد كاتدرائية إتشميادزين (بُنيت 301-303 م) أقدم كاتدرائية في العالم، وهي مقر الكاثوليكوس الأعلى ومركز الكنيسة الأرمنية الرسولية. تقع في مدينة فاغارشابات قرب يريفان، أرمينيا.
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>الكنيسة الأرمنية الرسولية: <a href="https://en.wikipedia.org/wiki/Armenian_Apostolic_Church" target="_blank">Wikipedia — Armenian Apostolic Church</a></li>
+                            <li>التسلسل الهرمي: <a href="https://www.armenianorthodoxchurch.org/en/the-armenian-church/hierarchy-decision-making" target="_blank">Armenian Church Hierarchy</a></li>
+                            <li>الكنيسة الإنجيلية: <a href="https://www.globalministries.org/partner/union_of_armenian_evangelical_churches_in_the_near_east/" target="_blank">Union of Armenian Evangelical Churches</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Notable Figures -->
+            <section class="slide" id="slide-9">
+                <div class="card">
+                    <h2>شخصيات أرمنية بارزة</h2>
+                    <p>ساهم الأرمن بشكل كبير في مجالات متنوعة على مستوى العالم:</p>
+
+                    <div class="figure-grid">
+                        <div class="figure-card">
+                            <div class="figure-name">ويليام سارويان (William Saroyan)</div>
+                            <div class="figure-dates">1908-1981</div>
+                            <div class="figure-bio">كاتب ومسرحي أمريكي من أصل أرمني، حاز على جائزة بوليتزر عام 1940. اشتهر بأعماله التي تناولت تجربة المهاجرين الأرمن.</div>
+                        </div>
+                        <div class="figure-card">
+                            <div class="figure-name">آرام خاتشادوريان (Aram Khachaturian)</div>
+                            <div class="figure-dates">1903-1978</div>
+                            <div class="figure-bio">مؤلف موسيقي سوفييتي أرمني، اشتهر برقصة السيف من باليه "غايانه" (Gayane).</div>
+                        </div>
+                        <div class="figure-card">
+                            <div class="figure-name">تشارلز أزنافور (Charles Aznavour)</div>
+                            <div class="figure-dates">1924-2018</div>
+                            <div class="figure-bio">مغني وممثل فرنسي من أصل أرمني، لُقب بـ"فرانك سيناترا الفرنسي". باع أكثر من 180 مليون أسطوانة.</div>
+                        </div>
+                        <div class="figure-card">
+                            <div class="figure-name">سيرج تانكيان (Serj Tankian)</div>
+                            <div class="figure-dates">مواليد 1967</div>
+                            <div class="figure-bio">مغني وملحن أمريكي أرمني، المغني الرئيسي لفرقة System of a Down. ناشط في قضية الاعتراف بالإبادة الأرمنية.</div>
+                        </div>
+                        <div class="figure-card">
+                            <div class="figure-name">شير (Cher)</div>
+                            <div class="figure-dates">مواليد 1946</div>
+                            <div class="figure-bio">مغنية وممثلة أمريكية من أصل أرمني (والدها جون سركيسيان). حازت على أوسكار وجرامي وإيمي، ولُقبت بـ"إلهة البوب".</div>
+                        </div>
+                        <div class="figure-card">
+                            <div class="figure-name">ستيف جوبز (Steve Jobs)</div>
+                            <div class="figure-dates">1955-2011</div>
+                            <div class="figure-bio">مؤسس شركة أبل. والده البيولوجي عبد الفتاح الجندلي (سوري)، ووالدته جوان شيبل. تبناه بول وكلارا جوبز. *ملاحظة: كان لديه صلة بالجالية السورية أكثر من الأرمنية.*</div>
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <strong>في الشرق الأوسط:</strong> ساهم الأرمن في الحياة الاقتصادية والثقافية بشكل كبير، خاصة في لبنان وسوريا. في لبنان، شغل أرمن مناصب وزارية وبرلمانية. في سوريا، برز الأرمن في الصناعة والتجارة والفنون (مثل المخرج السينمائي عمر أميرالاي من أصول أرمنية).
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: Political Status and Recognition -->
+            <section class="slide" id="slide-10">
+                <div class="card">
+                    <h2>الوضع السياسي والقانوني في الشرق الأوسط</h2>
+                    <p>يختلف الوضع القانوني للأرمن من دولة إلى أخرى في المنطقة:</p>
+
+                    <div class="grid-2">
+                        <div>
+                            <h4>لبنان: تمثيل دستوري</h4>
+                            <p style="font-size: 0.95rem;">
+                                يتمتع الأرمن في لبنان بـ<strong>6 مقاعد مضمونة</strong> في البرلمان اللبناني (128 مقعداً) بموجب نظام الطائفية السياسية. لهم حق في منصب نائب رئيس الوزراء في بعض الحكومات. تُدار المدارس الأرمنية بشكل مستقل، وتُدرّس فيها اللغة والتاريخ الأرمني. الكنائس الأرمنية تدير محاكم طوائف خاصة لشؤون الأحوال الشخصية.
+                            </p>
+                        </div>
+                        <div>
+                            <h4>سوريا: أقلية معترف بها</h4>
+                            <p style="font-size: 0.95rem;">
+                                كان الأرمن في سوريا يتمتعون بحرية نسبية في إدارة شؤونهم الثقافية والدينية قبل الحرب. لم يكن لهم تمثيل برلماني مخصص، لكن سُمح لهم بتشغيل مدارس وكنائس ونوادٍ ثقافية. أحياء أرمنية كاملة كانت موجودة في حلب (أحياء العزيزية والسليمانية). الحرب دمرت الكثير من هذه المؤسسات.
+                            </p>
+                        </div>
+                        <div>
+                            <h4>إيران: أقلية دينية دستورية</h4>
+                            <p style="font-size: 0.95rem;">
+                                يُعترف بالأرمن في الدستور الإيراني كـ<strong>أقلية دينية</strong> محمية (المادة 13). لهم <strong>مقعد برلماني مخصص</strong> في المجلس (290 مقعداً)، ويتمتعون بحرية دينية نسبية (كنائس، مدارس، نوادي). يُسمح لهم بإنتاج وتناول الخمور لأغراض دينية (ممنوع على المسلمين). لا يُطبق عليهم التجنيد الإجباري في الحروب الخارجية.
+                            </p>
+                        </div>
+                        <div>
+                            <h4>دول أخرى: حقوق محدودة</h4>
+                            <p style="font-size: 0.95rem;">
+                                في <strong>الأردن ومصر والعراق</strong>، يُعتبر الأرمن أقلية مسيحية صغيرة دون تمثيل برلماني مخصص أو وضع خاص. لهم حرية ممارسة الشعائر الدينية وتشغيل كنائس ومدارس، لكن أعدادهم المتناقصة تحد من تأثيرهم. في <strong>القدس</strong>، يتمتع الأرمن بوضع خاص في الحي الأرمني (ربع مساحة البلدة القديمة) ويديرون أديرة وكنائس ومدارس.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <strong>التجنس والهوية:</strong> في معظم دول الشرق الأوسط، حمل الأرمن اللاجئون (بعد 1915) "جوازات نانسن" (Nansen passports) التي أصدرتها عصبة الأمم للاجئين عديمي الجنسية. تدريجياً حصلوا على الجنسية المحلية (لبنانية، سورية، إلخ)، لكن الكثيرين حافظوا على هوية أرمنية قوية وولاء مزدوج.
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>الأرمن في لبنان: <a href="https://en.wikipedia.org/wiki/Armenians_in_Lebanon" target="_blank">Wikipedia — Armenians in Lebanon</a></li>
+                            <li>الأرمن في إيران: <a href="https://en.wikipedia.org/wiki/Iranian_Armenians" target="_blank">Wikipedia — Iranian Armenians</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 11: Current Challenges -->
+            <section class="slide" id="slide-11">
+                <div class="card">
+                    <h2>التحديات المعاصرة</h2>
+                    <p>رغم الاندماج النسبي في مجتمعات الشرق الأوسط، يواجه الأرمن تحديات كبيرة:</p>
+
+                    <div class="grid-2">
+                        <div>
+                            <h4>الهجرة المستمرة</h4>
+                            <p style="font-size: 0.95rem;">
+                                تشكل الهجرة التحدي الأكبر. بعد الحرب الأهلية اللبنانية (1975-1990)، هاجر عشرات الآلاف من الأرمن إلى أوروبا وأمريكا. الحرب السورية (2011-الآن) أدت إلى هجرة جماعية: من 100,000 إلى 15,000-30,000 فقط. الأسباب: عدم الاستقرار السياسي، الأوضاع الاقتصادية، نقص فرص العمل.
+                            </p>
+                        </div>
+                        <div>
+                            <h4>التآكل اللغوي والثقافي</h4>
+                            <p style="font-size: 0.95rem;">
+                                الجيل الجديد من الأرمن في الشتات (خاصة لبنان وسوريا) يتحدث بشكل متزايد العربية والإنجليزية أكثر من الأرمنية. الأرمنية الغربية مهددة بالانقراض (حسب اليونسكو). المدارس الأرمنية تواجه صعوبات مالية وتنافس من المدارس الدولية.
+                            </p>
+                        </div>
+                        <div>
+                            <h4>الصراعات الإقليمية</h4>
+                            <p style="font-size: 0.95rem;">
+                                تأثر الأرمن بشدة من الحروب في المنطقة: الحرب السورية دمرت أحياء أرمنية كاملة في حلب. صراع ناغورنو كاراباخ (2020، 2023) بين أرمينيا وأذربيجان أدى إلى نزوح 120,000 أرمني من كاراباخ، مما أثر على الشتات عاطفياً ومالياً (تبرعات، دعم).
+                            </p>
+                        </div>
+                        <div>
+                            <h4>قضية الاعتراف بالإبادة</h4>
+                            <p style="font-size: 0.95rem;">
+                                لا تزال تركيا ترفض الاعتراف بالإبادة الأرمنية، مما يشكل جرحاً مفتوحاً للأرمن. النشطاء الأرمن في الشتات يقودون حملات للاعتراف الدولي. حتى 2024، اعترفت 34 دولة رسمياً، بما في ذلك فرنسا (2001)، روسيا (1995)، الأرجنتين (2007)، والولايات المتحدة (2019، قرار الكونغرس ثم بايدن 2021).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <strong>المستقبل:</strong> يعتمد بقاء الجاليات الأرمنية في الشرق الأوسط على الاستقرار السياسي في المنطقة، تحسين الأوضاع الاقتصادية، والحفاظ على المؤسسات الثقافية (مدارس، كنائس، جمعيات). لبنان يبقى المعقل الرئيسي للهوية الأرمنية في العالم العربي، لكن الأزمة الاقتصادية (منذ 2019) تهدد حتى هذا الملاذ.
+                    </div>
+
+                    <div class="footnotes">
+                        <ol>
+                            <li>الأرمن في سوريا بعد الحرب: <a href="https://www.migrationpolicy.org/article/development-through-diversity-engaging-armenia%E2%80%99s-new-and-old-diaspora" target="_blank">Migration Policy Institute</a></li>
+                            <li>الاعتراف بالإبادة: <a href="https://en.wikipedia.org/wiki/Armenian_genocide_recognition" target="_blank">Wikipedia — Recognition</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <div class="controls">
+                <button class="btn btn-secondary" id="prev-btn" onclick="prevSlide()">السابق</button>
+                <button class="btn" id="next-btn" onclick="nextSlide()">التالي</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script>
+        const slides = [
+            { title: "الهوية والأصول" },
+            { title: "أصل التسمية" },
+            { title: "المسار التاريخي القديم" },
+            { title: "الإبادة الأرمنية" },
+            { title: "الهجرة إلى الشرق الأوسط" },
+            { title: "التوزيع الجغرافي" },
+            { title: "التقديرات السكانية" },
+            { title: "اللغة والأبجدية" },
+            { title: "الكنائس الأرمنية" },
+            { title: "شخصيات بارزة" },
+            { title: "الوضع السياسي" },
+            { title: "التحديات المعاصرة" }
+        ];
+
+        let currentSlide = 0;
+        let map;
+
+        function toArabicNum(n) {
+            const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+            return n.toString().split("").map(x => arabicNumbers[parseInt(x)]).join("");
+        }
+
+        function initNavigation() {
+            const navList = document.getElementById('nav-list');
+            slides.forEach((slide, index) => {
+                const li = document.createElement('li');
+                li.className = `nav-item ${index === 0 ? 'active' : ''}`;
+                li.id = `nav-${index}`;
+                li.onclick = () => goToSlide(index);
+                
+                const num = (index + 1).toString().padStart(2, '0');
+                li.innerHTML = `<span class="nav-num">${toArabicNum(num)}</span> ${slide.title}`;
+                navList.appendChild(li);
+            });
+            updateProgress();
+        }
+
+        function goToSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            currentSlide = index;
+            document.getElementById(`slide-${currentSlide}`).classList.add('active');
+            document.getElementById(`nav-${currentSlide}`).classList.add('active');
+            
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (currentSlide === 5) {
+                setTimeout(() => { if (map) map.invalidateSize(); }, 200);
+            }
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        function updateProgress() {
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            document.getElementById('prev-btn').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+            document.getElementById('next-btn').innerText = currentSlide === slides.length - 1 ? 'نهاية الدرس' : 'التالي';
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function initMap() {
+            map = L.map('map-container').setView([34.0, 38.0], 5);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            const regions = [
+                { name: "بيروت، لبنان", coords: [33.8886, 35.4955], pop: "~150,000 في لبنان" },
+                { name: "حلب، سوريا (قبل 2011)", coords: [36.2021, 37.1343], pop: "كان ~70,000-80,000" },
+                { name: "دمشق، سوريا", coords: [33.5138, 36.2765], pop: "~10,000" },
+                { name: "طهران، إيران", coords: [35.6892, 51.3890], pop: "~50,000-60,000" },
+                { name: "أصفهان، إيران", coords: [32.6546, 51.6680], pop: "~15,000" },
+                { name: "القدس (الحي الأرمني)", coords: [31.7761, 35.2290], pop: "~1,000-1,500" },
+                { name: "عمّان، الأردن", coords: [31.9454, 35.9284], pop: "~5,000" },
+                { name: "القاهرة، مصر", coords: [30.0444, 31.2357], pop: "~3,000-4,000" },
+                { name: "بغداد، العراق", coords: [33.3152, 44.3661], pop: "~3,000" }
+            ];
+
+            regions.forEach(region => {
+                L.marker(region.coords).addTo(map)
+                    .bindPopup(`<b>${region.name}</b><br>التعداد التقريبي: ${region.pop}`);
+            });
+
+            const armenianHistoricArea = [
+                [39.0, 38.0], [40.5, 40.0], [41.0, 45.0], [39.5, 47.0], [38.0, 46.0], [37.0, 43.0], [36.5, 40.0], [37.5, 38.5]
+            ];
+            L.polygon(armenianHistoricArea, {
+                color: '#ea580c',
+                fillColor: '#fed7aa',
+                fillOpacity: 0.3,
+                weight: 2,
+                dashArray: '5, 5'
+            }).addTo(map).bindPopup("<b>أرمينيا التاريخية</b><br>المنطقة التي عاش فيها الأرمن تاريخياً");
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavigation();
+            initMap();
+        });
+    </script>
+</body>
+</html>
+
