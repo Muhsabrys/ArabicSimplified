@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الشركس في الشرق الأوسط — عرض تعليمي شامل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&family=Noto+Serif+Arabic:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --forest:   #1a3d2e;
+  --forest-l: #2a5c44;
+  --gold:     #c9a84c;
+  --gold-l:   #e8c97a;
+  --cream:    #fdf8f0;
+  --white:    #ffffff;
+  --ink:      #1c1c1e;
+  --ink-soft: #3a3a3c;
+  --muted:    #8a8a8e;
+  --border:   #e4ddd0;
+  --red:      #c0392b;
+  --blue:     #1d6fa4;
+  --teal:     #0d7377;
+  --sidebar-w: 270px;
+  --shadow:   0 2px 20px rgba(26,61,46,0.10);
+  --shadow-lg:0 8px 40px rgba(26,61,46,0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  display: flex;
+  min-height: 100vh;
+  direction: rtl;
+  line-height: 1.75;
+}
+
+/* ═══════════════ SIDEBAR ═══════════════ */
+#sidebar {
+  width: var(--sidebar-w);
+  background: var(--forest);
+  position: fixed;
+  top: 0; right: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 30px rgba(0,0,0,0.25);
+}
+
+#sidebar-header {
+  background: var(--forest-l);
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgba(201,168,76,0.3);
+  text-align: center;
+}
+
+#sidebar-header .logo {
+  font-family: 'Noto Serif Arabic', serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+#sidebar-header .sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.5px;
+}
+
+#progress-wrap {
+  padding: 12px 20px 8px;
+  background: rgba(0,0,0,0.2);
+}
+#progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+#progress-bar-outer {
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px;
+  overflow: hidden;
+}
+#progress-bar-inner {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-l));
+  border-radius: 4px;
+  transition: width 0.4s cubic-bezier(.4,0,.2,1);
+}
+
+#nav-list {
+  list-style: none;
+  padding: 10px 0;
+  flex: 1;
+}
+#nav-list li {
+  border-right: 3px solid transparent;
+  transition: all 0.2s;
+}
+#nav-list li.active {
+  border-right-color: var(--gold);
+  background: rgba(201,168,76,0.12);
+}
+#nav-list li a {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 18px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+#nav-list li.active a,
+#nav-list li a:hover { color: var(--gold); }
+#nav-list li a .num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  margin-top: 1px;
+}
+#nav-list li.active a .num {
+  background: var(--gold);
+  color: var(--forest);
+}
+
+/* ═══════════════ MAIN ═══════════════ */
+#main {
+  margin-right: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ═══════════════ TOP BAR ═══════════════ */
+#topbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0; z-index: 500;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+#slide-title-bar {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--forest);
+}
+#nav-controls { display: flex; gap: 10px; }
+.nav-btn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 2px solid var(--forest);
+  background: transparent;
+  color: var(--forest);
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn:hover, .nav-btn.primary {
+  background: var(--forest);
+  color: var(--white);
+}
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ═══════════════ SLIDES ═══════════════ */
+#slides-container { padding: 40px; flex: 1; }
+
+.slide { display: none; animation: fadeIn 0.4s ease; }
+.slide.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Slide Header ─── */
+.slide-hero {
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-l) 100%);
+  border-radius: 18px;
+  padding: 40px 48px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.slide-hero::after {
+  content: '';
+  position: absolute;
+  top: -30px; left: -30px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.08);
+}
+.slide-hero::before {
+  content: '';
+  position: absolute;
+  bottom: -40px; right: 20px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.slide-hero .section-num {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--forest);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+.slide-hero h1 {
+  font-family: 'Noto Serif Arabic', serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.slide-hero .subtitle {
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+}
+
+/* ─── Cards ─── */
+.card {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+}
+.card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--forest);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.card h2 .icon { font-size: 20px; }
+
+/* ─── Grid ─── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+
+/* ─── Callout Boxes ─── */
+.callout {
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  border-right: 5px solid;
+  position: relative;
+}
+.callout-gold  { background: #fffbf0; border-color: var(--gold); }
+.callout-green { background: #f0f9f4; border-color: var(--forest); }
+.callout-red   { background: #fff5f5; border-color: var(--red); }
+.callout-blue  { background: #f0f7ff; border-color: var(--blue); }
+.callout-teal  { background: #f0fafa; border-color: var(--teal); }
+.callout-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+.callout p { font-size: 14px; line-height: 1.8; }
+
+/* ─── Stat Boxes ─── */
+.stat-box {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.stat-box .num {
+  font-family: 'Noto Serif Arabic', serif;
+  font-size: 34px;
+  font-weight: 900;
+  color: var(--forest);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-box .lbl { font-size: 12px; color: var(--muted); font-weight: 600; }
+.stat-box .lbl-en { font-size: 10px; color: var(--muted); opacity: 0.6; }
+
+/* ─── Tables ─── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin-top: 8px;
+}
+.data-table th {
+  background: var(--forest);
+  color: var(--gold);
+  padding: 12px 16px;
+  text-align: right;
+  font-weight: 700;
+  font-size: 12px;
+}
+.data-table th:first-child { border-radius: 0 8px 0 0; }
+.data-table th:last-child  { border-radius: 8px 0 0 0; }
+.data-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:nth-child(even) td { background: #f9f6f1; }
+.data-table tr:hover td { background: #f0f9f4; }
+
+/* ─── Timeline ─── */
+.timeline { position: relative; padding-right: 32px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  right: 12px; top: 0; bottom: 0;
+  width: 2px;
+  border-right: 3px dashed var(--gold);
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 28px;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin-right: 30px;
+}
+.tl-item::before {
+  content: attr(data-year);
+  position: absolute;
+  right: -56px;
+  top: 20px;
+  background: var(--gold);
+  color: var(--forest);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.tl-item::after {
+  content: '';
+  position: absolute;
+  right: -20px; top: 26px;
+  width: 12px; height: 12px;
+  background: var(--forest);
+  border: 3px solid var(--gold);
+  border-radius: 50%;
+}
+.tl-item h3 { font-size: 15px; font-weight: 700; color: var(--forest); margin-bottom: 6px; }
+.tl-item p  { font-size: 13.5px; color: var(--ink-soft); }
+
+/* ─── Tag Cloud ─── */
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.tag {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  transition: all 0.2s;
+}
+.tag:hover { background: var(--forest); color: var(--white); border-color: var(--forest); }
+.tag .en { font-size: 10px; color: var(--muted); margin-right: 4px; }
+.tag-gold { background: #fffbf0; border-color: var(--gold); color: var(--forest); }
+
+/* ─── Person Cards ─── */
+.person-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+.person-card {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 24px 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--gold);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.person-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.person-card .avatar {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--forest), var(--forest-l));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+.person-card .name { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.person-card .dates { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.person-card .field {
+  display: inline-block;
+  background: var(--forest);
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.person-card .achievement { font-size: 12.5px; color: var(--ink-soft); line-height: 1.6; }
+
+/* ─── Map ─── */
+#map-container {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  height: 420px;
+  border: 2px solid var(--border);
+  margin-bottom: 24px;
+}
+#map { height: 100%; width: 100%; }
+
+/* ─── Footnotes ─── */
+.footnotes {
+  background: #f7f4ef;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-top: 32px;
+  border: 1px dashed var(--border);
+}
+.footnotes h4 {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.footnotes ol { padding-right: 20px; }
+.footnotes li {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  line-height: 1.6;
+}
+.footnotes a { color: var(--blue); text-decoration: none; }
+.footnotes a:hover { text-decoration: underline; }
+
+/* ─── Bilingual Label ─── */
+.bilabel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.bilabel .ar { font-weight: 600; font-size: 14px; }
+.bilabel .en { font-size: 11px; color: var(--muted); font-family: 'Noto Sans Arabic', sans-serif; direction: ltr; text-align: left; }
+
+/* ─── Section Divider ─── */
+.sec-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 28px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sec-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─── Badge ─── */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.badge-green  { background: #e8f5ee; color: var(--forest); }
+.badge-red    { background: #fdecea; color: var(--red); }
+.badge-gold   { background: #fff8e6; color: #8b6914; }
+.badge-blue   { background: #e8f1fb; color: var(--blue); }
+.badge-muted  { background: #f0eeeb; color: var(--muted); }
+
+/* ─── Language Bar ─── */
+.lang-bar-wrap { margin: 10px 0; }
+.lang-bar-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+.lang-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.lang-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--forest), var(--teal)); }
+
+/* ─── Responsive ─── */
+@media (max-width: 1000px) {
+  .grid-2, .grid-3, .grid-4, .person-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  :root { --sidebar-w: 0px; }
+  #sidebar { display: none; }
+  #main { margin-right: 0; }
+  .grid-2, .grid-3, .grid-4, .person-grid { grid-template-columns: 1fr; }
+  #slides-container { padding: 20px; }
+}
+
+/* ─── Scrollbar ─── */
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+.flag-strip { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.flag-item {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.highlight-box {
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-l) 100%);
+  color: var(--white);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+}
+.highlight-box h3 {
+  font-family: 'Noto Serif Arabic', serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.highlight-box p { font-size: 14px; opacity: 0.85; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="logo">الشركس<br>في الشرق الأوسط</div>
+    <div class="sub">Circassians in the Middle East</div>
+  </div>
+  <div id="progress-wrap">
+    <div id="progress-label">
+      <span>التقدم</span>
+      <span id="progress-text">١ / ١٢</span>
+    </div>
+    <div id="progress-bar-outer">
+      <div id="progress-bar-inner" style="width:8.33%"></div>
+    </div>
+  </div>
+  <ul id="nav-list">
+    <li class="active"><a href="#" onclick="goTo(0);return false;"><span class="num">١</span>الهوية والأصول</a></li>
+    <li><a href="#" onclick="goTo(1);return false;"><span class="num">٢</span>الاشتقاق اللغوي</a></li>
+    <li><a href="#" onclick="goTo(2);return false;"><span class="num">٣</span>المسار التاريخي</a></li>
+    <li><a href="#" onclick="goTo(3);return false;"><span class="num">٤</span>المحنة التاريخية الكبرى</a></li>
+    <li><a href="#" onclick="goTo(4);return false;"><span class="num">٥</span>الهجرة إلى المنطقة</a></li>
+    <li><a href="#" onclick="goTo(5);return false;"><span class="num">٦</span>التوزيع الجغرافي</a></li>
+    <li><a href="#" onclick="goTo(6);return false;"><span class="num">٧</span>التقديرات السكانية</a></li>
+    <li><a href="#" onclick="goTo(7);return false;"><span class="num">٨</span>اللغة والكتابة</a></li>
+    <li><a href="#" onclick="goTo(8);return false;"><span class="num">٩</span>المؤسسات الدينية</a></li>
+    <li><a href="#" onclick="goTo(9);return false;"><span class="num">١٠</span>الشخصيات البارزة</a></li>
+    <li><a href="#" onclick="goTo(10);return false;"><span class="num">١١</span>الوضع السياسي والقانوني</a></li>
+    <li><a href="#" onclick="goTo(11);return false;"><span class="num">١٢</span>التحديات المعاصرة</a></li>
+  </ul>
+</aside>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main id="main">
+  <div id="topbar">
+    <div id="slide-title-bar">الهوية والأصول</div>
+    <div id="nav-controls">
+      <button class="nav-btn" id="btn-prev" onclick="prevSlide()" disabled>→ السابق</button>
+      <button class="nav-btn primary" id="btn-next" onclick="nextSlide()">التالي ←</button>
+    </div>
+  </div>
+
+  <div id="slides-container">
+
+  <!-- ═══ SLIDE 1: Identity & Origins ═══ -->
+  <div class="slide active" id="slide-0">
+    <div class="slide-hero">
+      <div class="section-num">القسم الأول · Section 1</div>
+      <h1>الهوية والأصول</h1>
+      <div class="subtitle">Identity & Origins — من هم الشركس؟</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2><span class="icon">🏔️</span> الأسرة الإثنولغوية</h2>
+        <p style="font-size:14px;line-height:1.9;">
+          الشركس أو <strong>الأديغة</strong> (Adyghe / Адыгэ) شعبٌ أصيل من منطقة <strong>شمال غرب القوقاز</strong>. ينتمون إلى الأسرة اللغوية <strong>الأبخازية-الأديغية</strong> (Northwest Caucasian / Abkhaz–Adyghe)، وهي أسرة لغوية أصيلة في القوقاز ونادرة نسبياً، لا تربطها قرابة موثّقة بالأسر الكبرى المجاورة كالهندو-أوروبية أو التركية أو السامية.
+        </p>
+        <div class="callout callout-gold" style="margin-top:16px;">
+          <div class="callout-label">الوطن التاريخي · Historic Homeland</div>
+          <p>منطقة <strong>شمال غرب القوقاز</strong> (Çerkezistan / Адыгэ Хэку) — تشمل اليوم روسيا الاتحادية: جمهورية أديغيا، قبردينو-بلقاريا، وقراتشاي-شركيسيا، إضافةً إلى ساحل البحر الأسود حتى أبخازيا.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">☪️</span> اللحظة الثقافية والدينية المحوّلة</h2>
+        <p style="font-size:14px;line-height:1.9;">
+          اعتنق الشركس <strong>الإسلام السني</strong> تدريجياً خلال القرنين الخامس عشر والسابع عشر الميلاديين، وأصبح الإسلام محوراً هوياتياً راسخاً في الشتات. لكن اللحظة المفصلية الأعمق في الوعي الجمعي الحديث هي تهجير القرن التاسع عشر، الذي حوّل التجربة الجماعية للنزوح إلى <strong>ذاكرة مؤسِّسة</strong> تُعيد تعريف الهوية في كل بلد مضيف.
+        </p>
+        <div class="callout callout-green" style="margin-top:16px;">
+          <div class="callout-label">خصائص ثقافية فريدة · Cultural Markers</div>
+          <p>نظام <strong>Xabze / Хабзэ</strong> (الأديغة خبزة): القانون العرفي الشركسي الذي ينظّم العلاقات الاجتماعية، وهو سابق في وجوده على دخول الإسلام.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🗺️</span> موطن الأجداد — شمال غرب القوقاز</h2>
+      <div class="grid-3">
+        <div class="stat-box">
+          <div class="num">ق.م ١</div>
+          <div class="lbl">أقدم إشارة كلاسيكية موثّقة (سترابون)</div>
+          <div class="lbl-en">Earliest classical reference (Strabo, 1st c. BCE)</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">١٨٦٤</div>
+          <div class="lbl">سنة الطرد الجماعي — اللحظة المفصلية</div>
+          <div class="lbl-en">Year of mass expulsion</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">٣–٥م</div>
+          <div class="lbl">تقدير الشتات العالمي اليوم</div>
+          <div class="lbl-en">Estimated global diaspora today</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Key Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">أديغة <span class="en">Adyghe</span></span>
+        <span class="tag">شركس <span class="en">Circassians</span></span>
+        <span class="tag">Xabze / خبزة <span class="en">Adyghe Code</span></span>
+        <span class="tag">القوقاز الشمالي الغربي <span class="en">NW Caucasus</span></span>
+        <span class="tag">الأبخازية-الأديغية <span class="en">Abkhazo-Adyghe family</span></span>
+        <span class="tag">مهاجر <span class="en">Muhajir</span></span>
+        <span class="tag">Çerkezistan <span class="en">Circassia</span></span>
+        <span class="tag">الشتات <span class="en">Diaspora</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر والمراجع · References</h4>
+      <ol>
+        <li>Richmond, W. (2013). <em>The Circassian Genocide</em>. Rutgers University Press. <a href="https://www.rutgersuniversitypress.org/the-circassian-genocide/9780813560694" target="_blank">rutgersuniversitypress.org</a></li>
+        <li>Jaimoukha, A. (2001). <em>The Circassians: A Handbook</em>. Routledge. <a href="https://www.routledge.com/The-Circassians-A-Handbook/Jaimoukha/p/book/9780700706440" target="_blank">routledge.com</a></li>
+        <li>Natho, K. (2009). <em>Circassian History</em>. Xlibris. <a href="https://www.circassianworld.com" target="_blank">circassianworld.com</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 2: Etymology ═══ -->
+  <div class="slide" id="slide-1">
+    <div class="slide-hero">
+      <div class="section-num">القسم الثاني · Section 2</div>
+      <h1>الاشتقاق اللغوي للتسمية</h1>
+      <div class="subtitle">Etymology — ماذا يُسمّي الشركس أنفسهم؟ وماذا يُسمّيهم الآخرون؟</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="highlight-box">
+        <h3>الاسم الذاتي: أديغة (Adyghe)</h3>
+        <p>يُسمّي الشركس أنفسهم <strong>«أديغة»</strong> (بالأديغية: Адыгэ). تتعدد الفرضيات حول أصل الكلمة — يُرجَّح أنها جذرٌ أديغي قديم، لكن الاشتقاق الدقيق لا يزال <strong>محلّ جدل أكاديمي</strong>، ولا يصح الجزم بمعنى واحد. هذا الاسم هو الاسم الرسمي المُعترف به في جمهورية أديغيا بروسيا، وهو التسمية المُفضَّلة لدى الشعب.</p>
+      </div>
+      <div class="card">
+        <h2><span class="icon">🌍</span> التسمية الخارجية: شركس</h2>
+        <p style="font-size:14px;line-height:1.9;">
+          كلمة «شركس» (Circassians / Çerkez / Черкесы) تسمية خارجية عرّف بها العالم هذا الشعب. تُستخدم في العربية والتركية والروسية والإنجليزية. مصدرها الأرجح التركية-العثمانية «Çerkez»، وإن كان الاشتقاق الأوّل لا يزال غير محسوم في الأبحاث اللغوية التاريخية.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📋</span> جدول أصول التسميات عبر اللغات</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>الاسم</th>
+            <th>اللغة</th>
+            <th>الأصل المحتمل</th>
+            <th>الملاحظات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>أديغة / Адыгэ</strong></td>
+            <td><span class="badge badge-green">الأديغية — ذاتي</span></td>
+            <td>جذر أديغي قديم؛ الاشتقاق الدقيق محل جدل أكاديمي</td>
+            <td>الاسم الرسمي الأصيل والمُفضّل لدى الشعب</td>
+          </tr>
+          <tr>
+            <td><strong>شركس / Circassian</strong></td>
+            <td><span class="badge badge-blue">عربية / إنجليزية / روسية</span></td>
+            <td>الأرجح من التركية «Çerkez»؛ الاشتقاق الأوّل غير محسوم</td>
+            <td>الأوسع انتشاراً في العالم الخارجي</td>
+          </tr>
+          <tr>
+            <td><strong>Çerkez</strong></td>
+            <td><span class="badge badge-gold">تركية</span></td>
+            <td>مصدر التسمية العربية والإنجليزية على الأرجح</td>
+            <td>مستخدمة منذ العهد العثماني؛ دلالات عثمانية–فارسية</td>
+          </tr>
+          <tr>
+            <td><strong>Черкес / Cherkess</strong></td>
+            <td><span class="badge badge-muted">روسية</span></td>
+            <td>مشتقة من التركية</td>
+            <td>مستخدمة رسمياً في قراتشاي-شركيسيا</td>
+          </tr>
+          <tr>
+            <td><strong>Zikh / Zikhoi</strong></td>
+            <td><span class="badge badge-muted">يونانية قديمة</span></td>
+            <td>من أقدم الأسماء المرتبطة بسكان هذا الساحل القوقازي</td>
+            <td>وردت في مصادر بيزنطية؛ الصلة بالشركس مقبولة لا مؤكدة</td>
+          </tr>
+          <tr>
+            <td><strong>Kasogi / Касоги</strong></td>
+            <td><span class="badge badge-muted">روسية قديمة</span></td>
+            <td>من المصادر السلافية القروسطية</td>
+            <td>وردت في الحوليات الروسية، القرن العاشر م</td>
+          </tr>
+          <tr>
+            <td><strong>Kerketai / كيركيتاي</strong></td>
+            <td><span class="badge badge-muted">يونانية / هيلينية</span></td>
+            <td>سترابون وأبوليونيوس — القرن الأول ق.م</td>
+            <td>من أقدم الأسماء الكلاسيكية المرتبطة بساحل القوقاز الأسود</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🔤</span> المفردات المفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">أديغة <span class="en">Adyghe — الاسم الذاتي</span></span>
+        <span class="tag">Çerkez <span class="en">تركي</span></span>
+        <span class="tag">Zikhoi <span class="en">يوناني قديم</span></span>
+        <span class="tag">اشتقاق لغوي <span class="en">Etymology</span></span>
+        <span class="tag">إندونيم <span class="en">Endonym</span></span>
+        <span class="tag">إكزونيم <span class="en">Exonym</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>Baddeley, J. F. (1908). <em>The Russian Conquest of the Caucasus</em>. Longmans. <a href="https://archive.org/details/russianconquestc00badd" target="_blank">archive.org</a></li>
+        <li>Colarusso, J. (1994). "Peoples of the Caucasus." <em>Encyclopaedia Iranica</em>. <a href="https://www.iranicaonline.org" target="_blank">iranicaonline.org</a></li>
+        <li>Strabo, <em>Geographica</em>, Book XI — Greek references to Kerketai.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 3: Historical Trajectory ═══ -->
+  <div class="slide" id="slide-2">
+    <div class="slide-hero">
+      <div class="section-num">القسم الثالث · Section 3</div>
+      <h1>المسار التاريخي</h1>
+      <div class="subtitle">Historical Trajectory — من الممالك القديمة إلى الحقبة الاستعمارية</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2><span class="icon">🏛️</span> العصور القديمة والوسطى</h2>
+        <p style="font-size:13.5px;line-height:1.9;">
+          <strong>القرن الأول ق.م:</strong> يُشير سترابون إلى «كيركيتاي» (Kerketai) على ساحل البحر الأسود القوقازي.<br><br>
+          <strong>القرنان السادس–العاشر م:</strong> علاقات مع الإمبراطورية البيزنطية؛ تحوّل مؤقت إلى المسيحية، ثم تراجعها.<br><br>
+          <strong>القرن الثالث عشر م:</strong> صمود أمام الغزو المغولي وحفاظ على الاستقلال الجبلي النسبي.<br><br>
+          <strong>القرن الخامس عشر م:</strong> روابط مع الدولة المملوكية؛ توريد مقاتلي الفرسان الشركس لجيوشها.<br><br>
+          <strong>١٥١٧–١٥٦٠م:</strong> التحالف مع الدولة العثمانية وبداية انتشار الإسلام.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">⚔️</span> الحقبة العثمانية والروسية</h2>
+        <p style="font-size:13.5px;line-height:1.9;">
+          <strong>١٧٦٣م:</strong> بناء روسيا حصن <strong>موزدوك</strong> — الخطوة الافتتاحية للصراع الروسي-الشركسي وفق المؤرخين.<br><br>
+          <strong>١٧٦٣–١٨٦٤م:</strong> <strong>الحرب القوقازية</strong> — أكثر من مائة عام من المقاومة الشركسية ضد التوسع الروسي.<br><br>
+          <strong>١٨٣٤–١٨٥٩م:</strong> قيادة الإمام شامل (من داغستان) للمقاومة في شرق القوقاز، بالتوازي مع مقاومة شركسية مستقلة في الغرب.<br><br>
+          <strong>١٨٦٠–١٨٦٤م:</strong> حملة روسية لإعادة التوطين القسري تُنهي المقاومة وتُفضي إلى الطرد الجماعي.<br><br>
+          <strong>١٨٦٤–١٨٨٠م:</strong> موجات الهجرة الكبرى إلى الإمبراطورية العثمانية — الشتات الكبير.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">🗓️</span> القرن العشرون</h2>
+        <p style="font-size:13.5px;line-height:1.9;">
+          <strong>١٩١٧–١٩٢١م:</strong> الثورة الروسية وإعادة تشكيل المنطقة؛ إنشاء الكيانات السوفيتية.<br><br>
+          <strong>١٩٢٢م:</strong> إنشاء المنطقة المستقلة الأديغية (تصبح جمهورية أديغيا لاحقاً).<br><br>
+          <strong>١٩٢٠–١٩٤٠م:</strong> الحقبة الستالينية وسياسات التجميع القسري؛ أضرّت بشعوب عديدة في القوقاز الشمالي، وإن تفاوتت حدّتها بين الجماعات.<br><br>
+          <strong>١٩٦٧م:</strong> حرب يونيو — تهجير الشركس في الجولان السوري من قراهم.<br><br>
+          <strong>١٩٩١م:</strong> انهيار الاتحاد السوفيتي وإعلان سيادة جمهورية أديغيا.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">🕊️</span> القرن الحادي والعشرون</h2>
+        <p style="font-size:13.5px;line-height:1.9;">
+          <strong>٢٠٠٠م:</strong> إنشاء أول مواقع إلكترونية للشبكات الشركسية العالمية.<br><br>
+          <strong>٢٠١٢م:</strong> تصويت البرلمان الجورجي باعتراف مؤسسي بالإبادة الجماعية الشركسية.<br><br>
+          <strong>٢٠١٤م:</strong> جدل دولي حول أولمبياد سوتشي المُقام على «الأرض الشركسية».<br><br>
+          <strong>٢٠١١–٢٠٢٣م:</strong> الحرب السورية تُشتّت الجالية الشركسية السورية مجدداً — موجة لجوء جديدة نحو أديغيا وتركيا والأردن.<br><br>
+          <strong>٢٠٢٣–٢٠٢٤م:</strong> تصاعد النقاش حول الاعتراف الدولي والعودة إلى الوطن.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">الحرب القوقازية <span class="en">Caucasian War</span></span>
+        <span class="tag">المهاجر <span class="en">Muhajir</span></span>
+        <span class="tag">الشتات الكبير <span class="en">Great Diaspora</span></span>
+        <span class="tag">Хасэ <span class="en">Khase — Parliament</span></span>
+        <span class="tag">الزالا <span class="en">Zala — Expulsion</span></span>
+        <span class="tag">أولمبياد سوتشي <span class="en">Sochi Olympics 2014</span></span>
+        <span class="tag">جمهورية أديغيا <span class="en">Republic of Adygea</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>King, C. (2008). <em>The Ghost of Freedom: A History of the Caucasus</em>. Oxford University Press. <a href="https://global.oup.com/academic/product/the-ghost-of-freedom-9780195177756" target="_blank">oup.com</a></li>
+        <li>Khodarkovsky, M. (2002). <em>Russia's Steppe Frontier</em>. Indiana University Press.</li>
+        <li>Human Rights Watch (1991). <em>Conflict in the Soviet Union: Black January in Azerbaijan</em>. <a href="https://www.hrw.org" target="_blank">hrw.org</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 4: Key Traumatic Event ═══ -->
+  <div class="slide" id="slide-3">
+    <div class="slide-hero">
+      <div class="section-num">القسم الرابع · Section 4</div>
+      <h1>المحنة التاريخية الكبرى: الإبادة الشركسية</h1>
+      <div class="subtitle">The Circassian Genocide 1864 — الصيفة / Ziyafe — الزالا</div>
+    </div>
+
+    <div class="callout callout-red">
+      <div class="callout-label">⚠️ حدث تأسيسي صادم · Defining Traumatic Event</div>
+      <p><strong>٢١ مايو ١٨٦٤م</strong> — يُحيي الشركس في كل أنحاء العالم هذا اليوم سنوياً ذكرى الإبادة والتهجير القسري (المعروف بـ «الزالا» أو «يوم الحداد»). في هذا التاريخ أعلنت روسيا القيصرية انتهاء الحرب القوقازية في موقع <strong>قباادة</strong> (Qbaada — كراسنايا بوليانا قرب سوتشي اليوم)، وهو الموقع المرجعي في الذاكرة الشركسية ومثار الجدل حول أولمبياد سوتشي ٢٠١٤.</p>
+    </div>
+
+    <div class="grid-4" style="margin-bottom:28px;">
+      <div class="stat-box" style="border-top:4px solid var(--red);">
+        <div class="num" style="color:var(--red);">تقديرات متباينة</div>
+        <div class="lbl">الضحايا — أرقام الأدبيات المتخصصة متفاوتة</div>
+        <div class="lbl-en">Death toll estimates vary widely</div>
+      </div>
+      <div class="stat-box" style="border-top:4px solid var(--gold);">
+        <div class="num">~٤٠٠ألف</div>
+        <div class="lbl">وصلوا إلى الأراضي العثمانية (تقدير موسوعي محافظ)</div>
+        <div class="lbl-en">Arrived in Ottoman lands (conservative estimate)</div>
+      </div>
+      <div class="stat-box" style="border-top:4px solid var(--forest);">
+        <div class="num">٣–٥م</div>
+        <div class="lbl">أفراد الشتات اليوم عالمياً</div>
+        <div class="lbl-en">Diaspora worldwide today</div>
+      </div>
+      <div class="stat-box" style="border-top:4px solid var(--blue);">
+        <div class="num">٢</div>
+        <div class="lbl">دولتان اعترفتا رسمياً بالإبادة</div>
+        <div class="lbl-en">Georgia (2011) · Ukraine (2025)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📅</span> جدول زمني تفصيلي</h2>
+      <div class="timeline">
+        <div class="tl-item" data-year="١٧٦٣">
+          <h3>بناء حصن موزدوك</h3>
+          <p>بنت روسيا القيصرية حصن موزدوك على الحدود الشركسية — وهو ما يُعدّه المؤرخون الخطوة الافتتاحية الرسمية للصراع الروسي-الشركسي الطويل.</p>
+        </div>
+        <div class="tl-item" data-year="١٨١٧">
+          <h3>بداية الحرب القوقازية الشاملة</h3>
+          <p>تعيين الجنرال يرموليف الذي اعتمد سياسة الأرض المحروقة وإبادة القرى الشركسية منهجياً على امتداد عقود.</p>
+        </div>
+        <div class="tl-item" data-year="١٨٣٤">
+          <h3>قيادة الإمام شامل</h3>
+          <p>أصبح الإمام شامل (الداغستاني) زعيماً للمقاومة في شرق القوقاز عام ١٨٣٤، وإن ظلت المقاومة الشركسية في الغرب مستقلة إلى حدٍ بعيد. استمر شامل حتى أسره عام ١٨٥٩.</p>
+        </div>
+        <div class="tl-item" data-year="١٨٦٠">
+          <h3>بداية حملة الطرد والتوطين القسري</h3>
+          <p>شرعت روسيا في حملة منظّمة لإعادة التوطين القسري؛ الشركس أمام خيار الاستيطان في السهول الداخلية أو المغادرة إلى الأراضي العثمانية.</p>
+        </div>
+        <div class="tl-item" data-year="١٨٦٤">
+          <h3>الإعلان عن نهاية الحرب في قباادة</h3>
+          <p><strong>٢١ مايو ١٨٦٤م</strong>: احتفل القيصر بالانتصار في موقع <strong>قباادة</strong> (Qbaada — كراسنايا بوليانا قرب سوتشي). مئات الآلاف يُحشدون على الشواطئ وترحيلهم قسراً عبر البحر الأسود في ظروف مروّعة.</p>
+        </div>
+        <div class="tl-item" data-year="١٨٦٤–١٨٧٩">
+          <h3>موجات الهجرة الكبرى</h3>
+          <p>ما يزيد على ٤٠٠,٠٠٠ شركسي يصلون إلى الأراضي العثمانية وفق التقديرات الموسوعية المحافظة — مع وفيات جماعية بسبب الأوبئة والجوع في السفن والمخيمات.</p>
+        </div>
+        <div class="tl-item" data-year="٢٠١١">
+          <h3>اعتراف جورجيا</h3>
+          <p>البرلمان الجورجي يُصوّت في ٢٠ مايو ٢٠١١ باعتراف رسمي بالإبادة الجماعية الشركسية، ليكون أول برلمان وطني سيادي يفعل ذلك.</p>
+        </div>
+        <div class="tl-item" data-year="٢٠٢٥">
+          <h3>اعتراف أوكرانيا</h3>
+          <p>أصدر البرلمان الأوكراني (فيرخوفنا رادا) في ٩ يناير ٢٠٢٥ قراراً رسمياً يعترف بإبادة الشركس (الأديغة) والطرد القسري خلال حرب القوقاز ١٧٦٣–١٨٦٤.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🌍</span> الاعتراف الدولي بالإبادة</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>الجهة</th><th>سنة الاعتراف</th><th>طبيعة القرار</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>جورجيا 🇬🇪</td><td>٢٠ مايو ٢٠١١</td><td><span class="badge badge-green">قرار برلماني رسمي — أول اعتراف سيادي</span></td></tr>
+          <tr><td>أوكرانيا 🇺🇦</td><td>٩ يناير ٢٠٢٥</td><td><span class="badge badge-green">نص تشريعي رسمي منشور (فيرخوفنا رادا)</span></td></tr>
+          <tr><td>بعض هيئات إقليمية (كندا، إلخ)</td><td>—</td><td><span class="badge badge-blue">قرارات مجالس إقليمية/محلية — ليست اعترافاً سياديًا رسميًا</span></td></tr>
+          <tr><td>روسيا الاتحادية</td><td>—</td><td><span class="badge badge-red">ترفض الاعتراف رسمياً</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">الزالا <span class="en">Zala — Expulsion</span></span>
+        <span class="tag">٢١ مايو <span class="en">May 21 — Memorial Day</span></span>
+        <span class="tag">إبادة جماعية <span class="en">Genocide</span></span>
+        <span class="tag">تهجير قسري <span class="en">Forced Deportation</span></span>
+        <span class="tag">الأرض المحروقة <span class="en">Scorched Earth</span></span>
+        <span class="tag">يرموليف <span class="en">Yermolov</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>Richmond, W. (2013). <em>The Circassian Genocide</em>. Rutgers UP. <a href="https://www.rutgersuniversitypress.org/the-circassian-genocide/9780813560694" target="_blank">rutgersuniversitypress.org</a></li>
+        <li>Shenfield, S. (1999). "The Circassians: A Forgotten Genocide?" <em>The Massacre in History</em>. <a href="https://www.circassianworld.com/genocide.html" target="_blank">circassianworld.com</a></li>
+        <li>Georgian Parliament Resolution on Circassian Genocide (2012). <a href="https://www.parliament.ge" target="_blank">parliament.ge</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 5: Migration ═══ -->
+  <div class="slide" id="slide-4">
+    <div class="slide-hero">
+      <div class="section-num">القسم الخامس · Section 5</div>
+      <h1>الهجرة إلى المنطقة</h1>
+      <div class="subtitle">Migration Waves — موجات اللجوء والاستيطان في الشرق الأوسط</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2><span class="icon">🌊</span> الموجة الأولى (١٨٦٤–١٨٨٠)</h2>
+        <p style="font-size:13.5px;line-height:1.9;">
+          استقبلت الإمبراطورية العثمانية الموجة الكبرى من المهاجرين الشركس. أنشأت الحكومة العثمانية <strong>مكتب الهجرة</strong> (١٨٦٠) بميزانية وطاقم لتنظيم الاستقبال وتخصيص الإيواء والإعفاءات وتوزيع موارد الاستقرار. وظّف العثمانيون الشركس في إطار سياسة <strong>استيطان الحدود</strong> (توطين في مناطق أمنية وزراعية استراتيجية) في المناطق المتاخمة للصحراء السورية-الأردنية.
+        </p>
+        <div class="callout callout-gold">
+          <div class="callout-label">المناطق الرئيسية للاستيطان العثماني</div>
+          <p>عمّان (أول الواصلين الشابسوغ ١٨٧٦–١٨٧٨)، جرش، وادي السير، ناعور، الجولان، قنيطرة، ثم توسّع لاحق نحو الزرقاء والرصيفة وصويلح</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">🌊</span> الموجة الثانية (١٩٠٥–١٩٢٣)</h2>
+        <p style="font-size:13.5px;line-height:1.9;">
+          موجات إضافية أفرزتها الاضطرابات في القوقاز إثر الثورة الروسية ١٩١٧ والحرب الأهلية. معاهدة لوزان ١٩٢٣ وتقسيم أراضي الدولة العثمانية زادت من تشرذم الشركس بين دول الانتداب الفرنسي والبريطاني.
+        </p>
+        <div class="callout callout-blue">
+          <div class="callout-label">الدول المضيفة الجديدة</div>
+          <p>سوريا، فلسطين/الأردن، العراق — تحت سيطرة الانتدابين الفرنسي والبريطاني</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">🌊</span> الموجة الثالثة (١٩٤٧–١٩٤٩)</h2>
+        <p style="font-size:13.5px;line-height:1.9;">
+          النكبة الفلسطينية ألقت بظلالها على الجاليات الشركسية في المدن الساحلية. كان بعض الشركس في قرى مثل «كفر كما» و«ريحانية» في الجليل داخل الأراضي التي أصبحت إسرائيل، فبقوا مواطنين إسرائيليين. المجتمعات الشركسية في الأردن تضخّمت باستيعاب اللاجئين.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">🌊</span> الموجة الرابعة (٢٠١١–الآن)</h2>
+        <p style="font-size:13.5px;line-height:1.9;">
+          الحرب السورية شتّتت مجدداً نحو ٩٠,٠٠٠–١٥٠,٠٠٠ شركسي سوري. روسيا استقبلت بعضهم في أديغيا، وهاجر آخرون إلى تركيا والأردن وأوروبا. منظمات شركسية دولية طالبت بحق العودة إلى الوطن الأصلي في القوقاز.
+        </p>
+        <div class="callout callout-red">
+          <div class="callout-label">⚠️ أزمة نزوح مستمرة</div>
+          <p>الشركس السوريون يعانون من تهجير مزدوج: الأول في ١٨٦٤، والثاني في ٢٠١١–٢٠٢٣</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏢</span> منظمات الإغاثة والدعم التاريخية</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>المنظمة / الجهة</th><th>الدور</th><th>الحقبة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>مكتب الهجرة العثماني</td><td>استقبال المهاجرين وتوزيعهم وتنظيم الإيواء والإعفاءات</td><td>تأسّس ١٨٦٠م</td></tr>
+          <tr><td>الهلال الأحمر العثماني</td><td>إغاثة المهاجرين في المراحل المتأخرة من موجات الهجرة</td><td>تأسّس ١٨٦٨م؛ دور في موجات لاحقة</td></tr>
+          <tr><td>الاتحاد الشركسي العالمي (ICA)</td><td>التنسيق بين مجتمعات الشتات والحفاظ على الهوية</td><td>١٩٩١–الآن</td></tr>
+          <tr><td>الجمعية الشركسية الخيرية — الأردن</td><td>الخدمات الاجتماعية والتعليمية وصون الثقافة</td><td>١٩٣٢–الآن</td></tr>
+          <tr><td>الاتحاد الشركسي في إسرائيل</td><td>الحفاظ على الثقافة واللغة والتمثيل</td><td>١٩٦٠–الآن</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">المهجر <span class="en">Diaspora</span></span>
+        <span class="tag">موجة لجوء <span class="en">Refugee Wave</span></span>
+        <span class="tag">الانتداب <span class="en">Mandate</span></span>
+        <span class="tag">الاستيطان <span class="en">Settlement</span></span>
+        <span class="tag">حرس الحدود <span class="en">Border Guard</span></span>
+        <span class="tag">التهجير المزدوج <span class="en">Double Displacement</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>Çiçek, K. (2000). "The Great Circassian Immigration of 1864." <em>Journal of Ottoman Studies</em>.</li>
+        <li>Shami, S. (1995). "Disjuncture in Ethnicity: Negotiating Circassian Identity in Jordan, Turkey and the Caucasus." <em>New Perspectives on Turkey</em>. <a href="https://doi.org/10.1017/S0896634600002296" target="_blank">doi.org</a></li>
+        <li>UNHCR Syria Reports (2012–2023). <a href="https://www.unhcr.org/syria" target="_blank">unhcr.org/syria</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 6: Geographic Distribution + Map ═══ -->
+  <div class="slide" id="slide-5">
+    <div class="slide-hero">
+      <div class="section-num">القسم السادس · Section 6</div>
+      <h1>التوزيع الجغرافي</h1>
+      <div class="subtitle">Geographic Distribution — خريطة تفاعلية للتجمعات الشركسية</div>
+    </div>
+
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div id="map-container">
+        <div id="map"></div>
+      </div>
+    </div>
+
+    <div class="grid-4">
+      <div class="stat-box">
+        <div class="num">~١٠٠ألف</div>
+        <div class="lbl">الأردن</div>
+        <div class="lbl-en">Jordan</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">~٧٠–٩٠ألف</div>
+        <div class="lbl">سوريا</div>
+        <div class="lbl-en">Syria (pre-war)</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">~٤٠٠٠</div>
+        <div class="lbl">إسرائيل</div>
+        <div class="lbl-en">Israel</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">~٤–٦م</div>
+        <div class="lbl">تركيا (الأكبر عالمياً)</div>
+        <div class="lbl-en">Turkey (largest globally)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📌</span> التجمعات الرئيسية في الشرق الأوسط</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>البلد</th><th>المدن الرئيسية</th><th>الوضع</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🇯🇴 الأردن</td>
+            <td>عمّان، الرصيفة، الزرقاء، جرش، نعور، ووادي السير</td>
+            <td><span class="badge badge-green">مواطنون - تمثيل برلماني محجوز</span></td>
+          </tr>
+          <tr>
+            <td>🇸🇾 سوريا</td>
+            <td>دمشق، القنيطرة (الجولان)، حمص، حلب، الرقة</td>
+            <td><span class="badge badge-red">نزاع - تهجير واسع منذ 2011</span></td>
+          </tr>
+          <tr>
+            <td> إسرائيل</td>
+            <td>كفر كما (الجليل)، ريحانية</td>
+            <td><span class="badge badge-blue">مواطنون - قريتان فقط</span></td>
+          </tr>
+          <tr>
+            <td>🇹🇷 تركيا</td>
+            <td>إسطنبول، أنقرة، بورصة، أدابازاري، دوزجه، قيصري</td>
+            <td><span class="badge badge-green">مواطنون - أكبر تجمع عالمي</span></td>
+          </tr>
+          <tr>
+            <td>🇪🇬 مصر</td>
+            <td>القاهرة - تجمع صغير من الحقبة العثمانية</td>
+            <td><span class="badge badge-muted">جالية صغيرة</span></td>
+          </tr>
+          <tr>
+            <td>🇮🇶 العراق</td>
+            <td>بغداد - مجتمع قديم نسبياً</td>
+            <td><span class="badge badge-muted">جالية صغيرة</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">كفر كما <span class="en">Kfar Kama — Israel</span></span>
+        <span class="tag">عمّان <span class="en">Amman — Jordan HQ</span></span>
+        <span class="tag">القنيطرة <span class="en">Quneitra — Syria</span></span>
+        <span class="tag">الشتات <span class="en">Diaspora</span></span>
+        <span class="tag">الجولان <span class="en">Golan Heights</span></span>
+        <span class="tag">أدابازاري <span class="en">Adapazarı — Turkey</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>Ciment, J. & Ness, I. (1999). <em>Encyclopedia of Global Population and Demographics</em>. Sharpe.</li>
+        <li>Israeli Central Bureau of Statistics (2023). <a href="https://www.cbs.gov.il" target="_blank">cbs.gov.il</a></li>
+        <li>Jordan Department of Statistics (2022). <a href="https://www.dos.gov.jo" target="_blank">dos.gov.jo</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 7: Demographics ═══ -->
+  <div class="slide" id="slide-6">
+    <div class="slide-hero">
+      <div class="section-num">القسم السابع · Section 7</div>
+      <h1>التقديرات السكانية التفصيلية</h1>
+      <div class="subtitle">Demographic Estimates — جداول الانتشار وتحديات البيانات</div>
+    </div>
+
+    <div class="callout callout-gold">
+      <div class="callout-label">⚠️ تحذير منهجي · Methodological Note</div>
+      <p>تتباين التقديرات تبايناً كبيراً لأن معظم دول الشرق الأوسط لا تُدرج الانتماء الإثني في تعداداتها الرسمية. كذلك تتفاوت تعريفات «الشركسي» بين من يتحدث الأديغية ومن له أصول شركسية. الأرقام التالية تقديرية مبنية على مصادر أكاديمية متعددة.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📊</span> جدول التوزيع السكاني الشامل</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>البلد</th>
+            <th>التقدير السكاني</th>
+            <th>النسبة من السكان</th>
+            <th>ملاحظات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🇹🇷 تركيا</td>
+            <td><strong>٢–٣ مليون</strong></td>
+            <td>٢.٥–٤٪ (تقديري)</td>
+            <td>الأكبر عالمياً؛ كثيرون مندمجون ثقافياً وتراجعت اللغة</td>
+          </tr>
+          <tr>
+            <td>🇷🇺 روسيا (أديغيا + القبردة)</td>
+            <td><strong>٧٠٠,٠٠٠–٨٠٠,٠٠٠</strong></td>
+            <td>~٠.٥٪</td>
+            <td>الموطن الأصلي؛ أقلية في جمهورياتهم</td>
+          </tr>
+          <tr>
+            <td>🇯🇴 الأردن</td>
+            <td><strong>٨٠,٠٠٠–١٥٠,٠٠٠</strong></td>
+            <td>٠.٩–١.٥٪</td>
+            <td>حضور سياسي راسخ؛ مقاعد برلمانية محجوزة</td>
+          </tr>
+          <tr>
+            <td>🇸🇾 سوريا (قبل ٢٠١١)</td>
+            <td><strong>٧٠,٠٠٠–١٠٠,٠٠٠</strong></td>
+            <td>~٠.٤٪</td>
+            <td>النزاع شتّت الجزء الأكبر</td>
+          </tr>
+          <tr>
+            <td>إسرائيل</td>
+            <td><strong>٤,٠٠٠–٤,٥٠٠</strong></td>
+            <td>~٠.٠٥٪</td>
+            <td>قريتان فقط؛ الخدمة العسكرية إلزامية</td>
+          </tr>
+          <tr>
+            <td>🇩🇪 ألمانيا</td>
+            <td><strong>٤٠,٠٠٠–٧٠,٠٠٠</strong></td>
+            <td>~٠.٠٨٪</td>
+            <td>معظمهم من اللاجئين السوريين</td>
+          </tr>
+          <tr>
+            <td>🇺🇸 الولايات المتحدة</td>
+            <td><strong>٣٠,٠٠٠–٤٠,٠٠٠</strong></td>
+            <td>~٠.٠١٪</td>
+            <td>نيوجيرسي، نيويورك، واشنطن العاصمة</td>
+          </tr>
+          <tr>
+            <td> فلسطين (رام الله وغيرها)</td>
+            <td><strong>تقدير غير متاح</strong></td>
+            <td>—</td>
+            <td>أعداد صغيرة مندمجة</td>
+          </tr>
+          <tr>
+            <td>🌍 المجموع العالمي</td>
+            <td><strong>٣.٥–٥ مليون</strong></td>
+            <td>—</td>
+            <td>تقديرات واسعة النطاق</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📉</span> تحديات موثوقية البيانات</h2>
+      <div class="grid-2">
+        <div class="callout callout-red">
+          <div class="callout-label">١. غياب التصنيف الإثني الرسمي</div>
+          <p>تركيا والأردن وسوريا لا تُدرج الهوية الإثنية في التعدادات السكانية الرسمية، ما يجعل التقديرات مبنية على مسوحات جزئية ومصادر مجتمعية.</p>
+        </div>
+        <div class="callout callout-blue">
+          <div class="callout-label">٢. الاندماج الثقافي والذوبان</div>
+          <p>كثير من الشركس في تركيا يُعرّفون أنفسهم كأتراك. الأجيال الثالثة والرابعة غالباً لا تتحدث الأديغية، ما يُعقّد التعريف والإحصاء.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">ديموغرافيا <span class="en">Demographics</span></span>
+        <span class="tag">إحصاء سكاني <span class="en">Census</span></span>
+        <span class="tag">اندماج ثقافي <span class="en">Assimilation</span></span>
+        <span class="tag">الهوية الإثنية <span class="en">Ethnic Identity</span></span>
+        <span class="tag">التعداد <span class="en">Population Count</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>Henze, P. (2000). "Circassian Resistance to Russia." <em>North Caucasus Barrier</em>. St. Martin's Press.</li>
+        <li>World Circassian Association census estimates (2021). <a href="https://www.wca-online.org" target="_blank">wca-online.org</a></li>
+        <li>Minority Rights Group International (2023). <em>Circassians</em>. <a href="https://minorityrights.org/minorities/circassians" target="_blank">minorityrights.org</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 8: Language ═══ -->
+  <div class="slide" id="slide-7">
+    <div class="slide-hero">
+      <div class="section-num">القسم الثامن · Section 8</div>
+      <h1>اللغة والكتابة</h1>
+      <div class="subtitle">Language & Script — الأديغية بين التراث والخطر</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2><span class="icon">🔤</span> الأسرة اللغوية</h2>
+        <div class="callout callout-gold">
+          <div class="callout-label">Northwest Caucasian Family — الأسرة الأبخازية-الأديغية</div>
+          <p>تنتمي الأديغية إلى الأسرة اللغوية <strong>القوقازية الشمالية الغربية</strong>، وهي أسرة أصيلة في القوقاز. <strong>لم تُثبَت لها قرابة جينالوجية واسعة القبول</strong> بأيٍّ من الأسر اللغوية الكبرى المجاورة — الهندو-أوروبية أو السامية أو التركية أو المغولية — مما يجعلها حالة نادرة ومعزولة نسبياً في الخارطة اللغوية العالمية.</p>
+        </div>
+        <p style="font-size:13.5px;margin-top:12px;">اللغات القريبة: الأبخازية (Abkhazian)، والأبازية (Abaza)، والوبيخية المنقرضة (Ubykh — انقرضت عام ١٩٩٢ بوفاة آخر متحدث بها).</p>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">✍️</span> نظام الكتابة</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>النظام</th><th>السنة</th><th>الملاحظات</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>الحروف العربية (المُعرَّبة)</td><td>قبل ١٩٢٠م</td><td>استخدام محدود في السياق الديني</td></tr>
+            <tr><td>الأبجدية اللاتينية</td><td>١٩٢٧م</td><td>المرحلة السوفيتية الأولى</td></tr>
+            <tr><td>الأبجدية السيريلية</td><td>١٩٣٨م</td><td>السوفيت فرضوا السيريلية على كل شعوب القوقاز</td></tr>
+            <tr><td>الأبجدية اللاتينية المُعدَّلة</td><td>٢٠١٠–الآن</td><td>الشتات (تركيا) يُفضّلها على الإنترنت</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🗣️</span> اللهجات الرئيسية</h2>
+      <div class="grid-2">
+        <div>
+          <div class="sec-title">الأديغية الغربية (Adyghe / Адыгэбзэ)</div>
+          <p style="font-size:13.5px;line-height:1.8;">تحدّث بها سكان المناطق الغربية (الشابسوغ، والكيميرغوي، والبجدوغ...). هي اللغة الرسمية في جمهورية أديغيا الروسية. يتحدث بها نحو ٦٠٠,٠٠٠ شخص عالمياً. لهجة الشركس في الأردن وإسرائيل وسوريا تنتمي إلى هذا الفرع.</p>
+          <div class="lang-bar-wrap" style="margin-top:12px;">
+            <div class="lang-bar-label"><span>الناطقون بها</span><span>~٦٠٠ ألف</span></div>
+            <div class="lang-bar"><div class="lang-bar-fill" style="width:40%"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="sec-title">القبردية (Kabardian / Къэбэрдейбзэ)</div>
+          <p style="font-size:13.5px;line-height:1.8;">تحدّث بها القبارطة وأحياناً تُعدّ لغة مستقلة وأحياناً لهجة راقية. هي اللغة الرسمية في قبردينو-بلقاريا. يتحدث بها نحو ١.٥–٢ مليون شخص. تحظى بحضور أقوى نسبياً بين الشركس في تركيا.</p>
+          <div class="lang-bar-wrap" style="margin-top:12px;">
+            <div class="lang-bar-label"><span>الناطقون بها</span><span>~١.٥–٢ مليون</span></div>
+            <div class="lang-bar"><div class="lang-bar-fill" style="width:65%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-red">
+      <div class="callout-label">🔴 الوضع المهدَّد بالانقراض · Endangered Status</div>
+      <p>تُصنّف <strong>اليونسكو</strong> الأديغية ضمن اللغات <strong>المهددة</strong> في عدد من مجتمعات الشتات. في تركيا — أكبر التجمعات — يُقدَّر أن نسبة كبيرة من الأجيال الشابة لا تتحدث الأديغية بطلاقة بسبب التحول اللغوي (هذه تقديرات مجتمعية، والأرقام الدقيقة تتفاوت). في كفر كما (إسرائيل) تُدرَّس الأديغية في المدارس، وهي حالة نادرة إيجابية.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">أديغية <span class="en">Adyghe Language</span></span>
+        <span class="tag">قبردية <span class="en">Kabardian</span></span>
+        <span class="tag">لغة مهددة <span class="en">Endangered Language</span></span>
+        <span class="tag">اليونسكو <span class="en">UNESCO</span></span>
+        <span class="tag">السيريلية <span class="en">Cyrillic Script</span></span>
+        <span class="tag">الوبيخية <span class="en">Ubykh — Extinct</span></span>
+        <span class="tag">القوقازية الشمالية <span class="en">NW Caucasian</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>UNESCO Atlas of the World's Languages in Danger (2010). <a href="https://www.unesco.org/en/education/endangered-languages" target="_blank">unesco.org</a></li>
+        <li>Colarusso, J. (1992). <em>A Grammar of the Kabardian Language</em>. University of Calgary Press.</li>
+        <li>Gordon, R.G. (ed.) (2005). <em>Ethnologue: Languages of the World</em>, 15th ed. SIL International. <a href="https://www.ethnologue.com" target="_blank">ethnologue.com</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 9: Religion ═══ -->
+  <div class="slide" id="slide-8">
+    <div class="slide-hero">
+      <div class="section-num">القسم التاسع · Section 9</div>
+      <h1>المؤسسات الدينية</h1>
+      <div class="subtitle">Religious Institutions — الإسلام وتراث ما قبله في الهوية الشركسية</div>
+    </div>
+
+    <div class="callout callout-green">
+      <div class="callout-label">✅ الانتماء الديني السائد · Primary Faith</div>
+      <p>غالبية الشركس <strong>مسلمون سنة</strong>؛ المذاهب الفقهية تتفاوت بحسب السياق المحلي وتأثير الدولة العثمانية التي نشرت المذهب الحنفي في كثير من ولاياتها، لكن لا يصح تعميم مذهب واحد على كل الجاليات. يمتاز الإسلام الشركسي تقليدياً بطابع اجتماعي معتدل وبالتعايش مع بقايا الموروث الثقافي ما قبل الإسلامي (Xabze).</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🕌</span> التنظيم الديني في الشتات</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>المستوى</th><th>اللقب</th><th>الدور</th><th>البلد</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>المرجعية الوطنية</td>
+            <td>المفتي العام / وزارة الأوقاف</td>
+            <td>الإشراف على الشؤون الدينية للمسلمين في البلد؛ الشركس مندمجون في هذا الإطار</td>
+            <td>الأردن، سوريا، تركيا</td>
+          </tr>
+          <tr>
+            <td>على مستوى الجالية</td>
+            <td>شيخ المسجد / الإمام</td>
+            <td>إمامة الصلوات؛ المسجد كمركز اجتماعي-ثقافي للجالية</td>
+            <td>كل مجتمع شركسي</td>
+          </tr>
+          <tr>
+            <td>مجلس استشاري عرفي</td>
+            <td>مجلس الشيوخ / الخاسة</td>
+            <td>حل النزاعات وفق القانون العرفي (Xabze) بالتوازي مع المنظومة القانونية الرسمية</td>
+            <td>الأردن، إسرائيل</td>
+          </tr>
+          <tr>
+            <td>الأحوال الشخصية</td>
+            <td>المحاكم الشرعية الوطنية</td>
+            <td>الشركس المسلمون خاضعون للمحاكم الشرعية العامة في بلدانهم</td>
+            <td>الأردن، سوريا، تركيا</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2><span class="icon">🕌</span> أقدس الأماكن المرتبطة بالهوية الشركسية</h2>
+        <div class="callout callout-gold">
+          <div class="callout-label">الأقدس — البقعة الروحية</div>
+          <p><strong>وادي ولنة (Ubykhia) / ساحل البحر الأسود</strong> — سوتشي وما حولها هي التربة الروحية الأولى. لكن في الشتات، يتخذ كثيرون من <strong>المسجد الجامع في عمّان</strong> الذي بنته الجالية الشركسية مرجعاً رمزياً مهماً.</p>
+        </div>
+        <p style="font-size:13px;margin-top:10px;">مسجد <strong>الملك عبدالله الأول</strong> في عمّان يضم ضريح الشهداء الشركس الذين قاتلوا دفاعاً عن الأردن الحديث.</p>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">🌀</span> الموروث الروحي ما قبل الإسلامي</h2>
+        <p style="font-size:13.5px;line-height:1.9;">
+          يحتفظ الشركس ببعض الموروثات الروحية السابقة للإسلام المدمجة في ثقافتهم:
+        </p>
+        <div class="flag-strip">
+          <span class="flag-item">🌳 تقديس غابات مقدسة (Djegu)</span>
+          <span class="flag-item">⚡ أساطير الإله ساوزريكو</span>
+          <span class="flag-item">🎭 الألعاب الطقسية (Lhepatle)</span>
+          <span class="flag-item">🏹 شعائر الصيد المقدسة</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">Xabze <span class="en">القانون العرفي</span></span>
+        <span class="tag">الحنفي <span class="en">Hanafi Madhhab</span></span>
+        <span class="tag">الصوفية <span class="en">Sufism</span></span>
+        <span class="tag">Djegu <span class="en">Sacred Forest</span></span>
+        <span class="tag">الخاسة <span class="en">Khase — Council</span></span>
+        <span class="tag">مجلس الشيوخ <span class="en">Elder Council</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>Jaimoukha, A. (2001). <em>The Circassians: A Handbook</em>. Ch. 8 "Religion." Routledge.</li>
+        <li>Chochiev, G. (2013). "Circassian Religious Beliefs Before and After Islam." <em>Central Asian Survey</em>.</li>
+        <li>Jordan Ministry of Awqaf (2020). <em>Religious Communities Report</em>. <a href="https://www.awqaf.gov.jo" target="_blank">awqaf.gov.jo</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 10: Notable Figures ═══ -->
+  <div class="slide" id="slide-9">
+    <div class="slide-hero">
+      <div class="section-num">القسم العاشر · Section 10</div>
+      <h1>الشخصيات البارزة</h1>
+      <div class="subtitle">Notable Figures — ستة أعلام من الشركس شكّلوا التاريخ</div>
+    </div>
+
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="avatar">👑</div>
+        <div class="name">الظاهر برقوق</div>
+        <div class="dates">~١٣٤٠ — ١٣٩٩م</div>
+        <span class="field">سياسة وعسكرية · Politics & Military</span>
+        <div class="achievement">مؤسس الدولة المملوكية «البرجية» الشركسية في مصر (١٣٨٢م)، وأول سلطان شركسي يحكم مصر والشام. حكمه يمثّل أبرز مثال تاريخي على وصول نخب شركسية إلى قمة السلطة السياسية في الشرق الأوسط قبل العصر الحديث.</div>
+      </div>
+
+      <div class="person-card">
+        <div class="avatar">🏛️</div>
+        <div class="name">الأشرف قايتباي</div>
+        <div class="dates">~١٤١٦ — ١٤٩٦م</div>
+        <span class="field">عمران وثقافة · Architecture & Culture</span>
+        <div class="achievement">سلطان مملوكي شركسي (برجي) بارز، اشتُهر برعاية العمران والفنون؛ تُنسب إليه إعادة تشييد قلعة قايتباي بالإسكندرية ومبانٍ في مكة والقدس والقاهرة. من أطول السلاطين المماليك حكماً (٢٨ عاماً).</div>
+      </div>
+
+      <div class="person-card">
+        <div class="avatar">🤝</div>
+        <div class="name">سعيد المفتي</div>
+        <div class="dates">١٨٩٩ — ١٩٨٩م</div>
+        <span class="field">سياسة · Politics — الأردن</span>
+        <div class="achievement">سياسي أردني شركسي تولّى رئاسة الوزراء عدة مرات (١٩٥٠، ١٩٥٥، ١٩٦١م). وصفته موسوعة بريتانيكا بأنه «زعيم المجتمع الشركسي غير العربي المؤثر في الأردن»، ويُمثّل نموذج اندماج الشركس في الدولة الوطنية الأردنية منذ تأسيسها.</div>
+      </div>
+
+      <div class="person-card">
+        <div class="avatar">✍️</div>
+        <div class="name">إسحاق مشباش / إسخاق مشبش</div>
+        <div class="dates">١٩٢٧ — ٢٠١٧م</div>
+        <span class="field">أدب · Literature</span>
+        <div class="achievement">أبرز كاتب شركسي في القرن العشرين. أعماله الروائية باللغتين الأديغية والروسية وثّقت تاريخ الإبادة والمنفى في سرديات ملحمية. نال لقب «بطل العمل الاشتراكي» السوفيتي، وتُرجمت أعماله إلى لغات عديدة.</div>
+      </div>
+
+
+      <div class="person-card">
+        <div class="avatar">🌸</div>
+        <div class="name">خيرية ملك هونج</div>
+        <div class="dates">أواخر القرن ١٩م</div>
+        <span class="field">نسوية وأدب · Feminism & Literature</span>
+        <div class="achievement">شخصية نسوية وأدبية شركسية في إسطنبول العثمانية المتأخرة. اضطلعت بدور قيادي في تأسيس وإدارة جمعيات نسائية شركسية عملت على دعم المهاجرين وصون الثقافة الشركسية في العاصمة العثمانية.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">المماليك <span class="en">Mamluks</span></span>
+        <span class="tag">عين جالوت <span class="en">Ain Jalut — 1260</span></span>
+        <span class="tag">المقاومة <span class="en">Resistance</span></span>
+        <span class="tag">الحرس الملكي <span class="en">Royal Guard</span></span>
+        <span class="tag">الأدب الأديغي <span class="en">Adyghe Literature</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>Amitai-Preiss, R. (1995). <em>Mongols and Mamluks</em>. Cambridge University Press.</li>
+        <li>Moshbash, N. Works. Adyghe Literary Archive. <a href="https://www.adyghe.ru" target="_blank">adyghe.ru</a></li>
+        <li>Jordan's Circassian Royal Guard History. <a href="https://www.circassianroyalguard.jo" target="_blank">circassianroyalguard.jo</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 11: Political & Legal Status ═══ -->
+  <div class="slide" id="slide-10">
+    <div class="slide-hero">
+      <div class="section-num">القسم الحادي عشر · Section 11</div>
+      <h1>الوضع السياسي والقانوني</h1>
+      <div class="subtitle">Political & Legal Status — التمثيل والحقوق بين الدول المستضيفة</div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏛️</span> تحليل مقارن بين الدول</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>البلد</th>
+            <th>المقاعد البرلمانية</th>
+            <th>الاعتراف الدستوري</th>
+            <th>قانون الأحوال الشخصية</th>
+            <th>الحالة العامة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🇯🇴 الأردن</td>
+            <td><span class="badge badge-green">٣ مقاعد (شركس وشيشان)</span></td>
+            <td><span class="badge badge-blue">قانون انتخابي — لا ذكر في الدستور</span></td>
+            <td><span class="badge badge-green">النظام القضائي الشرعي العام</span></td>
+            <td>الأكثر تمييزاً سياسياً في المنطقة؛ تمثيل راسخ في قانون الانتخابات</td>
+          </tr>
+          <tr>
+            <td>🇸🇾 سوريا</td>
+            <td><span class="badge badge-muted">لا مقاعد محجوزة</span></td>
+            <td><span class="badge badge-muted">ليس دستورياً</span></td>
+            <td><span class="badge badge-gold">مندمج مع منظومة الأحوال الشخصية الإسلامية</span></td>
+            <td>وضع مجمَّد بسبب النزاع؛ جاليات مشتتة</td>
+          </tr>
+          <tr>
+            <td> إسرائيل</td>
+            <td><span class="badge badge-muted">لا مقاعد محجوزة</span></td>
+            <td><span class="badge badge-blue">أقلية معترف بها</span></td>
+            <td><span class="badge badge-gold">قانون الزواج عبر مجلسهم الديني المعترف به</span></td>
+            <td>وضع فريد: تجنيد إلزامي للذكور — مواطنة كاملة</td>
+          </tr>
+          <tr>
+            <td>🇹🇷 تركيا</td>
+            <td><span class="badge badge-muted">لا مقاعد محجوزة</span></td>
+            <td><span class="badge badge-red">غير معترف بهم في إطار لوزان للأقليات</span></td>
+            <td><span class="badge badge-muted">لا استقلالية</span></td>
+            <td>أكبر الجاليات لكن أقل الحقوق الرسمية؛ نشاط جمعياتي واسع</td>
+          </tr>
+          <tr>
+            <td>🇷🇺 روسيا (أديغيا)</td>
+            <td><span class="badge badge-gold">تمثيل في البرلمان الجمهوري</span></td>
+            <td><span class="badge badge-blue">جمهورية فيدرالية</span></td>
+            <td><span class="badge badge-muted">النظام الروسي العام</span></td>
+            <td>جمهورية تحمل اسمهم لكن الأديغ أقلية (~٢٥٪) في جمهوريتهم</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2><span class="icon">🇯🇴</span> الأردن — النموذج الأكثر تطوراً</h2>
+        <p style="font-size:13.5px;line-height:1.85;">
+          يتمتع الشركس في الأردن بوضع سياسي استثنائي مقارنةً بسائر الأقليات في المنطقة:
+        </p>
+        <div class="flag-strip" style="margin-top:10px;flex-direction:column;gap:8px;">
+          <span class="flag-item">⚖️ ٣ مقاعد محجوزة مشتركة للشركس والشيشان في قانون الانتخابات (لا في الدستور)</span>
+          <span class="flag-item">👑 الحرس الملكي الشركسي — رمز وطني تاريخي منذ تأسيس الدولة عام ١٩٢١</span>
+          <span class="flag-item">🏫 جمعيات ثقافية وتعليمية تدعم اللغة الأديغية بشكل شبه رسمي</span>
+          <span class="flag-item">🕌 مؤسسة دينية مندمجة في النظام الشرعي الأردني العام</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon"></span> إسرائيل — الوضع الاستثنائي</h2>
+        <p style="font-size:13.5px;line-height:1.85;">
+          الشركس في إسرائيل (قريتا كفر كما وريحانية) يخدمون في الجيش الإسرائيلي بشكل إلزامي — وهو ما يميّزهم عن غالبية المواطنين العرب. يحظون بقدر من الاعتراف الثقافي ودعم الحفاظ على اللغة الأديغية في المدارس. في ما يخص الأحوال الشخصية، يخضع الشركس المسلمون للمحاكم الشرعية المعترف بها في إسرائيل، كما هو الحال لدى سائر المسلمين.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">التمييز الإيجابي <span class="en">Affirmative Representation</span></span>
+        <span class="tag">الحرس الملكي <span class="en">Royal Guard</span></span>
+        <span class="tag">الأحوال الشخصية <span class="en">Personal Status Law</span></span>
+        <span class="tag">الاعتراف الدستوري <span class="en">Constitutional Recognition</span></span>
+        <span class="tag">الجمهورية الفيدرالية <span class="en">Federal Republic</span></span>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>Jordan Electoral Law (2016), Article 8 — Minority Seats. <a href="https://www.iec.jo" target="_blank">iec.jo</a></li>
+        <li>Israel CBS — Arab and Minority Population Data (2023). <a href="https://www.cbs.gov.il" target="_blank">cbs.gov.il</a></li>
+        <li>Minority Rights Group International. <em>Circassians in Jordan</em> (2022). <a href="https://minorityrights.org" target="_blank">minorityrights.org</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 12: Contemporary Challenges ═══ -->
+  <div class="slide" id="slide-11">
+    <div class="slide-hero">
+      <div class="section-num">القسم الثاني عشر · Section 12</div>
+      <h1>التحديات المعاصرة</h1>
+      <div class="subtitle">Contemporary Challenges — الشركس اليوم: بين التشتت والهوية والمستقبل</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card" style="border-top:4px solid var(--red);">
+        <h2><span class="icon">✈️</span> موجات الهجرة المتجددة</h2>
+        <div class="callout callout-red">
+          <div class="callout-label">التهجير المزدوج · Double Displacement</div>
+          <p>الحرب السورية (٢٠١١–الآن) جردت جزءاً كبيراً من الجالية الشركسية السورية من مساكنها. كثيرون منهم طالبوا بحق العودة إلى القوقاز (أديغيا) باعتبارها وطنهم الأصلي، لكن روسيا وضعت عقبات بيروقراطية أمام هذا الخيار.</p>
+        </div>
+        <p style="font-size:13px;margin-top:10px;color:var(--ink-soft);">آلاف الشركس السوريين عادوا إلى أديغيا أو هاجروا إلى تركيا وأوروبا — الأرقام الدقيقة متضاربة والتحقق منها صعب.</p>
+      </div>
+
+      <div class="card" style="border-top:4px solid var(--gold);">
+        <h2><span class="icon">🌐</span> التآكل الثقافي واللغوي</h2>
+        <div class="callout callout-gold">
+          <div class="callout-label">اللغة في خطر · Language Erosion</div>
+          <p>في تركيا — أكبر تجمع شركسي — يُقدَّر أن أقل من <strong>٥٪</strong> من الجيل الثالث يتحدث الأديغية بطلاقة. الإنترنت ووسائل التواصل الاجتماعي باتت أداة مزدوجة: للتراجع بسبب الهيمنة اللغوية، وللنهوض عبر منصات تعليمية شركسية رقمية.</p>
+        </div>
+      </div>
+
+      <div class="card" style="border-top:4px solid var(--blue);">
+        <h2><span class="icon">⚔️</span> الصراعات الإقليمية وتداعياتها</h2>
+        <p style="font-size:13.5px;line-height:1.85;">
+          <strong>الجولان المحتل:</strong> الشركس السوريون في الجولان يعيشون تحت الاحتلال الإسرائيلي منذ ١٩٦٧، وكثيرون منهم نزحوا عام ١٩٦٧. الضمّ الإسرائيلي عام ١٩٨١ عرض عليهم الجنسية لكن أغلبهم رفض.<br><br>
+          <strong>الحرب الأوكرانية ٢٠٢٢:</strong> أثارت نقاشاً حاداً في المجتمعات الشركسية حول الموقف من روسيا — الدولة التي ارتكبت الإبادة.
+        </p>
+      </div>
+
+      <div class="card" style="border-top:4px solid var(--teal);">
+        <h2><span class="icon">⚖️</span> المظالم التاريخية غير المحلولة</h2>
+        <p style="font-size:13.5px;line-height:1.85;">
+          <strong>مطلب الاعتراف:</strong> روسيا الاتحادية لا تزال ترفض الاعتراف الرسمي بأحداث ١٨٦٤ إبادةً جماعية.<br><br>
+          <strong>حق العودة:</strong> مطلب شركسي قديم بحق العودة إلى الوطن الأصلي وفق القانون الدولي.<br><br>
+          <strong>أولمبياد سوتشي ٢٠١٤:</strong> أُقيمت ألعاب الشتاء في مدينة تقع على أرض الإبادة، ما أشعل احتجاجات شركسية عالمية.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🌱</span> بصيص الأمل — مبادرات النهضة</h2>
+      <div class="grid-3">
+        <div class="callout callout-green">
+          <div class="callout-label">إحياء رقمي</div>
+          <p>تطبيقات تعليم اللغة الأديغية، قنوات يوتيوب للأغاني والتراث، منتديات نقاش عبر الإنترنت تجمع شتات الشركس.</p>
+        </div>
+        <div class="callout callout-teal">
+          <div class="callout-label">مهرجانات ثقافية</div>
+          <p>مهرجانات شركسية سنوية في الأردن وإسرائيل وتركيا وأديغيا تجمع الشتات وتحيي الرقص التقليدي (Adyghe Dances) والزي والموسيقى.</p>
+        </div>
+        <div class="callout callout-blue">
+          <div class="callout-label">الدبلوماسية الثقافية</div>
+          <p>الاتحاد الشركسي الدولي (ICA) يعمل مع الأمم المتحدة واليونسكو لحماية التراث الثقافي والمطالبة بالاعتراف بالحقوق.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🏷️</span> مفردات مفتاحية · Vocabulary</h2>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">حق العودة <span class="en">Right of Return</span></span>
+        <span class="tag">التهجير المزدوج <span class="en">Double Displacement</span></span>
+        <span class="tag">إحياء الهوية <span class="en">Identity Revival</span></span>
+        <span class="tag">الاعتراف بالإبادة <span class="en">Genocide Recognition</span></span>
+        <span class="tag">أولمبياد سوتشي <span class="en">Sochi 2014</span></span>
+        <span class="tag">التآكل الثقافي <span class="en">Cultural Erosion</span></span>
+        <span class="tag">الاتحاد الشركسي الدولي <span class="en">ICA</span></span>
+      </div>
+    </div>
+
+    <div class="callout callout-green" style="margin-top:24px;">
+      <div class="callout-label">🎓 خلاصة ختامية · Conclusion</div>
+      <p>الشركس في الشرق الأوسط يمثّلون نموذجاً فريداً لشعب نجا من تهجير شبه كامل وأعاد تشكيل هويته في المنفى، محافظاً على لغته وعاداته وقانونه العرفي لأكثر من قرن ونصف. مستقبلهم يقف عند تقاطع التحديات الجيوسياسية مع إرادة جماعية صلبة للبقاء الثقافي والحضور الفاعل في مجتمعات الشتات.</p>
+    </div>
+
+    <div class="footnotes">
+      <h4>المصادر · References</h4>
+      <ol>
+        <li>International Circassian Association (ICA). Annual Reports 2020–2023. <a href="https://www.ica.org.tr" target="_blank">ica.org.tr</a></li>
+        <li>Human Rights Watch (2013). "Circassians in Syria." <a href="https://www.hrw.org/report/2013/circassians-syria" target="_blank">hrw.org</a></li>
+        <li>Hahn, G. (2014). "Circassian Protest of the Sochi Olympics." <em>PONARS Eurasia</em>. <a href="https://www.ponarseurasia.org" target="_blank">ponarseurasia.org</a></li>
+        <li>Shami, S. (2000). "Prehistories of Globalization: Circassian Identity in Motion." <em>Public Culture</em>, 12(1). <a href="https://doi.org/10.1215/08992363-12-1-177" target="_blank">doi.org</a></li>
+      </ol>
+    </div>
+  </div>
+
+  </div><!-- /slides-container -->
+</main>
+
+<script>
+// ═══════════════ SLIDE NAVIGATION ═══════════════
+const slides = document.querySelectorAll('.slide');
+const navItems = document.querySelectorAll('#nav-list li');
+const titleBar = document.getElementById('slide-title-bar');
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+const progressBar = document.getElementById('progress-bar-inner');
+const progressText = document.getElementById('progress-text');
+
+const titles = [
+  'الهوية والأصول','الاشتقاق اللغوي','المسار التاريخي',
+  'المحنة التاريخية الكبرى','الهجرة إلى المنطقة',
+  'التوزيع الجغرافي','التقديرات السكانية',
+  'اللغة والكتابة','المؤسسات الدينية',
+  'الشخصيات البارزة','الوضع السياسي والقانوني',
+  'التحديات المعاصرة'
+];
+
+const arabicNums = ['١','٢','٣','٤','٥','٦','٧','٨','٩','١٠','١١','١٢'];
+
+let current = 0;
+let mapInitialized = false;
+
+function goTo(idx) {
+  slides[current].classList.remove('active');
+  navItems[current].classList.remove('active');
+  current = idx;
+  slides[current].classList.add('active');
+  navItems[current].classList.add('active');
+  titleBar.textContent = titles[current];
+  btnPrev.disabled = current === 0;
+  btnNext.disabled = current === slides.length - 1;
+  const pct = ((current + 1) / slides.length * 100).toFixed(1);
+  progressBar.style.width = pct + '%';
+  progressText.textContent = arabicNums[current] + ' / ١٢';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (current === 5 && !mapInitialized) {
+    setTimeout(initMap, 200);
+  }
+}
+
+function nextSlide() { if (current < slides.length - 1) goTo(current + 1); }
+function prevSlide() { if (current > 0) goTo(current - 1); }
+
+// ═══════════════ MAP ═══════════════
+function initMap() {
+  mapInitialized = true;
+  const map = L.map('map', { zoomControl: true }).setView([34.0, 38.5], 5);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18
+  }).addTo(map);
+
+  // Custom icon
+  function mkIcon(color) {
+    return L.divIcon({
+      className: '',
+      html: `<div style="width:14px;height:14px;border-radius:50%;background:${color};border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.35);"></div>`,
+      iconSize: [14,14], iconAnchor: [7,7]
+    });
+  }
+
+  const communities = [
+    { lat: 31.95, lng: 35.93, name: 'عمّان — الأردن', en: 'Amman, Jordan', pop: '~١٠٠,٠٠٠', color: '#1a3d2e' },
+    { lat: 32.35, lng: 36.00, name: 'الزرقاء — الأردن', en: 'Zarqa, Jordan', pop: '~٣٠,٠٠٠', color: '#1a3d2e' },
+    { lat: 33.51, lng: 36.29, name: 'دمشق — سوريا', en: 'Damascus, Syria', pop: '~٢٠,٠٠٠', color: '#c0392b' },
+    { lat: 33.13, lng: 35.82, name: 'القنيطرة — الجولان', en: 'Quneitra, Golan', pop: 'نزحوا ١٩٦٧', color: '#c0392b' },
+    { lat: 32.72, lng: 35.48, name: 'كفر كما — إسرائيل', en: 'Kfar Kama, Israel', pop: '~٣,٠٠٠', color: '#1d6fa4' },
+    { lat: 32.98, lng: 35.56, name: 'ريحانية — إسرائيل', en: 'Rehaniya, Israel', pop: '~١,٠٠٠', color: '#1d6fa4' },
+    { lat: 36.89, lng: 30.70, name: 'أنطاليا — تركيا', en: 'Antalya, Turkey', pop: 'جالية كبيرة', color: '#c9a84c' },
+    { lat: 40.76, lng: 29.94, name: 'أدابازاري — تركيا', en: 'Adapazarı, Turkey', pop: 'مركز شركسي رئيسي', color: '#c9a84c' },
+    { lat: 41.01, lng: 28.96, name: 'إسطنبول — تركيا', en: 'Istanbul, Turkey', pop: 'أكبر التجمعات', color: '#c9a84c' },
+    { lat: 33.34, lng: 44.40, name: 'بغداد — العراق', en: 'Baghdad, Iraq', pop: 'جالية تاريخية صغيرة', color: '#0d7377' },
+    { lat: 30.06, lng: 31.23, name: 'القاهرة — مصر', en: 'Cairo, Egypt', pop: 'جالية قديمة صغيرة', color: '#0d7377' },
+  ];
+
+  communities.forEach(c => {
+    const marker = L.marker([c.lat, c.lng], { icon: mkIcon(c.color) }).addTo(map);
+    marker.bindPopup(`
+      <div style="font-family:'Noto Sans Arabic',sans-serif;direction:rtl;text-align:right;min-width:180px;">
+        <strong style="font-size:14px;color:#1a3d2e;">${c.name}</strong><br>
+        <span style="font-size:11px;color:#666;">${c.en}</span><br>
+        <hr style="margin:6px 0;border-color:#e4ddd0;">
+        <span style="font-size:13px;font-weight:600;">التقدير: ${c.pop}</span>
+      </div>
+    `);
+  });
+
+  // Historic homeland polygon (approximate Circassia)
+  const homeland = L.polygon([
+    [43.5, 38.5],[44.5, 39.5],[44.8, 41.0],[44.0, 43.5],
+    [43.0, 44.5],[42.0, 43.8],[41.5, 42.0],[42.0, 40.0],
+    [43.0, 39.0],[43.5, 38.5]
+  ], {
+    color: '#c9a84c',
+    weight: 2.5,
+    fillColor: '#c9a84c',
+    fillOpacity: 0.12,
+    dashArray: '6 4'
+  }).addTo(map);
+
+  homeland.bindPopup(`
+    <div style="font-family:'Noto Sans Arabic',sans-serif;direction:rtl;text-align:right;">
+      <strong style="color:#1a3d2e;">الوطن التاريخي الشركسي</strong><br>
+      <span style="font-size:12px;color:#666;">Circassia / Çerkezistan</span><br>
+      <span style="font-size:12px;">النطاق التقريبي قبل ١٨٦٤م</span>
+    </div>
+  `);
+
+  // Legend
+  const legend = L.control({ position: 'bottomleft' });
+  legend.onAdd = function() {
+    const div = L.DomUtil.create('div');
+    div.style.cssText = 'background:white;padding:12px 16px;border-radius:10px;font-family:Noto Sans Arabic,sans-serif;direction:rtl;font-size:12px;box-shadow:0 2px 12px rgba(0,0,0,0.15);border:1px solid #e4ddd0;';
+    div.innerHTML = `
+      <div style="font-weight:700;margin-bottom:8px;color:#1a3d2e;">مفتاح الخريطة</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+        <div style="width:12px;height:12px;border-radius:50%;background:#1a3d2e;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.3);"></div>
+        <span>الأردن</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+        <div style="width:12px;height:12px;border-radius:50%;background:#c0392b;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.3);"></div>
+        <span>سوريا</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+        <div style="width:12px;height:12px;border-radius:50%;background:#1d6fa4;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.3);"></div>
+        <span>إسرائيل</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+        <div style="width:12px;height:12px;border-radius:50%;background:#c9a84c;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.3);"></div>
+        <span>تركيا</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:12px;height:12px;border-radius:50%;background:#0d7377;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.3);"></div>
+        <span>دول أخرى</span>
+      </div>
+    `;
+    return div;
+  };
+  legend.addTo(map);
+}
+
+// ═══════════════ KEYBOARD NAVIGATION ═══════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') nextSlide();
+  if (e.key === 'ArrowRight' || e.key === 'ArrowUp') prevSlide();
+});
+</script>
+</body>
+</html>
