@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموارنة في الشرق الأوسط | Maronites in the Middle East</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans Arabic"', 'sans-serif'],
+                    },
+                    colors: {
+                        cedar: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        sand: {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            800: '#5c4d47',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .slide { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .slide.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .timeline-container { position: relative; padding-right: 2rem; border-right: 2px dashed #059669; }
+        .timeline-item { position: relative; margin-bottom: 2rem; }
+        .timeline-dot { position: absolute; right: -2.4rem; top: 0.2rem; width: 1rem; height: 1rem; background-color: #059669; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 2px #059669; }
+        
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+    </style>
+</head>
+<body class="bg-sand-50 text-slate-800 flex h-screen overflow-hidden text-right selection:bg-cedar-100 selection:text-cedar-900">
+
+<!-- Chosen Palette: Warm neutral "sand" background (#fdf8f6) with "cedar" green (#047857) accents for cultural relevance and slate grays for text readability. -->
+<!-- Application Structure Plan: A 12-section interactive presentation. A fixed sidebar provides global context and non-linear navigation. A top progress bar tracks completion. A main content area acts as a slide deck, presenting information chunked by topic. This minimizes cognitive load, controls the narrative flow, and allows for embedded interactive elements (maps, charts) without cluttering a single long page. -->
+<!-- Visualization & Content Choices: Slide 6 uses Leaflet.js (NO SVG) for geographic context. Slide 7 uses Chart.js Bar Chart for demographic comparisons. CSS Grid/Flexbox used for layout structures (timelines, hierarchy, card grids). Text snippets use HTML styling. Unicode used for icons. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<nav class="w-64 lg:w-72 bg-white shadow-xl z-20 flex flex-col h-full absolute lg:relative transition-transform duration-300 transform -translate-x-full lg:translate-x-0 border-l border-slate-200" id="sidebar">
+    <div class="p-6 border-b border-slate-100 bg-cedar-50">
+        <h1 class="text-xl font-bold text-cedar-900 leading-tight">الموارنة في الشرق الأوسط</h1>
+        <p class="text-xs text-cedar-700 mt-1 font-semibold tracking-wide uppercase">Maronites in the Middle East</p>
+    </div>
+    <div class="flex-1 overflow-y-auto py-4 custom-scrollbar" id="nav-links">
+    </div>
+    <div class="p-4 border-t border-slate-100 text-xs text-slate-400 text-center">
+        عرض تعليمي تفاعلي<br>Interactive Educational Presentation
+    </div>
+</nav>
+
+<div class="fixed inset-0 bg-slate-900/50 z-10 hidden lg:hidden" id="mobile-overlay" onclick="toggleSidebar()"></div>
+
+<main class="flex-1 relative flex flex-col h-full w-full overflow-hidden bg-sand-50">
+    
+    <div class="h-1.5 w-full bg-slate-200">
+        <div id="progress-bar" class="h-full bg-cedar-600 transition-all duration-300 w-0"></div>
+    </div>
+
+    <header class="lg:hidden bg-white shadow-sm p-4 flex items-center justify-between z-10 border-b border-slate-200">
+        <button onclick="toggleSidebar()" class="text-slate-600 text-2xl px-2">&#9776;</button>
+        <span class="font-bold text-cedar-900">الموارنة | Maronites</span>
+        <div class="w-8"></div>
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 relative" id="slider-container">
+        
+        <!-- Slide 1 -->
+        <section class="slide active max-w-5xl mx-auto" id="slide-1">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">الهوية والأصول <span class="text-slate-400 text-xl font-normal ml-2">| Identity & Origins</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+            
+            <p class="text-lg leading-relaxed mb-8 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                هذا القسم يقدم نظرة عامة على الجذور العرقية واللغوية والثقافية للموارنة، موضحاً اللحظة التاريخية التي شكلت هويتهم المستقلة في جبال لبنان.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-cedar-600">
+                    <h3 class="text-xl font-bold mb-3 flex items-center gap-2"><span class="text-2xl">&#127757;</span> العائلة العرقية اللغوية</h3>
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        مجموعة عرقية دينية من أصول مشرقية (آرامية/فينيقية)، يتحدثون العربية بلهجة لبنانية مشرقية، مع احتفاظهم باللغة السريانية في طقوسهم الدينية.
+                    </p>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-100 text-sm">
+                        <strong class="text-slate-800">Ethnolinguistic Family:</strong> Levantine ethnoreligious group with Aramean/Phoenician heritage.
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-cedar-600">
+                    <h3 class="text-xl font-bold mb-3 flex items-center gap-2"><span class="text-2xl">&#127956;</span> الموطن التاريخي</h3>
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        ارتبط الموارنة تاريخياً بجبل لبنان، الذي وفر لهم ملاذاً آمناً بسبب وعورته. هذا الارتباط الجغرافي شكل استقلاليتهم وهويتهم السياسية والثقافية لاحقاً.
+                    </p>
+                    <div class="bg-slate-50 p-3 rounded border border-slate-100 text-sm">
+                        <strong class="text-slate-800">Homeland:</strong> Mount Lebanon, a rugged terrain offering refuge and fostering autonomy.
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 border-r-4 border-amber-500 p-6 rounded-l-xl shadow-sm mb-8">
+                <h3 class="text-lg font-bold text-amber-900 mb-2">&#9888; اللحظة التكوينية (Defining Moment)</h3>
+                <p class="text-amber-800 leading-relaxed">
+                    تعتبر أزمة المشيئة الواحدة (Monothelite controversy) في القرن السابع الميلادي، وانفصالهم في جبال لبنان، ثم إرساء تحالف دائم مع الكرسي الرسولي في روما (البابوية) خلال فترة الحروب الصليبية، اللحظات المحورية التي بلورت هويتهم الدينية والسياسية المستقلة في الشرق.
+                </p>
+            </div>
+
+            <div class="mt-8">
+                <h4 class="text-sm font-bold text-slate-500 mb-2 uppercase tracking-wide">مصطلحات مفتاحية | Vocabulary Cloud</h4>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">جبل لبنان (Mount Lebanon)</span>
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">الهوية المشرقية (Levantine Identity)</span>
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">الكاثوليكية الشرقية (Eastern Catholicism)</span>
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">استقلالية (Autonomy)</span>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [1] Moosa, M. (1986). The Maronites in History. Syracuse University Press. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://press.syr.edu/supressbooks/2311/maronites-in-history-the/</a>
+            </div>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-2">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">أصل التسمية <span class="text-slate-400 text-xl font-normal ml-2">| Etymology</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-8 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                يتناول هذا القسم أصل مصطلح "موارنة"، وكيف يُطلقون على أنفسهم مقارنة بتسميات الآخرين لهم، مع توضيح الجذور اللغوية والتاريخية للاسم.
+            </p>
+
+            <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 border border-slate-200">
+                <table class="w-full text-right border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200 text-slate-700">
+                            <th class="p-4 font-bold w-1/3">المصطلح (Term)</th>
+                            <th class="p-4 font-bold w-1/3">التسمية (Name)</th>
+                            <th class="p-4 font-bold w-1/3">الأصل والدلالة (Origin & Meaning)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-slate-600">
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-semibold text-slate-800">التسمية الذاتية<br><span class="text-xs text-slate-500">Endonym</span></td>
+                            <td class="p-4">
+                                <div class="text-xl mb-1 text-cedar-800 font-bold">الموارنة</div>
+                                <div class="text-sm font-serif mb-1" dir="ltr">Moronoye (سريانية)</div>
+                                <div class="text-sm" dir="ltr">Al-Mawarinah</div>
+                            </td>
+                            <td class="p-4 leading-relaxed">
+                                نسبة إلى <strong class="text-slate-800">القديس مارون</strong> (توفي أوائل القرن الخامس)، الناسك السرياني الذي عاش في جبال طوروس (سوريا الحالية)، والذي أسس أتباعه لاحقاً دير مار مارون.
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-semibold text-slate-800">تسمية الآخرين<br><span class="text-xs text-slate-500">Exonym</span></td>
+                            <td class="p-4">
+                                <div class="text-lg mb-1" dir="ltr">Maronites</div>
+                                <div class="text-lg mb-1" dir="ltr">Maronites (فرنسي)</div>
+                            </td>
+                            <td class="p-4 leading-relaxed">
+                                ترجمة صوتية للاسم العربي/السرياني في اللغات الغربية، استخدمت بشكل واسع في الوثائق البابوية والسجلات الاستعمارية الأوروبية.
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors bg-sand-100/50">
+                            <td class="p-4 font-semibold text-slate-800">لقب ديني مرتبط<br><span class="text-xs text-slate-500">Religious Title</span></td>
+                            <td class="p-4">
+                                <div class="text-lg mb-1">أنطاكي سرياني كاثوليكي</div>
+                                <div class="text-sm" dir="ltr">Antiochene Syriac Catholic</div>
+                            </td>
+                            <td class="p-4 leading-relaxed">
+                                التسمية الرسمية الكنسية التي تؤكد الانتماء لكرسي أنطاكية التاريخي، التراث السرياني، والوحدة مع روما.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-8">
+                <h4 class="text-sm font-bold text-slate-500 mb-2 uppercase tracking-wide">مصطلحات مفتاحية | Vocabulary Cloud</h4>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">مار مارون (Saint Maron)</span>
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">دير مار مارون (Monastery of St. Maron)</span>
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">أنطاكية (Antioch)</span>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [2] Beggiani, S. (2014). Early Syriac Theology. Catholic University of America Press. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://cuapress.org/9780813227014/early-syriac-theology/</a>
+            </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-3">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">المسار التاريخي <span class="text-slate-400 text-xl font-normal ml-2">| Historical Trajectory</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-8 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                تتبع هذه اللوحة تطور المجتمع الماروني من مجتمع نسكي في سوريا القديمة إلى كيان سياسي واجتماعي رئيسي في لبنان الحديث، موزعة على حقبتين زمنيتين.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <div class="w-12 h-12 bg-sand-100 text-sand-800 rounded-full flex items-center justify-center text-2xl mb-4 border border-sand-800">&#9203;</div>
+                    <h3 class="text-xl font-bold mb-4 text-cedar-900 border-b pb-2">التكوين والقرون الوسطى<br><span class="text-sm text-slate-500 font-normal mt-1 block">Antiquity to Middle Ages</span></h3>
+                    <ul class="space-y-4 text-slate-600">
+                        <li class="flex items-start gap-3">
+                            <span class="text-cedar-600 mt-1">&#9679;</span>
+                            <div><strong>القرن الرابع-الخامس:</strong> نشأة الحركة النسكية حول القديس مارون في وادي العاصي (سوريا).</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-cedar-600 mt-1">&#9679;</span>
+                            <div><strong>القرن السابع-التاسع:</strong> الهجرة التدريجية إلى جبل لبنان هرباً من النزاعات البيزنطية والفتوحات الإسلامية، وتأسيس بطريركية مستقلة (يوحنا مارون).</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-cedar-600 mt-1">&#9679;</span>
+                            <div><strong>القرن الـ11-الـ13:</strong> مرحلة الحروب الصليبية. اتصال الموارنة بالفرنجة، وبدء العلاقات الرسمية مع روما وتأكيد التبعية للبابوية (1182م).</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <div class="w-12 h-12 bg-cedar-100 text-cedar-800 rounded-full flex items-center justify-center text-2xl mb-4 border border-cedar-800">&#127976;</div>
+                    <h3 class="text-xl font-bold mb-4 text-cedar-900 border-b pb-2">العصر العثماني والحديث<br><span class="text-sm text-slate-500 font-normal mt-1 block">Ottoman & Modern Era</span></h3>
+                    <ul class="space-y-4 text-slate-600">
+                        <li class="flex items-start gap-3">
+                            <span class="text-cedar-600 mt-1">&#9679;</span>
+                            <div><strong>القرن الـ16-الـ19:</strong> الحكم العثماني. تأسيس الكلية المارونية في روما (1584). نمو النفوذ السياسي والاقتصادي، تحالفات مع الدروز (إمارة جبل لبنان).</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-cedar-600 mt-1">&#9679;</span>
+                            <div><strong>1861-1915:</strong> نظام المتصرفية (برعاية أوروبية) أعطى جبل لبنان استقلالاً ذاتياً، مما عزز الهيمنة السياسية المارونية.</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-cedar-600 mt-1">&#9679;</span>
+                            <div><strong>1920:</strong> إعلان <strong class="text-slate-800">دولة لبنان الكبير</strong> تحت الانتداب الفرنسي، بمساعي حثيثة من البطريرك الحويك، لتصبح المارونية ركيزة الكيان اللبناني الحديث.</div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="mt-8">
+                <h4 class="text-sm font-bold text-slate-500 mb-2 uppercase tracking-wide">مصطلحات مفتاحية | Vocabulary Cloud</h4>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">يوحنا مارون (John Maron)</span>
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">المتصرفية (Mutasarrifate)</span>
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">لبنان الكبير (Greater Lebanon)</span>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [3] Salibi, K. (1988). A House of Many Mansions: The History of Lebanon Reconsidered. I.B. Tauris. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://www.bloomsbury.com/uk/house-of-many-mansions-9781860649127/</a>
+            </div>
+        </section>
+
+        <!-- Slide 4 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-4">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">الأحداث المأساوية والتكوينية <span class="text-slate-400 text-xl font-normal ml-2">| Formative Traumas</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-8 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                يعرض هذا القسم الأزمات الوجودية التي هددت المجتمع الماروني، والتي أسست لتدخلات دولية وغيرت مسارهم الديموغرافي والسياسي بشكل جذري.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+                
+                <div class="lg:col-span-7 bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <h3 class="text-xl font-bold mb-6 text-cedar-900 border-b pb-2">الجدول الزمني للأزمات الكبرى <span class="text-sm font-normal text-slate-500 block">Timeline of Major Crises</span></h3>
+                    
+                    <div class="timeline-container mt-4 mr-2">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <h4 class="font-bold text-lg text-red-800">1860</h4>
+                            <div class="font-semibold text-slate-800 mb-1">مذابح جبل لبنان ودمشق <span class="text-xs text-slate-500 font-normal">(1860 Massacres)</span></div>
+                            <p class="text-sm text-slate-600 leading-relaxed">صراع أهلي طائفي بين الدروز والموارنة/المسيحيين، امتد إلى دمشق. أدى إلى مقتل الآلاف وتدمير مئات القرى، وأسفر عن تدخل عسكري فرنسي وإنشاء نظام متصرفية جبل لبنان بضمانة دولية.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <h4 class="font-bold text-lg text-red-800">1915-1918</h4>
+                            <div class="font-semibold text-slate-800 mb-1">مجاعة جبل لبنان الكبرى <span class="text-xs text-slate-500 font-normal">(Great Famine of Mount Lebanon)</span></div>
+                            <p class="text-sm text-slate-600 leading-relaxed">أثناء الحرب العالمية الأولى. حصار عثماني، غزو الجراد، ومصادرة المحاصيل. أدت إلى هلاك ثلث سكان جبل لبنان (أغلبهم موارنة)، وشكلت صدمة جماعية سرّعت الهجرة الكثيفة.</p>
+                        </div>
+                        <div class="timeline-item mb-0">
+                            <div class="timeline-dot"></div>
+                            <h4 class="font-bold text-lg text-red-800">1975-1990</h4>
+                            <div class="font-semibold text-slate-800 mb-1">الحرب الأهلية اللبنانية <span class="text-xs text-slate-500 font-normal">(Lebanese Civil War)</span></div>
+                            <p class="text-sm text-slate-600 leading-relaxed">نزاع معقد محلي وإقليمي. شهد تهجير واغتيالات وتدمير للبنية التحتية المسيحية والوطنية، وأدى إلى تقليص النفوذ السياسي الماروني بموجب اتفاق الطائف.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 flex flex-col gap-4">
+                    <div class="bg-red-50 p-6 rounded-xl shadow-md border border-red-100 flex-1 flex flex-col justify-center">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-red-700 mb-2" dir="ltr">~200,000</div>
+                            <div class="font-bold text-slate-800">الضحايا خلال مجاعة 1915</div>
+                            <div class="text-sm text-red-900 mt-1">قرابة ثلث سكان الجبل (Estimated Deaths, 1/3 of pop)</div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-xl shadow-md border border-slate-700 text-white flex-1 flex flex-col justify-center">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-slate-100 mb-2">تدخل وإغاثة دولية</div>
+                            <div class="text-sm text-slate-300">اعتراف وتدخل أوروبي (1860) تلاه دعم اغترابي ضخم (Mahjar) ولجان إغاثة سورية-لبنانية أمريكية خلال المجاعة.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+                <h4 class="text-sm font-bold text-slate-500 mb-2 uppercase tracking-wide">مصطلحات مفتاحية | Vocabulary Cloud</h4>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">المجاعة (Kafno / Famine)</span>
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">نظام القائممقاميتين (Double Qaimaqamate)</span>
+                    <span class="bg-white border border-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-full shadow-sm">اتفاق الطائف (Taif Agreement)</span>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [4] Fawaz, L. T. (1994). An Occasion for War: Civil Conflict in Lebanon and Damascus in 1860. University of California Press. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://www.ucpress.edu/book/9780520200869/an-occasion-for-war</a>
+            </div>
+        </section>
+
+        <!-- Slide 5 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-5">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">الهجرة والانتشار <span class="text-slate-400 text-xl font-normal ml-2">| Migration & Diaspora</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-8 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                تسلط هذه الشريحة الضوء على موجات الهجرة المتعاقبة التي أدت إلى تكوين مجتمع اغترابي (مهجر) ماروني يفوق عددياً المجتمع المقيم في الوطن الأم.
+            </p>
+
+            <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 mb-8">
+                <h3 class="text-xl font-bold mb-6 text-cedar-900 border-b pb-2">موجات الهجرة الرئيسية <span class="text-sm font-normal text-slate-500 block">Main Waves of Migration</span></h3>
+                
+                <div class="space-y-6">
+                    <div class="flex flex-col md:flex-row gap-4 items-center">
+                        <div class="w-full md:w-1/4 font-bold text-slate-700 bg-slate-50 p-3 rounded text-center border border-slate-100">
+                            1880s - 1920s<br><span class="text-xs font-normal text-slate-500">موجة "المهجر" (Al-Mahjar)</span>
+                        </div>
+                        <div class="w-full md:w-3/4">
+                            <div class="w-full bg-slate-100 rounded-full h-4 mb-2 overflow-hidden flex">
+                                <div class="bg-cedar-700 h-4" style="width: 70%"></div>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed">هجرة اقتصادية وهرباً من التجنيد العثماني ثم المجاعة. الوجهات الرئيسية: البرازيل، الأرجنتين، الولايات المتحدة، والمكسيك. أسسوا صحافة وأدب المهجر التجاري والثقافي.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-4 items-center">
+                        <div class="w-full md:w-1/4 font-bold text-slate-700 bg-slate-50 p-3 rounded text-center border border-slate-100">
+                            1975 - 1990<br><span class="text-xs font-normal text-slate-500">الحرب الأهلية اللبنانية</span>
+                        </div>
+                        <div class="w-full md:w-3/4">
+                            <div class="w-full bg-slate-100 rounded-full h-4 mb-2 overflow-hidden flex">
+                                <div class="bg-cedar-500 h-4" style="width: 50%"></div>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed">نزوح جماعي هرباً من العنف والانهيار الاقتصادي. شملت الوجهات: كندا، أستراليا، فرنسا، دول الخليج، وأمريكا اللاتينية.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-4 items-center">
+                        <div class="w-full md:w-1/4 font-bold text-slate-700 bg-slate-50 p-3 rounded text-center border border-slate-100">
+                            2019 - الحاضر<br><span class="text-xs font-normal text-slate-500">الانهيار الاقتصادي الحديث</span>
+                        </div>
+                        <div class="w-full md:w-3/4">
+                            <div class="w-full bg-slate-100 rounded-full h-4 mb-2 overflow-hidden flex">
+                                <div class="bg-amber-500 h-4" style="width: 30%"></div>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed">موجة "هجرة الأدمغة" الحالية بسبب الأزمة المالية التاريخية في لبنان وتفجير مرفأ بيروت. تستهدف بشكل رئيسي أوروبا وكندا والخليج.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-sand-100 p-5 rounded-xl border border-sand-800/20 shadow-sm">
+                    <h4 class="font-bold text-sand-900 mb-2 flex items-center gap-2"><span class="text-xl">&#127970;</span> منظمات ومؤسسات الاغتراب</h4>
+                    <p class="text-sm text-slate-700 leading-relaxed">لعبت المؤسسة المارونية للانتشار (Maronite Foundation in the World) والأبرشيات المارونية في الخارج دوراً حيوياً في الحفاظ على الروابط الثقافية وتسهيل استعادة الجنسية اللبنانية للمغتربين.</p>
+                </div>
+                <div class="bg-sand-100 p-5 rounded-xl border border-sand-800/20 shadow-sm">
+                    <h4 class="font-bold text-sand-900 mb-2 flex items-center gap-2"><span class="text-xl">&#128205;</span> أنماط الاستيطان</h4>
+                    <p class="text-sm text-slate-700 leading-relaxed">انتقلوا من مجتمعات قروية زراعية في جبل لبنان إلى الانخراط السريع في التجارة (الكشة/التجوال) في المهجر، ثم إلى قطاعات الأعمال الحرة والسياسة في الأمريكيتين.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [5] Hourani, A., & Shehadi, N. (1992). The Lebanese in the World: A Century of Emigration. I.B. Tauris. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://www.bloomsbury.com/uk/lebanese-in-the-world-9781850435161/</a>
+            </div>
+        </section>
+
+        <!-- Slide 6 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-6">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">التوزيع الجغرافي <span class="text-slate-400 text-xl font-normal ml-2">| Geographic Distribution</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-6 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                استكشف الخريطة التفاعلية التي توضح المركز التاريخي للموارنة (جبل لبنان) ومناطق انتشارهم الإقليمية الرئيسية.
+            </p>
+
+            <div class="bg-white p-2 rounded-xl shadow-md border border-slate-200 mb-6 relative z-0">
+                <div id="leaflet-map" class="h-[400px] w-full rounded-lg z-0"></div>
+                <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur p-2 rounded shadow text-xs text-slate-700 z-[400] border border-slate-200" dir="ltr">
+                    <span class="inline-block w-3 h-3 bg-red-500/50 border border-red-700 mr-1"></span> Historic Homeland<br>
+                    <span class="inline-block w-3 h-3 bg-blue-600 rounded-full mr-1 mt-1"></span> Major Centers
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-center">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <div class="text-2xl font-bold text-cedar-700" dir="ltr">~ 1,000,000</div>
+                    <div class="text-sm font-semibold text-slate-700">لبنان (Lebanon)</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <div class="text-2xl font-bold text-cedar-700" dir="ltr">~ 6,000,000</div>
+                    <div class="text-sm font-semibold text-slate-700">البرازيل (Brazil)</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <div class="text-2xl font-bold text-cedar-700" dir="ltr">~ 1,000,000</div>
+                    <div class="text-sm font-semibold text-slate-700">الأرجنتين (Argentina)</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <div class="text-2xl font-bold text-cedar-700" dir="ltr">~ 200,000</div>
+                    <div class="text-sm font-semibold text-slate-700">الولايات المتحدة (USA)</div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [6] Faour, A. (2007). Religion, Demography, and Politics in Lebanon. Middle Eastern Studies. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://www.tandfonline.com/doi/abs/10.1080/00263200701568279</a>
+            </div>
+        </section>
+
+        <!-- Slide 7 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-7">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">التقديرات الديموغرافية <span class="text-slate-400 text-xl font-normal ml-2">| Demographic Estimates</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-6 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                يقدم هذا القسم بيانات كمية تقريبية لحجم الطائفة في دول الشرق الأوسط الرئيسية، مع التركيز على التحديات المتعلقة بدقة البيانات.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-4 rounded-xl shadow-md border border-slate-200 flex flex-col items-center justify-center">
+                    <div class="w-full text-center font-bold text-slate-700 mb-2 text-sm">التوزع التقريبي في الشرق الأوسط (المقيمون)</div>
+                    <div class="chart-container">
+                        <canvas id="demographicsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col">
+                    <table class="w-full text-right border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                <th class="p-3 font-bold">البلد (Country)</th>
+                                <th class="p-3 font-bold">العدد التقديري (Est. Pop)</th>
+                                <th class="p-3 font-bold">% محلياً (% of Nat. Pop)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-600">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-800">لبنان <span class="text-xs font-normal text-slate-500 block">Lebanon</span></td>
+                                <td class="p-3" dir="ltr">~ 900k - 1M</td>
+                                <td class="p-3" dir="ltr">~ 20% - 22%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-800">سوريا <span class="text-xs font-normal text-slate-500 block">Syria</span></td>
+                                <td class="p-3" dir="ltr">~ 40k - 50k</td>
+                                <td class="p-3" dir="ltr">< 0.5%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-800">قبرص <span class="text-xs font-normal text-slate-500 block">Cyprus</span></td>
+                                <td class="p-3" dir="ltr">~ 6k - 7k</td>
+                                <td class="p-3" dir="ltr">~ 0.7%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-800">إسرائيل/فلسطين <span class="text-xs font-normal text-slate-500 block">Israel/Palestine</span></td>
+                                <td class="p-3" dir="ltr">~ 10k - 11k</td>
+                                <td class="p-3" dir="ltr">< 0.2%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="mt-auto p-4 bg-amber-50 border-t border-amber-200 text-sm text-amber-900">
+                        <strong class="flex items-center gap-1">&#9888; تحديات البيانات (Data Challenges):</strong>
+                        لم يجرِ لبنان أي إحصاء سكاني رسمي منذ عام 1932 للحفاظ على التوازن الطائفي الهش. التقديرات تعتمد على لوائح الشطب الانتخابية وسجلات الكنيسة، وهي عرضة للتسييس.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [7] CIA World Factbook. (2023). Lebanon People and Society. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://www.cia.gov/the-world-factbook/countries/lebanon/#people-and-society</a>
+            </div>
+        </section>
+
+        <!-- Slide 8 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-8">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">اللغة والأبجدية <span class="text-slate-400 text-xl font-normal ml-2">| Language & Script</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-8 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                يتميز التراث اللغوي الماروني بازدواجية تعكس تاريخهم: تبني العربية لغة تخاطب، مع الحفاظ القوي على اللغة السريانية كلغة مقدسة وطقسية.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-slate-800 text-center">
+                    <div class="text-4xl mb-4 font-serif" dir="ltr">ܫܠܡܐ</div>
+                    <h3 class="font-bold text-lg mb-2 text-slate-800">اللغة السريانية<br><span class="text-sm font-normal text-slate-500">Syriac Language</span></h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        لغة تنتمي للعائلة الآرامية (السامية). هي اللغة الطقسية الأساسية للكنيسة المارونية. كانت لغة التخاطب اليومية في جبل لبنان حتى القرن السادس عشر-السابع عشر قبل أن تحل محلها العربية.
+                    </p>
+                    <div class="mt-4 inline-block bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Endangered (Spoken)</div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-slate-800 text-center">
+                    <div class="text-4xl mb-4">مرحبا</div>
+                    <h3 class="font-bold text-lg mb-2 text-slate-800">العربية المشرقية<br><span class="text-sm font-normal text-slate-500">Levantine Arabic</span></h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        اللغة الأم المحكية حالياً لجميع الموارنة في الشرق الأوسط. اللهجة اللبنانية المعاصرة متأثرة بشدة بالتركيب النحوي والمفردات السريانية القديمة.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-cedar-600 text-center bg-sand-50">
+                    <div class="text-4xl mb-4 font-serif text-cedar-800" dir="ltr">ܟܪܫܘܢܝ</div>
+                    <h3 class="font-bold text-lg mb-2 text-cedar-900">الكرشوني (Garshuni)</h3>
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        نظام كتابة فريد ابتكره السريان/الموارنة، حيث تُكتب <strong class="text-slate-900">اللغة العربية بالأحرف السريانية</strong>. استُخدم بكثافة في المخطوطات والوثائق الكنسية بين القرنين الخامس عشر والتاسع عشر.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [8] Versteegh, K. (2014). The Arabic Language. Edinburgh University Press. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://edinburghuniversitypress.com/book-the-arabic-language.html</a>
+            </div>
+        </section>
+
+        <!-- Slide 9 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-9">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">المؤسسات الدينية <span class="text-slate-400 text-xl font-normal ml-2">| Religious Institutions</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-8 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                الكنيسة المارونية هي المؤسسة المركزية التي حافظت على تماسك الطائفة. هي كنيسة "شرقية كاثوليكية"، أي أنها تحتفظ بطقوسها الشرقية (السريانية الأنطاكية) ولكنها في شركة تامة مع بابا روما.
+            </p>
+
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 mb-8">
+                <h3 class="text-xl font-bold mb-4 text-center text-slate-800">الهيكلية الهرمية <span class="text-sm font-normal text-slate-500 block">Hierarchy Structure</span></h3>
+                
+                <div class="flex flex-col items-center">
+                    
+                    <div class="w-full max-w-xs text-center p-3 bg-slate-800 text-white rounded-lg shadow-sm border border-slate-900 relative">
+                        <div class="font-bold">بابا روما</div>
+                        <div class="text-xs text-slate-300" dir="ltr">The Pope (Rome)</div>
+                        <div class="absolute -bottom-6 left-1/2 w-0.5 h-6 bg-slate-300"></div>
+                    </div>
+                    
+                    <div class="w-full max-w-sm text-center p-4 bg-cedar-700 text-white rounded-lg shadow-md border border-cedar-800 relative mt-6">
+                        <div class="text-xl mb-1">✝️</div>
+                        <div class="font-bold text-lg">البطريرك الماروني</div>
+                        <div class="text-xs text-cedar-200 mb-1" dir="ltr">Maronite Patriarch of Antioch</div>
+                        <div class="text-sm bg-cedar-900/50 inline-block px-2 py-1 rounded mt-1">المقر: بكركي (Bkerke)</div>
+                        <div class="absolute -bottom-6 left-1/2 w-0.5 h-6 bg-slate-300"></div>
+                    </div>
+
+                    <div class="w-full max-w-2xl flex justify-around mt-6 pt-4 border-t-2 border-slate-200">
+                        <div class="text-center w-1/3 px-2 relative">
+                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg shadow-sm">
+                                <div class="font-bold text-slate-800">المطارنة (Bishops)</div>
+                                <div class="text-xs text-slate-500 mt-1">رؤساء الأبرشيات في لبنان والعالم</div>
+                            </div>
+                        </div>
+                        <div class="text-center w-1/3 px-2 relative">
+                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg shadow-sm">
+                                <div class="font-bold text-slate-800">الرهبانيات (Monastic Orders)</div>
+                                <div class="text-xs text-slate-500 mt-1" dir="ltr">e.g., OLM, OAM, OMM</div>
+                            </div>
+                        </div>
+                        <div class="text-center w-1/3 px-2 relative">
+                            <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-slate-300"></div>
+                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg shadow-sm">
+                                <div class="font-bold text-slate-800">الكهنة (Priests)</div>
+                                <div class="text-xs text-slate-500 mt-1">رعاة الكنائس المحلية (يُسمح بزواجهم قبل الرسامة)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-sand-100 p-5 rounded-xl border border-sand-200 shadow-sm flex items-start gap-4">
+                <div class="text-4xl">&#127966;</div>
+                <div>
+                    <h4 class="font-bold text-sand-900 mb-1">الموقع الأقدس: وادي قاديشا (الوادي المقدس)</h4>
+                    <p class="text-sm text-slate-700 leading-relaxed">وادٍ عميق في شمال لبنان يُعرف بـ "Kadisha Valley". شكل ملجأ تاريخياً للنسّاك والبطاركة الموارنة لمئات السنين هرباً من الاضطهاد. يضم أقدم الأديرة المحفورة في الصخر، وهو مصنف كموقع تراث عالمي من اليونسكو.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [9] Mahfouz, J. (1995). Short History of the Maronite Church. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://www.maronite-heritage.com/History.php</a>
+            </div>
+        </section>
+
+        <!-- Slide 10 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-10">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">شخصيات بارزة <span class="text-slate-400 text-xl font-normal ml-2">| Notable Figures</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-6 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                ساهم الموارنة بشكل كبير في تشكيل الثقافة والسياسة والدين في الشرق الأوسط والعالم. هذه بطاقات تعريفية لبعض الشخصيات المؤثرة تاريخياً وحديثاً.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                
+                <div class="bg-white rounded-xl shadow border border-slate-200 p-5 flex flex-col">
+                    <div class="text-sm text-cedar-600 font-bold mb-1" dir="ltr">? - 410 AD</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">القديس مارون <span class="text-sm font-normal text-slate-500 block">Saint Maron</span></h3>
+                    <div class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded mb-3 inline-block">دين / تأسيس (Religion)</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mt-auto">راهب وناسك سرياني. المؤسس الروحي الذي أخذت الطائفة اسمه. عُرف بشفائه للمرضى وتعليمه في العراء.</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow border border-slate-200 p-5 flex flex-col">
+                    <div class="text-sm text-cedar-600 font-bold mb-1" dir="ltr">1823 - 1889</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">يوسف بك كرم <span class="text-sm font-normal text-slate-500 block">Youssef Bey Karam</span></h3>
+                    <div class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded mb-3 inline-block">قيادة سياسية/عسكرية (Politics)</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mt-auto">زعيم وطني ماروني قاد تمرداً ضد الحكم العثماني (نظام المتصرفية) مطالباً باستقلال جبل لبنان الفعلي.</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow border border-slate-200 p-5 flex flex-col">
+                    <div class="text-sm text-cedar-600 font-bold mb-1" dir="ltr">1843 - 1931</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">البطريرك إلياس الحويك <span class="text-sm font-normal text-slate-500 block">Patriarch E. Howayek</span></h3>
+                    <div class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded mb-3 inline-block">دين / دولة (State-building)</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mt-auto">قاد الوفد اللبناني إلى مؤتمر الصلح في فرساي (1919) وكان المهندس الرئيسي لإعلان "دولة لبنان الكبير" عام 1920.</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow border border-slate-200 p-5 flex flex-col">
+                    <div class="text-sm text-cedar-600 font-bold mb-1" dir="ltr">1883 - 1931</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">جبران خليل جبران <span class="text-sm font-normal text-slate-500 block">Gibran Khalil Gibran</span></h3>
+                    <div class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded mb-3 inline-block">أدب وفن (Literature/Art)</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mt-auto">كاتب وفيلسوف وفنان من شعراء المهجر. مؤلف كتاب "النبي"، أحد أكثر الكتب مبيعاً في التاريخ. جسد تمازج الشرق والغرب.</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow border border-slate-200 p-5 flex flex-col">
+                    <div class="text-sm text-cedar-600 font-bold mb-1" dir="ltr">1890 - 1964</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">بشارة الخوري <span class="text-sm font-normal text-slate-500 block">Bechara El Khoury</span></h3>
+                    <div class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded mb-3 inline-block">سياسة (Politics/Presidency)</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mt-auto">أول رئيس للجمهورية اللبنانية بعد الاستقلال (1943). شريك أساسي في صياغة "الميثاق الوطني" مع رياض الصلح.</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow border border-slate-200 p-5 flex flex-col">
+                    <div class="text-sm text-cedar-600 font-bold mb-1" dir="ltr">1906 - 1987</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-1">شارل مالك <span class="text-sm font-normal text-slate-500 block">Charles Malik</span></h3>
+                    <div class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded mb-3 inline-block">دبلوماسية/فلسفة (Diplomacy)</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mt-auto">فيلسوف ودبلوماسي. أحد الصاغة الرئيسيين للإعلان العالمي لحقوق الإنسان (1948)، ورئيس الجمعية العامة للأمم المتحدة.</p>
+                </div>
+
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [10] Cobban, H. (1985). The Making of Modern Lebanon. Hutchinson. <br>
+            </div>
+        </section>
+
+        <!-- Slide 11 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-11">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">الوضع السياسي والقانوني <span class="text-slate-400 text-xl font-normal ml-2">| Political & Legal Status</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-8 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                لبنان هو الدولة الوحيدة في الشرق الأوسط التي يلعب فيها الموارنة دوراً دستورياً وسيادياً مؤسساً، بفضل نظام الديمقراطية التوافقية (الطائفية السياسية).
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                
+                <div class="bg-white p-6 rounded-xl shadow-md border-r-4 border-cedar-600">
+                    <h3 class="text-xl font-bold mb-4 text-slate-800 border-b border-slate-100 pb-2">في لبنان (Lebanon)</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="font-bold text-slate-700 flex items-center justify-between">
+                                <span>رئاسة الجمهورية</span>
+                                <span class="bg-cedar-100 text-cedar-800 px-2 py-1 rounded text-xs">حصري (Exclusive)</span>
+                            </div>
+                            <p class="text-sm text-slate-600 mt-1">بموجب العرف (الميثاق الوطني 1943)، يُحفظ منصب رئيس الجمهورية اللبنانية والقائد الأعلى للقوات المسلحة للموارنة.</p>
+                        </div>
+                        <hr class="border-slate-100">
+                        <div>
+                            <div class="font-bold text-slate-700 flex items-center justify-between">
+                                <span>المقاعد النيابية (Parliament)</span>
+                                <span class="bg-slate-100 text-slate-800 px-2 py-1 rounded text-xs" dir="ltr">34 / 128 seats</span>
+                            </div>
+                            <p class="text-sm text-slate-600 mt-1">يخصص للموارنة 34 مقعداً في البرلمان من أصل 64 مقعداً مخصصاً للمسيحيين (إجمالي 128 للمناصفة الإسلامية المسيحية).</p>
+                        </div>
+                        <hr class="border-slate-100">
+                        <div>
+                            <div class="font-bold text-slate-700">قوانين الأحوال الشخصية</div>
+                            <p class="text-sm text-slate-600 mt-1">تتمتع المحاكم الروحية المارونية باستقلالية تامة في قضايا الزواج، الطلاق، والميراث للمنتمين للطائفة.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border-r-4 border-slate-300">
+                    <h3 class="text-xl font-bold mb-4 text-slate-800 border-b border-slate-100 pb-2">في قبرص ودول أخرى</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="font-bold text-slate-700">الاعتراف الدستوري القبرصي</div>
+                            <p class="text-sm text-slate-600 mt-1">يُعترف بالموارنة في دستور قبرص كواحدة من الأقليات الدينية الثلاث. ويحق لهم انتخاب ممثل واحد في مجلس النواب القبرصي (كمراقب).</p>
+                        </div>
+                        <hr class="border-slate-100">
+                        <div>
+                            <div class="font-bold text-slate-700">التمثيل في دول المهجر</div>
+                            <p class="text-sm text-slate-600 mt-1">يندمجون في النظم العلمانية الغربية، ويمارسون ضغطاً سياسياً (Lobbying) كجزء من الجالية اللبنانية/العربية، خاصة في البرازيل والولايات المتحدة.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [11] Makdisi, U. (2000). The Culture of Sectarianism: Community, History, and Violence in Nineteenth-Century Ottoman Lebanon. UC Press. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://www.ucpress.edu/book/9780520218711/the-culture-of-sectarianism</a>
+            </div>
+        </section>
+
+        <!-- Slide 12 -->
+        <section class="slide max-w-5xl mx-auto" id="slide-12">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">التحديات المعاصرة <span class="text-slate-400 text-xl font-normal ml-2">| Contemporary Challenges</span></h2>
+            <div class="h-1 w-20 bg-cedar-600 mb-6 rounded"></div>
+
+            <p class="text-lg leading-relaxed mb-8 text-slate-700 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                يواجه الموارنة في القرن الحادي والعشرين تحديات وجودية وسياسية تهدد دورهم التاريخي في الشرق الأوسط وتؤثر على هويتهم الثقافية.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                
+                <div class="bg-red-50 p-6 rounded-xl border border-red-100 shadow-sm relative overflow-hidden">
+                    <div class="absolute -left-6 -top-6 text-red-100 text-9xl opacity-50 font-serif">&#10071;</div>
+                    <h3 class="font-bold text-red-900 text-lg mb-3 relative z-10">النزيف الديموغرافي وهجرة الأدمغة</h3>
+                    <p class="text-slate-700 text-sm leading-relaxed relative z-10">
+                        تؤدي الأزمات الاقتصادية المتلاحقة وانفجار مرفأ بيروت (2020) إلى هجرة غير مسبوقة للشباب الماروني والنخب المتعلمة. هذا التراجع الديموغرافي المستمر يضعف موقفهم الداخلي ويهدد التوازن الدقيق للتركيبة اللبنانية.
+                    </p>
+                </div>
+
+                <div class="bg-sand-100 p-6 rounded-xl border border-sand-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute -left-4 -top-4 text-sand-200 text-9xl opacity-50 font-serif">&#9878;</div>
+                    <h3 class="font-bold text-sand-900 text-lg mb-3 relative z-10">التهميش السياسي والشراكة</h3>
+                    <p class="text-slate-700 text-sm leading-relaxed relative z-10">
+                        بعد اتفاق الطائف (1989)، تقلصت الصلاحيات التنفيذية لرئيس الجمهورية (الماروني) لصالح مجلس الوزراء مجتمعاً. يواجه الموارنة اليوم تحدي الحفاظ على "الشراكة الوطنية الفعلية" في ظل تنامي قوى طائفية أخرى مسلحة ومدعومة إقليمياً.
+                    </p>
+                </div>
+
+                <div class="bg-slate-100 p-6 rounded-xl border border-slate-200 shadow-sm md:col-span-2 flex flex-col md:flex-row items-center gap-6">
+                    <div class="text-4xl">&#128218;</div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-lg mb-2">تآكل الهوية الثقافية والتراث السرياني</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            مع اندماج الأجيال الجديدة في المهجر في مجتمعاتهم الغربية، وابتعاد الأجيال الشابة في لبنان عن الإرث السرياني، تواجه الكنيسة تحدياً في نقل "الهوية المارونية الأنطاكية" إلى خارج الإطار الفولكلوري، والحفاظ على اللغة السريانية من الانقراض الكامل.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                [12] Krayem, H. (1997). The Lebanese Civil War and the Taif Agreement. American University of Beirut. <br>
+                🔗 <a href="#" class="text-cedar-600 hover:underline">https://ddc.aub.edu.lb/projects/pspa/conflict-resolution.html</a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-white/90 backdrop-blur border-t border-slate-200 p-4 flex justify-between items-center z-10">
+        <button id="prevBtn" onclick="navigate(-1)" class="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold">
+            &rarr; السابق (Prev)
+        </button>
+        <span id="slideCounter" class="text-slate-500 text-sm font-bold" dir="ltr">1 / 12</span>
+        <button id="nextBtn" onclick="navigate(1)" class="px-6 py-2 bg-cedar-600 hover:bg-cedar-700 text-white rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold">
+            التالي (Next) &larr;
+        </button>
+    </footer>
+
+</main>
+
+<script>
+    // App State
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let mapInitialized = false;
+    let leafletMap;
+    let demographicsChartInst = null;
+
+    const navTitles = [
+        "الهوية والأصول", "أصل التسمية", "المسار التاريخي", "الأحداث المأساوية",
+        "الهجرة والانتشار", "التوزيع الجغرافي", "التقديرات الديموغرافية",
+        "اللغة والأبجدية", "المؤسسات الدينية", "شخصيات بارزة",
+        "الوضع السياسي", "التحديات المعاصرة"
+    ];
+
+    // Initialize Navigation Sidebar
+    const navLinksContainer = document.getElementById('nav-links');
+    navTitles.forEach((title, index) => {
+        const link = document.createElement('a');
+        link.href = `#slide-${index + 1}`;
+        link.className = `block px-6 py-3 border-r-4 transition-colors text-sm font-semibold ${index === 0 ? 'border-cedar-600 bg-cedar-50 text-cedar-900' : 'border-transparent text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`;
+        link.innerHTML = `<span class="inline-block w-6 text-slate-400 font-normal">${index + 1}.</span> ${title}`;
+        link.onclick = (e) => {
+            e.preventDefault();
+            goToSlide(index);
+            if(window.innerWidth < 1024) toggleSidebar();
+        };
+        navLinksContainer.appendChild(link);
+    });
+
+    // Core Navigation Logic
+    function updateUI() {
+        // Update slides
+        slides.forEach((slide, idx) => {
+            if (idx === currentSlideIndex) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+
+        // Update Nav Links
+        const links = navLinksContainer.querySelectorAll('a');
+        links.forEach((link, idx) => {
+            if (idx === currentSlideIndex) {
+                link.className = 'block px-6 py-3 border-r-4 border-cedar-600 bg-cedar-50 text-cedar-900 text-sm font-semibold transition-colors';
+            } else {
+                link.className = 'block px-6 py-3 border-r-4 border-transparent text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-semibold transition-colors';
+            }
+        });
+
+        // Update Progress Bar & Counter
+        const progress = ((currentSlideIndex + 1) / totalSlides) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
+        document.getElementById('slideCounter').innerText = `${currentSlideIndex + 1} / ${totalSlides}`;
+
+        // Update Buttons
+        document.getElementById('prevBtn').disabled = currentSlideIndex === 0;
+        document.getElementById('nextBtn').disabled = currentSlideIndex === totalSlides - 1;
+
+        // Reset scroll position
+        document.getElementById('slider-container').scrollTop = 0;
+
+        // Trigger view-specific renders
+        handleSlideSpecifics(currentSlideIndex);
+    }
+
+    function navigate(direction) {
+        const newIndex = currentSlideIndex + direction;
+        if (newIndex >= 0 && newIndex < totalSlides) {
+            currentSlideIndex = newIndex;
+            updateUI();
+        }
+    }
+
+    function goToSlide(index) {
+        if (index >= 0 && index < totalSlides) {
+            currentSlideIndex = index;
+            updateUI();
+        }
+    }
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobile-overlay');
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    }
+
+    // Slide-specific Logic (Map, Charts)
+    function handleSlideSpecifics(index) {
+        // Slide 6 (index 5) - Geographic Map
+        if (index === 5) {
+            setTimeout(() => {
+                if (!mapInitialized) {
+                    // Center on Lebanon roughly
+                    leafletMap = L.map('leaflet-map').setView([33.8547, 35.8623], 6);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(leafletMap);
+
+                    // Lebanon Mount Lebanon Rough Polygon
+                    const mtLebanonCoords = [
+                        [34.3, 36.0],
+                        [34.0, 35.6],
+                        [33.5, 35.4],
+                        [33.5, 35.7],
+                        [34.0, 36.1]
+                    ];
+                    L.polygon(mtLebanonCoords, {color: '#b91c1c', fillColor: '#ef4444', fillOpacity: 0.2, weight: 2}).addTo(leafletMap).bindPopup("جبل لبنان (المركز التاريخي)<br>Historic Mount Lebanon");
+
+                    // Major Centers
+                    const markers = [
+                        { coords: [33.8938, 35.5018], title: "بيروت (Beirut)" },
+                        { coords: [35.1264, 33.4299], title: "قبرص (Cyprus - Kormakitis)" },
+                        { coords: [34.7398, 36.7133], title: "حمص/سوريا (Homs/Syria)" },
+                        { coords: [32.7940, 34.9896], title: "حيفا/إسرائيل (Haifa)" }
+                    ];
+
+                    markers.forEach(m => {
+                        L.circleMarker(m.coords, {
+                            radius: 6,
+                            fillColor: "#2563eb",
+                            color: "#fff",
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(leafletMap).bindPopup(m.title);
+                    });
+
+                    mapInitialized = true;
+                } else {
+                    leafletMap.invalidateSize(); // Fixes rendering issue when container was hidden
+                }
+            }, 100);
+        }
+
+        // Slide 7 (index 6) - Demographics Chart
+        if (index === 6) {
+            setTimeout(() => {
+                if (demographicsChartInst) demographicsChartInst.destroy();
+                
+                const ctx = document.getElementById('demographicsChart').getContext('2d');
+                Chart.defaults.font.family = '"Noto Sans Arabic", sans-serif';
+                
+                demographicsChartInst = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['لبنان', 'سوريا', 'إسرائيل/فلسطين', 'قبرص'],
+                        datasets: [{
+                            label: 'العدد التقديري (Estimates)',
+                            data: [950000, 45000, 10500, 6500],
+                            backgroundColor: [
+                                '#047857', // Lebanon - Cedar
+                                '#94a3b8', 
+                                '#94a3b8', 
+                                '#94a3b8'  
+                            ],
+                            borderWidth: 0,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.y !== null) {
+                                            label += new Intl.NumberFormat('en-US').format(context.parsed.y);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                type: 'logarithmic', // Log scale to show small populations next to Lebanon
+                                title: { display: true, text: 'العدد (Log Scale)' }
+                            }
+                        }
+                    }
+                });
+            }, 100);
+        }
+    }
+
+    // Init
+    updateUI();
+
+</script>
+</body>
+</html>
