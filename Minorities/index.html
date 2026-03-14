@@ -97,6 +97,14 @@
             color: var(--text-main);
         }
 
+        .section-subtitle {
+            text-align: center;
+            margin: 2rem 0 1.5rem;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -204,7 +212,7 @@
     <section class="hero">
         <div class="container">
             <h1>مرحباً بكم في مقرر دراسات الأقليات</h1>
-            <p>رحلة أكاديمية لاستكشاف الفسيفساء الحضارية في الشرق الأوسط، وفهم التحديات والحقوق والهوية في عالم متغير.</p>
+            <p style="color: var(--text-muted); font-size: 1.05rem;">مسار متكامل لفهم تنوع الأقليات في الشرق الأوسط، مع ربط الحقوق والهوية بالواقع الاجتماعي والسياسي المتغير.</p>
             <div style="display: flex; gap: 1rem; justify-content: center;">
                 <a href="#classes" class="class-card" style="background: var(--primary); color: white; padding: 1rem 2.5rem; border: none; flex-direction: row; align-items: center; border-radius: 50px;">
                     ابدأ التعلم الآن
@@ -217,9 +225,9 @@
     <div class="container">
         <div class="section-title">
             <h2>المحاضرات والمواد الدراسية</h2>
-            <p class="subtitle">اختر الدرس الذي ترغب في مراجعته اليوم</p>
         </div>
 
+        <h3 class="section-subtitle">المسار ١: التعريف بالجماعات والسياقات</h3>
         <div class="grid">
 
             <!-- Class 1 -->
@@ -288,7 +296,7 @@
                 <span class="btn-link">فتح الدرس ←</span>
             </a>
 
-            <!-- Quiz: Amazigh -->
+            <!-- Quiz: Amazigh (placed after related lectures) -->
             <a href="amazighQ.html" class="class-card">
                 <div class="card-header">
                     <span class="class-num">تمرين</span>
@@ -298,6 +306,66 @@
                 <p>أسئلة تفاعلية للنقاش حول الهوية الأمازيغية والتاريخ والثقافة لتعميق الفهم وتحفيز التفكير النقدي.</p>
                 <span class="btn-link">فتح التمرين ←</span>
             </a>
+
+            <!-- Class 7 -->
+            <a href="Armenians.html" class="class-card">
+                <div class="card-header">
+                    <span class="class-num">المحاضرة ٠٧</span>
+                    <span class="badge-new">متاح حالياً</span>
+                </div>
+                <h3>الأرمن في الشرق الأوسط</h3>
+                <p>جذور الأرمن المشرقية، الجغرافيا المتغيرة للشتات، والهوية الثقافية الممتدة بين حلب وبيروت ويريفان.</p>
+                <span class="btn-link">فتح الدرس ←</span>
+            </a>
+
+            <!-- Class 8 -->
+            <a href="ArmenG.html" class="class-card">
+                <div class="card-header">
+                    <span class="class-num">المحاضرة ٠٨</span>
+                    <span class="badge-new">متاح حالياً</span>
+                </div>
+                <h3>قضية الأرمن: جدل الإبادة</h3>
+                <p>عرض تفاعلي للروايتين الأرمنية والتركية، والجدل القانوني والسياسي حول توصيف أحداث 1915.</p>
+                <span class="btn-link">فتح الدرس ←</span>
+            </a>
+
+            <!-- Class 9 -->
+            <a href="Circassians.html" class="class-card">
+                <div class="card-header">
+                    <span class="class-num">المحاضرة ٠٩</span>
+                    <span class="badge-new">متاح حالياً</span>
+                </div>
+                <h3>الشركس: من القوقاز إلى الشام</h3>
+                <p>مسارات الهجرة القوقازية، الاستيطان في الأردن وسوريا، ودور الشركس العسكري والثقافي في المنطقة.</p>
+                <span class="btn-link">فتح الدرس ←</span>
+            </a>
+
+            <!-- Class 10 -->
+            <a href="Druze.html" class="class-card">
+                <div class="card-header">
+                    <span class="class-num">المحاضرة ١٠</span>
+                    <span class="badge-new">متاح حالياً</span>
+                </div>
+                <h3>الموحّدون الدروز</h3>
+                <p>تاريخ الطائفة الدرزية، الجغرافيا السكانية في جبل العرب والجليل، ومفهوم الولاء والخدمة الوطنية.</p>
+                <span class="btn-link">فتح الدرس ←</span>
+            </a>
+
+            <!-- Class 11 -->
+            <a href="Maronites.html" class="class-card">
+                <div class="card-header">
+                    <span class="class-num">المحاضرة ١١</span>
+                    <span class="badge-new">متاح حالياً</span>
+                </div>
+                <h3>الموارنة في المشرق</h3>
+                <p>الهوية المارونية في جبل لبنان، العلاقات مع الكرسي الرسولي، ودورهم السياسي والاجتماعي في الدولة اللبنانية.</p>
+                <span class="btn-link">فتح الدرس ←</span>
+            </a>
+
+        </div>
+
+        <h3 class="section-subtitle">المسار ٢: المهارات اللغوية والمفاهيم الأكاديمية</h3>
+        <div class="grid">
 
             <!-- Skills: Legal Language -->
             <a href="legalMin.html" class="class-card">
@@ -341,6 +409,17 @@
                 <h3>علامات الترقيم العربية</h3>
                 <p>دليل شامل لاستخدام علامات الترقيم في الكتابة العربية الأكاديمية والرسمية.</p>
                 <span class="btn-link">فتح الدرس ←</span>
+            </a>
+
+            <!-- Reference: Statelessness & Nationality -->
+            <a href="NationalityProblems.html" class="class-card">
+                <div class="card-header">
+                    <span class="class-num">مرجع</span>
+                    <span class="badge-new">متاح حالياً</span>
+                </div>
+                <h3>قاموس انعدام الجنسية</h3>
+                <p>معجم أكاديمي للمصطلحات الخاصة بحقوق الأقليات، انعدام الجنسية، وبناء الحجج القانونية.</p>
+                <span class="btn-link">فتح المرجع ←</span>
             </a>
 
         </div>
