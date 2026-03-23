@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>النوبيون – عرض تعليمي تفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&family=Noto+Serif+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --sand: #F5E6C8;
+    --sand-light: #FBF5E9;
+    --terracotta: #C1440E;
+    --terracotta-light: #E8693A;
+    --nile: #1B6CA8;
+    --nile-light: #3A8FCC;
+    --gold: #D4A017;
+    --gold-light: #F0C040;
+    --dark: #1A1209;
+    --text: #2C1F0E;
+    --text-light: #5C4A30;
+    --card-bg: #FFFFFF;
+    --border: #E8D5B0;
+    --sidebar-w: 280px;
+    --header-h: 72px;
+    --progress-h: 5px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    background: var(--sand-light);
+    color: var(--text);
+    direction: rtl;
+    text-align: right;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* ══════ PROGRESS BAR ══════ */
+  #progress-bar {
+    position: fixed;
+    top: 0; right: 0; left: 0;
+    height: var(--progress-h);
+    background: var(--border);
+    z-index: 1000;
+  }
+  #progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--terracotta), var(--gold));
+    transition: width 0.4s ease;
+    width: 8.33%;
+  }
+
+  /* ══════ SIDEBAR ══════ */
+  #sidebar {
+    position: fixed;
+    top: var(--progress-h);
+    right: 0;
+    width: var(--sidebar-w);
+    height: calc(100vh - var(--progress-h));
+    background: var(--dark);
+    overflow-y: auto;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+  }
+
+  #sidebar-logo {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  #sidebar-logo h2 {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    line-height: 1.4;
+  }
+  #sidebar-logo p {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  #nav-list {
+    list-style: none;
+    flex: 1;
+    padding: 12px 0;
+  }
+  #nav-list li {
+    cursor: pointer;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    border-right: 3px solid transparent;
+  }
+  #nav-list li:hover { background: rgba(255,255,255,0.07); }
+  #nav-list li.active {
+    background: rgba(193,68,14,0.25);
+    border-right-color: var(--terracotta-light);
+  }
+  #nav-list li .nav-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.6);
+    flex-shrink: 0;
+  }
+  #nav-list li.active .nav-num {
+    background: var(--terracotta);
+    color: #fff;
+  }
+  #nav-list li .nav-label {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.3;
+  }
+  #nav-list li.active .nav-label { color: #fff; font-weight: 600; }
+
+  /* ══════ MAIN CONTENT ══════ */
+  #main {
+    margin-right: var(--sidebar-w);
+    height: 100vh;
+    padding-top: var(--progress-h);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ══════ SLIDE HEADER ══════ */
+  #slide-header {
+    background: var(--dark);
+    padding: 0 40px;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  #slide-title-area { display: flex; flex-direction: column; }
+  #slide-section-num {
+    font-size: 0.7rem;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  #slide-title {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.4rem;
+    color: #fff;
+    line-height: 1.2;
+  }
+  #slide-counter {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ══════ SLIDE BODY ══════ */
+  #slide-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 40px 20px;
+    scroll-behavior: smooth;
+  }
+
+  /* ══════ CONTROLS ══════ */
+  #controls {
+    background: var(--dark);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .ctrl-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    padding: 10px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Noto Sans Arabic', sans-serif;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ctrl-btn:hover { background: var(--terracotta); border-color: var(--terracotta); }
+  .ctrl-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  #ctrl-info { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+
+  /* ══════ SLIDE CONTENT STYLES ══════ */
+  .slide { animation: fadeSlide 0.4s ease; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  h3.section-heading {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.5rem;
+    color: var(--terracotta);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h3.section-heading::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to left, var(--border), transparent);
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .card h4 {
+    font-size: 1.05rem;
+    color: var(--nile);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .card p, .card li {
+    font-size: 0.93rem;
+    line-height: 1.85;
+    color: var(--text-light);
+  }
+  .card ul { padding-right: 20px; }
+  .card li { margin-bottom: 6px; }
+
+  /* CALLOUT BOXES */
+  .callout {
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 14px 0;
+    font-size: 0.92rem;
+    line-height: 1.8;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+  .callout-terracotta { background: #FEF0EA; border-right: 4px solid var(--terracotta); color: #6B2007; }
+  .callout-nile       { background: #EAF3FB; border-right: 4px solid var(--nile);       color: #0D3F6A; }
+  .callout-gold       { background: #FDF7E3; border-right: 4px solid var(--gold);       color: #6B4A00; }
+  .callout-green      { background: #E9F7EE; border-right: 4px solid #27A85A;          color: #145C30; }
+
+  /* GRID */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .grid-4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* STAT CARDS */
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  .stat-card .stat-num {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card .stat-label {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+  .stat-card.nile .stat-num  { color: var(--nile); }
+  .stat-card.gold .stat-num  { color: var(--gold); }
+  .stat-card.green .stat-num { color: #27A85A; }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+  }
+  thead tr {
+    background: var(--dark);
+    color: var(--gold-light);
+  }
+  thead th {
+    padding: 14px 16px;
+    font-weight: 600;
+    text-align: right;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--sand-light); }
+  tbody td {
+    padding: 12px 16px;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  td.bold { font-weight: 700; color: var(--text); }
+  td.center { text-align: center; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-right: 32px; margin-bottom: 20px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 10px; top: 0; bottom: 0;
+    width: 2px;
+    border-right: 3px dashed var(--terracotta-light);
+    opacity: 0.5;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 22px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    right: -27px; top: 20px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    border: 3px solid var(--sand-light);
+    box-shadow: 0 0 0 2px var(--terracotta-light);
+  }
+  .timeline-item .tl-year {
+    font-size: 0.75rem;
+    color: var(--terracotta);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .timeline-item .tl-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .timeline-item .tl-text {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* NOTABLE PERSON CARDS */
+  .person-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .person-card .person-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--terracotta), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+  }
+  .person-card .person-name {
+    font-family: 'Noto Serif Arabic', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .person-card .person-dates {
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+  .person-card .person-field {
+    display: inline-block;
+    background: var(--sand);
+    color: var(--terracotta);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    width: fit-content;
+  }
+  .person-card .person-desc {
+    font-size: 0.83rem;
+    color: var(--text-light);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  /* TAG CLOUD */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0;
+  }
+  .tag {
+    background: var(--sand);
+    border: 1px solid var(--border);
+    color: var(--text-light);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    cursor: default;
+    transition: all 0.15s;
+  }
+  .tag:hover { background: var(--terracotta); color: #fff; border-color: var(--terracotta); }
+  .tag.big  { font-size: 1rem; padding: 7px 18px; }
+  .tag.med  { font-size: 0.9rem; padding: 6px 16px; }
+  .tag.nile-tag { background: #EAF3FB; border-color: var(--nile); color: var(--nile); }
+  .tag.gold-tag { background: #FDF7E3; border-color: var(--gold); color: #7A5500; }
+
+  /* MAP */
+  #nubian-map {
+    height: 380px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+
+  /* FOOTNOTES */
+  .footnotes {
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+  }
+  .footnotes p {
+    font-size: 0.73rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    opacity: 0.75;
+  }
+  .footnotes a {
+    color: var(--nile);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .footnotes a:hover { text-decoration: underline; }
+
+  /* SECTION LABEL */
+  .section-label {
+    display: inline-block;
+    background: var(--terracotta);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  /* Bilingual helper */
+  .bilingue {
+    display: inline-block;
+    color: rgba(0,0,0,0.38);
+    font-size: 0.8em;
+    font-style: italic;
+    margin-right: 6px;
+    direction: ltr;
+  }
+
+  /* ══════ SCROLLBAR ══════ */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 10px; }
+
+  /* ══════ HIDDEN SLIDES ══════ */
+  .slide-section { display: none; }
+  .slide-section.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div id="sidebar-logo">
+    <h2>النوبيون</h2>
+    <p>NUBIANS · عرض تعليمي تفاعلي</p>
+  </div>
+  <ul id="nav-list">
+    <li class="active" onclick="goTo(0)"><span class="nav-num">١</span><span class="nav-label">الهوية والأصول</span></li>
+    <li onclick="goTo(1)"><span class="nav-num">٢</span><span class="nav-label">أصل التسمية</span></li>
+    <li onclick="goTo(2)"><span class="nav-num">٣</span><span class="nav-label">المسيرة التاريخية</span></li>
+    <li onclick="goTo(3)"><span class="nav-num">٤</span><span class="nav-label">الحدث المؤلم الكبير</span></li>
+    <li onclick="goTo(4)"><span class="nav-num">٥</span><span class="nav-label">الهجرة والتهجير</span></li>
+    <li onclick="goTo(5)"><span class="nav-num">٦</span><span class="nav-label">التوزيع الجغرافي</span></li>
+    <li onclick="goTo(6)"><span class="nav-num">٧</span><span class="nav-label">الأعداد والتعداد</span></li>
+    <li onclick="goTo(7)"><span class="nav-num">٨</span><span class="nav-label">اللغة والكتابة</span></li>
+    <li onclick="goTo(8)"><span class="nav-num">٩</span><span class="nav-label">المؤسسات الدينية</span></li>
+    <li onclick="goTo(9)"><span class="nav-num">١٠</span><span class="nav-label">شخصيات بارزة</span></li>
+    <li onclick="goTo(10)"><span class="nav-num">١١</span><span class="nav-label">الوضع السياسي والقانوني</span></li>
+    <li onclick="goTo(11)"><span class="nav-num">١٢</span><span class="nav-label">التحديات المعاصرة</span></li>
+  </ul>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="slide-header">
+    <div id="slide-title-area">
+      <span id="slide-section-num">القسم الأول · SECTION 1</span>
+      <span id="slide-title">الهوية والأصول</span>
+    </div>
+    <span id="slide-counter">١ / ١٢</span>
+  </div>
+
+  <div id="slide-body">
+
+    <!-- ══════════ SLIDE 1: IDENTITY & ORIGINS ══════════ -->
+    <div class="slide-section active" id="s0">
+      <span class="section-label">Identity &amp; Origins · هوية وأصول</span>
+      <h3 class="section-heading">من هم النوبيون؟</h3>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>🏺 تعريف الشعب النوبي</h4>
+          <p>النوبيون شعبٌ أصيل <span class="bilingue">indigenous</span> من شمال شرق أفريقيا. يعيشون في المنطقة التي تمتد من جنوب مصر إلى شمال السودان على ضفاف نهر النيل. هذه المنطقة تُسمى <strong>النوبة</strong>. يُعدّ النوبيون من أقدم الشعوب في العالم؛ إذ يعود وجودهم في هذه المنطقة إلى أكثر من <strong>سبعة آلاف سنة</strong>.</p>
+        </div>
+        <div class="card">
+          <h4>🌍 الموطن الأصلي</h4>
+          <p>الموطن الأصلي للنوبيين هو وادي النيل بين <strong>أسوان</strong> في جنوب مصر و<strong>الخرطوم</strong> في شمال السودان. تمتد هذه المنطقة على طول حوالي ١٢٣٠ كيلومتراً على ضفتي النيل. كانت هذه الأرض مركزاً للتجارة والحضارة منذ آلاف السنين.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-terracotta">
+        <span class="callout-icon">⚡</span>
+        <div>
+          <strong>اللحظة الثقافية والدينية الأهم</strong><br>
+          في القرن السادس الميلادي، تحوّل النوبيون إلى المسيحية (حوالي عام ٥٤٠ م في مملكة نوباتيا، و٥٨٠ م في مملكة علوة)، فأصبحوا من أقوى الممالك المسيحية في أفريقيا. ثم دخلوا الإسلام تدريجياً بعد القرن السابع الميلادي. أدّى هذا التحوّل إلى مزج فريد بين الموروث الأفريقي القديم وقيم الإسلام والبقايا المسيحية في ثقافتهم حتى اليوم.
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="stat-card">
+          <div class="stat-num">٧٠٠٠ ق.م</div>
+          <div class="stat-label">أقدم مستوطنة نوبية معروفة في وادي حلفا</div>
+        </div>
+        <div class="stat-card nile">
+          <div class="stat-num">٧٥٠ ق.م</div>
+          <div class="stat-label">حكم النوبيون مصر كلها في الأسرة الخامسة والعشرين</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-num">نيلو-صحراوية</div>
+          <div class="stat-label">الأسرة اللغوية للنوبيين <span class="bilingue">Nilo-Saharan</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>🧬 الانتماء الإثنو-لغوي</h4>
+        <p>تنتمي اللغات النوبية إلى <strong>الأسرة النيلية الصحراوية</strong> <span class="bilingue">Nilo-Saharan</span>، وتحديداً إلى فرع <em>السودانية الشرقية</em>. هذه الأسرة اللغوية مختلفة تماماً عن اللغة العربية واللغات الأفريقية الأخرى. يتكلم النوبيون لغتهم الأصيلة بينهم، ويستخدمون العربية كلغة ثانية للتواصل مع المجتمعات الأخرى.</p>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">النيل</span>
+        <span class="tag big">النوبة</span>
+        <span class="tag med">مصر وجنوبها</span>
+        <span class="tag med">شمال السودان</span>
+        <span class="tag nile-tag">حضارة كوش</span>
+        <span class="tag nile-tag">الأسرة الخامسة والعشرون</span>
+        <span class="tag gold-tag">الإسلام</span>
+        <span class="tag gold-tag">التراث الأفريقي</span>
+        <span class="tag">النيلية الصحراوية</span>
+        <span class="tag">الفراعنة النوبيون</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Nubians: <a href="https://en.wikipedia.org/wiki/Nubians" target="_blank">en.wikipedia.org/wiki/Nubians</a> | Arab America – Nubians: <a href="https://www.arabamerica.com/nubians-an-ancient-egyptian-sudanese-ethnic-group-now-under-persecution/" target="_blank">arabamerica.com</a> | University of Chicago Oriental Institute: <a href="https://isac.uchicago.edu/museum-exhibits/history-ancient-nubia" target="_blank">isac.uchicago.edu</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 2: ETYMOLOGY ══════════ -->
+    <div class="slide-section" id="s1">
+      <span class="section-label">Etymology · أصل التسمية</span>
+      <h3 class="section-heading">ماذا نسمّي أنفسنا؟ وماذا يسمّينا الآخرون؟</h3>
+
+      <div class="callout callout-nile">
+        <span class="callout-icon">🔤</span>
+        <div>
+          <strong>الاسم الذي يُطلقه النوبيون على أنفسهم:</strong><br>
+          في لغتهم الأصيلة (النوبين)، يُسمّون أنفسهم <strong>نوبي / Nⲟⲃⲓ̄</strong> أو <strong>النوبيين</strong>. هذا الاسم يُشير إلى الانتماء للأرض والشعب معاً.
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>الاسم / Name</th>
+            <th>اللغة / Language</th>
+            <th>المعنى الأصلي / Origin</th>
+            <th>ملاحظة / Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">نوبي · Nⲟⲃⲓ̄</td>
+            <td>النوبية القديمة</td>
+            <td>الشعب النوبي الأصيل</td>
+            <td>الاسم الذي يختاره النوبيون لأنفسهم</td>
+          </tr>
+          <tr>
+            <td class="bold">النوبيون · Al-Nūbiyyūn</td>
+            <td>العربية</td>
+            <td>مشتق من كلمة "نوبة"</td>
+            <td>الاسم الشائع في العالم العربي</td>
+          </tr>
+          <tr>
+            <td class="bold">نُبت · Nubt / نبو</td>
+            <td>المصرية القديمة</td>
+            <td>"الذهب" – nbw</td>
+            <td>أطلقه المصريون القدماء لغنى المنطقة بالذهب</td>
+          </tr>
+          <tr>
+            <td class="bold">تا-ستي · Ta-Seti</td>
+            <td>الهيروغليفية</td>
+            <td>"أرض القوس"</td>
+            <td>نسبة لمهارة النوبيين في الرماية</td>
+          </tr>
+          <tr>
+            <td class="bold">كوش · Kush</td>
+            <td>المصرية / العبرية القديمة</td>
+            <td>اسم المملكة القديمة</td>
+            <td>يُستخدم في التوراة وفي المصادر التاريخية القديمة</td>
+          </tr>
+          <tr>
+            <td class="bold">أيثيوبيا · Aethiopia</td>
+            <td>اليونانية القديمة</td>
+            <td>"وجوه محترقة بالشمس"</td>
+            <td>استخدمه اليونانيون والرومان للإشارة لمنطقة النوبة</td>
+          </tr>
+          <tr>
+            <td class="bold">نوباتي · Nobatae</td>
+            <td>اللاتينية / الرومانية</td>
+            <td>من شعب "النوبا"</td>
+            <td>استُخدم في الكتابات الرومانية بعد القرن الرابع الميلادي</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-gold">
+        <span class="callout-icon">💡</span>
+        <div>
+          <strong>سبب الخلاف على أصل الكلمة</strong><br>
+          يختلف العلماء حول أصل كلمة "نوبة": هل هي من "نبو" بمعنى الذهب؟ أم من شعب "النوبا" الذين سكنوا المنطقة في القرن الرابع الميلادي؟ كلا الرأيين له أدلة تاريخية، ولا يوجد حتى الآن إجابة قاطعة.
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>📝 الأسماء الداخلية حسب المجموعات</h4>
+        <ul>
+          <li><strong>الكنوز / Kenzi:</strong> نوبيو شمال مصر (محافظة أسوان)، يتكلمون لهجة الكنزي</li>
+          <li><strong>الفاديجا / Faddicca:</strong> يسكنون جنوب أسوان ويتكلمون النوبين</li>
+          <li><strong>المحس / Mahas:</strong> في وادي حلفا ومنطقة دنقلة، لهجتهم المحسية</li>
+          <li><strong>الدناقلة / Danagla:</strong> في منطقة دنقلة بالسودان، يتكلمون لغة الدنقلاوي</li>
+          <li><strong>السكوت والحلفاويون / Sukkot & Halfawi:</strong> من أسوان إلى وادي حلفا</li>
+        </ul>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">نوبي</span>
+        <span class="tag">الذهب – nbw</span>
+        <span class="tag">تا-ستي</span>
+        <span class="tag">كوش</span>
+        <span class="tag nile-tag">الكنوز</span>
+        <span class="tag nile-tag">الفاديجا</span>
+        <span class="tag nile-tag">المحس</span>
+        <span class="tag nile-tag">الدناقلة</span>
+        <span class="tag gold-tag">أيثيوبيا</span>
+        <span class="tag gold-tag">نوباتي</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Nubians: <a href="https://en.wikipedia.org/wiki/Nubians" target="_blank">en.wikipedia.org/wiki/Nubians</a> | Britannica – Nubia: <a href="https://www.britannica.com/place/Nubia" target="_blank">britannica.com/place/Nubia</a> | Leiden University: <a href="https://scholarlypublications.universiteitleiden.nl/access/item:2933639/view" target="_blank">scholarlypublications.universiteitleiden.nl</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 3: HISTORICAL TRAJECTORY ══════════ -->
+    <div class="slide-section" id="s2">
+      <span class="section-label">Historical Trajectory · المسيرة التاريخية</span>
+      <h3 class="section-heading">رحلة النوبيين عبر التاريخ</h3>
+
+      <div class="grid-2">
+        <div>
+          <div class="card" style="margin-bottom:14px; border-right: 4px solid var(--gold);">
+            <h4>🏛 العصور القديمة (٧٠٠٠ ق.م – ٣٥٠ م)</h4>
+            <ul>
+              <li><strong>٧٠٠٠ ق.م:</strong> أولى المستوطنات الزراعية في وادي حلفا</li>
+              <li><strong>٣٥٠٠ ق.م:</strong> ثقافة "أ-قروب" – أول حضارة نوبية منظمة</li>
+              <li><strong>٢٥٠٠ ق.م:</strong> مملكة كرمة – أول مدينة أفريقية خارج مصر</li>
+              <li><strong>٧٥٠ ق.م:</strong> الملك بيي يغزو مصر ويُؤسس الأسرة الخامسة والعشرين</li>
+              <li><strong>٢٨٠ ق.م:</strong> مروي تصبح عاصمة الإمبراطورية النوبية</li>
+              <li><strong>٣٥٠ م:</strong> سقوط مملكة كوش بعد هجوم مملكة أكسوم</li>
+            </ul>
+          </div>
+          <div class="card" style="border-right: 4px solid var(--nile);">
+            <h4>⚔️ العصر الوسيط (٣٥٠ – ١٥٠٤ م)</h4>
+            <ul>
+              <li><strong>٣٥٠ – ٦٥٠ م:</strong> ثلاث ممالك: نوباتيا، مقوريا، علوة</li>
+              <li><strong>٥٤٠ م:</strong> تحوّل النوبيين للمسيحية – أقوى ممالك مسيحية في أفريقيا</li>
+              <li><strong>٦٤١ م:</strong> الفتح الإسلامي لمصر – بداية الاحتكاك مع الأراضي النوبية</li>
+              <li><strong>٦٥٢ م:</strong> توقيع معاهدة البقط – اتفاقية سلام وتجارة بين العرب والنوبيين تحفظ استقلالهم</li>
+              <li><strong>١٣١٧ م:</strong> سقوط مملكة مقوريا المسيحية</li>
+              <li><strong>١٥٠٤ م:</strong> تقسيم النوبة بين مصر وسلطنة سنار – بداية الأسلمة الكاملة</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:14px; border-right: 4px solid var(--terracotta);">
+            <h4>🏗 العصر الحديث – الاستعمار (١٨٠٢ – ١٩٥٦)</h4>
+            <ul>
+              <li><strong>١٨٢٠ م:</strong> محمد علي باشا يضمّ أراضي النوبة إلى مصر</li>
+              <li><strong>١٨٩٩ م:</strong> السيطرة البريطانية – النوبة تحت "السودان الإنجليزي-المصري"</li>
+              <li><strong>١٩٠٢ م:</strong> بناء خزان أسوان الأول – أولى موجات التهجير</li>
+              <li><strong>١٩١٢ م:</strong> رفع منسوب الخزان – تهجير مزيد من القرى</li>
+              <li><strong>١٩٣٣ م:</strong> الرفع الثاني للخزان – غرق أراضٍ جديدة</li>
+              <li><strong>١٩٥٢ م:</strong> ثورة مصر – بداية مشروع السد العالي</li>
+              <li><strong>١٩٥٦ م:</strong> استقلال السودان</li>
+            </ul>
+          </div>
+          <div class="card" style="border-right: 4px solid #27A85A;">
+            <h4>🔥 العصر المعاصر (١٩٦٠ – حتى اليوم)</h4>
+            <ul>
+              <li><strong>١٩٦٣ – ١٩٦٤:</strong> التهجير الكبير – أكثر من ١٢٠,٠٠٠ نوبي يُجبَرون على الرحيل</li>
+              <li><strong>١٩٧٠ م:</strong> اكتمال بناء السد العالي – غرق أراضي النوبة إلى الأبد</li>
+              <li><strong>٢٠١١ م:</strong> الربيع العربي – النوبيون يطالبون بحق العودة لأول مرة علناً</li>
+              <li><strong>٢٠١٤ م:</strong> الدستور المصري يُضمّن المادة ٢٣٦ التي تعد بعودة النوبيين</li>
+              <li><strong>٢٠١٧ م:</strong> اعتقال عشرات الناشطين النوبيين بعد احتجاجات سلمية</li>
+              <li><strong>حتى اليوم:</strong> الوعود لم تُنفَّذ بالكامل والمطالبة بالعودة مستمرة</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-gold">
+        <span class="callout-icon">👑</span>
+        <div>
+          <strong>حقيقة مهمة جداً</strong><br>
+          حكم النوبيون مصر بأكملها لما يقارب مئة عام (٧٤٤ – ٦٥٦ ق.م) تحت اسم <strong>الأسرة الفرعونية الخامسة والعشرين</strong>. بنوا المعابد وأحيوا الحضارة المصرية. من أشهر ملوكهم: تهارقا، وبيي، وشاباكا.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">مملكة كوش</span>
+        <span class="tag big">مروي</span>
+        <span class="tag med">الأسرة الخامسة والعشرون</span>
+        <span class="tag">المسيحية النوبية</span>
+        <span class="tag nile-tag">مملكة مقوريا</span>
+        <span class="tag nile-tag">البقط والسلام</span>
+        <span class="tag gold-tag">السد العالي</span>
+        <span class="tag gold-tag">الاستعمار البريطاني</span>
+        <span class="tag">حق العودة</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: EveryculturE – Nubians History: <a href="https://www.everyculture.com/Africa-Middle-East/Nubians-History-and-Cultural-Relations.html" target="_blank">everyculture.com</a> | Black History Month: <a href="https://www.blackhistorymonth.org.uk/article/section/pre-colonial-history/nubia-and-the-noba-people/" target="_blank">blackhistorymonth.org.uk</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 4: KEY TRAUMATIC EVENT ══════════ -->
+    <div class="slide-section" id="s3">
+      <span class="section-label">Formative Trauma · الحدث المؤلم الكبير</span>
+      <h3 class="section-heading">التهجير القسري – المأساة النوبية الكبرى</h3>
+
+      <div class="callout callout-terracotta">
+        <span class="callout-icon">🌊</span>
+        <div>
+          <strong>الحدث الأهم في التاريخ النوبي الحديث</strong><br>
+          بين عامَي <strong>١٩٦٣ و١٩٦٤</strong>، أُجبر النوبيون على مغادرة أراضيهم التي عاشوا فيها آلاف السنين، بسبب بناء <strong>السد العالي في أسوان</strong>. غرقت القرى تحت مياه بحيرة ناصر، وضاعت أراضٍ لا يمكن استعادتها.
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-year">١٩٠٢ م</div>
+          <div class="tl-title">خزان أسوان الأول – بداية المشكلة</div>
+          <div class="tl-text">بنى البريطانيون خزان أسوان الصغير. غرق جزء من الأراضي النوبية. رُفع منسوب الخزان مرتين: في ١٩١٢ و١٩٣٣. نزح ١٥ قرية نوبية اضطرارياً.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-year">١٩٥٩ م</div>
+          <div class="tl-title">اتفاقية المياه المصرية-السودانية</div>
+          <div class="tl-text">وقّعت مصر والسودان اتفاقية لتقسيم مياه النيل. قرّرت هذه الاتفاقية بناء السد العالي، مما يعني غرق كامل أراضي النوبة. لم يُشَر إلى النوبيين في الاتفاقية.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-year">١٩٦٠ م</div>
+          <div class="tl-title">بدء البناء الفعلي للسد العالي</div>
+          <div class="tl-text">بدأ البناء بدعم سوفيتي. أطلق الرئيس جمال عبد الناصر مشروع "النوبة الجديدة" كبديل للسكان المُهجَّرين في كوم أمبو، على بُعد ٦٠ كيلومتراً شمال أسوان.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-year">أكتوبر ١٩٦٣ – يونيو ١٩٦٤</div>
+          <div class="tl-title">⚠️ التهجير الكبير – الحدث الأهم</div>
+          <div class="tl-text">نقلت الحكومة المصرية قسراً ما بين ٥٠,٠٠٠ و٧٠,٠٠٠ نوبي من أراضيهم. كثيرون رفضوا المغادرة وجلسوا في بيوتهم حتى وصل الماء. في السودان، نُقل حوالي ٥٠,٠٠٠ نوبي إلى "خشم القربة" على بُعد ٨٠٠ كيلومتر من وطنهم.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-year">١٩٧٠ م</div>
+          <div class="tl-title">اكتمال السد العالي – الغرق الكامل</div>
+          <div class="tl-text">اكتملت بحيرة ناصر وأغرقت ما لا يقل عن ٤٤ قرية نوبية، ومئات المواقع الأثرية، ومساحات شاسعة من الأراضي الزراعية التي عاش عليها النوبيون لآلاف السنين. امتدت البحيرة لأكثر من ٥٠٠ كيلومتر.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-year">٢٠١١ – حتى اليوم</div>
+          <div class="tl-title">المطالبة بحق العودة</div>
+          <div class="tl-text">منذ الربيع العربي، تصاعدت المطالبات النوبية بحق العودة إلى أراضي غير مغمورة بالمياه شمال السد. وعدت المادة ٢٣٦ من الدستور المصري ٢٠١٤ بالعودة خلال عشر سنوات، لكن وعداً كثيرة لم تُنفَّذ بعد.</div>
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <div class="stat-card">
+          <div class="stat-num">١٢٠,٠٠٠</div>
+          <div class="stat-label">تقديرات عدد النوبيين المُهجَّرين (مصر والسودان)</div>
+        </div>
+        <div class="stat-card nile">
+          <div class="stat-num">٤٤</div>
+          <div class="stat-label">قرية نوبية غرقت تحت بحيرة ناصر في مصر</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-num">٥٠٠ كم</div>
+          <div class="stat-label">طول بحيرة ناصر التي غطّت أراضي النوبة</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-num">٨٠٠ كم</div>
+          <div class="stat-label">المسافة بين وطن النوبيين السودانيين وموقع إعادة تسكينهم</div>
+        </div>
+      </div>
+
+      <div class="callout callout-nile">
+        <span class="callout-icon">🌍</span>
+        <div>
+          <strong>الاعتراف الدولي</strong><br>
+          أطلقت اليونسكو حملة دولية (١٩٥٥ – ١٩٦٨) لإنقاذ الآثار النوبية قبل الغرق. أُنقذ معبد أبو سمبل وعشرون موقعاً آخر. أُهديت معابد لدول ساهمت في الإنقاذ، منها معبد دندور الموجود الآن في متحف متروبوليتان في نيويورك. لكن ملايين من العناصر الحضارية والحياتية لم تُنقذ أبداً.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">السد العالي</span>
+        <span class="tag big">التهجير القسري</span>
+        <span class="tag med">بحيرة ناصر</span>
+        <span class="tag">كوم أمبو</span>
+        <span class="tag nile-tag">حملة اليونسكو</span>
+        <span class="tag nile-tag">أبو سمبل</span>
+        <span class="tag gold-tag">حق العودة</span>
+        <span class="tag gold-tag">المادة ٢٣٦</span>
+        <span class="tag">خشم القربة</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: New Lines Magazine: <a href="https://newlinesmag.com/essays/how-egypts-aswan-dam-washed-away-nubian-heritage/" target="_blank">newlinesmag.com</a> | ScienceInsights: <a href="https://scienceinsights.org/what-is-the-aswan-high-dam-history-facts-legacy/" target="_blank">scienceinsights.org</a> | WRMEA: <a href="https://www.wrmea.org/north-africa/on-displacement-and-threatened-heritage-the-case-of-egypts-nubians.html" target="_blank">wrmea.org</a> | Egypt Today: <a href="https://www.egypttoday.com/Article/10/3182/52-Years-After-Displacement-Scars-Of-Loss-Remain-For-Nubians" target="_blank">egypttoday.com</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 5: MIGRATION ══════════ -->
+    <div class="slide-section" id="s4">
+      <span class="section-label">Migration · الهجرة والتهجير</span>
+      <h3 class="section-heading">موجات الهجرة والتهجير عبر التاريخ</h3>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>🌊 الموجات الرئيسية للتهجير</h4>
+          <ul>
+            <li><strong>١٩٠٢ – ١٩٣٣:</strong> التهجير التدريجي بسبب خزان أسوان – ١٥ قرية</li>
+            <li><strong>١٩٦٣ – ١٩٦٤:</strong> التهجير الكبير بسبب السد العالي – ٤٤ قرية مصرية</li>
+            <li><strong>١٩٦٤ – ١٩٦٧:</strong> إعادة تسكين النوبيين السودانيين في خشم القربة</li>
+            <li><strong>١٩٦٤ – الآن:</strong> هجرة اقتصادية مستمرة من مواقع الإسكان الجديد إلى المدن</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🏙 مناطق الاستقرار الجديدة</h4>
+          <ul>
+            <li><strong>كوم أمبو / نصر النوبة:</strong> الموقع الرئيسي للنوبيين المصريين، ٦٠ كم شمال أسوان</li>
+            <li><strong>أسوان والقاهرة:</strong> هجرة داخلية لكثير من الشباب بحثاً عن العمل</li>
+            <li><strong>خشم القربة / حلفا الجديدة:</strong> موقع النوبيين السودانيين في ولاية كسلا</li>
+            <li><strong>الخرطوم:</strong> تجمعات نوبية كبيرة في العاصمة السودانية</li>
+            <li><strong>الخارج:</strong> مجتمعات نوبية في أوروبا وأمريكا الشمالية والخليج العربي</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-terracotta">
+        <span class="callout-icon">😢</span>
+        <div>
+          <strong>شهادة على التهجير</strong><br>
+          يقول عبد الحميد سعفان (٧٥ عاماً)، أحد النوبيين المُهجَّرين: <em>"أتذكر جيداً ذلك اليوم. كان مزرعتنا قد غرقت قبل أشهر من مغادرتنا. رأيت جدي يتحدث مع أحد الضباط وفي عينيه دموع. قالوا إنهم سيُعيدوننا، لكن عائلتي كانت تعرف أن ذلك لن يحدث أبداً."</em>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>🤝 المنظمات التي ساعدت النوبيين</h4>
+        <div class="grid-2" style="margin-top:10px">
+          <div>
+            <p><strong>اليونسكو:</strong> حملة إنقاذ الآثار النوبية ١٩٥٥-١٩٦٨</p>
+            <p style="margin-top:8px"><strong>الحكومة المصرية:</strong> مشروع "النوبة الجديدة" في كوم أمبو (لم يكن كافياً)</p>
+            <p style="margin-top:8px"><strong>الاتحاد السوفيتي:</strong> موّل بناء السد لكنه لم يهتم بالنوبيين</p>
+          </div>
+          <div>
+            <p><strong>منظمة المبادرة الجغرافية النوبية:</strong> توثيق التاريخ والثقافة بالصور</p>
+            <p style="margin-top:8px"><strong>جمعيات نوبية في المهجر:</strong> الحفاظ على اللغة والثقافة</p>
+            <p style="margin-top:8px"><strong>لجنة إعادة البناء (٢٠١٤):</strong> شُكّلت لكن تأثيرها كان محدوداً</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-nile">
+        <span class="callout-icon">📊</span>
+        <div>
+          <strong>أنماط الاستيطان بعد التهجير</strong><br>
+          في الإسكان الجديد، لم تحافظ القرى على نفس الترتيب الاجتماعي القديم. في النوبة الأصلية، كانت القرى موجّهة نحو النيل. في الأماكن الجديدة، فُرضت تصميمات معمارية مختلفة لا تتناسب مع الهوية الثقافية النوبية. هذا أدى إلى تفكك اجتماعي وفقدان تدريجي للغة والعادات.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">التهجير القسري</span>
+        <span class="tag med">نصر النوبة</span>
+        <span class="tag med">كوم أمبو</span>
+        <span class="tag">خشم القربة</span>
+        <span class="tag nile-tag">الهجرة الداخلية</span>
+        <span class="tag nile-tag">القاهرة</span>
+        <span class="tag nile-tag">الخرطوم</span>
+        <span class="tag gold-tag">المجتمع في المهجر</span>
+        <span class="tag gold-tag">اليونسكو</span>
+        <span class="tag">التفكك الاجتماعي</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: CNRS Éditions – Nubians of Egypt: <a href="https://books.openedition.org/editionscnrs/58490?lang=en" target="_blank">books.openedition.org</a> | The National: <a href="https://www.thenationalnews.com/mena/2023/04/30/how-egypts-dams-serve-the-nation-but-left-tens-of-thousands-of-nubians-without-a-home/" target="_blank">thenationalnews.com</a> | Project Unsettled: <a href="https://www.projectunsettled.com/un-resettlementshistory.html" target="_blank">projectunsettled.com</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 6: GEOGRAPHIC DISTRIBUTION ══════════ -->
+    <div class="slide-section" id="s5">
+      <span class="section-label">Geographic Distribution · التوزيع الجغرافي</span>
+      <h3 class="section-heading">أين يعيش النوبيون اليوم؟</h3>
+
+      <div id="nubian-map"></div>
+
+      <div class="grid-4">
+        <div class="stat-card">
+          <div class="stat-num">~ ٣م</div>
+          <div class="stat-label">في مصر (تقديرات شاملة)</div>
+        </div>
+        <div class="stat-card nile">
+          <div class="stat-num">~ ١.٥م</div>
+          <div class="stat-label">في السودان</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-num">~ ١٠٠ ألف</div>
+          <div class="stat-label">في دول الخليج العربي</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-num">~ ٢٠ ألف</div>
+          <div class="stat-label">في أوروبا وأمريكا الشمالية</div>
+        </div>
+      </div>
+
+      <div class="callout callout-gold">
+        <span class="callout-icon">📍</span>
+        <div>
+          <strong>الموطن الأصلي التاريخي</strong><br>
+          يمتد الموطن الأصلي من الشلال الأول في أسوان (جنوب مصر) إلى الشلال الرابع في السودان (منطقة دنقلة). هذه المنطقة تُسمى "النوبة التاريخية" وأكثرها مغمور الآن تحت مياه بحيرة ناصر.
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>🏘 أهم مناطق التجمع النوبي</h4>
+        <div class="grid-2" style="margin-top:10px">
+          <ul>
+            <li><strong>أسوان وضواحيها:</strong> قرى غرب سهيل والنوبة القديمة المجاورة للسد</li>
+            <li><strong>نصر النوبة / كوم أمبو:</strong> المدن الجديدة المبنية لإعادة التوطين</li>
+            <li><strong>القاهرة الكبرى:</strong> مجتمعات نوبية متفرقة في أحياء مختلفة</li>
+            <li><strong>الإسكندرية:</strong> جاليات نوبية من موجات الهجرة الاقتصادية</li>
+          </ul>
+          <ul>
+            <li><strong>الخرطوم:</strong> تجمعات نوبية كبيرة من السودانيين المُهجَّرين</li>
+            <li><strong>وادي حلفا الجديدة:</strong> جنوب السودان، منطقة الإسكان السودانية</li>
+            <li><strong>دنقلة:</strong> المركز الثقافي النوبي في شمال السودان</li>
+            <li><strong>الخليج والمهجر:</strong> عمال وطلاب ومهاجرون نوبيون في الخارج</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">أسوان</span>
+        <span class="tag big">دنقلة</span>
+        <span class="tag med">بحيرة ناصر</span>
+        <span class="tag">الخرطوم</span>
+        <span class="tag nile-tag">كوم أمبو</span>
+        <span class="tag nile-tag">وادي حلفا</span>
+        <span class="tag gold-tag">دول الخليج</span>
+        <span class="tag gold-tag">المهجر الأوروبي</span>
+        <span class="tag">الشتات النوبي</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Nubians: <a href="https://en.wikipedia.org/wiki/Nubians" target="_blank">en.wikipedia.org/wiki/Nubians</a> | CNRS Éditions: <a href="https://books.openedition.org/editionscnrs/58490" target="_blank">books.openedition.org</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 7: DEMOGRAPHIC ESTIMATES ══════════ -->
+    <div class="slide-section" id="s6">
+      <span class="section-label">Demographics · الأعداد والتعداد</span>
+      <h3 class="section-heading">كم عدد النوبيين في العالم؟</h3>
+
+      <div class="callout callout-terracotta">
+        <span class="callout-icon">⚠️</span>
+        <div>
+          <strong>تحذير مهم بشأن الأرقام</strong><br>
+          الأرقام النوبية غير دقيقة لأسباب عديدة: لا يُصنَّف النوبيون بشكل منفصل في تعداد السكان في مصر والسودان. كثيرون يُسجَّلون كمواطنين عاديين. التفريق بين من يتكلم اللغة النوبية ومن لا يتكلمها يُعقّد الأمر. لذلك كل الأرقام هي تقديرات.
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>الدولة / Country</th>
+            <th>التقدير العددي</th>
+            <th>النسبة من السكان</th>
+            <th>ملاحظات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">مصر 🇪🇬</td>
+            <td class="center">١ – ٣ مليون</td>
+            <td class="center">~ ١ – ٣٪</td>
+            <td>معظمهم في أسوان والقاهرة؛ لا يوجد إحصاء رسمي منفصل</td>
+          </tr>
+          <tr>
+            <td class="bold">السودان 🇸🇩</td>
+            <td class="center">٥٠٠ ألف – ١.٥ مليون</td>
+            <td class="center">~ ١ – ٣٪</td>
+            <td>في الشمال: دنقلة، وادي حلفا، والخرطوم</td>
+          </tr>
+          <tr>
+            <td class="bold">دول الخليج 🇸🇦🇦🇪🇰🇼</td>
+            <td class="center">٥٠ – ١٠٠ ألف</td>
+            <td class="center">أقلية صغيرة</td>
+            <td>غالباً عمال مؤقتون وطلاب، لا توجد أرقام رسمية</td>
+          </tr>
+          <tr>
+            <td class="bold">أوروبا وأمريكا الشمالية</td>
+            <td class="center">١٠ – ٢٥ ألف</td>
+            <td class="center">أقلية صغيرة جداً</td>
+            <td>في ألمانيا، السويد، الولايات المتحدة، كندا</td>
+          </tr>
+          <tr>
+            <td class="bold">ليبيا / الجزائر</td>
+            <td class="center">بضعة آلاف</td>
+            <td class="center">غير معروف</td>
+            <td>تجمعات صغيرة متناثرة</td>
+          </tr>
+          <tr>
+            <td class="bold" style="background:#FDF7E3;"><strong>الإجمالي التقديري العالمي</strong></td>
+            <td class="center" style="background:#FDF7E3;"><strong>٣ – ٥ ملايين</strong></td>
+            <td class="center" style="background:#FDF7E3;">—</td>
+            <td style="background:#FDF7E3;">تقدير غير رسمي، يتفاوت بحسب تعريف "النوبي"</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card">
+        <h4>🔍 لماذا يصعب معرفة الأرقام الحقيقية؟</h4>
+        <ul>
+          <li><strong>لا يوجد تعداد رسمي:</strong> لا تعترف مصر أو السودان بالنوبيين كأقلية منفصلة في إحصاءاتهم الرسمية</li>
+          <li><strong>مسألة الهوية:</strong> بعضهم يُعرِّف نفسه كمصري أو سوداني فقط، دون ذكر الانتماء النوبي</li>
+          <li><strong>اللغة كمعيار:</strong> إذا استخدمنا اللغة كمعيار، يقلّ العدد كثيراً؛ فمعظم الأجيال الشابة لا تتكلم النوبية بطلاقة</li>
+          <li><strong>التشتت:</strong> الهجرة إلى المدن فرّقت المجتمعات وجعل الإحصاء أصعب</li>
+        </ul>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">مصر والسودان</span>
+        <span class="tag med">الخليج العربي</span>
+        <span class="tag">المهجر الأوروبي</span>
+        <span class="tag nile-tag">أرقام تقديرية</span>
+        <span class="tag nile-tag">غياب الإحصاء الرسمي</span>
+        <span class="tag gold-tag">٣ – ٥ ملايين</span>
+        <span class="tag gold-tag">معيار اللغة</span>
+        <span class="tag">التشتت الديموغرافي</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: CNRS Éditions: <a href="https://books.openedition.org/editionscnrs/58490" target="_blank">books.openedition.org</a> | Wikipedia – Nubians: <a href="https://en.wikipedia.org/wiki/Nubians" target="_blank">en.wikipedia.org/wiki/Nubians</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 8: LANGUAGE & SCRIPT ══════════ -->
+    <div class="slide-section" id="s7">
+      <span class="section-label">Language & Script · اللغة والكتابة</span>
+      <h3 class="section-heading">اللغة النوبية – لغة قديمة في خطر</h3>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>🗣 معلومات اللغة الأساسية</h4>
+          <ul>
+            <li><strong>الأسرة اللغوية:</strong> النيلية الصحراوية <span class="bilingue">Nilo-Saharan</span>، فرع السودانية الشرقية</li>
+            <li><strong>أقرب لغة شقيقة:</strong> لغة الميدوبي ولغات النوبة الجبلية</li>
+            <li><strong>المتكلمون المقدَّرون:</strong> ٥٠٠,٠٠٠ إلى ١,٥ مليون شخص</li>
+            <li><strong>الحالة:</strong> مهدَّدة بالانقراض <span class="bilingue">endangered</span></li>
+            <li><strong>الوضع الرسمي:</strong> لغة غير رسمية في مصر والسودان</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>✍️ الكتابة النوبية</h4>
+          <ul>
+            <li><strong>الكتابة القديمة:</strong> النوبية القديمة – استخدمت الحروف القبطية والمروية</li>
+            <li><strong>أول ظهور:</strong> حوالي القرن الثامن الميلادي في المخطوطات المسيحية</li>
+            <li><strong>الحروف:</strong> نظام قبطي + رموز خاصة بالنوبية</li>
+            <li><strong>اليوم:</strong> تُكتب أحياناً بالحروف العربية، وأحياناً بالحروف اللاتينية</li>
+            <li><strong>لا يوجد نظام كتابة موحَّد</strong> متفق عليه حتى الآن</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-nile">
+        <span class="callout-icon">📖</span>
+        <div>
+          <strong>اللغة المروية – أقدم كتابة نوبية</strong><br>
+          طوّر النوبيون لغة "المروية" حوالي عام <strong>٢٠٠ ق.م</strong> في مدينة مروي. هذه اللغة وصلت إلينا في كتابات على الآثار، لكن العلماء لم يتمكنوا من فهمها كاملاً حتى اليوم، مما يجعلها من أكثر الألغاز اللغوية في التاريخ.
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>اللهجة / Dialect</th>
+            <th>المنطقة / Region</th>
+            <th>عدد المتكلمين (تقريباً)</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">النوبين / Nobiin</td>
+            <td>الفاديجا، المحس، الحلفاويون (مصر وشمال السودان)</td>
+            <td class="center">~ ٤٠٠,٠٠٠</td>
+            <td>مهدَّدة ⚠️</td>
+          </tr>
+          <tr>
+            <td class="bold">الكنزي / Kenzi-Mattokki</td>
+            <td>كنوز أسوان، شمال النوبة المصرية</td>
+            <td class="center">~ ١٠٠,٠٠٠</td>
+            <td>مهدَّدة جداً 🔴</td>
+          </tr>
+          <tr>
+            <td class="bold">الدنقلاوي / Andaandi</td>
+            <td>الدناقلة، شمال السودان حول دنقلة</td>
+            <td class="center">~ ٧٠,٠٠٠</td>
+            <td>مهدَّدة جداً 🔴</td>
+          </tr>
+          <tr>
+            <td class="bold">المروية / Meroitic</td>
+            <td>مروي القديمة (السودان)</td>
+            <td class="center">صفر (منقرضة)</td>
+            <td>منقرضة ❌</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-terracotta">
+        <span class="callout-icon">🚨</span>
+        <div>
+          <strong>أزمة اللغة</strong><br>
+          يقول الناشط النوبي مازن علاء: <em>"التهجير كان أكبر خطر على اللغة النوبية. عندما غادر الناس أرضهم، توقفوا عن ممارسة لغتهم."</em> لا تُدرَّس اللغة النوبية في أي مدرسة حكومية في مصر أو السودان، بينما تُدرَّس الفرنسية والإنجليزية إجبارياً.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">النوبين</span>
+        <span class="tag big">الكنزي</span>
+        <span class="tag med">الدنقلاوي</span>
+        <span class="tag">المروية</span>
+        <span class="tag nile-tag">النيلية الصحراوية</span>
+        <span class="tag nile-tag">الكتابة القبطية</span>
+        <span class="tag gold-tag">اللغة المهدَّدة</span>
+        <span class="tag gold-tag">الأجيال الجديدة</span>
+        <span class="tag">إنقاذ اللغة</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Nubian Languages: <a href="https://en.wikipedia.org/wiki/Nubian_languages" target="_blank">en.wikipedia.org/wiki/Nubian_languages</a> | WRMEA: <a href="https://www.wrmea.org/north-africa/on-displacement-and-threatened-heritage-the-case-of-egypts-nubians.html" target="_blank">wrmea.org</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 9: RELIGIOUS INSTITUTIONS ══════════ -->
+    <div class="slide-section" id="s8">
+      <span class="section-label">Religion · المؤسسات الدينية</span>
+      <h3 class="section-heading">الدين والمعتقد عند النوبيين</h3>
+
+      <div class="callout callout-gold">
+        <span class="callout-icon">☪️</span>
+        <div>
+          <strong>الإسلام هو الدين الرئيسي لمعظم النوبيين اليوم</strong><br>
+          يُعدّ معظم النوبيين في مصر والسودان مسلمين سنيين بتأثير صوفي واضح. لكنهم يحتفظون بموروث ثقافي ومسيحي قديم في عاداتهم وطقوسهم اليومية. هذا المزيج يجعل الثقافة النوبية فريدة من نوعها.
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>🕌 الإسلام السني والتصوف</h4>
+          <ul>
+            <li>معظم النوبيين مسلمون سنيون يتبعون المذهب المالكي أو الشافعي</li>
+            <li>للتصوف <span class="bilingue">Sufism</span> حضور قوي في الثقافة النوبية</li>
+            <li>الطريقة القادرية والطريقة التيجانية منتشرتان في السودان</li>
+            <li>المولد النبوي احتفال شعبي مهم جداً في القرى النوبية</li>
+            <li>بعض الموروثات الوثنية القديمة (بركة النيل، الطقوس الزراعية) لا تزال موجودة</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>✝️ الإرث المسيحي في الثقافة</h4>
+          <ul>
+            <li>رغم إسلامهم، يحتفظ النوبيون ببعض الطقوس من عهدهم المسيحي (٥٤٠ – ١٤٠٠ م)</li>
+            <li>بعض النوبيين كانوا يدعون "يسوع ومريم" إلى جانب النبي محمد في ابتهالاتهم</li>
+            <li>الفنون والزخارف النوبية تحمل أحياناً رموزاً مسيحية قديمة</li>
+            <li>الكنيسة الكبطية لا تزال تهتم بتاريخ الكنيسة النوبية كجزء من تراثها</li>
+          </ul>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>المؤسسة / Institution</th>
+            <th>الدور / Role</th>
+            <th>الموقع / Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">الأزهر الشريف</td>
+            <td>المرجعية الإسلامية الكبرى للنوبيين المصريين</td>
+            <td>القاهرة، مصر</td>
+          </tr>
+          <tr>
+            <td class="bold">مجلس العلماء السوداني</td>
+            <td>المرجعية الدينية للنوبيين في السودان</td>
+            <td>الخرطوم، السودان</td>
+          </tr>
+          <tr>
+            <td class="bold">الطرق الصوفية المحلية</td>
+            <td>الروابط الروحية والاجتماعية في القرى النوبية</td>
+            <td>أسوان، دنقلة، وادي حلفا</td>
+          </tr>
+          <tr>
+            <td class="bold">الكنيسة القبطية</td>
+            <td>تحافظ على إرث الكنيسة النوبية المسيحية تاريخياً</td>
+            <td>مصر والسودان</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-nile">
+        <span class="callout-icon">🏛</span>
+        <div>
+          <strong>أقدس مكان في الذاكرة النوبية: معبد فيلة</strong><br>
+          معبد فيلة <span class="bilingue">Philae Temple</span> هو رمز ديني وثقافي كبير للنوبيين. كان يُعبَد فيه الإله النوبي مانداوليس وآلهة مصرية أخرى. نُقل المعبد كاملاً أثناء حملة اليونسكو إلى جزيرة أجيليكا المجاورة لأسوان. يزوره النوبيون كمكان ذكرى لحضارتهم الغابرة.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">الإسلام السني</span>
+        <span class="tag big">التصوف</span>
+        <span class="tag med">المسيحية النوبية</span>
+        <span class="tag">الأزهر</span>
+        <span class="tag nile-tag">معبد فيلة</span>
+        <span class="tag nile-tag">الكنيسة القبطية</span>
+        <span class="tag gold-tag">المولد النبوي</span>
+        <span class="tag gold-tag">بركة النيل</span>
+        <span class="tag">الطريقة القادرية</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: EveryculturE – Nubians Religion: <a href="https://www.everyculture.com/Africa-Middle-East/Nubians-History-and-Cultural-Relations.html" target="_blank">everyculture.com</a> | The National: <a href="https://www.thenationalnews.com/mena/2023/04/30/how-egypts-dams-serve-the-nation-but-left-tens-of-thousands-of-nubians-without-a-home/" target="_blank">thenationalnews.com</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 10: NOTABLE FIGURES ══════════ -->
+    <div class="slide-section" id="s9">
+      <span class="section-label">Notable Figures · شخصيات بارزة</span>
+      <h3 class="section-heading">نوبيون تركوا بصمة في التاريخ</h3>
+
+      <div class="grid-3">
+        <div class="person-card">
+          <div class="person-avatar">👑</div>
+          <div class="person-name">الملك بيي (بعنخي)</div>
+          <div class="person-dates">حوالي ٧٤٤ – ٧١٤ ق.م</div>
+          <div class="person-field">فرعون / ملك</div>
+          <div class="person-desc">أول ملك نوبي يغزو مصر ويُوحّدها تحت حكمه، مُؤسِّس الأسرة الفرعونية الخامسة والعشرين. بنى أهراماً في النوبة وحافظ على الحضارة المصرية. يُعدّ من أعظم الحكام في تاريخ وادي النيل.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">🏛</div>
+          <div class="person-name">الملك تهارقا</div>
+          <div class="person-dates">حوالي ٦٩٠ – ٦٦٤ ق.م</div>
+          <div class="person-field">فرعون النوبة ومصر</div>
+          <div class="person-desc">أشهر ملوك الأسرة الخامسة والعشرين. مذكور في التوراة وفي المصادر الآشورية. وسّع المملكة وبنى معابد في النوبة ومصر. دافع عن مصر ضد الآشوريين. يُعدّ رمزاً للقوة النوبية والكرامة.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">👸</div>
+          <div class="person-name">الملكة شاناكداختو</div>
+          <div class="person-dates">حوالي ١٧٠ – ١٥٠ ق.م</div>
+          <div class="person-field">ملكة / أول امرأة تحكم</div>
+          <div class="person-desc">أول ملكة أفريقية معروفة تحكم منفردة بدون ملك. حكمت مملكة مروي في النوبة. تصوِّرها الآثار وهي على عرشها تحمل الرمح وعلامات السلطة. هرمها موجود حتى اليوم في مروي بالسودان.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">🏗</div>
+          <div class="person-name">حسن فتحي</div>
+          <div class="person-dates">١٩٠٠ – ١٩٨٩</div>
+          <div class="person-field">معماري مصري</div>
+          <div class="person-desc">مهندس معماري مصري وُلد في الإسكندرية. اشتُهر بـ"معمار الفقراء" باستخدام الطين والأساليب المحلية التقليدية. تأثّر عميقاً بالعمارة النوبية القديمة ودمجها في تصميماته وكتاباته. أسهم في تعريف العالم بجمال البناء النوبي وقيمته الإنسانية والبيئية.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">🎵</div>
+          <div class="person-name">محمد وردي</div>
+          <div class="person-dates">١٩٣٢ – ٢٠١٢</div>
+          <div class="person-field">مغنٍّ / فنان</div>
+          <div class="person-desc">أشهر مغنٍّ نوبي في التاريخ الحديث. يُسمّى "بلبل النيل". غنّى باللغتين العربية والنوبية. تغنّى بالوطن المفقود وألم التهجير. معروف في مصر والسودان وكل العالم العربي.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">✍️</div>
+          <div class="person-name">حجاج أدول</div>
+          <div class="person-dates">١٩٤٤ – ٢٠١٣</div>
+          <div class="person-field">روائي / كاتب مصري من أصل نوبي</div>
+          <div class="person-desc">كاتب مصري الجنسية من أصل نوبي، وُلد في الإسكندرية لأبوين هاجرا من قريتهما النوبية في جنوب مصر. كتب بالعربية عن معاناة النوبيين وجماليات ثقافتهم. أسهم في حفظ الذاكرة النوبية عبر الأدب وفي تعريف القارئ العربي بهذا الموروث الإنساني الغني.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-nile">
+        <span class="callout-icon">🌟</span>
+        <div>
+          <strong>شخصية من العصر الحديث – ناشطة نوبية</strong><br>
+          تعمل عشرات الناشطات النوبيات اليوم من أجل حقوق شعبهن. منهن من شاركن في ثورة ٢٥ يناير ٢٠١١ وتحدّثن علناً عن التمييز والحرمان من الأرض. لم يُسمح لهن باستعراض هويتهن علناً لسنوات، لكن الربيع العربي أتاح لهن فرصة الكلام.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">بيي</span>
+        <span class="tag big">تهارقا</span>
+        <span class="tag med">شاناكداختو</span>
+        <span class="tag med">حسن فتحي</span>
+        <span class="tag nile-tag">محمد وردي</span>
+        <span class="tag nile-tag">بلبل النيل</span>
+        <span class="tag gold-tag">الأسرة الخامسة والعشرون</span>
+        <span class="tag gold-tag">مروي</span>
+        <span class="tag">الفن النوبي</span>
+        <span class="tag">الكتابة النوبية</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Arab America – Nubians: <a href="https://www.arabamerica.com/nubians-an-ancient-egyptian-sudanese-ethnic-group-now-under-persecution/" target="_blank">arabamerica.com</a> | University of Chicago ISAC: <a href="https://isac.uchicago.edu/museum-exhibits/history-ancient-nubia" target="_blank">isac.uchicago.edu</a> | Egypt Tours Portal: <a href="https://www.egypttoursportal.com/en-us/nubian-history-and-culture/" target="_blank">egypttoursportal.com</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 11: POLITICAL & LEGAL STATUS ══════════ -->
+    <div class="slide-section" id="s10">
+      <span class="section-label">Political Status · الوضع السياسي والقانوني</span>
+      <h3 class="section-heading">النوبيون في القانون والسياسة</h3>
+
+      <div class="callout callout-terracotta">
+        <span class="callout-icon">⚖️</span>
+        <div>
+          <strong>المشكلة القانونية الكبرى</strong><br>
+          لا تعترف مصر ولا السودان رسمياً بالنوبيين كأقلية قومية ذات حقوق خاصة. يُعاملون كمواطنين عاديين. هذا يعني غياب التمثيل السياسي المضمون، وغياب الحماية القانونية لثقافتهم ولغتهم وأراضيهم.
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>الدولة</th>
+            <th>المقاعد البرلمانية</th>
+            <th>الاعتراف الدستوري</th>
+            <th>القانون الشخصي</th>
+            <th>الواقع</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">مصر 🇪🇬</td>
+            <td class="center">لا توجد مقاعد مخصصة</td>
+            <td>المادة ٢٣٦ (٢٠١٤) تذكر "نوبة" وتَعِد بالعودة</td>
+            <td>تابعون لقانون الأحوال الشخصية المصري العام</td>
+            <td>وعود كثيرة وتنفيذ بطيء؛ اعتقال ناشطين ٢٠١٧</td>
+          </tr>
+          <tr>
+            <td class="bold">السودان 🇸🇩</td>
+            <td class="center">لا توجد مقاعد مخصصة</td>
+            <td>لا اعتراف خاص بالنوبيين</td>
+            <td>قانون الأحوال الشخصية السوداني العام</td>
+            <td>حرب السودان (٢٠٢٣) زادت الأوضاع سوءاً</td>
+          </tr>
+          <tr>
+            <td class="bold">دول الخليج 🇸🇦🇦🇪</td>
+            <td class="center">لا ينطبق (عمالة وافدة)</td>
+            <td>لا اعتراف</td>
+            <td>نظام الكفالة يقيّد حرية التنقل</td>
+            <td>عمال يخضعون لنظام الكفالة بلا حماية خاصة</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>📜 ما تقوله المادة ٢٣٦ من الدستور المصري (٢٠١٤)</h4>
+          <p>تنصّ المادة على أن الدولة تتعهّد بتطوير منطقة النوبة وإعادة المُهجَّرين إلى مناطق أصولهم شمال بحيرة ناصر خلال عشر سنوات. لكن النوبيين يقولون إن التنفيذ كان شبه معدوم، وأن مناطقهم تحوّلت إلى مناطق عسكرية مغلقة.</p>
+        </div>
+        <div class="card">
+          <h4>🏛 المطالب السياسية النوبية</h4>
+          <ul>
+            <li>حق العودة إلى الأراضي الأصلية غير المغمورة</li>
+            <li>الاعتراف الرسمي بالهوية والثقافة النوبية</li>
+            <li>تدريس اللغة النوبية في المدارس</li>
+            <li>تمثيل سياسي حقيقي في البرلمانات</li>
+            <li>التعويض العادل عن الأراضي المفقودة</li>
+            <li>الإفراج عن الناشطين المعتقلين</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-nile">
+        <span class="callout-icon">📢</span>
+        <div>
+          <strong>أزمة ٢٠١٧</strong><br>
+          في سبتمبر ٢٠١٧، احتجّ النوبيون سلمياً في أسوان مطالبين بحق العودة. ردّت الحكومة المصرية باعتقال عشرات الناشطين. أدان ناشطون حقوقيون دوليون هذه الاعتقالات. لا تزال قضية حق العودة عالقة حتى اليوم.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">حق العودة</span>
+        <span class="tag big">المادة ٢٣٦</span>
+        <span class="tag med">الدستور المصري ٢٠١٤</span>
+        <span class="tag">المناطق العسكرية</span>
+        <span class="tag nile-tag">الناشطون النوبيون</span>
+        <span class="tag nile-tag">الاعتقالات ٢٠١٧</span>
+        <span class="tag gold-tag">التمثيل السياسي</span>
+        <span class="tag gold-tag">الاعتراف الدستوري</span>
+        <span class="tag">الأقلية القومية</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: CNRS Éditions: <a href="https://books.openedition.org/editionscnrs/58490" target="_blank">books.openedition.org</a> | WRMEA: <a href="https://www.wrmea.org/north-africa/on-displacement-and-threatened-heritage-the-case-of-egypts-nubians.html" target="_blank">wrmea.org</a> | Washington Post: <a href="https://www.washingtonpost.com/news/democracy-post/wp/2018/04/19/what-egypts-racist-campaign-against-nubians-reveals-about-sissis-regime/" target="_blank">washingtonpost.com</a></p>
+      </div>
+    </div>
+
+    <!-- ══════════ SLIDE 12: CONTEMPORARY CHALLENGES ══════════ -->
+    <div class="slide-section" id="s11">
+      <span class="section-label">Contemporary Challenges · التحديات المعاصرة</span>
+      <h3 class="section-heading">تحديات النوبيين في العصر الحديث</h3>
+
+      <div class="grid-2">
+        <div class="card" style="border-right: 4px solid var(--terracotta);">
+          <h4>🌍 الهجرة المستمرة وتفريق الأسر</h4>
+          <p>تواصل أجيال الشباب النوبي مغادرة مواقع الإسكان الجديد إلى المدن الكبيرة (القاهرة، أسوان، الخرطوم) بحثاً عن العمل. هذه الهجرة المستمرة تُفكّك الروابط الاجتماعية والعائلية وتُضعف الهوية الجماعية. كثير منهم يُصبحون "مصريين" أو "سودانيين" في هوياتهم الرسمية وينسون أصولهم النوبية تدريجياً.</p>
+        </div>
+        <div class="card" style="border-right: 4px solid #E63946;">
+          <h4>📉 تآكل الثقافة واللغة</h4>
+          <p>اللغة النوبية في خطر حقيقي. الأجيال الجديدة تتكلم العربية فقط. لا توجد مدارس تدرّس النوبية. وسائل الإعلام والترفيه بالعربية تتسيَّد الواجهة. الموسيقى والفن النوبيان يختفيان. بعض الطقوس والأعياد التقليدية انقطعت بعد التهجير لأنها كانت مرتبطة بأرض بعينها.</p>
+        </div>
+        <div class="card" style="border-right: 4px solid var(--nile);">
+          <h4>⚔️ تأثير النزاعات الإقليمية</h4>
+          <p>أزمة سد النهضة الإثيوبية (GERD) تُهدد مياه النيل وتُؤثر على المنطقة التي يعيش فيها النوبيون. الحرب الداخلية في السودان (٢٠٢٣) شرّدت الكثير من النوبيين السودانيين. الأوضاع السياسية غير المستقرة في مصر تُقلّص حرية التعبير والنشاط النوبي.</p>
+        </div>
+        <div class="card" style="border-right: 4px solid var(--gold);">
+          <h4>🏚 مظالم تاريخية لم تُحسَم</h4>
+          <p>لم يُنفَّذ حتى الآن وعد العودة الكامل للأراضي غير المغمورة. التعويضات التي قدّمتها الحكومتان المصرية والسودانية كانت رمزية وغير كافية. الصورة النمطية السلبية للنوبيين في السينما والإعلام المصريين تضرّ بكرامتهم. التمييز العنصري في بيئة العمل والحياة اليومية لا يزال موجوداً.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-green">
+        <span class="callout-icon">🌱</span>
+        <div>
+          <strong>بصيص الأمل – جهود التجديد الثقافي</strong><br>
+          رغم كل التحديات، ثمة مبادرات شبابية نوبية نشطة: تطبيقات لتعلم اللغة النوبية، مهرجانات ثقافية، مبادرات توثيق بالصوت والصورة، وشبكات مجتمعية عبر الإنترنت تجمع النوبيين في العالم. المبادرة الجغرافية النوبية توثّق التاريخ بالصور. بعض الجامعات بدأت تهتم بالدراسات النوبية.
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>📢 ما يطالب به النوبيون اليوم</h4>
+        <div class="grid-2" style="margin-top:10px">
+          <ul>
+            <li>🏡 العودة الفعلية إلى الأراضي المسترجعة شمال السد</li>
+            <li>🏫 تدريس اللغة النوبية في المدارس الحكومية</li>
+            <li>📺 برامج تلفزيونية وإذاعية باللغة النوبية</li>
+            <li>🎭 دعم الثقافة والفنون النوبية مادياً ومعنوياً</li>
+          </ul>
+          <ul>
+            <li>⚖️ محاكمة عادلة للناشطين المعتقلين</li>
+            <li>🗳 تمثيل حقيقي في المجالس المحلية والبرلمانية</li>
+            <li>💰 تعويض عادل عن الأراضي المفقودة</li>
+            <li>🌍 اعتراف دولي بمعاناة التهجير القسري</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-nile">
+        <span class="callout-icon">💬</span>
+        <div>
+          <strong>صوت نوبي – كلمة الختام</strong><br>
+          تقول الناشطة النوبية سالم: <em>"لقد سمعنا كلنا نفس الشتائم وعانينا من التمييز في أشكال كثيرة مجرد أننا كنا نمشي في الشارع. تاريخنا حي، ثقافتنا لا تزال هنا، وصوتنا لن يصمت."</em>
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">حق العودة</span>
+        <span class="tag big">إنقاذ اللغة</span>
+        <span class="tag med">الهجرة الداخلية</span>
+        <span class="tag">التمييز العنصري</span>
+        <span class="tag nile-tag">سد النهضة</span>
+        <span class="tag nile-tag">الحرب السودانية</span>
+        <span class="tag gold-tag">المبادرات الشبابية</span>
+        <span class="tag gold-tag">الهوية النوبية</span>
+        <span class="tag">الكرامة والتراث</span>
+        <span class="tag">الاعتراف الدولي</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: WRMEA: <a href="https://www.wrmea.org/north-africa/on-displacement-and-threatened-heritage-the-case-of-egypts-nubians.html" target="_blank">wrmea.org</a> | Egypt Today: <a href="https://www.egypttoday.com/Article/10/3182/52-Years-After-Displacement-Scars-Of-Loss-Remain-For-Nubians" target="_blank">egypttoday.com</a> | Jadaliyya: <a href="https://www.jadaliyya.com/Details/43334" target="_blank">jadaliyya.com</a> | New Lines Magazine: <a href="https://newlinesmag.com/essays/how-egypts-aswan-dam-washed-away-nubian-heritage/" target="_blank">newlinesmag.com</a></p>
+      </div>
+    </div>
+
+  </div><!-- /slide-body -->
+
+  <div id="controls">
+    <button class="ctrl-btn" id="btn-prev" onclick="prevSlide()" disabled>
+      &#9654; السابق
+    </button>
+    <span id="ctrl-info">القسم ١ من ١٢ – الهوية والأصول</span>
+    <button class="ctrl-btn" id="btn-next" onclick="nextSlide()">
+      التالي &#9664;
+    </button>
+  </div>
+</div><!-- /main -->
+
+<script>
+  const slides = [
+    { ar: "الهوية والأصول",         en: "Identity & Origins",       sec: "القسم الأول · SECTION 1" },
+    { ar: "أصل التسمية",            en: "Etymology",                sec: "القسم الثاني · SECTION 2" },
+    { ar: "المسيرة التاريخية",      en: "Historical Trajectory",    sec: "القسم الثالث · SECTION 3" },
+    { ar: "الحدث المؤلم الكبير",    en: "Key Traumatic Event",      sec: "القسم الرابع · SECTION 4" },
+    { ar: "الهجرة والتهجير",        en: "Migration",                sec: "القسم الخامس · SECTION 5" },
+    { ar: "التوزيع الجغرافي",       en: "Geographic Distribution",  sec: "القسم السادس · SECTION 6" },
+    { ar: "الأعداد والتعداد",       en: "Demographic Estimates",    sec: "القسم السابع · SECTION 7" },
+    { ar: "اللغة والكتابة",         en: "Language & Script",        sec: "القسم الثامن · SECTION 8" },
+    { ar: "المؤسسات الدينية",       en: "Religious Institutions",   sec: "القسم التاسع · SECTION 9" },
+    { ar: "شخصيات بارزة",          en: "Notable Figures",          sec: "القسم العاشر · SECTION 10" },
+    { ar: "الوضع السياسي والقانوني", en: "Political & Legal Status", sec: "القسم الحادي عشر · SECTION 11" },
+    { ar: "التحديات المعاصرة",      en: "Contemporary Challenges",  sec: "القسم الثاني عشر · SECTION 12" },
+  ];
+
+  const arabicNums = ["١","٢","٣","٤","٥","٦","٧","٨","٩","١٠","١١","١٢"];
+  let current = 0;
+  let mapInitialized = false;
+
+  function goTo(idx) {
+    document.querySelectorAll('.slide-section').forEach((s,i) => {
+      s.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('#nav-list li').forEach((li,i) => {
+      li.classList.toggle('active', i === idx);
+    });
+
+    current = idx;
+    const total = slides.length;
+    const pct = ((idx + 1) / total * 100).toFixed(2);
+
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('slide-section-num').textContent = slides[idx].sec;
+    document.getElementById('slide-title').textContent = slides[idx].ar;
+    document.getElementById('slide-counter').textContent = arabicNums[idx] + ' / ١٢';
+    document.getElementById('ctrl-info').textContent = 'القسم ' + arabicNums[idx] + ' من ١٢ – ' + slides[idx].ar;
+    document.getElementById('btn-prev').disabled = idx === 0;
+    document.getElementById('btn-next').disabled = idx === total - 1;
+
+    document.getElementById('slide-body').scrollTop = 0;
+
+    // Init map on slide 6
+    if (idx === 5 && !mapInitialized) initMap();
+  }
+
+  function nextSlide() { if (current < 11) goTo(current + 1); }
+  function prevSlide() { if (current > 0)  goTo(current - 1); }
+
+  // ══════ LEAFLET MAP ══════
+  function initMap() {
+    mapInitialized = true;
+    const map = L.map('nubian-map').setView([22.5, 32], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap',
+      maxZoom: 12
+    }).addTo(map);
+
+    // Historic homeland polygon (Aswan to 4th cataract)
+    const homeland = L.polygon([
+      [24.1, 32.8], [23.5, 32.5], [22.0, 31.8], [20.5, 30.5],
+      [19.5, 30.2], [18.5, 31.5], [19.2, 32.5], [20.3, 31.5],
+      [22.0, 32.8], [23.2, 33.0], [24.1, 32.8]
+    ], {
+      color: '#C1440E',
+      fillColor: '#E8693A',
+      fillOpacity: 0.18,
+      weight: 2,
+      dashArray: '6 4'
+    }).addTo(map).bindPopup('<b>الموطن الأصلي التاريخي للنوبة</b><br>من أسوان إلى الشلال الرابع');
+
+    const markers = [
+      { lat: 24.09, lng: 32.90, name: 'أسوان', en: 'Aswan', note: 'مركز النوبة المصرية' },
+      { lat: 23.55, lng: 32.54, name: 'أبو سمبل', en: 'Abu Simbel', note: 'معبد رمسيس الثاني النوبي' },
+      { lat: 24.35, lng: 32.93, name: 'كوم أمبو / نصر النوبة', en: 'Kom Ombo', note: 'الإسكان البديل للنوبيين' },
+      { lat: 19.63, lng: 30.41, name: 'دنقلة', en: 'Dongola', note: 'المركز الثقافي النوبي في السودان' },
+      { lat: 21.81, lng: 31.35, name: 'وادي حلفا', en: 'Wadi Halfa', note: 'المدينة الحدودية التاريخية' },
+      { lat: 15.59, lng: 32.53, name: 'الخرطوم', en: 'Khartoum', note: 'جاليات نوبية كبيرة في العاصمة' },
+      { lat: 16.69, lng: 35.95, name: 'خشم القربة', en: 'Khashm el-Girba', note: 'موقع تهجير النوبيين السودانيين' },
+      { lat: 16.82, lng: 33.97, name: 'مروي', en: 'Meroe', note: 'عاصمة المملكة النوبية القديمة – أهرامات مروي' },
+    ];
+
+    const iconTerracotta = L.divIcon({
+      html: '<div style="background:#C1440E;width:14px;height:14px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.4);"></div>',
+      iconSize: [14, 14], iconAnchor: [7, 7], className: ''
+    });
+
+    markers.forEach(m => {
+      L.marker([m.lat, m.lng], { icon: iconTerracotta })
+        .addTo(map)
+        .bindPopup(`<div dir="rtl" style="font-family:'Noto Sans Arabic',sans-serif;min-width:160px">
+          <b style="color:#C1440E">${m.name}</b><br>
+          <small style="color:#888">${m.en}</small><br>
+          <span style="font-size:0.82rem">${m.note}</span>
+        </div>`);
+    });
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') nextSlide();
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') prevSlide();
+  });
+</script>
+</body>
+</html>
