@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الإيزيديون – عرض تعليمي تفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&family=Noto+Serif+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --peacock:    #1A6B5E;
+    --peacock-lt: #2DA08C;
+    --saffron:    #C07000;
+    --saffron-lt: #E8A030;
+    --plum:       #5C1F6B;
+    --plum-lt:    #9050A8;
+    --danger:     #C0392B;
+    --sand:       #F8F2E8;
+    --sand-2:     #F0E8D4;
+    --dark:       #120D08;
+    --text:       #2A1D10;
+    --text-lt:    #5A4530;
+    --card-bg:    #FFFFFF;
+    --border:     #E0D0B0;
+    --sidebar-w:  290px;
+    --header-h:   72px;
+    --prog-h:     5px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans Arabic',sans-serif;background:var(--sand);color:var(--text);direction:rtl;text-align:right;overflow:hidden;height:100vh;}
+
+  /* PROGRESS */
+  #progress-bar{position:fixed;top:0;right:0;left:0;height:var(--prog-h);background:var(--border);z-index:1000;}
+  #progress-fill{height:100%;background:linear-gradient(90deg,var(--peacock),var(--saffron));transition:width .4s ease;width:8.33%;}
+
+  /* SIDEBAR */
+  #sidebar{position:fixed;top:var(--prog-h);right:0;width:var(--sidebar-w);height:calc(100vh - var(--prog-h));background:var(--dark);overflow-y:auto;z-index:500;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.35);}
+  #sidebar-logo{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.1);}
+  #sidebar-logo h2{font-family:'Noto Serif Arabic',serif;font-size:1.3rem;color:var(--saffron-lt);line-height:1.4;}
+  #sidebar-logo p{font-size:.7rem;color:rgba(255,255,255,.45);margin-top:4px;letter-spacing:.5px;}
+  #nav-list{list-style:none;flex:1;padding:12px 0;}
+  #nav-list li{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;transition:all .2s;border-right:3px solid transparent;}
+  #nav-list li:hover{background:rgba(255,255,255,.07);}
+  #nav-list li.active{background:rgba(26,107,94,.28);border-right-color:var(--peacock-lt);}
+  #nav-list li .nav-num{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.72rem;color:rgba(255,255,255,.6);flex-shrink:0;}
+  #nav-list li.active .nav-num{background:var(--peacock);color:#fff;}
+  #nav-list li .nav-label{font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.3;}
+  #nav-list li.active .nav-label{color:#fff;font-weight:600;}
+
+  /* MAIN */
+  #main{margin-right:var(--sidebar-w);height:100vh;padding-top:var(--prog-h);display:flex;flex-direction:column;}
+
+  /* HEADER */
+  #slide-header{background:var(--dark);padding:0 40px;height:var(--header-h);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+  #slide-title-area{display:flex;flex-direction:column;}
+  #slide-section-num{font-size:.7rem;color:var(--saffron-lt);letter-spacing:2px;text-transform:uppercase;}
+  #slide-title{font-family:'Noto Serif Arabic',serif;font-size:1.4rem;color:#fff;line-height:1.2;}
+  #slide-counter{font-size:.8rem;color:rgba(255,255,255,.4);}
+
+  /* BODY */
+  #slide-body{flex:1;overflow-y:auto;padding:32px 40px 20px;scroll-behavior:smooth;}
+
+  /* CONTROLS */
+  #controls{background:var(--dark);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-top:1px solid rgba(255,255,255,.08);}
+  .ctrl-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:10px 28px;border-radius:8px;cursor:pointer;font-family:'Noto Sans Arabic',sans-serif;font-size:.88rem;transition:all .2s;display:flex;align-items:center;gap:8px;}
+  .ctrl-btn:hover{background:var(--peacock);border-color:var(--peacock);}
+  .ctrl-btn:disabled{opacity:.3;cursor:not-allowed;}
+  #ctrl-info{color:rgba(255,255,255,.5);font-size:.8rem;}
+
+  /* SLIDE */
+  .slide{animation:fadeSlide .4s ease;}
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  h3.section-heading{font-family:'Noto Serif Arabic',serif;font-size:1.5rem;color:var(--peacock);margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px;}
+  h3.section-heading::after{content:'';flex:1;height:2px;background:linear-gradient(to left,var(--border),transparent);}
+
+  .card{background:var(--card-bg);border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(0,0,0,.07),0 1px 4px rgba(0,0,0,.04);margin-bottom:20px;border:1px solid var(--border);}
+  .card h4{font-size:1.05rem;color:var(--peacock);margin-bottom:10px;font-weight:700;}
+  .card p,.card li{font-size:.93rem;line-height:1.85;color:var(--text-lt);}
+  .card ul{padding-right:20px;}
+  .card li{margin-bottom:6px;}
+
+  /* CALLOUTS */
+  .callout{border-radius:12px;padding:18px 22px;margin:14px 0;font-size:.92rem;line-height:1.8;display:flex;gap:14px;align-items:flex-start;}
+  .callout-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px;}
+  .callout-peacock{background:#E6F5F2;border-right:4px solid var(--peacock);color:#0D3D35;}
+  .callout-saffron{background:#FDF5E3;border-right:4px solid var(--saffron);color:#5A3500;}
+  .callout-plum   {background:#F3EAF7;border-right:4px solid var(--plum);   color:#3A1048;}
+  .callout-danger {background:#FDF0EF;border-right:4px solid var(--danger); color:#6B1610;}
+  .callout-green  {background:#E8F7EF;border-right:4px solid #27A85A;       color:#125430;}
+
+  /* GRIDS */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px;}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-bottom:20px;}
+
+  /* STAT CARDS */
+  .stat-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:18px 14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+  .stat-card .stat-num{font-family:'Noto Serif Arabic',serif;font-size:1.8rem;font-weight:700;color:var(--peacock);line-height:1;margin-bottom:6px;}
+  .stat-card .stat-label{font-size:.78rem;color:var(--text-lt);line-height:1.4;}
+  .stat-card.saffron .stat-num{color:var(--saffron);}
+  .stat-card.plum    .stat-num{color:var(--plum);}
+  .stat-card.danger  .stat-num{color:var(--danger);}
+
+  /* TABLES */
+  table{width:100%;border-collapse:collapse;background:var(--card-bg);border-radius:12px;overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,.06);margin-bottom:20px;font-size:.88rem;}
+  thead tr{background:var(--dark);color:var(--saffron-lt);}
+  thead th{padding:14px 16px;font-weight:600;text-align:right;}
+  tbody tr{border-bottom:1px solid var(--border);}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:nth-child(even){background:var(--sand);}
+  tbody td{padding:12px 16px;color:var(--text-lt);line-height:1.5;}
+  td.bold{font-weight:700;color:var(--text);}
+  td.center{text-align:center;}
+
+  /* TIMELINE */
+  .timeline{position:relative;padding-right:32px;margin-bottom:20px;}
+  .timeline::before{content:'';position:absolute;right:10px;top:0;bottom:0;width:2px;border-right:3px dashed var(--peacock-lt);opacity:.4;}
+  .timeline-item{position:relative;margin-bottom:22px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+  .timeline-item::before{content:'';position:absolute;right:-27px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--peacock);border:3px solid var(--sand);box-shadow:0 0 0 2px var(--peacock-lt);}
+  .timeline-item.danger-node::before{background:var(--danger);box-shadow:0 0 0 2px #E8847E;}
+  .timeline-item .tl-year{font-size:.75rem;color:var(--peacock);font-weight:700;letter-spacing:1px;margin-bottom:4px;}
+  .timeline-item.danger-node .tl-year{color:var(--danger);}
+  .timeline-item .tl-title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+  .timeline-item .tl-text{font-size:.88rem;color:var(--text-lt);line-height:1.7;}
+
+  /* PERSON CARDS */
+  .person-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:8px;}
+  .person-card .person-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--peacock),var(--saffron));display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:4px;}
+  .person-card .person-name{font-family:'Noto Serif Arabic',serif;font-size:1rem;font-weight:700;color:var(--text);}
+  .person-card .person-dates{font-size:.75rem;color:var(--text-lt);}
+  .person-card .person-field{display:inline-block;background:var(--sand-2);color:var(--peacock);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;border:1px solid var(--border);width:fit-content;}
+  .person-card .person-desc{font-size:.83rem;color:var(--text-lt);line-height:1.65;flex:1;}
+
+  /* TAG CLOUD */
+  .tag-cloud{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0;}
+  .tag{background:var(--sand-2);border:1px solid var(--border);color:var(--text-lt);padding:5px 14px;border-radius:20px;font-size:.82rem;cursor:default;transition:all .15s;}
+  .tag:hover{background:var(--peacock);color:#fff;border-color:var(--peacock);}
+  .tag.big{font-size:1rem;padding:7px 18px;}
+  .tag.med{font-size:.9rem;padding:6px 16px;}
+  .tag.peacock-tag{background:#E6F5F2;border-color:var(--peacock);color:var(--peacock);}
+  .tag.saffron-tag{background:#FDF5E3;border-color:var(--saffron);color:#5A3500;}
+  .tag.plum-tag   {background:#F3EAF7;border-color:var(--plum);   color:var(--plum);}
+
+  /* MAP */
+  #yazidi-map{height:380px;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,.1);margin-bottom:20px;}
+
+  /* FOOTNOTES */
+  .footnotes{margin-top:28px;padding-top:14px;border-top:1px dashed var(--border);}
+  .footnotes p{font-size:.73rem;color:var(--text-lt);line-height:1.7;opacity:.75;}
+  .footnotes a{color:var(--peacock);text-decoration:none;word-break:break-all;}
+  .footnotes a:hover{text-decoration:underline;}
+
+  .section-label{display:inline-block;background:var(--peacock);color:#fff;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:1px;margin-bottom:14px;text-transform:uppercase;}
+  .bilingue{display:inline-block;color:rgba(0,0,0,.38);font-size:.8em;font-style:italic;margin-right:6px;direction:ltr;}
+
+  ::-webkit-scrollbar{width:6px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.18);border-radius:10px;}
+
+  .slide-section{display:none;}
+  .slide-section.active{display:block;}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div id="sidebar-logo">
+    <h2>الإيزيديون</h2>
+    <p>YAZIDIS · عرض تعليمي تفاعلي</p>
+  </div>
+  <ul id="nav-list">
+    <li class="active" onclick="goTo(0)"><span class="nav-num">١</span><span class="nav-label">الهوية والأصول</span></li>
+    <li onclick="goTo(1)"><span class="nav-num">٢</span><span class="nav-label">أصل التسمية</span></li>
+    <li onclick="goTo(2)"><span class="nav-num">٣</span><span class="nav-label">المسيرة التاريخية</span></li>
+    <li onclick="goTo(3)"><span class="nav-num">٤</span><span class="nav-label">الإبادة الجماعية ٢٠١٤</span></li>
+    <li onclick="goTo(4)"><span class="nav-num">٥</span><span class="nav-label">الهجرة واللجوء</span></li>
+    <li onclick="goTo(5)"><span class="nav-num">٦</span><span class="nav-label">التوزيع الجغرافي</span></li>
+    <li onclick="goTo(6)"><span class="nav-num">٧</span><span class="nav-label">الأعداد والتعداد</span></li>
+    <li onclick="goTo(7)"><span class="nav-num">٨</span><span class="nav-label">اللغة والكتابة</span></li>
+    <li onclick="goTo(8)"><span class="nav-num">٩</span><span class="nav-label">المعتقد والمؤسسات الدينية</span></li>
+    <li onclick="goTo(9)"><span class="nav-num">١٠</span><span class="nav-label">شخصيات بارزة</span></li>
+    <li onclick="goTo(10)"><span class="nav-num">١١</span><span class="nav-label">الوضع السياسي والقانوني</span></li>
+    <li onclick="goTo(11)"><span class="nav-num">١٢</span><span class="nav-label">التحديات المعاصرة</span></li>
+  </ul>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="slide-header">
+    <div id="slide-title-area">
+      <span id="slide-section-num">القسم الأول · SECTION 1</span>
+      <span id="slide-title">الهوية والأصول</span>
+    </div>
+    <span id="slide-counter">١ / ١٢</span>
+  </div>
+
+  <div id="slide-body">
+
+    <!-- ══════ SLIDE 1: IDENTITY & ORIGINS ══════ -->
+    <div class="slide-section active" id="s0">
+      <span class="section-label">Identity &amp; Origins · هوية وأصول</span>
+      <h3 class="section-heading">من هم الإيزيديون؟</h3>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>🕊 تعريف الشعب الإيزيدي</h4>
+          <p>الإيزيديون <span class="bilingue">Yazidis / Êzidî</span> مجموعة إثنية-دينية <span class="bilingue">ethno-religious group</span> أصيلة من منطقة كردستان التاريخية في غرب آسيا. يعيشون في الغالب في شمال العراق وشمال سوريا وجنوب شرق تركيا وأرمينيا. يجمعهم دين فريد يُسمّى <strong>الإيزيدية</strong> <span class="bilingue">Yazidism</span>، وهو دين قديم غير إبراهيمي بمعناه التقليدي.</p>
+        </div>
+        <div class="card">
+          <h4>🗺 الموطن الأصلي</h4>
+          <p>الموطن الأصلي للإيزيديين هو منطقة <strong>لالش</strong> ووادي شيخان في شمال العراق (محافظة نينوى ودهوك) ومنطقة <strong>سنجار</strong> الجبلية. تعدّ هذه المنطقة القلب الروحي والثقافي للشعب الإيزيدي. لالش هي الموقع المقدس الأعلى ومحل ضريح مؤسس الديانة الشيخ عدي ابن مسافر.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-saffron">
+        <span class="callout-icon">⚡</span>
+        <div>
+          <strong>اللحظة الثقافية الدينية الأهم</strong><br>
+          في القرن الثاني عشر الميلادي (حوالي عام ١١٦٢ م)، استقرّ الشيخ الصوفي <strong>عدي ابن مسافر</strong> في وادي لالش في شمال العراق، وأسّس مجتمعاً دينياً بين الأكراد المحليين يمزج بين معتقدات إيرانية قديمة وتعاليم إسلامية صوفية وموروثات محلية. من هذا التأسيس نشأت الديانة الإيزيدية التي نعرفها اليوم.
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="stat-card">
+          <div class="stat-num">٧٤</div>
+          <div class="stat-label">عدد الإبادات الجماعية في الذاكرة الإيزيدية (الفرمانات)</div>
+        </div>
+        <div class="stat-card saffron">
+          <div class="stat-num">١١٦٢ م</div>
+          <div class="stat-label">تاريخ وفاة الشيخ عدي ابن مسافر في لالش – تأسيس الديانة</div>
+        </div>
+        <div class="stat-card plum">
+          <div class="stat-num">إيرانية كردية</div>
+          <div class="stat-label">الأسرة الإثنية والثقافية للإيزيديين</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>🧬 هوية مزدوجة: إثنية ودينية</h4>
+        <p>تُعدّ الهوية الإيزيدية مسألة نقاش علمي: بعض الإيزيديين يُعرّفون أنفسهم كأكراد <span class="bilingue">Kurds</span> من دين مختلف، وبعضهم يُعرّفون أنفسهم كشعب مستقل تماماً. في العراق وأرمينيا، يُعترف بهم رسمياً كجماعة إثنية مستقلة. معظمهم يتكلمون الكرمانجية <span class="bilingue">Kurmanji</span> (الكردية الشمالية) كلغة أم. الأهم أن <strong>الإيزيدية تجمع الدين والعرق معاً</strong>: من تزوّج خارج الجماعة يُعدّ خارجاً عنها.</p>
+      </div>
+
+      <div class="callout callout-peacock">
+        <span class="callout-icon">🦚</span>
+        <div>
+          <strong>سوء الفهم الأكبر في التاريخ</strong><br>
+          أكثر ما يُميّز الإيزيديين هو الملاك الطاووس <strong>طاووسي ملك</strong> <span class="bilingue">Tawûsî Melek</span>، وهو الملاك الأعلى في دينهم ورمز التجدد والحياة. لكن المسلمين والمسيحيين طوال قرون ربطوا هذا الملاك بالشيطان، مما جعل الإيزيديين يُتهمون زوراً بأنهم "عبّاد الشيطان". هذا الفهم الخاطئ كان السبب المباشر لكثير من الاضطهادات.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">الإيزيديون</span>
+        <span class="tag big">لالش</span>
+        <span class="tag med">سنجار</span>
+        <span class="tag med">شمال العراق</span>
+        <span class="tag peacock-tag">طاووسي ملك</span>
+        <span class="tag peacock-tag">الشيخ عدي</span>
+        <span class="tag saffron-tag">الكرمانجية</span>
+        <span class="tag saffron-tag">الأكراد</span>
+        <span class="tag plum-tag">الإثنو-دينية</span>
+        <span class="tag">الفرمان</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Yazidis: <a href="https://en.wikipedia.org/wiki/Yazidis" target="_blank">en.wikipedia.org/wiki/Yazidis</a> | Britannica – Yazidi: <a href="https://www.britannica.com/topic/Yazidi" target="_blank">britannica.com/topic/Yazidi</a> | Encyclopaedia Iranica: <a href="https://www.iranicaonline.org/articles/yazidis-i-general-1/" target="_blank">iranicaonline.org</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 2: ETYMOLOGY ══════ -->
+    <div class="slide-section" id="s1">
+      <span class="section-label">Etymology · أصل التسمية</span>
+      <h3 class="section-heading">ماذا نُسمّي أنفسنا؟ وماذا يسمّينا الآخرون؟</h3>
+
+      <div class="callout callout-peacock">
+        <span class="callout-icon">🔤</span>
+        <div>
+          <strong>الاسم الذي يُطلقه الإيزيديون على أنفسهم:</strong><br>
+          يُسمّون أنفسهم <strong>إيزيدي / Êzidî</strong> أو <strong>إزدي / Ezdi</strong>. وفق معتقدهم، تعني هذه الكلمة <em>"خلقني الله"</em> أو <em>"عبّاد الخالق"</em>. يرفضون تماماً أي ربط بين اسمهم والخليفة الأموي يزيد بن معاوية.
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>الاسم / Name</th>
+            <th>المصدر / Origin</th>
+            <th>المعنى / Meaning</th>
+            <th>موقف الإيزيديين</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">إيزيدي · Êzidî</td>
+            <td>الكردية القديمة / الفارسية</td>
+            <td>"خلقني الله" – من ez dā (خلقني)</td>
+            <td>✅ الاسم الذي يختارونه لأنفسهم</td>
+          </tr>
+          <tr>
+            <td class="bold">إزدي · Ezdi</td>
+            <td>الكردية</td>
+            <td>"عبّاد الملاك" أو "أبناء الله"</td>
+            <td>✅ يُستخدم بشكل واسع في المجتمعات الإيزيدية</td>
+          </tr>
+          <tr>
+            <td class="bold">يزيدي · Yazidi</td>
+            <td>العربية / الغربية</td>
+            <td>من يزيد بن معاوية (الخليفة الأموي)</td>
+            <td>❌ يرفضه الإيزيديون؛ لكنه شائع في الأدبيات</td>
+          </tr>
+          <tr>
+            <td class="bold">يزدان / Yazdan</td>
+            <td>الفارسية / الأفستية</td>
+            <td>"الإله" أو "الكائن الإلهي"</td>
+            <td>⚠️ فرضية أكاديمية محتملة لأصل الاسم</td>
+          </tr>
+          <tr>
+            <td class="bold">داسيني · Dasinî</td>
+            <td>كردية تاريخية</td>
+            <td>القبيلة الكردية الكبرى الإيزيدية تاريخياً</td>
+            <td>⚠️ اسم تاريخي، يستخدمه بعض العلماء</td>
+          </tr>
+          <tr>
+            <td class="bold">عبّاد الشيطان</td>
+            <td>خطأ شائع في المصادر الإسلامية والمسيحية</td>
+            <td>تشبيه طاووسي ملك بإبليس أو الشيطان</td>
+            <td>❌❌ خطأ كامل – تسمية مسيئة ظالمة تاريخياً</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-saffron">
+        <span class="callout-icon">💡</span>
+        <div>
+          <strong>لماذا تعدد الأسماء وتعقّدها؟</strong><br>
+          أصل الكلمة "إيزيدي" مختلف عليه بين العلماء. النظريات الرئيسية: (١) مشتقة من الكلمة الفارسية <em>يزدان</em> (الله)، (٢) من الكلمة الكردية <em>ez dā</em> أي "خلقني"، (٣) مرتبطة بالخليفة يزيد التي يرفضها الإيزيديون جملةً وتفصيلاً. البريطانيكا وعلماء مستقلون يُرجّحون الأصل الإيراني-الكردي القديم.
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>📝 كيف يُسمّي العلماء والإيزيديون أنفسهم في سياقات مختلفة</h4>
+        <ul>
+          <li><strong>في العراق:</strong> يُعترف بهم رسمياً كـ "الإيزيديين" – أقلية إثنية مستقلة</li>
+          <li><strong>في أرمينيا:</strong> يُعترف بهم أيضاً كأقلية قومية مستقلة، وليس كأكراد</li>
+          <li><strong>في تركيا وسوريا:</strong> يُصنَّفون إدارياً في الغالب ضمن الأكراد</li>
+          <li><strong>في ألمانيا والمهجر:</strong> يُعرّفون أنفسهم بشكل واضح كـ "إيزيديين" ذوي هوية مستقلة</li>
+          <li><strong>المجلس الروحي الإيزيدي في لالش:</strong> يؤكد رسمياً الهوية الكردية للإيزيديين</li>
+        </ul>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">Êzidî</span>
+        <span class="tag big">إيزيدي</span>
+        <span class="tag med">يزدان</span>
+        <span class="tag med">ez dā</span>
+        <span class="tag peacock-tag">خلقني الله</span>
+        <span class="tag peacock-tag">عبّاد الخالق</span>
+        <span class="tag saffron-tag">داسيني</span>
+        <span class="tag plum-tag">رفض الارتباط بيزيد</span>
+        <span class="tag">أصل فارسي كردي</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Yazidism: <a href="https://en.wikipedia.org/wiki/Yazidism" target="_blank">en.wikipedia.org/wiki/Yazidism</a> | Britannica: <a href="https://www.britannica.com/topic/Yazidi" target="_blank">britannica.com/topic/Yazidi</a> | World History Encyclopedia: <a href="https://www.worldhistory.org/Yazidism/" target="_blank">worldhistory.org/Yazidism</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 3: HISTORICAL TRAJECTORY ══════ -->
+    <div class="slide-section" id="s2">
+      <span class="section-label">Historical Trajectory · المسيرة التاريخية</span>
+      <h3 class="section-heading">رحلة الإيزيديين عبر التاريخ</h3>
+
+      <div class="grid-2">
+        <div>
+          <div class="card" style="margin-bottom:14px;border-right:4px solid var(--saffron);">
+            <h4>🏛 الأصول القديمة وما قبل التأسيس</h4>
+            <ul>
+              <li><strong>قبل القرن الثاني عشر:</strong> وجود مجتمعات كردية في الجبال تحمل معتقدات إيرانية قديمة: زرادشتية ومانوية وغنوصية وطبيعية</li>
+              <li><strong>القرن الثامن م:</strong> تعلّق بعض الأكراد بتراث الخليفة الأموي يزيد بن معاوية بعد سقوط الدولة الأموية</li>
+              <li><strong>القرن الثاني عشر:</strong> وصول الشيخ عدي ابن مسافر (من لبنان) إلى وادي لالش وتأسيس طريقة صوفية بين الأكراد</li>
+              <li><strong>١١٦٢ م:</strong> وفاة الشيخ عدي في لالش – تحوّل أتباعه شيئاً فشيئاً عن الإسلام نحو معتقدات مستقلة</li>
+              <li><strong>القرن الثالث عشر:</strong> تشكّل هوية "الإيزيدية" كدين مستقل وانتشارها بين سبع قبائل كردية كبرى</li>
+            </ul>
+          </div>
+          <div class="card" style="border-right:4px solid var(--peacock);">
+            <h4>⚔️ عصر الاضطهاد العثماني (القرن الخامس عشر – ١٩١٨)</h4>
+            <ul>
+              <li><strong>مطلع القرن الخامس عشر:</strong> بدأ حكام مسلمون مجاورون يرون الإيزيديين "مرتدين" ومنافسين سياسيين</li>
+              <li><strong>القرن السادس عشر – التاسع عشر:</strong> سلسلة من الحملات العسكرية العثمانية وحملات الأمراء الأكراد المسلمين ضد الإيزيديين</li>
+              <li><strong>النصف الثاني من القرن التاسع عشر:</strong> اضطهادات واسعة تدفع أعداداً كبيرة إلى الفرار نحو القوقاز (أرمينيا وجورجيا)</li>
+              <li><strong>٧٣ فرمان (إبادة):</strong> يُحصي الإيزيديون ٧٣ موجة إبادة تاريخية قبل عام ٢٠١٤</li>
+              <li><strong>الحرب العالمية الأولى (١٩١٤-١٩١٨):</strong> المزيد من الاضطهادات في سياق المجازر العثمانية</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:14px;border-right:4px solid var(--plum);">
+            <h4>🏗 العصر الحديث: من الاستعمار إلى استقلال العراق (١٩٢٠–٢٠٠٣)</h4>
+            <ul>
+              <li><strong>بعد الحرب العالمية الأولى:</strong> تقسيم المنطقة – الإيزيديون يجدون أنفسهم بين العراق وسوريا وتركيا وأرمينيا</li>
+              <li><strong>العهد الملكي العراقي (١٩٢١-١٩٥٨):</strong> حياة نسبياً هادئة مع حفاظ على الهوية في سنجار وشيخان</li>
+              <li><strong>حكم البعث (١٩٦٨-٢٠٠٣):</strong> حملات تعريب قسري ونقل سكاني وإزالة قرى إيزيدية في سياق سياسة القمع الكردي</li>
+              <li><strong>حملة الأنفال (١٩٨٦-١٩٨٩):</strong> تدمير عشرات القرى الإيزيدية وتهجير قسري ضمن الحملة الأشمل ضد الأكراد</li>
+              <li><strong>٢٠٠٣:</strong> سقوط صدام – انفتاح نسبي لكن مع اضطرابات أمنية جديدة</li>
+            </ul>
+          </div>
+          <div class="card" style="border-right:4px solid var(--danger);">
+            <h4>🔥 ما بعد ٢٠٠٣ حتى اليوم</h4>
+            <ul>
+              <li><strong>٢٠٠٧:</strong> هجمات تفجيرية استهدفت قريتين إيزيديتين (قتاوية وسيبا شيخ خدر) – ٨٠٠ قتيل في يوم واحد</li>
+              <li><strong>أغسطس ٢٠١٤:</strong> الإبادة الجماعية على يد داعش – قتل وخطف ونزوح جماعي</li>
+              <li><strong>٢٠١٥:</strong> تحرير سنجار بدعم التحالف الدولي والقوات الكردية</li>
+              <li><strong>٢٠١٧:</strong> إعلان العراق الانتصار على داعش</li>
+              <li><strong>٢٠٢١:</strong> إقرار قانون ناجيات الإيزيديين في البرلمان العراقي</li>
+              <li><strong>حتى اليوم:</strong> أكثر من ٢٠٠,٠٠٠ إيزيدي في مخيمات للمهجّرين داخل العراق</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-saffron">
+        <span class="callout-icon">📜</span>
+        <div>
+          <strong>الفرمان – مفهوم الإبادة في الذاكرة الإيزيدية</strong><br>
+          يُسمّى كل موجة اضطهاد أو إبادة في التاريخ الإيزيدي <strong>فرمان</strong> (من الفارسية: أمر/مرسوم). يحفظ الإيزيديون ذاكرة ٧٤ فرماناً على مرّ التاريخ، آخرها إبادة ٢٠١٤ على يد داعش. هذه الذاكرة الجماعية للاضطهاد هي جزء محوري من الهوية الإيزيدية.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">لالش</span>
+        <span class="tag big">الفرمان</span>
+        <span class="tag med">الشيخ عدي</span>
+        <span class="tag med">سنجار</span>
+        <span class="tag peacock-tag">القرن الثاني عشر</span>
+        <span class="tag peacock-tag">القبائل الكردية</span>
+        <span class="tag saffron-tag">الاضطهاد العثماني</span>
+        <span class="tag saffron-tag">حملة الأنفال</span>
+        <span class="tag plum-tag">التعريب القسري</span>
+        <span class="tag">داعش ٢٠١٤</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Britannica – Yazidi: <a href="https://www.britannica.com/topic/Yazidi" target="_blank">britannica.com/topic/Yazidi</a> | World History Encyclopedia: <a href="https://www.worldhistory.org/Yazidism/" target="_blank">worldhistory.org/Yazidism</a> | National Geographic: <a href="https://www.nationalgeographic.com/history/article/140809-iraq-yazidis-minority-isil-religion-history" target="_blank">nationalgeographic.com</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 4: KEY TRAUMATIC EVENT ══════ -->
+    <div class="slide-section" id="s3">
+      <span class="section-label">Genocide 2014 · الإبادة الجماعية</span>
+      <h3 class="section-heading">إبادة سنجار ٢٠١٤ – الفرمان الرابع والسبعون</h3>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">⚠️</span>
+        <div>
+          <strong>الحدث الأكثر مأساةً في تاريخ الإيزيديين الحديث</strong><br>
+          في فجر <strong>٣ أغسطس ٢٠١٤</strong>، هجم تنظيم داعش بمئات المسلحين على منطقة سنجار في شمال غرب العراق. انسحبت قوات البيشمركة الكردية دون سابق إنذار، تاركةً الإيزيديين بلا حماية. ما تلا ذلك وصفه الأمم المتحدة وأكثر من عشرين دولة بأنه <strong>إبادة جماعية</strong>.
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-year">٣ أغسطس ٢٠١٤ – قبل الفجر</div>
+          <div class="tl-title">الهجوم المباغت على سنجار</div>
+          <div class="tl-text">يقتحم مسلحو داعش منطقة سنجار دون إنذار. تنسحب قوات البيشمركة بشكل مفاجئ تاركةً أكثر من ٤٠٠,٠٠٠ إيزيدي أمام مصيرهم. يفرّ عشرات الآلاف نحو جبل سنجار الوعر.</div>
+        </div>
+        <div class="timeline-item danger-node">
+          <div class="tl-year">٣ – ٦ أغسطس ٢٠١٤</div>
+          <div class="tl-title">⚠️ المجازر والخطف الجماعي</div>
+          <div class="tl-text">يُعدم الرجال والنساء المسنّات جماعياً. تُخطف الآلاف من النساء والأطفال وتُؤخذ النساء إلى أسواق النخاسة في الرقة والموصل. يُجبر الأولاد الصغار على الانضمام إلى صفوف داعش. يُودَع المئات في مقابر جماعية في سهل سنجار.</div>
+        </div>
+        <div class="timeline-item danger-node">
+          <div class="tl-year">أغسطس ٢٠١٤</div>
+          <div class="tl-title">⚠️ محاصرة جبل سنجار</div>
+          <div class="tl-text">يلجأ عشرات الآلاف إلى جبل سنجار تحت الشمس الحارقة دون ماء أو طعام. يُحاصرهم داعش أسفل الجبل. يموت مئات الأطفال والمسنّين من العطش والجوع والحرارة. يُشكّل ذلك أزمة إنسانية دولية تدفع الولايات المتحدة لشنّ غارات جوية.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-year">أغسطس – نوفمبر ٢٠١٤</div>
+          <div class="tl-title">الاستجابة الدولية الأولى</div>
+          <div class="tl-text">تشنّ الولايات المتحدة وحلفاؤها غارات جوية تفتح ممراً إنسانياً. تُوصل قوات كردية من سوريا إمدادات وتُجلي بعض المحاصرين. تُعلن الأمم المتحدة "كارثة إنسانية" في سنجار. يصف مسؤولو الأمم المتحدة ما يجري بأنه "إبادة جماعية".</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-year">نوفمبر ٢٠١٥</div>
+          <div class="tl-title">تحرير سنجار</div>
+          <div class="tl-text">تُحرَّر مدينة سنجار بغارات جوية أمريكية ومشاركة قوات البيشمركة. لكن المدينة دُمِّرت بشكل شبه كامل. لا تزال آلاف النساء في الأسر. بدأت رحلة إعادة البناء الشاقة.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-year">٢٠٢١ – حتى اليوم</div>
+          <div class="tl-title">الاعتراف الدولي وملاحقة المجرمين</div>
+          <div class="tl-text">تُقرّ ألمانيا عام ٢٠٢١ كأول دولة بأن ما جرى إبادة جماعية وتُصدر أحكاماً بالسجن بحق عناصر داعش. يقرّ البرلمان العراقي قانون ناجيات الإيزيديين (٢٠٢١). تُواصل المحاكم الدولية عملها، لكن آلاف الجناة لا يزالون طلقاء.</div>
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <div class="stat-card danger">
+          <div class="stat-num">~ ٣,١٠٠</div>
+          <div class="stat-label">قتيل (التقدير العلمي لمجلة PLOS Medicine)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">~٦,٠٠٠ – ٧,٠٠٠</div>
+          <div class="stat-label">امرأة وطفل اختُطفوا وأُخذوا كعبيد</div>
+        </div>
+        <div class="stat-card saffron">
+          <div class="stat-num">٢,٨٠٠+</div>
+          <div class="stat-label">مفقود لا يزال مصيره مجهولاً حتى اليوم</div>
+        </div>
+        <div class="stat-card plum">
+          <div class="stat-num">٤٠٠,٠٠٠+</div>
+          <div class="stat-label">نازح من منازله في الأيام الأولى</div>
+        </div>
+      </div>
+
+      <div class="callout callout-peacock">
+        <span class="callout-icon">🌍</span>
+        <div>
+          <strong>الاعتراف الدولي بالإبادة الجماعية</strong><br>
+          اعترفت بالإبادة رسمياً: الأمم المتحدة (٢٠١٦ و٢٠٢١)، البرلمان الأوروبي، ألمانيا، بلجيكا، كندا، هولندا، والعراق (٢٠٢١). كانت ألمانيا أول دولة تُصدر حكماً جنائياً بتهمة الإبادة الجماعية ضد عنصر في داعش بسبب جرائمه ضد الإيزيديين عام ٢٠٢١.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">إبادة جماعية</span>
+        <span class="tag big">داعش ٢٠١٤</span>
+        <span class="tag med">سنجار</span>
+        <span class="tag med">جبل سنجار</span>
+        <span class="tag peacock-tag">ناديا مراد</span>
+        <span class="tag peacock-tag">الاعتراف الدولي</span>
+        <span class="tag saffron-tag">المقابر الجماعية</span>
+        <span class="tag saffron-tag">سبايا داعش</span>
+        <span class="tag plum-tag">المفقودون</span>
+        <span class="tag">قانون ناجيات ٢٠٢١</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Yazidi Genocide: <a href="https://en.wikipedia.org/wiki/Yazidi_genocide" target="_blank">en.wikipedia.org/wiki/Yazidi_genocide</a> | Nadia's Initiative: <a href="https://www.nadiasinitiative.org/the-genocide" target="_blank">nadiasinitiative.org</a> | PLOS Medicine: <a href="https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1002297" target="_blank">journals.plos.org</a> | ICCT: <a href="https://icct.nl/publication/ten-years-yazidi-genocide-searching-redress-war-against-isis" target="_blank">icct.nl</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 5: MIGRATION ══════ -->
+    <div class="slide-section" id="s4">
+      <span class="section-label">Migration & Refuge · الهجرة واللجوء</span>
+      <h3 class="section-heading">موجات الهجرة والتشرد الإيزيدي</h3>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>📅 الموجات التاريخية الكبرى</h4>
+          <ul>
+            <li><strong>القرن التاسع عشر:</strong> هروب أعداد كبيرة من الاضطهاد العثماني نحو أرمينيا وجورجيا</li>
+            <li><strong>١٩١٤ – ١٩١٨:</strong> تهجير إضافي في سياق الحرب العالمية الأولى</li>
+            <li><strong>٦٠s – ٨٠s:</strong> هجرة إيزيديي تركيا الكبرى إلى ألمانيا (غالباً من منطقة طور عبدين)</li>
+            <li><strong>١٩٨٨ – ١٩٩٠:</strong> تهجير قسري من حملة الأنفال العراقية</li>
+            <li><strong>٢٠٠٣ – ٢٠١٣:</strong> هجرة متسارعة نتيجة العنف الطائفي في العراق بعد الغزو الأمريكي</li>
+            <li><strong>أغسطس ٢٠١٤:</strong> النزوح الجماعي الأكبر – أكثر من ٤٠٠,٠٠٠ في أيام</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🏠 أنماط الاستقرار في دول اللجوء</h4>
+          <ul>
+            <li><strong>ألمانيا:</strong> حوالي ٢٠٠,٠٠٠ إيزيدي – أكبر تجمع خارج العراق. مدن: هانوفر، بيليفيلد، سيله، بريمن</li>
+            <li><strong>إقليم كردستان العراق:</strong> أكثر من ٢٠٠,٠٠٠ في مخيمات دهوك وزاخو</li>
+            <li><strong>أرمينيا:</strong> حوالي ٣٥,٠٠٠ – مجتمع راسخ يعود للقرن التاسع عشر</li>
+            <li><strong>روسيا:</strong> تجمعات من إيزيديي القوقاز</li>
+            <li><strong>السويد وهولندا وبلجيكا:</strong> تجمعات متنامية منذ ٢٠٠٨</li>
+            <li><strong>الولايات المتحدة وكندا وأستراليا:</strong> مجتمعات صغيرة متفرقة</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">⛺</span>
+        <div>
+          <strong>أزمة المخيمات المستمرة</strong><br>
+          حتى عام ٢٠٢٤، لا يزال أكثر من <strong>١٥٠,٠٠٠ إيزيدي</strong> يعيشون في مخيمات للمهجّرين داخل إقليم كردستان العراق، دون قدرة على العودة إلى سنجار بسبب: الدمار الهائل في المنازل والبنية التحتية، الوجود العسكري المسلح المتعدد الأطراف، ومعارك النفوذ بين بغداد وأربيل على إدارة المنطقة.
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>🌐 المنظمات التي ساعدت الإيزيديين</h4>
+        <div class="grid-2" style="margin-top:10px">
+          <ul>
+            <li><strong>مبادرة ناديا / Nadia's Initiative:</strong> تدعم الناجيات وتدافع عن حقوق الإيزيديين دولياً (ناديا مراد)</li>
+            <li><strong>مفوضية الأمم المتحدة للاجئين (UNHCR):</strong> إدارة المخيمات وتسجيل اللاجئين</li>
+            <li><strong>منظمة العفو الدولية:</strong> توثيق الجرائم والمطالبة بالمحاسبة</li>
+          </ul>
+          <ul>
+            <li><strong>فريق تحقيق الأمم المتحدة (UNITAD):</strong> جمع الأدلة للملاحقة القضائية لعناصر داعش</li>
+            <li><strong>الحكومة الألمانية:</strong> برامج لجوء خاصة وعلاج الناجيات من الاغتصاب</li>
+            <li><strong>حكومة إقليم كردستان:</strong> إيواء وإدارة مخيمات المهجّرين</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-peacock">
+        <span class="callout-icon">🗣</span>
+        <div>
+          <strong>صوت ناجية</strong><br>
+          تقول بدرا، ناجية من خطف داعش: <em>"أسروني حين كنت أحاول الفرار نحو الجبل. لم يأخذوني من أمي لأنني كنت في الرابعة عشرة. ثم انتزعوني منها لاحقاً. بيعوني أكثر من عشر مرات لأشخاص مختلفين. الحياة هناك كانت لا توصف."</em> (من موقع مبادرة ناديا)
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">ألمانيا</span>
+        <span class="tag big">المخيمات</span>
+        <span class="tag med">دهوك وزاخو</span>
+        <span class="tag">أرمينيا</span>
+        <span class="tag peacock-tag">UNHCR</span>
+        <span class="tag peacock-tag">مبادرة ناديا</span>
+        <span class="tag saffron-tag">هانوفر وبيليفيلد</span>
+        <span class="tag plum-tag">٢٠٠,٠٠٠ في مخيمات</span>
+        <span class="tag">العودة المعلّقة</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: PBS Frontline: <a href="https://www.pbs.org/wgbh/frontline/article/yazidis-decade-after-isis-genocidal-campaign/" target="_blank">pbs.org/wgbh/frontline</a> | ICCT: <a href="https://icct.nl/publication/ten-years-yazidi-genocide-searching-redress-war-against-isis" target="_blank">icct.nl</a> | Nadia's Initiative: <a href="https://www.nadiasinitiative.org/the-genocide" target="_blank">nadiasinitiative.org</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 6: GEOGRAPHIC DISTRIBUTION ══════ -->
+    <div class="slide-section" id="s5">
+      <span class="section-label">Geographic Distribution · التوزيع الجغرافي</span>
+      <h3 class="section-heading">أين يعيش الإيزيديون اليوم؟</h3>
+
+      <div id="yazidi-map"></div>
+
+      <div class="grid-4">
+        <div class="stat-card">
+          <div class="stat-num">~٥٠٠,٠٠٠</div>
+          <div class="stat-label">في العراق (شمال محافظة نينوى ودهوك)</div>
+        </div>
+        <div class="stat-card saffron">
+          <div class="stat-num">~٢٠٠,٠٠٠</div>
+          <div class="stat-label">في ألمانيا (أكبر تجمع خارج العراق)</div>
+        </div>
+        <div class="stat-card plum">
+          <div class="stat-num">~٣٥,٠٠٠</div>
+          <div class="stat-label">في أرمينيا (أقلية إثنية رسمية)</div>
+        </div>
+        <div class="stat-card danger">
+          <div class="stat-num">&lt; ٥٠٠</div>
+          <div class="stat-label">في تركيا اليوم (غالبيتهم هاجروا إلى أوروبا)</div>
+        </div>
+      </div>
+
+      <div class="callout callout-saffron">
+        <span class="callout-icon">📍</span>
+        <div>
+          <strong>الموطن الأصلي التاريخي</strong><br>
+          يمتد الموطن الأصلي التاريخي للإيزيديين عبر منطقة كردستان التاريخية: شمال العراق (سنجار وشيخان ولالش)، جنوب شرق تركيا (طور عبدين)، شمال سوريا (عفرين وجبل سمعان)، وامتدادات في أرمينيا والقوقاز.
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>🏘 أهم مناطق التجمع الإيزيدي</h4>
+        <div class="grid-2" style="margin-top:10px">
+          <ul>
+            <li><strong>وادي لالش:</strong> المركز الروحي المقدس – ٥٥ كم شرق دهوك في العراق</li>
+            <li><strong>منطقة شيخان:</strong> شمال شرق الموصل – أكبر تجمع إيزيدي تاريخي</li>
+            <li><strong>سنجار:</strong> غرب الموصل – دُمّر جزء كبير منه في ٢٠١٤ ولا يزال يُعاد إعماره</li>
+            <li><strong>مخيمات دهوك وزاخو:</strong> تضم مئات الآلاف من النازحين منذ ٢٠١٤</li>
+          </ul>
+          <ul>
+            <li><strong>هانوفر، بيليفيلد، سيله (ألمانيا):</strong> أكبر تجمعات الشتات الإيزيدي</li>
+            <li><strong>يريفان (أرمينيا):</strong> مجتمع إيزيدي عريق منذ القرن التاسع عشر</li>
+            <li><strong>شمال سوريا (الحسكة):</strong> جاليات إيزيدية صغيرة متبقية</li>
+            <li><strong>طور عبدين (تركيا):</strong> المنطقة الأصلية – غادرها معظم إيزيديي تركيا</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">شمال العراق</span>
+        <span class="tag big">ألمانيا</span>
+        <span class="tag med">سنجار</span>
+        <span class="tag med">لالش</span>
+        <span class="tag peacock-tag">شيخان</span>
+        <span class="tag peacock-tag">دهوك</span>
+        <span class="tag saffron-tag">أرمينيا</span>
+        <span class="tag saffron-tag">طور عبدين</span>
+        <span class="tag plum-tag">الشتات الأوروبي</span>
+        <span class="tag">الحسكة سوريا</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Yazidis (Demographics): <a href="https://en.wikipedia.org/wiki/Yazidis" target="_blank">en.wikipedia.org/wiki/Yazidis</a> | EUAA Syria: <a href="https://euaa.europa.eu/country-guidance-syria/4106-yazidis" target="_blank">euaa.europa.eu</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 7: DEMOGRAPHICS ══════ -->
+    <div class="slide-section" id="s6">
+      <span class="section-label">Demographics · الأعداد والتعداد</span>
+      <h3 class="section-heading">كم عدد الإيزيديين في العالم؟</h3>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">⚠️</span>
+        <div>
+          <strong>تحذير مهم بشأن الأرقام</strong><br>
+          أعداد الإيزيديين غير دقيقة لأسباب موضوعية: ضحايا الإبادة والمفقودون غير محسوبين بدقة، أعداد كبيرة تركت العراق في موجات هجرة متلاحقة منذ ٢٠١٤، لا توجد إحصاءات رسمية بالهوية الدينية في أغلب الدول المضيفة. كل الأرقام هنا تقديرية.
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>الدولة / Country</th>
+            <th>التقدير العددي</th>
+            <th>النسبة التقريبية</th>
+            <th>ملاحظات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">العراق 🇮🇶</td>
+            <td class="center">٣٠٠,٠٠٠ – ٥٠٠,٠٠٠</td>
+            <td class="center">~ ١٪</td>
+            <td>انخفض بشدة بعد الإبادة؛ أكثر من ٢٠٠,٠٠٠ في مخيمات</td>
+          </tr>
+          <tr>
+            <td class="bold">ألمانيا 🇩🇪</td>
+            <td class="center">~ ٢٠٠,٠٠٠</td>
+            <td class="center">~ ٠.٢٤٪</td>
+            <td>أكبر تجمع خارج العراق؛ موجة الهجرة بعد ٢٠١٤ ضخّمت العدد</td>
+          </tr>
+          <tr>
+            <td class="bold">أرمينيا 🇦🇲</td>
+            <td class="center">~ ٣٥,٠٠٠</td>
+            <td class="center">~ ١.٢٪</td>
+            <td>أقلية إثنية معترف بها رسمياً؛ تعداد ٢٠١١ سجّل ٣٥,٢٧٢</td>
+          </tr>
+          <tr>
+            <td class="bold">روسيا 🇷🇺</td>
+            <td class="center">~ ٣١,٠٠٠</td>
+            <td class="center">أقل من ٠.٠٣٪</td>
+            <td>هجرة من القوقاز؛ تعداد ٢٠٠٢ أعطى ٣١,٢٧٣</td>
+          </tr>
+          <tr>
+            <td class="bold">سوريا 🇸🇾</td>
+            <td class="center">١٢,٠٠٠ – ١٥,٠٠٠</td>
+            <td class="center">أقل من ٠.١٪</td>
+            <td>نصفهم هاجر منذ الثمانينيات؛ الحرب شرّدت كثيرين أكثر</td>
+          </tr>
+          <tr>
+            <td class="bold">جورجيا 🇬🇪</td>
+            <td class="center">~ ٦,٠٠٠</td>
+            <td class="center">أقل من ٠.٢٪</td>
+            <td>تراجع حاد من ٣٠,٠٠٠ في التسعينيات بسبب الهجرة</td>
+          </tr>
+          <tr>
+            <td class="bold">تركيا 🇹🇷</td>
+            <td class="center">أقل من ٥٠٠</td>
+            <td class="center">ضئيل جداً</td>
+            <td>كان ٣٠,٠٠٠ في ١٩٨٢، هاجر معظمهم إلى ألمانيا</td>
+          </tr>
+          <tr>
+            <td class="bold">السويد وهولندا وغيرها</td>
+            <td class="center">بضعة آلاف</td>
+            <td class="center">أقلية صغيرة</td>
+            <td>تجمعات متنامية منذ ٢٠٠٨</td>
+          </tr>
+          <tr>
+            <td class="bold" style="background:#FDF5E3;"><strong>الإجمالي العالمي التقديري</strong></td>
+            <td class="center" style="background:#FDF5E3;"><strong>٥٠٠,٠٠٠ – ١ مليون</strong></td>
+            <td class="center" style="background:#FDF5E3;">—</td>
+            <td style="background:#FDF5E3;">تراجع ملحوظ بسبب الإبادة والهجرة الجماعية</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-saffron">
+        <span class="callout-icon">📉</span>
+        <div>
+          <strong>جماعة مهدَّدة بالانقراض الديموغرافي</strong><br>
+          قبل عام ٢٠١٤ كان عدد الإيزيديين في العراق حوالي ٦٠٠,٠٠٠. انخفض هذا العدد بشكل حاد. من لم يُقتل أو يُخطف، أُجبر على الفرار. يقول العلماء إن الإيزيديين يواجهون خطراً ديموغرافياً حقيقياً ما لم تتحسن ظروف العودة والأمن في سنجار.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">العراق</span>
+        <span class="tag big">ألمانيا</span>
+        <span class="tag med">أرمينيا</span>
+        <span class="tag">روسيا</span>
+        <span class="tag peacock-tag">تقديرات غير رسمية</span>
+        <span class="tag saffron-tag">الهجرة بعد ٢٠١٤</span>
+        <span class="tag plum-tag">الانقراض الديموغرافي</span>
+        <span class="tag">الإحصاء غير الكافي</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Yazidis Demographics: <a href="https://en.wikipedia.org/wiki/Yazidis" target="_blank">en.wikipedia.org/wiki/Yazidis</a> | About the Yezidi People: <a href="http://www.yezidisinternational.org/abouttheyezidipeople/" target="_blank">yezidisinternational.org</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 8: LANGUAGE & SCRIPT ══════ -->
+    <div class="slide-section" id="s7">
+      <span class="section-label">Language & Script · اللغة والكتابة</span>
+      <h3 class="section-heading">اللغة الإيزيدية – الكرمانجية ولهجاتها</h3>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>🗣 اللغة المحكية</h4>
+          <ul>
+            <li><strong>اللغة الأم:</strong> الكرمانجية <span class="bilingue">Kurmanji</span> – الكردية الشمالية</li>
+            <li><strong>الأسرة اللغوية:</strong> الإيرانية الغربية ← الهندو-إيرانية ← الهندو-أوروبية</li>
+            <li><strong>استثناء:</strong> قريتا بشيقة وبهزاني يتكلمان العربية كلغة أم</li>
+            <li><strong>اللغة المقدسة:</strong> الكرمانجية أيضاً، تُقرأ فيها الأناشيد الدينية (القولات)</li>
+            <li><strong>اللغة الدينية الكلاسيكية:</strong> شكل قديم من الكرمانجية في النصوص المقدسة</li>
+            <li><strong>اللغة الثانية:</strong> العربية والتركية والفارسية حسب البلد</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>✍️ الكتابة والنصوص</h4>
+          <ul>
+            <li><strong>التقليد الشفهي:</strong> الدين الإيزيدي نُقل شفهياً لقرون بواسطة رجال الدين (القوّالون)</li>
+            <li><strong>الكتابة الحديثة:</strong> تُكتب الكرمانجية بالحروف اللاتينية في تركيا وأوروبا، وأحياناً بالعربية</li>
+            <li><strong>الكتب المقدسة المدوَّنة:</strong> كتاب الجلوة وكتاب مصحف رش – لكن العلماء يرون أنهما كُتبا في القرن التاسع عشر وليسا قديمَين</li>
+            <li><strong>القولات / Qewls:</strong> الأناشيد الدينية – النص الحقيقي الأصيل للإيزيديين، تُحفَظ شفهياً</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-peacock">
+        <span class="callout-icon">📿</span>
+        <div>
+          <strong>القوّالون – حرّاس المعرفة الدينية</strong><br>
+          القوّالون <span class="bilingue">Qawwals</span> هم رجال دين خاصون مُكلَّفون بحفظ الأناشيد الدينية المقدسة (القولات) ونقلها شفهياً من جيل إلى جيل. يُعدّون المستودع الحيّ للتراث الديني الإيزيدي. في العقود الأخيرة، بدأ جمع هذه الأناشيد وتدوينها خوفاً من ضياعها.
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>النص / Text</th>
+            <th>الوصف</th>
+            <th>اللغة</th>
+            <th>ملاحظة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">القولات / Qewls</td>
+            <td>الأناشيد الدينية الأصيلة – الجوهر الحقيقي للدين</td>
+            <td>كرمانجية قديمة</td>
+            <td>شفهية تاريخياً، يُجمَع ويُدوَّن الآن</td>
+          </tr>
+          <tr>
+            <td class="bold">كتاب الجلوة</td>
+            <td>"كتاب الانكشاف" – يصف طبيعة الله والملائكة</td>
+            <td>عربية وكردية</td>
+            <td>العلماء: كُتب في القرن ١٩، لكن يعكس تراثاً أصيلاً</td>
+          </tr>
+          <tr>
+            <td class="bold">مصحف رش</td>
+            <td>"الكتاب الأسود" – تحتوي على الأساطير والأوامر</td>
+            <td>عربية وكردية</td>
+            <td>نفس الحالة: مدوَّن متأخراً، يحفظ تقاليد أصيلة</td>
+          </tr>
+          <tr>
+            <td class="bold">المشورات / Mişûrs</td>
+            <td>وثائق من القرن الثالث عشر تسرد القبائل المنتسبة للإيزيدية</td>
+            <td>كردية</td>
+            <td>مصادر تاريخية قيّمة من أقدم الوثائق الإيزيدية</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tag-cloud">
+        <span class="tag big">الكرمانجية</span>
+        <span class="tag big">القولات</span>
+        <span class="tag med">القوّالون</span>
+        <span class="tag med">التراث الشفهي</span>
+        <span class="tag peacock-tag">كتاب الجلوة</span>
+        <span class="tag peacock-tag">مصحف رش</span>
+        <span class="tag saffron-tag">الهندو-أوروبية</span>
+        <span class="tag plum-tag">التدوين الحديث</span>
+        <span class="tag">الإيرانية الغربية</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Yazidism: <a href="https://en.wikipedia.org/wiki/Yazidism" target="_blank">en.wikipedia.org/wiki/Yazidism</a> | Encyclopaedia Iranica: <a href="https://www.iranicaonline.org/articles/yazidis-i-general-1/" target="_blank">iranicaonline.org</a> | Britannica – Yazidi: <a href="https://www.britannica.com/topic/Yazidi" target="_blank">britannica.com/topic/Yazidi</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 9: RELIGIOUS INSTITUTIONS ══════ -->
+    <div class="slide-section" id="s8">
+      <span class="section-label">Religion · المعتقد والمؤسسات الدينية</span>
+      <h3 class="section-heading">الديانة الإيزيدية – دين فريد من نوعه</h3>
+
+      <div class="callout callout-peacock">
+        <span class="callout-icon">🦚</span>
+        <div>
+          <strong>ما هي الإيزيدية؟</strong><br>
+          الإيزيدية ديانة <strong>توحيدية</strong> تؤمن بإله واحد (خويدي / Xwedê) أوكل رعاية العالم إلى سبعة ملائكة مقدسة. أعلاهم الملاك الطاووس <strong>طاووسي ملك</strong>، الوسيط بين الله والبشر. الدين يمزج عناصر من: الزرادشتية، والمانوية، والغنوصية، والمسيحية، والإسلام الصوفي. لكنه ليس فرعاً من أيٍّ منها – بل دين مستقل تطوّر على مدى قرون.
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>🕊 المعتقدات الأساسية</h4>
+          <ul>
+            <li><strong>التوحيد:</strong> إله واحد (خويدي) أسمى لا يتدخل مباشرةً في شؤون العالم</li>
+            <li><strong>طاووسي ملك:</strong> الملاك الطاووس – رمز التجدد، الحياة، والعلاقة مع الله</li>
+            <li><strong>التقمّص / metempsychosis:</strong> الإيمان بتناسخ الأرواح وتجدد الحياة</li>
+            <li><strong>سبعة ملائكة:</strong> خلق الله العالم وعهد برعايته لسبعة ملائكة مقدسة</li>
+            <li><strong>الطهارة الروحية:</strong> الالتزام بقواعد الطهارة وعدم تلوّث العناصر الأربعة</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>⛔ تابوهات ومحظورات مهمة</h4>
+          <ul>
+            <li>محظور تماماً نطق كلمة "شيطان" (لأن حروفها قريبة من اسم طاووسي ملك عند بعضهم)</li>
+            <li>محظور ارتداء اللون الأزرق الفاتح في بعض الطقوس</li>
+            <li>محظور أكل الخس في الأعياد</li>
+            <li>محظور تبوّل في اتجاه الشمس أو مواجهتها بالجلوس</li>
+            <li>الزواج <strong>خارج</strong> الجماعة الإيزيدية محرّم وينتج عنه الطرد من الدين</li>
+            <li>الدين لا يقبل المتحوّلين من الخارج – ولا يسمح بالتبشير</li>
+          </ul>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>المرتبة / Rank</th>
+            <th>الاسم / Title</th>
+            <th>الدور / Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">الأعلى دينياً</td>
+            <td>بابا الشيخ / Baba Sheikh</td>
+            <td>الرئيس الديني الأعلى للإيزيديين، يقيم في لالش</td>
+          </tr>
+          <tr>
+            <td class="bold">الأعلى دنيوياً</td>
+            <td>المير / Mir (الأمير)</td>
+            <td>رئيس الجماعة المدني والسياسي، من أسرة بالو الأميرية</td>
+          </tr>
+          <tr>
+            <td class="bold">رجال الدين</td>
+            <td>الشيوخ والبيرات / Sheikhs & Pirs</td>
+            <td>طبقتان دينيتان يُقدّمان التعليم والإرشاد الروحي</td>
+          </tr>
+          <tr>
+            <td class="bold">حرّاس التراث</td>
+            <td>القوّالون / Qawwals</td>
+            <td>حفاظ الأناشيد المقدسة وترتيل القولات في الاحتفالات</td>
+          </tr>
+          <tr>
+            <td class="bold">عامة الناس</td>
+            <td>المريدون / Murids</td>
+            <td>عامة الإيزيديين</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-saffron">
+        <span class="callout-icon">🏛</span>
+        <div>
+          <strong>أقدس مكان: وادي لالش</strong><br>
+          لالش <span class="bilingue">Lalish Valley</span> هو قلب الدين الإيزيدي وأقدس مكان لديهم. يضم ضريح الشيخ عدي ابن مسافر المؤسس (توفي ١١٦٢ م) وعدداً من أضرحة الأولياء. الحج إليه واجب مرة في العمر. يقع ٥٥ كم شرق مدينة دهوك في إقليم كردستان العراق. يحتفل فيه الإيزيديون بعيد رأس السنة (عيد جمعة رجب في أول أربعاء من نيسان) وبأسبوع الجمعية الكبير <span class="bilingue">Feast of Assembly</span> في أكتوبر.
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">طاووسي ملك</span>
+        <span class="tag big">لالش</span>
+        <span class="tag med">بابا الشيخ</span>
+        <span class="tag med">المير</span>
+        <span class="tag peacock-tag">القوّالون</span>
+        <span class="tag peacock-tag">عيد الجمعية</span>
+        <span class="tag saffron-tag">التقمّص</span>
+        <span class="tag saffron-tag">سبعة ملائكة</span>
+        <span class="tag plum-tag">الزرادشتية</span>
+        <span class="tag">نظام الطبقات</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Britannica – Yazidi: <a href="https://www.britannica.com/topic/Yazidi" target="_blank">britannica.com/topic/Yazidi</a> | Wikipedia – Yazidism: <a href="https://en.wikipedia.org/wiki/Yazidism" target="_blank">en.wikipedia.org/wiki/Yazidism</a> | World History Encyclopedia: <a href="https://www.worldhistory.org/Yazidism/" target="_blank">worldhistory.org/Yazidism</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 10: NOTABLE FIGURES ══════ -->
+    <div class="slide-section" id="s9">
+      <span class="section-label">Notable Figures · شخصيات بارزة</span>
+      <h3 class="section-heading">إيزيديون تركوا بصمة في التاريخ</h3>
+
+      <div class="grid-3">
+        <div class="person-card">
+          <div class="person-avatar">🕊</div>
+          <div class="person-name">الشيخ عدي ابن مسافر</div>
+          <div class="person-dates">حوالي ١٠٧٣ – ١١٦٢ م</div>
+          <div class="person-field">مؤسس الديانة الإيزيدية</div>
+          <div class="person-desc">شيخ صوفي مسلم وُلد في لبنان. استقرّ في وادي لالش في شمال العراق وأسّس طريقة صوفية اجتذبت الأكراد المحليين. بعد وفاته، تطوّر أتباعه إلى ما يُعرف اليوم بالديانة الإيزيدية. ضريحه في لالش هو أقدس مواقع الإيزيديين.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">🏆</div>
+          <div class="person-name">ناديا مراد</div>
+          <div class="person-dates">مواليد ١٩٩٣</div>
+          <div class="person-field">ناشطة حقوق الإنسان – نوبل ٢٠١٨</div>
+          <div class="person-desc">ناجية من خطف داعش عام ٢٠١٤، كانت محتجزة كعبدة جنسية. فرّت وتحوّلت إلى أشهر صوت دولي لصالح الإيزيديين. حصلت على جائزة نوبل للسلام عام ٢٠١٨ لشهادتها على جرائم داعش. مؤسسة منظمة "مبادرة ناديا" لدعم الناجيات.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">🎤</div>
+          <div class="person-name">لميا عجي بشار</div>
+          <div class="person-dates">مواليد ١٩٩٤</div>
+          <div class="person-field">ناشطة – نوبل ٢٠١٨</div>
+          <div class="person-desc">ناجية إيزيدية أخرى فرّت من أسر داعش. شاركت مع ناديا مراد في جائزة نوبل للسلام ٢٠١٨. تعمل على توثيق جرائم الإبادة والمطالبة بمحاسبة مرتكبيها. شهادتها ساعدت في تحريك ملاحقات قضائية دولية.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">🎖</div>
+          <div class="person-name">فيان دخيل</div>
+          <div class="person-dates">مواليد ١٩٦٤</div>
+          <div class="person-field">سياسية – عضو البرلمان العراقي</div>
+          <div class="person-desc">أول وأشهر إيزيدية في البرلمان العراقي. خطابها المُبكي عام ٢٠١٤ في البرلمان طالباً النجدة لإيزيديي سنجار المحاصرين استقطب الاهتمام الدولي. عملت طوال سنوات على تحريك الرأي السياسي العراقي والدولي لصالح الإيزيديين.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">✍️</div>
+          <div class="person-name">خنّه عمر خالي</div>
+          <div class="person-dates">القرن العشرون – الحادي والعشرون</div>
+          <div class="person-field">باحثة في الإيزيدية</div>
+          <div class="person-desc">من أبرز الأكاديميين في مجال الدراسات الإيزيدية. باحثة في جامعة غوتنغن الألمانية. قدّمت أعمالاً علمية معمّقة حول اللاهوت الإيزيدي والتاريخ والهوية. من الناطقين باسم المجتمع الإيزيدي في الأوساط الأكاديمية الدولية.</div>
+        </div>
+
+        <div class="person-card">
+          <div class="person-avatar">🌿</div>
+          <div class="person-name">حسين قاسم / الميرلبان</div>
+          <div class="person-dates">دور تاريخي حديث</div>
+          <div class="person-field">شخصيات قيادية تقليدية</div>
+          <div class="person-desc">الأسرة الأميرية الإيزيدية (آل بالو) تُمثّل القيادة المدنية للمجتمع. الأمير (المير) هو الزعيم الدنيوي الأعلى. كان المير طاهسن بك (١٩٢٨-٢٠٠٩) من أبرز الأمراء في العقود الأخيرة وأكثرهم معروفةً لدى الصحافة الغربية.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-peacock">
+        <span class="callout-icon">🌟</span>
+        <div>
+          <strong>ناديا مراد – صوت العالم الإيزيدي</strong><br>
+          كانت ناديا مراد مجرد شابة من قرية كوجو قبل أغسطس ٢٠١٤. أصبحت بعد فرارها من الأسر شاهدة أمام الأمم المتحدة وناشطة دولية حاصلة على نوبل السلام. قالت: <em>"أريد أن أتحدث عن كل شيء – قتل إخوتي، واختفاء أمي، وغسيل الدماغ الذي تعرّض له الأولاد – ليس الاغتصاب فحسب."</em>
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">ناديا مراد</span>
+        <span class="tag big">نوبل ٢٠١٨</span>
+        <span class="tag med">الشيخ عدي</span>
+        <span class="tag med">فيان دخيل</span>
+        <span class="tag peacock-tag">لميا عجي بشار</span>
+        <span class="tag peacock-tag">مبادرة ناديا</span>
+        <span class="tag saffron-tag">المير طاهسن</span>
+        <span class="tag plum-tag">الباحثون الإيزيديون</span>
+        <span class="tag">البرلمان العراقي</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Nadia's Initiative: <a href="https://www.nadiasinitiative.org" target="_blank">nadiasinitiative.org</a> | Wikipedia – Nadia Murad: <a href="https://en.wikipedia.org/wiki/Nadia_Murad" target="_blank">en.wikipedia.org/wiki/Nadia_Murad</a> | PBS Frontline: <a href="https://www.pbs.org/wgbh/frontline/article/yazidis-decade-after-isis-genocidal-campaign/" target="_blank">pbs.org</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 11: POLITICAL & LEGAL STATUS ══════ -->
+    <div class="slide-section" id="s10">
+      <span class="section-label">Political Status · الوضع السياسي والقانوني</span>
+      <h3 class="section-heading">الإيزيديون في القانون والسياسة</h3>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">⚖️</span>
+        <div>
+          <strong>التحدي القانوني الكبير</strong><br>
+          يعيش الإيزيديون في دول متعددة بوضع قانوني مختلف في كل منها. في العراق: لا توجد حماية قانونية كاملة ولا تمثيل سياسي كافٍ. في تركيا وسوريا: لا اعتراف بهم كأقلية مستقلة. في أرمينيا وألمانيا: يتمتعون بحقوق مدنية كاملة كأي مواطن.
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>الدولة</th>
+            <th>التمثيل السياسي</th>
+            <th>الاعتراف الدستوري / القانوني</th>
+            <th>الوضع الراهن</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold">العراق 🇮🇶</td>
+            <td class="center">مقاعد في البرلمان (كوتا أقليات)</td>
+            <td>قانون ناجيات الإيزيديين ٢٠٢١ – تعويضات وحقوق</td>
+            <td>تعثّر التطبيق؛ نزاع بغداد-أربيل يُعطّل العودة</td>
+          </tr>
+          <tr>
+            <td class="bold">إقليم كردستان العراق 🏔</td>
+            <td class="center">ممثلون في برلمان الإقليم</td>
+            <td>الإيزيديون "أكراد أصليون" وفق تعريف الإقليم</td>
+            <td>نزاع على إدارة سنجار يُبقي مئات الآلاف في المخيمات</td>
+          </tr>
+          <tr>
+            <td class="bold">أرمينيا 🇦🇲</td>
+            <td class="center">لا مقاعد مخصصة، لكن حقوق مدنية كاملة</td>
+            <td>الاعتراف الرسمي كأقلية إثنية مستقلة</td>
+            <td>أفضل أوضاع قانونية للإيزيديين في أي دولة</td>
+          </tr>
+          <tr>
+            <td class="bold">ألمانيا 🇩🇪</td>
+            <td class="center">لا مقاعد خاصة، لكن حق الانتخاب للمواطنين</td>
+            <td>اعتراف بالإبادة الجماعية (٢٠٢١) وأحكام قضائية</td>
+            <td>أوضاع قانونية جيدة كمواطنين؛ قضايا لم جداً للمحاكم</td>
+          </tr>
+          <tr>
+            <td class="bold">تركيا 🇹🇷</td>
+            <td class="center">لا تمثيل</td>
+            <td>لا اعتراف – يُصنَّفون ضمن الأكراد</td>
+            <td>بقايا صغيرة جداً من المجتمع؛ معظمهم هاجر</td>
+          </tr>
+          <tr>
+            <td class="bold">سوريا 🇸🇾</td>
+            <td class="center">لا تمثيل منفصل</td>
+            <td>لا اعتراف رسمي بهم كأقلية دينية</td>
+            <td>تهجير واسع بسبب الحرب وهجمات فصائل مسلحة في عفرين</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>📜 قانون ناجيات الإيزيديين (العراق ٢٠٢١)</h4>
+          <p>أقرّه البرلمان العراقي في مارس ٢٠٢١. يُحدّد جرائم داعش بحق الإيزيديين والمسيحيين والتركمان والشبك باعتبارها إبادة جماعية وجرائم ضد الإنسانية. يُقدّم تعويضات مالية، ويُنشئ مراكز لإعادة التأهيل النفسي، ويمنح قطع أراضٍ لبناء مساكن. لكن التطبيق الفعلي بقي محدوداً حتى الآن.</p>
+        </div>
+        <div class="card">
+          <h4>🏛 المطالب السياسية الإيزيدية</h4>
+          <ul>
+            <li>العودة الآمنة إلى سنجار وتوفير الأمن الحقيقي هناك</li>
+            <li>ملاحقة قضائية دولية لمرتكبي الإبادة</li>
+            <li>إيجاد المفقودين والإفراج عن المحتجزين</li>
+            <li>إعادة الأطفال الذين استُرقّوا إلى عائلاتهم</li>
+            <li>تطبيق قانون التعويضات بالكامل</li>
+            <li>اعتراف دولي رسمي أوسع بالإبادة الجماعية</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">قانون الناجيات ٢٠٢١</span>
+        <span class="tag big">الاعتراف بالإبادة</span>
+        <span class="tag med">البرلمان العراقي</span>
+        <span class="tag">العودة لسنجار</span>
+        <span class="tag peacock-tag">ألمانيا وأحكام داعش</span>
+        <span class="tag peacock-tag">أرمينيا والاعتراف</span>
+        <span class="tag saffron-tag">المحاكمات الدولية</span>
+        <span class="tag plum-tag">المفقودون</span>
+        <span class="tag">حقوق الأقليات</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: Wikipedia – Yazidi Genocide (Recognition): <a href="https://en.wikipedia.org/wiki/Yazidi_genocide" target="_blank">en.wikipedia.org/wiki/Yazidi_genocide</a> | ICCT: <a href="https://icct.nl/publication/ten-years-yazidi-genocide-searching-redress-war-against-isis" target="_blank">icct.nl</a> | PBS Frontline: <a href="https://www.pbs.org/wgbh/frontline/article/yazidis-decade-after-isis-genocidal-campaign/" target="_blank">pbs.org</a></p>
+      </div>
+    </div>
+
+    <!-- ══════ SLIDE 12: CONTEMPORARY CHALLENGES ══════ -->
+    <div class="slide-section" id="s11">
+      <span class="section-label">Contemporary Challenges · التحديات المعاصرة</span>
+      <h3 class="section-heading">تحديات الإيزيديين في العصر الحديث</h3>
+
+      <div class="grid-2">
+        <div class="card" style="border-right:4px solid var(--danger);">
+          <h4>⛺ نزوح مستمر وعودة مستحيلة</h4>
+          <p>يعيش أكثر من ٢٠٠,٠٠٠ إيزيدي في مخيمات منذ عام ٢٠١٤ دون قدرة على العودة إلى سنجار. أسباب ذلك: دمار شبه كامل للبنية التحتية، وجود ألغام أرضية وذخائر غير منفجرة، تنافس عسكري بين فصائل متعددة (البيشمركة، والحشد الشعبي، وعناصر PKK، وجماعات محلية)، وعدم اتفاق حكومة بغداد وإقليم كردستان على إدارة المنطقة.</p>
+        </div>
+        <div class="card" style="border-right:4px solid var(--plum);">
+          <h4>💔 صدمة جماعية وآثار نفسية</h4>
+          <p>أثبتت الدراسات العلمية أن الإيزيديين يعانون من مستويات عالية جداً من الاضطراب النفسي (PTSD) والاكتئاب. الناجيات من الأسر يواجهن وصمة اجتماعية داخل مجتمعهن. أطفال اختُطفوا وأُعيدوا يواجهون صعوبة الاندماج. الأطفال الذين وُلدوا لآباء من داعش يواجهون تساؤلات هوية وقبول مجتمعي صعبة.</p>
+        </div>
+        <div class="card" style="border-right:4px solid var(--peacock);">
+          <h4>📉 تآكل ثقافي وهجرة الشباب</h4>
+          <p>مع انتقال مئات الآلاف إلى ألمانيا وأوروبا، تتراجع ممارسة الطقوس الدينية، يضعف التواصل مع لغة الكرمانجية، ويتهدد نظام الطبقات والقيادة التقليدية. الأجيال الجديدة في ألمانيا تنمو بين عالمين. يخشى بعض كبار السن من "ذوبان" الهوية الإيزيدية في مجتمعات الغرب.</p>
+        </div>
+        <div class="card" style="border-right:4px solid var(--saffron);">
+          <h4>⚖️ مظالم تاريخية لم تُعالَج</h4>
+          <p>آلاف المفقودين لم يُعثر عليهم. معظم عناصر داعش المسؤولين عن الجرائم لم يُحاكموا. التعويضات المالية في العراق لا تغطي حجم الخسائر الفعلية. الأطفال الذين خُطفوا أطفالاً ونشأوا في صفوف داعش يواجهون وضعاً قانونياً واجتماعياً بالغ التعقيد. وصمة "عبّاد الشيطان" لا تزال موجودة في بعض المجتمعات المحيطة.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-green">
+        <span class="callout-icon">🌱</span>
+        <div>
+          <strong>بصيص الأمل – قوة المجتمع الإيزيدي</strong><br>
+          رغم كل المعاناة، يُبدي المجتمع الإيزيدي صموداً استثنائياً: مبادرة ناديا تعمل دولياً على دعم الناجيات وإعادة بناء سنجار. مدارس وطواقم طبية تُنشأ في مخيمات الإقليم. مشاريع توثيق التراث الشفهي قبل ضياعه. محاكم دولية تُصدر أحكاماً تاريخية. الاهتمام الأكاديمي الدولي بالإيزيديين في تصاعد. ألمانيا وكندا قدّمتا برامج دعم خاصة لعائلات إيزيدية.
+        </div>
+      </div>
+
+      <div class="callout callout-peacock">
+        <span class="callout-icon">💬</span>
+        <div>
+          <strong>صوت من الشتات</strong><br>
+          يقول أحد الإيزيديين الذي يعيش الآن في ألمانيا: <em>"نسمع طلقات نارية ونخرج من سنجار. خلّفنا بيتنا وأرضنا. كل يوم يبدو وكأنه الثالث من أغسطس. نساؤنا وأمهاتنا وأخواتنا لا يزلن أسيرات."</em>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>🌍 ما يطالب به الإيزيديون اليوم</h4>
+        <div class="grid-2" style="margin-top:10px">
+          <ul>
+            <li>🏡 ضمانات أمنية حقيقية للعودة إلى سنجار</li>
+            <li>⚖️ محاكمات دولية شاملة لمجرمي داعش</li>
+            <li>🔍 البحث عن المفقودين وفتح المقابر الجماعية</li>
+            <li>👦 إيجاد الأطفال الذين اختُطفوا وإعادتهم لعائلاتهم</li>
+          </ul>
+          <ul>
+            <li>💰 تطبيق كامل وسريع لقانون التعويضات ٢٠٢١</li>
+            <li>🏫 دعم التعليم والصحة في المخيمات والعودة</li>
+            <li>🌐 اعتراف دولي أوسع وأشمل بالإبادة الجماعية</li>
+            <li>📚 الحفاظ على التراث الثقافي والديني الإيزيدي</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tag-cloud">
+        <span class="tag big">العودة لسنجار</span>
+        <span class="tag big">المفقودون</span>
+        <span class="tag med">الصدمة النفسية</span>
+        <span class="tag med">المحاكمات الدولية</span>
+        <span class="tag peacock-tag">مبادرة ناديا</span>
+        <span class="tag peacock-tag">الصمود الإيزيدي</span>
+        <span class="tag saffron-tag">الهجرة إلى ألمانيا</span>
+        <span class="tag plum-tag">الهوية في الشتات</span>
+        <span class="tag danger">وصمة "عبّاد الشيطان"</span>
+        <span class="tag">التعويضات</span>
+      </div>
+
+      <div class="footnotes">
+        <p>📚 المصادر: PBS Frontline: <a href="https://www.pbs.org/wgbh/frontline/article/yazidis-decade-after-isis-genocidal-campaign/" target="_blank">pbs.org</a> | ICCT: <a href="https://icct.nl/publication/ten-years-yazidi-genocide-searching-redress-war-against-isis" target="_blank">icct.nl</a> | Frontiers in Psychology: <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1074283/full" target="_blank">frontiersin.org</a> | The National: <a href="https://www.thenationalnews.com/mena/iraq/2023/08/03/yazidi-genocide-survivors-still-haunted-by-isis-onslaught-nine-years-later/" target="_blank">thenationalnews.com</a></p>
+      </div>
+    </div>
+
+  </div><!-- /slide-body -->
+
+  <div id="controls">
+    <button class="ctrl-btn" id="btn-prev" onclick="prevSlide()" disabled>&#9654; السابق</button>
+    <span id="ctrl-info">القسم ١ من ١٢ – الهوية والأصول</span>
+    <button class="ctrl-btn" id="btn-next" onclick="nextSlide()">التالي &#9664;</button>
+  </div>
+</div><!-- /main -->
+
+<script>
+  const slides = [
+    { ar:"الهوية والأصول",             en:"Identity & Origins",        sec:"القسم الأول · SECTION 1" },
+    { ar:"أصل التسمية",                en:"Etymology",                 sec:"القسم الثاني · SECTION 2" },
+    { ar:"المسيرة التاريخية",          en:"Historical Trajectory",     sec:"القسم الثالث · SECTION 3" },
+    { ar:"الإبادة الجماعية ٢٠١٤",     en:"Genocide 2014",             sec:"القسم الرابع · SECTION 4" },
+    { ar:"الهجرة واللجوء",            en:"Migration & Refuge",        sec:"القسم الخامس · SECTION 5" },
+    { ar:"التوزيع الجغرافي",           en:"Geographic Distribution",   sec:"القسم السادس · SECTION 6" },
+    { ar:"الأعداد والتعداد",           en:"Demographic Estimates",     sec:"القسم السابع · SECTION 7" },
+    { ar:"اللغة والكتابة",             en:"Language & Script",         sec:"القسم الثامن · SECTION 8" },
+    { ar:"المعتقد والمؤسسات الدينية",  en:"Religion & Institutions",   sec:"القسم التاسع · SECTION 9" },
+    { ar:"شخصيات بارزة",              en:"Notable Figures",           sec:"القسم العاشر · SECTION 10" },
+    { ar:"الوضع السياسي والقانوني",    en:"Political & Legal Status",  sec:"القسم الحادي عشر · SECTION 11" },
+    { ar:"التحديات المعاصرة",          en:"Contemporary Challenges",   sec:"القسم الثاني عشر · SECTION 12" },
+  ];
+  const arNums=["١","٢","٣","٤","٥","٦","٧","٨","٩","١٠","١١","١٢"];
+  let current=0, mapInited=false;
+
+  function goTo(idx){
+    document.querySelectorAll('.slide-section').forEach((s,i)=>s.classList.toggle('active',i===idx));
+    document.querySelectorAll('#nav-list li').forEach((li,i)=>li.classList.toggle('active',i===idx));
+    current=idx;
+    const pct=((idx+1)/12*100).toFixed(2);
+    document.getElementById('progress-fill').style.width=pct+'%';
+    document.getElementById('slide-section-num').textContent=slides[idx].sec;
+    document.getElementById('slide-title').textContent=slides[idx].ar;
+    document.getElementById('slide-counter').textContent=arNums[idx]+' / ١٢';
+    document.getElementById('ctrl-info').textContent='القسم '+arNums[idx]+' من ١٢ – '+slides[idx].ar;
+    document.getElementById('btn-prev').disabled=idx===0;
+    document.getElementById('btn-next').disabled=idx===11;
+    document.getElementById('slide-body').scrollTop=0;
+    if(idx===5&&!mapInited)initMap();
+  }
+  function nextSlide(){if(current<11)goTo(current+1);}
+  function prevSlide(){if(current>0)goTo(current-1);}
+
+  function initMap(){
+    mapInited=true;
+    const map=L.map('yazidi-map').setView([36.8,42.5],5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:12}).addTo(map);
+
+    // Historic homeland polygon (Yazidi heartland)
+    L.polygon([
+      [37.3,43.0],[37.0,42.5],[36.5,41.8],[36.0,41.5],
+      [35.5,42.0],[35.8,43.2],[36.5,43.8],[37.3,43.6],[37.3,43.0]
+    ],{color:'#1A6B5E',fillColor:'#2DA08C',fillOpacity:.15,weight:2,dashArray:'6 4'})
+      .addTo(map).bindPopup('<b>الموطن الأصلي التاريخي للإيزيديين</b><br>كردستان التاريخية – شمال العراق وجواره');
+
+    const ic=L.divIcon({html:'<div style="background:#1A6B5E;width:14px;height:14px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>',iconSize:[14,14],iconAnchor:[7,7],className:''});
+    const pts=[
+      {lat:36.82,lng:43.09,name:'وادي لالش',en:'Lalish Valley',note:'أقدس موقع إيزيدي – ضريح الشيخ عدي'},
+      {lat:36.61,lng:43.05,name:'دهوك',en:'Duhok',note:'أكبر مخيمات النازحين الإيزيديين'},
+      {lat:36.34,lng:41.87,name:'سنجار',en:'Sinjar',note:'مركز الوجود الإيزيدي – دُمّر ٢٠١٤'},
+      {lat:36.68,lng:43.40,name:'شيخان',en:'Shekhan',note:'أكبر تجمع إيزيدي تاريخي في العراق'},
+      {lat:36.35,lng:43.13,name:'الموصل',en:'Mosul',note:'المدينة الكبرى قرب المناطق الإيزيدية'},
+      {lat:36.19,lng:37.16,name:'عفرين',en:'Afrin',note:'إيزيديو شمال سوريا – هُجِّروا بعد ٢٠١٨'},
+      {lat:40.18,lng:44.51,name:'يريفان',en:'Yerevan',note:'عاصمة أرمينيا – أقلية إيزيدية رسمية (~٣٥,٠٠٠)'},
+      {lat:52.37,lng:9.73,name:'هانوفر',en:'Hannover',note:'أكبر تجمع إيزيدي في ألمانيا وأوروبا'},
+      {lat:37.38,lng:41.24,name:'طور عبدين',en:'Tur Abdin',note:'تاريخياً موطن إيزيديي تركيا (غادره معظمهم)'},
+    ];
+    pts.forEach(p=>L.marker([p.lat,p.lng],{icon:ic}).addTo(map).bindPopup(
+      `<div dir="rtl" style="font-family:'Noto Sans Arabic',sans-serif;min-width:170px">
+        <b style="color:#1A6B5E">${p.name}</b><br>
+        <small style="color:#888">${p.en}</small><br>
+        <span style="font-size:.82rem">${p.note}</span>
+      </div>`));
+  }
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'||e.key==='ArrowDown')nextSlide();
+    if(e.key==='ArrowRight'||e.key==='ArrowUp')prevSlide();
+  });
+</script>
+</body>
+</html>
