@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A detailed guide to referencing in Arabic research papers, with English explanations and Arabic examples." />
+  <title>Referencing in Arabic Research Papers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --panel-2: #eef4ff;
+      --text: #182230;
+      --muted: #5f6b7a;
+      --line: #d9e2ef;
+      --primary: #1f4ea3;
+      --primary-2: #2f6ad8;
+      --accent: #a61e2d;
+      --good: #166534;
+      --shadow: 0 14px 38px rgba(20, 38, 68, 0.08);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --arabic: 'Amiri', serif;
+      --ui: 'Inter', system-ui, sans-serif;
+      --maxw: 1280px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--ui);
+      background: linear-gradient(180deg, #eff5ff 0%, var(--bg) 240px);
+      color: var(--text);
+      line-height: 1.75;
+      padding: 24px;
+    }
+
+    .page {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #17366f 0%, #2458b5 55%, #3c7cff 100%);
+      color: white;
+      padding: 56px 48px 42px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.15;
+      margin-bottom: 16px;
+      max-width: 900px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 920px;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .hero-meta {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-badge {
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      font-size: 0.95rem;
+    }
+
+    .quick-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 18px 28px;
+      background: #f7faff;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(8px);
+    }
+
+    .quick-nav a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+      background: white;
+      border: 1px solid #d8e3f6;
+      border-radius: 999px;
+      padding: 10px 14px;
+      transition: 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .quick-nav a:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .content {
+      padding: 34px 28px 48px;
+    }
+
+    .intro-box {
+      background: linear-gradient(180deg, #f6f9ff 0%, #ffffff 100%);
+      border: 1px solid #dce7fb;
+      border-left: 7px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 24px 24px 20px;
+      margin-bottom: 28px;
+    }
+
+    .intro-box h2 {
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+      color: #152946;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 24px 0 32px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin: 24px 0 32px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 8px 22px rgba(25, 44, 82, 0.05);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #12315f;
+      font-size: 1.2rem;
+    }
+
+    .card p + p,
+    .card ul,
+    .card ol {
+      margin-top: 10px;
+    }
+
+    .section {
+      margin-top: 36px;
+      scroll-margin-top: 92px;
+    }
+
+    .section-header {
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      font-size: 1.85rem;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: #11294f;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      max-width: 920px;
+    }
+
+    .rule-box {
+      border: 1px solid #cfe0ff;
+      background: #f5f9ff;
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      margin: 14px 0;
+    }
+
+    .rule-box strong {
+      color: #12315f;
+    }
+
+    .example-card {
+      background: linear-gradient(180deg, #fcfdff 0%, #f6f9ff 100%);
+      border: 1px solid #d9e4f3;
+      border-radius: var(--radius);
+      padding: 20px;
+      margin: 18px 0;
+    }
+
+    .example-title {
+      display: inline-block;
+      margin-bottom: 12px;
+      font-weight: 800;
+      color: var(--accent);
+      font-size: 1.02rem;
+    }
+
+    .example-explanation {
+      color: #334155;
+      margin-bottom: 10px;
+    }
+
+    .arabic-block {
+      direction: rtl;
+      text-align: right;
+      font-family: var(--arabic);
+      font-size: 1.35rem;
+      background: #ffffff;
+      border: 1px dashed #bfd2f0;
+      border-radius: 14px;
+      padding: 16px 18px;
+      color: #1e293b;
+      margin-top: 10px;
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: white;
+      background: var(--primary);
+      border-radius: 999px;
+      padding: 6px 10px;
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0 26px;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 14px 16px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef4ff;
+      color: #163760;
+      font-weight: 800;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .rtl-cell {
+      direction: rtl;
+      text-align: right;
+      font-family: var(--arabic);
+      font-size: 1.18rem;
+    }
+
+    .note {
+      font-size: 0.96rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .compare .pane {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      background: #fbfdff;
+    }
+
+    .pane h3 {
+      margin-bottom: 10px;
+      color: #17345d;
+    }
+
+    .footer {
+      padding: 28px;
+      background: #f7faff;
+      border-top: 1px solid var(--line);
+      color: #475569;
+      font-size: 0.98rem;
+    }
+
+    .copy-btn {
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--ui);
+      transition: 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary-2);
+      transform: translateY(-1px);
+    }
+
+    .good {
+      color: var(--good);
+      font-weight: 700;
+    }
+
+    .warn {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    @media (max-width: 980px) {
+      .grid-2,
+      .grid-3,
+      .compare,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 12px;
+      }
+
+      .hero {
+        padding: 36px 22px 28px;
+      }
+
+      .content {
+        padding: 24px 18px 34px;
+      }
+
+      .quick-nav {
+        padding: 12px;
+      }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        border-bottom: 1px solid var(--line);
+      }
+
+      td {
+        padding: 10px 14px;
+      }
+
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 800;
+        color: #17345d;
+        margin-bottom: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <h1>How References Are Written in Arabic Research Papers</h1>
+      <p>
+        A practical guide in English, with Arabic examples. This page explains in-text citation,
+        the bibliography, Arabic and English sources, and how to cite books, articles, theses,
+        videos, websites, conference papers, and more.
+      </p>
+      <div class="hero-meta">
+        <span class="hero-badge">English explanations</span>
+        <span class="hero-badge">Arabic examples</span>
+        <span class="hero-badge">APA, Harvard, and footnote-based practice</span>
+      </div>
+    </header>
+
+    <nav class="quick-nav">
+      <a href="#overview">Overview</a>
+      <a href="#intext">In-text Citation</a>
+      <a href="#bibliography">Bibliography</a>
+      <a href="#english-sources">English Sources</a>
+      <a href="#source-types">Source Types</a>
+      <a href="#advanced">Advanced Cases</a>
+      <a href="#mistakes">Common Mistakes</a>
+      <a href="#templates">Quick Templates</a>
+    </nav>
+
+    <main class="content">
+      <section id="overview" class="section">
+        <div class="intro-box">
+          <h2>Main idea</h2>
+          <p>
+            Arabic research papers usually do <strong>not</strong> use a special citation system that is unique to Arabic.
+            Instead, they normally follow the same major citation systems used internationally, such as
+            <strong>APA</strong>, <strong>Harvard</strong>, or in some humanities contexts, <strong>Chicago-style footnotes</strong>.
+            What changes is the <strong>language and script</strong>, not the basic citation logic.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>What stays the same</h3>
+            <p>
+              The core pattern remains the same as in English academic writing: cite the source inside the text,
+              then give the full reference in a list at the end.
+            </p>
+          </div>
+          <div class="card">
+            <h3>What changes</h3>
+            <p>
+              Names, titles, and publication details may appear in Arabic script or English script,
+              depending on the language of the source and the department or journal style.
+            </p>
+          </div>
+          <div class="card">
+            <h3>What you should always check</h3>
+            <p>
+              Universities, supervisors, and journals sometimes impose their own house style.
+              Always follow the official guide if one exists.
+            </p>
+          </div>
+        </div>
+
+        <div class="rule-box">
+          <strong>Simple rule:</strong> Every source normally appears twice: once in the text, and once in the final reference list.
+        </div>
+      </section>
+
+      <section id="intext" class="section">
+        <div class="section-header">
+          <h2>In-text citation</h2>
+          <p>
+            In-text citation in Arabic papers follows the same logic as in English. You cite the author and year,
+            and if you quote directly, you usually include the page number as well.
+          </p>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Explanation</th>
+              <th>Arabic example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Case">One author</td>
+              <td data-label="Explanation">Use the family name and year.</td>
+              <td data-label="Arabic example" class="rtl-cell">(السعدي، 2021)</td>
+            </tr>
+            <tr>
+              <td data-label="Case">Author in sentence</td>
+              <td data-label="Explanation">Mention the author in the sentence, then place the year after the name.</td>
+              <td data-label="Arabic example" class="rtl-cell">يرى السعدي (2021) أن...</td>
+            </tr>
+            <tr>
+              <td data-label="Case">Direct quotation</td>
+              <td data-label="Explanation">Add the page number.</td>
+              <td data-label="Arabic example" class="rtl-cell">(السعدي، 2021، ص. 45)</td>
+            </tr>
+            <tr>
+              <td data-label="Case">Two authors</td>
+              <td data-label="Explanation">Write both names.</td>
+              <td data-label="Arabic example" class="rtl-cell">(الخفاجي والعتيبي، 2018)</td>
+            </tr>
+            <tr>
+              <td data-label="Case">Three or more authors</td>
+              <td data-label="Explanation">In Arabic writing, many people use وآخرون after the first author.</td>
+              <td data-label="Arabic example" class="rtl-cell">(الشمري وآخرون، 2022)</td>
+            </tr>
+            <tr>
+              <td data-label="Case">Organization as author</td>
+              <td data-label="Explanation">Use the institution name instead of a personal author.</td>
+              <td data-label="Arabic example" class="rtl-cell">(وزارة التعليم، 2020)</td>
+            </tr>
+            <tr>
+              <td data-label="Case">No date</td>
+              <td data-label="Explanation">Use a no-date equivalent if required by your style guide.</td>
+              <td data-label="Arabic example" class="rtl-cell">(العتيبي، بدون تاريخ)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="compare">
+          <div class="pane">
+            <h3>Paraphrase</h3>
+            <p>When you rewrite the idea in your own words, you still cite the source.</p>
+            <div class="arabic-block">يشير الباحث إلى أن تنمية مهارات الكتابة تحتاج إلى تدريب مستمر (السعدي، 2021).</div>
+          </div>
+          <div class="pane">
+            <h3>Direct quotation</h3>
+            <p>When you quote the exact wording, include the page number.</p>
+            <div class="arabic-block">"تعد الكتابة الأكاديمية مهارة مركبة تحتاج إلى وعي لغوي ومنهجي" (السعدي، 2021، ص. 45).</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="bibliography" class="section">
+        <div class="section-header">
+          <h2>Bibliography / reference list</h2>
+          <p>
+            The final list usually contains the full details of every cited source. In many Arabic papers,
+            this section is titled <strong>المراجع</strong> or <strong>قائمة المراجع</strong>.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Typical order of information</h3>
+            <ol>
+              <li>Author</li>
+              <li>Year</li>
+              <li>Title</li>
+              <li>Publication information</li>
+              <li>DOI or URL when relevant</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h3>Sorting practice in Arabic</h3>
+            <p>
+              Many Arabic departments sort Arabic references alphabetically by family name.
+              In practice, many writers ignore the definite article <strong>ال</strong> when alphabetizing.
+              Local conventions may vary.
+            </p>
+          </div>
+        </div>
+
+        <div class="rule-box">
+          <strong>Important distinction:</strong> Some departments use <em>references</em> to mean only the sources actually cited,
+          while <em>bibliography</em> may sometimes include additional works consulted. Many students use the two labels interchangeably,
+          but your department may distinguish between them.
+        </div>
+
+        <div class="example-card">
+          <span class="example-title">Basic Arabic book entry</span>
+          <p class="example-explanation">This is the general idea for a book entry in an author-date style.</p>
+          <div class="arabic-block">السعدي، محمد. (2021). <em>كتابة البحوث العلمية</em>. دار الفكر.</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="example-title">Basic Arabic journal article entry</span>
+          <p class="example-explanation">Include journal title, volume, issue, and page range.</p>
+          <div class="arabic-block">الشمري، نورة. (2022). فاعلية التعلم المدمج في تنمية التفكير الناقد. <em>مجلة التربية والعلوم</em>، 15(2)، 45-68.</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+      </section>
+
+      <section id="english-sources" class="section">
+        <div class="section-header">
+          <h2>What if you have English sources?</h2>
+          <p>
+            This is one of the most common questions. In Arabic research papers, English sources are often left in English,
+            especially in the bibliography. However, some institutions allow or prefer adding an Arabic translation of the title,
+            usually in square brackets.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Most common practice</h3>
+            <p>
+              Keep the English source exactly as it appears in English. This is especially common in linguistics,
+              computer science, education, and the social sciences.
+            </p>
+            <div class="arabic-block" style="direction:ltr;text-align:left;font-family:var(--ui);font-size:1rem;">
+              Smith, J. (2020). <em>Language and Cognition</em>. Oxford University Press.
+            </div>
+          </div>
+          <div class="card">
+            <h3>Possible translated-title practice</h3>
+            <p>
+              Some writers keep the original title and add an Arabic translation in brackets.
+              This can help Arabic readers, but only do it if your department accepts this practice.
+            </p>
+            <div class="arabic-block" style="direction:ltr;text-align:left;font-family:var(--ui);font-size:1rem;">
+              Smith, J. (2020). <em>Language and Cognition</em> [اللغة والإدراك]. Oxford University Press.
+            </div>
+          </div>
+        </div>
+
+        <div class="rule-box">
+          <strong>Best practical advice:</strong> If your paper is in Arabic and the source is in English, keep the source information in English unless your university guide tells you otherwise.
+        </div>
+
+        <div class="mini-grid">
+          <div class="example-card">
+            <span class="example-title">Arabic in-text citation with an English source</span>
+            <p class="example-explanation">You may keep the author name in Latin script if that is your department's practice.</p>
+            <div class="arabic-block">(Smith, 2020)</div>
+          </div>
+          <div class="example-card">
+            <span class="example-title">Arabic sentence with an English source</span>
+            <p class="example-explanation">Writers differ here. Some keep the English name, others transliterate it.</p>
+            <div class="arabic-block">ويرى Smith (2020) أن اللغة ترتبط بالإدراك على نحو وثيق.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>How to arrange Arabic and English references together</h3>
+          <ul>
+            <li>Many Arabic theses place <strong>Arabic references first</strong>, then <strong>foreign references</strong>.</li>
+            <li>Some journals prefer one combined alphabetical list.</li>
+            <li>Both practices exist, so the official style guide matters here.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="source-types" class="section">
+        <div class="section-header">
+          <h2>How to cite different source types</h2>
+          <p>
+            Below are practical examples for the most common types of publications and media. The explanations are in English,
+            and the examples themselves are in Arabic where appropriate.
+          </p>
+        </div>
+
+        <div class="example-card">
+          <span class="label">BOOK</span>
+          <span class="example-title">Book with one author</span>
+          <p class="example-explanation">Author, year, title, publisher.</p>
+          <div class="arabic-block">السعدي، محمد. (2021). <em>كتابة البحوث العلمية: دليل عملي</em>. دار الفكر.</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">BOOK</span>
+          <span class="example-title">Book with two authors</span>
+          <p class="example-explanation">Write both names in the order required by your style.</p>
+          <div class="arabic-block">الخفاجي، أحمد، والعتيبي، راشد. (2018). <em>استراتيجيات التدريس الحديثة</em>. دار النشر الجامعي.</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">CHAPTER</span>
+          <span class="example-title">Chapter in an edited book</span>
+          <p class="example-explanation">Include the chapter author, chapter title, editor, book title, page range, and publisher.</p>
+          <div class="arabic-block">جروان، فتحي. (1999). تعليم التفكير: مفاهيم وتطبيقات. في أحمد الطويل (محرر)، <em>التربية الحديثة</em> (ص. 120-145). دار وائل.</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">ARTICLE</span>
+          <span class="example-title">Journal article</span>
+          <p class="example-explanation">Include journal name, volume, issue, page range, and DOI if available.</p>
+          <div class="arabic-block">الشمري، نورة. (2022). فاعلية التعلم المدمج في تنمية التفكير الناقد. <em>مجلة التربية والعلوم</em>، 15(2)، 45-68. https://doi.org/10.1234/example</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">THESIS</span>
+          <span class="example-title">Unpublished master's thesis</span>
+          <p class="example-explanation">State the type of thesis and the university.</p>
+          <div class="arabic-block">البلوي، عائشة. (2017). واقع الأنشطة المدرسية غير الصفية في مدارس البنات بمنطقة تبوك [رسالة ماجستير غير منشورة، جامعة تبوك].</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">DISSERTATION</span>
+          <span class="example-title">Doctoral dissertation</span>
+          <p class="example-explanation">If it is unpublished, say so. If it is in a repository, add the repository information if required.</p>
+          <div class="arabic-block">الحربي، خالد. (2020). تحليل الخطاب الإعلامي العربي [أطروحة دكتوراه غير منشورة، جامعة الملك سعود].</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">WEBSITE</span>
+          <span class="example-title">Website or webpage</span>
+          <p class="example-explanation">For web sources, many styles ask for the access date, especially when the content may change over time.</p>
+          <div class="arabic-block">العتيبي، راشد. (2021، 15 مارس). كيفية كتابة البحوث العلمية. موقع مساعد البحث. تم الاطلاع في 2 أبريل 2026، من https://example.com</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">VIDEO</span>
+          <span class="example-title">YouTube video or online lecture</span>
+          <p class="example-explanation">Use the channel or person who uploaded the video as the author when needed.</p>
+          <div class="arabic-block">جامعة القاهرة. (2023). مدخل إلى علم اللغة [فيديو]. يوتيوب. تم الاطلاع في 2 أبريل 2026، من https://youtube.com/example</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">PODCAST</span>
+          <span class="example-title">Podcast episode</span>
+          <p class="example-explanation">Include the episode title and medium if your style guide asks for it.</p>
+          <div class="arabic-block">بودكاست العربية. (2022، 10 يونيو). تطور اللغة العربية [حلقة صوتية]. تم الاطلاع في 2 أبريل 2026، من https://example.com/podcast</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">CONFERENCE</span>
+          <span class="example-title">Conference paper</span>
+          <p class="example-explanation">The exact format varies, but the title of the paper and conference details are usually included.</p>
+          <div class="arabic-block">حسن، أحمد. (2020). تحليل الخطاب في وسائل التواصل الاجتماعي. في <em>أعمال مؤتمر اللغة العربية والاتصال</em>، جامعة القاهرة، 122-138.</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">NEWSPAPER</span>
+          <span class="example-title">Newspaper article</span>
+          <p class="example-explanation">Include the full date when available.</p>
+          <div class="arabic-block">المطيري، خالد. (2024، 12 يناير). التحول الرقمي في الجامعات العربية. <em>الرياض</em>.</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+
+        <div class="example-card">
+          <span class="label">REPORT</span>
+          <span class="example-title">Institutional or governmental report</span>
+          <p class="example-explanation">Use the institution as the author if no individual author is listed.</p>
+          <div class="arabic-block">وزارة التعليم. (2020). <em>تقرير تطوير المناهج للمرحلة الثانوية</em>. وزارة التعليم.</div>
+          <button class="copy-btn" onclick="copyText(this)">Copy example</button>
+        </div>
+      </section>
+
+      <section id="advanced" class="section">
+        <div class="section-header">
+          <h2>Advanced and tricky cases</h2>
+          <p>
+            These are the cases that often confuse students because they are not always handled consistently across institutions.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>No personal author</h3>
+            <p>Use the institution, organization, or site name.</p>
+            <div class="arabic-block">(وزارة التعليم، 2020)</div>
+          </div>
+          <div class="card">
+            <h3>No date</h3>
+            <p>Use a no-date equivalent only if your style guide allows it.</p>
+            <div class="arabic-block">(العتيبي، بدون تاريخ)</div>
+          </div>
+          <div class="card">
+            <h3>Secondary citation</h3>
+            <p>
+              Use this when you did not read the original source directly. In serious research, it is better to consult the original source whenever possible.
+            </p>
+            <div class="arabic-block">(ابن خلدون، كما ورد في السعدي، 2021)</div>
+          </div>
+          <div class="card">
+            <h3>Classical Arabic texts</h3>
+            <p>
+              Classical works may need edition details, editor names, volume numbers, and page numbers.
+              Humanities departments often have their own preferred format here.
+            </p>
+            <div class="arabic-block">ابن جني. (1952). <em>الخصائص</em> (تحقيق محمد علي النجار). دار الكتب المصرية.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Footnotes instead of author-date citation</h3>
+          <p>
+            Some Arabic humanities papers, especially in literature, history, Islamic studies, and philosophy,
+            may use footnotes rather than parenthetical in-text citation. In that case, the citation appears in a note at the bottom of the page,
+            and the bibliography still appears at the end.
+          </p>
+          <div class="arabic-block">محمد السعدي، <em>كتابة البحوث العلمية</em> (بيروت: دار الفكر، 2021)، 45.</div>
+          <p class="note">This is only an illustrative note-style example. Exact punctuation varies by style guide.</p>
+        </div>
+      </section>
+
+      <section id="mistakes" class="section">
+        <div class="section-header">
+          <h2>Common mistakes in Arabic research papers</h2>
+          <p>
+            These are the problems that appear again and again in student writing.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3 class="warn">Mistake 1</h3>
+            <p>Mixing citation styles in the same paper.</p>
+            <p class="note">Example: using APA in some places and footnotes in others without a clear reason.</p>
+          </div>
+          <div class="card">
+            <h3 class="warn">Mistake 2</h3>
+            <p>Quoting directly without a page number.</p>
+          </div>
+          <div class="card">
+            <h3 class="warn">Mistake 3</h3>
+            <p>Adding a source to the bibliography that never appears in the text, or citing a source in the text but forgetting it in the final list.</p>
+          </div>
+          <div class="card">
+            <h3 class="warn">Mistake 4</h3>
+            <p>Changing the spelling of authors' names from one entry to another.</p>
+          </div>
+          <div class="card">
+            <h3 class="warn">Mistake 5</h3>
+            <p>Translating English titles inconsistently or inventing translations without indicating that they are translations.</p>
+          </div>
+          <div class="card">
+            <h3 class="warn">Mistake 6</h3>
+            <p>Using websites with incomplete information, such as no author, no date, and no clear title, without handling them carefully.</p>
+          </div>
+        </div>
+
+        <div class="rule-box">
+          <strong>Good practice:</strong> Before final submission, compare every in-text citation against the final reference list line by line.
+        </div>
+      </section>
+
+      <section id="templates" class="section">
+        <div class="section-header">
+          <h2>Quick templates you can reuse</h2>
+          <p>
+            These are simple templates you can adapt quickly when writing a paper.
+          </p>
+        </div>
+
+        <div class="example-card">
+          <span class="example-title">Book template</span>
+          <div class="arabic-block">اسم العائلة، الاسم الأول. (السنة). <em>عنوان الكتاب</em>. دار النشر.</div>
+        </div>
+
+        <div class="example-card">
+          <span class="example-title">Journal article template</span>
+          <div class="arabic-block">اسم العائلة، الاسم الأول. (السنة). عنوان المقالة. <em>اسم المجلة</em>، رقم المجلد(رقم العدد)، الصفحات.</div>
+        </div>
+
+        <div class="example-card">
+          <span class="example-title">Thesis template</span>
+          <div class="arabic-block">اسم العائلة، الاسم الأول. (السنة). عنوان الرسالة [رسالة ماجستير غير منشورة، اسم الجامعة].</div>
+        </div>
+
+        <div class="example-card">
+          <span class="example-title">Website template</span>
+          <div class="arabic-block">اسم المؤلف أو الجهة. (السنة، اليوم الشهر). عنوان الصفحة أو المقال. اسم الموقع. تم الاطلاع في اليوم الشهر السنة، من الرابط</div>
+        </div>
+
+        <div class="example-card">
+          <span class="example-title">Video template</span>
+          <div class="arabic-block">اسم المؤلف أو الجهة. (السنة). عنوان الفيديو [فيديو]. اسم المنصة. تم الاطلاع في اليوم الشهر السنة، من الرابط</div>
+        </div>
+
+        <div class="card">
+          <h3>Final practical advice</h3>
+          <ul>
+            <li>Choose one style and stay consistent.</li>
+            <li>Keep English sources in English unless your department requests otherwise.</li>
+            <li>Use Arabic examples naturally in the body of the paper, but keep source details accurate to the original publication.</li>
+            <li>Always check whether your department wants APA, Harvard, or footnotes.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      This page is designed as a practical academic guide. It is intentionally written in English for explanation,
+      while keeping examples in Arabic so the patterns are easy to reuse in actual Arabic research papers.
+    </footer>
+  </div>
+
+  <script>
+    function copyText(button) {
+      const card = button.closest('.example-card');
+      const block = card.querySelector('.arabic-block');
+      if (!block) return;
+
+      const text = block.innerText.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const original = button.textContent;
+        button.textContent = 'Copied';
+        button.style.background = '#166534';
+        setTimeout(() => {
+          button.textContent = original;
+          button.style.background = '';
+        }, 1400);
+      });
+    }
+  </script>
+</body>
+</html>
