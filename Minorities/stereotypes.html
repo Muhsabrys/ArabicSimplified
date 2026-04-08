@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درس تحليل الخطاب والسياسة اللغوية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eef2f7;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        .input-field {
+            border: 2px solid #e2e8f0;
+            border-radius: 0.9rem;
+            width: 100%;
+            padding: 12px 16px;
+            outline: none;
+            transition: all 0.25s ease;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        .input-field:focus,
+        textarea.input-field:focus {
+            border-color: #6366f1;
+            background-color: white;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0;
+        }
+
+        .badge-indigo { background: #e0e7ff; color: #4338ca; }
+        .badge-rose { background: #ffe4e6; color: #be123c; }
+        .badge-emerald { background: #d1fae5; color: #047857; }
+        .badge-amber { background: #fef3c7; color: #b45309; }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.9rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.9rem;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background: #eef2ff;
+            border-color: #c7d2fe;
+        }
+
+        .mini-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .prompt-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1rem 1.1rem;
+        }
+
+        .reading-text p {
+            margin-bottom: 1rem;
+        }
+
+        .number-pill {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .section-card {
+                box-shadow: none;
+                border: 1px solid #cbd5e1;
+                break-inside: avoid;
+            }
+            main {
+                margin-top: 0 !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 pb-24">
+
+    <header class="bg-indigo-950 text-white py-16 px-6 text-center shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg width="100%" height="100%" fill="none" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h400v400H0z"/>
+                <circle cx="200" cy="200" r="150" stroke="currentColor" stroke-width="2"/>
+                <path d="M50 200h300M200 50v300" stroke="currentColor" stroke-width="1"/>
+            </svg>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <span class="bg-indigo-500 text-xs font-bold px-4 py-1 rounded-full mb-4 inline-block">وحدة: التمثيل والوصم والخطاب الأمني</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">تحليل الخطاب والسياسة اللغوية</h1>
+            <p class="text-indigo-200 text-lg max-w-3xl mx-auto leading-relaxed">
+                stereotyping, labeling, dehumanization, security discourse, and terminology politics
+            </p>
+            <p class="text-indigo-300 text-sm mt-4 max-w-3xl mx-auto leading-relaxed">
+                أهداف الدرس: تطوير معجم عربي لتحليل الخطاب، التدريب على الاقتباس وإعادة الصياغة، وتحليل التحيز في تمثيل الجماعات داخل النصوص الإعلامية.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 -mt-10 space-y-10 relative z-20">
+
+        <!-- Overview -->
+        <section class="section-card p-8">
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+                    <p class="mini-title mb-2">الموضوع</p>
+                    <p class="font-bold text-slate-900">الصور النمطية، الوصم، نزع الإنسانية، والخطاب الأمني</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+                    <p class="mini-title mb-2">الأهداف اللغوية</p>
+                    <p class="font-bold text-slate-900">تمثيل، وصم، تنميط، إطار، تحيز، إعادة صياغة، حياد لغوي</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+                    <p class="mini-title mb-2">المهمة الكتابية</p>
+                    <p class="font-bold text-slate-900">مذكرة تحليل خطاب تقارن بين 6 إلى 8 مقتطفات وتقترح بدائل محايدة</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vocabulary -->
+        <section class="section-card p-8">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-3 bg-indigo-100 rounded-xl text-indigo-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">المعجم التحليلي</h2>
+                    <p class="text-slate-500 text-sm">خمسة عشر مصطلحًا أساسيًا لهذا الدرس</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-indigo">تمثيل Representation</span>
+                    <p class="text-sm leading-relaxed text-slate-600">الطريقة التي تُعرض بها جماعة أو فئة اجتماعية داخل الخطاب.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-rose">وصم Stigmatization</span>
+                    <p class="text-sm leading-relaxed text-slate-600">ربط جماعة بصفة سلبية ثابتة تؤثر في صورتها العامة.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-indigo">تنميط Stereotyping</span>
+                    <p class="text-sm leading-relaxed text-slate-600">تعميم صفات محددة على جميع أفراد الجماعة مع تجاهل التنوع الداخلي.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-amber">إطار Framing</span>
+                    <p class="text-sm leading-relaxed text-slate-600">الزاوية التي يُقدَّم من خلالها الحدث أو القضية لتوجيه الفهم.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-indigo">تحيّز Bias</span>
+                    <p class="text-sm leading-relaxed text-slate-600">ميل غير موضوعي يؤثر في اختيار الكلمات أو طريقة العرض.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-rose">نزع الإنسانية Dehumanization</span>
+                    <p class="text-sm leading-relaxed text-slate-600">تصوير الناس كأخطار أو كتل أو أرقام بدلًا من أفراد لهم كرامة وتجارب.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-amber">خطاب أمني Security Discourse</span>
+                    <p class="text-sm leading-relaxed text-slate-600">خطاب يفسر القضايا الاجتماعية من زاوية التهديد والسيطرة والخطر.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-indigo">تأطير إعلامي Media Framing</span>
+                    <p class="text-sm leading-relaxed text-slate-600">اختيار مفردات وصيغ محددة لبناء فهم معين لدى الجمهور.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-rose">مصطلحات مشحونة Loaded Terms</span>
+                    <p class="text-sm leading-relaxed text-slate-600">كلمات تحمل دلالات عاطفية أو سياسية قوية تتجاوز الوصف المحايد.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-emerald">إعادة صياغة Rephrasing</span>
+                    <p class="text-sm leading-relaxed text-slate-600">التعبير عن الفكرة بطريقة مختلفة وأكثر توازنًا أو حيادًا.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-indigo">تحليل الخطاب Discourse Analysis</span>
+                    <p class="text-sm leading-relaxed text-slate-600">دراسة اللغة في سياقها الاجتماعي والسياسي والثقافي.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-amber">تصنيف اجتماعي Social Classification</span>
+                    <p class="text-sm leading-relaxed text-slate-600">تقسيم الناس إلى فئات تؤثر في إدراكهم ومعاملتهم داخل المجتمع.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-rose">إقصاء لغوي Linguistic Exclusion</span>
+                    <p class="text-sm leading-relaxed text-slate-600">استخدام اللغة على نحو يُبعد فئات أو يهمش أصواتًا معينة.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-emerald">حياد لغوي Neutral Wording</span>
+                    <p class="text-sm leading-relaxed text-slate-600">اختيار كلمات دقيقة لا تسبق الحكم على الأشخاص أو الجماعات.</p>
+                </div>
+
+                <div class="p-4 border border-slate-100 rounded-xl">
+                    <span class="badge badge-indigo">سردية إعلامية Media Narrative</span>
+                    <p class="text-sm leading-relaxed text-slate-600">القصة العامة أو المنطق التفسيري الذي يبنى حول حدث أو فئة اجتماعية.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reading -->
+        <section class="section-card overflow-hidden">
+            <div class="bg-slate-900 text-white p-6 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold">النص المركزي</h2>
+                    <p class="text-slate-400 text-sm mt-1">حوالي 300 كلمة</p>
+                </div>
+                <span class="text-xs text-slate-400">قراءة تحليلية</span>
+            </div>
+
+            <div class="p-8 reading-text text-lg text-slate-700 leading-loose text-justify">
+                <p>
+                    في كثير من النصوص الإعلامية، لا تُستخدم اللغة من أجل نقل المعلومات فقط، بل من أجل بناء صورة ذهنية عن جماعة أو فئة اجتماعية معينة. وهنا تظهر أهمية <span class="text-indigo-700 font-bold">تحليل الخطاب</span>، لأنه يساعدنا على فهم كيفية <span class="text-indigo-700 font-bold">تمثيل</span> الناس، وكيف يمكن للكلمات أن تنقل <span class="text-rose-700 font-bold">تحيزًا</span> أو تصنع <span class="text-amber-700 font-bold">إطارًا</span> يوجّه القارئ نحو تفسير محدد.
+                </p>
+
+                <p>
+                    فعندما يختار الكاتب أو الصحفي <span class="text-rose-700 font-bold">مصطلحات مشحونة</span> لوصف جماعة معينة، فإنه لا يكتفي بالوصف، بل يشارك في <span class="text-rose-700 font-bold">وصم</span> هذه الجماعة وربطها بصفات سلبية. وعندما تتكرر هذه الأوصاف نفسها في الأخبار والتقارير، يتحول الأمر إلى <span class="text-indigo-700 font-bold">تنميط</span> يجعل أفراد الجماعة متشابهين في نظر الجمهور، حتى لو كان الواقع أكثر تعقيدًا وتنوعًا.
+                </p>
+
+                <p>
+                    وفي حالات كثيرة، يعمل <span class="text-amber-700 font-bold">الخطاب الأمني</span> بوصفه الإطار الرئيسي لفهم وجود هذه الفئات، بحيث تُقدَّم باعتبارها مصدر خطر أو تهديد محتمل. هذا النوع من <span class="text-indigo-700 font-bold">التأطير الإعلامي</span> قد يؤدي إلى <span class="text-rose-700 font-bold">نزع الإنسانية</span>، لأن الناس يُعرضون كأرقام أو عبء أو مشكلة عامة، لا كأفراد لديهم أصوات وتجارب وظروف مختلفة. ومن هنا يظهر أيضًا أثر <span class="text-amber-700 font-bold">التصنيف الاجتماعي</span> و<span class="text-rose-700 font-bold">الإقصاء اللغوي</span> في تشكيل النقاش العام.
+                </p>
+
+                <p>
+                    لهذا السبب، تصبح <span class="text-emerald-700 font-bold">إعادة الصياغة</span> واختيار <span class="text-emerald-700 font-bold">حياد لغوي</span> أمرين ضروريين عند كتابة الأخبار أو تحليلها. فالتعبير الدقيق لا يلغي الحقائق، لكنه يمنع تحويلها إلى أداة للتشويه أو التعميم. وكلما فهمنا العلاقة بين اللغة و<span class="text-indigo-700 font-bold">السردية الإعلامية</span>، أصبحنا أكثر قدرة على إنتاج خطاب أكثر عدلًا ودقة ومسؤولية.
+                </p>
+            </div>
+        </section>
+
+        <!-- Activity 1 -->
+        <section class="section-card p-8">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="number-pill bg-indigo-100 text-indigo-700">1</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">نشاط المفردات</h3>
+                    <p class="text-slate-500 text-sm">اختر الإجابة الصحيحة</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <p class="font-semibold mb-3">1. كلمة <span class="text-indigo-700">وصم</span> تعني:</p>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <label class="option-label"><input type="radio" name="v1" class="mt-1"> <span>أ. تحليل البيانات</span></label>
+                        <label class="option-label"><input type="radio" name="v1" class="mt-1"> <span>ب. إلصاق صفة سلبية بفئة معينة</span></label>
+                        <label class="option-label"><input type="radio" name="v1" class="mt-1"> <span>ج. حذف المعلومات</span></label>
+                        <label class="option-label"><input type="radio" name="v1" class="mt-1"> <span>د. دعم الحياد</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-semibold mb-3">2. <span class="text-indigo-700">الخطاب الأمني</span> يقدّم القضايا عادة من زاوية:</p>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <label class="option-label"><input type="radio" name="v2" class="mt-1"> <span>أ. الجمال الفني</span></label>
+                        <label class="option-label"><input type="radio" name="v2" class="mt-1"> <span>ب. الخطر والتهديد والسيطرة</span></label>
+                        <label class="option-label"><input type="radio" name="v2" class="mt-1"> <span>ج. الحياد الكامل دائمًا</span></label>
+                        <label class="option-label"><input type="radio" name="v2" class="mt-1"> <span>د. الترفيه الثقافي</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-semibold mb-3">3. <span class="text-indigo-700">التنميط</span> يعني:</p>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <label class="option-label"><input type="radio" name="v3" class="mt-1"> <span>أ. تعميم صفات محددة على جماعة كاملة</span></label>
+                        <label class="option-label"><input type="radio" name="v3" class="mt-1"> <span>ب. دراسة التاريخ الاجتماعي</span></label>
+                        <label class="option-label"><input type="radio" name="v3" class="mt-1"> <span>ج. إلغاء النص</span></label>
+                        <label class="option-label"><input type="radio" name="v3" class="mt-1"> <span>د. توسيع المعجم</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-semibold mb-3">4. المقصود بـ <span class="text-indigo-700">الحياد اللغوي</span> هو:</p>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <label class="option-label"><input type="radio" name="v4" class="mt-1"> <span>أ. استخدام كلمات مشحونة</span></label>
+                        <label class="option-label"><input type="radio" name="v4" class="mt-1"> <span>ب. استخدام لغة دقيقة غير متحيزة</span></label>
+                        <label class="option-label"><input type="radio" name="v4" class="mt-1"> <span>ج. حذف التفاصيل المهمة</span></label>
+                        <label class="option-label"><input type="radio" name="v4" class="mt-1"> <span>د. الاكتفاء بالوصف العاطفي</span></label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity 2 -->
+        <section class="section-card p-8">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="number-pill bg-emerald-100 text-emerald-700">2</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">أسئلة فهم النص</h3>
+                    <p class="text-slate-500 text-sm">أجب بجمل كاملة</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="prompt-box">
+                    <label class="block font-semibold mb-3">1. كيف تؤثر المصطلحات المشحونة في تمثيل الجماعات داخل الخطاب الإعلامي؟</label>
+                    <input type="text" class="input-field" placeholder="اكتب إجابتك هنا">
+                </div>
+
+                <div class="prompt-box">
+                    <label class="block font-semibold mb-3">2. ما العلاقة بين الخطاب الأمني ونزع الإنسانية كما يشرحها النص؟</label>
+                    <input type="text" class="input-field" placeholder="اكتب إجابتك هنا">
+                </div>
+
+                <div class="prompt-box">
+                    <label class="block font-semibold mb-3">3. لماذا تعد إعادة الصياغة ضرورية عند تناول القضايا الحساسة؟</label>
+                    <input type="text" class="input-field" placeholder="اكتب إجابتك هنا">
+                </div>
+
+                <div class="prompt-box">
+                    <label class="block font-semibold mb-3">4. ماذا يحدث عندما تتحول الأوصاف المتكررة في الإعلام إلى تنميط؟</label>
+                    <input type="text" class="input-field" placeholder="اكتب إجابتك هنا">
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity 3 -->
+        <section class="section-card p-8 bg-indigo-50 border-indigo-100">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="number-pill bg-rose-100 text-rose-700">3</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">تحليل خطاب تطبيقي</h3>
+                    <p class="text-slate-500 text-sm">حلل الجملة التالية باستخدام أدوات الدرس</p>
+                </div>
+            </div>
+
+            <div class="bg-white border border-indigo-100 rounded-2xl p-5 mb-6">
+                <p class="text-center text-lg font-bold text-slate-900">"هذه الفئة تشكل خطرًا متزايدًا على المجتمع."</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="prompt-box">
+                    <label class="block font-semibold mb-3">1. ما نوع الإطار المستخدم في هذه الجملة؟</label>
+                    <input type="text" class="input-field" placeholder="مثال: إطار أمني">
+                </div>
+
+                <div class="prompt-box">
+                    <label class="block font-semibold mb-3">2. أين يظهر التحيز في صياغة هذه الجملة؟</label>
+                    <input type="text" class="input-field" placeholder="اكتب ملاحظتك هنا">
+                </div>
+
+                <div class="prompt-box">
+                    <label class="block font-semibold mb-3">3. هل تحتوي الجملة على وصم أو تنميط؟ وضح.</label>
+                    <input type="text" class="input-field" placeholder="اكتب إجابتك هنا">
+                </div>
+
+                <div class="prompt-box">
+                    <label class="block font-semibold mb-3">4. ما التأثير المتوقع لهذه الجملة على القارئ أو الجمهور؟</label>
+                    <input type="text" class="input-field" placeholder="اكتب إجابتك هنا">
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity 4 -->
+        <section class="section-card p-8">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="number-pill bg-amber-100 text-amber-700">4</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">إعادة الصياغة المحايدة</h3>
+                    <p class="text-slate-500 text-sm">حوّل الخطاب المشحون إلى خطاب مهني أدق</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <p class="text-sm mb-3 text-rose-700 font-bold">1. "هذه المجموعة تسبب مشاكل أمنية خطيرة."</p>
+                    <input type="text" class="input-field" placeholder="اكتب صياغتك البديلة هنا">
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <p class="text-sm mb-3 text-rose-700 font-bold">2. "هم لا يندمجون في المجتمع."</p>
+                    <input type="text" class="input-field" placeholder="اكتب صياغتك البديلة هنا">
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <p class="text-sm mb-3 text-rose-700 font-bold">3. "هذه الفئة عبء على الدولة."</p>
+                    <input type="text" class="input-field" placeholder="اكتب صياغتك البديلة هنا">
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <p class="text-sm mb-3 text-rose-700 font-bold">4. "انتشارهم يهدد الاستقرار."</p>
+                    <input type="text" class="input-field" placeholder="اكتب صياغتك البديلة هنا">
+                </div>
+            </div>
+        </section>
+
+        <!-- TF -->
+        <section class="section-card p-8">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="number-pill bg-indigo-100 text-indigo-700">5</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">صح أم خطأ</h3>
+                    <p class="text-slate-500 text-sm">استنادًا إلى النص</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <p class="font-semibold mb-3">1. تحليل الخطاب يدرس اللغة بمعزل عن السياق الاجتماعي.</p>
+                    <div class="flex gap-3">
+                        <label class="option-label flex-1"><input type="radio" name="tf1" class="mt-1"> <span>صح</span></label>
+                        <label class="option-label flex-1"><input type="radio" name="tf1" class="mt-1"> <span>خطأ</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-semibold mb-3">2. المصطلحات المشحونة قد تؤدي إلى وصم جماعات معينة.</p>
+                    <div class="flex gap-3">
+                        <label class="option-label flex-1"><input type="radio" name="tf2" class="mt-1"> <span>صح</span></label>
+                        <label class="option-label flex-1"><input type="radio" name="tf2" class="mt-1"> <span>خطأ</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-semibold mb-3">3. الخطاب الأمني يقدّم الجماعات دائمًا بشكل اجتماعي متوازن ومحايد.</p>
+                    <div class="flex gap-3">
+                        <label class="option-label flex-1"><input type="radio" name="tf3" class="mt-1"> <span>صح</span></label>
+                        <label class="option-label flex-1"><input type="radio" name="tf3" class="mt-1"> <span>خطأ</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-semibold mb-3">4. إعادة الصياغة والحياد اللغوي يمكن أن يسهما في تغيير السردية الإعلامية.</p>
+                    <div class="flex gap-3">
+                        <label class="option-label flex-1"><input type="radio" name="tf4" class="mt-1"> <span>صح</span></label>
+                        <label class="option-label flex-1"><input type="radio" name="tf4" class="mt-1"> <span>خطأ</span></label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Passage MCQ -->
+        <section class="section-card p-8">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="number-pill bg-emerald-100 text-emerald-700">6</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">اختيار من متعدد عن النص</h3>
+                    <p class="text-slate-500 text-sm">أربع أسئلة استيعابية</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <p class="font-semibold mb-3">1. ما الفكرة الرئيسية للنص؟</p>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <label class="option-label"><input type="radio" name="mcq1" class="mt-1"> <span>أ. تأثير الاقتصاد في الإعلام</span></label>
+                        <label class="option-label"><input type="radio" name="mcq1" class="mt-1"> <span>ب. دور اللغة في تشكيل تمثيل الجماعات والسرديات الإعلامية</span></label>
+                        <label class="option-label"><input type="radio" name="mcq1" class="mt-1"> <span>ج. تاريخ الصحافة العربية</span></label>
+                        <label class="option-label"><input type="radio" name="mcq1" class="mt-1"> <span>د. علاقة الإعلام بالتكنولوجيا فقط</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-semibold mb-3">2. ماذا يحدث عندما تتكرر أوصاف سلبية لجماعة معينة في الإعلام؟</p>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <label class="option-label"><input type="radio" name="mcq2" class="mt-1"> <span>أ. يتحقق الحياد اللغوي</span></label>
+                        <label class="option-label"><input type="radio" name="mcq2" class="mt-1"> <span>ب. تتكون صورة أكثر تنوعًا</span></label>
+                        <label class="option-label"><input type="radio" name="mcq2" class="mt-1"> <span>ج. يتحول الأمر إلى تنميط ووصم</span></label>
+                        <label class="option-label"><input type="radio" name="mcq2" class="mt-1"> <span>د. يختفي التحيز تمامًا</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-semibold mb-3">3. كيف يسهم الخطاب الأمني في تمثيل الفئات الاجتماعية؟</p>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <label class="option-label"><input type="radio" name="mcq3" class="mt-1"> <span>أ. يقدّمها غالبًا باعتبارها خطرًا أو تهديدًا</span></label>
+                        <label class="option-label"><input type="radio" name="mcq3" class="mt-1"> <span>ب. يقدّمها باعتبارها موضوعًا أدبيًا فقط</span></label>
+                        <label class="option-label"><input type="radio" name="mcq3" class="mt-1"> <span>ج. يفصلها تمامًا عن السياسة</span></label>
+                        <label class="option-label"><input type="radio" name="mcq3" class="mt-1"> <span>د. يمنع أي شكل من أشكال التأطير</span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="font-semibold mb-3">4. ما الهدف من استخدام الحياد اللغوي وإعادة الصياغة وفق النص؟</p>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <label class="option-label"><input type="radio" name="mcq4" class="mt-1"> <span>أ. جعل النص أقصر فقط</span></label>
+                        <label class="option-label"><input type="radio" name="mcq4" class="mt-1"> <span>ب. حذف المواقف المعقدة</span></label>
+                        <label class="option-label"><input type="radio" name="mcq4" class="mt-1"> <span>ج. إنتاج خطاب أدق وأكثر عدلًا</span></label>
+                        <label class="option-label"><input type="radio" name="mcq4" class="mt-1"> <span>د. استبدال التحليل بالمشاعر</span></label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Writing Task -->
+        <section class="section-card p-8 bg-slate-50 border-slate-200">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="number-pill bg-slate-200 text-slate-700">7</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">المهمة الكتابية</h3>
+                    <p class="text-slate-500 text-sm">Discourse memo</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-slate-700 leading-loose">
+                <p>
+                    اختر من 6 إلى 8 مقتطفات قصيرة من عناوين أو فقرات إعلامية، ثم حللها باستخدام مصطلحات هذا الدرس. في كل مقتطف، حدّد:
+                </p>
+                <ul class="list-disc pr-6 space-y-1">
+                    <li>نوع التمثيل أو الإطار المستخدم</li>
+                    <li>مواضع الوصم أو التنميط أو التحيز</li>
+                    <li>الألفاظ التي قد تساهم في نزع الإنسانية أو الإقصاء اللغوي</li>
+                    <li>صياغة بديلة أكثر حيادًا ودقة</li>
+                </ul>
+                <textarea rows="6" class="input-field" placeholder="ابدأ تدوين مذكرتك التحليلية هنا"></textarea>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 py-10 border-t border-slate-200 text-center text-slate-500 text-sm no-print">
+        <p>درس تدريبي في تحليل الخطاب والسياسة اللغوية</p>
+    </footer>
+
+    <div class="fixed bottom-6 left-6 no-print flex flex-col gap-3">
+        <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-xl flex items-center gap-2 transition-all group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m8-10V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2m10 10H7a2 2 0 01-2-2v-4a2 2 0 012-2h10a2 2 0 012 2v4a2 2 0 01-2 2z"/>
+            </svg>
+            <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300">طباعة الدرس</span>
+        </button>
+    </div>
+
+</body>
+</html>
