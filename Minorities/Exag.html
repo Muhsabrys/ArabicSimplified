@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صيغ المبالغة — Arabic Intensive Forms</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #f5f0e8;
+    --aged: #e8dfc8;
+    --rust: #8b3a1a;
+    --gold: #c4912a;
+    --teal: #1e6b6b;
+    --cream: #faf7f0;
+    --shadow: rgba(26,18,8,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.7;
+    background-image:
+      radial-gradient(ellipse at 10% 20%, rgba(196,145,42,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 90% 80%, rgba(30,107,107,0.06) 0%, transparent 60%);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3.5rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 40px,
+      rgba(196,145,42,0.04) 40px, rgba(196,145,42,0.04) 41px
+    );
+  }
+  header .ar-title {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    position: relative;
+  }
+  header .en-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: rgba(245,240,232,0.7);
+    margin-top: 0.5rem;
+    font-style: italic;
+    position: relative;
+  }
+  header .tagline {
+    margin-top: 1.2rem;
+    font-size: 0.9rem;
+    color: rgba(245,240,232,0.5);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  /* NAV TABS */
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-bottom: 3px solid var(--ink);
+    background: var(--aged);
+    padding: 0 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  nav button {
+    background: none;
+    border: none;
+    padding: 0.9rem 1.4rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(26,18,8,0.55);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+  nav button:hover { color: var(--rust); }
+  nav button.active {
+    color: var(--rust);
+    border-bottom-color: var(--rust);
+    background: var(--paper);
+  }
+
+  /* MAIN LAYOUT */
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* TYPOGRAPHY */
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 900;
+    color: var(--rust);
+    margin: 2rem 0 0.4rem;
+    border-left: 5px solid var(--gold);
+    padding-left: 1rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--teal);
+    margin: 1.8rem 0 0.6rem;
+    font-style: italic;
+  }
+  p { margin-bottom: 1rem; color: #2a2010; }
+  .ar {
+    font-family: 'Noto Naskh Arabic', serif;
+    direction: rtl;
+    font-size: 1.15em;
+    font-weight: 600;
+  }
+  .big-ar {
+    font-family: 'Noto Naskh Arabic', serif;
+    direction: rtl;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--rust);
+  }
+
+  /* INFO BOX */
+  .box {
+    background: var(--cream);
+    border: 1.5px solid rgba(196,145,42,0.35);
+    border-radius: 3px;
+    padding: 1.4rem 1.6rem;
+    margin: 1.2rem 0 1.8rem;
+    box-shadow: 3px 3px 0 rgba(196,145,42,0.12);
+  }
+  .box-teal { border-color: rgba(30,107,107,0.4); box-shadow: 3px 3px 0 rgba(30,107,107,0.1); }
+  .box-rust { border-color: rgba(139,58,26,0.35); box-shadow: 3px 3px 0 rgba(139,58,26,0.1); }
+
+  /* SEMANTIC PAIR */
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.2rem 0;
+  }
+  .pair-card {
+    background: var(--cream);
+    border: 1.5px solid var(--aged);
+    border-radius: 3px;
+    padding: 1rem 1.2rem;
+    text-align: center;
+  }
+  .pair-card.ism { border-top: 4px solid #a0b4c0; }
+  .pair-card.mub { border-top: 4px solid var(--rust); }
+  .pair-card .label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-bottom: 0.3rem;
+  }
+  .pair-card .word {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+    margin: 0.2rem 0;
+  }
+  .pair-card.ism .word { color: #4a7090; }
+  .pair-card.mub .word { color: var(--rust); }
+  .pair-card .gloss { font-size: 0.85rem; font-style: italic; color: #666; }
+  .pair-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--gold);
+    font-weight: 900;
+  }
+
+  /* WAZN BADGE */
+  .wazn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--gold);
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.2em 0.7em;
+    border-radius: 2px;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .wazn.q { background: var(--teal); color: #fff; }
+  .wazn.s { background: var(--rust); color: #fff; }
+
+  /* MAIN TABLES */
+  .table-wrap { overflow-x: auto; margin: 1rem 0 2rem; border-radius: 3px; box-shadow: 0 2px 14px var(--shadow); }
+  table { width: 100%; border-collapse: collapse; background: var(--cream); }
+  thead tr { background: var(--ink); color: var(--paper); }
+  thead th {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  thead th.ar-col { text-align: right; }
+  tbody tr { border-bottom: 1px solid rgba(196,145,42,0.18); transition: background 0.15s; }
+  tbody tr:hover { background: rgba(196,145,42,0.07); }
+  td { padding: 0.75rem 1rem; font-size: 0.93rem; vertical-align: top; }
+  td.ar-col { text-align: right; font-family: 'Noto Naskh Arabic', serif; font-size: 1.1rem; font-weight: 600; }
+  td.wazn-col { font-family: 'Noto Naskh Arabic', serif; font-size: 1rem; color: var(--rust); font-weight: 700; }
+  tbody tr:nth-child(even) { background: rgba(232,223,200,0.3); }
+  tbody tr:nth-child(even):hover { background: rgba(196,145,42,0.1); }
+
+  .cat-row { background: rgba(30,107,107,0.08) !important; }
+  .cat-row td { font-family: 'Playfair Display', serif; font-style: italic; color: var(--teal); font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.4rem 1rem; }
+
+  /* FILTER BUTTONS */
+  .filter-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 1.5rem; }
+  .filter-btn {
+    background: var(--aged);
+    border: 1.5px solid rgba(26,18,8,0.2);
+    border-radius: 2px;
+    padding: 0.35rem 0.9rem;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 400;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--ink);
+    color: var(--gold);
+    border-color: var(--ink);
+  }
+
+  /* SEARCH */
+  .search-wrap { margin: 1rem 0; }
+  .search-wrap input {
+    width: 100%;
+    max-width: 420px;
+    padding: 0.65rem 1rem;
+    border: 1.5px solid rgba(26,18,8,0.25);
+    border-radius: 2px;
+    background: var(--cream);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-wrap input:focus { border-color: var(--teal); }
+
+  /* QUIZ */
+  .quiz-card {
+    background: var(--cream);
+    border: 2px solid var(--aged);
+    border-radius: 3px;
+    padding: 1.6rem;
+    margin: 1.2rem 0;
+    box-shadow: 4px 4px 0 rgba(196,145,42,0.15);
+  }
+  .quiz-q { font-family: 'Noto Naskh Arabic', serif; font-size: 1.5rem; text-align: center; direction: rtl; margin-bottom: 1rem; color: var(--ink); }
+  .quiz-en { font-style: italic; text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 1.2rem; }
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .quiz-opt {
+    background: var(--aged);
+    border: 1.5px solid rgba(26,18,8,0.15);
+    border-radius: 2px;
+    padding: 0.7rem 1rem;
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-align: center;
+    direction: rtl;
+    transition: all 0.15s;
+    font-weight: 600;
+  }
+  .quiz-opt:hover { background: var(--ink); color: var(--paper); }
+  .quiz-opt.correct { background: #1a5c3a; color: #fff; border-color: #1a5c3a; }
+  .quiz-opt.wrong { background: var(--rust); color: #fff; border-color: var(--rust); }
+  .quiz-feedback { margin-top: 1rem; padding: 0.8rem 1rem; border-radius: 2px; font-size: 0.9rem; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: rgba(26,92,58,0.12); border-left: 4px solid #1a5c3a; color: #1a5c3a; }
+  .quiz-feedback.no { background: rgba(139,58,26,0.1); border-left: 4px solid var(--rust); color: var(--rust); }
+  .quiz-nav { display: flex; gap: 0.8rem; margin-top: 1.2rem; justify-content: center; }
+  .quiz-nav button {
+    background: var(--ink); color: var(--paper); border: none;
+    padding: 0.5rem 1.4rem; font-family: 'Playfair Display', serif;
+    font-weight: 700; cursor: pointer; border-radius: 2px;
+    font-size: 0.9rem; transition: background 0.15s;
+  }
+  .quiz-nav button:hover { background: var(--rust); }
+  .quiz-score { text-align: center; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--teal); margin-top: 0.5rem; }
+
+  /* COMPARISON TABLE */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 1.2rem 0 2rem;
+  }
+  .cg-head {
+    background: var(--ink); color: var(--paper);
+    padding: 0.8rem 1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .cg-cell {
+    padding: 0.8rem 1rem;
+    border-top: 1px solid var(--aged);
+    font-size: 0.9rem;
+    background: var(--cream);
+  }
+  .cg-cell:nth-child(3n+1) { background: rgba(232,223,200,0.5); }
+  .cg-cell .ar { font-size: 1.2em; }
+
+  /* TOOLTIP */
+  .tip { position: relative; display: inline-block; }
+  .tip .tiptext {
+    visibility: hidden; opacity: 0;
+    background: var(--ink); color: var(--paper);
+    font-size: 0.78rem; padding: 0.4rem 0.7rem;
+    border-radius: 2px; position: absolute;
+    bottom: 130%; left: 50%; transform: translateX(-50%);
+    white-space: nowrap; transition: opacity 0.15s;
+    z-index: 10; pointer-events: none;
+    box-shadow: 2px 2px 8px var(--shadow);
+  }
+  .tip:hover .tiptext { visibility: visible; opacity: 1; }
+
+  /* LEGEND */
+  .legend { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0; align-items: center; font-size: 0.82rem; }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 2rem; color: #888; font-size: 0.8rem; border-top: 1px solid var(--aged); margin-top: 2rem; }
+
+  @media (max-width: 640px) {
+    .pair { grid-template-columns: 1fr; }
+    .pair-arrow { display: none; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+    nav button { padding: 0.7rem 0.8rem; font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="ar-title">صِيَغُ الْمُبَالَغَةِ</div>
+  <div class="en-subtitle">Arabic Intensive (Hyperbolic) Noun Forms</div>
+  <div class="tagline">MSA · Quranic · Minority Languages of the Middle East</div>
+</header>
+
+<nav>
+  <button class="active" onclick="show('intro',this)">Introduction</button>
+  <button onclick="show('qiyas',this)">Qiyāsī Forms</button>
+  <button onclick="show('samaa',this)">Samāʿī Forms</button>
+  <button onclick="show('minority',this)">Minority Languages</button>
+  <button onclick="show('compare',this)">vs. Ṣifa Mušabbaha</button>
+
+</nav>
+
+<main>
+
+<!-- ══════════════ INTRO ══════════════ -->
+<div id="intro" class="section active">
+  <h2>What is صيغة المبالغة?</h2>
+  <div class="box">
+    <p>The <strong>intensive noun form</strong> (ṣīġat al-mubālaġa, صيغة المبالغة) is a derived nominal pattern in Arabic used to convey that someone does something <em>frequently, habitually, or with great intensity</em>. It goes beyond the active participle (اسم الفاعل) by adding hyperbolic weight to the attribute.</p>
+    <p>The core semantic shift is between <strong>occasional/single occurrence</strong> and <strong>habitual/excessive occurrence</strong>:</p>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem; margin:1.5rem 0;">
+    <div class="pair-card ism">
+      <div class="label">Active Participle — اسم الفاعل</div>
+      <span class="word">صَائِم</span>
+      <div class="gloss">ṣāʾim — "fasting (now / once)"</div>
+    </div>
+    <div class="pair-arrow">→</div>
+    <div class="pair-card mub">
+      <div class="label">Intensive Form — صيغة المبالغة</div>
+      <span class="word">صَوَّام</span>
+      <div class="gloss">ṣawwām — "one who fasts habitually / excessively"</div>
+    </div>
+  </div>
+
+  <div class="pair" style="margin-top:1.2rem;">
+    <div class="pair-card ism">
+      <div class="label">Active Participle</div>
+      <span class="word">قَائِم</span>
+      <div class="gloss">qāʾim — "standing (once)"</div>
+    </div>
+    <div class="pair-card mub">
+      <div class="label">Intensive Form</div>
+      <span class="word">قَوَّام</span>
+      <div class="gloss">qawwām — "constantly/excessively standing (in prayer)"</div>
+    </div>
+  </div>
+
+  <h3>The Five Canonical (Qiyāsī) Patterns — overview</h3>
+  <div class="box box-teal">
+    <p>Intensive forms are productive from <strong>triliteral verbs</strong> using five measurable templates (<em>qiyāsī</em>). All other forms are heard/learned by attestation (<em>samāʿī</em>) and cannot be freely generated by rule.</p>
+    <p style="margin-bottom:0;">Patterns: <span class="wazn q">فَعَّال</span> &nbsp; <span class="wazn q">فَعِيل</span> &nbsp; <span class="wazn q">فَعُول</span> &nbsp; <span class="wazn q">مِفْعَال</span> &nbsp; <span class="wazn q">فَعِل</span></p>
+  </div>
+
+  <h3>Key semantic principle</h3>
+  <div class="box box-rust">
+    <p>The intensification encodes one or more of: <br>
+    (1) <strong>frequency</strong> — the action recurs often &nbsp;|&nbsp;
+    (2) <strong>excess</strong> — beyond normal degree &nbsp;|&nbsp;
+    (3) <strong>occupation / identity</strong> — it defines who the person is</p>
+    <p style="margin-bottom:0;">Quranic example: <span class="ar">إِنَّ رَبَّكَ فَعَّالٌ لِّمَا يُرِيدُ</span> — God is not merely "doing" (فاعل) but the absolute doer, identically defined by doing.</p>
+  </div>
+</div>
+
+<!-- ══════════════ QIYASI ══════════════ -->
+<div id="qiyas" class="section">
+  <h2>Qiyāsī (Canonical) Forms</h2>
+  <p>These five patterns are <strong>rule-governed</strong>: given any triliteral root, you can predictably form them. They are the only "safe" productive templates.</p>
+
+  <div class="search-wrap">
+    <input type="text" id="qSearch" placeholder="Filter by word, gloss, or wazn…" oninput="filterTable('qTable','qSearch')">
+  </div>
+
+  <div class="filter-group" id="qFilter">
+    <button class="filter-btn active" onclick="filterWazn('qTable',this,'')">All</button>
+    <button class="filter-btn" onclick="filterWazn('qTable',this,'فَعَّال')">فَعَّال</button>
+    <button class="filter-btn" onclick="filterWazn('qTable',this,'فَعِيل')">فَعِيل</button>
+    <button class="filter-btn" onclick="filterWazn('qTable',this,'فَعُول')">فَعُول</button>
+    <button class="filter-btn" onclick="filterWazn('qTable',this,'مِفْعَال')">مِفْعَال</button>
+    <button class="filter-btn" onclick="filterWazn('qTable',this,'فَعِل')">فَعِل</button>
+  </div>
+
+  <div class="table-wrap">
+  <table id="qTable">
+    <thead>
+      <tr>
+        <th class="ar-col">الصيغة</th>
+        <th>Wazn</th>
+        <th>Root verb</th>
+        <th>Gloss (English)</th>
+        <th>Semantic note</th>
+        <th>Example sentence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- فَعَّال -->
+      <tr class="cat-row"><td colspan="6">Pattern فَعَّال — extreme/habitual agent (highest frequency marker)</td></tr>
+      <tr data-wazn="فَعَّال">
+        <td class="ar-col">غَفَّار</td><td class="wazn-col">فَعَّال</td>
+        <td>غ-ف-ر (to forgive)</td>
+        <td>The Oft-Forgiving</td>
+        <td>Habitual totality; not just forgiving but defined by forgiveness</td>
+        <td class="ar" dir="rtl">إِنَّ اللهَ غَفَّارٌ رَحِيمٌ</td>
+      </tr>
+      <tr data-wazn="فَعَّال">
+        <td class="ar-col">كَذَّاب</td><td class="wazn-col">فَعَّال</td>
+        <td>ك-ذ-ب (to lie)</td>
+        <td>Inveterate liar; compulsive liar</td>
+        <td>Identity-level frequency — lying is constitutive of who they are</td>
+        <td class="ar" dir="rtl">لا تُصَادِقِ الكَذَّابَ</td>
+      </tr>
+      <tr data-wazn="فَعَّال">
+        <td class="ar-col">نَمَّام</td><td class="wazn-col">فَعَّال</td>
+        <td>ن-م-م (to gossip)</td>
+        <td>Inveterate gossip</td>
+        <td>Frequency so high it becomes a defining trait</td>
+        <td class="ar" dir="rtl">احذَر النَّمَّامَ في مجلِسِكَ</td>
+      </tr>
+      <tr data-wazn="فَعَّال">
+        <td class="ar-col">عَلَّام</td><td class="wazn-col">فَعَّال</td>
+        <td>ع-ل-م (to know)</td>
+        <td>The All-Knowing; omniscient</td>
+        <td>Exhaustive / total knowledge; Quranic divine attribute</td>
+        <td class="ar" dir="rtl">اللهُ عَلَّامُ الغُيُوبِ</td>
+      </tr>
+      <tr data-wazn="فَعَّال">
+        <td class="ar-col">صَوَّام</td><td class="wazn-col">فَعَّال</td>
+        <td>ص-و-م (to fast)</td>
+        <td>One who fasts habitually / excessively</td>
+        <td>Contrast: صائم = fasting today; صوّام = perpetual faster</td>
+        <td class="ar" dir="rtl">كانَ النَّبِيُّ صَوَّامًا قَوَّامًا</td>
+      </tr>
+      <tr data-wazn="فَعَّال">
+        <td class="ar-col">بَسَّام</td><td class="wazn-col">فَعَّال</td>
+        <td>ب-س-م (to smile)</td>
+        <td>One who smiles constantly / habitually</td>
+        <td>Frequency becomes character trait</td>
+        <td class="ar" dir="rtl">المُؤمِنُ بَسَّامٌ في وُجُوهِ إخوانِهِ</td>
+      </tr>
+      <!-- فَعِيل -->
+      <tr class="cat-row"><td colspan="6">Pattern فَعِيل — intense inherent quality (often divine attributes)</td></tr>
+      <tr data-wazn="فَعِيل">
+        <td class="ar-col">سَمِيع</td><td class="wazn-col">فَعِيل</td>
+        <td>س-م-ع (to hear)</td>
+        <td>All-Hearing; acutely/perfectly hearing</td>
+        <td>Quality at its maximum possible degree</td>
+        <td class="ar" dir="rtl">إِنَّ اللهَ سَمِيعٌ بَصِيرٌ</td>
+      </tr>
+      <tr data-wazn="فَعِيل">
+        <td class="ar-col">رَحِيم</td><td class="wazn-col">فَعِيل</td>
+        <td>ر-ح-م (to be merciful)</td>
+        <td>All-Merciful; supremely merciful</td>
+        <td>Intensity > رَاحِم (active participle = "being merciful now")</td>
+        <td class="ar" dir="rtl">بِسْمِ اللهِ الرَّحْمَٰنِ الرَّحِيمِ</td>
+      </tr>
+      <tr data-wazn="فَعِيل">
+        <td class="ar-col">كَرِيم</td><td class="wazn-col">فَعِيل</td>
+        <td>ك-ر-م (to be generous)</td>
+        <td>Profoundly generous; noble</td>
+        <td>Stable intensive; generosity as essence</td>
+        <td class="ar" dir="rtl">الجارُ الكَرِيمُ نِعمَةٌ</td>
+      </tr>
+      <tr data-wazn="فَعِيل">
+        <td class="ar-col">خَبِير</td><td class="wazn-col">فَعِيل</td>
+        <td>خ-ب-ر (to be expert)</td>
+        <td>Thoroughly expert; fully informed</td>
+        <td>Depth of knowledge, not just quantity</td>
+        <td class="ar" dir="rtl">اللهُ لَطِيفٌ خَبِيرٌ</td>
+      </tr>
+      <tr data-wazn="فَعِيل">
+        <td class="ar-col">نَذِير</td><td class="wazn-col">فَعِيل</td>
+        <td>أنذر (to warn) — quadriliteral root</td>
+        <td>Repeated warner; harbinger</td>
+        <td>Rare: from non-triliteral أفعل; frequency of warning</td>
+        <td class="ar" dir="rtl">أنتَ نَذِيرٌ لِلنَّاسِ</td>
+      </tr>
+      <!-- فَعُول -->
+      <tr class="cat-row"><td colspan="6">Pattern فَعُول — intense disposition (applies equally to m. and f. without change)</td></tr>
+      <tr data-wazn="فَعُول">
+        <td class="ar-col">صَبُور</td><td class="wazn-col">فَعُول</td>
+        <td>ص-ب-ر (to endure)</td>
+        <td>Exceptionally patient; long-suffering</td>
+        <td>Degree-intensive: deeper than صابر</td>
+        <td class="ar" dir="rtl">الله صَبُورٌ على عِبادِهِ</td>
+      </tr>
+      <tr data-wazn="فَعُول">
+        <td class="ar-col">شَكُور</td><td class="wazn-col">فَعُول</td>
+        <td>ش-ك-ر (to thank)</td>
+        <td>Profoundly grateful; full of gratitude</td>
+        <td>Gender-invariant: رجل شكور / امرأة شكور</td>
+        <td class="ar" dir="rtl">كُنْ شَكُورًا عِندَ النِّعمَةِ</td>
+      </tr>
+      <tr data-wazn="فَعُول">
+        <td class="ar-col">كَذُوب</td><td class="wazn-col">فَعُول</td>
+        <td>ك-ذ-ب (to lie)</td>
+        <td>Habitual liar (cf. كذّاب — slightly less extreme)</td>
+        <td>كذوب: a liar by habit; كذّاب: an inveterate, pathological liar</td>
+        <td class="ar" dir="rtl">الكَذُوبُ لا يُوثَق بِهِ</td>
+      </tr>
+      <tr data-wazn="فَعُول">
+        <td class="ar-col">غَفُور</td><td class="wazn-col">فَعُول</td>
+        <td>غ-ف-ر (to forgive)</td>
+        <td>Very forgiving (cf. غفّار — divine superlative)</td>
+        <td>غفور often used for human capacity; غفّار reserved for divine</td>
+        <td class="ar" dir="rtl">كانَ الوالِدُ غَفُورًا لِأبنائِهِ</td>
+      </tr>
+      <tr data-wazn="فَعُول">
+        <td class="ar-col">رَؤُوف</td><td class="wazn-col">فَعُول</td>
+        <td>ر-أ-ف (to be compassionate)</td>
+        <td>Full of tender compassion</td>
+        <td>Emotional depth beyond mere mercy</td>
+        <td class="ar" dir="rtl">وَكانَ بِالمُؤمِنِينَ رَؤُوفًا رَحِيمًا</td>
+      </tr>
+      <!-- مِفْعَال -->
+      <tr class="cat-row"><td colspan="6">Pattern مِفْعَال — instrumental/habitual agent (tool-like habitual doer; gender-invariant)</td></tr>
+      <tr data-wazn="مِفْعَال">
+        <td class="ar-col">مِعْطَاء</td><td class="wazn-col">مِفْعَال</td>
+        <td>ع-ط-و (to give)</td>
+        <td>Very generous giver; open-handed</td>
+        <td>The person functions like an instrument of giving</td>
+        <td class="ar" dir="rtl">الكَرِيمُ مِعطاءٌ دائمًا</td>
+      </tr>
+      <tr data-wazn="مِفْعَال">
+        <td class="ar-col">مِقْدَام</td><td class="wazn-col">مِفْعَال</td>
+        <td>أقدم (to advance bravely)</td>
+        <td>Habitually bold; ever-advancing</td>
+        <td>From quadriliteral أقدم — rare non-triliteral</td>
+        <td class="ar" dir="rtl">الجُندِيُّ المِقدامُ لا يَتَراجَعُ</td>
+      </tr>
+      <tr data-wazn="مِفْعَال">
+        <td class="ar-col">مِهذَار</td><td class="wazn-col">فَعَّال</td>
+        <td>ه-ذ-ر (to talk nonsense)</td>
+        <td>Chatterbox; inveterate babbler</td>
+        <td>Negative: excessive trivial speech</td>
+        <td class="ar" dir="rtl">لا خَيرَ في المِهذارِ</td>
+      </tr>
+      <tr data-wazn="مِفْعَال">
+        <td class="ar-col">مِضيَاع</td><td class="wazn-col">مِفْعَال</td>
+        <td>ض-ي-ع (to waste/lose)</td>
+        <td>One who habitually wastes or loses things</td>
+        <td>Negative intensive trait</td>
+        <td class="ar" dir="rtl">لا تَكُن مِضياعًا لِوَقتِكَ</td>
+      </tr>
+      <!-- فَعِل -->
+      <tr class="cat-row"><td colspan="6">Pattern فَعِل — heightened alertness / reactive state (shortest form; visceral/immediate)</td></tr>
+      <tr data-wazn="فَعِل">
+        <td class="ar-col">حَذِر</td><td class="wazn-col">فَعِل</td>
+        <td>ح-ذ-ر (to be cautious)</td>
+        <td>Habitually wary; always on guard</td>
+        <td>Vigilance as default mode of being</td>
+        <td class="ar" dir="rtl">الأبُ حَذِرٌ على أبنائِهِ</td>
+      </tr>
+      <tr data-wazn="فَعِل">
+        <td class="ar-col">فَطِن</td><td class="wazn-col">فَعِل</td>
+        <td>ف-ط-ن (to be perceptive)</td>
+        <td>Keenly perceptive; sharp-minded</td>
+        <td>Perceptual acuity as innate quality</td>
+        <td class="ar" dir="rtl">المُؤمِنُ فَطِنٌ لا يُخدَع</td>
+      </tr>
+      <tr data-wazn="فَعِل">
+        <td class="ar-col">جَشِع</td><td class="wazn-col">فَعِل</td>
+        <td>ج-ش-ع (to be greedy)</td>
+        <td>Intensely greedy; insatiably covetous</td>
+        <td>Negative moral extreme</td>
+        <td class="ar" dir="rtl">تَجَنَّبِ الجَشِعَ في البَيعِ</td>
+      </tr>
+      <tr data-wazn="فَعِل">
+        <td class="ar-col">وَجِل</td><td class="wazn-col">فَعِل</td>
+        <td>و-ج-ل (to be fearful)</td>
+        <td>Deeply fearful; trembling with awe/fear</td>
+        <td>Used of godly fear in Quranic context</td>
+        <td class="ar" dir="rtl">قُلُوبُهُم وَجِلَةٌ مِن ذِكرِ اللهِ</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-teal" style="margin-top:1.5rem;">
+    <strong>Key semantic contrasts within the same root:</strong><br>
+    <span class="ar">غَفُور</span> (very forgiving — human scale) vs. <span class="ar">غَفَّار</span> (omniforgiver — divine scale)<br>
+    <span class="ar">كَذُوب</span> (habitual liar) vs. <span class="ar">كَذَّاب</span> (identity-level compulsive liar — more intense)<br>
+    <span class="ar">صَائِم</span> (fasting now) → <span class="ar">صَبُور / صَوَّام</span> (habitually/excessively doing it)
+  </div>
+</div>
+
+<!-- ══════════════ SAMAA ══════════════ -->
+<div id="samaa" class="section">
+  <h2>Samāʿī (Attested) Forms</h2>
+  <p>These are intensive forms found in classical Arabic texts and the Quran that <strong>cannot be generated by rule</strong>. They must be memorized from attestation. Grammarians have catalogued around <strong>30 such patterns</strong>.</p>
+
+  <div class="box box-rust">
+    <strong>Why samāʿī?</strong> Unlike the 5 qiyāsī patterns, samāʿī forms arose through historical/idiomatic usage and were never "regularized." You can recognize them but you cannot produce new words on these templates for new meanings.
+  </div>
+
+  <div class="table-wrap">
+  <table id="sTable">
+    <thead>
+      <tr>
+        <th class="ar-col">الصيغة</th>
+        <th>Wazn pattern</th>
+        <th>Gloss</th>
+        <th>Notes / semantic value</th>
+        <th>Source / attestation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat-row"><td colspan="5">فِعِّيل — intensity/occupation (strongest personal trait)</td></tr>
+      <tr>
+        <td class="ar-col">صِدِّيق</td><td class="wazn-col">فِعِّيل</td>
+        <td>The utterly truthful; a saint of truthfulness</td>
+        <td>Not just honest — defined by truth; title of Abū Bakr</td>
+        <td>Quran: وَاذكُر فِي الكِتابِ إِبراهِيمَ إِنَّهُ كانَ صِدِّيقًا نَبِيًّا</td>
+      </tr>
+      <tr>
+        <td class="ar-col">سِكِّير</td><td class="wazn-col">فِعِّيل</td>
+        <td>Habitual drunkard</td>
+        <td>Moral-negative occupation form; more extreme than شارب</td>
+        <td>Classical prose</td>
+      </tr>
+      <tr>
+        <td class="ar-col">شِرِّير</td><td class="wazn-col">فِعِّيل</td>
+        <td>Inveterate evildoer; thoroughly wicked</td>
+        <td>Evil as defining identity</td>
+        <td>Literary Arabic</td>
+      </tr>
+      <tr class="cat-row"><td colspan="5">فُعَلة — repeated action with slight diminutive / social nuance</td></tr>
+      <tr>
+        <td class="ar-col">هُمَزَة</td><td class="wazn-col">فُعَلة</td>
+        <td>One who constantly mocks / jabs with words</td>
+        <td>Social negative; verbal aggression as habit</td>
+        <td>Quran: وَيلٌ لِكُلِّ هُمَزَةٍ لُمَزَةٍ</td>
+      </tr>
+      <tr>
+        <td class="ar-col">لُمَزَة</td><td class="wazn-col">فُعَلة</td>
+        <td>One who constantly finds fault / backbites</td>
+        <td>Compulsive critic / slanderer; paired with همزة in Quran</td>
+        <td>Quran: سūrat al-Humazah</td>
+      </tr>
+      <tr>
+        <td class="ar-col">نُوَمَة</td><td class="wazn-col">فُعَلة</td>
+        <td>Someone who sleeps all the time; sleepyhead</td>
+        <td>Habitual laziness through sleeping</td>
+        <td>Classical lexicons</td>
+      </tr>
+      <tr>
+        <td class="ar-col">ضُحَكَة</td><td class="wazn-col">فُعَلة</td>
+        <td>One who laughs excessively / laughingstock</td>
+        <td>Ambiguous: either one who laughs a lot OR one laughed at</td>
+        <td>Classical Arabic</td>
+      </tr>
+      <tr class="cat-row"><td colspan="5">فَيعول / فَيعُلان — elevated / augmented intensive</td></tr>
+      <tr>
+        <td class="ar-col">قَيُّوم</td><td class="wazn-col">فَيعول</td>
+        <td>The Ever-Sustaining; the Self-Subsisting</td>
+        <td>Absolute degree; divine attribute of perpetual sustaining action</td>
+        <td>Quran: آية الكرسي — اللهُ لا إِلَهَ إِلَّا هُوَ الحَيُّ القَيُّومُ</td>
+      </tr>
+      <tr>
+        <td class="ar-col">رَحمَان</td><td class="wazn-col">فَعلان</td>
+        <td>The Supremely Merciful; overflowing with mercy</td>
+        <td>رحمان > رحيم in scope; رحمان = mercy as cosmic totality</td>
+        <td>Quran: بِسْمِ اللهِ الرَّحمَانِ الرَّحِيمِ</td>
+      </tr>
+      <tr class="cat-row"><td colspan="5">فَعَّالة / فِعِّيلة — intensive with feminine marker (personality/craft)</td></tr>
+      <tr>
+        <td class="ar-col">عَلَّامَة</td><td class="wazn-col">فَعَّالة</td>
+        <td>A supreme scholar; encyclopedic authority</td>
+        <td>Tā marbūṭa adds intensification (not femininity here); honorific title</td>
+        <td>Ibn Khaldūn, classical biography</td>
+      </tr>
+      <tr>
+        <td class="ar-col">فَهَّامَة</td><td class="wazn-col">فَعَّالة</td>
+        <td>One of supreme understanding</td>
+        <td>Tā marbūṭa signals superlative depth</td>
+        <td>Classical Arabic prose</td>
+      </tr>
+      <tr>
+        <td class="ar-col">رَحَّالَة</td><td class="wazn-col">فَعَّالة</td>
+        <td>A great traveler; inveterate wanderer</td>
+        <td>Travel as defining occupation — e.g. Ibn Baṭṭūṭa called رحّالة</td>
+        <td>Historical Arabic</td>
+      </tr>
+      <tr class="cat-row"><td colspan="5">فَاعُول — agent with elevated register</td></tr>
+      <tr>
+        <td class="ar-col">فَارُوق</td><td class="wazn-col">فاعُول</td>
+        <td>The great distinguisher (of truth from falsehood)</td>
+        <td>Honorific intensive; title of ʿUmar ibn al-Khaṭṭāb</td>
+        <td>Islamic historical texts</td>
+      </tr>
+      <tr class="cat-row"><td colspan="5">مِفْعَل (without alif) — instrument-agent without the elongation</td></tr>
+      <tr>
+        <td class="ar-col">مِحرَب</td><td class="wazn-col">مِفْعَل</td>
+        <td>One who fights incessantly; a warrior by nature</td>
+        <td>Distinguished from مقاتل (one who fights) by habitual identity</td>
+        <td>Classical poetry</td>
+      </tr>
+      <tr>
+        <td class="ar-col">مِفَرّ</td><td class="wazn-col">مِفْعَل</td>
+        <td>One who flees habitually; chronic runaway</td>
+        <td>Negative intensive — flight as identity</td>
+        <td>Classical lexicons</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ══════════════ MINORITY ══════════════ -->
+<div id="minority" class="section">
+  <h2>صيغ المبالغة in Minority-Related Contexts</h2>
+  <p>The following examples are MSA sentences drawn from thematic domains directly relevant to linguistic minorities in the Middle East — education policy, legal interpretation, media discourse, cultural preservation, and rights advocacy. Each sentence is analyzed for its intensive forms.</p>
+
+  <div class="box">
+    <strong>Communities referenced:</strong> Amazigh (North Africa) · Kurdish · Syriac / Turkmen (Iraq, Syria) · Nubian (Egypt/Sudan) · Minority language communities broadly
+  </div>
+
+  <!-- DOMAIN CARDS -->
+  <style>
+    .domain-card {
+      background: var(--cream);
+      border: 1.5px solid var(--aged);
+      border-left: 5px solid var(--gold);
+      border-radius: 3px;
+      padding: 1.5rem 1.6rem;
+      margin: 1.6rem 0;
+      box-shadow: 3px 3px 0 rgba(196,145,42,0.1);
+    }
+    .domain-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--teal);
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .domain-sentence {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 1.3rem;
+      direction: rtl;
+      line-height: 2;
+      color: var(--ink);
+      margin-bottom: 0.9rem;
+      padding: 0.8rem 1rem;
+      background: rgba(196,145,42,0.05);
+      border-radius: 2px;
+    }
+    .domain-sentence mark {
+      background: rgba(139,58,26,0.13);
+      color: var(--rust);
+      padding: 0 2px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+    .domain-translation {
+      font-style: italic;
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      padding-left: 0.5rem;
+      border-left: 2px solid var(--aged);
+    }
+    .form-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; }
+    .form-table th {
+      background: var(--ink); color: var(--paper);
+      padding: 0.5rem 0.8rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-align: left;
+    }
+    .form-table th.ar-col { text-align: right; }
+    .form-table td { padding: 0.55rem 0.8rem; font-size: 0.87rem; border-bottom: 1px solid var(--aged); vertical-align: top; }
+    .form-table td.ar-col { text-align: right; font-family: 'Noto Naskh Arabic', serif; font-size: 1.1rem; font-weight: 700; color: var(--rust); }
+    .form-table tr:last-child td { border-bottom: none; }
+    .why-note {
+      margin-top: 0.9rem;
+      font-size: 0.85rem;
+      color: #3a5a3a;
+      background: rgba(30,107,107,0.07);
+      border-left: 3px solid var(--teal);
+      padding: 0.5rem 0.8rem;
+      border-radius: 0 2px 2px 0;
+    }
+    .why-note strong { color: var(--teal); }
+  </style>
+
+  <!-- 1. EDUCATION POLICY -->
+  <div class="domain-card">
+    <div class="domain-label">① Education Policy — Amazigh language rights</div>
+    <div class="domain-sentence">تُطالِبُ جمعيّاتٌ أُمازيغيةٌ بمناهجَ أوسعَ حضورًا للّغةِ الأمازيغيةِ في المدارسِ، ويصفُ بعضُ النشطاءِ المعلّمينَ المُخلِصينَ بأنّهم <mark>حَرِيصُونَ</mark> لا <mark>حَذِرُونَ</mark> فقط، بل <mark>مِقدامُونَ</mark> أيضًا في الدفاعِ عن حقِّ التلاميذِ في التعلُّمِ بلغتِهم.</div>
+    <div class="domain-translation">Amazigh associations call for broader inclusion of the Amazigh language in schools; some activists describe committed teachers as not merely cautious but bold in defending students' right to learn in their language.</div>
+    <table class="form-table">
+      <thead><tr><th class="ar-col">الصيغة</th><th>Wazn</th><th>Source verb</th><th>Gloss</th><th>Semantic note in context</th></tr></thead>
+      <tbody>
+        <tr><td class="ar-col">حَرِيصُونَ</td><td><span class="wazn q">فَعِيل</span></td><td>ح-ر-ص (to be keen)</td><td>intensely eager / zealous</td><td>Not mere interest — a deep, persistent commitment to the cause; stronger than حارص (active participle)</td></tr>
+        <tr><td class="ar-col">حَذِرُونَ</td><td><span class="wazn q">فَعِل</span></td><td>ح-ذ-ر (to be cautious)</td><td>habitually wary / on guard</td><td>Signifies a defensive stance — the activists contrast it with مِقدامون to highlight that true advocacy requires <em>proactive</em> courage, not just caution</td></tr>
+        <tr><td class="ar-col">مِقدامُونَ</td><td><span class="wazn q">مِفْعَال</span></td><td>أقدم (to advance boldly)</td><td>habitually bold; ever-advancing</td><td>The مِفْعَال template signals an instrumental, identity-level boldness — they are constituted by their advancing, not merely brave on occasion</td></tr>
+      </tbody>
+    </table>
+    <div class="why-note"><strong>Key contrast:</strong> حذر (defensive vigilance) vs. مِقدام (offensive courage) — both intensive, but positioned on opposite ends of agency. The sentence exploits this semantic gap to make a political argument about what real advocacy demands.</div>
+  </div>
+
+  <!-- 2. INTERPRETING AND MEDIATION -->
+  <div class="domain-card" style="border-left-color: var(--teal);">
+    <div class="domain-label">② Legal Interpretation — Kurdish communities in public hearings</div>
+    <div class="domain-sentence">في جلساتِ الاستماعِ العامّةِ، تحتاجُ المجتمعاتُ الكرديةُ إلى مترجمٍ <mark>صَدُوقٍ</mark> و<mark>سَمَّاعٍ</mark> جيّدٍ، لأنّ الخطأَ في نقلِ الشكوى قد يُغيِّرُ معناها القانونيَّ بالكامل.</div>
+    <div class="domain-translation">In public hearings, Kurdish communities need an interpreter who is truthful and a careful listener, because an error in conveying a complaint can completely change its legal meaning.</div>
+    <table class="form-table">
+      <thead><tr><th class="ar-col">الصيغة</th><th>Wazn</th><th>Source verb</th><th>Gloss</th><th>Semantic note in context</th></tr></thead>
+      <tbody>
+        <tr><td class="ar-col">صَدُوق</td><td><span class="wazn q">فَعُول</span></td><td>ص-د-ق (to be truthful)</td><td>habitually truthful; reliably honest</td><td>فَعُول encodes disposition-level reliability — not just truthful today but constitutively trustworthy; critical in legal mediation where one lapse of honesty can be decisive</td></tr>
+        <tr><td class="ar-col">سَمَّاع</td><td><span class="wazn q">فَعَّال</span></td><td>س-م-ع (to hear/listen)</td><td>one who listens intensely and repeatedly</td><td>More than physical hearing (سامع) — سَمَّاع implies attentive, frequent, habitual deep listening; in legal contexts this means tracking every nuance of testimony across a long proceeding</td></tr>
+      </tbody>
+    </table>
+    <div class="why-note"><strong>Key contrast:</strong> صادق (active participle = honest right now) vs. صَدُوق (فعول = reliably honest as a character trait). The legal stakes require the intensive form — a court interpreter must be صَدُوق, not merely صادق.</div>
+  </div>
+
+  <!-- 3. MEDIA AND RIGHTS DISCOURSE -->
+  <div class="domain-card" style="border-left-color: var(--rust);">
+    <div class="domain-label">③ Media & Rights Discourse — linguistic minority coverage</div>
+    <div class="domain-sentence">تنتقدُ منظماتٌ حقوقيةٌ بعضَ التغطياتِ الإعلاميةِ لأنّها ليستْ <mark>مُنصِفةً</mark>، وتدعو إلى خطابٍ <mark>رَصِينٍ</mark> و<mark>رَؤُوفٍ</mark> بالجماعاتِ اللغويةِ الصغيرةِ بدلًا من الخطابِ المُنَفِّر.</div>
+    <div class="domain-translation">Rights organizations criticize some media coverage for lacking fairness, and call for a more measured and compassionate discourse toward small language communities instead of alienating rhetoric.</div>
+    <table class="form-table">
+      <thead><tr><th class="ar-col">الصيغة</th><th>Wazn</th><th>Source verb</th><th>Gloss</th><th>Semantic note in context</th></tr></thead>
+      <tbody>
+        <tr><td class="ar-col">رَصِين</td><td><span class="wazn q">فَعِيل</span></td><td>ر-ص-ن (to be firm/measured)</td><td>deeply measured; gravely serious in tone</td><td>Applied to discourse (خطاب), رَصِين signals not just calm but intellectual gravity and considered weight — the opposite of sensationalist or dismissive coverage</td></tr>
+        <tr><td class="ar-col">رَؤُوف</td><td><span class="wazn q">فَعُول</span></td><td>ر-أ-ف (to feel tender compassion)</td><td>full of tender compassion; humanely attentive</td><td>رؤوف carries an ethical charge beyond رحيم — it implies active emotional responsiveness to suffering; in rights discourse it frames minorities as requiring <em>felt</em> care, not bureaucratic neutrality</td></tr>
+      </tbody>
+    </table>
+    <div class="why-note"><strong>Why رؤوف and not رحيم?</strong> رحيم (merciful) implies power extending downward. رؤوف implies tender emotional attunement — more appropriate when advocacy organizations want to foreground empathy without paternalism.</div>
+  </div>
+
+  <!-- 4. CULTURAL PRESERVATION -->
+  <div class="domain-card" style="border-left-color: var(--gold);">
+    <div class="domain-label">④ Cultural Preservation — Nubian oral tradition</div>
+    <div class="domain-sentence">يُعَدُّ بعضُ الرواةِ الشفهيّينَ في المجتمعاتِ النوبيةِ <mark>حُفَّاظًا</mark> للتُّراثِ و<mark>مِعطاءينَ</mark> في نقلِ الذاكرةِ الجماعيةِ إلى الأجيالِ الأصغرِ.</div>
+    <div class="domain-translation">Some oral narrators in Nubian communities are considered preservers of heritage and generous transmitters of collective memory to younger generations.</div>
+    <table class="form-table">
+      <thead><tr><th class="ar-col">الصيغة</th><th>Wazn</th><th>Source verb</th><th>Gloss</th><th>Semantic note in context</th></tr></thead>
+      <tbody>
+        <tr><td class="ar-col">حُفَّاظ</td><td>plural of <span class="wazn s">فَعَّال</span> (حَفَّاظ)</td><td>ح-ف-ظ (to preserve/memorize)</td><td>intensive preservers; those who memorize habitually and totally</td><td>حفّاظ (plural of حفّاظ/حافظ intensified) — used for those who commit entire traditions to memory and reproduce them faithfully over time; cf. حُفَّاظ القرآن (those who memorize the Quran completely)</td></tr>
+        <tr><td class="ar-col">مِعطاءِين</td><td><span class="wazn q">مِفْعَال</span></td><td>ع-ط-و (to give)</td><td>habitually open-handed; constitutively generous givers</td><td>The مِفْعَال template frames them as instruments of transmission — they do not merely give occasionally but are structured by their giving; the word elevates cultural transmission to an act of radical generosity</td></tr>
+      </tbody>
+    </table>
+    <div class="why-note"><strong>Cultural register:</strong> Both forms elevate the narrators' role from informants to guardians. The pairing of حُفَّاظ (preservers through mastery) with مِعطاءين (givers through generosity) captures both the cognitive and the ethical dimensions of oral heritage transmission.</div>
+  </div>
+
+  <!-- 5. SCHOOL ACCESS -->
+  <div class="domain-card" style="border-left-color: var(--teal);">
+    <div class="domain-label">⑤ School Access & Linguistic Inclusion — Syriac and Turkmen students</div>
+    <div class="domain-sentence">حينَ يكونُ الطالبُ من أسرةٍ سريانيّةٍ أو تركمانيّةٍ، فإنّ وجودَ معلّمٍ <mark>فَطِنٍ</mark> بحاجاتِهِ اللغويةِ، ومرشدٍ <mark>سَمِيعٍ</mark> لهمومِ الأسرةِ، يُسهِمُ في تقليلِ العزلةِ داخلَ المدرسة.</div>
+    <div class="domain-translation">When a student comes from a Syriac or Turkmen family, having a teacher perceptive to their linguistic needs and a counselor attentive to the family's concerns helps reduce isolation at school.</div>
+    <table class="form-table">
+      <thead><tr><th class="ar-col">الصيغة</th><th>Wazn</th><th>Source verb</th><th>Gloss</th><th>Semantic note in context</th></tr></thead>
+      <tbody>
+        <tr><td class="ar-col">فَطِن</td><td><span class="wazn q">فَعِل</span></td><td>ف-ط-ن (to be perceptive)</td><td>keenly perceptive; sharp-minded by habit</td><td>فَطِن implies a baseline alertness — not just noticing when explicitly told, but spontaneously detecting what is unspoken. In inclusion contexts, it marks the teacher who reads code-switching, silence, or discomfort as linguistic data.</td></tr>
+        <tr><td class="ar-col">سَمِيع</td><td><span class="wazn q">فَعِيل</span></td><td>س-م-ع (to hear)</td><td>intensely and habitually attentive; deeply responsive</td><td>Applied to the counselor, سميع goes beyond hearing — it signals active, repeated, emotionally engaged listening. Contrast with سامع (passive hearer in the moment). The choice echoes the divine attribute: total, sustained responsiveness.</td></tr>
+      </tbody>
+    </table>
+    <div class="why-note"><strong>فَطِن vs. سَمِيع:</strong> فطن (فَعِل) marks perceptual acuity — catching what is unspoken. سميع (فَعِيل) marks receptive depth — truly processing what is expressed. Together they describe the ideal educational relationship for a minority-language student: seen and heard.</div>
+  </div>
+
+  <!-- 6. PUBLIC MEMORY -->
+  <div class="domain-card" style="border-left-color: var(--rust);">
+    <div class="domain-label">⑥ Public Memory & Symbolic Recognition — endangered language activists</div>
+    <div class="domain-sentence">يصفُ بعضُ الكتّابِ النشطاءَ المدافعينَ عن اللغاتِ المهدَّدةِ بأنّهم <mark>صَبُورُونَ</mark> و<mark>مِكثارُونَ</mark> من العملِ الصامتِ الذي لا يلفتُ الكاميراتِ، لكنَّهُ يصنعُ أثرًا بعيدَ المدى.</div>
+    <div class="domain-translation">Some writers describe activists defending endangered languages as patient and persistent workers whose quiet efforts do not attract cameras but produce long-term effects.</div>
+    <table class="form-table">
+      <thead><tr><th class="ar-col">الصيغة</th><th>Wazn</th><th>Source verb</th><th>Gloss</th><th>Semantic note in context</th></tr></thead>
+      <tbody>
+        <tr><td class="ar-col">صَبُورُونَ</td><td><span class="wazn q">فَعُول</span></td><td>ص-ب-ر (to endure)</td><td>deeply/habitually patient; long-suffering</td><td>فَعُول encodes endurance as a dispositional trait — not patience as a temporary posture, but a constitutive capacity to sustain effort across adversity. In advocacy journalism, this frames the activists' quiet persistence as a moral virtue, not a strategic choice.</td></tr>
+        <tr><td class="ar-col">مِكثارُونَ</td><td><span class="wazn q">مِفْعَال</span></td><td>ك-ث-ر (to be abundant/frequent)</td><td>those who do things habitually and in great quantity</td><td>مِفْعَال here foregrounds volume and frequency of effort — they produce work constantly, like an instrument set to repeat. The combination with صبور is rhetorically precise: صبور captures the emotional quality (endurance), مِكثارون captures the behavioral output (persistent production).</td></tr>
+      </tbody>
+    </table>
+    <div class="why-note"><strong>Register note:</strong> This sentence reflects the MSA essay style common in Arabic cultural journalism and advocacy writing (قلم الرأي). The juxtaposition of صَبُورُونَ (quiet inner strength) with مِكثارُونَ (outward prolific output) is a deliberate stylistic choice — the intensive forms carry the emotional weight that makes the sentence a tribute, not a description.</div>
+  </div>
+
+  <div class="box box-teal" style="margin-top:1.5rem;">
+    <strong>Patterns at work across these six domains:</strong>
+    <p style="margin-top:0.6rem; margin-bottom:0.4rem;">فَعُول (صدوق، رؤوف، صبور) consistently marks <em>dispositional depth</em> — a quality that is stable across time and situations, making it the preferred pattern in rights discourse for attributes we want to hold people to habitually.</p>
+    <p style="margin-bottom:0.4rem;">مِفْعَال (مِقدام، مِعطاء، مِكثار) marks <em>instrumental-habitual agency</em> — the person functions like a tool of that quality, producing it repeatedly and structurally.</p>
+    <p style="margin-bottom:0;">فَعِل (حَذِر، فَطِن) marks <em>heightened perceptual alertness</em> — a reactive, vigilant state that is always-on. These are the forms used for people who must read environments carefully, making them especially salient in inclusion and mediation contexts.</p>
+  </div>
+</div>
+
+<!-- ══════════════ COMPARE ══════════════ -->
+<div id="compare" class="section">
+  <h2>صيغة المبالغة vs. الصفة المشبهة</h2>
+  <p>Both are derived nominals that describe a quality of a noun, and several surface forms are identical (especially فَعِيل and فَعُول). The underlying distinction is <strong>aspectual and verbal</strong>.</p>
+
+  <div class="compare-grid">
+    <div class="cg-head">Criterion</div>
+    <div class="cg-head">صيغة المبالغة</div>
+    <div class="cg-head">الصفة المشبهة</div>
+
+    <div class="cg-cell">Source verb type</div>
+    <div class="cg-cell">Derived from <strong>transitive</strong> (متعدٍ) verb</div>
+    <div class="cg-cell">Derived from <strong>intransitive</strong> (لازم) verb</div>
+
+    <div class="cg-cell">Core semantic value</div>
+    <div class="cg-cell"><strong>Frequency / excess / identity</strong> — how much or how often</div>
+    <div class="cg-cell"><strong>Stable inherent quality</strong> — what the person permanently is</div>
+
+    <div class="cg-cell">Temporal profile</div>
+    <div class="cg-cell">Can imply temporal recurrence (doing it repeatedly)</div>
+    <div class="cg-cell">Atemporal / permanent; not anchored to events</div>
+
+    <div class="cg-cell">Takes an object?</div>
+    <div class="cg-cell">Yes — inherits transitivity of source verb<br><span class="ar" style="font-size:0.95em">سَمِيعٌ الدعاءَ</span></div>
+    <div class="cg-cell">No object (intransitive base)<br><span class="ar" style="font-size:0.95em">طَوِيلُ القامةِ</span> (genitive, not accusative)</div>
+
+    <div class="cg-cell">Shared surface form example</div>
+    <div class="cg-cell"><span class="ar">سَمِيع</span> (فَعِيل from سمع transitive)<br>= intensely/habitually hearing</div>
+    <div class="cg-cell"><span class="ar">طَوِيل</span> (فَعِيل from طال intransitive)<br>= permanently tall</div>
+
+    <div class="cg-cell">Quranic example</div>
+    <div class="cg-cell"><span class="ar">إِنَّ اللهَ سَمِيعٌ بَصِيرٌ</span><br>"God is all-hearing, all-seeing" — habitual total action</div>
+    <div class="cg-cell"><span class="ar">وَكانَ اللهُ عَزِيزًا حَكِيمًا</span><br>"God is mighty, wise" — stable attribute, not event-based</div>
+
+    <div class="cg-cell">Test: add a direct object?</div>
+    <div class="cg-cell">✓ <span class="ar">هو شكورٌ النعمةَ</span> (acceptable)</div>
+    <div class="cg-cell">✗ <span class="ar">*هو طويلٌ الجبلَ</span> (ungrammatical)</div>
+  </div>
+
+  <h3>The hard cases — forms that are ambiguous</h3>
+  <div class="box">
+    <p>When a form like <span class="ar big-ar">حَكِيم</span> appears, the categorization depends on which underlying verb is intended:</p>
+    <ul style="list-style:disc; padding-left:1.5rem; color:#2a2010;">
+      <li style="margin-bottom:0.5rem;">If from <strong>حَكَمَ</strong> (to rule/judge — transitive): صيغة مبالغة = "one who judges/rules habitually and intensely"</li>
+      <li>If construed as inherent wisdom (stable, not event-based): الصفة المشبهة = "the wise one" as permanent quality</li>
+    </ul>
+    <p style="margin-top:0.8rem;">The Quran uses حكيم for God (وَهُوَ العَزِيزُ الحَكِيمُ) — context determines reading; most grammarians allow both analyses for divine attributes.</p>
+  </div>
+
+  <h3>Select ambiguous forms with both readings</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="ar-col">الكلمة</th>
+        <th>As صيغة مبالغة</th>
+        <th>As صفة مشبهة</th>
+        <th>Diagnostic test</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ar-col">كَرِيم</td>
+        <td>Intensely generous (from كرم — to give generously, transitive act)</td>
+        <td>Noble/generous by nature (permanent disposition)</td>
+        <td>Both readings valid; context decides</td>
+      </tr>
+      <tr>
+        <td class="ar-col">رَحِيم</td>
+        <td>Constantly/deeply merciful (from رحم transitive)</td>
+        <td>Inherently merciful (stable quality)</td>
+        <td>Quran uses both; رحمان > رحيم in degree</td>
+      </tr>
+      <tr>
+        <td class="ar-col">جَمِيل</td>
+        <td>Rarely intensive reading</td>
+        <td>Permanently beautiful (from جَمُلَ intransitive) — صفة مشبهة only</td>
+        <td>Intransitive root → صفة مشبهة</td>
+      </tr>
+      <tr>
+        <td class="ar-col">طَوِيل</td>
+        <td>No intensive reading</td>
+        <td>Permanently tall (from طَالَ intransitive) — صفة مشبهة only</td>
+        <td>Height cannot be transitive → صفة مشبهة only</td>
+      </tr>
+      <tr>
+        <td class="ar-col">شَكُور</td>
+        <td>Habitually grateful; intensely thankful (from شكر transitive)</td>
+        <td>Not used as صفة مشبهة in classical Arabic</td>
+        <td>Transitive base → صيغة مبالغة</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+
+</main>
+
+<footer>صِيَغُ الْمُبَالَغَةِ — Interactive Reference &nbsp;·&nbsp; MSA · Quranic · Minority Languages of the Middle East</footer>
+
+<script>
+// TAB NAVIGATION
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// TABLE FILTER
+function filterTable(tableId, inputId) {
+  const q = document.getElementById(inputId).value.toLowerCase();
+  document.querySelectorAll('#' + tableId + ' tbody tr:not(.cat-row)').forEach(tr => {
+    tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+function filterWazn(tableId, btn, wazn) {
+  document.querySelectorAll('#qFilter .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#' + tableId + ' tbody tr:not(.cat-row)').forEach(tr => {
+    if (!wazn || tr.dataset.wazn === wazn) tr.style.display = '';
+    else tr.style.display = 'none';
+  });
+}
+
+
+</script>
+</body>
+</html>
