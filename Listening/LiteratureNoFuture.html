@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نشاط الاستماع: المستقبل والدراسة الجامعية</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Arabic Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Hero Section -->
+    <header class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-lg">
+        <div class="max-w-5xl mx-auto px-4 py-8 md:py-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="bg-teal-500 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Pre-Intermediate | مستوى دون المتوسط</span>
+                    <h1 class="text-3xl font-extrabold mt-3 leading-tight">Listening: الأدب والمستقبل</h1>
+                    <p class="text-teal-100 mt-2 text-base">نشاط سهل عن الدراسة، الحب، الشغل، والفلوس.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 w-full md:w-auto">
+                    <h3 class="text-xs font-semibold text-teal-200 mb-1.5"><i class="fa-solid fa-bullseye ml-1"></i>Class Goals:</h3>
+                    <ul class="text-xs space-y-1 text-teal-50">
+                        <li>• افهم الفكرة العامة</li>
+                        <li>• تكلّم عن الدراسة والمستقبل</li>
+                        <li>• قل رأيك بكلمات بسيطة</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full space-y-10">
+
+        <!-- Transcript & Video Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            <!-- Video Column (Updated to clean external link button for perfect compatibility) -->
+            <div class="lg:col-span-7 bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden flex flex-col justify-between">
+                <div class="p-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <span class="font-bold text-slate-700 flex items-center"><i class="fa-solid fa-circle-play text-rose-600 ml-2"></i>Listening Video</span>
+                    <span class="text-xs bg-rose-100 text-rose-800 px-2 py-1 rounded font-medium">Direct link</span>
+                </div>
+                <div class="p-6 flex-grow flex flex-col justify-center items-center text-center space-y-6">
+                    <div class="bg-rose-50 text-rose-600 w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-inner animate-pulse">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800">افتح الفيديو على يوتيوب</h3>
+                        <p class="text-sm text-slate-500 mt-2 max-w-sm mx-auto">Click the button. Listen to the short conversation. Then come back and answer the questions.</p>
+                    </div>
+                    
+                    <a href="https://youtu.be/Mi2WJFtvdWY" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        <span>Open the video</span>
+                    </a>
+                </div>
+                <div class="p-4 bg-slate-50 text-xs text-slate-500 border-t border-slate-100 flex items-center gap-2 justify-center">
+                    <i class="fa-solid fa-info-circle"></i> The video opens in a new tab.
+                </div>
+            </div>
+
+            <!-- Transcript Column -->
+            <div class="lg:col-span-5 bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden flex flex-col">
+                <div class="p-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <span class="font-bold text-slate-700 flex items-center"><i class="fa-solid fa-file-text text-emerald-600 ml-2"></i>Transcript</span>
+                    <button id="toggleTranscript" onclick="toggleTranscriptVisibility()" class="text-xs text-emerald-600 hover:text-emerald-700 font-semibold focus:outline-none flex items-center gap-1">
+                        <span id="toggleText">Hide transcript</span> <i id="toggleIcon" class="fa-solid fa-eye-slash"></i>
+                    </button>
+                </div>
+                <div id="transcriptBody" class="p-6 flex-grow flex flex-col justify-center transition-all duration-300">
+                    <blockquote class="border-r-4 border-emerald-500 pr-4 my-2 text-lg font-medium leading-relaxed text-slate-700 italic">
+                        "يا خالد يابني، انت عايز تدخل كلية الآداب ليه؟"
+                    </blockquote>
+                    <blockquote class="border-r-4 border-teal-400 pr-4 my-2 text-lg font-medium leading-relaxed text-slate-700 italic">
+                        "— بحب دراسة الأدب يا بابا."
+                    </blockquote>
+                    <blockquote class="border-r-4 border-emerald-500 pr-4 my-2 text-lg font-medium leading-relaxed text-slate-700 italic">
+                        "— يابني المسألة مش مسألة حب، المسألة مسألة مستقبل، والأدب مالوش مستقبل."
+                    </blockquote>
+                </div>
+                <div class="p-4 bg-teal-50 border-t border-teal-100 text-xs text-teal-800">
+                    <strong class="font-bold">Tip:</strong> Try to listen first without reading.
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs for Activities -->
+        <div class="border-b border-slate-200">
+            <nav class="flex space-x-1 space-x-reverse overflow-x-auto" aria-label="Tabs">
+                <button onclick="switchTab('pre')" id="tab-pre" class="tab-btn active px-4 py-3 text-sm md:text-base font-bold border-b-2 border-emerald-600 text-emerald-600 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-hourglass-start"></i> Before Listening
+                </button>
+                <button onclick="switchTab('during')" id="tab-during" class="tab-btn px-4 py-3 text-sm md:text-base font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-headphones"></i> Listening Questions
+                </button>
+                <button onclick="switchTab('post')" id="tab-post" class="tab-btn px-4 py-3 text-sm md:text-base font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-comment-dots"></i> After Listening
+                </button>
+            </nav>
+        </div>
+
+        <!-- 1. PRE-LISTENING SECTION -->
+        <section id="section-pre" class="tab-content space-y-8">
+            <!-- Activity 1: Warm up discussion -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-amber-100 text-amber-700 p-3 rounded-xl">
+                        <i class="fa-solid fa-comments text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">النشاط الأول: أسئلة Before Listening (Discussion)</h3>
+                        <p class="text-slate-500 text-sm">Talk with a partner. Use these easy questions:</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                        <span class="text-xs text-emerald-600 font-bold block mb-1">السؤال 1</span>
+                        <p class="font-semibold text-slate-700 text-sm">ماذا تريد أن تدرس؟ لماذا؟</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                        <span class="text-xs text-emerald-600 font-bold block mb-1">السؤال 2</span>
+                        <p class="font-semibold text-slate-700 text-sm">هل عائلتك توافق؟</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                        <span class="text-xs text-emerald-600 font-bold block mb-1">السؤال 3</span>
+                        <p class="font-semibold text-slate-700 text-sm">هل تريد دراسة تحبها أم شغل بفلوس كثيرة؟</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                        <span class="text-xs text-emerald-600 font-bold block mb-1">السؤال 4</span>
+                        <p class="font-semibold text-slate-700 text-sm">هل الأدب مهم؟ لماذا؟</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                        <span class="text-xs text-emerald-600 font-bold block mb-1">السؤال 5</span>
+                        <p class="font-semibold text-slate-700 text-sm">ما هو المستقبل الجيد؟</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                        <span class="text-xs text-emerald-600 font-bold block mb-1">السؤال 6</span>
+                        <p class="font-semibold text-slate-700 text-sm">هل الفلوس مهمة عندما تختار دراستك؟</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 2: Vocabulary Prediction -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-indigo-100 text-indigo-700 p-3 rounded-xl">
+                        <i class="fa-solid fa-spell-check text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">Activity 2: Vocabulary Check</h3>
+                        <p class="text-slate-500 text-sm">Read the words. What is the video about?</p>
+                    </div>
+                </div>
+
+                <!-- Vocabulary Badges -->
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full font-bold text-indigo-800 text-xs md:text-sm">المستقبل</span>
+                    <span class="bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full font-bold text-indigo-800 text-xs md:text-sm">الجامعة</span>
+                    <span class="bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full font-bold text-indigo-800 text-xs md:text-sm">الأدب</span>
+                    <span class="bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full font-bold text-indigo-800 text-xs md:text-sm">الوظيفة</span>
+                    <span class="bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full font-bold text-indigo-800 text-xs md:text-sm">الدراسة</span>
+                    <span class="bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full font-bold text-indigo-800 text-xs md:text-sm">الحب</span>
+                    <span class="bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full font-bold text-indigo-800 text-xs md:text-sm">النجاح</span>
+                    <span class="bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full font-bold text-indigo-800 text-xs md:text-sm">الأهل</span>
+                    <span class="bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full font-bold text-indigo-800 text-xs md:text-sm">القرار</span>
+                </div>
+
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-100">
+                    <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-2 text-sm md:text-base">
+                        <i class="fa-solid fa-clipboard-question text-indigo-600"></i> Quick questions:
+                    </h4>
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-start gap-3">
+                            <span class="bg-indigo-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shrink-0 mt-0.5">١</span>
+                            <p class="text-slate-700 font-semibold">من يتكلم؟ أصدقاء أم عائلة؟</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="bg-indigo-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shrink-0 mt-0.5">٢</span>
+                            <p class="text-slate-700 font-semibold">ما المشكلة؟</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="bg-indigo-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shrink-0 mt-0.5">٣</span>
+                            <p class="text-slate-700 font-semibold">هل الأب موافق؟</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. DURING-LISTENING SECTION (INTERACTIVE) -->
+        <section id="section-during" class="tab-content hidden space-y-8">
+            
+            <!-- Step 1: Main Idea (MCQ) -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-emerald-100 text-emerald-700 p-3 rounded-xl">
+                            <i class="fa-solid fa-list-ol text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">First Listening: Main Idea</h3>
+                            <p class="text-slate-500 text-sm">Listen one time. Choose the main idea.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="my-4">
+                    <p class="text-base font-bold text-slate-800 mb-4">ما الفكرة الأساسية؟</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="mcq-options">
+                        <button onclick="selectMCQ(this, 'A')" class="mcq-opt border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/30 text-right p-4 rounded-xl flex items-center justify-between transition-all font-semibold text-sm">
+                            <span>A. خالد يريد السفر.</span>
+                            <span class="indicator-icon w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-xs"></span>
+                        </button>
+                        <button onclick="selectMCQ(this, 'B')" class="mcq-opt border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/30 text-right p-4 rounded-xl flex items-center justify-between transition-all font-semibold text-sm">
+                            <span>B. الأب يتكلم مع خالد عن الدراسة والمستقبل.</span>
+                            <span class="indicator-icon w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-xs"></span>
+                        </button>
+                        <button onclick="selectMCQ(this, 'C')" class="mcq-opt border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/30 text-right p-4 rounded-xl flex items-center justify-between transition-all font-semibold text-sm">
+                            <span>C. خالد يريد أن يعمل في شركة.</span>
+                            <span class="indicator-icon w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-xs"></span>
+                        </button>
+                        <button onclick="selectMCQ(this, 'D')" class="mcq-opt border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/30 text-right p-4 rounded-xl flex items-center justify-between transition-all font-semibold text-sm">
+                            <span>D. الأب يحب الأدب.</span>
+                            <span class="indicator-icon w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-xs"></span>
+                        </button>
+                    </div>
+
+                    <div class="mt-6 flex items-center gap-4">
+                        <button onclick="checkMCQ()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2 rounded-lg shadow-sm transition-colors text-sm">
+                            Check answer
+                        </button>
+                        <div id="mcq-feedback" class="hidden font-bold flex items-center gap-2 text-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: True or False -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-teal-100 text-teal-700 p-3 rounded-xl">
+                            <i class="fa-solid fa-circle-check text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Second Listening: True or False</h3>
+                            <p class="text-slate-500 text-sm">Listen again. Choose صح or خطأ.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3.5">
+                    <!-- TF Question Items -->
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="false">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">١.</span> خالد يريد أن يدرس الطب.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="true">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">٢.</span> خالد يحب دراسة الأدب.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="false">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">٣.</span> الأب يقول: الأدب له مستقبل جيد.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="true">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">٤.</span> الأب يفكر في الشغل والفلوس.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="false">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">٥.</span> الحوار بين صديقين.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="false">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">٦.</span> خالد لا يحب الأدب.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="true">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">٧.</span> الأب لا يحب فكرة كلية الآداب.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="false">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">٨.</span> خالد يتكلم مع أمه.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="true">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">٩.</span> الأب يقول: الحب ليس كافيًا.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+
+                    <div class="tf-question-item flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:border-teal-100 transition-colors gap-2" data-correct="true">
+                        <p class="font-semibold text-slate-700 text-sm"><span class="ml-1 text-slate-400 font-bold">١٠.</span> الحوار عن الدراسة والشغل والمستقبل.</p>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="selectTF(this, true)" class="tf-btn-true bg-white border border-slate-200 hover:bg-teal-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-check"></i> صح</button>
+                            <button onclick="selectTF(this, false)" class="tf-btn-false bg-white border border-slate-200 hover:bg-rose-50 px-3 py-1 rounded-lg text-xs font-bold text-slate-600 transition-colors flex items-center gap-1"><i class="fa-solid fa-xmark"></i> خطأ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex flex-col sm:flex-row items-center gap-4 justify-between border-t border-slate-100 pt-6">
+                    <button onclick="checkTFResults()" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-5 py-2 rounded-lg shadow-sm transition-colors w-full sm:w-auto text-sm">
+                        Check all answers
+                    </button>
+                    <div id="tf-overall-feedback" class="text-xs md:text-sm font-bold text-slate-700"></div>
+                </div>
+            </div>
+
+            <!-- Step 3: Fill in the Blanks -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-amber-100 text-amber-700 p-3 rounded-xl">
+                            <i class="fa-solid fa-pen-nib text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Third Listening: Fill in the Blanks</h3>
+                            <p class="text-slate-500 text-sm">Listen again. Write the missing word.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4 leading-loose text-base md:text-lg">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-4">
+                        <div>
+                            <span>يا خالد يا</span>
+                            <input type="text" id="blank-1" class="blank-input border-b-2 border-slate-300 focus:border-amber-500 text-center font-bold px-1 py-0.5 mx-1 outline-none text-amber-700 w-28 bg-transparent transition-colors text-sm" placeholder="...">، 
+                            <span>إنت عايز تدخل كلية</span>
+                            <input type="text" id="blank-2" class="blank-input border-b-2 border-slate-300 focus:border-amber-500 text-center font-bold px-1 py-0.5 mx-1 outline-none text-amber-700 w-28 bg-transparent transition-colors text-sm" placeholder="..."> ليه؟
+                        </div>
+
+                        <div>
+                            <span>— بحب دراسة</span>
+                            <input type="text" id="blank-3" class="blank-input border-b-2 border-slate-300 focus:border-amber-500 text-center font-bold px-1 py-0.5 mx-1 outline-none text-amber-700 w-28 bg-transparent transition-colors text-sm" placeholder="..."> يا بابا.
+                        </div>
+
+                        <div>
+                            <span>— يا ابني المسألة مش مسألة</span>
+                            <input type="text" id="blank-4" class="blank-input border-b-2 border-slate-300 focus:border-amber-500 text-center font-bold px-1 py-0.5 mx-1 outline-none text-amber-700 w-28 bg-transparent transition-colors text-sm" placeholder="...">، 
+                            <span>المسألة مسألة</span>
+                            <input type="text" id="blank-5" class="blank-input border-b-2 border-slate-300 focus:border-amber-500 text-center font-bold px-1 py-0.5 mx-1 outline-none text-amber-700 w-28 bg-transparent transition-colors text-sm" placeholder="...">، 
+                            <span>والأدب مالوش</span>
+                            <input type="text" id="blank-6" class="blank-input border-b-2 border-slate-300 focus:border-amber-500 text-center font-bold px-1 py-0.5 mx-1 outline-none text-amber-700 w-28 bg-transparent transition-colors text-sm" placeholder="...">.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex flex-wrap gap-3 items-center">
+                    <button onclick="checkBlanks()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-5 py-2.5 rounded-lg shadow-sm transition-colors text-sm">
+                        Check words
+                    </button>
+                    <button onclick="toggleBlankSolutions()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold px-4 py-2.5 rounded-lg transition-colors text-sm">
+                        Show / hide answers
+                    </button>
+                    <div id="blanks-feedback" class="text-xs md:text-sm font-bold text-slate-700"></div>
+                </div>
+
+                <div id="blank-solutions" class="hidden mt-4 p-4 bg-amber-50 rounded-lg border border-amber-100 text-amber-900 text-xs md:text-sm">
+                    <strong>Answers:</strong> ابني - الآداب - الأدب - حب - مستقبل - مستقبل.
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. POST-LISTENING SECTION -->
+        <section id="section-post" class="tab-content hidden space-y-8">
+            <!-- Activity 1: Opinion discussion -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-rose-100 text-rose-700 p-3 rounded-xl">
+                        <i class="fa-solid fa-comments text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">Activity 1: Talk and Give Your Opinion</h3>
+                        <p class="text-slate-500 text-sm">Talk in small groups. Use these questions:</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <h5 class="font-bold text-slate-800 mb-1.5 text-sm">1. هل الأب صح؟ لماذا؟</h5>
+                        <p class="text-xs text-slate-500">Think about money and love of study.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <h5 class="font-bold text-slate-800 mb-1.5 text-sm">2. هل ندرس ما نحب فقط؟</h5>
+                        <p class="text-xs text-slate-500">Or do we need a study with a good job?</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <h5 class="font-bold text-slate-800 mb-1.5 text-sm">3. هل هناك دراسة ليس لها مستقبل؟</h5>
+                        <p class="text-xs text-slate-500">Think about technology and AI.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <h5 class="font-bold text-slate-800 mb-1.5 text-sm">4. هل الأهل يختارون دراسة الأبناء؟</h5>
+                        <p class="text-xs text-slate-500">لماذا الأهل أحيانًا يريدون تخصصًا معينًا؟</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 2: Role Play -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-violet-100 text-violet-700 p-3 rounded-xl">
+                        <i class="fa-solid fa-people-arrows text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">Activity 2: Role Play</h3>
+                        <p class="text-slate-500 text-sm">Work with a partner: one student is the father, one student is Khaled. Speak for 2 minutes.</p>
+                    </div>
+                </div>
+
+                <div class="bg-violet-50/50 rounded-xl p-5 border border-violet-100 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h5 class="font-bold text-violet-900 mb-2 text-sm"><i class="fa-solid fa-user-tie ml-1.5"></i>الأب:</h5>
+                        <ul class="text-xs text-violet-800 space-y-1.5 list-disc pr-4">
+                            <li>يقول: ادرس طب أو هندسة أو تجارة.</li>
+                            <li>يتكلم عن الشغل والفلوس.</li>
+                            <li>يعطي نصيحة لخالد.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-violet-900 mb-2 text-sm"><i class="fa-solid fa-graduation-cap ml-1.5"></i>خالد:</h5>
+                        <ul class="text-xs text-violet-800 space-y-1.5 list-disc pr-4">
+                            <li>يقول: أنا أحب الأدب.</li>
+                            <li>يقول: الحب مهم للنجاح.</li>
+                            <li>يقول: السعادة مهمة في الشغل.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 3: Debate -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-emerald-100 text-emerald-700 p-3 rounded-xl">
+                        <i class="fa-solid fa-scale-balanced text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">Activity 3: Quick Debate</h3>
+                        <p class="text-slate-500 text-sm">Two groups discuss this idea:</p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 text-center">
+                    <span class="text-xs bg-slate-200 text-slate-800 px-3 py-1 rounded-full font-bold uppercase tracking-wider">Debate Topic</span>
+                    <h4 class="text-lg font-extrabold text-slate-800 mt-2">"الطالب يجب أن يدرس ما يحب فقط."</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 text-right">
+                            <span class="font-bold text-emerald-800 block mb-1 text-sm">Group 1: Yes</span>
+                            <p class="text-xs text-emerald-700 leading-relaxed">When students love the subject, they study better.</p>
+                        </div>
+                        <div class="bg-rose-50 p-4 rounded-xl border border-rose-100 text-right">
+                            <span class="font-bold text-rose-800 block mb-1 text-sm">Group 2: No</span>
+                            <p class="text-xs text-rose-700 leading-relaxed">Money is important. Jobs are important.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cultural Notes -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-4 text-xs md:text-sm">
+            <!-- Cultural Notes -->
+            <div class="md:col-span-12 bg-amber-50 rounded-2xl p-5 border border-amber-100 shadow-sm">
+                <h4 class="font-bold text-amber-900 text-base mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-earth-americas text-amber-700"></i> Cultural Notes
+                </h4>
+                <ul class="space-y-2 text-amber-800 list-disc pr-4" dir="ltr">
+                    <li>In many Arab families, parents talk with their children about university and future jobs.</li>
+                    <li>Some majors, such as medicine, engineering, and business, are often seen as safe choices.</li>
+                    <li>This short dialogue shows a common question: should students choose what they love, or what may bring a good job and money?</li>
+                </ul>
+            </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-400 py-6 border-t border-slate-700 mt-12 text-center text-sm">
+        <div class="max-w-5xl mx-auto px-4">
+            <p>© 2026 Listening Activity: Study and Future.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JS Logic -->
+    <script>
+        // Tab switching logic
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            // Show requested tab
+            document.getElementById('section-' + tabId).classList.remove('hidden');
+
+            // Reset tab button styling
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-emerald-600', 'text-emerald-600');
+                btn.classList.add('border-transparent', 'text-slate-500');
+            });
+            // Highlight selected tab button
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.remove('border-transparent', 'text-slate-500');
+            activeBtn.classList.add('border-emerald-600', 'text-emerald-600');
+        }
+
+        // Transcript visibility toggle
+        function toggleTranscriptVisibility() {
+            const transcript = document.getElementById('transcriptBody');
+            const toggleText = document.getElementById('toggleText');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (transcript.classList.contains('hidden')) {
+                transcript.classList.remove('hidden');
+                toggleText.innerText = 'Hide transcript';
+                toggleIcon.className = 'fa-solid fa-eye-slash';
+            } else {
+                transcript.classList.add('hidden');
+                toggleText.innerText = 'إظهار النص المكتوب';
+                toggleIcon.className = 'fa-solid fa-eye';
+            }
+        }
+
+        // MCQ Interactive Logic
+        let selectedMCQOption = null;
+        function selectMCQ(button, option) {
+            // Reset background and indicators for all options
+            document.querySelectorAll('.mcq-opt').forEach(opt => {
+                opt.classList.remove('bg-emerald-50', 'border-emerald-500');
+                opt.classList.add('border-slate-200');
+                const indicator = opt.querySelector('.indicator-icon');
+                indicator.innerHTML = '';
+                indicator.className = 'indicator-icon w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-xs';
+            });
+
+            // Select clicked option
+            selectedMCQOption = option;
+            button.classList.remove('border-slate-200');
+            button.classList.add('bg-emerald-50', 'border-emerald-500');
+            const clickedIndicator = button.querySelector('.indicator-icon');
+            clickedIndicator.className = 'indicator-icon w-5 h-5 rounded-full bg-emerald-600 border border-emerald-600 flex items-center justify-center text-xs text-white';
+            clickedIndicator.innerHTML = '<i class="fa-solid fa-check"></i>';
+        }
+
+        function checkMCQ() {
+            const feedback = document.getElementById('mcq-feedback');
+            feedback.classList.remove('hidden', 'text-emerald-600', 'text-rose-600');
+
+            if (!selectedMCQOption) {
+                feedback.classList.add('text-amber-600');
+                feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Choose an answer first.';
+                return;
+            }
+
+            if (selectedMCQOption === 'B') {
+                feedback.classList.add('text-emerald-600');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> Correct! الأب يتكلم مع خالد عن الدراسة والمستقبل.';
+            } else {
+                feedback.classList.add('text-rose-600');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Try again. Listen again.';
+            }
+        }
+
+        // True or False Interactive Logic
+        function selectTF(button, value) {
+            const parent = button.closest('.tf-question-item');
+            
+            // Unselect peer buttons in the same item
+            parent.querySelectorAll('button').forEach(btn => {
+                btn.classList.remove('bg-teal-600', 'text-white', 'bg-rose-600');
+                btn.classList.add('bg-white', 'text-slate-600');
+            });
+
+            // Store selection in custom attribute
+            parent.setAttribute('data-user-answer', value.toString());
+
+            // Add selected visual style
+            if (value === true) {
+                button.classList.remove('bg-white', 'text-slate-600');
+                button.classList.add('bg-teal-600', 'text-white');
+            } else {
+                button.classList.remove('bg-white', 'text-slate-600');
+                button.classList.add('bg-rose-600', 'text-white');
+            }
+        }
+
+        function checkTFResults() {
+            const items = document.querySelectorAll('.tf-question-item');
+            let correctCount = 0;
+            let answeredCount = 0;
+
+            items.forEach(item => {
+                const correct = item.getAttribute('data-correct');
+                const userAns = item.getAttribute('data-user-answer');
+
+                // Clear previous correctness highlights
+                item.classList.remove('border-emerald-200', 'bg-emerald-50/50', 'border-rose-200', 'bg-rose-50/50');
+
+                if (userAns !== null) {
+                    answeredCount++;
+                    if (correct === userAns) {
+                        correctCount++;
+                        item.classList.add('border-emerald-200', 'bg-emerald-50/50');
+                    } else {
+                        item.classList.add('border-rose-200', 'bg-rose-50/50');
+                    }
+                }
+            });
+
+            const overallFeedback = document.getElementById('tf-overall-feedback');
+            if (answeredCount === 0) {
+                overallFeedback.innerHTML = '<span class="text-amber-600"><i class="fa-solid fa-triangle-exclamation"></i> Choose answers first.</span>';
+            } else {
+                overallFeedback.innerHTML = `Answered: <span class="text-indigo-600">${answeredCount}</span>. Correct: <span class="text-emerald-600">${correctCount} / ${items.length}</span>.`;
+            }
+        }
+
+        // Fill in the blanks logic
+        const correctBlanks = ["ابني", "الآداب", "الأدب", "حب", "مستقبل", "مستقبل"];
+        
+        function checkBlanks() {
+            let correctCount = 0;
+            const feedback = document.getElementById('blanks-feedback');
+
+            for (let i = 1; i <= 6; i++) {
+                const input = document.getElementById('blank-' + i);
+                const userVal = input.value.trim();
+                const correctVal = correctBlanks[i - 1];
+
+                input.classList.remove('bg-emerald-100', 'text-emerald-900', 'border-emerald-500', 'bg-rose-100', 'text-rose-950', 'border-rose-500');
+
+                if (userVal === "") {
+                    input.classList.add('border-slate-300');
+                } else if (normalizeArabic(userVal) === normalizeArabic(correctVal)) {
+                    correctCount++;
+                    input.classList.add('bg-emerald-100', 'text-emerald-900', 'border-emerald-500');
+                } else {
+                    input.classList.add('bg-rose-100', 'text-rose-950', 'border-rose-500');
+                }
+            }
+
+            feedback.innerHTML = `Correct words: <span class="text-emerald-600 font-bold">${correctCount} / 6</span>.`;
+        }
+
+        // Helper to normalize arabic writing issues (like Hamzas & Alifs) for accurate automatic checking
+        function normalizeArabic(text) {
+            return text
+                .replace(/[أإآا]/g, 'ا')
+                .replace(/ة/g, 'ه')
+                .replace(/ى/g, 'ي')
+                .replace(/ً/g, '')
+                .replace(/ٌ/g, '')
+                .replace(/ٍ/g, '')
+                .replace(/َ/g, '')
+                .replace(/ُ/g, '')
+                .replace(/ِ/g, '')
+                .replace(/ّ/g, '')
+                .trim();
+        }
+
+        function toggleBlankSolutions() {
+            const solutions = document.getElementById('blank-solutions');
+            solutions.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
