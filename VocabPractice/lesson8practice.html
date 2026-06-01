@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Vocabulary Builder</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        :root {
+            --primary-color: #005f73;
+            --secondary-color: #0a9396;
+            --bg-color: #f4f1de;
+            --text-dark: #333333;
+            --card-bg: #ffffff;
+            --target-word: #94d2bd;
+            --correct: #2a9d8f;
+            --incorrect: #e76f51;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .arabic-text {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.3rem;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .activity-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .instruction {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .target-word {
+            font-weight: 700;
+            color: var(--primary-color);
+            background-color: rgba(148, 210, 189, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Task 1: Flashcards */
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .flashcard {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .flashcard:hover {
+            transform: translateY(-3px);
+            background-color: var(--primary-color);
+        }
+
+        .flashcard .front {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .flashcard .back {
+            display: none;
+            margin-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 15px;
+        }
+
+        .flashcard.revealed .back {
+            display: block;
+        }
+
+        .flashcard .meaning {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffb703;
+        }
+
+        .flashcard .example {
+            font-size: 1.2rem;
+            line-height: 1.4;
+        }
+
+        /* Task 2 & 3: Interactive Lists */
+        .question-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .question-item[dir="rtl"] {
+            justify-content: flex-start;
+            gap: 15px;
+        }
+
+        .question-text {
+            flex-grow: 1;
+        }
+
+        select {
+            padding: 8px 12px;
+            font-size: 1.1rem;
+            font-family: 'Tajawal', sans-serif;
+            border: 2px solid var(--secondary-color);
+            border-radius: 6px;
+            background-color: white;
+            cursor: pointer;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* Fill in the blanks specific */
+        .inline-select {
+            margin: 0 10px;
+            min-width: 150px;
+        }
+
+        /* Feedback styling */
+        .feedback-icon {
+            margin: 0 10px;
+            font-size: 1.5rem;
+            display: none;
+        }
+
+        .correct-ans {
+            color: var(--correct);
+            border-color: var(--correct);
+            background-color: rgba(42, 157, 143, 0.1);
+        }
+
+        .incorrect-ans {
+            color: var(--incorrect);
+            border-color: var(--incorrect);
+            background-color: rgba(231, 111, 81, 0.1);
+        }
+
+        /* Check Answers Section */
+        .check-section {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .check-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .check-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .score-display {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Arabic Vocabulary Builder</h1>
+
+    <!-- Activity 1: Click to Reveal -->
+    <div class="activity-section">
+        <h2>Activity 1: Discover the Words</h2>
+        <p class="instruction">Click on each Arabic word to reveal its English meaning and a simple example sentence. Read the example sentence carefully.</p>
+        
+        <div class="flashcard-grid" dir="rtl" lang="ar">
+            <div class="flashcard arabic-text" onclick="this.classList.toggle('revealed')">
+                <div class="front">حُكومَة</div>
+                <div class="back">
+                    <div class="meaning" dir="ltr">Government</div>
+                    <div class="example">الـ<span class="target-word">حكومة</span> تبني مدارس جديدة في المدينة.</div>
+                </div>
+            </div>
+            
+            <div class="flashcard arabic-text" onclick="this.classList.toggle('revealed')">
+                <div class="front">مُسْتَقْبَل</div>
+                <div class="back">
+                    <div class="meaning" dir="ltr">Future</div>
+                    <div class="example">أريد أن أكون طبيباً في الـ<span class="target-word">مستقبل</span>.</div>
+                </div>
+            </div>
+
+            <div class="flashcard arabic-text" onclick="this.classList.toggle('revealed')">
+                <div class="front">رَئيس</div>
+                <div class="back">
+                    <div class="meaning" dir="ltr">President / Head</div>
+                    <div class="example"><span class="target-word">رئيس</span> الشركة رجل طيب ويساعد العمال.</div>
+                </div>
+            </div>
+
+            <div class="flashcard arabic-text" onclick="this.classList.toggle('revealed')">
+                <div class="front">النَّجاح</div>
+                <div class="back">
+                    <div class="meaning" dir="ltr">Success</div>
+                    <div class="example"><span class="target-word">النجاح</span> في الامتحان يحتاج إلى وقت طويل.</div>
+                </div>
+            </div>
+
+            <div class="flashcard arabic-text" onclick="this.classList.toggle('revealed')">
+                <div class="front">رَفَضَ</div>
+                <div class="back">
+                    <div class="meaning" dir="ltr">He refused</div>
+                    <div class="example"><span class="target-word">رفض</span> الطالب أن يلعب لأنه يذاكر.</div>
+                </div>
+            </div>
+
+            <div class="flashcard arabic-text" onclick="this.classList.toggle('revealed')">
+                <div class="front">يُساعِد</div>
+                <div class="back">
+                    <div class="meaning" dir="ltr">He helps</div>
+                    <div class="example">الولد <span class="target-word">يساعد</span> أمه في ترتيب البيت.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity 2: Matching -->
+    <div class="activity-section">
+        <h2>Activity 2: Match to the Definition</h2>
+        <p class="instruction">Select the correct target word that matches the simple Arabic definition.</p>
+        
+        <ul class="question-list" dir="rtl" lang="ar">
+            <li class="question-item">
+                <span class="question-text arabic-text">١. الوقت قبل الآن (مثل: أمس، أو السنة الماضية).</span>
+                <select id="match-1" class="arabic-text">
+                    <option value="">-- اختر الكلمة --</option>
+                    <option value="الماضي">الماضي</option>
+                    <option value="المذاكرة">المذاكرة</option>
+                    <option value="أمهات">أمهات</option>
+                    <option value="دولي">دولي</option>
+                </select>
+                <span class="feedback-icon" id="icon-match-1"></span>
+            </li>
+            <li class="question-item">
+                <span class="question-text arabic-text">٢. جمع كلمة "أم" (والدة).</span>
+                <select id="match-2" class="arabic-text">
+                    <option value="">-- اختر الكلمة --</option>
+                    <option value="رؤساء">رؤساء</option>
+                    <option value="أمهات">أمهات</option>
+                    <option value="دول">دول</option>
+                    <option value="حكومات">حكومات</option>
+                </select>
+                <span class="feedback-icon" id="icon-match-2"></span>
+            </li>
+            <li class="question-item">
+                <span class="question-text arabic-text">٣. الدراسة وقراءة الدروس للنجاح.</span>
+                <select id="match-3" class="arabic-text">
+                    <option value="">-- اختر الكلمة --</option>
+                    <option value="الرفض">الرفض</option>
+                    <option value="الالتحاق">الالتحاق</option>
+                    <option value="المساعدة">المساعدة</option>
+                    <option value="المذاكرة">المذاكرة</option>
+                </select>
+                <span class="feedback-icon" id="icon-match-3"></span>
+            </li>
+            <li class="question-item">
+                <span class="question-text arabic-text">٤. شيء بين دول كثيرة ومختلفة في العالم.</span>
+                <select id="match-4" class="arabic-text">
+                    <option value="">-- اختر الكلمة --</option>
+                    <option value="دولي">دولي</option>
+                    <option value="الماضي">الماضي</option>
+                    <option value="مثل">مثل</option>
+                    <option value="بعد">بعد</option>
+                </select>
+                <span class="feedback-icon" id="icon-match-4"></span>
+            </li>
+            <li class="question-item">
+                <span class="question-text arabic-text">٥. يحصل الطالب على درجات ممتازة في الامتحان.</span>
+                <select id="match-5" class="arabic-text">
+                    <option value="">-- اختر الكلمة --</option>
+                    <option value="يذاكر">يذاكر</option>
+                    <option value="ينجح">ينجح</option>
+                    <option value="يرفض">يرفض</option>
+                    <option value="يلتحق">يلتحق</option>
+                </select>
+                <span class="feedback-icon" id="icon-match-5"></span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Activity 3: Fill in the Blanks -->
+    <div class="activity-section">
+        <h2>Activity 3: Fill in the Blanks</h2>
+        <p class="instruction">Choose the appropriate word to complete each sentence.</p>
+
+        <ul class="question-list" dir="rtl" lang="ar">
+            <li class="question-item">
+                <span class="arabic-text">١. الطالب 
+                    <select id="fill-1" class="inline-select arabic-text">
+                        <option value="">-- اختر --</option>
+                        <option value="أراد أن">أراد أن</option>
+                        <option value="يريد أن">يريد أن</option>
+                        <option value="بفضل">بفضل</option>
+                    </select>
+                    يدرس اللغة العربية ليفهم القرآن.
+                </span>
+                <span class="feedback-icon" id="icon-fill-1"></span>
+            </li>
+            <li class="question-item">
+                <span class="arabic-text">٢. فاطمة 
+                    <select id="fill-2" class="inline-select arabic-text">
+                        <option value="">-- اختر --</option>
+                        <option value="دخلت">دخلت</option>
+                        <option value="حصلت على">حصلت على</option>
+                        <option value="رفضت">رفضت</option>
+                    </select>
+                    درجة ممتازة في امتحان التاريخ.
+                </span>
+                <span class="feedback-icon" id="icon-fill-2"></span>
+            </li>
+            <li class="question-item">
+                <span class="arabic-text">٣. أخي الكبير يريد أن 
+                    <select id="fill-3" class="inline-select arabic-text">
+                        <option value="">-- اختر --</option>
+                        <option value="يلتحق">يلتحق</option>
+                        <option value="يرفض">يرفض</option>
+                        <option value="ينجح">ينجح</option>
+                    </select>
+                    بجامعة القاهرة لدراسة الطب.
+                </span>
+                <span class="feedback-icon" id="icon-fill-3"></span>
+            </li>
+            <li class="question-item">
+                <span class="arabic-text">٤. أنا أدرس وأقرأ 
+                    <select id="fill-4" class="inline-select arabic-text">
+                        <option value="">-- اختر --</option>
+                        <option value="كما">كما</option>
+                        <option value="طوال">طوال</option>
+                        <option value="مثل">مثل</option>
+                    </select>
+                    اليوم لأن عندي امتحان غداً.
+                </span>
+                <span class="feedback-icon" id="icon-fill-4"></span>
+            </li>
+            <li class="question-item">
+                <span class="arabic-text">٥. تكلم 
+                    <select id="fill-5" class="inline-select arabic-text">
+                        <option value="">-- اختر --</option>
+                        <option value="الدخول">الدخول</option>
+                        <option value="المساعدة">المساعدة</option>
+                        <option value="رئيس الوزراء">رئيس الوزراء</option>
+                    </select>
+                    عن الاقتصاد في التلفزيون أمس.
+                </span>
+                <span class="feedback-icon" id="icon-fill-5"></span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Self Check Section -->
+    <div class="check-section">
+        <button class="check-btn" onclick="checkAnswers()">Check Answers</button>
+        <div id="score-display" class="score-display"></div>
+    </div>
+
+    <script>
+        const answers = {
+            // Activity 2 Answers
+            'match-1': 'الماضي',
+            'match-2': 'أمهات',
+            'match-3': 'المذاكرة',
+            'match-4': 'دولي',
+            'match-5': 'ينجح',
+            
+            // Activity 3 Answers
+            'fill-1': 'يريد أن',
+            'fill-2': 'حصلت على',
+            'fill-3': 'يلتحق',
+            'fill-4': 'طوال',
+            'fill-5': 'رئيس الوزراء'
+        };
+
+        function checkAnswers() {
+            let score = 0;
+            const totalQuestions = Object.keys(answers).length;
+
+            for (const [id, correctAnswer] of Object.entries(answers)) {
+                const selectElement = document.getElementById(id);
+                const iconElement = document.getElementById('icon-' + id);
+                const userAnswer = selectElement.value;
+
+                // Reset classes
+                selectElement.classList.remove('correct-ans', 'incorrect-ans');
+                iconElement.style.display = 'inline-block';
+
+                if (userAnswer === correctAnswer) {
+                    selectElement.classList.add('correct-ans');
+                    iconElement.innerHTML = '✅';
+                    score++;
+                } else {
+                    selectElement.classList.add('incorrect-ans');
+                    iconElement.innerHTML = '❌';
+                }
+            }
+
+            // Display Score
+            const scoreDisplay = document.getElementById('score-display');
+            scoreDisplay.style.display = 'block';
+            
+            if (score === totalQuestions) {
+                scoreDisplay.innerHTML = `Excellent! You scored ${score} out of ${totalQuestions}! 🎉`;
+                scoreDisplay.style.color = 'var(--correct)';
+            } else {
+                scoreDisplay.innerHTML = `You scored ${score} out of ${totalQuestions}. Keep practicing! 💪`;
+                scoreDisplay.style.color = 'var(--incorrect)';
+            }
+        }
+    </script>
+</body>
+</html>
