@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗣️ أنشطة المحادثة باللغة العربية</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font for beautiful Arabic typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f7fee7; /* Soft natural olive/lime tint */
+        }
+        .arabic-text {
+            font-size: 1.25rem;
+            line-height: 2rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- Top Navigation / Banner -->
+    <header class="bg-gradient-to-r from-emerald-700 to-teal-800 text-white shadow-md py-6 px-4">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-right">
+                <span class="bg-emerald-500/30 text-emerald-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">مستوى مبتدئ - متوسط</span>
+                <h1 class="text-3xl md:text-4xl font-extrabold mt-2">🗣️ أنشطة المحادثة والمناقشة</h1>
+                <p class="text-emerald-100 mt-1 text-sm md:text-base">استخدم المفردات المستهدفة للتحدث مع زملائك في الصف.</p>
+            </div>
+            <!-- Interface Controls -->
+            <div class="flex flex-wrap gap-2 justify-center" dir="ltr">
+                <button onclick="toggleTranslations()" id="translationToggleBtn" class="bg-white/10 hover:bg-white/20 text-white font-medium py-2 px-4 rounded-lg border border-white/20 transition-all text-sm flex items-center gap-2">
+                    <span>👁️</span> Toggle English Translations
+                </button>
+                <button onclick="resetWordChecklist()" class="bg-rose-600 hover:bg-rose-700 text-white font-medium py-2 px-4 rounded-lg transition-all text-sm">
+                    🔄 Reset Word Tracker
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="max-w-6xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 flex-grow">
+        
+        <!-- Left Column: Word Tracker Sidebar -->
+        <aside class="lg:col-span-1 bg-white p-5 rounded-2xl shadow-sm border border-emerald-100 flex flex-col justify-between">
+            <div>
+                <h3 class="text-lg font-bold text-emerald-900 border-b pb-3 mb-4 flex items-center gap-2">
+                    🎯 <span>تعقب الكلمات</span>
+                </h3>
+                <p class="text-xs text-slate-500 mb-4 leading-relaxed" dir="ltr">
+                    <strong>Instructions:</strong> Tap on the target words as you use them in your conversation to mark them off!
+                </p>
+                
+                <!-- Categorized Interactive Word Bank -->
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="text-xs font-bold text-teal-600 uppercase mb-2">الفعل والحدث (Verbs)</h4>
+                        <div class="flex flex-wrap gap-1.5" id="verb-bank">
+                            <!-- JS will populate -->
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-teal-600 uppercase mb-2">الأسماء والصفات (Nouns/Adjs)</h4>
+                        <div class="flex flex-wrap gap-1.5" id="noun-bank">
+                            <!-- JS will populate -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress Circle -->
+            <div class="mt-6 pt-6 border-t border-slate-100 text-center">
+                <div class="text-xs font-semibold text-slate-500 mb-1" dir="ltr">WORDS USED</div>
+                <div class="text-3xl font-extrabold text-emerald-700"><span id="words-count">0</span> / <span id="words-total">12</span></div>
+                <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden">
+                    <div id="progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-600 h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Column: Discussion Activities -->
+        <section class="lg:col-span-3 space-y-6">
+            
+            <!-- Activity 1 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:border-emerald-200 transition-all">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+                    <h2 class="text-xl md:text-2xl font-bold text-emerald-800">نشاط ١: مقابلة المستقبل (The Future Interview)</h2>
+                    <span class="bg-teal-50 text-teal-700 text-xs font-medium px-2.5 py-1 rounded-md">👥 العمل الثنائي (Pair Work)</span>
+                </div>
+                <p class="text-sm text-slate-500 mb-5 leading-relaxed" dir="ltr">
+                    <strong>Instructions:</strong> Take turns interviewing your partner using the questions below. Aim for complete, descriptive answers using the words in bold.
+                </p>
+                
+                <!-- Questions List -->
+                <ol class="space-y-4 arabic-text list-decimal list-inside pr-1">
+                    <li class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all">
+                        <span>كم ساعة <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">تذاكر</strong> كل يوم؟ وهل تحب <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">المذاكرة</strong>؟</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">How many hours do you study every day? And do you like studying?</p>
+                    </li>
+                    <li class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all">
+                        <span>هل <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">تريد أن تلتحق</strong> بجامعة في <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">المستقبل</strong>؟ أي جامعة؟</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">Do you want to enroll in a university in the future? Which university?</p>
+                    </li>
+                    <li class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all">
+                        <span>ماذا تريد أن تعمل في <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">المستقبل</strong>؟ ولماذا؟</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">What do you want to work as in the future? And why?</p>
+                    </li>
+                    <li class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all">
+                        <span>في <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">رأيك</strong>، ما هو سر <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">النجاح</strong> للطلاب؟</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">In your opinion, what is the secret of success for students?</p>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Activity 2 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:border-emerald-200 transition-all">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+                    <h2 class="text-xl md:text-2xl font-bold text-emerald-800">نشاط ٢: العائلة والمساعدة (Family and Helping)</h2>
+                    <span class="bg-teal-50 text-teal-700 text-xs font-medium px-2.5 py-1 rounded-md">👥 مجموعات صغيرة (Groups of 3-4)</span>
+                </div>
+                <p class="text-sm text-slate-500 mb-5 leading-relaxed" dir="ltr">
+                    <strong>Instructions:</strong> Discuss the following questions. Try comparing how duties were managed in the past versus how they are today.
+                </p>
+                
+                <!-- Questions List -->
+                <ol class="space-y-4 arabic-text list-decimal list-inside pr-1">
+                    <li class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all">
+                        <span>من <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">يساعد</strong> في ترتيب البيت في عائلتك؟ وهل تساعد والدتك <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">طوال</strong> الوقت؟</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">Who helps organize the house in your family? Do you help your mother all the time?</p>
+                    </li>
+                    <li class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all">
+                        <span>كيف كانت حياة الـ <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">أمهات</strong> في <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">الماضي</strong> وكيف هي اليوم؟</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">How was the life of mothers in the past and how is it today?</p>
+                    </li>
+                    <li class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all">
+                        <span>هل <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">ترفض المساعدة</strong> عندما يطلبها صديقك؟ ولماذا؟</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">Do you refuse to help when your friend asks? And why?</p>
+                    </li>
+                    <li class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all">
+                        <span>اذكر <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">مثلاً</strong> واحداً عن شخص <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">يساعد</strong> الناس في مدينتك.</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">Give one example of a person who helps people in your city.</p>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Activity 3 -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:border-emerald-200 transition-all">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+                    <h2 class="text-xl md:text-2xl font-bold text-emerald-800">نشاط ٣: رئيس الوزراء ليوم واحد (Prime Minister for a Day)</h2>
+                    <span class="bg-teal-50 text-teal-700 text-xs font-medium px-2.5 py-1 rounded-md">🎭 لعب أدوار وعروض (Presentations / Roleplay)</span>
+                </div>
+                <p class="text-sm text-slate-500 mb-5 leading-relaxed" dir="ltr">
+                    <strong>Instructions:</strong> Imagine you are the Prime Minister. Fill in the sentence frames below with your own initiatives, then share your platform.
+                </p>
+                
+                <!-- Prompts List -->
+                <div class="space-y-4 arabic-text">
+                    <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100 hover:bg-amber-50 transition-all">
+                        <span class="font-bold text-amber-900 block text-sm mb-1">الجملة الأولى:</span>
+                        <span>إذا كنت <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">رئيس الوزراء</strong>، سوف أساعد الـ...</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">If I were the Prime Minister, I will help the...</p>
+                    </div>
+                    <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100 hover:bg-amber-50 transition-all">
+                        <span class="font-bold text-amber-900 block text-sm mb-1">الجملة الثانية:</span>
+                        <span>أريد أن تكون <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">حكومة</strong> بلدي <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">مثل</strong>...</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">I want the government of my country to be like...</p>
+                    </div>
+                    <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100 hover:bg-amber-50 transition-all">
+                        <span class="font-bold text-amber-900 block text-sm mb-1">الجملة الثالثة:</span>
+                        <span><strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">بفضل</strong> التعليم، سوف <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">تحصل</strong> كل <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">دولة</strong> على...</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">Thanks to education, every country will get...</p>
+                    </div>
+                    <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100 hover:bg-amber-50 transition-all">
+                        <span class="font-bold text-amber-900 block text-sm mb-1">الجملة الرابعة:</span>
+                        <span>في رأيي، أهم شيء في السياسة الـ <strong class="text-emerald-700 underline decoration-emerald-300 decoration-2">دولية</strong> هو...</span>
+                        <p class="translation text-sm text-slate-500 mt-1 block font-sans" dir="ltr">In my opinion, the most important thing in international politics is...</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Bottom Footer Notes -->
+    <footer class="bg-slate-900 text-slate-400 py-6 px-4 border-t border-slate-800 text-center text-sm">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>💡 <strong>Teacher Tip:</strong> project this interactive dashboard on your board to guide pairs and track collective progress.</p>
+            <p dir="ltr">© 2026 Arabic Class Tools</p>
+        </div>
+    </footer>
+
+    <!-- JS Logic -->
+    <script>
+        // Set up the target words list
+        const verbs = [
+            { word: "تذاكر", translation: "studies" },
+            { word: "المذاكرة", translation: "studying" },
+            { word: "تريد أن", translation: "wants to" },
+            { word: "تلتحق", translation: "enrolls" },
+            { word: "يساعد", translation: "helps" },
+            { word: "ترفض", translation: "refuses" }
+        ];
+
+        const nouns = [
+            { word: "المستقبل", translation: "future" },
+            { word: "النجاح", translation: "success" },
+            { word: "رأي", translation: "opinion" },
+            { word: "الماضي", translation: "past" },
+            { word: "أمهات", translation: "mothers" },
+            { word: "رئيس الوزراء", translation: "Prime Minister" },
+            { word: "حكومة", translation: "government" },
+            { word: "دولة", translation: "country" }
+        ];
+
+        let wordsUsedSet = new Set();
+        let showTranslations = true;
+
+        // Populate Sidebar Word Tracker
+        function initTracker() {
+            const verbContainer = document.getElementById('verb-bank');
+            const nounContainer = document.getElementById('noun-bank');
+            
+            // Render verbs
+            verbContainer.innerHTML = verbs.map(v => `
+                <button onclick="toggleWord('${v.word}')" id="word-${v.word}" class="bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 font-medium py-1 px-2.5 rounded-lg border border-slate-200 transition-all text-sm cursor-pointer flex justify-between items-center w-full">
+                    <span>${v.word}</span>
+                    <span class="text-[10px] text-slate-400 font-normal ml-2">${v.translation}</span>
+                </button>
+            `).join('');
+
+            // Render nouns
+            nounContainer.innerHTML = nouns.map(n => `
+                <button onclick="toggleWord('${n.word}')" id="word-${n.word}" class="bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 font-medium py-1 px-2.5 rounded-lg border border-slate-200 transition-all text-sm cursor-pointer flex justify-between items-center w-full">
+                    <span>${n.word}</span>
+                    <span class="text-[10px] text-slate-400 font-normal ml-2">${n.translation}</span>
+                </button>
+            `).join('');
+
+            updateProgress();
+        }
+
+        // Toggle Word Active / Completed state
+        function toggleWord(word) {
+            const btn = document.getElementById(`word-${word}`);
+            if (wordsUsedSet.has(word)) {
+                wordsUsedSet.delete(word);
+                btn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-700', 'shadow-sm');
+                btn.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-200');
+            } else {
+                wordsUsedSet.add(word);
+                btn.classList.remove('bg-slate-100', 'text-slate-700', 'border-slate-200');
+                btn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-700', 'shadow-sm');
+            }
+            updateProgress();
+        }
+
+        // Update Tracker Progress Numbers
+        function updateProgress() {
+            const total = verbs.length + nouns.length;
+            const current = wordsUsedSet.size;
+            
+            document.getElementById('words-count').innerText = current;
+            document.getElementById('words-total').innerText = total;
+
+            const percentage = (current / total) * 100;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+
+        // Reset Tracker
+        function resetWordChecklist() {
+            wordsUsedSet.clear();
+            initTracker();
+        }
+
+        // Toggle English Translation visibility
+        function toggleTranslations() {
+            showTranslations = !showTranslations;
+            const translations = document.querySelectorAll('.translation');
+            translations.forEach(el => {
+                if (showTranslations) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+            
+            const btn = document.getElementById('translationToggleBtn');
+            if (showTranslations) {
+                btn.innerHTML = '<span>👁️</span> Hide English Translations';
+            } else {
+                btn.innerHTML = '<span>👁️‍🗨️</span> Show English Translations';
+            }
+        }
+
+        // On Load
+        window.onload = function() {
+            initTracker();
+            // Default to showing translations initially
+            showTranslations = true;
+        };
+    </script>
+</body>
+</html>
