@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>الأوزان العشرة — The Ten Arabic Verb Forms</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --parchment: #f5efe0;
+    --parchment-dark: #ede3c8;
+    --ink: #1a1208;
+    --ink-light: #3d2e10;
+    --rust: #8b3a1a;
+    --gold: #b8860b;
+    --gold-light: #d4a832;
+    --sienna: #a0522d;
+    --teal: #2a6e6a;
+    --teal-light: #3a8e8a;
+    --cream: #fdf8ee;
+    --border: #c8b07a;
+    --shadow: rgba(26,18,8,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--parchment);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(184,134,11,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(139,58,26,0.06) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding: 56px 24px 40px;
+    border-bottom: 2px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(184,134,11,0.08) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .header-ornament {
+    font-size: 1.1rem;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    margin-bottom: 18px;
+    display: block;
+  }
+  h1.title-arabic {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2.8rem, 6vw, 4.8rem);
+    color: var(--rust);
+    direction: rtl;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  h1.title-english {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-style: italic;
+    color: var(--ink-light);
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+  .header-desc {
+    max-width: 620px;
+    margin: 0 auto;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--ink-light);
+  }
+
+  /* ── Nav bar ── */
+  .form-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 22px 24px;
+    background: var(--parchment-dark);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  .form-nav a {
+    display: inline-block;
+    padding: 5px 14px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-family: 'Lora', serif;
+    font-size: 0.82rem;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: all 0.2s;
+    background: var(--cream);
+  }
+  .form-nav a:hover, .form-nav a.active-nav {
+    background: var(--rust);
+    color: #fff;
+    border-color: var(--rust);
+  }
+
+  /* ── Main container ── */
+  main { max-width: 980px; margin: 0 auto; padding: 40px 20px 0; }
+
+  /* ── Form card ── */
+  .form-card {
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--cream);
+    box-shadow: 0 3px 18px var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .form-card:hover { box-shadow: 0 6px 28px rgba(26,18,8,0.22); }
+
+  .form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    cursor: pointer;
+    user-select: none;
+    background: linear-gradient(90deg, var(--parchment-dark) 0%, var(--parchment) 100%);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+    gap: 12px;
+  }
+  .form-header:hover { background: linear-gradient(90deg, #e8d9b4 0%, var(--parchment-dark) 100%); }
+
+  .form-number-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 58px;
+    flex-shrink: 0;
+  }
+  .roman-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .arabic-num {
+    font-family: 'Amiri', serif;
+    font-size: 1.05rem;
+    color: var(--gold);
+    direction: rtl;
+  }
+
+  .form-header-center {
+    flex: 1;
+    text-align: center;
+  }
+  .form-pattern {
+    font-family: 'Amiri', serif;
+    font-size: 1.9rem;
+    color: var(--rust);
+    direction: rtl;
+    line-height: 1.3;
+    display: block;
+  }
+  .form-label {
+    font-family: 'Lora', serif;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--ink-light);
+    margin-top: 2px;
+    display: block;
+  }
+
+  .form-tag {
+    font-family: 'Lora', serif;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--teal);
+    background: rgba(42,110,106,0.09);
+    border: 1px solid rgba(42,110,106,0.25);
+    border-radius: 20px;
+    padding: 3px 12px;
+    white-space: nowrap;
+    max-width: 130px;
+    text-align: center;
+  }
+  .toggle-arrow {
+    font-size: 1.1rem;
+    color: var(--gold);
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    flex-shrink: 0;
+  }
+  .form-card.open .toggle-arrow { transform: rotate(180deg); }
+
+  /* ── Body ── */
+  .form-body { display: none; }
+  .form-card.open .form-body { display: block; }
+
+  /* ── Morphology table ── */
+  .morpho-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+  .morpho-table th {
+    background: var(--parchment-dark);
+    font-family: 'Lora', serif;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink-light);
+    padding: 10px 14px;
+    text-align: center;
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .morpho-table td {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .morpho-table td.ar {
+    font-family: 'Amiri', serif;
+    font-size: 1.45rem;
+    color: var(--rust);
+    direction: rtl;
+    line-height: 1.5;
+  }
+  .morpho-table td.en {
+    font-family: 'Lora', serif;
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  /* ── Function section ── */
+  .function-section {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .function-label {
+    font-family: 'Lora', serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    font-weight: 500;
+    white-space: nowrap;
+    padding-top: 2px;
+    min-width: 75px;
+  }
+  .function-text {
+    font-size: 0.91rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  /* ── Examples ── */
+  .examples-section { padding: 0 24px 24px; }
+  .examples-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sienna);
+    margin: 18px 0 12px;
+  }
+
+  .example-item {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .example-item:hover { box-shadow: 0 2px 10px var(--shadow); }
+
+  .example-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.4rem;
+    color: var(--ink);
+    direction: rtl;
+    padding: 12px 16px 8px;
+    background: rgba(245,239,224,0.5);
+    line-height: 1.7;
+    cursor: pointer;
+    position: relative;
+  }
+  .example-arabic::after {
+    content: '▾';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    color: var(--gold);
+    direction: ltr;
+  }
+  .example-meta {
+    display: none;
+    padding: 10px 16px 12px;
+    border-top: 1px solid var(--border);
+    background: var(--cream);
+  }
+  .example-item.ex-open .example-meta { display: block; }
+  .example-item.ex-open .example-arabic::after { content: '▴'; }
+  .example-translation {
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    margin-bottom: 5px;
+    font-style: italic;
+  }
+  .example-note {
+    font-size: 0.8rem;
+    color: var(--teal);
+    font-family: 'Lora', serif;
+  }
+  .example-note::before { content: '◆ '; font-size: 0.6rem; }
+
+  /* ── Tooltip ── */
+  .tooltip-wrap {
+    position: relative;
+    display: inline;
+    cursor: help;
+  }
+  .tooltip-wrap .tt {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: #f0e8d4;
+    font-family: 'Lora', serif;
+    font-size: 0.78rem;
+    padding: 6px 12px;
+    border-radius: 3px;
+    white-space: nowrap;
+    z-index: 200;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+    pointer-events: none;
+    direction: ltr;
+  }
+  .tooltip-wrap .tt::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--ink);
+  }
+  .tooltip-wrap:hover .tt { display: block; }
+
+  /* ── Quiz ── */
+  .quiz-section {
+    background: var(--parchment-dark);
+    border-top: 2px solid var(--border);
+    padding: 48px 24px;
+    max-width: 980px;
+    margin: 40px auto 0;
+    border-radius: 4px;
+  }
+  .quiz-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--rust);
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .quiz-subtitle {
+    text-align: center;
+    font-style: italic;
+    color: var(--ink-light);
+    font-size: 0.88rem;
+    margin-bottom: 30px;
+  }
+
+  .quiz-q {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .quiz-q-text {
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .quiz-q-text .qnum {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--rust);
+    margin-right: 6px;
+  }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .quiz-opt {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--parchment);
+    cursor: pointer;
+    font-family: 'Lora', serif;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    text-align: left;
+    color: var(--ink);
+  }
+  .quiz-opt:hover:not(.answered) { background: var(--parchment-dark); border-color: var(--sienna); }
+  .quiz-opt.correct { background: #d4edda; border-color: #2e7d32; color: #1b5e20; font-weight: 500; }
+  .quiz-opt.wrong { background: #fde8e8; border-color: #c62828; color: #b71c1c; }
+  .quiz-feedback {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--teal);
+    min-height: 18px;
+  }
+
+  .quiz-score-wrap { text-align: center; margin-top: 24px; }
+  #score-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .btn-reset {
+    padding: 10px 28px;
+    background: var(--rust);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-reset:hover { background: var(--ink-light); }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 0.78rem;
+    color: var(--border);
+    font-style: italic;
+    border-top: 1px solid var(--border);
+    margin-top: 50px;
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .quiz-options { grid-template-columns: 1fr; }
+    .form-tag { display: none; }
+    .morpho-table td.ar { font-size: 1.2rem; }
+  }
+
+  /* ── Highlight target ── */
+  .form-card:target {
+    box-shadow: 0 0 0 3px var(--gold-light), 0 6px 28px var(--shadow);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="header-ornament">A Reference in Classical Arabic Morphology</span>
+  <h1 class="title-arabic">الأوزانُ العَشَرة</h1>
+  <h1 class="title-english">The Ten Verb Forms & Their Verbal Nouns</h1>
+  <p class="header-desc">
+    Arabic derives verbs from three-letter roots through a system of ten principal patterns (أوزان). Each form carries a predictable grammatical meaning — causative, reflexive, reciprocal, intensive, and more — allowing fluent manipulation of meaning from a single root. Click any form below to explore its conjugations, masdar, and illustrated examples.
+  </p>
+</header>
+
+<!-- Nav -->
+<nav class="form-nav" id="mainNav">
+  <a href="#form1">I · فَعَلَ</a>
+  <a href="#form2">II · فَعَّلَ</a>
+  <a href="#form3">III · فَاعَلَ</a>
+  <a href="#form4">IV · أَفْعَلَ</a>
+  <a href="#form5">V · تَفَعَّلَ</a>
+  <a href="#form6">VI · تَفَاعَلَ</a>
+  <a href="#form7">VII · انْفَعَلَ</a>
+  <a href="#form8">VIII · افْتَعَلَ</a>
+  <a href="#form9">IX · افْعَلَّ</a>
+  <a href="#form10">X · اسْتَفْعَلَ</a>
+</nav>
+
+<main id="formsContainer">
+<!-- Cards injected by JS -->
+</main>
+
+<!-- Quiz -->
+<section class="quiz-section" id="quiz">
+  <h2 class="quiz-title">Self-Check Quiz</h2>
+  <p class="quiz-subtitle">Match each description to the correct verb form.</p>
+  <div id="quizContainer"></div>
+  <div class="quiz-score-wrap">
+    <div id="score-display"></div>
+    <button class="btn-reset" onclick="resetQuiz()">↺ Try Again</button>
+  </div>
+</section>
+
+<footer>Compiled for learners of Classical and Modern Standard Arabic. All verbs are fully vocalized for clarity. &nbsp;|&nbsp; الأوزان العشرة</footer>
+
+<script>
+const FORMS = [
+  {
+    id: "form1",
+    roman: "I",
+    arabicNum: "الأوَّل",
+    pattern: "فَعَلَ / يَفْعَلُ",
+    label: "Base form",
+    tag: "Simple action",
+    root: "ك-ت-ب",
+    past: "كَتَبَ",
+    present: "يَكْتُبُ",
+    masdar: "كِتَابَة",
+    pastGloss: "he wrote",
+    presentGloss: "he writes",
+    masdarGloss: "writing",
+    function: "Form I is the base, unmarked verb — the primary vehicle for simple transitive, intransitive, and stative actions. Meaning is unpredictable from the pattern alone and must be learned root-by-root. Masdar patterns vary enormously (كِتَابَة، ضَرْب، خُرُوج, etc.).",
+    examples: [
+      { ar: "كَتَبَ الطَّالِبُ رِسَالَةً طَوِيلَةً.", en: "The student wrote a long letter.", note: "Basic transitive action; direct object in accusative." },
+      { ar: "تَكْتُبُ البِنْتُ بِخَطٍّ جَمِيلٍ.", en: "The girl writes in beautiful handwriting.", note: "Present tense describing a habitual action." },
+      { ar: "كَتَبَ المُعَلِّمُ عَلَى السَّبُّورَةِ.", en: "The teacher wrote on the blackboard.", note: "Intransitive use with a prepositional phrase." },
+      { ar: "تَكْتُبُ الكِتَابَةُ تَارِيخَ الأُمَمِ.", en: "Writing records the history of nations.", note: "Masdar كِتَابَة used as the subject; philosophical register." },
+      { ar: "كَتَبَتِ الشَّاعِرَةُ قَصِيدَةً مُؤَثِّرَةً.", en: "The poetess wrote a moving poem.", note: "Feminine subject; verb agrees in gender (كَتَبَتِ)." }
+    ]
+  },
+  {
+    id: "form2",
+    roman: "II",
+    arabicNum: "الثَّانِي",
+    pattern: "فَعَّلَ / يُفَعِّلُ",
+    label: "Doubled middle radical",
+    tag: "Intensive / Causative",
+    root: "ع-ل-م",
+    past: "عَلَّمَ",
+    present: "يُعَلِّمُ",
+    masdar: "تَعْلِيم",
+    pastGloss: "he taught",
+    presentGloss: "he teaches",
+    masdarGloss: "teaching / education",
+    function: "Form II is created by doubling the middle radical. It expresses two primary functions: (1) Causative — causing someone to do or be what Form I denotes (عَلِمَ 'knew' → عَلَّمَ 'caused to know = taught'); (2) Intensive or repeated action (كَسَرَ 'broke' → كَسَّرَ 'smashed thoroughly'). The masdar always follows the pattern تَفْعِيل.",
+    examples: [
+      { ar: "يُعَلِّمُ الأُسْتَاذُ الطُّلَّابَ النَّحْوَ الْعَرَبِيَّ.", en: "The professor teaches the students Arabic grammar.", note: "Classic causative: 'causes them to know' — Form I علِمَ means 'knew'." },
+      { ar: "عَلَّمَتِ الأُمُّ ابْنَهَا الصَّبْرَ.", en: "The mother taught her son patience.", note: "Double accusative (son + patience) is characteristic of causative verbs." },
+      { ar: "قَطَّعَ الطَّبَّاخُ الْخَضْرَوَاتِ قِطَعاً صَغِيرَةً.", en: "The cook cut the vegetables into small pieces.", note: "Intensive meaning: repeated, thorough cutting — not just one cut." },
+      { ar: "التَّعْلِيمُ هُوَ أَسَاسُ التَّقَدُّمِ.", en: "Education is the foundation of progress.", note: "Masdar تَعْلِيم used as nominal subject; تَفْعِيل pattern is diagnostic." },
+      { ar: "يُنَظِّمُ الْمُدِيرُ اجْتِمَاعاً أُسْبُوعِيًّا.", en: "The director organizes a weekly meeting.", note: "Denominative use: from نِظَام 'system' — to systematize/organize." }
+    ]
+  },
+  {
+    id: "form3",
+    roman: "III",
+    arabicNum: "الثَّالِث",
+    pattern: "فَاعَلَ / يُفَاعِلُ",
+    label: "Long ā after first radical",
+    tag: "Reciprocal / Conative",
+    root: "ك-ت-ب",
+    past: "كَاتَبَ",
+    present: "يُكَاتِبُ",
+    masdar: "مُكَاتَبَة",
+    pastGloss: "he corresponded with",
+    presentGloss: "he corresponds with",
+    masdarGloss: "correspondence",
+    function: "Form III adds a long ā vowel after the first radical, extending the action to a second participant. It typically expresses reciprocal or bilateral action ('to do X with/to someone') or conative sense ('to try to do X'). It always takes a direct object — the person toward whom the action is directed.",
+    examples: [
+      { ar: "كَاتَبَ الطَّالِبُ أُسْتَاذَهُ فِي الْخَارِجِ.", en: "The student corresponded with his professor abroad.", note: "Reciprocal: both parties potentially write to each other." },
+      { ar: "يُجَادِلُ الْمُحَامِي خَصْمَهُ بِحُجَجٍ مَنْطِقِيَّةٍ.", en: "The lawyer debates his opponent with logical arguments.", note: "Conative nuance: to argue against someone, trying to convince." },
+      { ar: "سَاعَدَ الْجِيرَانُ بَعْضَهُمْ بَعْضاً.", en: "The neighbors helped one another.", note: "True reciprocal action between multiple parties." },
+      { ar: "الْمُكَاتَبَةُ بَيْنَ الْعُلَمَاءِ نَشَرَتِ الْعِلْمَ.", en: "Correspondence between scholars spread knowledge.", note: "Masdar مُفَاعَلَة pattern clearly marks this as Form III." },
+      { ar: "يُخَاصِمُ الْوَلَدُ زَمِيلَهُ فِي الصَّفِّ.", en: "The boy quarrels with his classmate in class.", note: "Mutual hostile exchange; the other party is the direct object." }
+    ]
+  },
+  {
+    id: "form4",
+    roman: "IV",
+    arabicNum: "الرَّابِع",
+    pattern: "أَفْعَلَ / يُفْعِلُ",
+    label: "Hamza prefix",
+    tag: "Causative",
+    root: "خ-ر-ج",
+    past: "أَخْرَجَ",
+    present: "يُخْرِجُ",
+    masdar: "إِخْرَاج",
+    pastGloss: "he brought out / produced",
+    presentGloss: "he brings out",
+    masdarGloss: "production / extraction",
+    function: "Form IV is one of the two major causative forms (alongside Form II). It is formed by prefixing أَ to the root. It typically means 'to cause [someone/something] to undergo the state/action of Form I', though many Form IV verbs have lexicalized beyond a straightforward causative reading. Masdar always follows إِفْعَال.",
+    examples: [
+      { ar: "أَخْرَجَ الْمُخْرِجُ فِيلْماً رَائِعاً.", en: "The director produced a wonderful film.", note: "Lexicalized: أَخْرَجَ = produced, not just 'caused to exit'." },
+      { ar: "أَعْلَمَ الْمُدِيرُ الْمُوَظَّفِينَ بِالْقَرَارِ.", en: "The director informed the employees of the decision.", note: "Classic causative: أَعْلَمَ = caused (them) to know; double object structure." },
+      { ar: "يُحْسِنُ الْفَنَّانُ رَسْمَ الْبُحُورِ.", en: "The artist is skilled at painting seas.", note: "أَحْسَنَ = to do well / be good at; Form I حَسُنَ = to be good." },
+      { ar: "أَسْلَمَ الرَّجُلُ بِقَنَاعَةٍ تَامَّةٍ.", en: "The man embraced Islam with full conviction.", note: "أَسْلَمَ = to submit/surrender; highly lexicalized Form IV." },
+      { ar: "إِخْرَاجُ الْبِضَاعَةِ مِنَ الْجُمْرُكِ اسْتَغْرَقَ يَوْمَيْنِ.", en: "Clearing the goods from customs took two days.", note: "Masdar إِفْعَال pattern; إِخْرَاج acts as a verbal noun with genitive complement." }
+    ]
+  },
+  {
+    id: "form5",
+    roman: "V",
+    arabicNum: "الْخَامِس",
+    pattern: "تَفَعَّلَ / يَتَفَعَّلُ",
+    label: "تَ prefix + doubled middle",
+    tag: "Reflexive of II",
+    root: "ع-ل-م",
+    past: "تَعَلَّمَ",
+    present: "يَتَعَلَّمُ",
+    masdar: "تَعَلُّم",
+    pastGloss: "he learned",
+    presentGloss: "he learns",
+    masdarGloss: "learning",
+    function: "Form V is the reflexive or passive counterpart of Form II. The تَ prefix signals that the subject undergoes or performs the action upon themselves. If Form II means 'to cause X', Form V means 'to undergo X, to do X to oneself' (عَلَّمَ 'taught' → تَعَلَّمَ 'learned = had oneself taught'). It can also suggest gradual, deliberate effort.",
+    examples: [
+      { ar: "تَعَلَّمَ الطِّفْلُ الْقِرَاءَةَ فِي سِنٍّ مُبَكِّرَةٍ.", en: "The child learned to read at an early age.", note: "Reflexive: he himself underwent the teaching process." },
+      { ar: "يَتَذَكَّرُ الشَّيْخُ أَيَّامَ شَبَابِهِ.", en: "The elder recalls the days of his youth.", note: "تَذَكَّرَ = to remind oneself = to remember; Form II ذَكَّرَ = to remind another." },
+      { ar: "تَقَدَّمَتِ الشَّرِكَةُ بِطَلَبٍ رَسْمِيٍّ.", en: "The company submitted a formal application.", note: "Gradual or deliberate action: to advance/step forward formally." },
+      { ar: "تَعَلُّمُ لُغَةٍ جَدِيدَةٍ يَفْتَحُ آفَاقاً وَاسِعَةً.", en: "Learning a new language opens wide horizons.", note: "Masdar تَفَعُّل used as subject; note doubled middle radical with sukūn." },
+      { ar: "تَكَلَّمَ الْمُتَحَدِّثُ بِوُضُوحٍ وَثِقَةٍ.", en: "The speaker spoke with clarity and confidence.", note: "تَكَلَّمَ = to speak (reflexive 'to engage one's speech'); extremely common." }
+    ]
+  },
+  {
+    id: "form6",
+    roman: "VI",
+    arabicNum: "السَّادِس",
+    pattern: "تَفَاعَلَ / يَتَفَاعَلُ",
+    label: "تَ prefix + long ā",
+    tag: "Reflexive of III / Mutual",
+    root: "ع-و-ن",
+    past: "تَعَاوَنَ",
+    present: "يَتَعَاوَنُ",
+    masdar: "تَعَاوُن",
+    pastGloss: "they cooperated",
+    presentGloss: "they cooperate",
+    masdarGloss: "cooperation",
+    function: "Form VI is the reflexive of Form III, combining the تَ prefix with the characteristic ā vowel of Form III. It denotes mutual, reciprocal action among multiple subjects ('to do X to/with one another') or feigned/pretended action ('to act as if doing X'). The plural or dual is the typical subject.",
+    examples: [
+      { ar: "تَعَاوَنَ الزُّمَلَاءُ لِإِنْجَازِ الْمَشْرُوعِ.", en: "The colleagues cooperated to complete the project.", note: "True reciprocal: each member helps the others; plural subject is typical." },
+      { ar: "يَتَبَادَلُ الصَّدِيقَانِ الْكُتُبَ وَالْأَفْكَارَ.", en: "The two friends exchange books and ideas.", note: "Mutual exchange; dual subject reinforces bilateral action." },
+      { ar: "تَظَاهَرَ الْمُمَثِّلُ بِالْمَرَضِ أَمَامَ الْكَامِيرَا.", en: "The actor pretended to be sick in front of the camera.", note: "Pretense/simulation meaning; تَظَاهَرَ = to feign, to act as if." },
+      { ar: "تَعَاوُنُ الدُّوَلِ ضَرُورَةٌ فِي عَصْرِ الْعَوْلَمَةِ.", en: "Cooperation among nations is a necessity in the age of globalization.", note: "Masdar تَفَاعُل acting as subject; extremely productive pattern in MSA discourse." },
+      { ar: "تَسَابَقَ الْمُتَنَافِسُونَ نَحْوَ خَطِّ الْوُصُولِ.", en: "The competitors raced toward the finish line.", note: "Mutual racing — each races against the others simultaneously." }
+    ]
+  },
+  {
+    id: "form7",
+    roman: "VII",
+    arabicNum: "السَّابِع",
+    pattern: "انْفَعَلَ / يَنْفَعِلُ",
+    label: "نَ infix after hamzat waṣl",
+    tag: "Passive / Inchoative",
+    root: "ك-س-ر",
+    past: "انْكَسَرَ",
+    present: "يَنْكَسِرُ",
+    masdar: "انْكِسَار",
+    pastGloss: "it broke (by itself)",
+    presentGloss: "it breaks",
+    masdarGloss: "breaking / fracture",
+    function: "Form VII is characterized by the infixed نَ after a hamzat waṣl prefix. It functions as the passive/reflexive of Form I, indicating that the subject undergoes the action spontaneously or involuntarily — without an expressed agent. It is not possible to construct a passive with هُوَ مَكْسُور of VII; Form VII itself conveys passivity. It does not apply to transitive verbs whose subjects could be agents.",
+    examples: [
+      { ar: "انْكَسَرَ الْكُوبُ حِينَ سَقَطَ عَلَى الْأَرْضِ.", en: "The cup broke when it fell to the ground.", note: "No agent mentioned — spontaneous result; كَسَرَ (I) would require an agent." },
+      { ar: "انْفَتَحَ الْبَابُ فَجْأَةً بِسَبَبِ الرِّيحِ.", en: "The door opened suddenly due to the wind.", note: "Inchoative: transition into a new state (closed → open) with no agent." },
+      { ar: "يَنْحَلُّ الْمَلَحُ بِسُرْعَةٍ فِي الْمَاءِ الدَّافِئِ.", en: "Salt dissolves quickly in warm water.", note: "Spontaneous process; Form I حَلَّ can mean to untie (with an agent)." },
+      { ar: "انْهَارَ الْجِدَارُ بَعْدَ سَنَوَاتٍ مِنَ الإِهْمَالِ.", en: "The wall collapsed after years of neglect.", note: "Strong inchoative meaning; entire edifice undergoes transformation." },
+      { ar: "انْكِسَارُ الْقَلْبِ أَشَدُّ أَلَماً مِنَ انْكِسَارِ الْعَظْمِ.", en: "The breaking of the heart is more painful than the breaking of a bone.", note: "Masdar انْفِعَال used twice metaphorically vs. literally; parallelism." }
+    ]
+  },
+  {
+    id: "form8",
+    roman: "VIII",
+    arabicNum: "الثَّامِن",
+    pattern: "افْتَعَلَ / يَفْتَعِلُ",
+    label: "تَ infix after first radical",
+    tag: "Reflexive / Middle",
+    root: "ج-م-ع",
+    past: "اجْتَمَعَ",
+    present: "يَجْتَمِعُ",
+    masdar: "اجْتِمَاع",
+    pastGloss: "they gathered / met",
+    presentGloss: "they gather / meet",
+    masdarGloss: "meeting / gathering",
+    function: "Form VIII inserts a تَ after the first radical (with hamzat waṣl prefix). It is a middle-reflexive form, often indicating that the subject performs an action for their own benefit, collects themselves into an action, or experiences a process. It overlaps somewhat with Form VII but applies more broadly and to many verbs not of Form I origin. The masdar follows the pattern افْتِعَال.",
+    examples: [
+      { ar: "اجْتَمَعَ أَعْضَاءُ الْمَجْلِسِ لِمُنَاقَشَةِ الْمِيزَانِيَّةِ.", en: "The council members met to discuss the budget.", note: "Reflexive gathering: they brought themselves together; Form I جَمَعَ = to collect [something]." },
+      { ar: "يَكْتَسِبُ الشَّبَابُ الْخِبْرَةَ بِالتَّدْرِيجِ.", en: "Young people acquire experience gradually.", note: "For one's own benefit: to acquire for oneself; Form I كَسَبَ = to earn." },
+      { ar: "اخْتَارَ الطَّالِبُ تَخَصُّصَ الطِّبِّ.", en: "The student chose the field of medicine.", note: "Reflexive selection: choosing for oneself; Form I خَارَ is rare." },
+      { ar: "اجْتِمَاعُ الْعَقْلِ وَالإِرَادَةِ يُحَقِّقُ الْمُعْجِزَاتِ.", en: "The meeting of mind and will achieves miracles.", note: "Masdar اجْتِمَاع in a metaphorical, philosophical construction." },
+      { ar: "يَحْتَاجُ كُلُّ إِنْسَانٍ إِلَى الأَمَانِ وَالطُّمَأْنِينَةِ.", en: "Every person needs security and peace of mind.", note: "Extremely common Form VIII verb; احْتَاجَ = to need / to be in need of." }
+    ]
+  },
+  {
+    id: "form9",
+    roman: "IX",
+    arabicNum: "التَّاسِع",
+    pattern: "افْعَلَّ / يَفْعَلُّ",
+    label: "Doubled final radical",
+    tag: "Colors & Defects",
+    root: "ح-م-ر",
+    past: "احْمَرَّ",
+    present: "يَحْمَرُّ",
+    masdar: "احْمِرَار",
+    pastGloss: "it turned red / reddened",
+    presentGloss: "it turns red",
+    masdarGloss: "reddening",
+    function: "Form IX is the most semantically restricted form. It is used exclusively with verbs denoting the acquisition of a color or a physical defect/characteristic. The final radical is doubled. Examples: ابْيَضَّ (whitened), اصْفَرَّ (yellowed), اسْوَدَّ (blackened), اعْوَجَّ (became crooked). It is inchoative: entering a state rather than being in one.",
+    examples: [
+      { ar: "احْمَرَّ وَجْهُهُ حَيَاءً أَمَامَ الْجَمِيعِ.", en: "His face reddened with embarrassment before everyone.", note: "Inchoative color verb: transition into the state of redness." },
+      { ar: "يَصْفَرُّ الْوَرَقُ فِي الْخَرِيفِ ثُمَّ يَتَسَاقَطُ.", en: "Leaves yellow in autumn and then fall.", note: "Sequential process; افْعَلَّ describes the color-change phase." },
+      { ar: "ابْيَضَّ شَعْرُهُ قَبْلَ أَوَانِهِ مِنَ الْقَلَقِ.", en: "His hair turned white prematurely from anxiety.", note: "Color change as symptom; the doubled ض is audible/orthographic." },
+      { ar: "اسْوَدَّتِ السَّمَاءُ وَالْعَاصِفَةُ تَقْتَرِبُ.", en: "The sky darkened as the storm approached.", note: "Dramatic atmospheric description; Form IX is vivid and immediate." },
+      { ar: "احْمِرَارُ الْجِلْدِ قَدْ يَدُلُّ عَلَى حَسَاسِيَّةٍ.", en: "Reddening of the skin may indicate an allergy.", note: "Masdar احْمِرَار in a medical/clinical register; pattern افْعِلَال." }
+    ]
+  },
+  {
+    id: "form10",
+    roman: "X",
+    arabicNum: "الْعَاشِر",
+    pattern: "اسْتَفْعَلَ / يَسْتَفْعِلُ",
+    label: "استَ prefix",
+    tag: "Requestive / Estimative",
+    root: "غ-ف-ر",
+    past: "اسْتَغْفَرَ",
+    present: "يَسْتَغْفِرُ",
+    masdar: "اسْتِغْفَار",
+    pastGloss: "he sought forgiveness",
+    presentGloss: "he seeks forgiveness",
+    masdarGloss: "seeking forgiveness",
+    function: "Form X, formed with the prefix اسْتَ, carries two primary meanings: (1) Requestive — to ask for or seek what the root denotes (استَغْفَرَ: to seek غُفْرَان forgiveness); (2) Estimative — to consider or deem something to have a quality (اسْتَحْسَنَ: to consider beautiful, اسْتَكْبَرَ: to consider oneself great → to be arrogant). The masdar follows the pattern اسْتِفْعَال.",
+    examples: [
+      { ar: "يَسْتَغْفِرُ الْمُؤْمِنُ رَبَّهُ فِي كُلِّ لَيْلَةٍ.", en: "The believer seeks his Lord's forgiveness every night.", note: "Classic requestive: asking God for غُفْرَان (forgiveness)." },
+      { ar: "اسْتَقْبَلَ الرَّئِيسُ الْوَفْدَ الأَجْنَبِيَّ بِحَفَاوَةٍ.", en: "The president received the foreign delegation warmly.", note: "To face toward = to welcome/receive; استَ often idiomatized." },
+      { ar: "يَسْتَحِقُّ الْعَامِلُ الْمُجِدُّ رَاتِباً أَعْلَى.", en: "The diligent worker deserves a higher salary.", note: "Estimative-internal: to be worthy of, to have a right to." },
+      { ar: "اسْتَعَانَ الطَّالِبُ بِالْمُعَجَمِ لِفَهْمِ النَّصِّ.", en: "The student sought help from the dictionary to understand the text.", note: "Requestive: to seek aid/assistance; ع-و-ن root underlying." },
+      { ar: "اسْتِغْفَارُ اللِّسَانِ لَا يَكْفِي دُونَ إِصْلَاحِ الْقَلْبِ.", en: "Verbal seeking of forgiveness is not enough without reforming the heart.", note: "Masdar اسْتِفْعَال as sentence subject; theological register, parallelism." }
+    ]
+  }
+];
+
+// ── Quiz data ──
+const QUIZ_QS = [
+  {
+    q: "Which form is used exclusively for verbs denoting colors and physical defects?",
+    correct: "Form IX (افْعَلَّ)",
+    options: ["Form IX (افْعَلَّ)", "Form VII (انْفَعَلَ)", "Form IV (أَفْعَلَ)", "Form II (فَعَّلَ)"],
+    feedback: "Form IX (افْعَلَّ) is semantically restricted to color acquisition and physical characteristics, e.g. احْمَرَّ (reddened)."
+  },
+  {
+    q: "Form X (اسْتَفْعَلَ) primarily conveys what meaning(s)?",
+    correct: "Requestive & estimative",
+    options: ["Intensive repetition", "Requestive & estimative", "Passive spontaneous", "Bilateral reciprocal"],
+    feedback: "Form X asks for something (requestive) or deems something to be a certain way (estimative), e.g. اسْتَغْفَرَ = sought forgiveness."
+  },
+  {
+    q: "Which form is the reflexive/passive counterpart of Form I, expressing spontaneous or agentless action?",
+    correct: "Form VII (انْفَعَلَ)",
+    options: ["Form V (تَفَعَّلَ)", "Form VIII (افْتَعَلَ)", "Form VII (انْفَعَلَ)", "Form VI (تَفَاعَلَ)"],
+    feedback: "Form VII (انْفَعَلَ) indicates the subject undergoes the action spontaneously with no agent — e.g. انْكَسَرَ (it broke by itself)."
+  },
+  {
+    q: "Form III (فَاعَلَ) extends action toward another participant. What nuance does it additionally carry?",
+    correct: "Conative (trying to do X to someone)",
+    options: ["Causing someone to act", "Conative (trying to do X to someone)", "Acting pretentiously", "Inchoative state change"],
+    feedback: "Form III can mean a genuine reciprocal action OR a conative one — attempting an action upon someone, e.g. قَاتَلَهُ (fought him, tried to kill him)."
+  },
+  {
+    q: "Form V is the reflexive counterpart of which form?",
+    correct: "Form II",
+    options: ["Form I", "Form II", "Form III", "Form IV"],
+    feedback: "Form V (تَفَعَّلَ) reflexivizes Form II (فَعَّلَ): if Form II is causative/intensive, Form V is 'to undergo that causation oneself', e.g. عَلَّمَ → تَعَلَّمَ."
+  },
+  {
+    q: "What is the masdar pattern for Form IV (أَفْعَلَ)?",
+    correct: "إِفْعَال",
+    options: ["تَفْعِيل", "مُفَاعَلَة", "إِفْعَال", "افْتِعَال"],
+    feedback: "Form IV (أَفْعَلَ) consistently produces masdars of the pattern إِفْعَال, e.g. إِخْرَاج, إِعْلَام, إِسْلَام."
+  }
+];
+
+// ── Render forms ──
+function renderForms() {
+  const container = document.getElementById('formsContainer');
+  FORMS.forEach(f => {
+    const card = document.createElement('div');
+    card.className = 'form-card';
+    card.id = f.id;
+
+    card.innerHTML = `
+      <div class="form-header" onclick="toggleCard('${f.id}')">
+        <div class="form-number-badge">
+          <span class="roman-num">${f.roman}</span>
+          <span class="arabic-num" dir="rtl">${f.arabicNum}</span>
+        </div>
+        <div class="form-header-center">
+          <span class="form-pattern" dir="rtl">${f.pattern}</span>
+          <span class="form-label">${f.label}</span>
+        </div>
+        <span class="form-tag">${f.tag}</span>
+        <span class="toggle-arrow">▾</span>
+      </div>
+      <div class="form-body">
+        <table class="morpho-table">
+          <thead>
+            <tr>
+              <th>Root</th>
+              <th>Past (الماضي)</th>
+              <th>Present (المضارع)</th>
+              <th>Masdar (المصدر)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="ar" dir="rtl">
+                <span class="tooltip-wrap">${f.root}<span class="tt">Root: ${f.root}</span></span>
+              </td>
+              <td class="ar" dir="rtl">
+                <span class="tooltip-wrap">${f.past}<span class="tt">${f.pastGloss}</span></span>
+              </td>
+              <td class="ar" dir="rtl">
+                <span class="tooltip-wrap">${f.present}<span class="tt">${f.presentGloss}</span></span>
+              </td>
+              <td class="ar" dir="rtl">
+                <span class="tooltip-wrap">${f.masdar}<span class="tt">${f.masdarGloss}</span></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="function-section">
+          <span class="function-label">Function</span>
+          <p class="function-text">${f.function}</p>
+        </div>
+
+        <div class="examples-section">
+          <div class="examples-title">Example Sentences — click to reveal translation & note</div>
+          ${f.examples.map((ex, i) => `
+            <div class="example-item" id="${f.id}-ex${i}">
+              <div class="example-arabic" dir="rtl" onclick="toggleEx('${f.id}-ex${i}')">${ex.ar}</div>
+              <div class="example-meta">
+                <div class="example-translation">"${ex.en}"</div>
+                <div class="example-note">${ex.note}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function toggleCard(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+function toggleEx(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('ex-open');
+}
+
+// ── Render quiz ──
+let quizAnswered = 0;
+let quizScore = 0;
+
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizAnswered = 0;
+  quizScore = 0;
+  document.getElementById('score-display').textContent = '';
+
+  QUIZ_QS.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-q';
+    div.id = `qq${qi}`;
+
+    const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+
+    div.innerHTML = `
+      <div class="quiz-q-text"><span class="qnum">${qi+1}.</span> ${q.q}</div>
+      <div class="quiz-options">
+        ${shuffled.map((opt, oi) => `
+          <button class="quiz-opt" id="qo${qi}-${oi}" onclick="answerQ(${qi}, '${opt.replace(/'/g,"\\'")}', this)">${opt}</button>
+        `).join('')}
+      </div>
+      <div class="quiz-feedback" id="qf${qi}"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function answerQ(qi, answer, btn) {
+  const q = QUIZ_QS[qi];
+  // Already answered?
+  const opts = btn.parentElement.querySelectorAll('.quiz-opt');
+  if ([...opts].some(o => o.classList.contains('correct') || o.classList.contains('wrong'))) return;
+
+  opts.forEach(o => o.classList.add('answered'));
+
+  const correct = answer === q.correct;
+  if (correct) {
+    btn.classList.add('correct');
+    quizScore++;
+  } else {
+    btn.classList.add('wrong');
+    // Highlight correct
+    opts.forEach(o => { if (o.textContent === q.correct) o.classList.add('correct'); });
+  }
+
+  document.getElementById(`qf${qi}`).textContent = q.feedback;
+
+  quizAnswered++;
+  if (quizAnswered === QUIZ_QS.length) {
+    document.getElementById('score-display').textContent =
+      `Your score: ${quizScore} / ${QUIZ_QS.length} — ${quizScore === QUIZ_QS.length ? '🌟 Perfect!' : quizScore >= 4 ? '✓ Well done!' : 'Keep reviewing the forms.'}`;
+  }
+}
+
+function resetQuiz() { renderQuiz(); }
+
+// ── Nav highlight on scroll ──
+function setupNavHighlight() {
+  const links = document.querySelectorAll('.form-nav a');
+  const cards = FORMS.map(f => document.getElementById(f.id));
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active-nav'));
+        const active = document.querySelector(`.form-nav a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active-nav');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  cards.forEach(c => c && obs.observe(c));
+}
+
+// ── Init ──
+renderForms();
+renderQuiz();
+setupNavHighlight();
+
+// Open first card by default
+document.getElementById('form1').classList.add('open');
+</script>
+</body>
+</html>
