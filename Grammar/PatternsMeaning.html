@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Awzan: Master the 10 Arabic Verb Forms</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for premium Latin & Arabic typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        }
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+        }
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-full flex flex-col selection:bg-emerald-500 selection:text-white">
+
+    <!-- Navigation & Header Bar -->
+    <header class="bg-gradient-to-r from-emerald-900 via-teal-900 to-cyan-950 text-white shadow-xl sticky top-0 z-50 border-b border-emerald-700/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-amber-400 text-emerald-950 p-2.5 rounded-xl shadow-md font-extrabold text-xl tracking-wider border border-amber-300">
+                        أوزان
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
+                            Al-Awzan <span class="text-xs bg-emerald-500 text-emerald-950 font-bold px-2 py-0.5 rounded-full uppercase">10 Forms</span>
+                        </h1>
+                        <p class="text-xs text-emerald-200/90 tracking-wide mt-0.5 font-medium">The Ultimate Interactive Arabic Root & Verb System Guide</p>
+                    </div>
+                </div>
+                <!-- Main Nav Tabs -->
+                <nav class="flex flex-wrap bg-emerald-950/50 p-1.5 rounded-xl border border-emerald-800/40 gap-1">
+                    <button onclick="switchTab('explorer')" id="btn-explorer" class="nav-btn px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 bg-amber-500 text-emerald-950 shadow-sm">
+                        📚 Form Explorer
+                    </button>
+                    <button onclick="switchTab('visualizer')" id="btn-visualizer" class="nav-btn px-4 py-2 text-sm font-semibold rounded-lg text-emerald-100 hover:text-white hover:bg-emerald-800/40 transition-all duration-200">
+                        ✨ Root Visualizer
+                    </button>
+                    <button onclick="switchTab('practice')" id="btn-practice" class="nav-btn px-4 py-2 text-sm font-semibold rounded-lg text-emerald-100 hover:text-white hover:bg-emerald-800/40 transition-all duration-200">
+                        🎯 Quiz Arena
+                    </button>
+                    <button onclick="switchTab('search')" id="btn-search" class="nav-btn px-4 py-2 text-sm font-semibold rounded-lg text-emerald-100 hover:text-white hover:bg-emerald-800/40 transition-all duration-200 flex items-center gap-1.5">
+                        🔍 Master Search
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Body container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Welcome banner alerting users about web speech synthesis audio support -->
+        <div class="mb-8 bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-12 -translate-y-12 pointer-events-none text-9xl font-bold text-emerald-900 arabic-text">
+                فَعَلَ
+            </div>
+            <div class="space-y-2 max-w-3xl z-10">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                    💡 Pedagogical Method
+                </span>
+                <h2 class="text-lg font-bold text-slate-900">Understanding the Root-and-Pattern System</h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Most Arabic verbs are derived from a 3-letter root (represented by <span class="font-bold text-emerald-700">ف - ع - ل</span>). By morphing this root into one of the ten primary <strong>Awzan (patterns)</strong>, speakers convey precise semantic shifts like causation, repetition, intensity, or reciprocity.
+                </p>
+            </div>
+            <div class="flex flex-col xs:flex-row gap-2 w-full md:w-auto shrink-0 z-10">
+                <button onclick="testSpeech()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center justify-center gap-2 border border-slate-300/60 transition shadow-sm">
+                    🔊 Test Arabic TTS Voice
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= EXPLORER TAB ================= -->
+        <section id="tab-explorer" class="tab-content block space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                
+                <!-- Quick Navigation Sidebar -->
+                <div class="lg:col-span-1 space-y-4">
+                    <div class="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-sm sticky top-24">
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 px-2">Navigate Forms</h3>
+                        <div class="space-y-1.5" id="explorer-sidebar">
+                            <!-- Populated via Javascript dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Details Main Display Container -->
+                <div class="lg:col-span-3 space-y-6">
+                    <!-- Form Metadata Card -->
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" id="form-details-card">
+                        <!-- Header with dynamic Form info -->
+                        <div class="bg-gradient-to-br from-emerald-800 to-teal-900 text-white p-6 sm:p-8 relative">
+                            <div class="absolute right-6 bottom-4 text-8xl font-black text-white/5 font-serif arabic-text select-none" id="detail-bg-num">
+                                I
+                            </div>
+                            <div class="flex flex-wrap items-center justify-between gap-4">
+                                <div>
+                                    <span class="px-3 py-1 bg-amber-400 text-emerald-950 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm" id="detail-roman">Form I</span>
+                                    <h2 class="text-3xl font-extrabold tracking-tight mt-3 text-white" id="detail-english-title">The Ground/Basic Form</h2>
+                                    <p class="text-emerald-100 text-sm mt-1.5 font-medium max-w-xl" id="detail-one-liner">Simple active action with varying transitivities.</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-5xl font-extrabold tracking-wide arabic-text text-amber-300" id="detail-arabic-name">فَعَلَ</div>
+                                    <p class="text-emerald-200 text-xs font-bold tracking-widest uppercase mt-1">Skeletal Pattern</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Linguistic Details & Grammar Meaning -->
+                        <div class="p-6 sm:p-8 border-b border-slate-100 bg-slate-50/50">
+                            <h3 class="text-sm font-extrabold text-slate-950 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                <span class="w-1.5 h-3.5 bg-emerald-600 rounded-full"></span>
+                                Primary Meaning & Behavior
+                            </h3>
+                            <p class="text-slate-600 text-sm leading-relaxed" id="detail-description">
+                                Represents the basic concept of the verb root. It can be transitive or intransitive. There is no set meaning addition since it is the root reference frame.
+                            </p>
+                        </div>
+
+                        <!-- Pattern Table Conjugations -->
+                        <div class="p-6 sm:p-8 border-b border-slate-100">
+                            <h3 class="text-sm font-extrabold text-slate-950 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <span class="w-1.5 h-3.5 bg-emerald-600 rounded-full"></span>
+                                Master Paradigms (الأنماط)
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <!-- Past Tense -->
+                                <div class="bg-slate-50/70 hover:bg-slate-50 border border-slate-200 rounded-xl p-4 transition duration-200">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-xs font-bold text-slate-400 uppercase">Past (الماضي)</span>
+                                        <button onclick="speakTextById('paradigm-past')" class="text-slate-400 hover:text-emerald-600 transition">
+                                            🔊
+                                        </button>
+                                    </div>
+                                    <div class="text-2xl font-bold text-slate-800 text-right arabic-text py-1" id="paradigm-past">
+                                        فَعَلَ
+                                    </div>
+                                    <span class="text-xs text-slate-500 block text-right mt-1" id="paradigm-past-trans">faʿala</span>
+                                </div>
+                                <!-- Present Tense -->
+                                <div class="bg-slate-50/70 hover:bg-slate-50 border border-slate-200 rounded-xl p-4 transition duration-200">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-xs font-bold text-slate-400 uppercase">Present (المضارع)</span>
+                                        <button onclick="speakTextById('paradigm-present')" class="text-slate-400 hover:text-emerald-600 transition">
+                                            🔊
+                                        </button>
+                                    </div>
+                                    <div class="text-2xl font-bold text-slate-800 text-right arabic-text py-1" id="paradigm-present">
+                                        يَفْعُلُ
+                                    </div>
+                                    <span class="text-xs text-slate-500 block text-right mt-1" id="paradigm-present-trans">yafʿulu</span>
+                                </div>
+                                <!-- Verbal Noun (Masdar) -->
+                                <div class="bg-slate-50/70 hover:bg-slate-50 border border-slate-200 rounded-xl p-4 transition duration-200">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-xs font-bold text-slate-400 uppercase">Verbal Noun (المصدر)</span>
+                                        <button onclick="speakTextById('paradigm-masdar')" class="text-slate-400 hover:text-emerald-600 transition">
+                                            🔊
+                                        </button>
+                                    </div>
+                                    <div class="text-2xl font-bold text-slate-800 text-right arabic-text py-1" id="paradigm-masdar">
+                                        فَعْل
+                                    </div>
+                                    <span class="text-xs text-slate-500 block text-right mt-1" id="paradigm-masdar-trans">faʿl</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Examples Block -->
+                        <div class="p-6 sm:p-8">
+                            <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                                <h3 class="text-sm font-extrabold text-slate-950 uppercase tracking-widest flex items-center gap-2">
+                                    <span class="w-1.5 h-3.5 bg-emerald-600 rounded-full"></span>
+                                    Vetted Examples (أمثلة)
+                                </h3>
+                                <span class="text-xs font-medium text-slate-500">Tap speaker to hear correct vocalization</span>
+                            </div>
+
+                            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
+                                            <th class="px-6 py-4">#</th>
+                                            <th class="px-6 py-4 text-right">Past (الماضي)</th>
+                                            <th class="px-6 py-4 text-right">Present (المضارع)</th>
+                                            <th class="px-6 py-4 text-right">Masdar (المصدر)</th>
+                                            <th class="px-6 py-4">Translation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="examples-table-body" class="divide-y divide-slate-100 text-sm">
+                                        <!-- Dynamic Example Rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ROOT VISUALIZER TAB ================= -->
+        <section id="tab-visualizer" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+                <div>
+                    <h2 class="text-2xl font-extrabold tracking-tight text-slate-900">Interactive Root Visualizer & Adapter</h2>
+                    <p class="text-sm text-slate-500 mt-1">Plug in any three-letter root to generate conjugations across all ten Arabic verb forms with color-coded structural breakdowns.</p>
+                </div>
+
+                <!-- Input Selection Area -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-5 rounded-xl border border-slate-200/60">
+                    <!-- Root Preset Dropdown -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Select Root Preset</label>
+                        <select id="preset-select" onchange="loadPresetRoot()" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
+                            <option value="k-t-b" selected>ك - ت - ب (k-t-b : To Write)</option>
+                            <option value="d-r-s">د - ر - س (d-r-s : To Study)</option>
+                            <option value="ʿ-l-m">ع - ل - م (ʿ-l-m : To Know/Learn)</option>
+                            <option value="k-b-r">ك - ب - ر (k-b-r : To Grow/Be Big)</option>
+                            <option value="s-l-m">س - ل - م (s-l-m : To Be Safe/Peaceful)</option>
+                        </select>
+                    </div>
+
+                    <!-- Custom Root Inputs -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Or Define Custom Root (Arabic Letters Only)</label>
+                        <div class="flex gap-2 justify-between">
+                            <div class="w-full">
+                                <input type="text" id="root-r1" value="ك" maxlength="1" class="w-full text-center py-2.5 font-bold arabic-text text-xl border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm" placeholder="R1">
+                                <span class="text-[10px] text-center block mt-1 font-bold text-slate-400">R1 (ف)</span>
+                            </div>
+                            <div class="w-full">
+                                <input type="text" id="root-r2" value="ت" maxlength="1" class="w-full text-center py-2.5 font-bold arabic-text text-xl border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm" placeholder="R2">
+                                <span class="text-[10px] text-center block mt-1 font-bold text-slate-400">R2 (ع)</span>
+                            </div>
+                            <div class="w-full">
+                                <input type="text" id="root-r3" value="ب" maxlength="1" class="w-full text-center py-2.5 font-bold arabic-text text-xl border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm" placeholder="R3">
+                                <span class="text-[10px] text-center block mt-1 font-bold text-slate-400">R3 (ل)</span>
+                            </div>
+                            <button onclick="updateVisualizerFromInputs()" class="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-extrabold rounded-lg tracking-wider transition-colors shadow-sm uppercase self-start mt-0 flex items-center gap-1">
+                                🔄 Plot
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legend of Colors -->
+                <div class="flex flex-wrap items-center gap-4 text-xs font-medium border-t border-slate-100 pt-4">
+                    <span class="text-slate-400">Legend:</span>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-100 text-amber-800 font-bold border border-amber-200">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span> Root Letter 1 (Radical 1)
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span> Root Letter 2 (Radical 2)
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-100 text-cyan-800 font-bold border border-cyan-200">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 shrink-0"></span> Root Letter 3 (Radical 3)
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 border border-slate-200">
+                        <span class="w-2.5 h-2.5 rounded bg-slate-400 shrink-0"></span> Form Modifiers / Diacritics
+                    </span>
+                </div>
+
+                <!-- Comparative Visualizer Grid -->
+                <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-inner">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-emerald-950 text-white text-xs font-bold uppercase tracking-widest border-b border-emerald-800">
+                                <th class="px-6 py-4">Form</th>
+                                <th class="px-6 py-4">Formula Context</th>
+                                <th class="px-6 py-4 text-right">Past (الماضي)</th>
+                                <th class="px-6 py-4 text-right">Present (المضارع)</th>
+                                <th class="px-6 py-4 text-right">Masdar (المصدر)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="visualizer-table-body" class="divide-y divide-slate-100">
+                            <!-- Populated with dynamic generated rows with parsed colorization tags -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= QUIZ ARENA TAB ================= -->
+        <section id="tab-practice" class="tab-content hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Score & Progress Card -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                        <div class="text-center space-y-2">
+                            <span class="text-3xl">🏆</span>
+                            <h3 class="text-lg font-extrabold text-slate-900">Your Session Standing</h3>
+                            <p class="text-xs text-slate-400">Score saves for active window session</p>
+                        </div>
+
+                        <!-- Big Circular/Square Scoreboard -->
+                        <div class="flex justify-center">
+                            <div class="bg-gradient-to-br from-slate-50 to-emerald-50/50 border-4 border-emerald-500/20 w-40 h-40 rounded-full flex flex-col items-center justify-center shadow-inner relative">
+                                <span class="text-4xl font-extrabold text-emerald-950" id="quiz-score-val">0</span>
+                                <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold mt-1">Points Gained</span>
+                            </div>
+                        </div>
+
+                        <!-- Session Performance stats -->
+                        <div class="divide-y divide-slate-100 text-xs">
+                            <div class="flex justify-between py-3">
+                                <span class="text-slate-400">Total Solved</span>
+                                <span class="font-bold text-slate-700" id="stat-solved">0</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="text-slate-400">Correct Answers</span>
+                                <span class="font-bold text-emerald-600" id="stat-correct">0</span>
+                            </div>
+                            <div class="flex justify-between py-3">
+                                <span class="text-slate-400">Success Rate</span>
+                                <span class="font-bold text-slate-700" id="stat-accuracy">0%</span>
+                            </div>
+                        </div>
+
+                        <!-- Reset Progress button -->
+                        <button onclick="resetQuizStats()" class="w-full py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-500 text-xs font-bold rounded-xl transition border border-slate-200 flex items-center justify-center gap-1.5">
+                            ♻️ Clear Scoring History
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Question/Arena Core Card -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden min-h-[450px] flex flex-col justify-between">
+                        <!-- Progress Top Indicator -->
+                        <div class="bg-emerald-50 px-6 py-3 border-b border-emerald-100 flex justify-between items-center">
+                            <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider" id="quiz-category">Identify the Form</span>
+                            <span class="text-xs text-emerald-600 font-semibold" id="quiz-question-counter">Question Pool Active</span>
+                        </div>
+
+                        <!-- Main Challenge Body -->
+                        <div class="p-6 sm:p-8 flex-grow flex flex-col justify-center space-y-6">
+                            <div class="text-center space-y-4">
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block">Analyze the word below</span>
+                                <div class="inline-block px-8 py-5 bg-slate-50 border border-slate-200 rounded-2xl relative group">
+                                    <button onclick="speakTextById('quiz-arabic-term')" class="absolute top-2 right-2 text-xs text-slate-400 hover:text-emerald-600 transition p-1">
+                                        🔊
+                                    </button>
+                                    <div class="text-5xl font-black text-emerald-950 arabic-text" id="quiz-arabic-term">
+                                        اِسْتَغْفَرَ
+                                    </div>
+                                </div>
+                                <p class="text-sm text-slate-600 font-medium" id="quiz-question-prompt">Which form number corresponds to this verb?</p>
+                            </div>
+
+                            <!-- Choices Multiple Selection Grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="quiz-choices-grid">
+                                <!-- Generated Dynamically via Javascript -->
+                            </div>
+                        </div>
+
+                        <!-- Bottom Feedback Bar -->
+                        <div class="bg-slate-50 border-t border-slate-200/80 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <div id="quiz-feedback" class="text-sm font-bold flex items-center gap-1.5 transition-all duration-200 opacity-0">
+                                <!-- Dynamic correctness prompt text -->
+                            </div>
+                            <button id="btn-next-quiz" onclick="loadNewQuestion()" class="w-full sm:w-auto px-6 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl shadow-sm transition-colors flex items-center justify-center gap-1">
+                                Next Challenge ➡️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SEARCH HUB TAB ================= -->
+        <section id="tab-search" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
+                    <div>
+                        <h2 class="text-2xl font-extrabold tracking-tight text-slate-900">Master Example Query Center</h2>
+                        <p class="text-sm text-slate-500 mt-1">Browse and locate any verb example among all forms with specialized criteria filters.</p>
+                    </div>
+                    <!-- Stats badge -->
+                    <span class="inline-flex self-start md:self-auto items-center px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold rounded-full">
+                        📚 Total Index Size: 50 Verb Conjugations
+                    </span>
+                </div>
+
+                <!-- Controls Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="md:col-span-6 relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                            🔍
+                        </span>
+                        <input type="text" id="search-input" onkeyup="filterVerbs()" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm" placeholder="Search by English, Arabic, or Transliteration...">
+                    </div>
+                    <div class="md:col-span-3">
+                        <select id="filter-form-select" onchange="filterVerbs()" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
+                            <option value="all">All Forms (I - X)</option>
+                            <option value="I">Form I</option>
+                            <option value="II">Form II</option>
+                            <option value="III">Form III</option>
+                            <option value="IV">Form IV</option>
+                            <option value="V">Form V</option>
+                            <option value="VI">Form VI</option>
+                            <option value="VII">Form VII</option>
+                            <option value="VIII">Form VIII</option>
+                            <option value="IX">Form IX</option>
+                            <option value="X">Form X</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-3">
+                        <select id="sort-order-select" onchange="filterVerbs()" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
+                            <option value="asc">Sort by Form Ascending</option>
+                            <option value="desc">Sort by Form Descending</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Query Results Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="search-results-grid">
+                    <!-- Populated dynamically via script with gorgeous mini cards -->
+                </div>
+
+                <!-- No Results fallback states -->
+                <div id="search-empty" class="hidden text-center py-12 space-y-3">
+                    <span class="text-4xl">🔎</span>
+                    <h3 class="text-base font-bold text-slate-800">No Verb Matches Found</h3>
+                    <p class="text-xs text-slate-400 max-w-sm mx-auto">Try typing a root directly (e.g. "كتب"), an English verb concept ("travel"), or filter by form.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Application Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12 shrink-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-base">🕋</span>
+                <p>&copy; Al-Awzan Interactive Arabic Companion. Built for pedagogical efficiency, visualization, and rapid mastery of the 10 forms.</p>
+            </div>
+            <p class="text-slate-500">Form reference frames use canonical standard roots (<span class="text-emerald-400">ف-ع-ل</span>).</p>
+        </div>
+    </footer>
+
+    <!-- Core Application Javascript -->
+    <script>
+        // Definitive structures of Arabic Verb System Forms, meanings, pattern structures & 5 real examples per form.
+        const verbFormsData = [
+            {
+                roman: "I",
+                arabic: "فَعَلَ",
+                oneLiner: "The Ground / Basic Form",
+                meaning: "This is the primary ground state of the 3-letter root verb. It features direct active actions without modifications. Depending on the lexical nature of the root, it can express transitive (takes object) or intransitive (stays with subject) actions. The past vocalization can utilize Fathah, Kasrah, or Dammah on the second root letter, with corresponding variety in the present tense vowel.",
+                patterns: {
+                    past: "فَعَلَ / فَعِلَ / فَعُلَ",
+                    pastTrans: "faʿala / faʿila / faʿula",
+                    present: "يَفْعُلُ / يَفْعَلُ / يَفْعِلُ",
+                    presentTrans: "yafʿulu / yafʿalu / yafʿilu",
+                    masdar: "فَعْل / فُعُول / فِعَالَة",
+                    masdarTrans: "various patterns"
+                },
+                examples: [
+                    { past: "كَتَبَ", present: "يَكْتُبُ", masdar: "كِتَابَة", eng: "To write", pastTrans: "kataba", presentTrans: "yaktubu", masdarTrans: "kitābah" },
+                    { past: "دَرَسَ", present: "يَدْرُسُ", masdar: "دِرَاسَة", eng: "To study", pastTrans: "darasa", presentTrans: "yadrusu", masdarTrans: "dirāsah" },
+                    { past: "قَرَأَ", present: "يَقْرَأُ", masdar: "قِرَاءَة", eng: "To read", pastTrans: "qara'a", presentTrans: "yaqra'u", masdarTrans: "qirā'ah" },
+                    { past: "ذَهَبَ", present: "يَذْهَبُ", masdar: "ذَهَاب", eng: "To go", pastTrans: "dhahaba", presentTrans: "yadhhabu", masdarTrans: "dhahāb" },
+                    { past: "شَرِبَ", present: "يَشْرَبُ", masdar: "شُرْب", eng: "To drink", pastTrans: "shariba", presentTrans: "yashrabu", masdarTrans: "shurb" }
+                ]
+            },
+            {
+                roman: "II",
+                arabic: "فَعَّلَ",
+                oneLiner: "The Causative / Intensive Form",
+                meaning: "This form alters the ground root by doubling the middle root letter (Shaddah). This serves multiple primary modifications: 1. Making intransitive Form I verbs transitive (causative, e.g., 'to make someone do something'). 2. Creating an intensive meaning of the action (doing something repeatedly or with extreme violence/completeness).",
+                patterns: {
+                    past: "فَعَّلَ",
+                    pastTrans: "faʿʿala",
+                    present: "يُفَعِّلُ",
+                    presentTrans: "yufaʿʿilu",
+                    masdar: "تَفْعِيل",
+                    masdarTrans: "tafʿīl"
+                },
+                examples: [
+                    { past: "عَلَّمَ", present: "يُعَلِّمُ", masdar: "تَعْلِيم", eng: "To teach (make know)", pastTrans: "ʿallama", presentTrans: "yuʿallimu", masdarTrans: "taʿlīm" },
+                    { past: "كَتَّبَ", present: "يُكَتِّبُ", masdar: "تَكْتِيب", eng: "To make write / dictate", pastTrans: "kattaba", presentTrans: "yukattibu", masdarTrans: "taktīb" },
+                    { past: "كَبَّرَ", present: "يُكَبِّرُ", masdar: "تَكْبِير", eng: "To magnify / declare greatness", pastTrans: "kabbara", presentTrans: "yukabbiru", masdarTrans: "takbīr" },
+                    { past: "قَدَّمَ", present: "يُقَدِّمُ", masdar: "تَقْدِيم", eng: "To present / offer", pastTrans: "qaddama", presentTrans: "yuqaddimu", masdarTrans: "taqdīm" },
+                    { past: "غَيَّرَ", present: "يُغَيِّرُ", masdar: "تَغْيِير", eng: "To modify / alter", pastTrans: "ghayyara", presentTrans: "yughayyiru", masdarTrans: "taghyīr" }
+                ]
+            },
+            {
+                roman: "III",
+                arabic: "فَاعَلَ",
+                oneLiner: "The Associative / Reciprocal Form",
+                meaning: "Characterized by lengthening the vowel of the first radical (adding Alif). It signifies an action directed towards another entity, often implying an interactive or reciprocal behavior between two parties (e.g., 'doing an action with someone else' or 'trying to outdo' another).",
+                patterns: {
+                    past: "فَاعَلَ",
+                    pastTrans: "fāʿala",
+                    present: "يُفَاعِلُ",
+                    presentTrans: "yufāʿilu",
+                    masdar: "مُفَاعَلَة / فِعَال",
+                    masdarTrans: "mufāʿalah / fiʿāl"
+                },
+                examples: [
+                    { past: "كَاتَبَ", present: "يُكَاتِبُ", masdar: "مُكَاتَبَة", eng: "To correspond with", pastTrans: "kātaba", presentTrans: "yukātibu", masdarTrans: "mukātabah" },
+                    { past: "سَافَرَ", present: "يُسَافِرُ", masdar: "سَفَر", eng: "To travel", pastTrans: "sāfara", presentTrans: "yusāfiru", masdarTrans: "safar" },
+                    { past: "قَاتَلَ", present: "يُقَاتِلُ", masdar: "مُقَاتَلَة", eng: "To fight", pastTrans: "qātala", presentTrans: "yuqātila", masdarTrans: "muqātalah" },
+                    { past: "سَاعَدَ", present: "يُسَاعِدُ", masdar: "مُسَاعَدَة", eng: "To assist / help", pastTrans: "sāʿada", presentTrans: "yusāʿidu", masdarTrans: "musāʿadah" },
+                    { past: "شَارَكَ", present: "يُشَارِكُ", masdar: "مُشَارَكَة", eng: "To participate / share with", pastTrans: "shāraka", presentTrans: "yushāriku", masdarTrans: "mushārakah" }
+                ]
+            },
+            {
+                roman: "IV",
+                arabic: "أَفْعَلَ",
+                oneLiner: "The Direct Causative Form",
+                meaning: "Features a prefix Hamza (أ) in the past tense. This is purely causative and highly transitive. It takes a Form I active verb and transforms it into a transitive action, or elevates a transitive verb to double transitive (causing someone else to receive an object).",
+                patterns: {
+                    past: "أَفْعَلَ",
+                    pastTrans: "ʾafʿala",
+                    present: "يُفْعِلُ",
+                    presentTrans: "yufʿilu",
+                    masdar: "إِفْعَال",
+                    masdarTrans: "ʾifʿāl"
+                },
+                examples: [
+                    { past: "أَرْسَلَ", present: "يُرْسِلُ", masdar: "إِرْسَال", eng: "To dispatch / send", pastTrans: "ʾarsala", presentTrans: "yursilu", masdarTrans: "ʾirsāl" },
+                    { past: "أَخْرَجَ", present: "يُخْرِجُ", masdar: "إِخْرَاج", eng: "To produce / bring out", pastTrans: "ʾakhraja", presentTrans: "yukhriju", masdarTrans: "ʾikhrāj" },
+                    { past: "أَدْخَلَ", present: "يُدْخِلُ", masdar: "إِدْخَال", eng: "To insert / introduce", pastTrans: "ʾadkhala", presentTrans: "yudkhilu", masdarTrans: "ʾidkhāl" },
+                    { past: "أَعْلَنَ", present: "يُعْلِنُ", masdar: "إِعْلَان", eng: "To broadcast / announce", pastTrans: "ʾaʿlana", presentTrans: "yuʿlinu", masdarTrans: "ʾiʿlān" },
+                    { past: "أَغْلَقَ", present: "يُغْلِقُ", masdar: "إِغْلَاق", eng: "To lock / close", pastTrans: "ʾaghlaqa", presentTrans: "yughliqu", masdarTrans: "ʾighlāq" }
+                ]
+            },
+            {
+                roman: "V",
+                arabic: "تَفَعَّلَ",
+                oneLiner: "The Reflexive of Form II / Progressive",
+                meaning: "Form V prefixes a Ta- (ت) onto Form II. It generally denotes the reflexive effect of Form II. E.g., if Form II means 'to teach' (عَلَّمَ), Form V means 'to learn / teach oneself' (تَعَلَّمَ). It highlights the gradual absorption of an action.",
+                patterns: {
+                    past: "تَفَعَّلَ",
+                    pastTrans: "tafaʿʿala",
+                    present: "يَتَفَعَّلُ",
+                    presentTrans: "yatafaʿʿilu",
+                    masdar: "تَفَعُّل",
+                    masdarTrans: "tafaʿʿul"
+                },
+                examples: [
+                    { past: "تَعَلَّمَ", present: "يَتَعَلَّمُ", masdar: "تَعَلُّم", eng: "To learn / teach oneself", pastTrans: "taʿallama", presentTrans: "yataʿallamu", masdarTrans: "taʿallum" },
+                    { past: "تَكَلَّمَ", present: "يَتَكَلَّمُ", masdar: "تَكَلُّم", eng: "To speak / talk", pastTrans: "takallama", presentTrans: "yatakallamu", masdarTrans: "takallum" },
+                    { past: "تَغَيَّرَ", present: "يَتَغَيَّرُ", masdar: "تَغَيُّر", eng: "To change (oneself) / be altered", pastTrans: "taghayyara", presentTrans: "yataghayyiru", masdarTrans: "taghayyur" },
+                    { past: "تَذَكَّرَ", present: "يَتَذَكَّرُ", masdar: "تَذَكُّر", eng: "To recall / remember", pastTrans: "tadhakkara", presentTrans: "yatadhakkaru", masdarTrans: "tadhakkur" },
+                    { past: "تَقَدَّمَ", present: "يَتَقَدَّمُ", masdar: "تَقَدُّم", eng: "To advance / make progress", pastTrans: "taqaddama", presentTrans: "yataqaddamu", masdarTrans: "taqaddum" }
+                ]
+            },
+            {
+                roman: "VI",
+                arabic: "تَفَاعَلَ",
+                oneLiner: "The Reciprocal Multi-Party Form",
+                meaning: "Adds a prefix Ta- (ت) to Form III. This signifies mutual interaction among two or more people. Additionally, it is used idiomatically to denote 'pretending' or simulation (feigning to possess a state, e.g. pretending to be sick).",
+                patterns: {
+                    past: "تَفَاعَلَ",
+                    pastTrans: "tafāʿala",
+                    present: "يَتَفَاعَلُ",
+                    presentTrans: "yatafāʿalu",
+                    masdar: "تَفَاعُل",
+                    masdarTrans: "tafāʿul"
+                },
+                examples: [
+                    { past: "تَعَاوَنَ", present: "يَتَعَاوَنُ", masdar: "تَعَاوُن", eng: "To cooperate together", pastTrans: "taʿāwana", presentTrans: "yataʿāwanu", masdarTrans: "taʿāwun" },
+                    { past: "تَبَادَلَ", present: "يَتَبَادَلُ", masdar: "تَبَادُل", eng: "To exchange with each other", pastTrans: "tabādala", presentTrans: "yatabādalu", masdarTrans: "tabādul" },
+                    { past: "تَسَاءَلَ", present: "يَتَسَاءَلُ", masdar: "تَسَاؤُل", eng: "To wonder / ask one another", pastTrans: "tasā'ala", presentTrans: "yatasā'alu", masdarTrans: "tasā'ul" },
+                    { past: "تَقَاتَلَ", present: "يَتَقَاتَلُ", masdar: "تَقَاتُل", eng: "To fight one another", pastTrans: "taqātala", presentTrans: "yataqātalu", masdarTrans: "taqātul" },
+                    { past: "تَمَارَضَ", present: "يَتَمَارَضُ", masdar: "تَمَارُض", eng: "To pretend to be sick", pastTrans: "tamāraḍa", presentTrans: "yatamāraḍu", masdarTrans: "tamāruḍ" }
+                ]
+            },
+            {
+                roman: "VII",
+                arabic: "اِنْفَعَلَ",
+                oneLiner: "The Passive Reflexive Form",
+                meaning: "Characterized by prefixing In- (اِنْـ). It represents the passive/reflexive consequence of Form I. This form is intrinsically intransitive, focusing entirely on the object undergoing the change rather than the agent doing it (e.g. 'it broke').",
+                patterns: {
+                    past: "اِنْفَعَلَ",
+                    pastTrans: "infaʿala",
+                    present: "يَنْفَعِلُ",
+                    presentTrans: "yanfaʿilu",
+                    masdar: "اِنْفِعَال",
+                    masdarTrans: "infiʿāl"
+                },
+                examples: [
+                    { past: "اِنْكَسَرَ", present: "يَنْكَسِرُ", masdar: "اِنْكِسَار", eng: "To break / become shattered", pastTrans: "inkasara", presentTrans: "yankasiru", masdarTrans: "inkisār" },
+                    { past: "اِنْصَرَفَ", present: "يَنْصَرِفُ", masdar: "اِنْصِرَاف", eng: "To depart / leave", pastTrans: "inṣarafa", presentTrans: "yanṣarifu", masdarTrans: "inṣirāf" },
+                    { past: "اِنْقَطَعَ", present: "يَنْقَطِعُ", masdar: "اِنْقِطَاع", eng: "To be interrupted / cut off", pastTrans: "inqaṭaʿa", presentTrans: "yanqaṭiʿu", masdarTrans: "inqiṭāʿ" },
+                    { past: "اِنْفَجَرَ", present: "يَنْفَجِرُ", masdar: "اِنْفِجَار", eng: "To detonate / burst open", pastTrans: "infajara", presentTrans: "yanfajiru", masdarTrans: "infijār" },
+                    { past: "اِنْفَتَحَ", present: "يَنْفَتِحُ", masdar: "اِنْفَتَاح", eng: "To open up / be opened", pastTrans: "infataḥa", presentTrans: "yanfatiḥu", masdarTrans: "infitiḥāḥ" }
+                ]
+            },
+            {
+                roman: "VIII",
+                arabic: "اِفْتَعَلَ",
+                oneLiner: "The Reflexive Intentional Form",
+                meaning: "Features a prefix Alif-i and an infixed -ta- (ت) between the first and second radicals. It represents a reflexive state of Form I but typically with a connotation of 'working for oneself' or doing the action deliberately, often with passion.",
+                patterns: {
+                    past: "اِفْتَعَلَ",
+                    pastTrans: "iftaʿala",
+                    present: "يَفْتَعِلُ",
+                    presentTrans: "yaftaʿilu",
+                    masdar: "اِفْتِعَال",
+                    masdarTrans: "iftiʿāl"
+                },
+                examples: [
+                    { past: "اِجْتَمَعَ", present: "يَجْتَمِعُ", masdar: "اِجْتِمَاع", eng: "To assemble / meet up", pastTrans: "ijtamaʿa", presentTrans: "yajtamiʿu", masdarTrans: "ijtimāʿ" },
+                    { past: "اِشْتَرَكَ", present: "يَشْتَرِكُ", masdar: "اِشْتِرَاك", eng: "To participate / subscribe", pastTrans: "ishtaraka", presentTrans: "yashtariku", masdarTrans: "ishtirāk" },
+                    { past: "اِحْتَرَمَ", present: "يَحْتَرِمُ", masdar: "اِحْتِرَام", eng: "To respect / esteem", pastTrans: "iḥtarama", presentTrans: "yaḥtarimu", masdarTrans: "iḥtirām" },
+                    { past: "اِخْتَلَفَ", present: "يَخْتَلِفُ", masdar: "اِخْتِلَاف", eng: "To differ / disagree", pastTrans: "ikhtalafa", presentTrans: "yakhtalifu", masdarTrans: "ikhtilāf" },
+                    { past: "اِسْتَمَعَ", present: "يَسْتَمِعُ", masdar: "اِسْتَمَاع", eng: "To listen closely", pastTrans: "istamaʿa", presentTrans: "yastamiʿu", masdarTrans: "istimāʿ" }
+                ]
+            },
+            {
+                roman: "IX",
+                arabic: "اِفْعَلَّ",
+                oneLiner: "The Color / Physical Attribute Form",
+                meaning: "Rare form characterized by doubling the final radical. It is almost exclusively applied to describe physical defects, mutations, or turning a specific color (e.g. turning red). It does not take direct objects.",
+                patterns: {
+                    past: "اِفْعَلَّ",
+                    pastTrans: "ifʿalla",
+                    present: "يَفْعَلُّ",
+                    presentTrans: "yafʿallu",
+                    masdar: "اِفْعِلَال",
+                    masdarTrans: "ifʿilāl"
+                },
+                examples: [
+                    { past: "اِحْمَرَّ", present: "يَحْمَرُّ", masdar: "اِحْمِرَار", eng: "To blush / turn red", pastTrans: "iḥmarra", presentTrans: "yaḥmarru", masdarTrans: "iḥmirār" },
+                    { past: "اِصْفَرَّ", present: "يَصْفَرُّ", masdar: "اِصْفِرَار", eng: "To grow pale / turn yellow", pastTrans: "iṣfarra", presentTrans: "yaṣfarru", masdarTrans: "iṣfirār" },
+                    { past: "اِخْضَرَّ", present: "يَخْضَرُّ", masdar: "اِخْضِرَار", eng: "To flourish / turn green", pastTrans: "ikhḍarra", presentTrans: "yakhḍarru", masdarTrans: "ikhḍirār" },
+                    { past: "اِسْوَدَّ", present: "يَسْوَدُّ", masdar: "اِسْوِدَاد", eng: "To darken / turn black", pastTrans: "iswadda", presentTrans: "yaswaddu", masdarTrans: "iswidād" },
+                    { past: "اِبْيَضَّ", present: "يَبْيَضُّ", masdar: "اِبْيِضَاض", eng: "To whiten / turn white", pastTrans: "ibyaḍḍa", presentTrans: "yabyaḍḍu", masdarTrans: "ibyiḍāḍ" }
+                ]
+            },
+            {
+                roman: "X",
+                arabic: "اِسْتَفْعَلَ",
+                oneLiner: "The Requesting / Estimating Form",
+                meaning: "This highly common form prefixes Ista- (اِسْتَـ). It primarily signifies: 1. Requesting or seeking the root meaning (e.g. غفر 'forgive' -> استغفر 'seek forgiveness'). 2. Finding or deeming something to possess a specific quality (e.g. حسن 'good' -> استحسن 'deem good').",
+                patterns: {
+                    past: "اِسْتَفْعَلَ",
+                    pastTrans: "istafʿala",
+                    present: "يَسْتَفْعِلُ",
+                    presentTrans: "yastafʿilu",
+                    masdar: "اِسْتِفْعَال",
+                    masdarTrans: "istifʿāl"
+                },
+                examples: [
+                    { past: "اِسْتَغْفَرَ", present: "يَسْتَغْفِرُ", masdar: "اِسْتِغْفَار", eng: "To seek forgiveness", pastTrans: "istaghfara", presentTrans: "yastaghfiru", masdarTrans: "istighfār" },
+                    { past: "اِسْتَخْدَمَ", present: "يَسْتَخْدِمُ", masdar: "اِسْتِخْدَام", eng: "To employ / use", pastTrans: "istakhdama", presentTrans: "yastakhdimu", masdarTrans: "istikhdām" },
+                    { past: "اِسْتَقْبَلَ", present: "يَسْتَقْبِلُ", masdar: "اِسْتِقْبَال", eng: "To welcome / receive", pastTrans: "istaqbala", presentTrans: "yastaqbilu", masdarTrans: "istiqbāl" },
+                    { past: "اِسْتَعْمَلَ", present: "يَسْتَعْمِلُ", masdar: "اِسْتِعْمَال", eng: "To apply / use", pastTrans: "istaʿmala", presentTrans: "yastaʿmilu", masdarTrans: "istiʿmāl" },
+                    { past: "اِسْتَخْرَجَ", present: "يَسْتَخْرِجُ", masdar: "اِسْتِخْرَاج", eng: "To extract / draw out", pastTrans: "istakhraja", presentTrans: "yastakhriju", masdarTrans: "istikhrāj" }
+                ]
+            }
+        ];
+
+        // Active State trackers
+        let currentSelectedFormIndex = 0;
+        let activeQuizQuestion = null;
+        let score = 0;
+        let solvedCount = 0;
+        let correctCount = 0;
+
+        // Window Load Handler
+        window.onload = function() {
+            renderExplorerSidebar();
+            loadFormDetails(0);
+            updateVisualizer('ك', 'ت', 'ب'); // Default visualizer root
+            loadNewQuestion();
+            filterVerbs(); // Populate initial search grid
+        };
+
+        // Tab Navigation switching controller
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Show target tab
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            // Toggle Nav styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn px-4 py-2 text-sm font-semibold rounded-lg text-emerald-100 hover:text-white hover:bg-emerald-800/40 transition-all duration-200";
+            });
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.className = "nav-btn px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 bg-amber-500 text-emerald-950 shadow-sm";
+            }
+        }
+
+        // Audio pronunciation speaker function
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                // Cancel ongoing speak requests
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.pitch = 1.0;
+                utterance.rate = 0.85; // slightly slower for language learners
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Speech Synthesis is not fully supported in your browser.");
+            }
+        }
+
+        function speakTextById(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                speakText(el.innerText);
+            }
+        }
+
+        // Test Voice helper button
+        function testSpeech() {
+            speakText("مَرْحَبًا بِكُمْ فِي بَرْنَامَجِ الأَوْزَانِ العَرَبِيَّة");
+        }
+
+        // Render Left Navigation List in Explorer
+        function renderExplorerSidebar() {
+            const container = document.getElementById('explorer-sidebar');
+            container.innerHTML = '';
+
+            verbFormsData.forEach((formData, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `sidebar-btn-${idx}`;
+                btn.onclick = () => loadFormDetails(idx);
+                
+                // Form layout row with Arabic template beside Roman indicator
+                btn.className = `w-full px-4 py-3.5 rounded-xl flex items-center justify-between text-left transition duration-200 border text-slate-700 ${idx === 0 ? 'bg-emerald-50 border-emerald-500/30 text-emerald-950 font-bold shadow-sm' : 'bg-transparent border-transparent hover:bg-slate-50'}`;
+                
+                btn.innerHTML = `
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 bg-slate-100 rounded-lg flex items-center justify-center text-xs font-bold text-slate-500 border border-slate-200 shrink-0 group-hover:bg-emerald-100 transition" id="sidebar-roman-badge-${idx}">${formData.roman}</span>
+                        <span class="text-xs tracking-tight font-semibold text-slate-800">${formData.oneLiner.replace('The ', '')}</span>
+                    </div>
+                    <span class="arabic-text text-lg text-emerald-700 font-bold shrink-0">${formData.arabic}</span>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        // Load Form details on click
+        function loadFormDetails(idx) {
+            currentSelectedFormIndex = idx;
+            const data = verbFormsData[idx];
+
+            // Reset active styles on sidebar
+            document.querySelectorAll('[id^="sidebar-btn-"]').forEach(btn => {
+                btn.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-between text-left transition duration-200 border border-transparent text-slate-700 hover:bg-slate-100";
+            });
+            const activeBtn = document.getElementById(`sidebar-btn-${idx}`);
+            if (activeBtn) {
+                activeBtn.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-between text-left transition duration-200 border border-emerald-500/20 bg-emerald-50 text-emerald-950 font-bold shadow-sm";
+            }
+
+            // Populate Main Display
+            document.getElementById('detail-roman').innerText = `Form ${data.roman}`;
+            document.getElementById('detail-bg-num').innerText = data.roman;
+            document.getElementById('detail-english-title').innerText = data.oneLiner;
+            document.getElementById('detail-one-liner').innerText = `${data.roman} • ${data.patterns.pastTrans} / ${data.patterns.presentTrans}`;
+            document.getElementById('detail-arabic-name').innerText = data.arabic;
+            document.getElementById('detail-description').innerText = data.meaning;
+
+            // Paradigms
+            document.getElementById('paradigm-past').innerText = data.patterns.past;
+            document.getElementById('paradigm-past-trans').innerText = data.patterns.pastTrans;
+            document.getElementById('paradigm-present').innerText = data.patterns.present;
+            document.getElementById('paradigm-present-trans').innerText = data.patterns.presentTrans;
+            document.getElementById('paradigm-masdar').innerText = data.patterns.masdar;
+            document.getElementById('paradigm-masdar-trans').innerText = data.patterns.masdarTrans;
+
+            // Render Table Rows for examples
+            const tBody = document.getElementById('examples-table-body');
+            tBody.innerHTML = '';
+
+            data.examples.forEach((ex, exIdx) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/80 transition-colors";
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-slate-400">${exIdx + 1}</td>
+                    <!-- Past Column -->
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <button onclick="speakText('${ex.past}')" class="text-xs text-slate-300 hover:text-emerald-600 transition p-1">🔊</button>
+                            <div>
+                                <div class="text-lg font-bold text-slate-800 arabic-text">${ex.past}</div>
+                                <span class="text-[10px] text-slate-400 font-mono block">${ex.pastTrans}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <!-- Present Column -->
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <button onclick="speakText('${ex.present}')" class="text-xs text-slate-300 hover:text-emerald-600 transition p-1">🔊</button>
+                            <div>
+                                <div class="text-lg font-bold text-slate-800 arabic-text">${ex.present}</div>
+                                <span class="text-[10px] text-slate-400 font-mono block">${ex.presentTrans}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <!-- Masdar Column -->
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <button onclick="speakText('${ex.masdar}')" class="text-xs text-slate-300 hover:text-emerald-600 transition p-1">🔊</button>
+                            <div>
+                                <div class="text-lg font-bold text-slate-800 arabic-text">${ex.masdar}</div>
+                                <span class="text-[10px] text-slate-400 font-mono block">${ex.masdarTrans}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <!-- Translation -->
+                    <td class="px-6 py-4">
+                        <span class="font-semibold text-slate-700 bg-slate-100 border border-slate-200/50 px-2.5 py-1 rounded-lg text-xs tracking-tight inline-block">${ex.eng}</span>
+                    </td>
+                `;
+                tBody.appendChild(tr);
+            });
+        }
+
+        // Preset selectors in Root Visualizer Tab
+        function loadPresetRoot() {
+            const select = document.getElementById('preset-select');
+            const rootStr = select.value; // e.g., k-t-b
+            
+            let r1, r2, r3;
+            if (rootStr === 'k-t-b') { r1 = 'ك'; r2 = 'ت'; r3 = 'ب'; }
+            else if (rootStr === 'd-r-s') { r1 = 'د'; r2 = 'ر'; r3 = 'س'; }
+            else if (rootStr === 'ʿ-l-m') { r1 = 'ع'; r2 = 'ل'; r3 = 'م'; }
+            else if (rootStr === 'k-b-r') { r1 = 'ك'; r2 = 'ب'; r3 = 'ر'; }
+            else if (rootStr === 's-l-m') { r1 = 'س'; r2 = 'ل'; r3 = 'م'; }
+
+            // Update inputs
+            document.getElementById('root-r1').value = r1;
+            document.getElementById('root-r2').value = r2;
+            document.getElementById('root-r3').value = r3;
+
+            updateVisualizer(r1, r2, r3);
+        }
+
+        function updateVisualizerFromInputs() {
+            const r1 = document.getElementById('root-r1').value.trim();
+            const r2 = document.getElementById('root-r2').value.trim();
+            const r3 = document.getElementById('root-r3').value.trim();
+
+            if (!r1 || !r2 || !r3) {
+                alert("Please fill all three radical fields (R1, R2, R3).");
+                return;
+            }
+            updateVisualizer(r1, r2, r3);
+        }
+
+        // Build visually structured pattern layout with colored spans for R1, R2, R3
+        function makeRootSpan(r, num) {
+            // Apply color classes based on Radical Number
+            let colorClass = "";
+            let bgClass = "";
+            if (num === 1) { colorClass = "text-amber-600"; bgClass = "bg-amber-100 border border-amber-300 px-1 rounded"; }
+            if (num === 2) { colorClass = "text-emerald-600"; bgClass = "bg-emerald-100 border border-emerald-300 px-1 rounded"; }
+            if (num === 3) { colorClass = "text-cyan-600"; bgClass = "bg-cyan-100 border border-cyan-300 px-1 rounded"; }
+
+            return `<span class="${colorClass} ${bgClass} font-bold inline-block font-sans select-all mx-0.5">${r}</span>`;
+        }
+
+        // Generate customized table of 10 forms with the plugged roots
+        function updateVisualizer(r1, r2, r3) {
+            const tBody = document.getElementById('visualizer-table-body');
+            tBody.innerHTML = '';
+
+            // Rules dictionary for standard sound roots plugged into the 10 Forms
+            // Templates containing placeholders {r1}, {r2}, {r3}
+            const structuralTemplates = [
+                {
+                    form: "I",
+                    formula: "1-2-3",
+                    past: "{r1}َ{r2}َ{r3}َ",
+                    present: "يَ{r1}ْ{r2}ُ{r3}ُ",
+                    masdar: "{r1}َ{r2}ْ{r3}"
+                },
+                {
+                    form: "II",
+                    formula: "1-2ّ-3",
+                    past: "{r1}َ{r2}َّ{r3}َ",
+                    present: "يُ{r1}َ{r2}ِّ{r3}ُ",
+                    masdar: "تَ{r1}ْ{r2}ِيـ{r3}"
+                },
+                {
+                    form: "III",
+                    formula: "1ا-2-3",
+                    past: "{r1}َا{r2}َ{r3}َ",
+                    present: "يُ{r1}َا{r2}ِ{r3}ُ",
+                    masdar: "مُ{r1}َا{r2}َ{r3}َة"
+                },
+                {
+                    form: "IV",
+                    formula: "أ-1-2-3",
+                    past: "أَ{r1}ْ{r2}َ{r3}َ",
+                    present: "يُ{r1}ْ{r2}ِ{r3}ُ",
+                    masdar: "إِ{r1}ْ{r2}َا{r3}"
+                },
+                {
+                    form: "V",
+                    formula: "ت-1-2ّ-3",
+                    past: "تَ{r1}َ{r2}َّ{r3}َ",
+                    present: "يَتَ{r1}َ{r2}َّ{r3}ُ",
+                    masdar: "تَ{r1}َ{r2}ُّ{r3}"
+                },
+                {
+                    form: "VI",
+                    formula: "ت-1ا-2-3",
+                    past: "تَ{r1}َا{r2}َ{r3}َ",
+                    present: "يَتَ{r1}َا{r2}َ{r3}ُ",
+                    masdar: "تَ{r1}َا{r2}ُ{r3}"
+                },
+                {
+                    form: "VII",
+                    formula: "ان-1-2-3",
+                    past: "اِنْ{r1}َ{r2}َ{r3}َ",
+                    present: "يَنْ{r1}َ{r2}ِ{r3}ُ",
+                    masdar: "اِنْ{r1}ِ{r2}َا{r3}"
+                },
+                {
+                    form: "VIII",
+                    formula: "ا-1-ت-2-3",
+                    past: "اِ{r1}ْتَ{r2}َ{r3}َ",
+                    present: "يَ{r1}ْتَ{r2}ِ{r3}ُ",
+                    masdar: "اِ{r1}ْتِ{r2}َا{r3}"
+                },
+                {
+                    form: "IX",
+                    formula: "ا-1-2-3ّ",
+                    past: "اِ{r1}ْ{r2}َ{r3}َّ",
+                    present: "يَ{r1}ْ{r2}َ{r3}ُّ",
+                    masdar: "اِ{r1}ْ{r2}ِ{r3}َا{r3}"
+                },
+                {
+                    form: "X",
+                    formula: "است-1-2-3",
+                    past: "اِسْتَ{r1}ْ{r2}َ{r3}َ",
+                    present: "يَسْتَ{r1}ْ{r2}ِ{r3}ُ",
+                    masdar: "اِسْتِ{r1}ْ{r2}َا{r3}"
+                }
+            ];
+
+            structuralTemplates.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition duration-150 text-sm";
+
+                // Function to replace structural placeholders with colored R1,R2,R3 spans
+                const buildSpanString = (tpl) => {
+                    return tpl
+                        .replace('{r1}', makeRootSpan(r1, 1))
+                        .replace('{r2}', makeRootSpan(r2, 2))
+                        .replace('{r3}', makeRootSpan(r3, 3));
+                };
+
+                // Formatted plain Arabic strings without visual colors (for Web Speech TTS reading)
+                const speakPast = item.past.replaceAll('{r1}', r1).replaceAll('{r2}', r2).replaceAll('{r3}', r3);
+                const speakPresent = item.present.replaceAll('{r1}', r1).replaceAll('{r2}', r2).replaceAll('{r3}', r3);
+                const speakMasdar = item.masdar.replaceAll('{r1}', r1).replaceAll('{r2}', r2).replaceAll('{r3}', r3);
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-slate-800 flex items-center gap-2">
+                        <span class="w-6 h-6 bg-slate-100 border border-slate-200 rounded-md text-[10px] flex items-center justify-center font-bold text-slate-500">${item.form}</span>
+                        Form ${item.form}
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="font-mono text-xs bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-slate-500">${item.formula}</span>
+                    </td>
+                    <!-- Past Dynamic -->
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <button onclick="speakText('${speakPast}')" class="text-slate-300 hover:text-emerald-600 transition text-xs p-1">🔊</button>
+                            <span class="text-xl arabic-text leading-loose">${buildSpanString(item.past)}</span>
+                        </div>
+                    </td>
+                    <!-- Present Dynamic -->
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <button onclick="speakText('${speakPresent}')" class="text-slate-300 hover:text-emerald-600 transition text-xs p-1">🔊</button>
+                            <span class="text-xl arabic-text leading-loose">${buildSpanString(item.present)}</span>
+                        </div>
+                    </td>
+                    <!-- Masdar Dynamic -->
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <button onclick="speakText('${speakMasdar}')" class="text-slate-300 hover:text-emerald-600 transition text-xs p-1">🔊</button>
+                            <span class="text-xl arabic-text leading-loose">${buildSpanString(item.masdar)}</span>
+                        </div>
+                    </td>
+                `;
+                tBody.appendChild(tr);
+            });
+        }
+
+        // Reset Quiz standing stats
+        function resetQuizStats() {
+            score = 0;
+            solvedCount = 0;
+            correctCount = 0;
+            updateQuizUI();
+        }
+
+        function updateQuizUI() {
+            document.getElementById('quiz-score-val').innerText = score;
+            document.getElementById('stat-solved').innerText = solvedCount;
+            document.getElementById('stat-correct').innerText = correctCount;
+
+            const accuracy = solvedCount > 0 ? Math.round((correctCount / solvedCount) * 100) : 0;
+            document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
+        }
+
+        // Fetch a dynamic randomized question
+        function loadNewQuestion() {
+            // Hide feedback bar
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.className = "text-sm font-bold flex items-center gap-1.5 transition-all duration-200 opacity-0";
+
+            // Determine question template type (0: Identify Form Number from Arabic Verb, 1: Match Masdar/Pattern)
+            const questionType = Math.floor(Math.random() * 3);
+            
+            // Pick a random form data
+            const formIdx = Math.floor(Math.random() * verbFormsData.length);
+            const targetForm = verbFormsData[formIdx];
+
+            // Pick a random example verb in that form
+            const exIdx = Math.floor(Math.random() * targetForm.examples.length);
+            const targetEx = targetForm.examples[exIdx];
+
+            activeQuizQuestion = {
+                type: questionType,
+                correctFormIndex: formIdx,
+                targetForm: targetForm,
+                targetEx: targetEx
+            };
+
+            const promptEl = document.getElementById('quiz-question-prompt');
+            const arabicTermEl = document.getElementById('quiz-arabic-term');
+            const categoryEl = document.getElementById('quiz-category');
+
+            if (questionType === 0) {
+                // Identify the Form of specific past tense example verb
+                categoryEl.innerText = "Word Analysis: Form Finder";
+                arabicTermEl.innerText = targetEx.past;
+                promptEl.innerHTML = `What is the correct <strong>Verb Form</strong> number for the verb <span class="bg-slate-100 px-1 rounded">"${targetEx.past}"</span> (${targetEx.eng})?`;
+                buildQuizChoices(formIdx, "form-number");
+            } 
+            else if (questionType === 1) {
+                // Match the past tense to its verbal noun masdar
+                categoryEl.innerText = "Masdar / Verbal Noun Connection";
+                arabicTermEl.innerText = targetEx.past;
+                promptEl.innerHTML = `What is the correct <strong>Masdar (verbal noun)</strong> form corresponding to the verb <span class="bg-slate-100 px-1 rounded">"${targetEx.past}"</span>?`;
+                buildQuizChoices(formIdx, "masdar-match");
+            }
+            else {
+                // Match translation of form
+                categoryEl.innerText = "Semantic Context Matching";
+                arabicTermEl.innerText = targetForm.arabic;
+                promptEl.innerHTML = `Which of the following describes the typical semantic modification of <strong>Form ${targetForm.roman}</strong> (${targetForm.arabic})?`;
+                buildQuizChoices(formIdx, "meaning-match");
+            }
+        }
+
+        // Generate dynamic choice answers for multiple selection layout
+        function buildQuizChoices(correctFormIdx, mode) {
+            const grid = document.getElementById('quiz-choices-grid');
+            grid.innerHTML = '';
+
+            const choices = [];
+            // Add correct choice
+            choices.push({
+                formIdx: correctFormIdx,
+                isCorrect: true,
+                data: getChoiceDataByMode(correctFormIdx, mode)
+            });
+
+            // Generate 3 unique wrong choices
+            const selectedWrongIndices = new Set();
+            while (selectedWrongIndices.size < 3) {
+                const randIdx = Math.floor(Math.random() * verbFormsData.length);
+                if (randIdx !== correctFormIdx && !selectedWrongIndices.has(randIdx)) {
+                    selectedWrongIndices.add(randIdx);
+                    choices.push({
+                        formIdx: randIdx,
+                        isCorrect: false,
+                        data: getChoiceDataByMode(randIdx, mode)
+                    });
+                }
+            }
+
+            // Shuffle array choices
+            choices.sort(() => Math.random() - 0.5);
+
+            // Render buttons
+            choices.forEach((choice, idx) => {
+                const btn = document.createElement('button');
+                btn.onclick = () => verifyQuizAnswer(choice.isCorrect, btn);
+                btn.className = "choice-btn w-full px-4 py-3 bg-slate-50 hover:bg-slate-100/80 active:bg-slate-200 border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl text-left transition duration-200 shadow-sm flex items-center justify-between";
+                
+                // Content template based on query type
+                if (mode === 'form-number') {
+                    btn.innerHTML = `
+                        <span class="font-bold text-slate-400">Option ${String.fromCharCode(65 + idx)}</span>
+                        <span class="font-extrabold text-emerald-800 text-sm">Form ${verbFormsData[choice.formIdx].roman} (${verbFormsData[choice.formIdx].arabic})</span>
+                    `;
+                } else if (mode === 'masdar-match') {
+                    btn.innerHTML = `
+                        <span class="font-bold text-slate-400">Option ${String.fromCharCode(65 + idx)}</span>
+                        <span class="arabic-text text-base font-bold text-emerald-950">${choice.data}</span>
+                    `;
+                } else {
+                    btn.innerHTML = `
+                        <span class="font-bold text-slate-400 mr-2 shrink-0">Option ${String.fromCharCode(65 + idx)}</span>
+                        <span class="text-slate-600 truncate text-right font-medium">${choice.data}</span>
+                    `;
+                }
+                grid.appendChild(btn);
+            });
+        }
+
+        // Helper fetching choice fields mapping
+        function getChoiceDataByMode(idx, mode) {
+            const form = verbFormsData[idx];
+            if (mode === 'form-number') {
+                return form.roman;
+            } else if (mode === 'masdar-match') {
+                // If it is correct, return the actual ex masdar, otherwise return a preset masdar from wrong index first item
+                if (idx === activeQuizQuestion.correctFormIndex) {
+                    return activeQuizQuestion.targetEx.masdar;
+                }
+                return form.examples[0].masdar;
+            } else {
+                return form.oneLiner;
+            }
+        }
+
+        // Evaluate choices and trigger graphical scoring response
+        function verifyQuizAnswer(isCorrect, element) {
+            const feedback = document.getElementById('quiz-feedback');
+            
+            // Freeze option selection until next button
+            document.querySelectorAll('.choice-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('opacity-60');
+            });
+
+            solvedCount++;
+            
+            if (isCorrect) {
+                correctCount++;
+                score += 15; // Earn 15 points per correct answer
+                element.className = "choice-btn w-full px-4 py-3 bg-emerald-500 text-white border border-emerald-600 text-xs font-semibold rounded-xl text-left shadow-md flex items-center justify-between";
+                
+                feedback.className = "text-sm font-bold flex items-center gap-1.5 transition-all duration-200 opacity-100 text-emerald-600";
+                feedback.innerHTML = "✨ Excellent! Your understanding is solid. (+15 XP)";
+            } else {
+                score = Math.max(0, score - 5); // Subtract 5 XP for incorrect answer
+                element.className = "choice-btn w-full px-4 py-3 bg-rose-500 text-white border border-rose-600 text-xs font-semibold rounded-xl text-left shadow-md flex items-center justify-between";
+                
+                // Highlight correct button for student guidance
+                feedback.className = "text-sm font-bold flex items-center gap-1.5 transition-all duration-200 opacity-100 text-rose-600";
+                const targetText = verbFormsData[activeQuizQuestion.correctFormIndex].roman;
+                feedback.innerHTML = `❌ Incorrect. Correct answer was Form ${targetText}. (-5 XP)`;
+            }
+
+            updateQuizUI();
+        }
+
+        // Search & Filter implementation
+        function filterVerbs() {
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            const formFilter = document.getElementById('filter-form-select').value;
+            const sortOrder = document.getElementById('sort-order-select').value;
+
+            // Compile flat array of all 50 examples with parent Form context references
+            let allExamples = [];
+            verbFormsData.forEach((form, formIdx) => {
+                form.examples.forEach(ex => {
+                    allExamples.push({
+                        ...ex,
+                        formIdx: formIdx,
+                        roman: form.roman,
+                        arabicTemplate: form.arabic,
+                        formOneLiner: form.oneLiner
+                    });
+                });
+            });
+
+            // Perform filters
+            let results = allExamples.filter(item => {
+                // Form matching filter
+                if (formFilter !== 'all' && item.roman !== formFilter) {
+                    return false;
+                }
+
+                // Keyword query search text matching across past, present, translation, transliteration
+                if (searchVal !== '') {
+                    const matchText = (item.past + item.present + item.masdar + item.eng + item.pastTrans + item.presentTrans + item.roman).toLowerCase();
+                    if (!matchText.includes(searchVal)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            // Sorting handler logic
+            if (sortOrder === 'asc') {
+                results.sort((a, b) => a.formIdx - b.formIdx);
+            } else {
+                results.sort((a, b) => b.formIdx - a.formIdx);
+            }
+
+            // Render Output Grid
+            const grid = document.getElementById('search-results-grid');
+            const emptyState = document.getElementById('search-empty');
+            grid.innerHTML = '';
+
+            if (results.length === 0) {
+                grid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            results.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-50/70 hover:bg-white border border-slate-200 hover:border-emerald-500/30 hover:shadow-md rounded-2xl p-5 transition duration-200 flex flex-col justify-between gap-4";
+                
+                card.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-200/50 pb-3">
+                        <div class="flex items-center gap-1.5">
+                            <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-md uppercase">Form ${item.roman}</span>
+                        </div>
+                        <span class="text-xs text-slate-400 font-semibold truncate max-w-[150px]">${item.formOneLiner}</span>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-1.5 text-center my-1.5">
+                        <div class="bg-white/80 border border-slate-200/60 rounded-xl p-2">
+                            <span class="text-[9px] text-slate-400 uppercase tracking-widest block font-bold">Past</span>
+                            <span class="text-base font-bold text-slate-800 arabic-text select-all block mt-0.5">${item.past}</span>
+                        </div>
+                        <div class="bg-white/80 border border-slate-200/60 rounded-xl p-2">
+                            <span class="text-[9px] text-slate-400 uppercase tracking-widest block font-bold">Present</span>
+                            <span class="text-base font-bold text-slate-800 arabic-text select-all block mt-0.5">${item.present}</span>
+                        </div>
+                        <div class="bg-white/80 border border-slate-200/60 rounded-xl p-2">
+                            <span class="text-[9px] text-slate-400 uppercase tracking-widest block font-bold">Masdar</span>
+                            <span class="text-base font-bold text-slate-800 arabic-text select-all block mt-0.5">${item.masdar}</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-1">
+                        <span class="text-xs font-bold text-slate-700 bg-amber-100/50 border border-amber-200/50 px-3 py-1 rounded-lg">${item.eng}</span>
+                        <button onclick="speakText('${item.past} ${item.present} ${item.masdar}')" class="text-xs text-slate-400 hover:text-emerald-600 transition p-1.5 bg-white border border-slate-200 rounded-lg flex items-center gap-1">
+                            🔊 Read
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
