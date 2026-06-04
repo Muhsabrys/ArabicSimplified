@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شخصيات مشهورة: قراءة ومحادثة</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f7f7f2;
+      color: #222;
+      font-family: "Times New Roman", "Amiri", "Scheherazade New", serif;
+      line-height: 1.9;
+    }
+    .page {
+      max-width: 1050px;
+      margin: 28px auto;
+      background: white;
+      padding: 46px 58px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.08);
+      border: 1px solid #ddd;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #4b4b7a;
+      padding-bottom: 6px;
+      color: #3d3d70;
+      font-size: 18px;
+    }
+    h1 {
+      text-align: center;
+      color: #59597d;
+      font-size: 42px;
+      margin: 34px 0 4px;
+      font-weight: bold;
+    }
+    h2 {
+      text-align: center;
+      color: #4b4b7a;
+      font-size: 26px;
+      margin: 0 0 28px;
+    }
+    h3 {
+      color: #4b4b7a;
+      font-size: 30px;
+      margin: 34px 0 10px;
+      border-bottom: 1px solid #bbb;
+      padding-bottom: 4px;
+    }
+    .english {
+      direction: ltr;
+      text-align: left;
+      font-size: 19px;
+      color: #333;
+      margin: 20px 0;
+    }
+    .arabic-note {
+      font-size: 22px;
+      color: #7b2f2f;
+      text-align: center;
+      margin: 22px 0;
+      font-weight: bold;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 24px 0;
+      direction: rtl;
+    }
+    button {
+      background: #f0f0f7;
+      color: #33335f;
+      border: 1.5px solid #4b4b7a;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      font-family: inherit;
+      font-weight: bold;
+    }
+    button:hover, button.active {
+      background: #4b4b7a;
+      color: white;
+    }
+    .bio-card {
+      display: none;
+    }
+    .bio-card.active {
+      display: block;
+    }
+    .bio {
+      font-size: 23px;
+      text-align: justify;
+      background: #fff;
+      border: 1.5px solid #ddd;
+      padding: 20px 24px;
+      margin: 18px 0;
+    }
+    .gloss {
+      color: #aaa;
+      font-size: 15px;
+      direction: ltr;
+      unicode-bidi: isolate;
+      margin: 0 3px;
+    }
+    .vocab {
+      background: #f8f8ff;
+      border: 1px solid #c9c9df;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 20px;
+    }
+    .questions {
+      background: #fafafa;
+      border: 1px solid #ccc;
+      padding: 18px 24px;
+      margin: 18px 0 34px;
+    }
+    ol {
+      padding-right: 28px;
+      font-size: 22px;
+    }
+    li { margin-bottom: 8px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 20px;
+    }
+    th, td {
+      border: 1.5px solid #333;
+      padding: 12px 8px;
+      text-align: center;
+      vertical-align: middle;
+      height: 46px;
+    }
+    th {
+      background: #f0f0f7;
+      color: #33335f;
+      font-weight: bold;
+    }
+    .line {
+      display: inline-block;
+      border-bottom: 1.5px dotted #444;
+      min-width: 220px;
+      height: 24px;
+      vertical-align: bottom;
+    }
+    .box {
+      border: 1.5px solid #444;
+      padding: 18px 22px;
+      margin: 22px 0;
+      background: #fff;
+      font-size: 22px;
+    }
+    .footer {
+      text-align: center;
+      color: #4b4b7a;
+      margin-top: 36px;
+      border-top: 8px solid #3e3e75;
+      padding-top: 12px;
+      font-size: 16px;
+    }
+    .print-btn {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      background: #4b4b7a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; border: none; margin: 0; max-width: none; }
+      .print-btn, .buttons { display: none; }
+      .bio-card { display: block; page-break-after: always; }
+    }
+  </style>
+</head>
+
+<body>
+<button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
+<div class="page">
+  <div class="topline">
+    <span>درس ٨</span>
+    <span>المستقبل، النجاح، والعمل</span>
+  </div>
+
+  <h1>شخصيات عربية وأمريكية مشهورة</h1>
+  <h2>نشاط قراءة ومحادثة وتقديم شفهي</h2>
+
+  <div class="english">
+    <strong>Exercise:</strong> Work in groups. Choose ONE person. Read only your person’s text.
+    Answer the simple guide questions. Use your answers to prepare a short presentation.
+    While other groups present, listen and complete the listening table at the end.
+  </div>
+
+  <div class="arabic-note">
+    اختاروا شخصية واحدة. أجيبوا عن الأسئلة، ثم استخدموا الإجابات في التقديم.
+  </div>
+
+  <div class="vocab">
+    <strong>كلمات مفيدة:</strong>
+    أراد أن، التحق، الدخول، الرفض، الماضي، المذاكرة، المساعدة، النجاح، بعد، بفضل، حصلت على، حكومة، دولة، دولي، رأي، رئيس، رفض، طوال، مثل، مستقبل، نجحت، يذاكر، يريد أن، يساعد، يلتحق، ينجح
+  </div>
+
+  <div class="buttons">
+    <button onclick="showBio('taha', this)" class="active">طه حسين</button>
+    <button onclick="showBio('umm', this)">أم كلثوم</button>
+    <button onclick="showBio('mahfouz', this)">نجيب محفوظ</button>
+    <button onclick="showBio('obama', this)">باراك أوباما</button>
+    <button onclick="showBio('oprah', this)">أوبرا وينفري</button>
+  </div>
+
+  <section id="taha" class="bio-card active">
+    <h3>١. طه حسين</h3>
+    <div class="bio">
+      طه حسين كاتب مصري مشهور. وُلِد في مصر سنة 1889. عندما كان طفلًا، فقد البصر
+      <span class="gloss">(lost his sight)</span>، لكنه لم يرفض الدراسة. في الماضي، لم تكن الدراسة سهلة في القرى. مع ذلك، كان طه حسين يحب العلم كثيرًا. كان يذاكر كل يوم، وكانت عائلته تساعده. أراد أن يدخل الجامعة، ونجح في ذلك. التحق بالجامعة المصرية، وبعد ذلك سافر إلى فرنسا. في فرنسا درس في جامعة كبيرة، وحصل على درجة علمية عالية
+      <span class="gloss">(advanced degree)</span>.
+      بعد سنوات، عاد إلى مصر. عمل أستاذًا، ثم أصبح وزيرًا في الحكومة المصرية. كان رأيه أن التعليم مهم لكل الناس: الأولاد والبنات، الأغنياء والفقراء. أراد أن يساعد الناس على الالتحاق بالمدارس. كتب طه حسين كتبًا كثيرة عن الأدب، والحياة، والماضي، ومستقبل التعليم. بفضل المذاكرة والعمل، نجح طه حسين نجاحًا كبيرًا. قصته تقول لنا إن الإنسان يستطيع أن ينجح، حتى عندما تكون الحياة صعبة.
+    </div>
+
+    <div class="questions">
+      <ol>
+        <li>ما اسم الشخصية؟</li>
+        <li>ما جنسيته؟</li>
+        <li>في أي سنة وُلِد؟</li>
+        <li>في أي مجال عمل؟</li>
+        <li>أين درس؟</li>
+        <li>إلى أي دولة سافر؟</li>
+        <li>ماذا أصبح في الحكومة؟</li>
+        <li>ما المشكلة أو الصعوبة في حياته؟</li>
+        <li>كيف نجح؟</li>
+        <li>لماذا هو مهم؟</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="umm" class="bio-card">
+    <h3>٢. أم كلثوم</h3>
+    <div class="bio">
+      أم كلثوم مغنية مصرية مشهورة جدًا. وُلِدت في قرية صغيرة في مصر. كانت عائلتها بسيطة، ولكنها كانت تحب الغناء منذ الصغر. في الماضي، لم يكن دخول البنات إلى عالم الغناء سهلًا. بعض الناس رفضوا هذا الطريق، لكن أم كلثوم أرادت أن تغني. ساعدها أبوها في البداية، وكانت تغني معه في القرى. بعد ذلك دخلت القاهرة، وبدأ الناس يعرفون صوتها. كان صوتها قويًا، وكانت تذاكر الكلمات والألحان
+      <span class="gloss">(melodies)</span>
+      جيدًا قبل الحفلات. نجحت أم كلثوم بفضل صوتها والعمل الطويل. كان الناس يستمعون إليها طوال ساعات. أحبها الناس في مصر وفي دول عربية كثيرة. كما أحبها رؤساء وملوك وفنانون. حصلت على احترام كبير، لأنها كانت تعمل بجدّ
+      <span class="gloss">(seriously / hard)</span>.
+      لم تكن أم كلثوم مغنية فقط، بل أصبحت رمزًا
+      <span class="gloss">(symbol)</span>
+      للفن العربي. قصتها مهمة لأنها تبيّن أن النجاح يحتاج إلى موهبة، ومذاكرة، ومساعدة، وصبر.
+    </div>
+
+    <div class="questions">
+      <ol>
+        <li>ما اسم الشخصية؟</li>
+        <li>ما جنسيتها؟</li>
+        <li>أين وُلِدت؟</li>
+        <li>في أي مجال عملت؟</li>
+        <li>مَن ساعدها في البداية؟</li>
+        <li>إلى أي مدينة ذهبت بعد القرية؟</li>
+        <li>هل كانت مشهورة في دولة واحدة أم في دول كثيرة؟</li>
+        <li>مَن كان يحب أغانيها؟</li>
+        <li>كيف نجحت؟</li>
+        <li>لماذا هي مهمة؟</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="mahfouz" class="bio-card">
+    <h3>٣. نجيب محفوظ</h3>
+    <div class="bio">
+      نجيب محفوظ كاتب مصري مشهور. وُلِد في القاهرة سنة 1911. عاش في أحياء قديمة في القاهرة، وهذه الأماكن ظهرت كثيرًا في كتبه. عندما كان صغيرًا، كان يحب القراءة. بعد ذلك التحق بالجامعة ودرس الفلسفة
+      <span class="gloss">(philosophy)</span>.
+      لكنه أراد أن يكون كاتبًا. بدأ يكتب عن الناس في مصر: عن العائلة، والشارع، والعمل، والحب، والماضي، والمستقبل. لم ينجح بسرعة، لكنه لم يرفض العمل الصعب. كان يكتب كل يوم تقريبًا. كتب روايات كثيرة، مثل الثلاثية
+      <span class="gloss">(The Trilogy)</span>.
+      بفضل كتبه، عرف الناس في دول كثيرة الحياة المصرية. حصل على جائزة نوبل في الأدب سنة 1988. بعد هذه الجائزة، أصبح اسمه دوليًا. ومع ذلك، بقيت حياته بسيطة. كان رأيه أن الكاتب يساعد الناس على فهم المجتمع. نجح نجيب محفوظ لأنه كتب طوال حياته، وكان منظمًا وصبورًا. قصته تعلمنا أن النجاح أحيانًا يحتاج إلى وقت طويل وعمل يومي.
+    </div>
+
+    <div class="questions">
+      <ol>
+        <li>ما اسم الشخصية؟</li>
+        <li>ما جنسيته؟</li>
+        <li>في أي سنة وُلِد؟</li>
+        <li>أين وُلِد؟</li>
+        <li>في أي مجال عمل؟</li>
+        <li>ماذا درس في الجامعة؟</li>
+        <li>عن ماذا كتب؟</li>
+        <li>ما الجائزة التي حصل عليها؟</li>
+        <li>كيف نجح؟</li>
+        <li>لماذا هو مهم؟</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="obama" class="bio-card">
+    <h3>٤. باراك أوباما</h3>
+    <div class="bio">
+      باراك أوباما سياسي أمريكي مشهور. وُلِد في هاواي سنة 1961. أمه أمريكية، وأبوه من كينيا. عندما كان صغيرًا، عاش في أكثر من مكان. هذا ساعده أن يفهم ثقافات مختلفة
+      <span class="gloss">(different cultures)</span>.
+      في الماضي، لم يكن من السهل أن يصبح شخص من عائلة مختلفة رئيسًا للولايات المتحدة. لكن أوباما أراد أن يعمل في السياسة وأن يساعد الناس. التحق بالجامعة، وبعد ذلك درس القانون
+      <span class="gloss">(law)</span>
+      في جامعة هارفرد. بعد الدراسة عمل مع عائلات في مدينة شيكاغو. كان يريد أن يساعد الناس في الأحياء الفقيرة
+      <span class="gloss">(poor neighborhoods)</span>.
+      بعد ذلك دخل السياسة. أصبح عضوًا في مجلس الشيوخ
+      <span class="gloss">(Senate)</span>.
+      ثم أراد أن يدخل انتخابات الرئاسة. كثير من الناس لم يعرفوا هل سينجح أم لا، لكنه نجح. في سنة 2008 أصبح رئيس الولايات المتحدة. حصل على جائزة نوبل للسلام. كان رأيه أن المستقبل يحتاج إلى أمل، ومساعدة، وعمل بين الحكومة والناس.
+    </div>
+
+    <div class="questions">
+      <ol>
+        <li>ما اسم الشخصية؟</li>
+        <li>ما جنسيته؟</li>
+        <li>في أي سنة وُلِد؟</li>
+        <li>أين وُلِد؟</li>
+        <li>في أي مجال عمل؟</li>
+        <li>ماذا درس؟</li>
+        <li>في أي مدينة ساعد الناس؟</li>
+        <li>متى أصبح رئيسًا؟</li>
+        <li>ما الجائزة التي حصل عليها؟</li>
+        <li>لماذا هو مهم؟</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="oprah" class="bio-card">
+    <h3>٥. أوبرا وينفري</h3>
+    <div class="bio">
+      أوبرا وينفري إعلامية أمريكية مشهورة
+      <span class="gloss">(media personality)</span>.
+      وُلِدت سنة 1954 في عائلة فقيرة. في الماضي، كانت حياتها صعبة، لكنها أرادت أن تنجح وأن تغيّر مستقبلها. عندما كانت طالبة، كانت تحب الكلام أمام الناس والقراءة. بعد ذلك دخلت عالم الراديو والتلفزيون. في البداية، رفض بعض الناس فكرة أن تصبح امرأة سوداء من عائلة فقيرة نجمة كبيرة في الإعلام. لكن أوبرا لم ترفض حلمها. عملت طوال سنوات، ونجحت بفضل ذكائها وشخصيتها القوية. كان برنامجها التلفزيوني مشهورًا جدًا في أمريكا وفي دول كثيرة. في البرنامج، كانت تتكلم مع رؤساء، وكتّاب، وفنانين، وأمهات، وناس عاديين. كما ساعدت طلابًا ونساءً من خلال التعليم والمشاريع الخيرية
+      <span class="gloss">(charity projects)</span>.
+      حصلت على جوائز كثيرة، وأصبحت صاحبة شركة إعلامية. رأي أوبرا أن النجاح ليس فلوسًا فقط. النجاح عندها هو أن يساعد الإنسان غيره وأن يعطي الناس أملًا.
+    </div>
+
+    <div class="questions">
+      <ol>
+        <li>ما اسم الشخصية؟</li>
+        <li>ما جنسيتها؟</li>
+        <li>في أي سنة وُلِدت؟</li>
+        <li>في أي مجال عملت؟</li>
+        <li>كيف كانت حياتها في الماضي؟</li>
+        <li>أين عملت: في الراديو أم التلفزيون أم الاثنين؟</li>
+        <li>مَن كان يظهر في برنامجها؟</li>
+        <li>كيف ساعدت الناس؟</li>
+        <li>كيف نجحت؟</li>
+        <li>لماذا هي مهمة؟</li>
+      </ol>
+    </div>
+  </section>
+
+  <h3>ورقة تقديم المجموعة</h3>
+  <div class="english">
+    Your group completes this table for your ONE person. Use it as notes for your presentation.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>اسم الشخصية</th>
+        <th>الجنسية</th>
+        <th>سنة الميلاد</th>
+        <th>مكان الميلاد</th>
+        <th>المجال / العمل</th>
+        <th>لماذا هو / هي مهم؟</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <h3>نموذج التقديم</h3>
+  <div class="box">
+    هذه الشخصية اسمها <span class="line"></span>.
+    هو / هي <span class="line"></span>.
+    وُلِد / وُلِدت سنة <span class="line"></span>
+    في <span class="line"></span>.
+    عمل / عملت في مجال <span class="line"></span>.
+    هو / هي مهم / مهمة لأن <span class="line"></span>.
+  </div>
+
+  <h3>جدول الاستماع لعروض المجموعات الأخرى</h3>
+  <div class="english">
+    While other groups present, listen and fill in this table. Focus on easy facts:
+    name, nationality, year, place, work, and why the person is important.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>اسم الشخصية</th>
+        <th>الجنسية</th>
+        <th>سنة الميلاد</th>
+        <th>مكان الميلاد</th>
+        <th>المجال / العمل</th>
+        <th>شيء مهم عنه / عنها</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>طه حسين</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>أم كلثوم</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>نجيب محفوظ</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>باراك أوباما</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>أوبرا وينفري</td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    نشاط قراءة ومحادثة — العربية ٢ — شخصيات مشهورة
+  </div>
+</div>
+
+<script>
+  function showBio(id, btn) {
+    document.querySelectorAll('.bio-card').forEach(card => card.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('.buttons button').forEach(button => button.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
