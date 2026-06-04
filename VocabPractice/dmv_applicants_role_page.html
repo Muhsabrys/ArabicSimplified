@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>مكتب المرور: صفحة المتقدمين</title>
+  
+  <style>
+    body {
+      margin: 0;
+      background: #f7f7f2;
+      color: #222;
+      font-family: "Times New Roman", "Amiri", "Scheherazade New", serif;
+      line-height: 1.8;
+    }
+    .page {
+      max-width: 980px;
+      margin: 28px auto;
+      background: #fff;
+      padding: 48px 58px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.08);
+      border: 1px solid #ddd;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #4b4b7a;
+      padding-bottom: 6px;
+      color: #3d3d70;
+      font-size: 18px;
+    }
+    h1 {
+      text-align: center;
+      color: #59597d;
+      font-size: 42px;
+      margin: 34px 0 4px;
+      font-weight: bold;
+    }
+    h2 {
+      text-align: center;
+      color: #4b4b7a;
+      font-size: 26px;
+      margin: 0 0 28px;
+    }
+    .english {
+      direction: ltr;
+      text-align: left;
+      font-size: 20px;
+      color: #333;
+      margin: 20px 0;
+    }
+    .arabic-note {
+      font-size: 22px;
+      color: #7b2f2f;
+      text-align: center;
+      margin: 22px 0;
+      font-weight: bold;
+    }
+    .section-title {
+      color: #4b4b7a;
+      font-size: 26px;
+      font-weight: bold;
+      margin: 28px 0 12px;
+      border-bottom: 1px solid #bbb;
+      padding-bottom: 4px;
+    }
+    .box {
+      border: 1.5px solid #444;
+      padding: 18px 22px;
+      margin: 22px 0;
+      background: #fff;
+    }
+    .soft {
+      background: #f8f8ff;
+      border: 1px solid #c9c9df;
+    }
+    ol, ul {
+      padding-right: 28px;
+      font-size: 22px;
+    }
+    li { margin-bottom: 8px; }
+    .line {
+      display: inline-block;
+      border-bottom: 1.5px dotted #444;
+      min-width: 260px;
+      height: 24px;
+      vertical-align: bottom;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 20px;
+    }
+    th, td {
+      border: 1.5px solid #333;
+      padding: 12px 8px;
+      text-align: center;
+      vertical-align: middle;
+      height: 46px;
+    }
+    th {
+      background: #f0f0f7;
+      color: #33335f;
+      font-weight: bold;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .topic {
+      border: 1px solid #bbb;
+      padding: 14px;
+      background: #fafafa;
+      font-size: 21px;
+    }
+    .small {
+      font-size: 17px;
+      color: #555;
+    }
+    .footer {
+      text-align: center;
+      color: #4b4b7a;
+      margin-top: 36px;
+      border-top: 8px solid #3e3e75;
+      padding-top: 12px;
+      font-size: 16px;
+    }
+    .print-btn {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      background: #4b4b7a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; border: none; margin: 0; max-width: none; }
+      .print-btn { display: none; }
+    }
+  </style>
+
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
+<div class="page">
+  <div class="topline">
+    <span>درس ٨</span>
+    <span>المستقبل للتجارة</span>
+  </div>
+
+  <h1>طلب رخصة قيادة</h1>
+  <h2>صفحة المتقدّمين</h2>
+
+  <div class="english">
+    <strong>Your role:</strong> You are applying for a driver’s license.
+    Your group will prepare answers before going to the DMV / traffic office.
+    You do not know exactly what the employees will ask, so prepare information about the topics below.
+  </div>
+
+  <div class="arabic-note">
+    أنتم متقدّمون لرخصة قيادة. جهّزوا إجاباتكم قبل المقابلة.
+  </div>
+
+  <div class="section-title">أ. اختاروا شخصياتكم</div>
+
+  <div class="english">
+    Each student chooses one applicant profile, or the group can create new profiles.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>الشخص</th>
+        <th>المعلومات</th>
+        <th>المشكلة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>المتقدم ١</td>
+        <td>طالب / طالبة، يحتاج الرخصة للجامعة</td>
+        <td>لا يعرف كل الأوراق المطلوبة</td>
+      </tr>
+      <tr>
+        <td>المتقدم ٢</td>
+        <td>يعمل في الصيف، يحتاج الرخصة للعمل</td>
+        <td>رسب في اختبار القيادة مرة واحدة</td>
+      </tr>
+      <tr>
+        <td>المتقدم ٣</td>
+        <td>يريد شراء سيارة في المستقبل</td>
+        <td>لا يعرف كم الرسوم</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">ب. معلومات يجب أن تجهّزوها</div>
+
+  <div class="grid">
+    <div class="topic"><strong>١. من أنت؟</strong><br><span class="small">اسم، عمر، مدينة، دراسة أو عمل</span></div>
+    <div class="topic"><strong>٢. لماذا تريد الرخصة؟</strong><br><span class="small">دراسة، عمل، عائلة، سفر، مستقبل</span></div>
+    <div class="topic"><strong>٣. هل تقود؟</strong><br><span class="small">نعم، لا، قليلاً، أخذت دروسًا</span></div>
+    <div class="topic"><strong>٤. ما الأوراق عندك؟</strong><br><span class="small">هوية، جواز، صورة، عنوان</span></div>
+    <div class="topic"><strong>٥. الاختبار</strong><br><span class="small">نجحت، رسبت، لم آخذ الاختبار</span></div>
+    <div class="topic"><strong>٦. المستقبل</strong><br><span class="small">سيارة، عمل، جامعة، سفر</span></div>
+  </div>
+
+  <div class="section-title">ج. بطاقة المتقدّم</div>
+
+  <div class="english">
+    Fill this out for your own character. Do not show everything to the employees immediately.
+    Answer only when they ask.
+  </div>
+
+  <div class="box">
+    <p style="font-size:22px;"><strong>اسمي:</strong> <span class="line"></span></p>
+    <p style="font-size:22px;"><strong>عمري:</strong> <span class="line"></span></p>
+    <p style="font-size:22px;"><strong>أسكن في:</strong> <span class="line"></span></p>
+    <p style="font-size:22px;"><strong>أدرس / أعمل في:</strong> <span class="line"></span></p>
+    <p style="font-size:22px;"><strong>أريد الرخصة لأنّ:</strong> <span class="line"></span></p>
+    <p style="font-size:22px;"><strong>مشكلتي هي:</strong> <span class="line"></span></p>
+  </div>
+
+  <div class="section-title">د. كيف تجيب؟</div>
+
+  <ul>
+    <li>اسمي ________.</li>
+    <li>عمري ________ سنة.</li>
+    <li>أسكن في ________.</li>
+    <li>أدرس في الجامعة / أعمل في ________.</li>
+    <li>أريد الرخصة لأنني أحتاجها للعمل.</li>
+    <li>أريد الرخصة لأن الجامعة بعيدة.</li>
+    <li>عندي بطاقة هوية، لكن لا أعرف الرسوم.</li>
+    <li>أخذت دروس قيادة، لكن رسبت في الاختبار.</li>
+    <li>لا أعرف كل الأوراق المطلوبة.</li>
+    <li>في المستقبل أريد أن أشتري سيارة.</li>
+  </ul>
+
+  <div class="section-title">هـ. قبل المقابلة: توقّعوا الأسئلة</div>
+
+  <div class="english">
+    What do you think the employees will ask? Write possible questions and prepare your answers.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>الموضوع</th>
+        <th>السؤال المتوقع</th>
+        <th>إجابتي</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>المعلومات الشخصية</td><td></td><td></td></tr>
+      <tr><td>الأوراق</td><td></td><td></td></tr>
+      <tr><td>القيادة</td><td></td><td></td></tr>
+      <tr><td>الاختبار</td><td></td><td></td></tr>
+      <tr><td>سبب الرخصة</td><td></td><td></td></tr>
+      <tr><td>المستقبل</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">و. بعد المقابلة</div>
+
+  <div class="box soft">
+    <p style="font-size:22px;"><strong>هل حصلت على الرخصة اليوم؟</strong> نعم / لا</p>
+    <p style="font-size:22px;"><strong>لماذا؟</strong> <span class="line"></span></p>
+    <p style="font-size:22px;"><strong>ماذا أحتاج بعد ذلك؟</strong> <span class="line"></span></p>
+  </div>
+
+  <div class="footer">صفحة المتقدمين — نشاط جماعي — العربية ٢</div>
+</div>
+</body>
+</html>

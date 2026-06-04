@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>مكتب المرور: صفحة الموظفين</title>
+  
+  <style>
+    body {
+      margin: 0;
+      background: #f7f7f2;
+      color: #222;
+      font-family: "Times New Roman", "Amiri", "Scheherazade New", serif;
+      line-height: 1.8;
+    }
+    .page {
+      max-width: 980px;
+      margin: 28px auto;
+      background: #fff;
+      padding: 48px 58px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.08);
+      border: 1px solid #ddd;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #4b4b7a;
+      padding-bottom: 6px;
+      color: #3d3d70;
+      font-size: 18px;
+    }
+    h1 {
+      text-align: center;
+      color: #59597d;
+      font-size: 42px;
+      margin: 34px 0 4px;
+      font-weight: bold;
+    }
+    h2 {
+      text-align: center;
+      color: #4b4b7a;
+      font-size: 26px;
+      margin: 0 0 28px;
+    }
+    .english {
+      direction: ltr;
+      text-align: left;
+      font-size: 20px;
+      color: #333;
+      margin: 20px 0;
+    }
+    .arabic-note {
+      font-size: 22px;
+      color: #7b2f2f;
+      text-align: center;
+      margin: 22px 0;
+      font-weight: bold;
+    }
+    .section-title {
+      color: #4b4b7a;
+      font-size: 26px;
+      font-weight: bold;
+      margin: 28px 0 12px;
+      border-bottom: 1px solid #bbb;
+      padding-bottom: 4px;
+    }
+    .box {
+      border: 1.5px solid #444;
+      padding: 18px 22px;
+      margin: 22px 0;
+      background: #fff;
+    }
+    .soft {
+      background: #f8f8ff;
+      border: 1px solid #c9c9df;
+    }
+    ol, ul {
+      padding-right: 28px;
+      font-size: 22px;
+    }
+    li { margin-bottom: 8px; }
+    .line {
+      display: inline-block;
+      border-bottom: 1.5px dotted #444;
+      min-width: 260px;
+      height: 24px;
+      vertical-align: bottom;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 20px;
+    }
+    th, td {
+      border: 1.5px solid #333;
+      padding: 12px 8px;
+      text-align: center;
+      vertical-align: middle;
+      height: 46px;
+    }
+    th {
+      background: #f0f0f7;
+      color: #33335f;
+      font-weight: bold;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .topic {
+      border: 1px solid #bbb;
+      padding: 14px;
+      background: #fafafa;
+      font-size: 21px;
+    }
+    .small {
+      font-size: 17px;
+      color: #555;
+    }
+    .footer {
+      text-align: center;
+      color: #4b4b7a;
+      margin-top: 36px;
+      border-top: 8px solid #3e3e75;
+      padding-top: 12px;
+      font-size: 16px;
+    }
+    .print-btn {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      background: #4b4b7a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; border: none; margin: 0; max-width: none; }
+      .print-btn { display: none; }
+    }
+  </style>
+
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
+<div class="page">
+  <div class="topline">
+    <span>درس ٨</span>
+    <span>المستقبل للتجارة</span>
+  </div>
+
+  <h1>مكتب المرور</h1>
+  <h2>صفحة الموظفين</h2>
+
+  <div class="english">
+    <strong>Your role:</strong> You work at the DMV / traffic office.
+    You do not receive a list of exact questions. Your group must decide what questions to ask
+    based on the topics below. Later, you will interview applicants and decide who can get a license.
+  </div>
+
+  <div class="arabic-note">
+    أنتم موظفون في مكتب المرور. فكّروا: ما الأسئلة المناسبة؟
+  </div>
+
+  <div class="section-title">أ. معلومات يجب أن تعرفوها</div>
+
+  <div class="grid">
+    <div class="topic"><strong>١. معلومات شخصية</strong><br><span class="small">الاسم، العمر، المدينة، رقم الهاتف</span></div>
+    <div class="topic"><strong>٢. الهوية والأوراق</strong><br><span class="small">بطاقة هوية، جواز سفر، صورة، عنوان</span></div>
+    <div class="topic"><strong>٣. خبرة القيادة</strong><br><span class="small">يقود؟ لا يقود؟ دروس قيادة؟</span></div>
+    <div class="topic"><strong>٤. الاختبارات</strong><br><span class="small">اختبار نظري، اختبار قيادة، نجاح أو رسوب</span></div>
+    <div class="topic"><strong>٥. سبب الرخصة</strong><br><span class="small">عمل، دراسة، عائلة، سفر، مستقبل</span></div>
+    <div class="topic"><strong>٦. مشكلات ممكنة</strong><br><span class="small">العمر، الأوراق، المال، الموعد، الاختبار</span></div>
+  </div>
+
+  <div class="section-title">ب. اكتبوا أسئلتكم</div>
+
+  <div class="english">
+    Write simple Arabic questions. You need at least two questions for each topic.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>الموضوع</th>
+        <th>السؤال الأول</th>
+        <th>السؤال الثاني</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>معلومات شخصية</td><td></td><td></td></tr>
+      <tr><td>الأوراق</td><td></td><td></td></tr>
+      <tr><td>القيادة</td><td></td><td></td></tr>
+      <tr><td>الاختبار</td><td></td><td></td></tr>
+      <tr><td>سبب الرخصة</td><td></td><td></td></tr>
+      <tr><td>المشكلات</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">ج. عبارات مفيدة للموظفين</div>
+
+  <ul>
+    <li>من فضلك، ما اسمك؟</li>
+    <li>كم عمرك؟</li>
+    <li>هل عندك بطاقة هوية؟</li>
+    <li>هل عندك كل الأوراق؟</li>
+    <li>هل نجحت في الاختبار؟</li>
+    <li>لماذا تريد رخصة قيادة؟</li>
+    <li>هل تحتاج الرخصة للعمل أو الدراسة؟</li>
+    <li>آسف / آسفة، هناك مشكلة.</li>
+    <li>تحتاج إلى ________.</li>
+    <li>يمكنك أن ترجع يوم ________.</li>
+  </ul>
+
+  <div class="section-title">د. أثناء المقابلة: جدول الموظف</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>اسم المتقدم</th>
+        <th>المشكلة أو النقص</th>
+        <th>هل يحصل على الرخصة؟</th>
+        <th>ماذا يحتاج؟</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td>نعم / لا</td><td></td></tr>
+      <tr><td></td><td></td><td>نعم / لا</td><td></td></tr>
+      <tr><td></td><td></td><td>نعم / لا</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">هـ. قرار مكتب المرور</div>
+
+  <div class="box soft">
+    <p style="font-size:22px;"><strong>الشخص الذي يستطيع الحصول على الرخصة اليوم هو:</strong> <span class="line"></span></p>
+    <p style="font-size:22px;"><strong>لأنّ:</strong> <span class="line"></span></p>
+    <p style="font-size:22px;"><strong>الشخص الذي لا يستطيع اليوم هو:</strong> <span class="line"></span></p>
+    <p style="font-size:22px;"><strong>لأنه / لأنها يحتاج إلى:</strong> <span class="line"></span></p>
+  </div>
+
+  <div class="footer">صفحة الموظفين — نشاط جماعي — العربية ٢</div>
+</div>
+</body>
+</html>
