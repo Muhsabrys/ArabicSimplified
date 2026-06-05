@@ -1,1 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mastering المضارع المرفوع</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            arabic: ['"Noto Sans Arabic"', 'sans-serif']
+          },
+          colors: {
+            ink: '#0f172a',
+            formal: '#dc2626',
+            spoken: '#2563eb',
+            soft: '#f8fafc'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .arabic {
+      font-family: 'Noto Sans Arabic', sans-serif;
+      direction: rtl;
+      unicode-bidi: isolate;
+      line-height: 1.9;
+    }
+    .marker-formal { color: #dc2626; font-weight: 800; }
+    .marker-spoken { color: #2563eb; font-weight: 800; }
+    .fade-in { animation: fadeIn .28s ease-in-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+    .table-wrap { overflow-x: auto; }
+    table { border-collapse: separate; border-spacing: 0; min-width: 900px; }
+    th { position: sticky; top: 0; z-index: 1; }
+    .quiz-option:disabled { cursor: default; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen pb-16">
 
+  <header class="bg-slate-950 text-white py-12 shadow-xl relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, white 0, transparent 24%), radial-gradient(circle at 80% 10%, white 0, transparent 18%);"></div>
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <div class="max-w-3xl">
+        <p class="uppercase tracking-[.25em] text-indigo-300 text-sm font-bold mb-3">Arabic Grammar</p>
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+          Mastering <span class="arabic text-indigo-300 inline-block">المضارع المرفوع</span>
+        </h1>
+        <p class="text-slate-300 text-lg md:text-xl leading-relaxed">
+          A practical guide to the indicative present tense in Modern Standard Arabic, with a careful comparison to the spoken habitual present.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 mt-10 space-y-10">
+
+    <section class="bg-white rounded-3xl border border-slate-200 shadow-sm p-7 md:p-9">
+      <div class="grid md:grid-cols-[1.35fr_.9fr] gap-8 items-start">
+        <div>
+          <h2 class="text-3xl font-bold mb-4">What does <span class="arabic inline-block">المضارع المرفوع</span> mean?</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-4">
+            <span class="arabic font-bold text-slate-900">المضارع</span> is the present/imperfect verb. <span class="arabic font-bold text-slate-900">المرفوع</span> means that the verb is in the <strong>indicative</strong> state. In beginner-friendly terms, this is usually the “normal” present-tense form when the verb is not affected by a word like <span class="arabic font-bold">أنْ</span>, <span class="arabic font-bold">لن</span>, <span class="arabic font-bold">لم</span>, or <span class="arabic font-bold">لا الناهية</span>.
+          </p>
+          <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5">
+            <h3 class="font-bold text-indigo-900 mb-2">Core rule</h3>
+            <p class="text-indigo-950 leading-relaxed">
+              A present-tense verb is <strong>marfūʿ</strong> when no subjunctive or jussive particle comes before it. In MSA, the marfūʿ marker is usually either a final <strong>ḍamma</strong> or the retention of final <span class="arabic font-bold">ن</span>.
+            </p>
+          </div>
+        </div>
+        <div class="grid gap-4">
+          <div class="rounded-2xl bg-red-50 border border-red-100 p-5">
+            <p class="text-sm font-bold uppercase tracking-wider text-red-700 mb-2">MSA marker 1</p>
+            <p class="text-xl font-bold">Final ḍamma</p>
+            <p class="arabic text-3xl mt-2">يَدْرُس<span class="marker-formal">ُ</span></p>
+            <p class="text-sm text-slate-600 mt-2">He studies / is studying.</p>
+          </div>
+          <div class="rounded-2xl bg-red-50 border border-red-100 p-5">
+            <p class="text-sm font-bold uppercase tracking-wider text-red-700 mb-2">MSA marker 2</p>
+            <p class="text-xl font-bold">Keeping the final nūn</p>
+            <p class="arabic text-3xl mt-2">يَدْرُسُو<span class="marker-formal">نَ</span></p>
+            <p class="text-sm text-slate-600 mt-2">They study / are studying.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-slate-900 rounded-3xl shadow-xl p-7 md:p-9 text-white">
+      <div class="text-center max-w-3xl mx-auto mb-8">
+        <h2 class="text-3xl font-bold mb-3">Interactive Verb Generator</h2>
+        <p class="text-slate-300 leading-relaxed">
+          Choose a pronoun and a verb. The left card shows the MSA marfūʿ form. The right card shows a common spoken habitual form with <span class="arabic font-bold">بـ</span>.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5 max-w-3xl mx-auto mb-8">
+        <div>
+          <label class="block text-slate-300 text-sm font-bold mb-2 uppercase tracking-wider">Select pronoun</label>
+          <select id="pronounSelect" onchange="generateVerb()" class="w-full bg-slate-800 border border-slate-700 text-white text-lg rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block p-4 outline-none arabic" dir="rtl">
+            <option value="ana">أنا — I</option>
+            <option value="nahnu">نحن / إحنا — we</option>
+            <option value="anta">أنتَ — you, masculine singular</option>
+            <option value="anti">أنتِ — you, feminine singular</option>
+            <option value="antum">أنتم — you, plural</option>
+            <option value="huwa">هو — he</option>
+            <option value="hiya">هي — she</option>
+            <option value="hum">هم — they</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-300 text-sm font-bold mb-2 uppercase tracking-wider">Select verb</label>
+          <select id="verbSelect" onchange="generateVerb()" class="w-full bg-slate-800 border border-slate-700 text-white text-lg rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block p-4 outline-none arabic" dir="rtl">
+            <option value="study">دَرَسَ — to study</option>
+            <option value="drink">شَرِبَ — to drink</option>
+            <option value="play">لَعِبَ — to play</option>
+            <option value="write">كَتَبَ — to write</option>
+            <option value="travel">سافَرَ — to travel</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-7">
+        <div class="bg-slate-800 rounded-2xl p-6 border-t-4 border-red-600 min-h-[255px] flex flex-col items-center justify-center text-center">
+          <p class="text-xs uppercase tracking-[.2em] text-red-200 font-bold mb-5">Formal Arabic / MSA</p>
+          <div id="formalOutput" class="arabic text-5xl md:text-7xl font-extrabold mb-5 fade-in"></div>
+          <div id="formalExplanation" class="fade-in text-slate-300 text-sm leading-relaxed"></div>
+        </div>
+        <div class="bg-slate-800 rounded-2xl p-6 border-t-4 border-blue-600 min-h-[255px] flex flex-col items-center justify-center text-center">
+          <p class="text-xs uppercase tracking-[.2em] text-blue-200 font-bold mb-5">Spoken Arabic / Habitual</p>
+          <div id="spokenOutput" class="arabic text-5xl md:text-7xl font-extrabold mb-5 fade-in"></div>
+          <div id="spokenExplanation" class="fade-in text-slate-300 text-sm leading-relaxed"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-3xl border border-slate-200 shadow-sm p-7 md:p-9">
+      <h2 class="text-3xl font-bold mb-6">MSA vs. spoken Arabic: do not mix the systems</h2>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+          <h3 class="font-bold text-lg mb-2">In MSA</h3>
+          <p class="text-slate-600 leading-relaxed">The grammar marker comes at the end: <span class="arabic font-bold">أدرسُ</span>, <span class="arabic font-bold">تدرسينَ</span>, <span class="arabic font-bold">يدرسونَ</span>.</p>
+        </div>
+        <div class="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+          <h3 class="font-bold text-lg mb-2">In spoken Arabic</h3>
+          <p class="text-slate-600 leading-relaxed">The habitual marker often comes at the beginning: <span class="arabic font-bold">بأدرس</span>, <span class="arabic font-bold">بتدرسي</span>, <span class="arabic font-bold">بيدرسوا</span>.</p>
+        </div>
+        <div class="rounded-2xl bg-amber-50 border border-amber-200 p-5">
+          <h3 class="font-bold text-lg mb-2">After words like “want”</h3>
+          <p class="text-slate-700 leading-relaxed">The next verb is not simply a main indicative verb: <span class="arabic font-bold">أريد أن أدرسَ</span> in MSA, and <span class="arabic font-bold">عايز أدرس</span> in spoken Arabic.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-3xl border border-slate-200 shadow-sm p-7 md:p-9">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-3xl font-bold mb-2">Conjugation and example table</h2>
+          <p class="text-slate-600 leading-relaxed max-w-3xl">Use this table as a quick reference. The red part marks the MSA marfūʿ ending. The blue part marks the spoken habitual prefix.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap rounded-2xl border border-slate-200">
+        <table class="w-full text-left bg-white">
+          <thead class="bg-slate-900 text-white">
+            <tr>
+              <th class="p-4 text-sm font-bold">Pronoun</th>
+              <th class="p-4 text-sm font-bold">MSA marfūʿ form</th>
+              <th class="p-4 text-sm font-bold">MSA example</th>
+              <th class="p-4 text-sm font-bold">Spoken habitual</th>
+              <th class="p-4 text-sm font-bold">Spoken example</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50">
+              <td class="p-4 font-semibold">I <span class="arabic block text-slate-500">أنا</span></td>
+              <td class="p-4 arabic text-2xl">أَدْرُس<span class="marker-formal">ُ</span></td>
+              <td class="p-4"><span class="arabic text-xl block">أنا أدرسُ العربيةَ كلَّ يوم.</span><span class="text-sm text-slate-500">I study Arabic every day.</span></td>
+              <td class="p-4 arabic text-2xl"><span class="marker-spoken">بَـ</span>أدرس</td>
+              <td class="p-4"><span class="arabic text-xl block">أنا بأدرس عربي كل يوم.</span><span class="text-sm text-slate-500">I study Arabic every day.</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-4 font-semibold">We <span class="arabic block text-slate-500">نحن / إحنا</span></td>
+              <td class="p-4 arabic text-2xl">نَكْتُب<span class="marker-formal">ُ</span></td>
+              <td class="p-4"><span class="arabic text-xl block">نحن نكتبُ الواجبَ في البيت.</span><span class="text-sm text-slate-500">We write the homework at home.</span></td>
+              <td class="p-4 arabic text-2xl"><span class="marker-spoken">بِـ</span>نكتب</td>
+              <td class="p-4"><span class="arabic text-xl block">إحنا بنكتب الواجب في البيت.</span><span class="text-sm text-slate-500">We write the homework at home.</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-4 font-semibold">You m. sg. <span class="arabic block text-slate-500">أنتَ</span></td>
+              <td class="p-4 arabic text-2xl">تَشْرَب<span class="marker-formal">ُ</span></td>
+              <td class="p-4"><span class="arabic text-xl block">أنتَ تشربُ القهوةَ صباحًا.</span><span class="text-sm text-slate-500">You drink coffee in the morning.</span></td>
+              <td class="p-4 arabic text-2xl"><span class="marker-spoken">بِـ</span>تشرب</td>
+              <td class="p-4"><span class="arabic text-xl block">إنت بتشرب قهوة الصبح.</span><span class="text-sm text-slate-500">You drink coffee in the morning.</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-4 font-semibold">You f. sg. <span class="arabic block text-slate-500">أنتِ</span></td>
+              <td class="p-4 arabic text-2xl">تَدْرُسِي<span class="marker-formal">نَ</span></td>
+              <td class="p-4"><span class="arabic text-xl block">أنتِ تدرسينَ في الجامعة.</span><span class="text-sm text-slate-500">You study at the university.</span></td>
+              <td class="p-4 arabic text-2xl"><span class="marker-spoken">بِـ</span>تدرسي</td>
+              <td class="p-4"><span class="arabic text-xl block">إنتِ بتدرسي في الجامعة.</span><span class="text-sm text-slate-500">You study at the university.</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-4 font-semibold">He <span class="arabic block text-slate-500">هو</span></td>
+              <td class="p-4 arabic text-2xl">يُسافِر<span class="marker-formal">ُ</span></td>
+              <td class="p-4"><span class="arabic text-xl block">هو يسافرُ إلى نيويورك كلَّ شهر.</span><span class="text-sm text-slate-500">He travels to New York every month.</span></td>
+              <td class="p-4 arabic text-2xl"><span class="marker-spoken">بِـ</span>يسافر</td>
+              <td class="p-4"><span class="arabic text-xl block">هو بيسافر نيويورك كل شهر.</span><span class="text-sm text-slate-500">He travels to New York every month.</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-4 font-semibold">She <span class="arabic block text-slate-500">هي</span></td>
+              <td class="p-4 arabic text-2xl">تَلْعَب<span class="marker-formal">ُ</span></td>
+              <td class="p-4"><span class="arabic text-xl block">هي تلعبُ كرةَ القدم.</span><span class="text-sm text-slate-500">She plays soccer.</span></td>
+              <td class="p-4 arabic text-2xl"><span class="marker-spoken">بِـ</span>تلعب</td>
+              <td class="p-4"><span class="arabic text-xl block">هي بتلعب كورة.</span><span class="text-sm text-slate-500">She plays soccer.</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-4 font-semibold">You pl. <span class="arabic block text-slate-500">أنتم</span></td>
+              <td class="p-4 arabic text-2xl">تَكْتُبُو<span class="marker-formal">نَ</span></td>
+              <td class="p-4"><span class="arabic text-xl block">أنتم تكتبونَ رسائلَ قصيرةً.</span><span class="text-sm text-slate-500">You write short messages.</span></td>
+              <td class="p-4 arabic text-2xl"><span class="marker-spoken">بِـ</span>تكتبوا</td>
+              <td class="p-4"><span class="arabic text-xl block">إنتو بتكتبوا رسايل قصيرة.</span><span class="text-sm text-slate-500">You write short messages.</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-4 font-semibold">They <span class="arabic block text-slate-500">هم</span></td>
+              <td class="p-4 arabic text-2xl">يَدْرُسُو<span class="marker-formal">نَ</span></td>
+              <td class="p-4"><span class="arabic text-xl block">هم يدرسونَ اللغةَ العربيةَ.</span><span class="text-sm text-slate-500">They study Arabic.</span></td>
+              <td class="p-4 arabic text-2xl"><span class="marker-spoken">بِـ</span>يدرسوا</td>
+              <td class="p-4"><span class="arabic text-xl block">هم بيدرسوا عربي.</span><span class="text-sm text-slate-500">They study Arabic.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-3xl border border-slate-200 shadow-sm p-7 md:p-9">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-3xl font-bold mb-2">Short quiz</h2>
+          <p class="text-slate-600">Choose the correct form. The feedback explains the rule.</p>
+        </div>
+        <button onclick="resetQuiz()" class="self-start md:self-auto px-4 py-2 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-700 transition-colors">Reset quiz</button>
+      </div>
+
+      <div id="quiz" class="space-y-6">
+        <div class="quiz-item rounded-2xl border border-slate-200 p-5" data-answer="1" data-note="This is MSA and the subject is هم, so the marfūʿ form keeps the final ن: يدرسونَ.">
+          <p class="font-bold mb-2">1. Complete the MSA sentence:</p>
+          <p class="arabic text-2xl mb-4">هم _______ العربيةَ كلَّ يوم.</p>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,0)">يدرسوا</button>
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,1)">يدرسونَ</button>
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,2)">يدرسُ</button>
+          </div>
+          <p class="quiz-feedback hidden mt-3 text-sm font-semibold"></p>
+        </div>
+
+        <div class="quiz-item rounded-2xl border border-slate-200 p-5" data-answer="0" data-note="This is MSA with أنا, so the verb takes a final ḍamma: أكتبُ.">
+          <p class="font-bold mb-2">2. Complete the MSA sentence:</p>
+          <p class="arabic text-2xl mb-4">أنا _______ الواجبَ الآن.</p>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,0)">أكتبُ</button>
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,1)">أكتبَ</button>
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,2)">أكتبْ</button>
+          </div>
+          <p class="quiz-feedback hidden mt-3 text-sm font-semibold"></p>
+        </div>
+
+        <div class="quiz-item rounded-2xl border border-slate-200 p-5" data-answer="2" data-note="In spoken habitual Arabic, the main present verb often takes بـ at the beginning: بتشرب.">
+          <p class="font-bold mb-2">3. Complete the spoken sentence:</p>
+          <p class="arabic text-2xl mb-4">إنت _______ قهوة كل يوم.</p>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,0)">تشربُ</button>
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,1)">تشربَ</button>
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,2)">بتشرب</button>
+          </div>
+          <p class="quiz-feedback hidden mt-3 text-sm font-semibold"></p>
+        </div>
+
+        <div class="quiz-item rounded-2xl border border-slate-200 p-5" data-answer="1" data-note="After أريد أن, the verb is not marfūʿ; it becomes منصوب and takes fatḥa: أدرسَ.">
+          <p class="font-bold mb-2">4. Complete the MSA sentence:</p>
+          <p class="arabic text-2xl mb-4">أريد أن _______ العربيةَ.</p>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,0)">أدرسُ</button>
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,1)">أدرسَ</button>
+            <button class="quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl" onclick="answerQuiz(this,2)">بأدرس</button>
+          </div>
+          <p class="quiz-feedback hidden mt-3 text-sm font-semibold"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const verbsData = {
+      study: {
+        formal: {
+          ana: ['أَدْرُس', 'ُ', 'Final ḍamma: أدرسُ.'],
+          nahnu: ['نَدْرُس', 'ُ', 'Final ḍamma: ندرسُ.'],
+          anta: ['تَدْرُس', 'ُ', 'Final ḍamma: تدرسُ.'],
+          anti: ['تَدْرُسِي', 'نَ', 'The final nūn remains: تدرسينَ.'],
+          antum: ['تَدْرُسُو', 'نَ', 'The final nūn remains: تدرسونَ.'],
+          huwa: ['يَدْرُس', 'ُ', 'Final ḍamma: يدرسُ.'],
+          hiya: ['تَدْرُس', 'ُ', 'Final ḍamma: تدرسُ.'],
+          hum: ['يَدْرُسُو', 'نَ', 'The final nūn remains: يدرسونَ.']
+        },
+        spoken: {
+          ana: ['بَـ', 'أدرس'], nahnu: ['بِـ', 'ندرس'], anta: ['بِـ', 'تدرس'], anti: ['بِـ', 'تدرسي'], antum: ['بِـ', 'تدرسوا'], huwa: ['بِـ', 'يدرس'], hiya: ['بِـ', 'تدرس'], hum: ['بِـ', 'يدرسوا']
+        }
+      },
+      drink: {
+        formal: {
+          ana: ['أَشْرَب', 'ُ', 'Final ḍamma: أشربُ.'], nahnu: ['نَشْرَب', 'ُ', 'Final ḍamma: نشربُ.'], anta: ['تَشْرَب', 'ُ', 'Final ḍamma: تشربُ.'], anti: ['تَشْرَبِي', 'نَ', 'The final nūn remains: تشربينَ.'], antum: ['تَشْرَبُو', 'نَ', 'The final nūn remains: تشربونَ.'], huwa: ['يَشْرَب', 'ُ', 'Final ḍamma: يشربُ.'], hiya: ['تَشْرَب', 'ُ', 'Final ḍamma: تشربُ.'], hum: ['يَشْرَبُو', 'نَ', 'The final nūn remains: يشربونَ.']
+        },
+        spoken: {
+          ana: ['بَـ', 'أشرب'], nahnu: ['بِـ', 'نشرب'], anta: ['بِـ', 'تشرب'], anti: ['بِـ', 'تشربي'], antum: ['بِـ', 'تشربوا'], huwa: ['بِـ', 'يشرب'], hiya: ['بِـ', 'تشرب'], hum: ['بِـ', 'يشربوا']
+        }
+      },
+      play: {
+        formal: {
+          ana: ['أَلْعَب', 'ُ', 'Final ḍamma: ألعبُ.'], nahnu: ['نَلْعَب', 'ُ', 'Final ḍamma: نلعبُ.'], anta: ['تَلْعَب', 'ُ', 'Final ḍamma: تلعبُ.'], anti: ['تَلْعَبِي', 'نَ', 'The final nūn remains: تلعبينَ.'], antum: ['تَلْعَبُو', 'نَ', 'The final nūn remains: تلعبونَ.'], huwa: ['يَلْعَب', 'ُ', 'Final ḍamma: يلعبُ.'], hiya: ['تَلْعَب', 'ُ', 'Final ḍamma: تلعبُ.'], hum: ['يَلْعَبُو', 'نَ', 'The final nūn remains: يلعبونَ.']
+        },
+        spoken: {
+          ana: ['بَـ', 'ألعب'], nahnu: ['بِـ', 'نلعب'], anta: ['بِـ', 'تلعب'], anti: ['بِـ', 'تلعبي'], antum: ['بِـ', 'تلعبوا'], huwa: ['بِـ', 'يلعب'], hiya: ['بِـ', 'تلعب'], hum: ['بِـ', 'يلعبوا']
+        }
+      },
+      write: {
+        formal: {
+          ana: ['أَكْتُب', 'ُ', 'Final ḍamma: أكتبُ.'], nahnu: ['نَكْتُب', 'ُ', 'Final ḍamma: نكتبُ.'], anta: ['تَكْتُب', 'ُ', 'Final ḍamma: تكتبُ.'], anti: ['تَكْتُبِي', 'نَ', 'The final nūn remains: تكتبينَ.'], antum: ['تَكْتُبُو', 'نَ', 'The final nūn remains: تكتبونَ.'], huwa: ['يَكْتُب', 'ُ', 'Final ḍamma: يكتبُ.'], hiya: ['تَكْتُب', 'ُ', 'Final ḍamma: تكتبُ.'], hum: ['يَكْتُبُو', 'نَ', 'The final nūn remains: يكتبونَ.']
+        },
+        spoken: {
+          ana: ['بَـ', 'أكتب'], nahnu: ['بِـ', 'نكتب'], anta: ['بِـ', 'تكتب'], anti: ['بِـ', 'تكتبي'], antum: ['بِـ', 'تكتبوا'], huwa: ['بِـ', 'يكتب'], hiya: ['بِـ', 'تكتب'], hum: ['بِـ', 'يكتبوا']
+        }
+      },
+      travel: {
+        formal: {
+          ana: ['أُسافِر', 'ُ', 'Final ḍamma: أسافرُ.'], nahnu: ['نُسافِر', 'ُ', 'Final ḍamma: نسافرُ.'], anta: ['تُسافِر', 'ُ', 'Final ḍamma: تسافرُ.'], anti: ['تُسافِرِي', 'نَ', 'The final nūn remains: تسافرينَ.'], antum: ['تُسافِرُو', 'نَ', 'The final nūn remains: تسافرونَ.'], huwa: ['يُسافِر', 'ُ', 'Final ḍamma: يسافرُ.'], hiya: ['تُسافِر', 'ُ', 'Final ḍamma: تسافرُ.'], hum: ['يُسافِرُو', 'نَ', 'The final nūn remains: يسافرونَ.']
+        },
+        spoken: {
+          ana: ['بَـ', 'سافر'], nahnu: ['بِـ', 'نسافر'], anta: ['بِـ', 'تسافر'], anti: ['بِـ', 'تسافري'], antum: ['بِـ', 'تسافروا'], huwa: ['بِـ', 'يسافر'], hiya: ['بِـ', 'تسافر'], hum: ['بِـ', 'يسافروا']
+        }
+      }
+    };
+
+    function animate(id) {
+      const el = document.getElementById(id);
+      el.classList.remove('fade-in');
+      void el.offsetWidth;
+      el.classList.add('fade-in');
+    }
+
+    function generateVerb() {
+      const pronoun = document.getElementById('pronounSelect').value;
+      const verb = document.getElementById('verbSelect').value;
+      const f = verbsData[verb].formal[pronoun];
+      const s = verbsData[verb].spoken[pronoun];
+      document.getElementById('formalOutput').innerHTML = `${f[0]}<span class="marker-formal">${f[1]}</span>`;
+      document.getElementById('formalExplanation').innerHTML = `<span class="inline-block bg-red-950/50 text-red-100 px-3 py-1 rounded-full text-xs font-bold mb-2">MSA marfūʿ marker</span><p>${f[2]}</p>`;
+      document.getElementById('spokenOutput').innerHTML = `<span class="marker-spoken">${s[0]}</span>${s[1]}`;
+      document.getElementById('spokenExplanation').innerHTML = `<span class="inline-block bg-blue-950/50 text-blue-100 px-3 py-1 rounded-full text-xs font-bold mb-2">Spoken habitual marker</span><p>The prefix بـ marks the usual or repeated present action in many spoken varieties.</p>`;
+      animate('formalOutput'); animate('formalExplanation'); animate('spokenOutput'); animate('spokenExplanation');
+    }
+
+    function answerQuiz(button, index) {
+      const item = button.closest('.quiz-item');
+      const correct = Number(item.dataset.answer);
+      const note = item.dataset.note;
+      const buttons = item.querySelectorAll('.quiz-option');
+      const feedback = item.querySelector('.quiz-feedback');
+      buttons.forEach((b, i) => {
+        b.disabled = true;
+        b.classList.remove('hover:bg-slate-200');
+        if (i === correct) b.classList.add('bg-emerald-100', 'text-emerald-900', 'ring-2', 'ring-emerald-500');
+        else b.classList.add('bg-slate-50', 'text-slate-400');
+      });
+      if (index === correct) {
+        feedback.textContent = `Correct. ${note}`;
+        feedback.className = 'quiz-feedback mt-3 text-sm font-semibold text-emerald-700';
+      } else {
+        button.classList.add('bg-red-100', 'text-red-900', 'ring-2', 'ring-red-500');
+        feedback.textContent = `Not quite. ${note}`;
+        feedback.className = 'quiz-feedback mt-3 text-sm font-semibold text-red-700';
+      }
+    }
+
+    function resetQuiz() {
+      document.querySelectorAll('.quiz-item').forEach(item => {
+        item.querySelectorAll('.quiz-option').forEach(b => {
+          b.disabled = false;
+          b.className = 'quiz-option p-3 rounded-xl bg-slate-100 hover:bg-slate-200 arabic text-xl';
+        });
+        const feedback = item.querySelector('.quiz-feedback');
+        feedback.className = 'quiz-feedback hidden mt-3 text-sm font-semibold';
+        feedback.textContent = '';
+      });
+    }
+
+    window.onload = generateVerb;
+  </script>
+</body>
+</html>
