@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الوقت بالعربي — Telling Time in Arabic</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal-dark: #0d3d3a;
+  --teal: #1a6b65;
+  --teal-mid: #2a8a82;
+  --teal-light: #4db8ae;
+  --gold: #c9953a;
+  --gold-light: #e8b85a;
+  --gold-pale: #f5e4c0;
+  --cream: #faf6ef;
+  --cream-dark: #f0e9da;
+  
+  /* Dialect Colors */
+  --fusha-color: #8b6b1a;
+  --fusha-accent: #c9953a;
+  --lev-color: #1a6b65;
+  --lev-accent: #4db8ae;
+  --egy-color: #8b3a1a;
+  --egy-accent: #d4622a;
+  
+  --ink: #1c1410;
+  --ink-mid: #3d2e22;
+  --ink-light: #7a6555;
+  --shadow: rgba(13,61,58,0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── GEOMETRIC BG PATTERN ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    radial-gradient(circle at 15% 85%, rgba(26,107,101,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 85% 15%, rgba(201,149,58,0.07) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cpath d='M40 0 L80 40 L40 80 L0 40Z' fill='none' stroke='%231a6b65' stroke-width='0.4' opacity='0.18'/%3E%3Cpath d='M40 10 L70 40 L40 70 L10 40Z' fill='none' stroke='%23c9953a' stroke-width='0.3' opacity='0.12'/%3E%3Ccircle cx='40' cy='40' r='4' fill='none' stroke='%231a6b65' stroke-width='0.4' opacity='0.1'/%3E%3C/svg%3E");
+  background-size: auto, auto, 80px 80px;
+  pointer-events: none;
+}
+
+.container {
+  position: relative; z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ── HEADER & NAV ── */
+header {
+  text-align: center;
+  padding: 64px 0 48px;
+}
+.header-arabic {
+  font-family: 'Amiri', serif;
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  color: var(--teal-dark);
+  line-height: 1.2;
+  margin-bottom: 10px;
+  direction: rtl;
+}
+.header-english {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+.header-ornament {
+  font-size: 1.8rem;
+  color: var(--gold);
+  opacity: 0.7;
+  margin: 14px 0 4px;
+  letter-spacing: 0.5em;
+}
+
+.nav-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 246, 239, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px 0;
+  border-top: 2px solid rgba(201,149,58,0.25);
+  border-bottom: 2px solid rgba(201,149,58,0.25);
+  margin-bottom: 56px;
+}
+nav {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center;
+}
+nav a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+  text-decoration: none;
+  padding: 8px 20px;
+  border: 1.5px solid var(--teal-light);
+  border-radius: 2px;
+  transition: all 0.2s;
+  background: white;
+}
+nav a:hover {
+  background: var(--teal-dark);
+  color: var(--gold-pale);
+  border-color: var(--teal-dark);
+}
+
+/* ── SECTION HEADERS ── */
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 600;
+  color: var(--teal-dark);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1.5px;
+  background: linear-gradient(to right, var(--gold), transparent);
+}
+.section-arabic-label {
+  font-family: 'Amiri', serif;
+  font-size: 1.15rem;
+  color: var(--gold);
+  direction: rtl;
+  margin-bottom: 28px;
+  opacity: 0.85;
+}
+section {
+  margin-bottom: 68px;
+}
+
+/* ── DIALECT BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+.badge-fusha {
+  background: rgba(201,149,58,0.15);
+  color: var(--fusha-color);
+  border: 1px solid rgba(201,149,58,0.4);
+}
+.badge-lev {
+  background: rgba(26,107,101,0.1);
+  color: var(--lev-color);
+  border: 1px solid rgba(26,107,101,0.3);
+}
+.badge-egy {
+  background: rgba(139,58,26,0.1);
+  color: var(--egy-color);
+  border: 1px solid rgba(139,58,26,0.3);
+}
+
+/* ── TIME DISPLAY CARD ── */
+.time-card {
+  background: white;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px var(--shadow);
+}
+.time-card-header {
+  background: var(--teal-dark);
+  color: var(--gold-pale);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+}
+.dialect-block {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--cream-dark);
+}
+.dialect-block:last-child { border-bottom: none; }
+.dialect-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.dialect-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.arabic-time-text {
+  font-family: 'Amiri', serif;
+  font-size: 1.65rem;
+  color: var(--ink);
+  direction: rtl;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.translit {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--ink-light);
+  font-style: italic;
+  margin-bottom: 3px;
+}
+.english-gloss {
+  font-size: 0.85rem;
+  color: var(--ink-mid);
+  font-style: italic;
+}
+.fusha-text { color: var(--fusha-color); }
+.lev-text { color: var(--lev-color); }
+.egy-text { color: var(--egy-color); }
+
+/* ── DIGITAL CLOCK ── */
+.digital-layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 32px;
+  align-items: start;
+}
+@media (max-width: 850px) { .digital-layout { grid-template-columns: 1fr; } }
+
+.digital-clock-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.digital-display {
+  font-family: 'DM Mono', monospace;
+  font-size: 3.8rem;
+  font-weight: 500;
+  color: var(--gold-pale);
+  background: var(--teal-dark);
+  padding: 22px 36px;
+  border-radius: 6px;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 24px rgba(13,61,58,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  min-width: 220px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.digital-display::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+.controls-row {
+  display: flex;
+  gap: 20px;
+}
+.spinner-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.spinner-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+}
+.spinner-btn {
+  width: 36px; height: 28px;
+  background: var(--teal-dark);
+  color: var(--gold-pale);
+  border: none;
+  border-radius: 2px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.spinner-btn:hover { background: var(--teal-mid); }
+.spinner-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--teal-dark);
+  width: 36px;
+  text-align: center;
+}
+.ampm-toggle {
+  display: flex;
+  border: 1.5px solid var(--teal-dark);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.ampm-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  background: transparent;
+  color: var(--teal-dark);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ampm-btn.active {
+  background: var(--teal-dark);
+  color: var(--gold-pale);
+}
+
+/* ── EXPRESSIONS SECTION ── */
+.expressions-grid {
+  display: grid;
+  gap: 18px;
+}
+.expr-card {
+  background: white;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px var(--shadow);
+  transition: box-shadow 0.2s;
+}
+.expr-card:hover { box-shadow: 0 4px 24px var(--shadow); }
+.expr-context {
+  background: linear-gradient(to right, var(--cream-dark), var(--cream));
+  padding: 10px 18px;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--ink-light);
+  border-bottom: 1px solid var(--cream-dark);
+}
+.expr-context .emoji { margin-right: 8px; }
+.expr-dialects {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+@media (max-width: 900px) { .expr-dialects { grid-template-columns: 1fr; } }
+.expr-dialect {
+  padding: 16px 18px;
+  border-right: 1px solid var(--cream-dark);
+}
+.expr-dialect:last-child {
+  border-right: none;
+}
+@media (max-width: 900px) {
+  .expr-dialect { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+  .expr-dialect:last-child { border-bottom: none; }
+}
+.expr-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 1.3rem;
+  direction: rtl;
+  margin: 4px 0 5px;
+  line-height: 1.5;
+}
+.expr-translit {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--ink-light);
+  font-style: italic;
+  margin-bottom: 3px;
+}
+.expr-english {
+  font-size: 0.83rem;
+  color: var(--ink-mid);
+}
+.fusha-border { border-left: 3px solid var(--fusha-color); }
+.lev-border { border-left: 3px solid var(--lev-color); }
+.egy-border { border-left: 3px solid var(--egy-color); }
+
+/* ── DIFF HIGHLIGHT ── */
+.diff-highlight {
+  background: rgba(201,149,58,0.18);
+  color: var(--ink);
+  border-radius: 2px;
+  padding: 0 2px;
+  font-weight: 700;
+}
+
+/* ── QUIZ SECTION ── */
+.quiz-intro {
+  background: var(--teal-dark);
+  color: var(--gold-pale);
+  padding: 24px 28px;
+  border-radius: 4px;
+  margin-bottom: 28px;
+  font-style: italic;
+}
+.quiz-intro .arabic {
+  font-family: 'Amiri', serif;
+  font-size: 1.4rem;
+  direction: rtl;
+  margin-bottom: 8px;
+}
+.quiz-question {
+  background: white;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 4px;
+  padding: 22px 24px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+.quiz-q-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  margin-bottom: 10px;
+}
+.quiz-q-text {
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.quiz-q-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 1.5rem;
+  direction: rtl;
+  color: var(--teal-dark);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.quiz-clock-display {
+  margin-bottom: 14px;
+}
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+@media (max-width: 560px) { .quiz-options { grid-template-columns: 1fr; } }
+.quiz-opt {
+  background: var(--cream);
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 3px;
+  padding: 11px 15px;
+  cursor: pointer;
+  text-align: right;
+  transition: all 0.18s;
+  font-family: 'Amiri', serif;
+  font-size: 1.15rem;
+  direction: rtl;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.quiz-opt.en-opt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  direction: ltr;
+  text-align: left;
+}
+.quiz-opt:hover {
+  border-color: var(--teal-light);
+  background: rgba(26,107,101,0.05);
+}
+.quiz-opt.selected {
+  border-color: var(--teal-mid);
+  background: rgba(26,107,101,0.1);
+}
+.quiz-opt.correct {
+  border-color: #2d8a4e;
+  background: rgba(45,138,78,0.1);
+  color: #1d5c35;
+}
+.quiz-opt.incorrect {
+  border-color: #c0392b;
+  background: rgba(192,57,43,0.08);
+  color: #8b1a0f;
+  text-decoration: line-through;
+  text-decoration-color: rgba(139,26,15,0.4);
+}
+.quiz-feedback {
+  display: none;
+  margin-top: 12px;
+  font-size: 0.88rem;
+  padding: 9px 14px;
+  border-radius: 3px;
+  line-height: 1.5;
+}
+.quiz-feedback.show { display: block; }
+.feedback-correct {
+  background: rgba(45,138,78,0.1);
+  color: #1d5c35;
+  border-left: 3px solid #2d8a4e;
+}
+.feedback-incorrect {
+  background: rgba(192,57,43,0.07);
+  color: #6b1a0f;
+  border-left: 3px solid #c0392b;
+}
+.quiz-submit {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  padding: 14px 40px;
+  background: var(--teal-dark);
+  color: var(--gold-pale);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  display: block;
+  margin: 28px auto 0;
+  transition: all 0.2s;
+}
+.quiz-submit:hover { background: var(--gold); color: var(--teal-dark); }
+.quiz-results {
+  display: none;
+  background: var(--teal-dark);
+  color: var(--gold-pale);
+  text-align: center;
+  padding: 32px;
+  border-radius: 4px;
+  margin-top: 28px;
+}
+.quiz-results.show { display: block; }
+.quiz-score-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 4rem;
+  color: var(--gold);
+  line-height: 1;
+}
+.quiz-score-label {
+  font-style: italic;
+  font-size: 1.15rem;
+  margin-top: 6px;
+  opacity: 0.85;
+}
+.quiz-reset-btn {
+  margin-top: 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  padding: 10px 30px;
+  background: transparent;
+  color: var(--gold-pale);
+  border: 1.5px solid var(--gold);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.quiz-reset-btn:hover { background: var(--gold); color: var(--teal-dark); }
+
+/* ── VOCABULARY REFERENCE BOX ── */
+.vocab-box {
+  background: white;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.vocab-box-header {
+  background: var(--gold);
+  color: var(--teal-dark);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  font-weight: 500;
+}
+.vocab-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--cream-dark);
+  gap: 8px;
+  align-items: center;
+}
+@media (max-width: 580px) { .vocab-row { grid-template-columns: 1fr 1fr; } }
+.vocab-row:last-child { border-bottom: none; }
+.vocab-row:hover { background: var(--cream); }
+.vocab-ar {
+  font-family: 'Amiri', serif;
+  font-size: 1.2rem;
+  direction: rtl;
+  color: var(--teal-dark);
+}
+.vocab-tr {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--ink-light);
+  font-style: italic;
+}
+.vocab-en {
+  font-size: 0.85rem;
+  color: var(--ink-mid);
+}
+
+/* ── MINI CLOCK SVG IN QUIZ ── */
+.mini-clock-svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 32px;
+  border-top: 1px solid rgba(201,149,58,0.2);
+  font-style: italic;
+  color: var(--ink-light);
+  font-size: 0.88rem;
+}
+footer .arabic {
+  font-family: 'Amiri', serif;
+  font-size: 1.2rem;
+  direction: rtl;
+  color: var(--gold);
+  display: block;
+  margin-top: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-arabic">الوقت بالعربي</div>
+    <div class="header-english">Telling Time in Arabic</div>
+    <div class="header-ornament">✦ ✦ ✦</div>
+    <p style="color:var(--ink-light);font-size:0.9rem;font-style:italic">Formal (Fus'ha), Levantine &amp; Egyptian Arabic · Digital Clock · Interactive Drills &amp; Quiz</p>
+  </header>
+
+  <!-- NAV -->
+  <div class="nav-wrapper">
+    <nav>
+      <a href="#intro">Foundations</a>
+      <a href="#digital">Digital Clock</a>
+      <a href="#expressions">Expressions</a>
+      <a href="#quiz">Quiz</a>
+    </nav>
+  </div>
+
+  <!-- ── SECTION 0: FOUNDATIONS ── -->
+  <section id="intro">
+    <div class="section-title">Foundations</div>
+    <div class="section-arabic-label">أساسيات الوقت — the basics of time</div>
+
+    <!-- Vocabulary Reference -->
+    <div class="vocab-box">
+      <div class="vocab-box-header">Key Vocabulary — الكلمات الأساسية</div>
+      <!-- rows: arabic | transliteration | english | note -->
+      <div class="vocab-row" style="background:var(--cream-dark);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;color:var(--ink-light)">
+        <span>Arabic</span><span>Transliteration</span><span>English</span><span>Note</span>
+      </div>
+      <div class="vocab-row"><span class="vocab-ar">الساعة</span><span class="vocab-tr">ʾas-sāʿa</span><span class="vocab-en">the hour / the clock / o'clock</span><span style="font-size:0.78rem;color:var(--ink-light)">All Dialects</span></div>
+      <div class="vocab-row"><span class="vocab-ar">وربع</span><span class="vocab-tr">wa-rubʿ</span><span class="vocab-en">and a quarter</span><span style="font-size:0.78rem;color:var(--ink-light)">All Dialects (Fusha: والربع)</span></div>
+      <div class="vocab-row"><span class="vocab-ar">ونص / ونصّ</span><span class="vocab-tr">wa-nuṣṣ</span><span class="vocab-en">and a half</span><span style="font-size:0.78rem;color:var(--ink-light)">Fusha: والنصف / Lev: ونص / Egy: ونصّ</span></div>
+      <div class="vocab-row"><span class="vocab-ar">وتلت / والثلث</span><span class="vocab-tr">wa-tilt / wa-ṯulṯ</span><span class="vocab-en">and a third (20 min)</span><span style="font-size:0.78rem;color:var(--ink-light)">Egy uses "20 min" instead</span></div>
+      <div class="vocab-row"><span class="vocab-ar">إلا</span><span class="vocab-tr">ʾillā</span><span class="vocab-en">except / minus (before)</span><span style="font-size:0.78rem;color:var(--ink-light)">All (Egy: إلاّ stressed)</span></div>
+      <div class="vocab-row"><span class="vocab-ar">الظهر / الضهر</span><span class="vocab-tr">aẓ-ẓuhr / aḍ-ḍuhr</span><span class="vocab-en">noon</span><span style="font-size:0.78rem;color:var(--ink-light)">Lev: الضهر · Egy: الظهر</span></div>
+      <div class="vocab-row"><span class="vocab-ar">بالليل / ليلاً</span><span class="vocab-tr">bil-lēl / laylan</span><span class="vocab-en">at night / PM</span><span style="font-size:0.78rem;color:var(--ink-light)">Fusha: ليلاً</span></div>
+      <div class="vocab-row"><span class="vocab-ar">الصبح / صباحاً</span><span class="vocab-tr">iṣ-ṣubḥ / ṣabāḥan</span><span class="vocab-en">morning / AM</span><span style="font-size:0.78rem;color:var(--ink-light)">Fusha: صباحاً</span></div>
+    </div>
+
+    <p style="margin-bottom:14px">In Arabic, time is expressed by the word <strong>الساعة</strong> (ʾas-sāʿa — literally <em>the hour</em>), followed by the number. Unlike English, Arabic uses a base-60 system similar to English but employs specific fraction words — <strong>ربع</strong> (quarter), <strong>نصف/نص</strong> (half), and <strong>ثلث/تلت</strong> (third/20 min) — rather than literal minute counts in everyday speech.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:16px;margin-top:20px">
+      <div style="background:rgba(201,149,58,0.07);border:1.5px solid rgba(201,149,58,0.25);border-radius:4px;padding:18px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span class="badge badge-fusha">🏛️ Formal (Fus'ha)</span>
+        </div>
+        <p style="font-size:0.9rem">Modern Standard Arabic. Used in news, official broadcasts, and writing. Distinctive for preserving case endings and specific fractional terms with "al-" (ال) attached.</p>
+      </div>
+      <div style="background:rgba(26,107,101,0.07);border:1.5px solid rgba(26,107,101,0.25);border-radius:4px;padding:18px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span class="badge badge-lev">🌿 Levantine</span>
+        </div>
+        <p style="font-size:0.9rem">Spoken in Syria, Lebanon, Jordan, and Palestine. Uses <strong>وتلت</strong> (wa-tilt) for 20 minutes, drops case endings. Softer phonology.</p>
+      </div>
+      <div style="background:rgba(139,58,26,0.07);border:1.5px solid rgba(139,58,26,0.25);border-radius:4px;padding:18px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span class="badge badge-egy">🌙 Egyptian</span>
+        </div>
+        <p style="font-size:0.9rem">Spoken in Egypt. Stresses geminated consonants (ونصّ), uses <strong>إلاّ</strong> for minutes before the hour. Uses literal numbers for 20 mins instead of "third".</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 1: DIGITAL CLOCK ── -->
+  <section id="digital">
+    <div class="section-title">Digital Clock</div>
+    <div class="section-arabic-label">الساعة الرقمية — the digital clock</div>
+
+    <p style="margin-bottom:22px">Use the up/down controls to change the hour and minute. Toggle AM/PM to see how the time of day changes the Arabic phrasing.</p>
+
+    <div class="digital-layout">
+      <div class="digital-clock-widget">
+        <div class="digital-display" id="digitalDisplay">3:00</div>
+        <div class="controls-row">
+          <div class="spinner-group">
+            <button class="spinner-btn" onclick="changeDigHour(1)">▲</button>
+            <div class="spinner-value" id="digHourVal">3</div>
+            <button class="spinner-btn" onclick="changeDigHour(-1)">▼</button>
+            <div class="spinner-label">hour</div>
+          </div>
+          <div class="spinner-group">
+            <button class="spinner-btn" onclick="changeDigMin(5)">▲</button>
+            <div class="spinner-value" id="digMinVal">00</div>
+            <button class="spinner-btn" onclick="changeDigMin(-5)">▼</button>
+            <div class="spinner-label">min</div>
+          </div>
+        </div>
+        <div class="ampm-toggle">
+          <button class="ampm-btn active" id="amBtn" onclick="setAmPm('AM')">AM</button>
+          <button class="ampm-btn" id="pmBtn" onclick="setAmPm('PM')">PM</button>
+        </div>
+      </div>
+
+      <div class="time-card">
+        <div class="time-card-header">Digital Reading</div>
+        
+        <!-- Fusha -->
+        <div class="dialect-block">
+          <div class="dialect-block-header">
+            <span class="badge badge-fusha">🏛️ Formal</span>
+          </div>
+          <div class="arabic-time-text fusha-text" id="digFushaText" dir="rtl">الساعة الثالثة صباحاً</div>
+        </div>
+
+        <!-- Levantine -->
+        <div class="dialect-block">
+          <div class="dialect-block-header">
+            <span class="badge badge-lev">🌿 Levantine</span>
+          </div>
+          <div class="arabic-time-text lev-text" id="digLevText" dir="rtl">الساعة ثلاثة الصبح</div>
+        </div>
+
+        <!-- Egyptian -->
+        <div class="dialect-block">
+          <div class="dialect-block-header">
+            <span class="badge badge-egy">🌙 Egyptian</span>
+          </div>
+          <div class="arabic-time-text egy-text" id="digEgyText" dir="rtl">الساعة تلاتة الصبح</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: EXPRESSIONS ── -->
+  <section id="expressions">
+    <div class="section-title">Time Expressions</div>
+    <div class="section-arabic-label">تعابير الوقت الشائعة — common time phrases</div>
+
+    <p style="margin-bottom:22px">These everyday expressions appear in conversation, appointments, school, and work settings.</p>
+
+    <div class="expressions-grid" id="expressionsGrid"></div>
+  </section>
+
+  <!-- ── SECTION 3: QUIZ ── -->
+  <section id="quiz">
+    <div class="section-title">Quiz</div>
+    <div class="section-arabic-label">اختبار الوقت — time test</div>
+
+    <div class="quiz-intro">
+      <div class="arabic" dir="rtl">جرّب معلوماتك!</div>
+      Ten questions mixing Arabic time phrases and clock readings. Select your answer and submit when done.
+    </div>
+
+    <div id="quizContainer"></div>
+    <button class="quiz-submit" id="quizSubmitBtn" onclick="submitQuiz()">Submit Quiz — تسليم</button>
+    <div class="quiz-results" id="quizResults">
+      <div class="quiz-score-num" id="quizScoreNum">—</div>
+      <div class="quiz-score-label" id="quizScoreLabel"></div>
+      <button class="quiz-reset-btn" onclick="resetQuiz()">Try Again — أعد المحاولة</button>
+    </div>
+  </section>
+
+  <footer>
+    Crafted for Arabic language learners &mdash; combining classical form with living dialect.
+    <span class="arabic" dir="rtl">اللغة العربية — جسر بين الأمس واليوم</span>
+  </footer>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   DATA LAYER — Numbers, Time Phrases, Expressions
+   ═══════════════════════════════════════════════ */
+const HOURS_FUSHA = ['', 'الوَاحِدَة', 'الثَّانِيَة', 'الثَّالِثَة', 'الرَّابِعَة', 'الخَامِسَة', 'السَّادِسَة', 'السَّابِعَة', 'الثَّامِنَة', 'التَّاسِعَة', 'العَاشِرَة', 'الحَادِيَةَ عَشْرَة', 'الثَّانِيَةَ عَشْرَة'];
+const HOURS_LEV = ['', 'وحدة','تنتين','ثلاثة','أربعة','خمسة','ستة','سبعة','تمانية','تسعة','عشرة','إحدى عشر','اثنا عشر'];
+const HOURS_EGY = ['', 'واحدة','اتنين','تلاتة','أربعة','خمسة','ستة','سبعة','تمانية','تسعة','عشرة','حداشر','اتناشر'];
+
+const HOURS_FUSHA_TR = ['', 'al-wāḥida', 'aṯ-ṯāniya', 'aṯ-ṯālitha', 'ar-rābiʿa', 'al-xāmisa', 'as-sādisa', 'as-sābiʿa', 'aṯ-ṯāmina', 'at-tāsiʿa', 'al-ʿāšira', 'al-ḥādiya ʿašra', 'aṯ-ṯāniya ʿašra'];
+const HOURS_LEV_TR = ['', 'waḥde','tnein','tlāta','ʾarbaʿa','xamse','sitte','sabʿa','tmānya','tisʿa','ʿašara','iḥdāš','tnāš'];
+const HOURS_EGY_TR = ['', 'wāḥda','itnēn','talāta','ʾarbaʿa','xamsa','sitta','sabʿa','tamānya','tisʿa','ʿašara','ḥidāšar','itnāšar'];
+
+// AM/PM labels based on 24 hour time mapping
+function getPeriodFusha(hour24) {
+  if (hour24 >= 0 && hour24 < 12) return { ar: 'صباحاً', tr: 'ṣabāḥan' };
+  if (hour24 === 12) return { ar: 'ظهراً', tr: 'ẓuhran' };
+  if (hour24 > 12 && hour24 < 17) return { ar: 'بعد الظهر', tr: 'baʿda aẓ-ẓuhr' };
+  if (hour24 >= 17 && hour24 < 20) return { ar: 'مساءً', tr: 'masāʾan' };
+  return { ar: 'ليلاً', tr: 'laylan' };
+}
+function getPeriodLev(hour24) {
+  if (hour24 >= 0 && hour24 < 12) return { ar: 'الصبح', tr: 'ṣ-ṣubḥ', en: 'in the morning' };
+  if (hour24 === 12) return { ar: 'الضهر', tr: 'iḍ-ḍuhr', en: 'noon' };
+  if (hour24 > 12 && hour24 < 17) return { ar: 'بعد الضهر', tr: 'baʿd iḍ-ḍuhr', en: 'in the afternoon' };
+  if (hour24 >= 17 && hour24 < 21) return { ar: 'المسا', tr: 'il-masā', en: 'in the evening' };
+  return { ar: 'بالليل', tr: 'bil-lēl', en: 'at night' };
+}
+function getPeriodEgy(hour24) {
+  if (hour24 >= 0 && hour24 < 12) return { ar: 'الصبح', tr: 'ṣ-ṣubḥ', en: 'in the morning' };
+  if (hour24 === 12) return { ar: 'الضهر', tr: 'iḍ-ḍuhr', en: 'at noon' };
+  if (hour24 > 12 && hour24 < 17) return { ar: 'بعد الضهر', tr: 'baʿd iḍ-ḍuhr', en: 'in the afternoon' };
+  if (hour24 >= 17 && hour24 < 21) return { ar: 'مساءً', tr: 'masāʾan', en: 'in the evening' };
+  return { ar: 'بالليل', tr: 'bil-lēl', en: 'at night' };
+}
+
+function buildTimeString(h12, min, isAM) {
+  const h24 = isAM ? (h12 === 12 ? 0 : h12) : (h12 === 12 ? 12 : h12 + 12);
+  const periodFusha = getPeriodFusha(h24);
+  const periodLev = getPeriodLev(h24);
+  const periodEgy = getPeriodEgy(h24);
+
+  const hourFusha = HOURS_FUSHA[h12];
+  const hourLev = HOURS_LEV[h12];
+  const hourEgy = HOURS_EGY[h12];
+  
+  const hourFushaTr = HOURS_FUSHA_TR[h12];
+  const hourLevTr = HOURS_LEV_TR[h12];
+  const hourEgyTr = HOURS_EGY_TR[h12];
+
+  let fushaAr, fushaTr, levAr, levTr, levEn, egyAr, egyTr, egyEn, diff;
+
+  // Next hour for "before" expressions
+  const nextH12 = (h12 % 12) + 1;
+  const nextHourFusha = HOURS_FUSHA[nextH12];
+  const nextHourLev = HOURS_LEV[nextH12];
+  const nextHourEgy = HOURS_EGY[nextH12];
+  
+  const nextHourFushaTr = HOURS_FUSHA_TR[nextH12];
+  const nextHourLevTr = HOURS_LEV_TR[nextH12];
+  const nextHourEgyTr = HOURS_EGY_TR[nextH12];
+
+  const pFusha = periodFusha.ar ? ' ' + periodFusha.ar : '';
+  const pLev = periodLev.ar ? ' ' + periodLev.ar : '';
+  const pEgy = periodEgy.ar ? ' ' + periodEgy.ar : '';
+  
+  const pFushaTr = periodFusha.tr ? ' ' + periodFusha.tr : '';
+  const pLevTr = periodLev.tr ? ' ' + periodLev.tr : '';
+  const pEgyTr = periodEgy.tr ? ' ' + periodEgy.tr : '';
+
+  const enPeriod = periodLev.en ? ' ' + periodLev.en : '';
+
+  if (min === 0) {
+    fushaAr = `الساعة ${hourFusha}${pFusha}`;
+    fushaTr = `ʾas-sāʿatu ${hourFushaTr}${pFushaTr}`;
+    levAr = `الساعة ${hourLev}${pLev}`;
+    levTr = `ʾas-sāʿa ${hourLevTr}${pLevTr}`;
+    levEn = `${numberWord(h12)} o'clock${enPeriod}`;
+    egyAr = `الساعة ${hourEgy}${pEgy}`;
+    egyTr = `ʾis-sāʿa ${hourEgyTr}${pEgyTr}`;
+    egyEn = `${numberWord(h12)} o'clock${enPeriod}`;
+    diff = 'All dialects agree on exact hours. Pronunciation slightly differs (e.g., <span class="diff-highlight">ثلاثة</span> vs <span class="diff-highlight">تلاتة</span>).';
+  } else if (min === 15) {
+    fushaAr = `الساعة ${hourFusha} والرُّبْع${pFusha}`;
+    fushaTr = `ʾas-sāʿatu ${hourFushaTr} wa-r-rubʿ${pFushaTr}`;
+    levAr = `الساعة ${hourLev} وربع${pLev}`;
+    levTr = `ʾas-sāʿa ${hourLevTr} wa-rubʿ${pLevTr}`;
+    levEn = `quarter past ${numberWord(h12)}${enPeriod}`;
+    egyAr = `الساعة ${hourEgy} وربع${pEgy}`;
+    egyTr = `ʾis-sāʿa ${hourEgyTr} wa-rubʿ${pEgyTr}`;
+    egyEn = `quarter past ${numberWord(h12)}${enPeriod}`;
+    diff = 'Formal uses <span class="diff-highlight">والرُّبْع</span> (with Al-). Spoken dialects drop Al- and say <span class="diff-highlight">وربع</span>.';
+  } else if (min === 30) {
+    fushaAr = `الساعة ${hourFusha} والنِّصْف${pFusha}`;
+    fushaTr = `ʾas-sāʿatu ${hourFushaTr} wa-n-niṣf${pFushaTr}`;
+    levAr = `الساعة ${hourLev} ونص${pLev}`;
+    levTr = `ʾas-sāʿa ${hourLevTr} wa-nuṣṣ${pLevTr}`;
+    levEn = `half past ${numberWord(h12)}${enPeriod}`;
+    egyAr = `الساعة ${hourEgy} ونصّ${pEgy}`;
+    egyTr = `ʾis-sāʿa ${hourEgyTr} wa-nuṣṣ${pEgyTr}`;
+    egyEn = `half past ${numberWord(h12)}${enPeriod}`;
+    diff = 'Formal: <span class="diff-highlight">والنصف</span>. Levantine: <span class="diff-highlight">ونص</span> (light). Egyptian: <span class="diff-highlight">ونصّ</span> (geminated ṣ).';
+  } else if (min === 45) {
+    fushaAr = `الساعة ${nextHourFusha} إِلَّا رُبْعاً${pFusha}`;
+    fushaTr = `ʾas-sāʿatu ${nextHourFushaTr} ʾillā rubʿan${pFushaTr}`;
+    levAr = `الساعة ${nextHourLev} إلا ربع${pLev}`;
+    levTr = `ʾas-sāʿa ${nextHourLevTr} ʾillā rubʿ${pLevTr}`;
+    levEn = `quarter to ${numberWord(nextH12)}${enPeriod}`;
+    egyAr = `الساعة ${nextHourEgy} إلاّ ربع${pEgy}`;
+    egyTr = `ʾis-sāʿa ${nextHourEgyTr} ʾillaʾ rubʿ${pEgyTr}`;
+    egyEn = `quarter to ${numberWord(nextH12)}${enPeriod}`;
+    diff = 'Formal preserves case: <span class="diff-highlight">إلا ربعاً</span>. Spoken dialects drop the -an ending.';
+  } else if (min === 20) {
+    fushaAr = `الساعة ${hourFusha} والثُّلْث${pFusha}`;
+    fushaTr = `ʾas-sāʿatu ${hourFushaTr} wa-ṯ-ṯulṯ${pFushaTr}`;
+    levAr = `الساعة ${hourLev} وتلت${pLev}`;
+    levTr = `ʾas-sāʿa ${hourLevTr} wa-tilt${pLevTr}`;
+    levEn = `twenty past ${numberWord(h12)} (lit. "and a third")${enPeriod}`;
+    egyAr = `الساعة ${hourEgy} وعشرين دقيقة${pEgy}`;
+    egyTr = `ʾis-sāʿa ${hourEgyTr} wa-ʿišrīn daqīqa${pEgyTr}`;
+    egyEn = `twenty past ${numberWord(h12)}${enPeriod}`;
+    diff = 'Formal and Levantine use "a third" (<span class="diff-highlight">والثلث / وتلت</span>). Egyptian literally says "twenty minutes" (<span class="diff-highlight">وعشرين دقيقة</span>).';
+  } else if (min === 40) {
+    fushaAr = `الساعة ${nextHourFusha} إِلَّا ثُلْثاً${pFusha}`;
+    fushaTr = `ʾas-sāʿatu ${nextHourFushaTr} ʾillā ṯulṯan${pFushaTr}`;
+    levAr = `الساعة ${nextHourLev} إلا تلت${pLev}`;
+    levTr = `ʾas-sāʿa ${nextHourLevTr} ʾillā tilt${pLevTr}`;
+    levEn = `twenty to ${numberWord(nextH12)}${enPeriod}`;
+    egyAr = `الساعة ${nextHourEgy} إلاّ تلت${pEgy}`;
+    egyTr = `ʾis-sāʿa ${nextHourEgyTr} ʾillaʾ tilt${pEgyTr}`;
+    egyEn = `twenty to ${numberWord(nextH12)}${enPeriod}`;
+    diff = 'Formal: <span class="diff-highlight">إلا ثلثاً</span>. Spoken dialects simplify this to <span class="diff-highlight">إلا تلت</span> (or إلاّ تلت in Egyptian).';
+  } else if (min < 30) {
+    fushaAr = `الساعة ${hourFusha} و ${min} دقيقة${pFusha}`;
+    fushaTr = `ʾas-sāʿatu ${hourFushaTr} wa ${min} daqīqa${pFushaTr}`;
+    levAr = `الساعة ${hourLev} و${min} دقيقة${pLev}`;
+    levTr = `ʾas-sāʿa ${hourLevTr} wa-${min} daqīqa${pLevTr}`;
+    levEn = `${min} minutes past ${numberWord(h12)}${enPeriod}`;
+    egyAr = `الساعة ${hourEgy} و${min} دقيقة${pEgy}`;
+    egyTr = `ʾis-sāʿa ${hourEgyTr} wa-${min} daqīqa${pEgyTr}`;
+    egyEn = `${min} minutes past ${numberWord(h12)}${enPeriod}`;
+    diff = 'For non-fractional minutes past the hour, all dialects say <span class="diff-highlight">و[X] دقيقة</span> (and X minute/s).';
+  } else {
+    const before = 60 - min;
+    fushaAr = `الساعة ${nextHourFusha} إِلَّا ${before} دقيقة${pFusha}`;
+    fushaTr = `ʾas-sāʿatu ${nextHourFushaTr} ʾillā ${before} daqīqa${pFushaTr}`;
+    levAr = `الساعة ${nextHourLev} إلا ${before} دقيقة${pLev}`;
+    levTr = `ʾas-sāʿa ${nextHourLevTr} ʾillā ${before} daqīqa${pLevTr}`;
+    levEn = `${before} minutes to ${numberWord(nextH12)}${enPeriod}`;
+    egyAr = `الساعة ${nextHourEgy} إلاّ ${before} دقيقة${pEgy}`;
+    egyTr = `ʾis-sāʿa ${nextHourEgyTr} ʾillaʾ ${before} daqīqa${pEgyTr}`;
+    egyEn = `${before} minutes to ${numberWord(nextH12)}${enPeriod}`;
+    diff = 'Minutes before the hour: Levantine <span class="diff-highlight">إلا</span> (soft) · Egyptian <span class="diff-highlight">إلاّ</span> (geminated, stressed).';
+  }
+
+  return { fushaAr, fushaTr, levAr, levTr, levEn, egyAr, egyTr, egyEn, diff };
+}
+
+function numberWord(n) {
+  const w = ['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+  return w[n] || n;
+}
+
+/* ═══════════════════════════
+   DIGITAL CLOCK
+   ═══════════════════════════ */
+let digH = 3, digM = 0, digAM = true;
+
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+function updateDigital() {
+  const display = `${digH}:${pad(digM)}`;
+  document.getElementById('digitalDisplay').textContent = display;
+  document.getElementById('digHourVal').textContent = digH;
+  document.getElementById('digMinVal').textContent = pad(digM);
+
+  const t = buildTimeString(digH, digM, digAM);
+  
+  document.getElementById('digFushaText').textContent = t.fushaAr;
+  document.getElementById('digLevText').textContent = t.levAr;
+  document.getElementById('digEgyText').textContent = t.egyAr;
+}
+
+function changeDigHour(d) {
+  digH = ((digH - 1 + d + 12) % 12) + 1;
+  updateDigital();
+}
+function changeDigMin(d) {
+  digM = ((digM + d) + 60) % 60;
+  // Round to nearest 5
+  digM = Math.round(digM / 5) * 5 % 60;
+  updateDigital();
+}
+function setAmPm(v) {
+  digAM = v === 'AM';
+  document.getElementById('amBtn').classList.toggle('active', digAM);
+  document.getElementById('pmBtn').classList.toggle('active', !digAM);
+  updateDigital();
+}
+
+updateDigital();
+
+/* ═══════════════════════════
+   EXPRESSIONS
+   ═══════════════════════════ */
+const expressions = [
+  {
+    context: '🕐 Asking the time',
+    fushaAr: 'كَم السَّاعَةُ الآن؟',
+    levAr: 'كم الساعة هلق؟',
+    egyAr: 'الساعة كام دلوقتي؟',
+  },
+  {
+    context: '📅 Scheduling an appointment',
+    fushaAr: 'المَوْعِدُ السَّاعَة الخَامِسَة بِالضَّبْط.',
+    levAr: 'الموعد الساعة خمسة بالضبط.',
+    egyAr: 'الميعاد الساعة خمسة بالظبط.',
+  },
+  {
+    context: '🏫 School schedule',
+    fushaAr: 'تَبْدَأُ المَدْرَسَةُ السَّاعَة السَّابِعَة وَالنِّصْف.',
+    levAr: 'المدرسة بتبلش الساعة سبعة ونص.',
+    egyAr: 'المدرسة بتبدأ الساعة سبعة ونصّ.',
+  },
+  {
+    context: '☕ Morning routine',
+    fushaAr: 'أَسْتَيْقِظُ كُلَّ صَبَاحٍ السَّاعَة السَّادِسَة.',
+    levAr: 'بصحى كل صبح الساعة ستة.',
+    egyAr: 'بصحى  الصبح الساعة ستة.',
+  },
+  {
+    context: '🌙 Staying up late',
+    fushaAr: 'عُدْتُ إِلَى البَيْت السَّاعَة الثَّانِيَةَ عَشْرَة لَيْلاً.',
+    levAr: 'رجعت عالبيت الساعة اثنا عشر بالليل.',
+    egyAr: 'رجعت البيت الساعة اتناشر بالليل.',
+  },
+  {
+    context: '🚂 Transport & punctuality',
+    fushaAr: 'سَيَصِلُ القِطَار قَبْلَ الظُّهْر بِقَلِيل.',
+    levAr: 'القطار راح يوصل قبل الضهر بشوي.',
+    egyAr: 'القطر هيوصل قبل الضهر بشوية.',
+  },
+  {
+    context: '⏰ Running late',
+    fushaAr: 'أَنَا مُتَأَخِّر! السَّاعَة التَّاسِعَة وَالِعشْرُون دَقِيقَة!',
+    levAr: 'أنا متأخر! الساعة تسعة وعشرين دقيقة!',
+    egyAr: 'أنا متأخر! الساعة تسعة وعشرين دقيقة!',
+  },
+  {
+    context: '🌅 Time of day — evening plans',
+    fushaAr: 'سَنَلْتَقِي المَسَاء السَّاعَة السَّابِعَة وَالرُّبْع.',
+    levAr: 'بنلتقي بالمسا الساعة سبعة وربع.',
+    egyAr: 'هنتقابل بالليل الساعة سبعة وربع.',
+  }
+];
+
+function buildExpressions() {
+  const grid = document.getElementById('expressionsGrid');
+  expressions.forEach((ex, idx) => {
+    const card = document.createElement('div');
+    card.className = 'expr-card';
+    card.innerHTML = `
+      <div class="expr-context"><span class="emoji"></span>${ex.context}</div>
+      <div class="expr-dialects">
+        
+        <div class="expr-dialect fusha-border">
+          <div style="margin-bottom:6px;">
+            <span class="badge badge-fusha">🏛️ Formal</span>
+          </div>
+          <div class="expr-arabic" dir="rtl">${ex.fushaAr}</div>
+        </div>
+
+        <div class="expr-dialect lev-border">
+          <div style="margin-bottom:6px;">
+            <span class="badge badge-lev">🌿 Levantine</span>
+          </div>
+          <div class="expr-arabic" dir="rtl">${ex.levAr}</div>
+        </div>
+
+        <div class="expr-dialect egy-border">
+          <div style="margin-bottom:6px;">
+            <span class="badge badge-egy">🌙 Egyptian</span>
+          </div>
+          <div class="expr-arabic" dir="rtl">${ex.egyAr}</div>
+        </div>
+
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+buildExpressions();
+
+/* ═══════════════════════════
+   MINI CLOCK SVG
+   ═══════════════════════════ */
+function miniClock(h, m, size = 80) {
+  const r = size / 2 - 4;
+  const cx = size / 2, cy = size / 2;
+  const hourDeg = (h % 12) * 30 + m * 0.5 - 90;
+  const minDeg = m * 6 - 90;
+  const hRad = hourDeg * Math.PI / 180;
+  const mRad = minDeg * Math.PI / 180;
+  const hLen = r * 0.55, mLen = r * 0.8;
+  const hx = cx + Math.cos(hRad) * hLen;
+  const hy = cy + Math.sin(hRad) * hLen;
+  const mx = cx + Math.cos(mRad) * mLen;
+  const my = cy + Math.sin(mRad) * mLen;
+
+  let ticks = '';
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 12) * 2 * Math.PI;
+    const x1 = cx + Math.cos(a) * (r - 1);
+    const y1 = cy + Math.sin(a) * (r - 1);
+    const x2 = cx + Math.cos(a) * (r - 5);
+    const y2 = cy + Math.sin(a) * (r - 5);
+    ticks += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#0d3d3a" stroke-width="1.5"/>`;
+  }
+
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" class="mini-clock-svg">
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="#faf6ef" stroke="#0d3d3a" stroke-width="2"/>
+    ${ticks}
+    <line x1="${cx}" y1="${cy}" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}" stroke="#0d3d3a" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="${cx}" y1="${cy}" x2="${mx.toFixed(1)}" y2="${my.toFixed(1)}" stroke="#1a6b65" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="2.5" fill="#0d3d3a"/>
+  </svg>`;
+}
+
+/* ═══════════════════════════
+   QUIZ
+   ═══════════════════════════ */
+const quizData = [
+  {
+    type: 'read-arabic-choose-time',
+    prompt: 'Which time does this phrase describe?',
+    arabic: 'الساعة سبعة ونصّ',
+    dialect: 'Egyptian',
+    options: ['7:30', '7:15', '6:30', '7:45'],
+    correct: 0,
+    feedback: 'ونصّ means "and a half" — Egyptian style with geminated ṣ.'
+  },
+  {
+    type: 'clock-choose-arabic',
+    prompt: 'What time does the clock show?',
+    clock: { h: 3, m: 15 },
+    dialect: 'Levantine',
+    options: ['الساعة ثلاثة وربع', 'الساعة ثلاثة ونص', 'الساعة أربعة إلا ربع', 'الساعة ثلاثة وتلت'],
+    correct: 0,
+    feedback: 'وربع (quarter past) is the Levantine way to say :15.'
+  },
+  {
+    type: 'read-arabic-choose-time',
+    prompt: 'Which time does this Egyptian phrase mean?',
+    arabic: 'الساعة اتناشر إلاّ ربع',
+    dialect: 'Egyptian',
+    options: ['11:45', '12:15', '11:30', '12:45'],
+    correct: 0,
+    feedback: 'إلاّ ربع = "minus a quarter" before 12 → 11:45.'
+  },
+  {
+    type: 'clock-choose-arabic',
+    prompt: 'The clock shows 5:20. Which is the Levantine way to say it?',
+    clock: { h: 5, m: 20 },
+    dialect: 'Levantine',
+    options: ['الساعة خمسة وتلت', 'الساعة خمسة وعشرين دقيقة', 'الساعة خمسة وربع', 'الساعة ستة إلا تلت'],
+    correct: 0,
+    feedback: 'وتلت (a third of an hour = 20 min) is the elegant Levantine expression.'
+  },
+  {
+    type: 'read-arabic-choose-time',
+    prompt: 'What time does this phrase describe?',
+    arabic: 'الساعة تسعة إلا ربع',
+    dialect: 'Levantine',
+    options: ['8:45', '9:15', '9:45', '8:30'],
+    correct: 0,
+    feedback: 'إلا ربع = "minus a quarter" before 9 → 8:45.'
+  },
+  {
+    type: 'clock-choose-arabic',
+    prompt: 'The clock shows 12:00 (noon). Which phrase fits?',
+    clock: { h: 12, m: 0 },
+    dialect: 'Egyptian',
+    options: ['الساعة اتناشر الضهر', 'الساعة اتناشر بالليل', 'الساعة اتناشر الصبح', 'الساعة واحدة الضهر'],
+    correct: 0,
+    feedback: 'Noon (12:00) → الساعة اتناشر الضهر in Egyptian.'
+  },
+  {
+    type: 'read-arabic-choose-time',
+    prompt: 'What does this Levantine phrase mean?',
+    arabic: 'الساعة ستة ونص بالمسا',
+    dialect: 'Levantine',
+    options: ['6:30 PM', '6:15 PM', '6:45 AM', '7:30 PM'],
+    correct: 0,
+    feedback: 'ونص = half past · بالمسا = in the evening. So 6:30 PM.'
+  },
+  {
+    type: 'clock-choose-arabic',
+    prompt: 'Clock shows 10:40. Which is the Egyptian way?',
+    clock: { h: 10, m: 40 },
+    dialect: 'Egyptian',
+    options: ['الساعة حداشر إلاّ تلت', 'الساعة عشرة وربع', 'الساعة عشرة وعشرين', 'الساعة حداشر إلاّ ربع'],
+    correct: 0,
+    feedback: '10:40 = 20 minutes before 11 → إلاّ تلت (minus a third).'
+  },
+  {
+    type: 'dialect-id',
+    prompt: 'Which phrase is Levantine (not Egyptian) for "half past two"?',
+    arabic: null,
+    options: ['الساعة تنتين ونص', 'الساعة اتنين ونصّ', 'الساعة اتنين ونص', 'الساعة تنتين ونصّ'],
+    correct: 0,
+    dialect: 'Levantine',
+    feedback: 'Levantine uses تنتين (tnein) for two; Egyptian says اتنين (itnēn).'
+  },
+  {
+    type: 'read-arabic-choose-time',
+    prompt: 'Which time matches this phrase?',
+    arabic: 'الساعة واحدة وتلت الصبح',
+    dialect: 'Levantine',
+    options: ['1:20 AM', '1:30 AM', '1:15 AM', '2:20 AM'],
+    correct: 0,
+    feedback: 'وتلت = 20 minutes past · الصبح = morning/AM → 1:20 AM.'
+  },
+];
+
+let userAnswers = new Array(quizData.length).fill(null);
+let submitted = false;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+
+  quizData.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+
+    let clockHtml = '';
+    if (q.clock) {
+      clockHtml = `<div class="quiz-clock-display">${miniClock(q.clock.h, q.clock.m, 90)}<span style="font-family:'DM Mono',monospace;font-size:1rem;font-weight:500;color:var(--teal-dark);margin-left:12px;vertical-align:middle">${q.clock.h}:${pad(q.clock.m)}</span></div>`;
+    }
+    let arabicHtml = '';
+    if (q.arabic) {
+      arabicHtml = `<div class="quiz-q-arabic" dir="rtl">${q.arabic}</div>`;
+      if (q.dialect) arabicHtml = `<div style="margin-bottom:6px"><span class="badge ${q.dialect==='Levantine'?'badge-lev':'badge-egy'}">${q.dialect==='Levantine'?'🌿 Levantine':'🌙 Egyptian'}</span></div>` + arabicHtml;
+    }
+
+    const isAr = q.options[0].match(/[\u0600-\u06FF]/);
+    const optsHtml = q.options.map((opt, oi) => `
+      <button class="quiz-opt ${isAr?'':'en-opt'}" data-qi="${qi}" data-oi="${oi}" onclick="selectAnswer(${qi},${oi})" dir="${isAr?'rtl':'ltr'}">${opt}</button>
+    `).join('');
+
+    div.innerHTML = `
+      <div class="quiz-q-num">Question ${qi + 1} of ${quizData.length}</div>
+      <div class="quiz-q-text">${q.prompt}</div>
+      ${clockHtml}
+      ${arabicHtml}
+      <div class="quiz-options" id="opts-${qi}">${optsHtml}</div>
+      <div class="quiz-feedback" id="fb-${qi}"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function selectAnswer(qi, oi) {
+  if (submitted) return;
+  userAnswers[qi] = oi;
+  const opts = document.querySelectorAll(`[data-qi="${qi}"]`);
+  opts.forEach(btn => btn.classList.remove('selected'));
+  document.querySelector(`[data-qi="${qi}"][data-oi="${oi}"]`).classList.add('selected');
+}
+
+function submitQuiz() {
+  const unanswered = userAnswers.filter(a => a === null).length;
+  if (unanswered > 0) {
+    alert(`Please answer all questions. You have ${unanswered} unanswered.`);
+    return;
+  }
+  submitted = true;
+  let score = 0;
+
+  quizData.forEach((q, qi) => {
+    const userAns = userAnswers[qi];
+    const isCorrect = userAns === q.correct;
+    if (isCorrect) score++;
+
+    const opts = document.querySelectorAll(`[data-qi="${qi}"]`);
+    opts.forEach((btn, oi) => {
+      btn.classList.remove('selected');
+      if (oi === q.correct) btn.classList.add('correct');
+      else if (oi === userAns) btn.classList.add('incorrect');
+    });
+
+    const fb = document.getElementById(`fb-${qi}`);
+    fb.className = `quiz-feedback show ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+    fb.innerHTML = `${isCorrect ? '✓ Correct! ' : '✗ Incorrect. '}${q.feedback}`;
+  });
+
+  document.getElementById('quizSubmitBtn').style.display = 'none';
+  const results = document.getElementById('quizResults');
+  results.classList.add('show');
+  document.getElementById('quizScoreNum').textContent = `${score} / ${quizData.length}`;
+  const pct = Math.round(score / quizData.length * 100);
+  let msg;
+  if (pct === 100) msg = 'ممتاز! Perfect score! أحسنت!';
+  else if (pct >= 70) msg = 'جيد جداً! Very good — keep practising!';
+  else if (pct >= 50) msg = 'لا بأس — Not bad! Review the expressions and try again.';
+  else msg = 'راجع الدروس وحاول مرة ثانية — Review and try again!';
+  document.getElementById('quizScoreLabel').textContent = msg;
+  results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function resetQuiz() {
+  userAnswers = new Array(quizData.length).fill(null);
+  submitted = false;
+  buildQuiz();
+  document.getElementById('quizSubmitBtn').style.display = 'block';
+  document.getElementById('quizResults').classList.remove('show');
+}
+
+buildQuiz();
+</script>
+</body>
+</html>
