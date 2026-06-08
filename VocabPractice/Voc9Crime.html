@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Alibi Game | لعبة المتهم والتحقيق</title>
+
+  <style>
+    :root {
+      --bg: #f4f1ec;
+      --card: #ffffff;
+      --ink: #222;
+      --muted: #666;
+      --accent: #7c2d12;
+      --accent2: #b45309;
+      --soft: #fff7ed;
+      --border: #e5d6c8;
+      --danger: #991b1b;
+      --success: #166534;
+      --blue: #1e3a8a;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(180,83,9,0.12), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(124,45,18,0.10), transparent 35%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+    }
+
+    header {
+      background: linear-gradient(135deg, #431407, #7c2d12, #b45309);
+      color: white;
+      padding: 36px 18px;
+      text-align: center;
+      border-bottom: 6px solid #fed7aa;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+    }
+
+    header p {
+      max-width: 850px;
+      margin: 12px auto 0;
+      font-size: 1.05rem;
+      opacity: 0.95;
+      direction: ltr;
+    }
+
+    .container {
+      width: min(1100px, 94%);
+      margin: 28px auto 60px;
+    }
+
+    .login-card,
+    .card {
+      background: var(--card);
+      padding: 24px;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    .login-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    @media (max-width: 650px) {
+      .login-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--accent);
+      direction: ltr;
+      text-align: left;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      font-size: 1.1rem;
+      outline: none;
+      direction: ltr;
+      text-align: center;
+      letter-spacing: 3px;
+      font-weight: 700;
+    }
+
+    input:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(180,83,9,0.12);
+    }
+
+    button {
+      border: none;
+      background: var(--accent);
+      color: white;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      background: #9a3412;
+      transform: translateY(-1px);
+    }
+
+    .small-btn {
+      padding: 9px 14px;
+      font-size: 0.9rem;
+      background: #44403c;
+      margin-top: 10px;
+    }
+
+    .print-btn {
+      background: var(--accent2);
+      margin-top: 10px;
+    }
+
+    .error {
+      display: none;
+      margin-top: 12px;
+      color: var(--danger);
+      font-weight: 700;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 8px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .role-section {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .role-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      border: 1px solid #fed7aa;
+      font-size: 0.9rem;
+      font-weight: 700;
+      direction: ltr;
+    }
+
+    .badge.blue {
+      background: #eff6ff;
+      color: var(--blue);
+      border-color: #bfdbfe;
+    }
+
+    .badge.red {
+      background: #fef2f2;
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .badge.green {
+      background: #f0fdf4;
+      color: var(--success);
+      border-color: #bbf7d0;
+    }
+
+    h2 {
+      color: var(--accent);
+      margin: 0;
+      font-size: 1.8rem;
+      direction: ltr;
+      text-align: left;
+    }
+
+    h3 {
+      color: var(--accent);
+      margin-top: 22px;
+      margin-bottom: 10px;
+      border-right: 5px solid var(--accent2);
+      padding-right: 10px;
+    }
+
+    .english {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .crime-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 18px;
+      padding: 18px;
+      font-size: 1.05rem;
+    }
+
+    .important {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #7f1d1d;
+      border-radius: 18px;
+      padding: 16px;
+      font-weight: 700;
+    }
+
+    .safe {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #14532d;
+      border-radius: 18px;
+      padding: 16px;
+      font-weight: 700;
+    }
+
+    .note {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e3a8a;
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    ul, ol {
+      margin-top: 8px;
+      padding-right: 24px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      overflow: hidden;
+      border-radius: 14px;
+      font-size: 0.98rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #fff7ed;
+      color: var(--accent);
+    }
+
+    td {
+      background: #fff;
+    }
+
+    .ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .question-bank {
+      columns: 2;
+      column-gap: 35px;
+    }
+
+    @media (max-width: 750px) {
+      .question-bank {
+        columns: 1;
+      }
+    }
+
+    .question-bank li {
+      break-inside: avoid;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      font-size: 1rem;
+      line-height: 1.8;
+      resize: vertical;
+      font-family: Arial, Tahoma, sans-serif;
+      background: #fffdf9;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(180,83,9,0.12);
+    }
+
+    .word-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .word-chip {
+      border: 1px solid var(--border);
+      background: #fffdf9;
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+
+    .word-chip strong {
+      color: var(--accent);
+      display: block;
+      font-size: 1.05rem;
+    }
+
+    .word-chip span {
+      display: block;
+      color: var(--muted);
+      direction: ltr;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .sentence-frame {
+      background: #fffdf9;
+      border: 1px dashed #d6b99f;
+      border-radius: 16px;
+      padding: 14px;
+      margin: 10px 0;
+    }
+
+    .blank {
+      display: inline-block;
+      min-width: 90px;
+      border-bottom: 2px solid #999;
+      margin: 0 4px;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header,
+      .login-card,
+      .small-btn,
+      .print-btn {
+        display: none !important;
+      }
+
+      .role-section {
+        display: block !important;
+      }
+
+      .card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>لعبة المتهم والتحقيق</h1>
+  <p>The Alibi Game: speaking practice with time, movement, and past actions</p>
+</header>
+
+<main class="container">
+
+  <section class="login-card">
+    <label for="passcode">Enter your role code</label>
+    <div class="login-grid">
+      <input id="passcode" type="password" placeholder="Enter code" autocomplete="off" />
+      <button onclick="checkCode()">Open</button>
+    </div>
+    <p class="hint">
+      Enter the code your teacher gives you.
+    </p>
+    <p id="error" class="error">Incorrect code. Try again.</p>
+    <button class="small-btn" onclick="hideAll()">Hide all sections</button>
+  </section>
+
+  <!-- OFFICER SECTION -->
+  <section id="officer" class="role-section">
+
+    <div class="card">
+      <div class="role-title">
+        <h2>Officer / Inspector Section</h2>
+        <span class="badge blue">Officer</span>
+      </div>
+
+      <div class="crime-box">
+        <div class="english">
+          <strong>The case:</strong><br>
+          Yesterday afternoon, the teacher’s favorite book disappeared from the classroom.
+          The book was on the teacher’s desk around 2:00.
+          At 3:30, the book was gone.
+          Your job is to question the suspects and find the problem in their stories.
+        </div>
+      </div>
+
+      <h3 class="english">Your job</h3>
+      <ul class="english">
+        <li>Question each suspect separately.</li>
+        <li>Ask about time, place, and actions.</li>
+        <li>Write down important details.</li>
+        <li>Look for a time problem or contradiction.</li>
+        <li>At the end, explain who you suspect and why.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Question Bank</h3>
+
+      <ol class="question-bank">
+        <li>متى خرجتَ / خرجتِ من الصف؟</li>
+        <li>مع من خرجت؟</li>
+        <li>إلى أين ذهبت بعد الصف؟</li>
+        <li>متى وصلت؟</li>
+        <li>هل جلست هناك؟</li>
+        <li>كم دقيقة جلست؟</li>
+        <li>ما الموضوع؟</li>
+        <li>هل كان الموضوع خاصًا؟</li>
+        <li>هل شاهدت برنامجًا؟</li>
+        <li>متى بدأ البرنامج؟</li>
+        <li>هل استطعت أن تشاهد البرنامج كله؟</li>
+        <li>متى خرجت من المكان؟</li>
+        <li>متى عدت إلى البيت؟</li>
+        <li>كيف عدت إلى البيت؟</li>
+        <li>أين كنت حوالي الساعة الثالثة؟</li>
+        <li>أين كنت حوالي الساعة الثالثة والربع؟</li>
+        <li>هل رجعت إلى الصف مرة أخرى؟</li>
+        <li>لماذا لم تستطع مشاهدة البرنامج كله؟</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>Simple Officer Language</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Arabic</th>
+            <th>English</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ماذا حدث؟</td>
+            <td class="ltr">What happened?</td>
+          </tr>
+          <tr>
+            <td>متى؟</td>
+            <td class="ltr">When?</td>
+          </tr>
+          <tr>
+            <td>أين؟</td>
+            <td class="ltr">Where?</td>
+          </tr>
+          <tr>
+            <td>مع من؟</td>
+            <td class="ltr">With whom?</td>
+          </tr>
+          <tr>
+            <td>قل ذلك مرة أخرى.</td>
+            <td class="ltr">Say that again.</td>
+          </tr>
+          <tr>
+            <td>لا أفهم.</td>
+            <td class="ltr">I do not understand.</td>
+          </tr>
+          <tr>
+            <td>هل أنت متأكد؟</td>
+            <td class="ltr">Are you sure?</td>
+          </tr>
+          <tr>
+            <td>هذا غريب.</td>
+            <td class="ltr">That is strange.</td>
+          </tr>
+          <tr>
+            <td>الوقت غير واضح.</td>
+            <td class="ltr">The time is not clear.</td>
+          </tr>
+          <tr>
+            <td>هناك مشكلة.</td>
+            <td class="ltr">There is a problem.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Investigation Notes</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>السؤال</th>
+        <th>المتهم ١</th>
+        <th>المتهم ٢</th>
+        <th>المتهم ٣</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>متى خرج المتهم من الصف؟</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td>إلى أين ذهب المتهم؟</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td>ماذا فعل المتهم؟</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td>ما الموضوع؟</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td>هل شاهد المتهم برنامجًا؟</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td>متى عاد المتهم إلى البيت؟</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td>هل هناك أي شيء غريب؟</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      </tr>
+    </tbody>
+  </table>
+
+      <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+  </section>
+
+  <!-- SUSPECT 1 SECTION -->
+  <section id="suspect1" class="role-section">
+
+    <div class="card">
+      <div class="role-title">
+        <h2>Suspect 1 Section</h2>
+        <span class="badge green">Suspect 1</span>
+      </div>
+
+      <div class="safe english">
+        You are a suspect, but you are not the culprit. Answer calmly and clearly.
+        Your story should make sense, but do not simply read full sentences from the page.
+        Use the word pieces below to form your own answers.
+      </div>
+
+      <h3 class="english">Your basic story</h3>
+      <p class="english">
+        You left class in the afternoon because you wanted to go to the club.
+        At the club, you sat with a friend and talked about a private topic for a university program.
+        You did not return to the classroom after that.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Your Timeline</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Information</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>٢:٠٥</td>
+            <td class="english">You left the classroom.</td>
+          </tr>
+          <tr>
+            <td>٢:١٥</td>
+            <td class="english">You arrived at the club.</td>
+          </tr>
+          <tr>
+            <td>٢:١٥ - ٢:٥٠</td>
+            <td class="english">You sat and talked about a private topic.</td>
+          </tr>
+          <tr>
+            <td>٣:٠٠</td>
+            <td class="english">A program began at the club.</td>
+          </tr>
+          <tr>
+            <td>٣:١٠</td>
+            <td class="english">You left the club.</td>
+          </tr>
+          <tr>
+            <td>٣:٣٠ تقريبًا</td>
+            <td class="english">You returned home.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Sentence-Building Pieces</h3>
+
+      <div class="word-grid">
+        <div class="word-chip"><strong>خرجتُ من...</strong><span>I left from...</span></div>
+        <div class="word-chip"><strong>حوالي الساعة...</strong><span>around ... o’clock</span></div>
+        <div class="word-chip"><strong>ذهبتُ إلى...</strong><span>I went to...</span></div>
+        <div class="word-chip"><strong>جلستُ في...</strong><span>I sat in/at...</span></div>
+        <div class="word-chip"><strong>تكلمتُ عن موضوع...</strong><span>I talked about a topic...</span></div>
+        <div class="word-chip"><strong>موضوع خاص</strong><span>a private/special topic</span></div>
+        <div class="word-chip"><strong>بدأ البرنامج...</strong><span>the program began...</span></div>
+        <div class="word-chip"><strong>ما استطعتُ...</strong><span>I was not able to...</span></div>
+        <div class="word-chip"><strong>شاهدتُ بعض...</strong><span>I watched some of...</span></div>
+        <div class="word-chip"><strong>عدتُ إلى...</strong><span>I returned to...</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Build Your Story</h3>
+      <p class="english">
+        Add 3–5 extra details using the vocabulary. You may mention lunch, afternoon, another student, a newspaper, a favorite program, or another topic.
+      </p>
+
+      <div class="sentence-frame">
+        عند الظهر، <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        بعد الظهر، خرجتُ من <span class="blank"></span> وذهبتُ إلى <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        جلستُ مع <span class="blank"></span> وتكلمنا عن <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        بدأ البرنامج في الساعة <span class="blank"></span>، لكنني ما استطعتُ <span class="blank"></span>.
+      </div>
+
+      <textarea placeholder="Write your extra details here..."></textarea>
+    </div>
+
+  </section>
+
+  <!-- SUSPECT 2 SECTION -->
+  <section id="suspect2" class="role-section">
+
+    <div class="card">
+      <div class="role-title">
+        <h2>Suspect 2 Section</h2>
+        <span class="badge red">Suspect 2</span>
+      </div>
+
+      <div class="important english">
+        You are the culprit. You took the teacher’s book. Do not say this to the officer.
+        Your job is to sound calm and natural, but your story has a small time problem.
+      </div>
+
+      <h3 class="english">What really happened</h3>
+      <p class="english">
+        You left the classroom, then secretly returned when nobody was there.
+        You took the teacher’s favorite book from the desk.
+        After that, you went to the club so your story would sound normal.
+      </p>
+
+      <h3 class="english">What you should pretend</h3>
+      <p class="english">
+        Pretend that you went directly to the club after class.
+        Pretend that you sat there, talked about a private topic, watched part of a program,
+        and then returned home. Do not give too much detail unless the officer asks.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Your Claimed Timeline</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Information you will claim</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>٢:٠٥</td>
+            <td class="english">You left the classroom.</td>
+          </tr>
+          <tr>
+            <td>٢:١٥ تقريبًا</td>
+            <td class="english">You arrived at the club.</td>
+          </tr>
+          <tr>
+            <td>حوالي نصف ساعة</td>
+            <td class="english">You sat and talked about a private topic.</td>
+          </tr>
+          <tr>
+            <td>٣:٠٠</td>
+            <td class="english">A program began at the club.</td>
+          </tr>
+          <tr>
+            <td>بعد ٣:٠٠ بقليل</td>
+            <td class="english">You watched only part of the program.</td>
+          </tr>
+          <tr>
+            <td>٣:١٥ تقريبًا</td>
+            <td class="english">You returned home.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Sentence-Building Pieces</h3>
+
+      <div class="word-grid">
+        <div class="word-chip"><strong>خرجتُ من...</strong><span>I left from...</span></div>
+        <div class="word-chip"><strong>حوالي الساعة...</strong><span>around ... o’clock</span></div>
+        <div class="word-chip"><strong>ذهبتُ إلى...</strong><span>I went to...</span></div>
+        <div class="word-chip"><strong>جلستُ هناك...</strong><span>I sat there...</span></div>
+        <div class="word-chip"><strong>نصف ساعة تقريبًا</strong><span>about half an hour</span></div>
+        <div class="word-chip"><strong>موضوع خاص</strong><span>a private/special topic</span></div>
+        <div class="word-chip"><strong>برنامج في الجامعة</strong><span>a university program</span></div>
+        <div class="word-chip"><strong>بدأ البرنامج...</strong><span>the program began...</span></div>
+        <div class="word-chip"><strong>ما استطعتُ...</strong><span>I was not able to...</span></div>
+        <div class="word-chip"><strong>عدتُ إلى البيت...</strong><span>I returned home...</span></div>
+        <div class="word-chip"><strong>لا أتذكر بالضبط</strong><span>I do not remember exactly</span></div>
+        <div class="word-chip"><strong>ربما بعد...</strong><span>maybe after...</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Build Your Story</h3>
+      <p class="english">
+        Add 3–5 extra details using the vocabulary. Try to sound natural, but do not explain too much.
+      </p>
+
+      <div class="sentence-frame">
+        بعد الظهر، خرجتُ من <span class="blank"></span> حوالي الساعة <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        ذهبتُ إلى <span class="blank"></span> وجلستُ هناك <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        تكلمتُ عن موضوع <span class="blank"></span> لبرنامج <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        بدأ البرنامج في الساعة <span class="blank"></span>، وما استطعتُ <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        عدتُ إلى البيت حوالي الساعة <span class="blank"></span>.
+      </div>
+
+      <textarea placeholder="Write your extra details here..."></textarea>
+    </div>
+
+  </section>
+
+  <!-- SUSPECT 3 SECTION -->
+  <section id="suspect3" class="role-section">
+
+    <div class="card">
+      <div class="role-title">
+        <h2>Suspect 3 Section</h2>
+        <span class="badge green">Suspect 3</span>
+      </div>
+
+      <div class="safe english">
+        You are a suspect, but you are not the culprit. Answer clearly.
+        Your story should be different from the other suspects’ stories.
+        Use the word pieces below to form your own answers.
+      </div>
+
+      <h3 class="english">Your basic story</h3>
+      <p class="english">
+        You left class in the afternoon, but you did not go directly to the club.
+        First, you went to the library because you wanted to read a newspaper.
+        Then you went to the club, watched part of a program, and returned home.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Your Timeline</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Information</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>٢:٠٠</td>
+            <td class="english">You were in class.</td>
+          </tr>
+          <tr>
+            <td>٢:١٠</td>
+            <td class="english">You left class and went to the library.</td>
+          </tr>
+          <tr>
+            <td>٢:١٥ - ٢:٤٥</td>
+            <td class="english">You sat in the library and read part of a newspaper.</td>
+          </tr>
+          <tr>
+            <td>٢:٥٥</td>
+            <td class="english">You went to the club.</td>
+          </tr>
+          <tr>
+            <td>٣:٠٠</td>
+            <td class="english">A program began at the club.</td>
+          </tr>
+          <tr>
+            <td>٣:٠٠ - ٣:٢٠</td>
+            <td class="english">You watched part of the program.</td>
+          </tr>
+          <tr>
+            <td>٣:٢٠</td>
+            <td class="english">You left the club.</td>
+          </tr>
+          <tr>
+            <td>٣:٤٠ تقريبًا</td>
+            <td class="english">You returned home.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Sentence-Building Pieces</h3>
+
+      <div class="word-grid">
+        <div class="word-chip"><strong>خرجتُ من...</strong><span>I left from...</span></div>
+        <div class="word-chip"><strong>ذهبتُ أولًا إلى...</strong><span>First, I went to...</span></div>
+        <div class="word-chip"><strong>قرأتُ بعض...</strong><span>I read some of...</span></div>
+        <div class="word-chip"><strong>جريدة</strong><span>newspaper</span></div>
+        <div class="word-chip"><strong>ثم ذهبتُ إلى...</strong><span>Then I went to...</span></div>
+        <div class="word-chip"><strong>بدأ البرنامج...</strong><span>the program began...</span></div>
+        <div class="word-chip"><strong>شاهدتُ بعض البرنامج</strong><span>I watched some of the program</span></div>
+        <div class="word-chip"><strong>خرجتُ من النادي...</strong><span>I left the club...</span></div>
+        <div class="word-chip"><strong>عدتُ إلى البيت...</strong><span>I returned home...</span></div>
+        <div class="word-chip"><strong>حوالي الساعة...</strong><span>around ... o’clock</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Build Your Story</h3>
+      <p class="english">
+        Add 3–5 extra details using the vocabulary. You may mention another student, lunch, a topic, the newspaper, the club, or the program.
+      </p>
+
+      <div class="sentence-frame">
+        بعد الظهر، خرجتُ من <span class="blank"></span> وذهبتُ أولًا إلى <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        جلستُ في <span class="blank"></span> وقرأتُ بعض <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        ثم ذهبتُ إلى <span class="blank"></span> حوالي الساعة <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        بدأ البرنامج في الساعة <span class="blank"></span>، وشاهدتُ <span class="blank"></span>.
+      </div>
+
+      <div class="sentence-frame">
+        عدتُ إلى البيت حوالي الساعة <span class="blank"></span>.
+      </div>
+
+      <textarea placeholder="Write your extra details here..."></textarea>
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+  const sections = {
+    "007": "officer",
+    "111": "suspect1",
+    "222": "suspect2",
+    "333": "suspect3"
+  };
+
+  function checkCode() {
+    const input = document.getElementById("passcode");
+    const error = document.getElementById("error");
+    const code = input.value.trim();
+
+    hideAll(false);
+
+    if (sections[code]) {
+      document.getElementById(sections[code]).style.display = "block";
+      error.style.display = "none";
+      input.value = "";
+      window.scrollTo({
+        top: document.querySelector(".login-card").offsetTop,
+        behavior: "smooth"
+      });
+    } else {
+      error.style.display = "block";
+    }
+  }
+
+  function hideAll(clearError = true) {
+    document.querySelectorAll(".role-section").forEach(section => {
+      section.style.display = "none";
+    });
+
+    if (clearError) {
+      document.getElementById("error").style.display = "none";
+    }
+  }
+
+  document.getElementById("passcode").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      checkCode();
+    }
+  });
+</script>
+
+</body>
+</html>
+
