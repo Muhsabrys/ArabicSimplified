@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تدريبات المفردات العربية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        arabic: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0d9488', // teal-600
+                        secondary: '#0f766e', // teal-700
+                        accent: '#f59e0b', // amber-500
+                        background: '#f0fdfa', // teal-50
+                        card: '#ffffff',
+                        success: '#10b981', 
+                        error: '#ef4444', 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: theme('colors.background');
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .input-correct {
+            border-color: theme('colors.success') !important;
+            background-color: #ecfdf5 !important;
+            color: theme('colors.success');
+        }
+        
+        .input-incorrect {
+            border-color: theme('colors.error') !important;
+            background-color: #fef2f2 !important;
+            color: theme('colors.error');
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: left 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-left: 2.5rem;
+            padding-right: 1rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <header class="bg-primary text-white py-8 shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-4 max-w-4xl text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-3">تدريبات المفردات العربية</h1>
+            <p class="text-lg text-teal-100 font-medium">اقرأ، افهم، وأكمل الفراغات بالكلمة الصحيحة</p>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl space-y-12">
+
+        <!-- Activity 1: Fill in the Blanks (Sentences) -->
+        <section class="bg-card rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-slate-50 border-b border-slate-200 p-6">
+                <h2 class="text-2xl font-bold text-primary flex items-center gap-2">
+                    <span class="bg-accent text-white w-8 h-8 rounded-full inline-flex items-center justify-center text-lg">١</span>
+                    أكمل الجمل
+                </h2>
+                <p class="text-slate-500 mt-2 text-lg">اختر الكلمة الصحيحة لتكملة الفراغ في كل جملة.</p>
+            </div>
+            
+            <div class="p-6">
+                <ul id="sentences-container" class="space-y-6 list-none p-0">
+                    <!-- Sentences will be injected here via JS -->
+                </ul>
+                
+                <div class="mt-8 text-center border-t border-slate-100 pt-6">
+                    <button onclick="checkSentences()" class="px-8 py-3 bg-primary hover:bg-secondary text-white text-lg font-bold rounded-full shadow transition-all">
+                        تحقق من الإجابات
+                    </button>
+                    <div id="sentences-feedback" class="mt-4 text-xl font-bold hidden"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity 2: Fill in the Blanks (Passage) -->
+        <section class="bg-card rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-slate-50 border-b border-slate-200 p-6">
+                <h2 class="text-2xl font-bold text-primary flex items-center gap-2">
+                    <span class="bg-accent text-white w-8 h-8 rounded-full inline-flex items-center justify-center text-lg">٢</span>
+                    أكمل القصة القصيرة
+                </h2>
+                <p class="text-slate-500 mt-2 text-lg">اقرأ القصة جيداً، ثم اختر الكلمات الصحيحة للفراغات.</p>
+            </div>
+            
+            <div class="p-8">
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 text-xl leading-loose text-slate-700 font-medium" id="passage-container">
+                    <!-- Passage will be injected here via JS -->
+                </div>
+                
+                <div class="mt-8 text-center border-t border-slate-100 pt-6">
+                    <button onclick="checkPassage()" class="px-8 py-3 bg-primary hover:bg-secondary text-white text-lg font-bold rounded-full shadow transition-all">
+                        تحقق من الإجابات
+                    </button>
+                    <div id="passage-feedback" class="mt-4 text-xl font-bold hidden"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-8 text-center mt-auto">
+        <p class="text-2xl font-bold mb-2 text-white">بالتوفيق والنجاح!</p>
+        <p class="text-lg">استمر في القراءة والممارسة كل يوم.</p>
+    </footer>
+
+    <script>
+        // --- Data ---
+        
+        // 1. Sentences (10 Fill-in-the-blanks using the new vocabulary)
+        const sentencesData = [
+            { before: "القطار ", after: " اليوم، لذلك سأنتظر في المحطة.", options: ["مُمِل", "مُرتَّب", "متأخر"], answer: "متأخر" },
+            { before: "أحب مشاهدة ", after: " كرة القدم في عطلة نهاية الأسبوع.", options: ["جوامع", "مباريات", "ملوك"], answer: "مباريات" },
+            { before: "", after: "، هذا الفيلم كان طويلاً جداً ولم يعجبني.", options: ["إذا", "عادةً", "بصراحة"], answer: "بصراحة" },
+            { before: "المعلم يشرح الدرس جيداً حتى ", after: " كل الطلاب.", options: ["ينام", "يسهر", "يفهم"], answer: "يفهم" },
+            { before: "هل ", after: " تساعدني في كتابة هذا الواجب؟", options: ["مُنذُ", "إذا", "يُمكن أن"], answer: "يُمكن أن" },
+            { before: "نحن نعيش في ", after: " صعبة، ويجب أن نساعد بعضنا.", options: ["أوقات", "مواعيد", "ليالي"], answer: "أوقات" },
+            { before: "يعيش الـ ", after: " في قصر كبير وجميل جداً.", options: ["جامع", "مُرتَّب", "مَلِك"], answer: "مَلِك" },
+            { before: "أنا أدرس اللغة العربية ", after: " ثلاث سنوات.", options: ["عادةً", "مُنذُ", "بسرعة"], answer: "مُنذُ" },
+            { before: "قضينا ", after: " ممتعة مع العائلة في الحديقة.", options: ["مقابلة", "مُباراة", "ليلة"], answer: "ليلة" },
+            { before: "الطبيب قال لي: ", after: " مضر بالصحة، يجب أن تنام مبكراً.", options: ["الفهم", "المجيء", "السهر"], answer: "السهر" }
+        ];
+
+        // 2. Passage (10 Blanks in a story using the new vocabulary)
+        const passageData = {
+            parts: [
+                "في يوم الجمعة، ذهبت إلى الـ ",
+                " الكبير. ",
+                " ما أذهب ماشياً، ولكن اليوم ذهبت ",
+                " بالسيارة. هناك ",
+                " صلاة الجمعة مع الناس. في المساء، كان لدي ",
+                " مع أصدقائي. ذهبنا لمشاهدة ",
+                " كرة قدم. الشوط الأول كان ",
+                " جداً، ولكن بعد ",
+                " قصيرة، تحسن اللعب. صديقي أحمد ",
+                " باللعبة كثيراً. رجعنا إلى البيت، وذهبنا إلى ",
+                " لأننا كنا متعبين."
+            ],
+            blanks: [
+                { options: ["مُرتَّب", "مَلِك", "جامع"], answer: "جامع" },
+                { options: ["بصراحة", "إذا", "عادةً"], answer: "عادةً" },
+                { options: ["مُنذُ", "أكثر", "بسرعة"], answer: "بسرعة" },
+                { options: ["جاء", "يسهر", "صليتُ"], answer: "صليتُ" },
+                { options: ["موعد", "الفهم", "ليلة"], answer: "موعد" },
+                { options: ["مواعيد", "جوامع", "مُباراة"], answer: "مُباراة" },
+                { options: ["متأخر", "مُرتَّب", "مُمِل"], answer: "مُمِل" },
+                { options: ["مقابلة", "الصلاة", "استراحة"], answer: "استراحة" },
+                { options: ["يفهم", "ينام", "استمتع"], answer: "استمتع" },
+                { options: ["المجيء", "السهر", "النوم"], answer: "النوم" }
+            ]
+        };
+
+        // --- Render Functions ---
+
+        function renderSentences() {
+            const container = document.getElementById('sentences-container');
+            let html = '';
+            
+            sentencesData.forEach((item, index) => {
+                let optionsHtml = item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+                
+                html += `
+                    <li class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3 relative" id="sen-row-${index}">
+                        <div class="flex items-center justify-between w-full">
+                            <div class="text-xl leading-loose flex-grow">
+                                <span class="bg-slate-100 text-slate-600 rounded-md w-8 h-8 inline-flex items-center justify-center text-lg font-bold ml-3">${index + 1}</span>
+                                ${item.before}
+                                <select id="sen-select-${index}" class="inline-block mx-2 rounded-lg border-2 border-slate-300 py-1 px-3 text-primary font-bold bg-slate-50 focus:border-primary outline-none min-w-[120px] text-center transition-colors">
+                                    <option value="" disabled selected>ــــــ</option>
+                                    ${optionsHtml}
+                                </select>
+                                ${item.after}
+                            </div>
+                            <span id="sen-icon-${index}" class="text-2xl w-8 text-center hidden shrink-0"></span>
+                        </div>
+                    </li>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderPassage() {
+            const container = document.getElementById('passage-container');
+            let html = '';
+            
+            passageData.parts.forEach((part, index) => {
+                html += `<span>${part}</span>`;
+                
+                if (index < passageData.blanks.length) {
+                    const blank = passageData.blanks[index];
+                    let optionsHtml = blank.options.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+                    
+                    html += `
+                        <select id="pass-select-${index}" class="inline-block mx-2 rounded-lg border-2 border-slate-300 py-1 px-3 text-primary font-bold bg-white focus:border-primary outline-none min-w-[130px] text-center align-baseline transition-colors">
+                            <option value="" disabled selected>ــــــ</option>
+                            ${optionsHtml}
+                        </select>
+                        <span id="pass-icon-${index}" class="inline-block align-middle text-xl w-6 hidden"></span>
+                    `;
+                }
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // --- Validation Functions ---
+
+        function showFeedback(elementId, score, total) {
+            const feedbackEl = document.getElementById(elementId);
+            feedbackEl.classList.remove('hidden');
+            if(score === total) {
+                feedbackEl.innerHTML = `ممتاز! إجاباتك كلها صحيحة (${score}/${total}) 🌟`;
+                feedbackEl.className = "mt-4 text-2xl font-bold text-success";
+            } else {
+                feedbackEl.innerHTML = `لديك بعض الأخطاء. النتيجة: ${score} من ${total}. حاول مرة أخرى!`;
+                feedbackEl.className = "mt-4 text-xl font-bold text-accent";
+            }
+        }
+
+        function checkSentences() {
+            let score = 0;
+            const total = sentencesData.length;
+            
+            sentencesData.forEach((item, index) => {
+                const selectEl = document.getElementById(`sen-select-${index}`);
+                const iconEl = document.getElementById(`sen-icon-${index}`);
+                const userAnswer = selectEl.value;
+                
+                selectEl.classList.remove('input-correct', 'input-incorrect');
+                iconEl.classList.remove('hidden');
+                
+                if (userAnswer === item.answer) {
+                    selectEl.classList.add('input-correct');
+                    iconEl.innerHTML = '✅';
+                    score++;
+                } else {
+                    selectEl.classList.add('input-incorrect');
+                    iconEl.innerHTML = '❌';
+                }
+            });
+            showFeedback('sentences-feedback', score, total);
+        }
+
+        function checkPassage() {
+            let score = 0;
+            const total = passageData.blanks.length;
+            
+            passageData.blanks.forEach((item, index) => {
+                const selectEl = document.getElementById(`pass-select-${index}`);
+                const iconEl = document.getElementById(`pass-icon-${index}`);
+                const userAnswer = selectEl.value;
+                
+                selectEl.classList.remove('input-correct', 'input-incorrect');
+                iconEl.classList.remove('hidden');
+                
+                if (userAnswer === item.answer) {
+                    selectEl.classList.add('input-correct');
+                    iconEl.innerHTML = '✅';
+                    score++;
+                } else {
+                    selectEl.classList.add('input-incorrect');
+                    iconEl.innerHTML = '❌';
+                }
+            });
+            showFeedback('passage-feedback', score, total);
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            renderSentences();
+            renderPassage();
+        };
+    </script>
+</body>
+</html>
