@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arabic Conditional Activity | إذا ولو</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --card: #ffffff;
+      --ink: #1f2933;
+      --muted: #667085;
+      --accent: #7c3f16;
+      --accent-2: #bf7a30;
+      --soft: #fff2dc;
+      --soft-2: #efe1cf;
+      --green: #2f6f4e;
+      --blue: #365f91;
+      --red: #9f3a38;
+      --border: #e2d2bd;
+      --shadow: 0 10px 24px rgba(31, 41, 51, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, #fff4df 0, transparent 35%),
+        radial-gradient(circle at bottom right, #ead7bd 0, transparent 30%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    header {
+      padding: 56px 24px 36px;
+      text-align: center;
+      background: linear-gradient(135deg, #78370f, #b36a29);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "إذا لو";
+      position: absolute;
+      right: -40px;
+      top: -50px;
+      font-size: 150px;
+      opacity: 0.08;
+      font-weight: 900;
+      font-family: Georgia, serif;
+      white-space: nowrap;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+    }
+
+    header .arabic-title {
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      font-family: "Amiri", "Scheherazade New", "Times New Roman", serif;
+      direction: rtl;
+      margin-top: 10px;
+      font-weight: 700;
+    }
+
+    header p {
+      max-width: 850px;
+      margin: 20px auto 0;
+      font-size: 1.08rem;
+      opacity: 0.94;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 32px auto 72px;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      padding: 22px 26px;
+      background: linear-gradient(90deg, var(--soft), #fff);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+      font-size: 1rem;
+      flex: 0 0 auto;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
+
+    .section-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    .content {
+      padding: 26px;
+    }
+
+    .arabic {
+      direction: rtl;
+      text-align: right;
+      font-family: "Amiri", "Scheherazade New", "Times New Roman", serif;
+      font-size: 1.35rem;
+      line-height: 1.9;
+    }
+
+    .arabic.small {
+      font-size: 1.16rem;
+    }
+
+    .arabic.center {
+      text-align: center;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .info-box {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .info-box strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 4px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .rule-card {
+      background: #fbf7ef;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .rule-card.if-card {
+      border-top: 6px solid var(--green);
+    }
+
+    .rule-card.law-card {
+      border-top: 6px solid var(--blue);
+    }
+
+    .formula {
+      direction: rtl;
+      text-align: center;
+      background: white;
+      border: 2px dashed var(--accent-2);
+      border-radius: 14px;
+      padding: 16px;
+      margin: 12px 0;
+      font-family: "Amiri", "Scheherazade New", "Times New Roman", serif;
+      font-size: 1.55rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .contrast-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .mini-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fffdf9;
+      padding: 18px;
+    }
+
+    .mini-card h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    
+    .example-box {
+      background: #f0f7f4;
+      border-left: 4px solid var(--green);
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .example-box h4 {
+      margin: 0 0 10px 0;
+      color: var(--green);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+
+    th,
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    th {
+      background: #efe2cf;
+      color: #3a2616;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    td {
+      background: white;
+    }
+
+    tr:nth-child(even) td {
+      background: #fcfaf6;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .rtl-table th,
+    .rtl-table td {
+      direction: rtl;
+      text-align: right;
+      font-family: "Amiri", "Scheherazade New", "Times New Roman", serif;
+      font-size: 1.12rem;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #d7c7b3;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font: inherit;
+      background: #fffdf9;
+      color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(196, 127, 53, 0.18);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .scenario-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 6px 16px rgba(31, 41, 51, 0.05);
+    }
+
+    .scenario-title {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      padding: 14px 16px;
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .scenario-body {
+      padding: 14px 16px;
+    }
+
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid #f0e7dc;
+      font-size: 0.95rem;
+    }
+
+    .stat:last-child {
+      border-bottom: 0;
+    }
+
+    .stat span:first-child {
+      color: var(--muted);
+    }
+
+    .note {
+      margin-top: 12px;
+      padding: 10px;
+      background: var(--soft);
+      border-radius: 12px;
+      color: #4a3524;
+      font-size: 0.95rem;
+    }
+
+    .question-list {
+      counter-reset: q;
+      display: grid;
+      gap: 14px;
+    }
+
+    .question {
+      counter-increment: q;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fffdf9;
+    }
+
+    .question::before {
+      content: counter(q);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 28px;
+      height: 28px;
+      margin-right: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .question .arabic {
+      display: inline;
+      font-size: 1.25rem;
+    }
+
+    .question textarea,
+    .question input,
+    .question select {
+      margin-top: 12px;
+      direction: rtl;
+      text-align: right;
+      font-family: "Amiri", "Scheherazade New", "Times New Roman", serif;
+      font-size: 1.15rem;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 16px;
+      padding: 16px;
+      background: white;
+      border: 1px dashed var(--accent-2);
+      border-radius: 12px;
+    }
+    
+    .word-bank-title {
+      width: 100%;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .chip {
+      background: var(--soft);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-family: "Amiri", "Scheherazade New", "Times New Roman", serif;
+      font-size: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.2;
+    }
+    
+    .chip-en {
+      font-family: "Inter", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .decision-box {
+      background: #f7efe4;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+
+    .template-line {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .template-line label {
+      direction: rtl;
+      text-align: right;
+      font-family: "Amiri", "Scheherazade New", "Times New Roman", serif;
+      font-size: 1.2rem;
+      color: #3a2616;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: #fffdf9;
+      margin-top: 16px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .teacher-note {
+      border-left: 5px solid var(--green);
+      background: #eef7f1;
+      padding: 16px;
+      border-radius: 12px;
+      color: #214b36;
+      margin-top: 18px;
+    }
+
+    .warning-note {
+      border-left: 5px solid var(--red);
+      background: #fff0ef;
+      padding: 16px;
+      border-radius: 12px;
+      color: #65302e;
+      margin-top: 18px;
+    }
+
+    .print-bar {
+      position: sticky;
+      bottom: 16px;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      margin-top: 32px;
+    }
+
+    .print-btn {
+      border: none;
+      background: var(--accent);
+      color: white;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(139, 69, 19, 0.25);
+    }
+
+    .print-btn:hover {
+      background: #70370f;
+    }
+
+    @media (max-width: 1000px) {
+      .info-grid,
+      .scenario-grid,
+      .rule-grid,
+      .contrast-box {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        width: min(100% - 18px, 1180px);
+      }
+
+      .section-header {
+        align-items: flex-start;
+      }
+
+      .info-grid,
+      .scenario-grid,
+      .rule-grid,
+      .contrast-box {
+        grid-template-columns: 1fr;
+      }
+
+      th,
+      td {
+        padding: 10px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header {
+        background: white;
+        color: black;
+        border-bottom: 2px solid #000;
+        padding: 24px 0;
+      }
+
+      main {
+        width: 100%;
+        margin: 0;
+      }
+
+      section {
+        box-shadow: none;
+        break-inside: avoid;
+        border: 1px solid #bbb;
+      }
+
+      .print-bar {
+        display: none;
+      }
+
+      input,
+      textarea,
+      select {
+        border: 1px solid #888;
+        background: white;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Conditional Sentences Activity</h1>
+    <div class="arabic-title">إذا ولو</div>
+    <p>
+      A collaborative problem-solving task for intermediate learners. Plan a class trip, 
+      navigate hypothetical problems, and present your group's final decision.
+    </p>
+  </header>
+
+  <main>
+    <section>
+      <div class="section-header">
+        <div class="badge">0</div>
+        <div>
+          <h2>Activity Instructions</h2>
+          <p>Read these steps with your group before beginning the worksheet.</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="info-grid">
+          <div class="info-box">
+            <strong>Group Size</strong>
+            3–4 students per group
+          </div>
+          <div class="info-box">
+            <strong>Objective</strong>
+            Agree on one class trip
+          </div>
+          <div class="info-box">
+            <strong>Grammar Focus</strong>
+            إذا (Real) vs. لو (Unreal)
+          </div>
+          <div class="info-box">
+            <strong>Language Rule</strong>
+            Speak entirely in Arabic!
+          </div>
+        </div>
+
+        <div class="teacher-note">
+          <strong>Your Mission:</strong> The university has given your class a budget and time for a field trip. 
+          Your group must review the options, discuss what will realistically happen (إذا), imagine what you would do if things went wrong (لو), and present a final choice to the class.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="badge">1</div>
+        <div>
+          <h2>Grammar Review: The Rules of Conditionals</h2>
+          <p>Review the difference between the two main conditional words before you start planning.</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="rule-grid">
+          <div class="rule-card if-card">
+            <h3>إذا (Real / Possible)</h3>
+            <p>
+              Use <strong>إذا</strong> for a condition that can actually happen. 
+              It is exactly like saying "if" or "when" in a realistic scenario.
+            </p>
+
+            <div class="formula">إذا + فعل ماضٍ، فسوف / سـ + فعل مضارع</div>
+
+            <div class="arabic small">
+              إذا كان الجو جميلًا، سنذهب إلى الحديقة.<br />
+              (If the weather is nice, we will go to the park.)
+            </div>
+          </div>
+
+          <div class="rule-card law-card">
+            <h3>لو (Hypothetical / Unreal)</h3>
+            <p>
+              Use <strong>لو</strong> for an imaginary, impossible, or highly unlikely condition. 
+              It is like saying "If I were..." or "If we had..."
+            </p>
+
+            <div class="formula">لو + فعل ماضٍ، لـ + فعل ماضٍ / لَـ + مضارع</div>
+
+            <div class="arabic small">
+              لو كان عندي وقت أكثر، لسافرتُ إلى مصر.<br />
+              (If I had more time, I would have traveled to Egypt.)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="badge">2</div>
+        <div>
+          <h2>Step 1: Warm-up Practice</h2>
+          <p>Read the second half of each sentence. Decide if the outcome is <em>possible/real</em> or <em>imaginary/unreal</em>, then select the correct word.</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="question-list">
+          <div class="question">
+            <span class="arabic">________ كان الجو جميلًا غدًا، سنذهب إلى المتحف.</span>
+            <select>
+              <option value="">Choose based on context...</option>
+              <option>إذا (Real - "we will go")</option>
+              <option>لو (Unreal)</option>
+            </select>
+          </div>
+
+          <div class="question">
+            <span class="arabic">________ كنتُ غنيًّا جدًا، لسافرتُ حول العالم.</span>
+            <select>
+              <option value="">Choose based on context...</option>
+              <option>إذا (Real)</option>
+              <option>لو (Unreal - "I would travel")</option>
+            </select>
+          </div>
+
+          <div class="question">
+            <span class="arabic">________ تأخر الباص، سنتصل بالأستاذ.</span>
+            <select>
+              <option value="">Choose based on context...</option>
+              <option>إذا (Real - "we will call")</option>
+              <option>لو (Unreal)</option>
+            </select>
+          </div>
+
+          <div class="question">
+            <span class="arabic">________ كنتُ أتكلم العربية بطلاقة، لتحدثتُ مع كل الناس في السوق.</span>
+            <select>
+              <option value="">Choose based on context...</option>
+              <option>إذا (Real)</option>
+              <option>لو (Unreal - "I would speak")</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="badge">3</div>
+        <div>
+          <h2>Step 2: Review the Trip Options</h2>
+          <p>Your group is the planning committee. Read your four options carefully. You will use these details to answer the questions in the next sections.</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="scenario-grid">
+          <div class="scenario-card">
+            <div class="scenario-title arabic center">المتحف</div>
+            <div class="scenario-body">
+              <div class="stat"><span>Cost</span><b>$8</b></div>
+              <div class="stat"><span>Distance</span><b>15 min</b></div>
+              <div class="stat"><span>Weather</span><b>Any weather</b></div>
+              <div class="stat"><span>Arabic use</span><b>Medium</b></div>
+              <div class="note">Good for culture, history, and quiet group discussion.</div>
+            </div>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-title arabic center">مطعم عربي</div>
+            <div class="scenario-body">
+              <div class="stat"><span>Cost</span><b>$18</b></div>
+              <div class="stat"><span>Distance</span><b>10 min</b></div>
+              <div class="stat"><span>Weather</span><b>Any weather</b></div>
+              <div class="stat"><span>Arabic use</span><b>High</b></div>
+              <div class="note">Students can order food and speak with the staff in Arabic.</div>
+            </div>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-title arabic center">الحديقة</div>
+            <div class="scenario-body">
+              <div class="stat"><span>Cost</span><b>Free</b></div>
+              <div class="stat"><span>Distance</span><b>20 min</b></div>
+              <div class="stat"><span>Weather</span><b>Needs good weather</b></div>
+              <div class="stat"><span>Arabic use</span><b>Medium</b></div>
+              <div class="note">Good for games, conversation, and group speaking activities.</div>
+            </div>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-title arabic center">فيلم عربي</div>
+            <div class="scenario-body">
+              <div class="stat"><span>Cost</span><b>$5</b></div>
+              <div class="stat"><span>Distance</span><b>On campus</b></div>
+              <div class="stat"><span>Weather</span><b>Any weather</b></div>
+              <div class="stat"><span>Arabic use</span><b>Listening</b></div>
+              <div class="note">Good for listening practice, but students speak less during the film.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="badge">4</div>
+        <div>
+          <h2>Step 3: Real Conditions (إذا)</h2>
+          <p>Imagine your group is discussing the realities of the trip. Use the options above to complete these sentences with <em>logical, possible</em> results.</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="word-bank">
+          <div class="word-bank-title">Helpful Verbs (Future Tense for Real Actions)</div>
+          <span class="chip">سنذهب<span class="chip-en">we will go</span></span>
+          <span class="chip">سنختار<span class="chip-en">we will choose</span></span>
+          <span class="chip">سنتصل<span class="chip-en">we will call</span></span>
+          <span class="chip">سنأكل<span class="chip-en">we will eat</span></span>
+          <span class="chip">سنتكلم<span class="chip-en">we will speak</span></span>
+          <span class="chip">سنشاهد<span class="chip-en">we will watch</span></span>
+        </div>
+
+        <div class="question-list">
+          <div class="question">
+            <span class="arabic">إذا كان الجو جميلًا ومُشمسًا، ______________________________.</span>
+            <input type="text" placeholder="Example: سنذهب إلى الحديقة (we will go to the park)" />
+          </div>
+
+          <div class="question">
+            <span class="arabic">إذا كان الجو ممطرًا، ______________________________.</span>
+            <input type="text" placeholder="Write a logical outcome..." />
+          </div>
+
+          <div class="question">
+            <span class="arabic">إذا أراد الطلاب أن يتكلموا العربية كثيرًا، ______________________________.</span>
+            <input type="text" placeholder="Write a logical outcome..." />
+          </div>
+
+          <div class="question">
+            <span class="arabic">إذا كان بعض الطلاب لا يملكون مالًا كثيرًا، ______________________________.</span>
+            <input type="text" placeholder="Write a logical outcome..." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="badge">5</div>
+        <div>
+          <h2>Step 4: Hypothetical Conditions (لو)</h2>
+          <p>Now use your imagination. Complete these sentences with <em>unlikely or fantasy</em> results. Notice how the verbs change!</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="word-bank">
+          <div class="word-bank-title">Helpful Verbs (Past Tense + لـ for Hypothetical Actions)</div>
+          <span class="chip">لذهبنا<span class="chip-en">we would have gone</span></span>
+          <span class="chip">لاخترنا<span class="chip-en">we would have chosen</span></span>
+          <span class="chip">لسافرنا<span class="chip-en">we would have traveled</span></span>
+          <span class="chip">لتكلمنا<span class="chip-en">we would have spoken</span></span>
+          <span class="chip">لشاهدنا<span class="chip-en">we would have watched</span></span>
+          <span class="chip">لدفعنا<span class="chip-en">we would have paid</span></span>
+        </div>
+
+        <div class="question-list">
+          <div class="question">
+            <span class="arabic">لو كان عندنا مال كثير جدًا، ______________________________.</span>
+            <input type="text" placeholder="Example: لذهبنا إلى المطعم كل يوم (We would go to the restaurant every day)" />
+          </div>
+
+          <div class="question">
+            <span class="arabic">لو كان عندنا يوم كامل (ليس فقط ساعتين)، ______________________________.</span>
+            <input type="text" placeholder="Write a hypothetical outcome..." />
+          </div>
+
+          <div class="question">
+            <span class="arabic">لو كنتُ مدير الجامعة، ______________________________.</span>
+            <input type="text" placeholder="Write a hypothetical outcome..." />
+          </div>
+
+          <div class="question">
+            <span class="arabic">لو كان المطعم مجانيًا للطلاب، ______________________________.</span>
+            <input type="text" placeholder="Write a hypothetical outcome..." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="badge">6</div>
+        <div>
+          <h2>Step 5: Solve the Problems</h2>
+          <p>Read each problem. How would you handle it realistically (إذا)? What would you do in a perfect, hypothetical world (لو)? Write two solutions per problem.</p>
+        </div>
+      </div>
+
+      <div class="content">
+        
+        <div class="example-box">
+          <h4>Example / مثال</h4>
+          <p><strong>المشكلة:</strong> الوقت قصير جدًا. (The time is very short.)</p>
+          <p><strong>Real Plan (إذا):</strong> إذا كان الوقت قصيرًا، سنشاهد فيلمًا في الجامعة. <br><em>(If the time is short, we will watch a movie on campus.)</em></p>
+          <p><strong>Dream Plan (لو):</strong> لو كان عندنا وقت طويل، لذهبنا إلى الحديقة ثم المطعم. <br><em>(If we had a long time, we would go to the park then the restaurant.)</em></p>
+        </div>
+
+        <div class="comparison-grid">
+          <div class="question">
+            <span class="arabic">
+              المشكلة: الجو قد يكون ممطرًا يوم الرحلة.
+              <br><small style="color: #666; font-size: 0.9rem; font-family: sans-serif">(Problem: The weather might be rainy.)</small>
+            </span>
+            <input type="text" placeholder="الخطة الواقعية (إذا)..." />
+            <input type="text" placeholder="الخطة الخيالية (لو)..." />
+          </div>
+
+          <div class="question">
+            <span class="arabic">
+              المشكلة: بعض الطلاب لا يريدون دفع أكثر من ١٠ دولارات.
+              <br><small style="color: #666; font-size: 0.9rem; font-family: sans-serif">(Problem: Some students don't want to pay more than $10.)</small>
+            </span>
+            <input type="text" placeholder="الخطة الواقعية (إذا)..." />
+            <input type="text" placeholder="الخطة الخيالية (لو)..." />
+          </div>
+
+          <div class="question">
+            <span class="arabic">
+              المشكلة: الطلاب يريدون ممارسة الكلام بالعربية، وليس الاستماع فقط.
+              <br><small style="color: #666; font-size: 0.9rem; font-family: sans-serif">(Problem: Students want to practice speaking, not just listening.)</small>
+            </span>
+            <input type="text" placeholder="الخطة الواقعية (إذا)..." />
+            <input type="text" placeholder="الخطة الخيالية (لو)..." />
+          </div>
+
+          <div class="question">
+            <span class="arabic">
+              المشكلة: بعض الطلاب لا يحبون المشي مسافات طويلة.
+              <br><small style="color: #666; font-size: 0.9rem; font-family: sans-serif">(Problem: Some students don't like walking long distances.)</small>
+            </span>
+            <input type="text" placeholder="الخطة الواقعية (إذا)..." />
+            <input type="text" placeholder="الخطة الخيالية (لو)..." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="badge">7</div>
+        <div>
+          <h2>Step 6: Group Decision & Pitch</h2>
+          <p>Discuss with your group and choose your final trip. Fill out the template to build your argument, then write your final paragraph.</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="decision-box">
+          <div class="template-line">
+            <label>١. اختيارنا (Our Choice): نحن نختارُ ______________________.</label>
+            <input type="text" />
+          </div>
+
+          <div class="template-line">
+            <label>٢. سبب واقعي (Real Reason): إذا ذهبنا إلى هناك، فسوف ______________________.</label>
+            <input type="text" />
+          </div>
+
+          <div class="template-line">
+            <label>٣. حل لمشكلة (Problem Solver): إذا حدثت مشكلة (مثل...)، سنـ ______________________.</label>
+            <input type="text" />
+          </div>
+
+          <div class="template-line">
+            <label>٤. بديل خيالي (Hypothetical Alternative): لو كان عندنا وقت/مال أكثر، لـ ______________________.</label>
+            <input type="text" />
+          </div>
+
+          <div class="template-line">
+            <label>٥. الخلاصة (Conclusion): لذلك، نعتقد أن هذه الخطة ______________________.</label>
+            <input type="text" />
+          </div>
+        </div>
+
+        <h3>Write your final group presentation</h3>
+        <p style="font-size: 0.9rem; color: var(--muted); margin-top: 0;">Combine your sentences from above into a cohesive paragraph to read to the class.</p>
+        <textarea
+          class="arabic"
+          placeholder="نحن نختار..."
+        ></textarea>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="badge">8</div>
+        <div>
+          <h2>Step 7: Class Presentations</h2>
+          <p>Assign one spokesperson to read your paragraph. While other groups present, listen carefully and take notes in the table.</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <table>
+          <thead>
+            <tr>
+              <th>Group</th>
+              <th>Chosen plan</th>
+              <th>What is their "إذا" reason?</th>
+              <th>What is their "لو" alternative?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Group 1</td>
+              <td><input type="text" /></td>
+              <td><input type="text" /></td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Group 2</td>
+              <td><input type="text" /></td>
+              <td><input type="text" /></td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Group 3</td>
+              <td><input type="text" /></td>
+              <td><input type="text" /></td>
+              <td><input type="text" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="print-bar">
+      <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </main>
+</body>
+</html>
