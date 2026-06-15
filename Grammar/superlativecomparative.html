@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arabic Comparative & Superlative Studio | اسم التفضيل</title>
+  <!-- Tailwind CSS for modern layout -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter for UI, Amiri for elegant Arabic script -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .font-arabic {
+      font-family: 'Amiri', serif;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .tab-content {
+      transition: all 0.3s ease-in-out;
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      .print-layout {
+        display: block !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: white !important;
+        color: black !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-[#1E293B] min-h-screen flex flex-col antialiased">
+
+  <header class="no-print bg-gradient-to-r from-[#1E293B] via-[#0F172A] to-[#0D9488] text-white py-8 px-4 shadow-md relative overflow-hidden">
+    <div class="absolute -right-10 -top-10 text-[180px] font-bold opacity-5 font-arabic select-none pointer-events-none">أفعل</div>
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+      <div>
+        <span class="bg-[#E0F2FE] text-[#0369A1] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Arabic Grammar Studio</span>
+        <h1 class="text-3xl md:text-5xl font-extrabold mt-2 tracking-tight">Comparative & Superlative</h1>
+        <div class="font-arabic text-4xl md:text-5xl text-[#F59E0B] mt-2 font-bold" dir="rtl">اسم التفضيل</div>
+        <p class="text-sm md:text-base mt-2 text-[#E2E8F0] max-w-xl">
+          Apply grammatical templates, analyze raw statistics, and synthesize comparative justifications. No automated handouts—your brain does the heavy lifting!
+        </p>
+      </div>
+      
+      <!-- Gamified Score Widget -->
+      <div class="bg-black/45 backdrop-blur-md rounded-2xl p-4 border border-white/10 flex flex-col items-center justify-center min-w-[160px]">
+        <div class="text-[#F59E0B] text-xs font-bold uppercase tracking-widest">Mastery Level</div>
+        <div class="text-3xl font-black mt-1 text-white" id="pointsDisplay">0 / 100</div>
+        <div class="w-full bg-white/20 h-2 rounded-full mt-2 overflow-hidden">
+          <div id="pointsBar" class="bg-gradient-to-r from-teal-400 to-emerald-300 h-full w-0 transition-all duration-500"></div>
+        </div>
+        <div class="text-[10px] text-teal-200 mt-1 font-medium" id="achievementBadge">Novice (مبتدئ)</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="no-print bg-[#0F172A] border-b border-slate-800 sticky top-0 z-50 shadow-sm text-slate-300">
+    <div class="max-w-6xl mx-auto px-4 flex items-center justify-between overflow-x-auto no-scrollbar gap-2">
+      <div class="flex space-x-1 py-2 min-w-max">
+        <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 bg-[#0D9488] text-white">
+          <i class="fa-solid fa-gauge mr-1.5"></i> Dashboard
+        </button>
+        <button onclick="switchTab('tab-vocabulary')" id="btn-tab-vocabulary" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-800 transition-all duration-200">
+          <i class="fa-solid fa-list-check mr-1.5"></i> 1. Vocabulary
+        </button>
+        <button onclick="switchTab('tab-grammar')" id="btn-tab-grammar" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-800 transition-all duration-200">
+          <i class="fa-solid fa-book-open mr-1.5"></i> 2. Rules Reminder
+        </button>
+        <button onclick="switchTab('tab-comparator')" id="btn-tab-comparator" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-800 transition-all duration-200">
+          <i class="fa-solid fa-users-viewfinder mr-1.5"></i> 3. Analytics Comparator
+        </button>
+        <button onclick="switchTab('tab-practice')" id="btn-tab-practice" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-800 transition-all duration-200">
+          <i class="fa-solid fa-pen-fancy mr-1.5"></i> 4. Practice Suite
+        </button>
+        <button onclick="switchTab('tab-decision')" id="btn-tab-decision" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-800 transition-all duration-200">
+          <i class="fa-solid fa-gavel mr-1.5"></i> 5. Decision Assembly
+        </button>
+      </div>
+
+      <div class="flex items-center space-x-2 border-l border-slate-800 pl-3 py-2 min-w-max">
+        <button onclick="toggleTeacherMode()" id="teacherToggleBtn" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold px-3 py-2 rounded-xl transition-all">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>Teacher View: <b id="teacherModeState" class="text-[#F59E0B]">LOCKED</b></span>
+        </button>
+        <button onclick="toggleKeyboard()" class="bg-teal-900/45 hover:bg-teal-900 text-teal-300 p-2 rounded-xl text-xs font-bold transition-all" title="Toggle Arabic Virtual Keyboard">
+          <i class="fa-solid fa-keyboard text-sm"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Keyboard Anchor Container -->
+  <div id="keyboardContainer" class="no-print hidden fixed bottom-4 right-4 z-[999] bg-[#1E293B] p-3 rounded-2xl shadow-2xl border border-slate-700 w-96 max-w-[calc(100vw-32px)]">
+    <div class="flex justify-between items-center mb-2 border-b pb-1.5 border-slate-700">
+      <span class="text-xs font-bold text-teal-400"><i class="fa-solid fa-keyboard mr-1.5"></i>Arabic Virtual Keyboard</span>
+      <button onclick="toggleKeyboard()" class="text-slate-400 hover:text-red-400"><i class="fa-solid fa-times"></i></button>
+    </div>
+    <!-- Virtual keys generated via script -->
+    <div class="grid grid-cols-10 gap-1 text-center font-arabic select-none text-sm" id="virtualKeys"></div>
+    <div class="text-[10px] text-slate-400 mt-2 italic text-center">Place your cursor inside an input box, then tap these keys to insert text.</div>
+  </div>
+
+  <main class="flex-grow max-w-6xl w-full mx-auto p-4 md:p-6 print-layout">
+    
+    <!-- DASHBOARD VIEW -->
+    <div id="tab-dashboard" class="tab-pane block space-y-6">
+      <div class="bg-white rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm relative overflow-hidden">
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[#1E293B] flex items-center gap-3">
+          <i class="fa-solid fa-compass text-teal-600"></i> Mission Objectives & Roadmap
+        </h2>
+        <p class="text-slate-600 mt-2 max-w-3xl">
+          Welcome to the Arabic Comparative Analysis Studio. Your mission is to serve as the Academic Evaluation Committee. Follow the numbered sequence above: master the template structures, use raw analytics to evaluate candidate parameters, and write a persuasive formal selection paper.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-5 rounded-2xl border border-slate-200">
+            <div class="w-10 h-10 bg-teal-100 text-teal-700 rounded-xl flex items-center justify-center mb-3">
+              <i class="fa-solid fa-flask"></i>
+            </div>
+            <h3 class="font-bold text-lg text-slate-800">1. Apply the Template</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Convert raw three-letter Arabic roots into the comparative/superlative <span class="font-arabic font-bold text-teal-700">أَفْعَل</span> template. Focus on phonological rules and ending changes.
+            </p>
+          </div>
+
+          <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-5 rounded-2xl border border-slate-200">
+            <div class="w-10 h-10 bg-indigo-100 text-indigo-700 rounded-xl flex items-center justify-center mb-3">
+              <i class="fa-solid fa-chart-column"></i>
+            </div>
+            <h3 class="font-bold text-lg text-slate-800">2. Interrogate Analytics</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Load and compare candidate profiles side-by-side. Inspect relative deltas of age, grades, budget constraints, and distance variables.
+            </p>
+          </div>
+
+          <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-5 rounded-2xl border border-slate-200">
+            <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center mb-3">
+              <i class="fa-solid fa-file-signature"></i>
+            </div>
+            <h3 class="font-bold text-lg text-slate-800">3. Formulate Arguments</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Compile your formal committee recommendation document. Use comparative constraints to defend your chosen candidate to department faculty.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div class="text-sm text-slate-500">
+            <i class="fa-solid fa-circle-nodes mr-1 text-teal-600"></i> No pre-filled solutions exist. Students must deduce and type every grammatical form.
+          </div>
+          <button onclick="switchTab('tab-vocabulary')" class="bg-teal-700 hover:bg-teal-800 text-white font-bold px-6 py-3 rounded-2xl shadow-sm transition-all flex items-center gap-2 text-sm">
+            Step 1: Start Vocabulary Construction <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VOCABULARY VIEW -->
+    <div id="tab-vocabulary" class="tab-pane hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4 mb-4">
+          <span class="bg-teal-700 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">Construct comparative/superlative templates (اسم التفضيل)</h2>
+            <p class="text-xs text-slate-500">Determine the correct grammatical template based on the provided three-letter roots.</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/60 mb-4 text-xs text-slate-700">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-keyboard text-teal-600"></i>
+            <span>Need typing assistance? Toggle our virtual on-screen Arabic key helper from the navbar at any time.</span>
+          </div>
+        </div>
+
+        <!-- Interactive Vocabulary Grid -->
+        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
+                <th class="p-3">English Core Concept</th>
+                <th class="p-3 text-right font-arabic">Root Letters / Adjective</th>
+                <th class="p-3 text-center">Your Constructed Formula</th>
+                <th class="p-3 text-center">Evaluation</th>
+                <th class="p-3 text-center">Clue Finder</th>
+              </tr>
+            </thead>
+            <tbody id="vocabTableBody" class="divide-y divide-slate-100">
+              <!-- JS-generated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-3 justify-between items-center">
+          <button onclick="checkAllVocab()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition">
+            <i class="fa-solid fa-rotate mr-1"></i> Verify All Draft Entries
+          </button>
+        </div>
+
+        <!-- Hidden Teacher Area -->
+        <div id="teacherVocabNote" class="teacher-note bg-teal-50 border-l-4 border-teal-600 text-teal-900 p-4 rounded-r-xl text-xs mt-6 space-y-1 hidden">
+          <strong><i class="fa-solid fa-chalkboard-user mr-1"></i> Teacher Answer Key & Grammar Notes:</strong>
+          <p class="font-arabic text-right text-base mb-2">أكبر، أصغر، أقرب، أبعد، أسهل، أصعب، أجمل، أسرع، أرخص، أغلى، أفضل/أحسن، أسوأ</p>
+          <p>Important lesson point: Remind students that weak-ending words like "غالٍ" change to Alif Maqsura (أغلى), and words like "سيئ" place the hamza on the waw carrier (أسوأ).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRAMMAR RULES VIEW -->
+    <div id="tab-grammar" class="tab-pane hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4 mb-6">
+          <span class="bg-teal-700 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">Grammar Mechanics Review</h2>
+            <p class="text-xs text-slate-500">How to form and position the comparative pattern within real-world contexts.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Pattern Card -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 relative">
+            <h3 class="text-xs font-bold text-teal-700 uppercase tracking-wider">The General Template</h3>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl text-center py-4 font-arabic text-3xl text-slate-800 font-black my-4">
+              أَفْعَل
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Regular three-letter adjectives correspond directly to this paradigm. It remains masculine singular during direct comparative tasks, regardless of gender.
+            </p>
+            <div class="font-arabic text-right space-y-1 text-sm text-slate-700 mt-4 pt-3 border-t border-slate-100">
+              <div>كَبِير (Big) ← <strong class="text-teal-700">أَكْبَر</strong></div>
+              <div>صَغِير (Small) ← <strong class="text-teal-700">أَصْغَر</strong></div>
+              <div>قَرِيب (Near) ← <strong class="text-teal-700">أَقْرَب</strong></div>
+            </div>
+          </div>
+
+          <!-- Comparative Card -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 relative">
+            <h3 class="text-xs font-bold text-teal-700 uppercase tracking-wider">Comparative Structure</h3>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl text-center py-4 font-arabic text-2xl text-slate-800 font-black my-4">
+              X أَفْعَل مِن Y
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Place the preposition <strong class="text-teal-700">مِن</strong> (than/from) directly after the adjective form to construct comparison assertions.
+            </p>
+            <div class="font-arabic text-right space-y-1 text-sm text-slate-700 mt-4 pt-3 border-t border-slate-100" dir="rtl">
+              <div>القاهرةُ <strong class="text-teal-700">أَكْبَرُ مِن</strong> بلومنجتون.</div>
+              <div class="text-[10px] text-slate-400 font-sans text-left" dir="ltr">Cairo is bigger than Bloomington.</div>
+              <div>مريم <strong class="text-teal-700">أَكْبَرُ مِن</strong> ليلى.</div>
+              <div class="text-[10px] text-slate-400 font-sans text-left" dir="ltr">Maryam is older than Laila.</div>
+            </div>
+          </div>
+
+          <!-- Superlative Card -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 relative">
+            <h3 class="text-xs font-bold text-teal-700 uppercase tracking-wider">Superlative Structure</h3>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl text-center py-4 font-arabic text-2xl text-slate-800 font-black my-4">
+              أَفْعَل + اسم مجرور
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Prefix the <strong class="text-teal-700">أَفْعَل</strong> form directly to an indefinite genitive noun to form superlative statements ("the cheapest X").
+            </p>
+            <div class="font-arabic text-right space-y-1 text-sm text-slate-700 mt-4 pt-3 border-t border-slate-100" dir="rtl">
+              <div><strong class="text-teal-700">أَفْضَلُ</strong> طالِبٍ</div>
+              <div class="text-[10px] text-slate-400 font-sans text-left" dir="ltr">The best student</div>
+              <div><strong class="text-teal-700">أَقَلُّ</strong> مَبْلَغٍ</div>
+              <div class="text-[10px] text-slate-400 font-sans text-left" dir="ltr">The least amount (of money)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARATOR TOOL VIEW -->
+    <div id="tab-comparator" class="tab-pane hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4 mb-4">
+          <span class="bg-teal-700 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">Analytical Scholarship Candidate Comparator</h2>
+            <p class="text-xs text-slate-500">Pick any two profiles to load their comparative statistics side-by-side.</p>
+          </div>
+        </div>
+
+        <p class="text-sm text-slate-600 mb-6">
+          Toggle profiles head-to-head. Our comparative analytics portal calculates the visual metrics, differences, and target root-words. <strong>Translate these graphical metrics into Arabic comparative grammar to solve your worksheets!</strong>
+        </p>
+
+        <!-- Dropdown Controls -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
+            <label for="comp1" class="text-xs font-extrabold text-slate-700 uppercase tracking-wider">Select Candidate A:</label>
+            <select id="comp1" onchange="compareCandidates()" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-sm font-bold text-slate-800 focus:outline-none focus:ring-1 focus:ring-teal-500">
+              <option value="0">ليلى (Laila)</option>
+              <option value="1" selected>سامر (Samer)</option>
+              <option value="2">ندى (Nada)</option>
+              <option value="3">يوسف (Youssef)</option>
+              <option value="4">مريم (Maryam)</option>
+            </select>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
+            <label for="comp2" class="text-xs font-extrabold text-slate-700 uppercase tracking-wider">Select Candidate B:</label>
+            <select id="comp2" onchange="compareCandidates()" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-sm font-bold text-slate-800 focus:outline-none focus:ring-1 focus:ring-teal-500">
+              <option value="0">ليلى (Laila)</option>
+              <option value="1">سامر (Samer)</option>
+              <option value="2" selected>ندى (Nada)</option>
+              <option value="3">يوسف (Youssef)</option>
+              <option value="4">مريم (Maryam)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Side by Side Comparative Portal -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          
+          <!-- Candidate A Display Panel -->
+          <div id="cardA" class="bg-white rounded-2xl border-2 border-teal-600 shadow-md overflow-hidden transition-all duration-300">
+            <!-- Dynamically Rendered -->
+          </div>
+
+          <!-- Conceptual Hint & Variable Delta Panel -->
+          <div class="bg-gradient-to-b from-slate-50 to-slate-100 p-5 rounded-2xl border border-slate-200 space-y-4">
+            <h3 class="text-xs font-extrabold text-slate-700 uppercase tracking-wider border-b border-slate-200 pb-2 text-center"><i class="fa-solid fa-compass"></i> Metrics delta</h3>
+            
+            <div class="space-y-3" id="compAnalysisOutput">
+              <!-- Dynamically populated comparison elements containing values but not full Arabic answer sentences -->
+            </div>
+            
+            <div class="text-center pt-2">
+              <span class="inline-block bg-teal-100 text-teal-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest">Deduction Guide</span>
+            </div>
+          </div>
+
+          <!-- Candidate B Display Panel -->
+          <div id="cardB" class="bg-white rounded-2xl border-2 border-slate-300 shadow-md overflow-hidden transition-all duration-300">
+            <!-- Dynamically Rendered -->
+          </div>
+        </div>
+
+        <!-- Detailed Evaluation Sheet -->
+        <div class="mt-8">
+          <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-address-book"></i> Reference Sheet: Committee Scorecard
+          </h3>
+          <div class="overflow-x-auto rounded-2xl border border-slate-200">
+            <table class="w-full text-right font-arabic border-collapse" dir="rtl">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 text-xs font-bold border-b border-slate-200">
+                  <th class="p-3 text-right">الاسم (Name)</th>
+                  <th class="p-3 text-center">العمر (Age)</th>
+                  <th class="p-3 text-center">المسافة (Distance)</th>
+                  <th class="p-3 text-center">درجة العربية (Grade)</th>
+                  <th class="p-3 text-center">المبلغ المطلوب (Budget)</th>
+                  <th class="p-3 text-right">ملاحظات (Notes)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 bg-white text-sm">
+                <tr class="hover:bg-slate-50">
+                  <td class="p-3 font-bold text-teal-800">ليلى (Laila)</td>
+                  <td class="p-3 text-center">٢٠ (20)</td>
+                  <td class="p-3 text-center">٥ كم (5 km)</td>
+                  <td class="p-3 text-center text-teal-700 font-bold">٩٢٪ (92%)</td>
+                  <td class="p-3 text-center">٢٥٠٠$</td>
+                  <td class="p-3 text-right text-slate-600 text-xs font-sans">Studies hard, but she is slightly shy.</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-3 font-bold text-teal-800">سامر (Samer)</td>
+                  <td class="p-3 text-center">٢٢ (22)</td>
+                  <td class="p-3 text-center">٢ كم (2 km)</td>
+                  <td class="p-3 text-center font-bold">٨٨٪ (88%)</td>
+                  <td class="p-3 text-center text-teal-700 font-bold">١٨٠٠$</td>
+                  <td class="p-3 text-right text-slate-600 text-xs font-sans">Speaks rapidly and enjoys student work.</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-3 font-bold text-teal-800">ندى (Nada)</td>
+                  <td class="p-3 text-center">١٩ (19)</td>
+                  <td class="p-3 text-center">٨ كم (8 km)</td>
+                  <td class="p-3 text-center text-teal-700 font-bold">٩٥٪ (95%)</td>
+                  <td class="p-3 text-center">٣٠٠٠$</td>
+                  <td class="p-3 text-right text-slate-600 text-xs font-sans">Superb grades, but traveling brings anxiety.</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-3 font-bold text-teal-800">يوسف (Youssef)</td>
+                  <td class="p-3 text-center">٢١ (21)</td>
+                  <td class="p-3 text-center">١ كم (1 km)</td>
+                  <td class="p-3 text-center text-red-600 font-bold">٨٠٪ (80%)</td>
+                  <td class="p-3 text-center text-teal-700 font-bold">١٥٠٠$</td>
+                  <td class="p-3 text-right text-slate-600 text-xs font-sans">Highly organized, but language fundamentals are weaker.</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-3 font-bold text-teal-800">مريم (Maryam)</td>
+                  <td class="p-3 text-center">٢٣ (23)</td>
+                  <td class="p-3 text-center">٤ كم (4 km)</td>
+                  <td class="p-3 text-center font-bold">٩٠٪ (90%)</td>
+                  <td class="p-3 text-center text-teal-700 font-bold">٢٢٠٠$</td>
+                  <td class="p-3 text-right text-slate-600 text-xs font-sans">Prior teaching credentials, deeply cultural.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRACTICE EXERCISES VIEW -->
+    <div id="tab-practice" class="tab-pane hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4 mb-6">
+          <span class="bg-teal-700 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">Practice Arena: Sentence Formations</h2>
+            <p class="text-xs text-slate-500">Provide the appropriate comparative template term to complete the sentences.</p>
+          </div>
+        </div>
+
+        <div class="bg-indigo-50 p-4 rounded-xl text-xs text-slate-800 border border-indigo-200 mb-6 flex flex-wrap gap-2 items-center justify-between">
+          <div class="flex items-center gap-1.5 font-bold text-indigo-900">
+            <i class="fa-solid fa-cube text-indigo-700"></i> Vocabulary Pool Reference:
+          </div>
+          <div class="flex flex-wrap gap-1.5 text-sm font-arabic" dir="rtl">
+            <span class="bg-white border px-2.5 py-0.5 rounded-full shadow-sm text-indigo-900 font-semibold">أَفْضَل</span>
+            <span class="bg-white border px-2.5 py-0.5 rounded-full shadow-sm text-indigo-900 font-semibold">أَقْرَب</span>
+            <span class="bg-white border px-2.5 py-0.5 rounded-full shadow-sm text-indigo-900 font-semibold">أَقَلّ</span>
+            <span class="bg-white border px-2.5 py-0.5 rounded-full shadow-sm text-indigo-900 font-semibold">أَعْلَى</span>
+            <span class="bg-white border px-2.5 py-0.5 rounded-full shadow-sm text-indigo-900 font-semibold">أَكْبَر</span>
+            <span class="bg-white border px-2.5 py-0.5 rounded-full shadow-sm text-indigo-900 font-semibold">أَصْعَب</span>
+            <span class="bg-white border px-2.5 py-0.5 rounded-full shadow-sm text-indigo-900 font-semibold">أَسْرَع</span>
+            <span class="bg-white border px-2.5 py-0.5 rounded-full shadow-sm text-indigo-900 font-semibold">أَرْخَص</span>
+          </div>
+        </div>
+
+        <!-- Questions Matrix -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="practiceQuestionsContainer">
+          <!-- JS dynamic generated items -->
+        </div>
+
+        <div class="mt-6 flex justify-between items-center flex-wrap gap-4">
+          <button onclick="checkAllPractice()" class="bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold px-6 py-3 rounded-xl shadow-sm transition">
+            <i class="fa-solid fa-clipboard-check mr-1"></i> Verify All Sentences
+          </button>
+        </div>
+
+        <!-- Protected Teacher view -->
+        <div id="teacherPracticeNote" class="teacher-note bg-teal-50 border-l-4 border-teal-600 text-teal-900 p-4 rounded-r-xl text-xs mt-6 space-y-1 hidden">
+          <strong><i class="fa-solid fa-chalkboard-user mr-1"></i> Teacher Answer Key Guidelines:</strong>
+          <p>Accepted raw keys (with or without diacritics):</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1 font-arabic text-base text-right" dir="rtl">
+            <li>1. أفضل / أحسن</li>
+            <li>2. أقرب</li>
+            <li>3. أقل / أصغر</li>
+            <li>4. أعلى / أكبر</li>
+            <li>5. أكبر / أسن</li>
+            <li>6. أصعب</li>
+            <li>7. أسرع</li>
+            <li>8. أرخص</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMITTEE DECISION VIEW -->
+    <div id="tab-decision" class="tab-pane hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4 mb-6">
+          <span class="bg-teal-700 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">5</span>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">Assembly: Committee Proposal Document</h2>
+            <p class="text-xs text-slate-500">Formulate and defend your final scholarship decision using comparative grammar arguments.</p>
+          </div>
+        </div>
+
+        <p class="text-sm text-slate-600 mb-4">
+          Synthesize your final comparative analysis below. <strong>You must manually enter the candidate's name and adjectives based on your metrics analysis.</strong>
+        </p>
+
+        <!-- Document Assembly Form -->
+        <div class="bg-[#F8FAFC] p-6 rounded-2xl border border-slate-200 space-y-6 font-arabic" dir="rtl">
+          <!-- Line 1 -->
+          <div class="flex flex-wrap items-center gap-2 text-base md:text-lg">
+            <span>نحن نختارُ المرشّح / المرشّحة</span>
+            <input type="text" id="decName" placeholder="[اسم المرشّح المختار]" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-center text-sm font-bold text-teal-800 w-48 focus:outline-none focus:ring-1 focus:ring-teal-500" />
+            <span>للحصول على منحة اللغة العربية الصيفية في الأردن.</span>
+          </div>
+
+          <!-- Line 2 -->
+          <div class="flex flex-wrap items-center gap-2 text-base md:text-lg">
+            <span>هو / هي</span>
+            <input type="text" id="decComp1" placeholder="[اسم تفضيل للملاءمة]" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-center text-sm font-bold text-teal-800 w-48 focus:outline-none focus:ring-1 focus:ring-teal-500" />
+            <span>من الآخرين من ناحية الخبرة والاهتمام بالثقافة.</span>
+          </div>
+
+          <!-- Line 3 -->
+          <div class="flex flex-wrap items-center gap-2 text-base md:text-lg">
+            <span>ودرجتها في اللغة العربية</span>
+            <input type="text" id="decComp2" placeholder="[اسم تفضيل للدرجة]" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-center text-sm font-bold text-teal-800 w-48 focus:outline-none focus:ring-1 focus:ring-teal-500" />
+            <span>من درجة بعض الطلاب الآخرين مثل يوسف وسامر.</span>
+          </div>
+
+          <!-- Line 4 -->
+          <div class="flex flex-wrap items-center gap-2 text-base md:text-lg">
+            <span>وهو/هي يحتاج إلى ميزانية مالية</span>
+            <input type="text" id="decComp3" placeholder="[اسم تفضيل للمبلغ]" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-center text-sm font-bold text-teal-800 w-48 focus:outline-none focus:ring-1 focus:ring-teal-500" />
+            <span>من المرشّحة ندى التي تحتاج إلى ميزانية أكبر.</span>
+          </div>
+
+          <!-- Line 5 -->
+          <div class="flex flex-wrap items-center gap-2 text-base md:text-lg">
+            <span>ونعتقد أن هذا القرار هو</span>
+            <input type="text" id="decComp4" placeholder="[اسم تفضيل للقرار]" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-center text-sm font-bold text-teal-800 w-48 focus:outline-none focus:ring-1 focus:ring-teal-500" />
+            <span>قرار للقسم لأنّه يُمثل الاختيار الأكثر توازناً.</span>
+          </div>
+        </div>
+
+        <div class="mt-6 space-y-3">
+          <label class="block text-sm font-bold text-slate-700 uppercase tracking-wider">Write Your Committee's Freeform Argument (Deduce and write in Arabic):</label>
+          <textarea id="freeformJustify" rows="5" placeholder="اكتب هنا تبرير اللجنة باللغة العربية بالتفصيل... (مثال: نختار مريم لأنها أكبر سناً ولديها خبرة أفضل...)" class="w-full bg-white border border-slate-300 rounded-2xl p-4 font-arabic text-lg text-right focus:outline-none focus:ring-2 focus:ring-teal-600 leading-loose" dir="rtl"></textarea>
+          <div class="flex justify-between items-center text-xs text-slate-500">
+            <span id="justifyCharCount">0 characters entered</span>
+            <span class="text-amber-700 font-bold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Pro Tip: Synthesize your defense using at least 5 different comparative (أَفْعَل) words.</span>
+          </div>
+        </div>
+
+        <!-- Output Preview Block -->
+        <div id="decisionReportContainer" class="mt-8 bg-gradient-to-br from-slate-900 to-[#1E293B] border-2 border-double border-teal-500 p-6 rounded-3xl relative hidden text-slate-100">
+          <div class="absolute top-4 right-4 text-teal-500/20 text-3xl"><i class="fa-solid fa-stamp"></i></div>
+          <div class="text-center font-arabic space-y-4">
+            <h3 class="text-teal-400 text-xl font-bold border-b border-slate-700 pb-2">قرار لجنة المنح الدراسية الرسمي</h3>
+            <p class="text-base leading-relaxed max-w-2xl mx-auto" id="reportOutputText">
+              <!-- JS-generated outcome -->
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-3 justify-between items-center">
+          <button onclick="generateReport()" class="bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold px-6 py-3 rounded-xl shadow-md transition">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Assemble and Lock Document
+          </button>
+          
+          <button onclick="copyDecisionReport()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition">
+            <i class="fa-solid fa-copy mr-1"></i> Copy Formatted Report
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="no-print bg-[#0F172A] text-slate-400 py-6 px-4 border-t border-slate-800">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-xs text-center md:text-left">
+        <span class="font-bold text-teal-400">&copy; 2026 Academic Arabic Workspace.</span> All analytical decisions must be compiled manually. No prefilled answer grids.
+      </div>
+      <div>
+        <button onclick="window.print()" class="bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-md transition-all flex items-center gap-2">
+          <i class="fa-solid fa-file-pdf"></i> Generate Evaluation PDF / Print
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Audio engine using Web Audio API for rewarding correct answers without external assets
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(isCorrect) {
+      try {
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (isCorrect) {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, audioCtx.currentTime); // A4
+          osc.frequency.setValueAtTime(554.37, audioCtx.currentTime + 0.1); // C#5
+          osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.2); // E5
+          gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.35);
+        } else {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(180, audioCtx.currentTime); // Low buzz
+          osc.frequency.setValueAtTime(120, audioCtx.currentTime + 0.12);
+          gainNode.gain.setValueAtTime(0.18, audioCtx.currentTime);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.3);
+        }
+      } catch (err) {
+        console.log("Audio contexts couldn't start due to browser interactions constraints.");
+      }
+    }
+
+    // Vocabulary data with hints that assist conceptually but DO NOT provide the answers
+    const vocabularyData = [
+      { english: "big / bigger / biggest", root: "ك ب ر", correct: ["أكبر", "أَكْبَر"], userAns: "", status: "neutral", clue: "Formula: Alif + root letters. Standard root words: K-B-R." },
+      { english: "small / smaller / smallest", root: "ص غ ر", correct: ["أصغر", "أَصْغَر"], userAns: "", status: "neutral", clue: "Starts with Alif (أ), then root letters S-Gh-R (ص-غ-ر)." },
+      { english: "near / nearer / nearest", root: "ق ر ب", correct: ["أقرب", "أَقْرَب"], userAns: "", status: "neutral", clue: "Prefix with Alif (أ), insert root letters Q-R-B (ق-ر-ب)." },
+      { english: "far / farther / farthest", root: "ب ع د", correct: ["أبعد", "أَبْعَد"], userAns: "", status: "neutral", clue: "Prefix with Alif (أ), insert root letters B-A-D (ب-ع-د)." },
+      { english: "easy / easier / easiest", root: "س ه ل", correct: ["أسهل", "أَسْهَل"], userAns: "", status: "neutral", clue: "Prefix with Alif (أ), insert root letters S-H-L (س-ه-ل)." },
+      { english: "difficult / more difficult / most difficult", root: "ص ع ب", correct: ["أصعب", "أَصْعَب"], userAns: "", status: "neutral", clue: "Opposite of 'easier' (أسهل). Begins with Alif, then S-A-B (ص-ع-ب)." },
+      { english: "beautiful / more beautiful / most beautiful", root: "ج م ل", correct: ["أجمل", "أَجْمَل"], userAns: "", status: "neutral", clue: "Translate using root J-M-L (ج-م-ل)." },
+      { english: "fast / faster / fastest", root: "س ر ع", correct: ["أسرع", "أَسْرَع"], userAns: "", status: "neutral", clue: "Like speed. Translate using root S-R-A (س-ر-ع)." },
+      { english: "cheap / cheaper / cheapest", root: "ر خ ص", correct: ["أرخص", "أَرْخَص"], userAns: "", status: "neutral", clue: "Opposite of 'expensive'. Translate using root R-Kh-S (ر-خ-ص)." },
+      { english: "expensive / more expensive / most expensive", root: "غالٍ", correct: ["أغلى", "أَغْلَى"], userAns: "", status: "neutral", clue: "The weak ending letter at the end transforms into Alif Maqsura (ى)." },
+      { english: "good / better / best", root: "جَيِّد / خَيْر", correct: ["أفضل", "أَفْضَل", "أحسن", "أَحْسَن"], userAns: "", status: "neutral", clue: "Deduce the irregular or typical form meaning better or finer (ends with L or N)." },
+      { english: "bad / worse / worst", root: "سَيِّئ", correct: ["أسوأ", "أَسْوَأ"], userAns: "", status: "neutral", clue: "Watch the ending spelling: the final Hamza sits on a Waw seat (أ)." }
+    ];
+
+    // Practice questions data containing prompts and individual hints
+    const practiceQuestions = [
+      { id: 1, text: "ليلى ________ من سامر في العربية.", hint: "better (Laila's grade is 92%, Samer's is 88%)", correct: ["أفضل", "أحسن", "أَفْضَل", "أَحْسَن"], userAns: "", status: "neutral", clue: "Try the comparative form of good/excellent." },
+      { id: 2, text: "سامر ________ من ندى إلى الجامعة.", hint: "nearer (Samer lives 2 km away, Nada lives 8 km away)", correct: ["أقرب", "أَقْرَب"], userAns: "", status: "neutral", clue: "Evaluate the distance delta and use the root Q-R-B." },
+      { id: 3, text: "يوسف يحتاج إلى مبلغ ________ من مريم.", hint: "smaller / less (Youssef needs $1500, Maryam needs $2200)", correct: ["أقل", "أصغر", "أَقَلّ", "أَصْغَر"], userAns: "", status: "neutral", clue: "Use the comparative term for 'less' (root Q-L-L)." },
+      { id: 4, text: "ندى ________ من ليلى في درجة العربية.", hint: "higher (Nada got 95%, Laila got 92%)", correct: ["أعلى", "أكبر", "أَعْلَى", "أَكْبَر"], userAns: "", status: "neutral", clue: "Evaluate grades delta. Think of root A-L-W (high)." },
+      { id: 5, text: "مريم ________ من ليلى.", hint: "older (Maryam is 23, Laila is 20)", correct: ["أكبر", "أَكْبَر", "أسن", "أَسَنّ"], userAns: "", status: "neutral", clue: "Compare their ages. Think of the root K-B-R." },
+      { id: 6, text: "السفر إلى الأردن ربما يكون ________ لندى من الآخرين.", hint: "more difficult (Nada suffers from travel anxiety)", correct: ["أصعب", "أَصْعَب"], userAns: "", status: "neutral", clue: "Reflects the travel note of Nada. Think of root S-A-B." },
+      { id: 7, text: "سامر ________ من يوسف في الكلام.", hint: "faster (Samer speaks rapidly, Youssef is organized)", correct: ["أسرع", "أَسْرَع"], userAns: "", status: "neutral", clue: "Look at Samer's fast speech profile note. Root S-R-A." },
+      { id: 8, text: "منحة يوسف ________ من منحة ندى.", hint: "cheaper (Youssef needs $1500, Nada needs $3000)", correct: ["أرخص", "أَرْخَص"], userAns: "", status: "neutral", clue: "Check the budget delta. Use the template for low price." }
+    ];
+
+    const candidates = [
+      { name: "ليلى", nameEn: "Laila", age: 20, distance: 5, grade: 92, budget: 2500, notes: "Studies hard, but she is slightly shy.", gender: "female" },
+      { name: "سامر", nameEn: "Samer", age: 22, distance: 2, grade: 88, budget: 1800, notes: "Speaks rapidly and enjoys student work.", gender: "male" },
+      { name: "ندى", nameEn: "Nada", age: 19, distance: 8, grade: 95, budget: 3000, notes: "Superb grades, but traveling brings anxiety.", gender: "female" },
+      { name: "يوسف", nameEn: "Youssef", age: 21, distance: 1, grade: 80, budget: 1500, notes: "Highly organized, but language fundamentals are weaker.", gender: "male" },
+      { name: "مريم", nameEn: "Maryam", age: 23, distance: 4, grade: 90, budget: 2200, notes: "Prior teaching credentials, deeply cultural.", gender: "female" }
+    ];
+
+    let teacherMode = false;
+    let activeInputId = null;
+    let points = 0;
+    const completedItems = new Set();
+
+    const arabicKeys = ['ض', 'ص', 'ث', 'ق', 'ف', 'غ', 'ع', 'ه', 'خ', 'ح', 'ج', 'د', 'ش', 'س', 'ي', 'ب', 'ل', 'ا', 'ت', 'ن', 'م', 'ك', 'ط', 'ئ', 'ء', 'ؤ', 'ر', 'لا', 'ى', 'ة', 'و', 'ز', 'ظ', 'أ', 'إ', 'آ', 'ّ', 'َ', 'ُ', 'ِ'];
+    
+    // Initialize Arabic onscreen keyboard keys
+    function initKeyboard() {
+      const parent = document.getElementById('virtualKeys');
+      parent.innerHTML = '';
+      arabicKeys.forEach(key => {
+        const btn = document.createElement('button');
+        btn.className = "bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 py-2 rounded-lg text-sm font-bold transition active:scale-95 cursor-pointer";
+        btn.textContent = key;
+        btn.onmousedown = (e) => {
+          e.preventDefault();
+          insertAtActiveInput(key);
+        };
+        parent.appendChild(btn);
+      });
+    }
+
+    function toggleKeyboard() {
+      const container = document.getElementById('keyboardContainer');
+      container.classList.toggle('hidden');
+    }
+
+    function insertAtActiveInput(char) {
+      if (!activeInputId) return;
+      const el = document.getElementById(activeInputId);
+      if (el) {
+        const start = el.selectionStart;
+        const end = el.selectionEnd;
+        const text = el.value;
+        el.value = text.substring(0, start) + char + text.substring(end);
+        el.focus();
+        el.setSelectionRange(start + char.length, start + char.length);
+        el.dispatchEvent(new Event('input'));
+      }
+    }
+
+    function attachInputTrackers() {
+      document.querySelectorAll('input[type="text"], textarea').forEach(input => {
+        input.addEventListener('focus', () => {
+          activeInputId = input.id;
+        });
+      });
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.add('hidden');
+        pane.classList.remove('block');
+      });
+      document.getElementById(tabId).classList.add('block');
+      document.getElementById(tabId).classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = "tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-800 transition-all duration-200";
+      });
+      document.getElementById(`btn-${tabId}`).className = "tab-btn px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 bg-[#0D9488] text-white";
+    }
+
+    // Protected Teacher Mode prompt with passcode to prevent students from toggling easily
+    function toggleTeacherMode() {
+      if (!teacherMode) {
+        const password = prompt("Enter teacher passcode to show answers and analytical solutions:\n(Hint: teach)");
+        if (password === 'teach' || password === 'teacher') {
+          teacherMode = true;
+          document.getElementById('teacherModeState').textContent = "ON";
+          document.getElementById('teacherModeState').className = "text-emerald-400";
+          document.getElementById('teacherVocabNote').classList.remove('hidden');
+          document.getElementById('teacherPracticeNote').classList.remove('hidden');
+        } else {
+          alert("Incorrect passcode. Answers remain locked.");
+        }
+      } else {
+        teacherMode = false;
+        document.getElementById('teacherModeState').textContent = "LOCKED";
+        document.getElementById('teacherModeState').className = "text-[#F59E0B]";
+        document.getElementById('teacherVocabNote').classList.add('hidden');
+        document.getElementById('teacherPracticeNote').classList.add('hidden');
+      }
+    }
+
+    // Custom hints helper modal to keep students engaged
+    function showClue(clueText) {
+      alert(`💡 Hint: ${clueText}`);
+    }
+
+    function renderVocabularyTable() {
+      const container = document.getElementById('vocabTableBody');
+      container.innerHTML = '';
+      
+      vocabularyData.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition";
+        
+        let borderClass = "border-slate-300";
+        let iconMarkup = `<i class="fa-solid fa-hourglass-start text-slate-400"></i>`;
+        
+        if (item.status === 'correct') {
+          borderClass = "border-emerald-500 bg-emerald-50/20";
+          iconMarkup = `<i class="fa-solid fa-circle-check text-emerald-600"></i>`;
+        } else if (item.status === 'incorrect') {
+          borderClass = "border-rose-400 bg-rose-50/20";
+          iconMarkup = `<i class="fa-solid fa-circle-xmark text-rose-600"></i>`;
+        }
+
+        tr.innerHTML = `
+          <td class="p-3 text-xs md:text-sm text-slate-700 font-semibold">${item.english}</td>
+          <td class="p-3 text-right font-arabic font-bold text-lg text-slate-800" dir="rtl">${item.root}</td>
+          <td class="p-3">
+            <input 
+              type="text" 
+              id="vocab-input-${index}" 
+              value="${item.userAns}" 
+              placeholder="Deduce template..."
+              class="w-full bg-white border-2 ${borderClass} rounded-xl px-3 py-1.5 text-center font-arabic text-base focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
+              oninput="saveVocabInput(${index}, this.value)"
+            />
+          </td>
+          <td class="p-3 text-center text-sm" id="vocab-status-${index}">
+            ${iconMarkup}
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="showClue(\`${item.clue}\`)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200 transition">
+              <i class="fa-solid fa-lightbulb"></i> Clue
+            </button>
+          </td>
+        `;
+        container.appendChild(tr);
+      });
+      attachInputTrackers();
+    }
+
+    function saveVocabInput(index, val) {
+      vocabularyData[index].userAns = val;
+    }
+
+    function checkIndividualVocab(index) {
+      const item = vocabularyData[index];
+      const normalizedInput = item.userAns.trim().replace(/\s+/g, '');
+      const isCorrect = item.correct.includes(normalizedInput);
+      
+      const inputEl = document.getElementById(`vocab-input-${index}`);
+      const statusEl = document.getElementById(`vocab-status-${index}`);
+      
+      if (normalizedInput === "") return; // Skip checking if empty
+      
+      if (isCorrect) {
+        item.status = "correct";
+        inputEl.className = "w-full bg-white border-2 border-emerald-500 bg-emerald-50/10 rounded-xl px-3 py-1.5 text-center font-arabic text-base focus:outline-none transition";
+        statusEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>`;
+        trackPoints(`vocab-${index}`, 4);
+      } else {
+        item.status = "incorrect";
+        inputEl.className = "w-full bg-white border-2 border-rose-400 bg-rose-50/10 rounded-xl px-3 py-1.5 text-center font-arabic text-base focus:outline-none transition";
+        statusEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 text-lg"></i>`;
+      }
+    }
+
+    function checkAllVocab() {
+      let allPassed = true;
+      let someEntered = false;
+      vocabularyData.forEach((item, idx) => {
+        if (item.userAns.trim() !== "") {
+          someEntered = true;
+          checkIndividualVocab(idx);
+          if (item.status !== "correct") allPassed = false;
+        } else {
+          allPassed = false;
+        }
+      });
+      if (someEntered) {
+        playSound(allPassed);
+      }
+    }
+
+    function renderCandidateCards() {
+      const p1Idx = parseInt(document.getElementById('comp1').value);
+      const p2Idx = parseInt(document.getElementById('comp2').value);
+
+      const candidateA = candidates[p1Idx];
+      const candidateB = candidates[p2Idx];
+
+      document.getElementById('cardA').innerHTML = generateCandidateCardHTML(candidateA, "A");
+      document.getElementById('cardB').innerHTML = generateCandidateCardHTML(candidateB, "B");
+    }
+
+    function generateCandidateCardHTML(candidate, label) {
+      const avatarUrl = candidate.gender === 'female' 
+        ? "https://placehold.co/150x150/0F172A/0D9488?text=👩" 
+        : "https://placehold.co/150x150/0F172A/1E3A8A?text=👨";
+
+      return `
+        <div class="bg-slate-900 text-white p-4 flex items-center justify-between">
+          <div class="text-xs font-bold bg-white/10 px-2.5 py-0.5 rounded-full uppercase tracking-wider">Candidate ${label}</div>
+          <h4 class="font-arabic text-2xl font-bold text-teal-400" dir="rtl">${candidate.name}</h4>
+        </div>
+        <div class="p-5 space-y-3">
+          <div class="flex justify-center mb-3">
+            <img src="${avatarUrl}" class="w-16 h-16 rounded-full border-2 border-teal-500" alt="avatar" />
+          </div>
+          <div class="flex justify-between border-b pb-1 text-xs border-slate-100">
+            <span class="text-slate-400 font-semibold uppercase">العمر (Age)</span>
+            <span class="font-bold text-slate-800">${candidate.age} Years</span>
+          </div>
+          <div class="flex justify-between border-b pb-1 text-xs border-slate-100">
+            <span class="text-slate-400 font-semibold uppercase">المسافة (Distance)</span>
+            <span class="font-bold text-slate-800">${candidate.distance} km</span>
+          </div>
+          <div class="flex justify-between border-b pb-1 text-xs border-slate-100">
+            <span class="text-slate-400 font-semibold uppercase">درجة العربية (Language)</span>
+            <span class="font-bold text-teal-700">${candidate.grade}%</span>
+          </div>
+          <div class="flex justify-between border-b pb-1 text-xs border-slate-100">
+            <span class="text-slate-400 font-semibold uppercase">المبلغ المطلوب (Budget)</span>
+            <span class="font-bold text-slate-800">$${candidate.budget}</span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center">
+            <span class="block text-[10px] font-bold text-teal-700 uppercase tracking-wider mb-1">Context Variable</span>
+            <p class="text-xs text-slate-600 italic font-medium leading-relaxed">${candidate.notes}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Redesigned analysis comparison output: 
+    // It NO LONGER outputs the ready-to-copy Arabic answers.
+    // Instead, it gives the comparative difference values and advises which root pattern is relevant.
+    function compareCandidates() {
+      renderCandidateCards();
+
+      const p1Idx = parseInt(document.getElementById('comp1').value);
+      const p2Idx = parseInt(document.getElementById('comp2').value);
+
+      const a = candidates[p1Idx];
+      const b = candidates[p2Idx];
+
+      const parent = document.getElementById('compAnalysisOutput');
+      parent.innerHTML = '';
+
+      if (p1Idx === p2Idx) {
+        parent.innerHTML = `<p class="text-xs font-bold text-amber-800 bg-amber-50 p-3 rounded-xl">Please select two different candidates to inspect variables deltas.</p>`;
+        return;
+      }
+
+      // Generate parameters comparisons
+      const indicators = [];
+
+      // 1. Grade Compare Indicator
+      const gradeDelta = Math.abs(a.grade - b.grade);
+      if (a.grade !== b.grade) {
+        const higher = a.grade > b.grade ? a.name : b.name;
+        indicators.push({
+          title: "Language Grades comparison",
+          deltaText: `Delta: ${gradeDelta}% difference`,
+          clueText: `Deduction: ${higher} has the higher grade. Try applying the root (ع ل و) or (ج ي د) to compare them.`
+        });
+      }
+
+      // 2. Distance Compare Indicator
+      const distDelta = Math.abs(a.distance - b.distance);
+      if (a.distance !== b.distance) {
+        const farther = a.distance > b.distance ? a.name : b.name;
+        indicators.push({
+          title: "Distance Delta to Campus",
+          deltaText: `Delta: ${distDelta} km distance difference`,
+          clueText: `Deduction: ${farther} lives farther away. Try applying the root (ب ع د) or (ق ر ب) to compare.`
+        });
+      }
+
+      // 3. Budget compare
+      const budgetDelta = Math.abs(a.budget - b.budget);
+      if (a.budget !== b.budget) {
+        const cheaper = a.budget < b.budget ? a.name : b.name;
+        indicators.push({
+          title: "Required Financial Aid Delta",
+          deltaText: `Delta: $${budgetDelta} difference`,
+          clueText: `Deduction: ${cheaper} requires less aid. Try applying comparative of cheap (ر خ ص) or less (ق ل ل).`
+        });
+      }
+
+      // Render indicators
+      indicators.forEach(item => {
+        const div = document.createElement('div');
+        div.className = "bg-white p-3 rounded-xl border border-slate-200 space-y-2 shadow-sm transition hover:border-teal-300";
+        div.innerHTML = `
+          <div class="text-xs font-bold text-slate-800 flex justify-between">
+            <span>${item.title}</span>
+            <span class="text-teal-600">${item.deltaText}</span>
+          </div>
+          <p class="text-[11px] text-slate-500 leading-relaxed">${item.clueText}</p>
+        `;
+        parent.appendChild(div);
+      });
+
+      trackPoints('compare-click', 10);
+    }
+
+    function renderPracticeQuestions() {
+      const container = document.getElementById('practiceQuestionsContainer');
+      container.innerHTML = '';
+
+      practiceQuestions.forEach((q, idx) => {
+        const div = document.createElement('div');
+        
+        let borderClass = "border-slate-200";
+        let iconMarkup = `<i class="fa-solid fa-pen text-slate-400"></i>`;
+        
+        if (q.status === 'correct') {
+          borderClass = "border-emerald-500 bg-emerald-50/10";
+          iconMarkup = `<i class="fa-solid fa-circle-check text-emerald-600"></i>`;
+        } else if (q.status === 'incorrect') {
+          borderClass = "border-rose-400 bg-rose-50/10";
+          iconMarkup = `<i class="fa-solid fa-circle-xmark text-rose-600"></i>`;
+        }
+
+        div.className = `p-4 border-2 ${borderClass} rounded-2xl bg-[#FCFBF9] transition duration-200 flex flex-col justify-between space-y-3`;
+        div.innerHTML = `
+          <div class="flex items-start justify-between gap-4">
+            <span class="bg-slate-200 text-slate-700 text-xs font-black w-6 h-6 rounded-full flex items-center justify-center">${q.id}</span>
+            <div class="text-right font-arabic text-lg text-slate-800 leading-relaxed" dir="rtl">${q.text}</div>
+            <div class="status-hook text-lg">${iconMarkup}</div>
+          </div>
+          
+          <div class="flex items-center gap-3 pt-2">
+            <button onclick="showClue(\`${q.clue}\`)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-2.5 py-1 rounded-md transition border border-slate-200">
+              <i class="fa-solid fa-lightbulb"></i> Clue
+            </button>
+            <input 
+              type="text" 
+              id="practice-input-${idx}" 
+              value="${q.userAns}" 
+              placeholder="اكتب الإجابة..." 
+              class="flex-grow bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-right font-arabic text-base focus:outline-none focus:border-teal-500 transition"
+              oninput="savePracticeInput(${idx}, this.value)"
+            />
+          </div>
+        `;
+        container.appendChild(div);
+      });
+      attachInputTrackers();
+    }
+
+    function savePracticeInput(index, val) {
+      practiceQuestions[index].userAns = val;
+    }
+
+    function checkIndividualPractice(index) {
+      const q = practiceQuestions[index];
+      const normalizedInput = q.userAns.trim().replace(/\s+/g, '');
+      const isCorrect = q.correct.includes(normalizedInput);
+      
+      if (normalizedInput === "") return;
+      
+      if (isCorrect) {
+        q.status = "correct";
+        trackPoints(`practice-${q.id}`, 5);
+      } else {
+        q.status = "incorrect";
+      }
+    }
+
+    function checkAllPractice() {
+      let allCorrect = true;
+      let enteredSome = false;
+      practiceQuestions.forEach((q, idx) => {
+        if (q.userAns.trim() !== "") {
+          enteredSome = true;
+          checkIndividualPractice(idx);
+          if (q.status !== "correct") allCorrect = false;
+        } else {
+          allCorrect = false;
+        }
+      });
+      renderPracticeQuestions();
+      if (enteredSome) {
+        playSound(allCorrect);
+      }
+    }
+
+    function generateReport() {
+      const name = document.getElementById('decName').value.trim();
+      const comp1 = document.getElementById('decComp1').value.trim();
+      const comp2 = document.getElementById('decComp2').value.trim();
+      const comp3 = document.getElementById('decComp3').value.trim();
+      const comp4 = document.getElementById('decComp4').value.trim();
+      const freeform = document.getElementById('freeformJustify').value.trim();
+
+      const container = document.getElementById('decisionReportContainer');
+      const textOutput = document.getElementById('reportOutputText');
+
+      if (!name || !comp1 || !comp2 || !comp3 || !comp4) {
+        alert("Attention: All committee sentence slots must be filled in Arabic to finalize the official decision document.");
+        return;
+      }
+
+      container.classList.remove('hidden');
+      
+      textOutput.innerHTML = `
+        لقد قررت لجنة اللغة العربية اختيار الطالب/الطالبة <strong class="text-teal-400 underline font-bold">${name}</strong> للحصول على منحة البرنامج الصيفي في الأردن. 
+        بناءً على التقييم، فإن اختيارنا يعود لأن المرشّح <strong class="text-teal-400 font-bold">${comp1}</strong> من الآخرين من حيث ملاءمته العامة. 
+        درجة العربية لهذا المرشح <strong class="text-teal-400 font-bold">${comp2}</strong> من أقرانه، وهو/هي يحتاج إلى ميزانية <strong class="text-teal-400 font-bold">${comp3}</strong> من غيره. 
+        وبذلك نرى أن هذا الخيار هو <strong class="text-teal-400 font-bold">${comp4}</strong> قرار للقسم الأكاديمي.
+        <br/><br/>
+        <span class="block text-right text-xs text-slate-400 italic font-sans border-t border-slate-700 pt-3" dir="rtl">
+          <strong>ملاحظات إضافية من تقييم اللجنة:</strong><br/> ${freeform || "لا توجد ملاحظات إضافية."}
+        </span>
+      `;
+
+      trackPoints('generate-decision', 20);
+      playSound(true);
+    }
+
+    // Copy formatted report to clipboard
+    function copyDecisionReport() {
+      const textOutput = document.getElementById('reportOutputText');
+      if (!textOutput || textOutput.textContent.trim() === '') {
+        alert("Please assemble the document first using the Assemble button.");
+        return;
+      }
+      
+      const el = document.createElement('textarea');
+      el.value = textOutput.textContent.trim();
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      alert("The formatted report summary was successfully copied to your clipboard!");
+    }
+
+    function trackPoints(actionId, reward) {
+      if (!completedItems.has(actionId)) {
+        completedItems.add(actionId);
+        points += reward;
+        if (points > 100) points = 100;
+        updatePointsDisplay();
+      }
+    }
+
+    function updatePointsDisplay() {
+      const display = document.getElementById('pointsDisplay');
+      const bar = document.getElementById('pointsBar');
+      const badge = document.getElementById('achievementBadge');
+
+      display.textContent = `${points} / 100`;
+      bar.style.width = `${points}%`;
+
+      if (points >= 25) {
+        badge.textContent = "Scholar (عالم)";
+      }
+      if (points >= 60) {
+        badge.textContent = "Specialist (أخصائي)";
+      }
+      if (points >= 95) {
+        badge.textContent = "Expert (رئيس اللجنة)";
+      }
+    }
+
+    // Set freeform counter
+    document.getElementById('freeformJustify').addEventListener('input', function() {
+      const count = this.value.length;
+      document.getElementById('justifyCharCount').textContent = `${count} characters entered`;
+    });
+
+    window.onload = function() {
+      renderVocabularyTable();
+      compareCandidates();
+      renderPracticeQuestions();
+      initKeyboard();
+    }
+  </script>
+</body>
+</html>
