@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ابن الحلال / بنت الحلال — American Student Version</title>
+<style>
+  :root{
+    --bg:#f7f1e8;
+    --card:#fffdf8;
+    --ink:#222;
+    --muted:#6b7280;
+    --accent:#7a3e2c;
+    --accent2:#b66a3c;
+    --soft:#f2e4d5;
+    --green:#2f6f4e;
+    --red:#9b2f2f;
+    --border:#dcc7b4;
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    font-family: Arial, "Segoe UI", sans-serif;
+    background:linear-gradient(135deg,#f8efe4,#fffaf3);
+    color:var(--ink);
+    line-height:1.6;
+  }
+
+  header{
+    background:linear-gradient(135deg,#6d3325,#a65d37);
+    color:white;
+    padding:34px 20px 26px;
+    text-align:center;
+    border-bottom:7px solid #d3aa7d;
+  }
+
+  header h1{
+    margin:0;
+    font-size:clamp(2.1rem,5vw,4rem);
+    font-family:"Times New Roman", serif;
+    direction:rtl;
+  }
+
+  header p{
+    max-width:850px;
+    margin:12px auto 0;
+    font-size:1.05rem;
+  }
+
+  main{
+    max-width:1120px;
+    margin:auto;
+    padding:22px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    margin:18px 0;
+    box-shadow:0 10px 22px rgba(90,54,31,.08);
+  }
+
+  h2{
+    margin:0 0 12px;
+    color:var(--accent);
+    border-left:7px solid var(--accent2);
+    padding-left:10px;
+    font-size:1.45rem;
+  }
+
+  h3{
+    color:#563124;
+    margin:0 0 8px;
+  }
+
+  .rtl{
+    direction:rtl;
+    text-align:right;
+    font-family:"Times New Roman", "Amiri", serif;
+    font-size:1.2rem;
+    line-height:1.9;
+  }
+
+  .small{
+    font-size:.94rem;
+    color:var(--muted);
+  }
+
+  .note{
+    background:var(--soft);
+    border:1px dashed #bd916d;
+    padding:13px 15px;
+    border-radius:14px;
+    margin-top:12px;
+  }
+
+  .keyword-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+    gap:10px;
+  }
+
+  .kw{
+    background:#fff8ef;
+    border:1px solid #d9c0aa;
+    border-radius:13px;
+    padding:10px;
+    min-height:74px;
+  }
+
+  .kw b{
+    display:block;
+    direction:rtl;
+    text-align:right;
+    font-family:"Times New Roman", serif;
+    font-size:1.25rem;
+    color:#5d3023;
+  }
+
+  .kw span{
+    color:var(--muted);
+    font-size:.88rem;
+  }
+
+  .people-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+    gap:16px;
+  }
+
+  .person{
+    border:1px solid var(--border);
+    background:#fffaf3;
+    border-radius:18px;
+    padding:18px;
+    position:relative;
+  }
+
+  .person h3{
+    direction:rtl;
+    text-align:right;
+    font-family:"Times New Roman", serif;
+    font-size:1.65rem;
+    margin-bottom:4px;
+  }
+
+  .tag-row{
+    margin:10px 0 8px;
+  }
+
+  .tag{
+    display:inline-block;
+    border-radius:999px;
+    padding:4px 9px;
+    margin:3px;
+    font-size:.84rem;
+    background:#ead9c7;
+    border:1px solid #d2b99f;
+  }
+
+  .good{
+    border-right:5px solid var(--green);
+    background:#f1f8f3;
+    padding:10px;
+    border-radius:12px;
+    margin:10px 0;
+  }
+
+  .bad{
+    border-right:5px solid var(--red);
+    background:#fff0ef;
+    padding:10px;
+    border-radius:12px;
+    margin:10px 0;
+  }
+
+  .label-good{color:var(--green);font-weight:700}
+  .label-bad{color:var(--red);font-weight:700}
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+  }
+
+  th,td{
+    border:1px solid #d8c2ae;
+    padding:10px;
+    vertical-align:top;
+  }
+
+  th{
+    background:var(--accent);
+    color:white;
+  }
+
+  td{
+    background:#fffdf8;
+  }
+
+  textarea,input,select{
+    width:100%;
+    border:1px solid #cbb5a3;
+    border-radius:10px;
+    padding:9px 10px;
+    font-size:1rem;
+    background:white;
+  }
+
+  textarea{
+    min-height:95px;
+    resize:vertical;
+  }
+
+  button{
+    border:none;
+    border-radius:12px;
+    padding:10px 14px;
+    background:var(--accent);
+    color:white;
+    cursor:pointer;
+    font-weight:700;
+    margin:6px 4px 0 0;
+  }
+
+  button:hover{background:#5e2f23}
+
+  .choice-area{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:12px;
+  }
+
+  .mini{
+    background:#fff8ef;
+    border:1px solid #d7bea8;
+    border-radius:14px;
+    padding:14px;
+  }
+
+  .output{
+    background:#f3e8db;
+    border:1px solid #d0b69d;
+    border-radius:14px;
+    padding:14px;
+    margin-top:12px;
+    min-height:90px;
+  }
+
+  .print{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    box-shadow:0 7px 16px rgba(0,0,0,.18);
+  }
+
+  @media print{
+    body{background:white}
+    .print, button{display:none}
+    .card{box-shadow:none;break-inside:avoid}
+    .person{break-inside:avoid}
+    header{background:#7a3e2c!important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ابن الحلال / بنت الحلال</h1>
+  <p>A short Arabic personality-match activity for American college students. Students use key vocabulary to evaluate seven possible matches, discuss good qualities and red flags, then describe their ideal person.</p>
+</header>
+
+<main>
+
+<section class="card">
+  <h2>1. Key Words for Today</h2>
+  <p>Use these words when you discuss the seven people.</p>
+
+  <div class="keyword-grid">
+    <div class="kw"><b>رأي</b><span>opinion</span></div>
+    <div class="kw"><b>بصراحة</b><span>honestly</span></div>
+    <div class="kw"><b>مستقبل</b><span>future</span></div>
+    <div class="kw"><b>مرتب</b><span>salary / organized</span></div>
+    <div class="kw"><b>يفهم</b><span>understands</span></div>
+    <div class="kw"><b>يساعد</b><span>helps</span></div>
+    <div class="kw"><b>يرفض</b><span>refuses</span></div>
+    <div class="kw"><b>ينجح في</b><span>succeeds in</span></div>
+    <div class="kw"><b>يذاكر</b><span>studies/reviews</span></div>
+    <div class="kw"><b>موعد</b><span>appointment/date</span></div>
+    <div class="kw"><b>متأخر</b><span>late</span></div>
+    <div class="kw"><b>يسهر</b><span>stays up late</span></div>
+    <div class="kw"><b>يدخن</b><span>smokes</span></div>
+    <div class="kw"><b>عادةً</b><span>usually</span></div>
+    <div class="kw"><b>إذا</b><span>if</span></div>
+    <div class="kw"><b>بعد أن</b><span>after</span></div>
+    <div class="kw"><b>أكثر من</b><span>more than</span></div>
+    <div class="kw"><b>بفضل</b><span>thanks to</span></div>
+    <div class="kw"><b>نادي</b><span>club / gym / student club</span></div>
+    <div class="kw"><b>برنامج</b><span>program / show</span></div>
+    <div class="kw"><b>العشاء</b><span>dinner</span></div>
+    <div class="kw"><b>القهوة</b><span>coffee</span></div>
+    <div class="kw"><b>يشرب</b><span>drinks</span></div>
+    <div class="kw"><b>كثيرًا</b><span>a lot</span></div>
+  </div>
+
+  <div class="note">
+    Useful sentence frames:
+    <p class="rtl">
+      بصراحة، رأيي أن...<br>
+      إذا كان الشخص... فهذا جيد / ليس جيدًا.<br>
+      المستقبل مهم، ولكن الفهم أهم من المرتب.<br>
+      أحب شخصًا يساعد الآخرين بعد أن ينتهي من العمل.<br>
+      لا أحب شخصًا يشرب كثيرًا أو يأتي متأخرًا دائمًا.
+    </p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>2. Seven Possible Matches</h2>
+  <p>Each person has good qualities and red flags. Read, discuss, and rank them.</p>
+
+  <div class="people-grid">
+
+    <div class="person">
+      <h3>١. جاك</h3>
+      <p class="rtl">جاك طالب في الجامعة، ويذاكر عادةً في المكتبة بعد الظهر. يريد أن يلتحق ببرنامج جيد بعد التخرج، وله رأي واضح في مستقبله.</p>
+      <div class="good rtl"><span class="label-good">صفات جيدة:</span> جاد، يذاكر كثيرًا، ويفكر في المستقبل.</div>
+      <div class="bad rtl"><span class="label-bad">علامات مقلقة:</span> يشرب قهوة كثيرة جدًا، ويكون متوترًا إذا لم ينجح في شيء صغير.</div>
+      <div class="tag-row"><span class="tag">يذاكر</span><span class="tag">مستقبل</span><span class="tag">قهوة كثيرة</span></div>
+    </div>
+
+    <div class="person">
+      <h3>٢. إيما</h3>
+      <p class="rtl">إيما تعمل في نادي الطلاب، وتساعد أصدقاءها في كل موضوع. بعد أن تنتهي من العمل، تحب العشاء مع أصدقائها.</p>
+      <div class="good rtl"><span class="label-good">صفات جيدة:</span> لطيفة، اجتماعية، وتساعد الناس بسرعة.</div>
+      <div class="bad rtl"><span class="label-bad">علامات مقلقة:</span> عادةً تقول نعم لكل شخص، ولذلك تكون مشغولة ومتأخرة عن المواعيد.</div>
+      <div class="tag-row"><span class="tag">نادي الطلاب</span><span class="tag">يساعد</span><span class="tag">متأخرة</span></div>
+    </div>
+
+    <div class="person">
+      <h3>٣. مايكل</h3>
+      <p class="rtl">مايكل يعمل في مطعم، وعنده مرتب جيد. هو شخص مضحك، ويحب مشاهدة البرامج في الليل مع أصدقائه.</p>
+      <div class="good rtl"><span class="label-good">صفات جيدة:</span> مضحك، كريم، ويستطيع أن يجعل الناس سعداء.</div>
+      <div class="bad rtl"><span class="label-bad">علامات مقلقة:</span> يسهر طوال الليل، ويشرب كثيرًا في نهاية الأسبوع، ولا يتكلم عن المستقبل.</div>
+      <div class="tag-row"><span class="tag">مرتب</span><span class="tag">يسهر</span><span class="tag">يشرب كثيرًا</span></div>
+    </div>
+
+    <div class="person">
+      <h3>٤. صوفيا</h3>
+      <p class="rtl">صوفيا طالبة ناجحة. نجحت في كل امتحاناتها بفضل المذاكرة والفهم الجيد. تحب النظام وتحترم الوقت.</p>
+      <div class="good rtl"><span class="label-good">صفات جيدة:</span> ذكية، منظمة، وتفهم بسرعة.</div>
+      <div class="bad rtl"><span class="label-bad">علامات مقلقة:</span> ترفض تغيير خططها، وتتكلم عن الدراسة أكثر من أي موضوع آخر.</div>
+      <div class="tag-row"><span class="tag">ناجحة</span><span class="tag">الفهم</span><span class="tag">ترفض التغيير</span></div>
+    </div>
+
+    <div class="person">
+      <h3>٥. دانيال</h3>
+      <p class="rtl">دانيال يحب الرياضة، ويذهب إلى النادي كل يوم. لا يدخن، ويحب الطبخ والعشاء في البيت.</p>
+      <div class="good rtl"><span class="label-good">صفات جيدة:</span> صحي، نشيط، ويحب الحياة الهادئة في البيت.</div>
+      <div class="bad rtl"><span class="label-bad">علامات مقلقة:</span> يقضي وقتًا طويلًا في النادي، وأحيانًا يهتم بجسمه أكثر من الناس حوله.</div>
+      <div class="tag-row"><span class="tag">نادي</span><span class="tag">لا يدخن</span><span class="tag">وقت طويل</span></div>
+    </div>
+
+    <div class="person">
+      <h3>٦. أوليفيا</h3>
+      <p class="rtl">أوليفيا تريد أن تعمل في منظمة دولية. تحب السفر، وتقرأ الجريدة، وتتكلم عن العالم والسياسة والجامعة.</p>
+      <div class="good rtl"><span class="label-good">صفات جيدة:</span> مثقفة، طموحة، وعندها رأي واضح.</div>
+      <div class="bad rtl"><span class="label-bad">علامات مقلقة:</span> أحيانًا لا تسمع رأي الآخرين، وتنظر إلى هاتفها كثيرًا أثناء الكلام.</div>
+      <div class="tag-row"><span class="tag">دولي</span><span class="tag">رأي</span><span class="tag">الهاتف كثيرًا</span></div>
+    </div>
+
+    <div class="person">
+      <h3>٧. إيثان</h3>
+      <p class="rtl">إيثان شخص هادئ وطيب. يعمل بعد الظهر، ثم يعود إلى البيت مبكرًا. يحب القهوة والقراءة وبعض البرامج القديمة.</p>
+      <div class="good rtl"><span class="label-good">صفات جيدة:</span> هادئ، محترم، ومنظم في مواعيده.</div>
+      <div class="bad rtl"><span class="label-bad">علامات مقلقة:</span> لا يحب الخروج كثيرًا، ولا يريد أن يجرب أشياء جديدة.</div>
+      <div class="tag-row"><span class="tag">هادئ</span><span class="tag">مواعيد</span><span class="tag">لا يحب التغيير</span></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="card">
+  <h2>3. Decide and Rank</h2>
+  <p>Choose the best three people. Give reasons in Arabic.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Good quality</th>
+        <th>Red flag</th>
+        <th>Final opinion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><input class="rtl"></td>
+        <td><input class="rtl"></td>
+        <td><input class="rtl"></td>
+        <td><input class="rtl" placeholder="رأيي أن..."></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><input class="rtl"></td>
+        <td><input class="rtl"></td>
+        <td><input class="rtl"></td>
+        <td><input class="rtl" placeholder="أعتقد أن..."></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><input class="rtl"></td>
+        <td><input class="rtl"></td>
+        <td><input class="rtl"></td>
+        <td><input class="rtl" placeholder="بصراحة..."></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="card">
+  <h2>4. Speaking Questions</h2>
+  <div class="choice-area">
+    <div class="mini">
+      <h3>Ask your partner</h3>
+      <p class="rtl">
+        ١. من أفضل شخص؟ لماذا؟<br>
+        ٢. من عنده / عندها أكبر علامة مقلقة؟<br>
+        ٣. هل المستقبل أهم من المرتب؟<br>
+        ٤. هل الفهم أهم من الشكل؟<br>
+        ٥. إذا كان الشخص يشرب كثيرًا، هل هذا مهم؟<br>
+        ٦. ما رأيك في شخص ينظر إلى هاتفه كثيرًا؟<br>
+        ٧. هل تحب شخصًا يسهر طوال الليل؟
+      </p>
+    </div>
+
+    <div class="mini">
+      <h3>Useful answers</h3>
+      <p class="rtl">
+        بصراحة، أختار... لأن...<br>
+        رأيي أن... مناسب / مناسبة.<br>
+        لا أختار... لأنه / لأنها...<br>
+        إذا كان الشخص... فهذا ليس جيدًا.<br>
+        الفهم أهم من المرتب عندي.<br>
+        المستقبل مهم، لكن الشخصية مهمة أيضًا.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>5. Quick Final Writing</h2>
+  <p>Write 5–7 Arabic sentences. Use at least six keywords.</p>
+
+  <div class="note rtl">
+    اكتب عن ابن الحلال أو بنت الحلال عندك. ما الصفات المهمة؟ ما العلامات المقلقة؟ من الأشخاص السبعة هو الأقرب إلى رأيك؟ ولماذا؟
+  </div>
+
+  <textarea class="rtl" placeholder="بصراحة، رأيي أن ابن الحلال / بنت الحلال يجب أن..."></textarea>
+
+  <button onclick="generateSample()">Show sample answer</button>
+  <div id="sample" class="output rtl" style="display:none;"></div>
+</section>
+
+</main>
+
+<button class="print" onclick="window.print()">Print / Save PDF</button>
+
+<script>
+function generateSample(){
+  const sample = document.getElementById("sample");
+  sample.style.display = "block";
+  sample.textContent =
+  "بصراحة، رأيي أن ابن الحلال أو بنت الحلال يجب أن يفهمني ويحترم رأيي. المستقبل مهم، ولكن الفهم أهم من المرتب. لا أحب شخصًا يشرب كثيرًا أو ينظر إلى هاتفه طوال الوقت. إذا كان الشخص متأخرًا دائمًا، فهذا ليس جيدًا. من الأشخاص السبعة، أختار صوفيا لأنها ناجحة ومنظمة وتفهم بسرعة. لكن عندها علامة مقلقة لأنها ترفض تغيير خططها. أعتقد أن إيثان أيضًا مناسب لأنه هادئ ومحترم.";
+}
+</script>
+
+</body>
+</html>
