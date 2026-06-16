@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Negation in Modern Standard Arabic</title>
+
+<style>
+  :root {
+    --bg: #f6f3ed;
+    --card: #ffffff;
+    --ink: #1f2933;
+    --muted: #5f6b7a;
+    --accent: #7a3e2c;
+    --accent2: #b66a45;
+    --soft: #f3dfd2;
+    --soft2: #eef3f7;
+    --green: #2f7d5c;
+    --red: #b33a3a;
+    --border: #e3d8cf;
+    --shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #f6f3ed 0%, #fffaf4 100%);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  header {
+    background: linear-gradient(135deg, #4a241b, #8b4a32);
+    color: white;
+    padding: 48px 24px;
+    text-align: center;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    line-height: 1.2;
+  }
+
+  header p {
+    max-width: 850px;
+    margin: 18px auto 0;
+    font-size: 1.1rem;
+    opacity: 0.95;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+  }
+
+  nav .nav-inner {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    background: white;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  nav a:hover {
+    background: var(--soft);
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 32px auto;
+    padding: 0 18px 48px;
+  }
+
+  section {
+    margin: 32px 0;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+  }
+
+  h2 {
+    margin-top: 0;
+    color: var(--accent);
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    color: #3b4652;
+    margin-top: 24px;
+  }
+
+  .arabic {
+    direction: rtl;
+    text-align: right;
+    font-family: "Amiri", "Noto Naskh Arabic", "Scheherazade New", Arial, sans-serif;
+    font-size: 1.35rem;
+    line-height: 2;
+  }
+
+  .arabic-small {
+    direction: rtl;
+    text-align: right;
+    font-family: "Amiri", "Noto Naskh Arabic", "Scheherazade New", Arial, sans-serif;
+    font-size: 1.15rem;
+    line-height: 1.9;
+  }
+
+  .note {
+    background: var(--soft2);
+    border-left: 5px solid var(--accent2);
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: #354150;
+    margin: 16px 0;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  @media (max-width: 850px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .mini-card {
+    border: 1px solid var(--border);
+    background: #fffaf7;
+    border-radius: 16px;
+    padding: 18px;
+  }
+
+  .mini-card h3 {
+    margin-top: 0;
+    color: var(--accent);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    background: white;
+    overflow: hidden;
+    border-radius: 14px;
+  }
+
+  th, td {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--soft);
+    color: #42251d;
+  }
+
+  td.arabic, th.arabic {
+    font-size: 1.15rem;
+  }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .tab-btn {
+    border: none;
+    background: var(--soft);
+    color: var(--accent);
+    padding: 10px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .tab-btn.active {
+    background: var(--accent);
+    color: white;
+  }
+
+  .tab-panel {
+    display: none;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin: 12px 0;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .pill {
+    display: inline-block;
+    background: var(--soft);
+    color: var(--accent);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    margin: 2px;
+  }
+
+  .practice-box {
+    background: #fffaf7;
+    border: 1px dashed var(--accent2);
+    border-radius: 16px;
+    padding: 18px;
+    margin-top: 18px;
+  }
+
+  .question {
+    margin: 18px 0;
+    padding: 16px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  input[type="text"], select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+
+  button {
+    border: none;
+    background: var(--accent);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background: #5e2e22;
+  }
+
+  .feedback {
+    margin-top: 8px;
+    font-weight: 700;
+  }
+
+  .correct {
+    color: var(--green);
+  }
+
+  .incorrect {
+    color: var(--red);
+  }
+
+  .matching {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 700px) {
+    .matching {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .drag-item, .drop-zone {
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: white;
+    margin: 8px 0;
+  }
+
+  .drag-item {
+    cursor: grab;
+    font-weight: 700;
+  }
+
+  .drop-zone {
+    min-height: 58px;
+    background: #faf7f2;
+  }
+
+  .drop-zone.over {
+    outline: 3px solid var(--accent2);
+  }
+
+  .summary-table td:first-child {
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 40px;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Negation in Modern Standard Arabic</h1>
+  <p>
+    Learn how to negate adjectives, nouns, and verbs in Arabic using
+    <strong>ليس</strong>, <strong>غير</strong>, <strong>لا يوجد</strong>,
+    <strong>لم</strong>, <strong>لا</strong>, and <strong>لن</strong>.
+  </p>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#adjectives">Adjectives</a>
+    <a href="#nouns">Nouns</a>
+    <a href="#verbs">Verbs</a>
+    <a href="#summary">Summary Table</a>
+    <a href="#practice">Practice</a>
+  </div>
+</nav>
+
+<main>
+
+<section id="overview" class="card">
+  <h2>1. What is negation?</h2>
+  <p>
+    Negation means saying that something is <strong>not true</strong>,
+    <strong>does not exist</strong>, or <strong>did not happen</strong>.
+  </p>
+
+  <div class="note">
+    <strong>Instructions:</strong> Read each section, study the examples, then complete the practice activities at the end.
+    Arabic examples are written from right to left.
+  </div>
+
+  <div class="arabic">
+    النفي هو أن نقول إنّ شيئًا غير موجود، أو غير صحيح، أو لم يحدث.
+  </div>
+
+  <div class="grid">
+    <div class="mini-card">
+      <h3>Negating adjectives</h3>
+      <p>Use <span class="pill arabic-small">ليس</span> or <span class="pill arabic-small">غير</span>.</p>
+      <p class="arabic-small">الجوُّ ليس جميلًا.</p>
+    </div>
+
+    <div class="mini-card">
+      <h3>Negating nouns</h3>
+      <p>Use <span class="pill arabic-small">لا يوجد</span> or <span class="pill arabic-small">لا توجد</span>.</p>
+      <p class="arabic-small">لا يوجد امتحان اليوم.</p>
+    </div>
+
+    <div class="mini-card">
+      <h3>Negating verbs</h3>
+      <p>Choose the negative particle according to tense.</p>
+      <p class="arabic-small">لم أذهبْ. لا أدرسُ. لن أسافرَ.</p>
+    </div>
+  </div>
+</section>
+
+<section id="adjectives" class="card">
+  <h2>2. Negating Adjectives</h2>
+
+  <p>
+    To negate adjectives in Arabic, you can use <strong>ليس</strong>, <strong>غير</strong>, or sometimes <strong>لا</strong>.
+  </p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="openTab(event, 'laysa')">ليس</button>
+    <button class="tab-btn" onclick="openTab(event, 'ghayr')">غير</button>
+    <button class="tab-btn" onclick="openTab(event, 'la-adj')">لا with fixed expressions</button>
+  </div>
+
+  <div id="laysa" class="tab-panel active">
+    <h3>2.1 Negation with ليس</h3>
+    <p>
+      <strong>ليس</strong> is used with nominal sentences. It negates the predicate, often an adjective.
+    </p>
+
+    <div class="note">
+      After <strong>ليس</strong>, the adjective is usually in the accusative case.
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Affirmative sentence</th>
+          <th>Negative sentence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="arabic">الجوُّ جميلٌ.</td>
+          <td class="arabic">الجوُّ ليس جميلًا.</td>
+        </tr>
+        <tr>
+          <td class="arabic">الطالبُ نشيطٌ.</td>
+          <td class="arabic">الطالبُ ليس نشيطًا.</td>
+        </tr>
+        <tr>
+          <td class="arabic">الدرسُ صعبٌ.</td>
+          <td class="arabic">الدرسُ ليس صعبًا.</td>
+        </tr>
+        <tr>
+          <td class="arabic">المدينةُ كبيرةٌ.</td>
+          <td class="arabic">المدينةُ ليست كبيرةً.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Forms of ليس</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Pronoun</th>
+          <th>Form of ليس</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="arabic">أنا</td>
+          <td class="arabic">لستُ</td>
+          <td class="arabic">أنا لستُ متعبًا.</td>
+        </tr>
+        <tr>
+          <td class="arabic">أنتَ</td>
+          <td class="arabic">لستَ</td>
+          <td class="arabic">أنتَ لستَ جاهزًا.</td>
+        </tr>
+        <tr>
+          <td class="arabic">أنتِ</td>
+          <td class="arabic">لستِ</td>
+          <td class="arabic">أنتِ لستِ مشغولةً.</td>
+        </tr>
+        <tr>
+          <td class="arabic">هو</td>
+          <td class="arabic">ليس</td>
+          <td class="arabic">هو ليس موجودًا.</td>
+        </tr>
+        <tr>
+          <td class="arabic">هي</td>
+          <td class="arabic">ليست</td>
+          <td class="arabic">هي ليست سعيدةً.</td>
+        </tr>
+        <tr>
+          <td class="arabic">نحن</td>
+          <td class="arabic">لسنا</td>
+          <td class="arabic">نحن لسنا مشغولين.</td>
+        </tr>
+        <tr>
+          <td class="arabic">أنتم</td>
+          <td class="arabic">لستم</td>
+          <td class="arabic">أنتم لستم جاهزين.</td>
+        </tr>
+        <tr>
+          <td class="arabic">هم</td>
+          <td class="arabic">ليسوا</td>
+          <td class="arabic">هم ليسوا موجودين.</td>
+        </tr>
+        <tr>
+          <td class="arabic">هنّ</td>
+          <td class="arabic">لسنَ</td>
+          <td class="arabic">هنّ لسنَ غائباتٍ.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="ghayr" class="tab-panel">
+    <h3>2.2 Negation with غير</h3>
+    <p>
+      <strong>غير</strong> comes before an adjective. It often means <em>not</em>, <em>non-</em>, <em>un-</em>, or <em>in-</em>.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Arabic</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="arabic">هذا الطالب غير نشيط.</td>
+          <td>This student is not active.</td>
+        </tr>
+        <tr>
+          <td class="arabic">هذا الكلام غير صحيح.</td>
+          <td>This statement is incorrect.</td>
+        </tr>
+        <tr>
+          <td class="arabic">هذه الإجابة غير واضحة.</td>
+          <td>This answer is unclear.</td>
+        </tr>
+        <tr>
+          <td class="arabic">هذا المكان غير مناسب.</td>
+          <td>This place is unsuitable.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      For students, <strong>غير + adjective</strong> is often easier than changing the form of <strong>ليس</strong>.
+    </div>
+  </div>
+
+  <div id="la-adj" class="tab-panel">
+    <h3>2.3 Negation with لا in fixed expressions</h3>
+    <p>
+      Arabic sometimes uses <strong>لا</strong> before a noun in fixed expressions that describe lack of meaning, importance, or solution.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Arabic expression</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="arabic">هذا سؤال لا معنى له.</td>
+          <td>This is a meaningless question.</td>
+        </tr>
+        <tr>
+          <td class="arabic">هذا موضوع لا أهمية له.</td>
+          <td>This is an unimportant topic.</td>
+        </tr>
+        <tr>
+          <td class="arabic">هذه مشكلة لا حلّ لها.</td>
+          <td>This is a problem with no solution.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      For simple classroom Arabic, it is usually better to use <strong>ليس + adjective</strong> or <strong>غير + adjective</strong>.
+    </div>
+  </div>
+</section>
+
+<section id="nouns" class="card">
+  <h2>3. Negating Nouns and Existence</h2>
+
+  <p>
+    To negate the existence of a person, thing, or idea, Arabic often uses <strong>لا يوجد</strong> or <strong>لا توجد</strong>.
+  </p>
+
+  <h3>3.1 لا يوجد / لا توجد</h3>
+
+  <div class="note">
+    Use <strong>لا يوجد</strong> with masculine nouns and <strong>لا توجد</strong> with feminine nouns.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Affirmative sentence</th>
+        <th>Negative sentence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="arabic">يوجد طالب في الصف.</td>
+        <td class="arabic">لا يوجد طالب في الصف.</td>
+      </tr>
+      <tr>
+        <td class="arabic">توجد مشكلة في السؤال.</td>
+        <td class="arabic">لا توجد مشكلة في السؤال.</td>
+      </tr>
+      <tr>
+        <td class="arabic">يوجد امتحان اليوم.</td>
+        <td class="arabic">لا يوجد امتحان اليوم.</td>
+      </tr>
+      <tr>
+        <td class="arabic">توجد جامعة قريبة.</td>
+        <td class="arabic">لا توجد جامعة قريبة.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 ليس هناك / لا يوجد هناك</h3>
+
+  <p>
+    These expressions also mean <em>there is not</em> or <em>there are not</em>.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Arabic</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="arabic">ليس هناك وقت كافٍ.</td>
+        <td>There is not enough time.</td>
+      </tr>
+      <tr>
+        <td class="arabic">ليس هناك طلاب في القاعة.</td>
+        <td>There are no students in the hall.</td>
+      </tr>
+      <tr>
+        <td class="arabic">لا يوجد هناك مطعم قريب.</td>
+        <td>There is no restaurant nearby.</td>
+      </tr>
+      <tr>
+        <td class="arabic">لا توجد هناك سيارة أمام البيت.</td>
+        <td>There is no car in front of the house.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>3.3 ما من</h3>
+
+  <p>
+    <strong>ما من</strong> is a more formal or literary way to say <em>there is no</em> or <em>there is not any</em>.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Arabic</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="arabic">ما من مشكلة.</td>
+        <td>There is no problem.</td>
+      </tr>
+      <tr>
+        <td class="arabic">ما من أحدٍ في البيت.</td>
+        <td>There is no one in the house.</td>
+      </tr>
+      <tr>
+        <td class="arabic">ما من سببٍ للخوف.</td>
+        <td>There is no reason to be afraid.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="verbs" class="card">
+  <h2>4. Negating Verbs</h2>
+
+  <p>
+    To negate verbs, choose the negative particle according to the tense or function of the verb.
+  </p>
+
+  <div class="grid">
+    <div class="mini-card">
+      <h3>Past</h3>
+      <p class="arabic-small">لم + فعل مضارع مجزوم</p>
+      <p class="arabic-small">لم أذهبْ.</p>
+    </div>
+
+    <div class="mini-card">
+      <h3>Present</h3>
+      <p class="arabic-small">لا + فعل مضارع</p>
+      <p class="arabic-small">لا أدرسُ.</p>
+    </div>
+
+    <div class="mini-card">
+      <h3>Future</h3>
+      <p class="arabic-small">لن + فعل مضارع منصوب</p>
+      <p class="arabic-small">لن أسافرَ.</p>
+    </div>
+  </div>
+
+  <h3>4.1 Negating the past: لم + present verb</h3>
+
+  <p>
+    Although the meaning is past, Arabic uses a present-tense verb after <strong>لم</strong>.
+    The verb after <strong>لم</strong> is jussive.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Affirmative past</th>
+        <th>Negative past</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="arabic">ذهبَ الطالبُ إلى الجامعة.</td>
+        <td class="arabic">لم يذهبْ الطالبُ إلى الجامعة.</td>
+      </tr>
+      <tr>
+        <td class="arabic">كتبتُ الواجب.</td>
+        <td class="arabic">لم أكتبْ الواجب.</td>
+      </tr>
+      <tr>
+        <td class="arabic">شاهدنا الفيلم.</td>
+        <td class="arabic">لم نشاهدْ الفيلم.</td>
+      </tr>
+      <tr>
+        <td class="arabic">درستْ مريمُ العربية.</td>
+        <td class="arabic">لم تدرسْ مريمُ العربية.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>4.2 Negating the past with ما</h3>
+
+  <p>
+    <strong>ما + past verb</strong> can also negate the past. It is common in Arabic, especially in simpler or speech-like style.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Arabic</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="arabic">ما ذهبتُ إلى الجامعة.</td>
+        <td>I did not go to the university.</td>
+      </tr>
+      <tr>
+        <td class="arabic">ما فهمتُ الدرس.</td>
+        <td>I did not understand the lesson.</td>
+      </tr>
+      <tr>
+        <td class="arabic">ما قرأَ الطالبُ الكتاب.</td>
+        <td>The student did not read the book.</td>
+      </tr>
+      <tr>
+        <td class="arabic">ما شاهدنا الفيلم.</td>
+        <td>We did not watch the film.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    In standard written Arabic, <strong>لم + present verb</strong> is usually more common and more formal.
+  </div>
+
+  <h3>4.3 Negating the present: لا + present verb</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Affirmative present</th>
+        <th>Negative present</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="arabic">أدرسُ العربية.</td>
+        <td class="arabic">لا أدرسُ العربية.</td>
+      </tr>
+      <tr>
+        <td class="arabic">يذهبُ أحمد إلى الجامعة.</td>
+        <td class="arabic">أحمد لا يذهبُ إلى الجامعة.</td>
+      </tr>
+      <tr>
+        <td class="arabic">تشربُ سارة القهوة.</td>
+        <td class="arabic">سارة لا تشربُ القهوة.</td>
+      </tr>
+      <tr>
+        <td class="arabic">نكتبُ الواجب.</td>
+        <td class="arabic">لا نكتبُ الواجب.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>4.4 Negating the future: لن + present verb</h3>
+
+  <p>
+    Use <strong>لن</strong> to negate the future. The verb after <strong>لن</strong> is subjunctive.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Affirmative future</th>
+        <th>Negative future</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="arabic">سأذهبُ غدًا.</td>
+        <td class="arabic">لن أذهبَ غدًا.</td>
+      </tr>
+      <tr>
+        <td class="arabic">سوف ندرسُ في المكتبة.</td>
+        <td class="arabic">لن ندرسَ في المكتبة.</td>
+      </tr>
+      <tr>
+        <td class="arabic">سيحضرُ الأستاذُ اليوم.</td>
+        <td class="arabic">لن يحضرَ الأستاذُ اليوم.</td>
+      </tr>
+      <tr>
+        <td class="arabic">ستسافرُ مريمُ الأسبوع القادم.</td>
+        <td class="arabic">لن تسافرَ مريمُ الأسبوع القادم.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>4.5 Negative commands: لا + jussive present verb</h3>
+
+  <p>
+    To tell someone not to do something, use <strong>لا</strong> with a jussive present-tense verb.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>Negative command</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="arabic">اكتبْ.</td>
+        <td class="arabic">لا تكتبْ.</td>
+      </tr>
+      <tr>
+        <td class="arabic">اذهبْ.</td>
+        <td class="arabic">لا تذهبْ.</td>
+      </tr>
+      <tr>
+        <td class="arabic">تكلّمْ.</td>
+        <td class="arabic">لا تتكلّمْ.</td>
+      </tr>
+      <tr>
+        <td class="arabic">كُلْ هنا.</td>
+        <td class="arabic">لا تأكلْ هنا.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <details>
+    <summary>More examples of negative commands</summary>
+    <ul class="arabic-small">
+      <li>لا تفتحْ الباب.</li>
+      <li>لا تتأخرْ عن الصف.</li>
+      <li>لا تستخدمْ الهاتف في الامتحان.</li>
+      <li>لا تنسَ الواجب.</li>
+    </ul>
+  </details>
+</section>
+
+<section id="summary" class="card">
+  <h2>5. Summary Table</h2>
+
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Negative structure</th>
+        <th>Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Negating an adjective</td>
+        <td class="arabic">ليس</td>
+        <td class="arabic">الطالب ليس نشيطًا.</td>
+      </tr>
+      <tr>
+        <td>Negating an adjective</td>
+        <td class="arabic">غير</td>
+        <td class="arabic">الجواب غير صحيح.</td>
+      </tr>
+      <tr>
+        <td>Negating existence</td>
+        <td class="arabic">لا يوجد / لا توجد</td>
+        <td class="arabic">لا يوجد امتحان اليوم.</td>
+      </tr>
+      <tr>
+        <td>Negating the past</td>
+        <td class="arabic">لم + مضارع</td>
+        <td class="arabic">لم أذهبْ إلى الجامعة.</td>
+      </tr>
+      <tr>
+        <td>Negating the past</td>
+        <td class="arabic">ما + ماضٍ</td>
+        <td class="arabic">ما ذهبتُ إلى الجامعة.</td>
+      </tr>
+      <tr>
+        <td>Negating the present</td>
+        <td class="arabic">لا + مضارع</td>
+        <td class="arabic">لا أدرسُ اليوم.</td>
+      </tr>
+      <tr>
+        <td>Negating the future</td>
+        <td class="arabic">لن + مضارع</td>
+        <td class="arabic">لن أسافرَ غدًا.</td>
+      </tr>
+      <tr>
+        <td>Negative command</td>
+        <td class="arabic">لا + مضارع مجزوم</td>
+        <td class="arabic">لا تكتبْ هنا.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="practice" class="card">
+  <h2>6. Interactive Practice</h2>
+
+  <div class="note">
+    <strong>Instructions:</strong> Complete the exercises below. Use Arabic answers where required.
+  </div>
+
+  <div class="practice-box">
+    <h3>Activity 1: Choose the correct negative particle</h3>
+    <p>Choose the best answer for each sentence.</p>
+
+    <div class="question">
+      <p class="arabic-small">١. أنا ___ متعبًا.</p>
+      <select id="q1">
+        <option value="">Choose an answer</option>
+        <option value="لا">لا</option>
+        <option value="لستُ">لستُ</option>
+        <option value="لن">لن</option>
+      </select>
+      <button onclick="checkSelect('q1','لستُ','f1')">Check</button>
+      <div id="f1" class="feedback"></div>
+    </div>
+
+    <div class="question">
+      <p class="arabic-small">٢. ___ أذهبْ إلى السوق أمس.</p>
+      <select id="q2">
+        <option value="">Choose an answer</option>
+        <option value="لم">لم</option>
+        <option value="لن">لن</option>
+        <option value="ليس">ليس</option>
+      </select>
+      <button onclick="checkSelect('q2','لم','f2')">Check</button>
+      <div id="f2" class="feedback"></div>
+    </div>
+
+    <div class="question">
+      <p class="arabic-small">٣. ___ أسافرَ غدًا.</p>
+      <select id="q3">
+        <option value="">Choose an answer</option>
+        <option value="لم">لم</option>
+        <option value="لا">لا</option>
+        <option value="لن">لن</option>
+      </select>
+      <button onclick="checkSelect('q3','لن','f3')">Check</button>
+      <div id="f3" class="feedback"></div>
+    </div>
+
+    <div class="question">
+      <p class="arabic-small">٤. ___ يوجد امتحان اليوم.</p>
+      <select id="q4">
+        <option value="">Choose an answer</option>
+        <option value="لا">لا</option>
+        <option value="لن">لن</option>
+        <option value="ليس">ليس</option>
+      </select>
+      <button onclick="checkSelect('q4','لا','f4')">Check</button>
+      <div id="f4" class="feedback"></div>
+    </div>
+  </div>
+
+  <div class="practice-box">
+    <h3>Activity 2: Type the negative form</h3>
+    <p>Rewrite each sentence in the negative. Use the model given in the hint.</p>
+
+    <div class="question">
+      <p><strong>Hint:</strong> Use <span class="arabic-small">ليس</span>.</p>
+      <p class="arabic-small">الدرسُ صعبٌ.</p>
+      <input type="text" id="t1" dir="rtl" placeholder="اكتب الجملة المنفية هنا">
+      <button onclick="checkText('t1',['الدرس ليس صعبا','الدرس ليس صعبًا','الدرسُ ليس صعبًا','الدرسُ ليس صعبا'],'tf1')">Check</button>
+      <div id="tf1" class="feedback"></div>
+    </div>
+
+    <div class="question">
+      <p><strong>Hint:</strong> Use <span class="arabic-small">لم</span>.</p>
+      <p class="arabic-small">ذهبتُ إلى الجامعة.</p>
+      <input type="text" id="t2" dir="rtl" placeholder="اكتب الجملة المنفية هنا">
+      <button onclick="checkText('t2',['لم أذهب إلى الجامعة','لم أذهبْ إلى الجامعة','لم اذهب الى الجامعة','لم أذهب للجامعة'],'tf2')">Check</button>
+      <div id="tf2" class="feedback"></div>
+    </div>
+
+    <div class="question">
+      <p><strong>Hint:</strong> Use <span class="arabic-small">لن</span>.</p>
+      <p class="arabic-small">سأسافرُ غدًا.</p>
+      <input type="text" id="t3" dir="rtl" placeholder="اكتب الجملة المنفية هنا">
+      <button onclick="checkText('t3',['لن أسافر غدا','لن أسافرَ غدًا','لن أسافر غدًا','لن اسافر غدا'],'tf3')">Check</button>
+      <div id="tf3" class="feedback"></div>
+    </div>
+  </div>
+
+  <div class="practice-box">
+    <h3>Activity 3: Match the structure with the function</h3>
+    <p>
+      Drag each Arabic structure to the correct meaning.
+    </p>
+
+    <div class="matching">
+      <div>
+        <h4>Structures</h4>
+        <div class="drag-item arabic-small" draggable="true" data-answer="past">لم + مضارع</div>
+        <div class="drag-item arabic-small" draggable="true" data-answer="present">لا + مضارع</div>
+        <div class="drag-item arabic-small" draggable="true" data-answer="future">لن + مضارع</div>
+        <div class="drag-item arabic-small" draggable="true" data-answer="existence">لا يوجد / لا توجد</div>
+      </div>
+
+      <div>
+        <h4>Functions</h4>
+        <div class="drop-zone" data-target="present">Negating the present</div>
+        <div class="drop-zone" data-target="future">Negating the future</div>
+        <div class="drop-zone" data-target="existence">Negating existence</div>
+        <div class="drop-zone" data-target="past">Negating the past</div>
+      </div>
+    </div>
+
+    <button onclick="checkMatching()">Check Matching</button>
+    <div id="match-feedback" class="feedback"></div>
+  </div>
+
+  <div class="practice-box">
+    <h3>Activity 4: Transform the sentences</h3>
+    <p>
+      Work with a partner. Student A reads the affirmative sentence. Student B changes it into a negative sentence.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Affirmative sentence</th>
+          <th>Negative sentence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="arabic">البيتُ كبيرٌ.</td>
+          <td class="arabic">البيتُ ليس كبيرًا.</td>
+        </tr>
+        <tr>
+          <td class="arabic">السؤالُ سهلٌ.</td>
+          <td class="arabic">السؤالُ غير سهل.</td>
+        </tr>
+        <tr>
+          <td class="arabic">يوجد طالب في المكتب.</td>
+          <td class="arabic">لا يوجد طالب في المكتب.</td>
+        </tr>
+        <tr>
+          <td class="arabic">توجد سيارة أمام البيت.</td>
+          <td class="arabic">لا توجد سيارة أمام البيت.</td>
+        </tr>
+        <tr>
+          <td class="arabic">أقرأُ الجريدة كل يوم.</td>
+          <td class="arabic">لا أقرأُ الجريدة كل يوم.</td>
+        </tr>
+        <tr>
+          <td class="arabic">سأسافرُ في الصيف.</td>
+          <td class="arabic">لن أسافرَ في الصيف.</td>
+        </tr>
+        <tr>
+          <td class="arabic">افتحْ الكتاب.</td>
+          <td class="arabic">لا تفتحْ الكتاب.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="footer">
+  Negation in Modern Standard Arabic — classroom interactive handout
+</div>
+
+</main>
+
+<script>
+  function openTab(event, tabId) {
+    const panels = document.querySelectorAll(".tab-panel");
+    const buttons = document.querySelectorAll(".tab-btn");
+
+    panels.forEach(panel => panel.classList.remove("active"));
+    buttons.forEach(button => button.classList.remove("active"));
+
+    document.getElementById(tabId).classList.add("active");
+    event.currentTarget.classList.add("active");
+  }
+
+  function checkSelect(selectId, correct, feedbackId) {
+    const answer = document.getElementById(selectId).value;
+    const feedback = document.getElementById(feedbackId);
+
+    if (answer === correct) {
+      feedback.textContent = "Correct.";
+      feedback.className = "feedback correct";
+    } else if (answer === "") {
+      feedback.textContent = "Choose an answer first.";
+      feedback.className = "feedback incorrect";
+    } else {
+      feedback.textContent = "Try again.";
+      feedback.className = "feedback incorrect";
+    }
+  }
+
+  function normalizeArabic(text) {
+    return text
+      .trim()
+      .replace(/[ًٌٍَُِّْـ]/g, "")
+      .replace(/[إأآا]/g, "ا")
+      .replace(/ى/g, "ي")
+      .replace(/ة/g, "ه")
+      .replace(/[،.؟!]/g, "")
+      .replace(/\s+/g, " ");
+  }
+
+  function checkText(inputId, acceptedAnswers, feedbackId) {
+    const input = normalizeArabic(document.getElementById(inputId).value);
+    const feedback = document.getElementById(feedbackId);
+
+    const normalizedAnswers = acceptedAnswers.map(ans => normalizeArabic(ans));
+
+    if (normalizedAnswers.includes(input)) {
+      feedback.textContent = "Correct.";
+      feedback.className = "feedback correct";
+    } else {
+      feedback.textContent = "Not quite. Check the negative particle and the verb/adjective form.";
+      feedback.className = "feedback incorrect";
+    }
+  }
+
+  let draggedItem = null;
+
+  document.querySelectorAll(".drag-item").forEach(item => {
+    item.addEventListener("dragstart", function() {
+      draggedItem = this;
+    });
+  });
+
+  document.querySelectorAll(".drop-zone").forEach(zone => {
+    zone.addEventListener("dragover", function(e) {
+      e.preventDefault();
+      this.classList.add("over");
+    });
+
+    zone.addEventListener("dragleave", function() {
+      this.classList.remove("over");
+    });
+
+    zone.addEventListener("drop", function(e) {
+      e.preventDefault();
+      this.classList.remove("over");
+
+      if (draggedItem) {
+        this.appendChild(draggedItem);
+      }
+    });
+  });
+
+  function checkMatching() {
+    const zones = document.querySelectorAll(".drop-zone");
+    let correct = 0;
+    let total = zones.length;
+
+    zones.forEach(zone => {
+      const target = zone.dataset.target;
+      const item = zone.querySelector(".drag-item");
+
+      if (item && item.dataset.answer === target) {
+        correct++;
+        zone.style.borderColor = "var(--green)";
+      } else {
+        zone.style.borderColor = "var(--red)";
+      }
+    });
+
+    const feedback = document.getElementById("match-feedback");
+
+    if (correct === total) {
+      feedback.textContent = "Correct. All matches are right.";
+      feedback.className = "feedback correct";
+    } else {
+      feedback.textContent = correct + " out of " + total + " are correct. Try again.";
+      feedback.className = "feedback incorrect";
+    }
+  }
+</script>
+
+</body>
+</html>
