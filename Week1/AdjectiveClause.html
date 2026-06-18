@@ -3,140 +3,744 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jumlat As-Sifah (Relative Clause)</title>
+    <title>Interactive Jumlat As-Sifah Module</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&display=swap');
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #1f2937;
+            background-color: #f8fafc;
+            color: #334155;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
+
+        /* Typography for Arabic */
         .arabic {
             font-family: 'Amiri', serif;
             direction: rtl;
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             line-height: 2.2;
-            color: #1e3a8a;
         }
+        .arabic-handwriting {
+            font-family: 'Aref Ruqaa', serif;
+            direction: rtl;
+            font-size: 2rem;
+            color: #0f172a;
+        }
+
+        /* Layout & Slides */
+        #app-container {
+            display: flex;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            box-shadow: 0 0 40px rgba(0,0,0,0.05);
+            background: white;
+        }
+
+        /* Sidebar Navigation */
+        #sidebar {
+            width: 280px;
+            background-color: #1e293b;
+            color: white;
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .nav-item {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.7;
+        }
+
+        .nav-item:hover {
+            background-color: #334155;
+            opacity: 1;
+        }
+
+        .nav-item.active {
+            background-color: #334155;
+            border-left-color: #3b82f6;
+            opacity: 1;
+            font-weight: 600;
+        }
+
+        /* Main Content Area */
+        #main-content {
+            flex-grow: 1;
+            position: relative;
+            overflow-y: auto;
+            height: 100vh;
+            padding: 3rem 4rem;
+            scroll-behavior: smooth;
+        }
+
         .slide {
             display: none;
-            animation: fadeIn 0.4s ease-in-out;
-            min-height: 60vh;
+            animation: slideUpFade 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
+
         .slide.active {
-            display: flex;
+            display: block;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+
+        @keyframes slideUpFade {
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Color Coding Grammatical Elements */
+        .hl-noun { color: #dc2626; font-weight: 700; position: relative; } /* Red: Indefinite Noun */
+        .hl-clause { color: #059669; } /* Green: Relative Clause */
+        .hl-pronoun { color: #7c3aed; font-weight: 700; } /* Purple: Linking Pronoun */
+        
+        .hl-noun-bg { background-color: #fee2e2; border: 1px solid #f87171; }
+        .hl-clause-bg { background-color: #d1fae5; border: 1px solid #34d399; }
+        .hl-pronoun-bg { background-color: #ede9fe; border: 1px solid #a78bfa; }
+
+        /* Interactivity: Click to Reveal */
+        .reveal-btn {
+            background: #e2e8f0;
+            color: #475569;
+            border: 2px dashed #cbd5e1;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            width: 100%;
+            text-align: center;
+        }
+        .reveal-btn:hover {
+            background: #cbd5e1;
+            border-color: #94a3b8;
+        }
+        .reveal-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+        .reveal-wrapper.revealed .reveal-btn { display: none; }
+        .reveal-wrapper.revealed .reveal-content { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Interactivity: Hover Sync */
+        .sync-hover { transition: background-color 0.2s, transform 0.2s; border-radius: 4px; padding: 0 4px; cursor: help; }
+        .sync-hover.active-sync { background-color: #fef08a; transform: scale(1.05); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+        /* Interactivity: Toggle Switch */
+        .toggle-container {
+            display: flex;
+            background: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+            width: max-content;
+        }
+        .toggle-option {
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .toggle-option.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        /* Quiz Styles */
+        .quiz-option {
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .quiz-option:hover { border-color: #3b82f6; background-color: #eff6ff; }
+        .quiz-option.correct { border-color: #10b981; background-color: #ecfdf5; }
+        .quiz-option.incorrect { border-color: #ef4444; background-color: #fef2f2; }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            #app-container { flex-direction: column; }
+            #sidebar { width: 100%; padding: 1rem; flex-direction: row; overflow-x: auto; white-space: nowrap; }
+            .nav-item { padding: 0.5rem 1rem; border-left: none; border-bottom: 4px solid transparent; }
+            .nav-item.active { border-left: none; border-bottom-color: #3b82f6; }
+            #main-content { padding: 1.5rem; height: auto; min-height: 100vh; }
         }
     </style>
 </head>
-<body class="p-6 md:p-10">
+<body>
 
-<div id="presentation-container" class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-2xl border border-gray-200">
-    <div class="mb-6 flex justify-between items-center border-b border-gray-300 pb-4">
-        <h1 class="text-3xl font-extrabold text-blue-700">Jumlat As-Sifah (جملة الصفة)</h1>
-        <div class="text-lg font-medium text-gray-500">
-            Slide <span id="current-slide-number">1</span> of 4
+<div id="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar">
+        <div class="px-8 pb-6 mb-2 border-b border-slate-700 hidden md:block">
+            <h1 class="text-2xl font-bold text-white tracking-tight">Arabic Grammar</h1>
+            <p class="text-sm text-slate-400 mt-1">Advanced Structures</p>
         </div>
-    </div>
+        <div class="nav-item active" onclick="goToSlide(1)">
+            <i class="fas fa-book-open w-5"></i> 1. Concept & Definition
+        </div>
+        <div class="nav-item" onclick="goToSlide(2)">
+            <i class="fas fa-key w-5"></i> 2. The Golden Rule
+        </div>
+        <div class="nav-item" onclick="goToSlide(3)">
+            <i class="fas fa-eye-slash w-5"></i> 3. Hidden Subject Pronoun
+        </div>
+        <div class="nav-item" onclick="goToSlide(4)">
+            <i class="fas fa-link w-5"></i> 4. Object Pronoun
+        </div>
+        <div class="nav-item" onclick="goToSlide(5)">
+            <i class="fas fa-arrow-right-to-bracket w-5"></i> 5. Prepositional Link
+        </div>
+        <div class="nav-item" onclick="goToSlide(6)">
+            <i class="fas fa-id-card w-5"></i> 6. Nominal Clause
+        </div>
+        <div class="nav-item" onclick="goToSlide(7)">
+            <i class="fas fa-dumbbell w-5"></i> 7. Interactive Practice
+        </div>
+    </nav>
 
-    <div id="slides-container">
-        <div id="slide-1" class="slide active flex-col">
-            <h2 class="text-4xl text-pink-700 font-bold mb-4">What is جملة الصفة?</h2>
-            <p class="text-lg mb-6">In Arabic grammar, <b>جملة الصفة</b> (Jumlat As-Sifah) means “the adjective sentence,” or the <b>relative clause</b> in English.</p>
-            <div class="bg-blue-50 p-6 rounded-xl border border-blue-200">
-                <p class="text-lg mb-2">It’s a complete sentence — verbal or nominal — that describes a noun.</p>
-                <p class="text-lg text-blue-700 font-semibold">In English, we say “the man <i>who runs</i>,” but in Arabic, we use a short sentence after the noun.</p>
+    <!-- Main Content Area -->
+    <main id="main-content">
+        
+        <!-- Top Legend -->
+        <div class="flex flex-wrap gap-4 mb-8 bg-slate-50 p-4 rounded-lg border border-slate-200 text-sm font-medium justify-center items-center shadow-sm">
+            <span class="text-slate-500 uppercase tracking-wider text-xs mr-2">Legend:</span>
+            <span class="hl-noun-bg px-3 py-1 rounded-full text-red-700"><i class="fas fa-tag mr-1"></i> المنعوت (Indefinite Noun)</span>
+            <span class="hl-clause-bg px-3 py-1 rounded-full text-green-700"><i class="fas fa-stream mr-1"></i> جملة (Defining Sentence)</span>
+            <span class="hl-pronoun-bg px-3 py-1 rounded-full text-purple-700"><i class="fas fa-link mr-1"></i> الضمير (Linking Pronoun)</span>
+        </div>
+
+        <!-- Slide 1: Introduction -->
+        <div id="slide-1" class="slide active">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl font-bold shadow-sm">1</div>
+                <h2 class="text-4xl font-extrabold text-slate-800">What is <span class="arabic-handwriting text-blue-600">جملة الصفة</span>?</h2>
             </div>
-        </div>
+            
+            <p class="text-xl text-slate-600 mb-8 leading-relaxed">
+                In Arabic, <b>جملة الصفة (Jumlat As-Sifah)</b> translates to "the adjective sentence." It acts exactly like a <b>relative clause</b> in English (sentences using <i>who</i>, <i>which</i>, or <i>that</i>). 
+                <br><br>
+                However, Arabic achieves this simply by placing a complete sentence directly after an <b>indefinite noun</b>, without using words like "who" or "which".
+            </p>
 
-        <div id="slide-2" class="slide flex-col">
-            <h2 class="text-4xl text-pink-700 font-bold mb-4">Golden Rule: Indefinite Noun</h2>
-            <div class="bg-yellow-50 p-6 rounded-xl border border-yellow-200">
-                <p class="text-lg mb-4">A sentence works as an adjective (<b>جملة الصفة</b>) only when the described noun (<b>المنعوت</b>) is <span class="text-red-600 font-bold">نكرة (indefinite)</span>.</p>
-                <div class="text-center my-6">
-                    <div class="text-xl font-extrabold text-green-700 p-3 bg-green-100 rounded-lg inline-block border border-green-300 shadow-md">
-                        <span class="text-red-600">نكرة (Indefinite Noun)</span> + <span class="text-blue-700">جملة (Sentence)</span>
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-slate-300"></div>
+                    <h3 class="font-bold text-slate-500 uppercase tracking-wider text-sm mb-4">English Structure</h3>
+                    <p class="text-xl">I have a <span class="hl-noun">friend</span> <b>who</b> <span class="hl-clause">studies Middle East history</span>.</p>
+                    <p class="mt-4 text-sm text-slate-500 italic"><i class="fas fa-info-circle"></i> English requires the relative pronoun "who" to link the clause to the noun.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-blue-200 shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                    <h3 class="font-bold text-blue-500 uppercase tracking-wider text-sm mb-4">Arabic Structure</h3>
+                    
+                    <div class="reveal-wrapper">
+                        <button class="reveal-btn mb-4" onclick="this.parentElement.classList.add('revealed')">
+                            <i class="fas fa-eye mr-2"></i> Reveal Arabic Translation
+                        </button>
+                        <div class="reveal-content">
+                            <div class="arabic text-right mb-4">
+                                لي <span class="hl-noun">صديق</span> <span class="hl-clause">يدرس تاريخ الشرق الأوسط</span>.
+                            </div>
+                            <p class="text-lg">I have a <span class="hl-noun">friend</span> <span class="hl-clause">[he] studies Middle East history</span>.</p>
+                            <p class="mt-4 text-sm text-blue-700 bg-blue-50 p-3 rounded-lg"><i class="fas fa-lightbulb mr-1"></i> Notice the absence of "who". The sentence "he studies..." directly follows the indefinite noun "friend".</p>
+                        </div>
                     </div>
                 </div>
-                <p class="text-lg">If the noun were <b>definite</b> (<span class="text-blue-700">معرفة</span>), the sentence would just describe it, not act as an adjective.</p>
             </div>
         </div>
 
-        <div id="slide-3" class="slide flex-col">
-            <h2 class="text-4xl text-pink-700 font-bold mb-6">Type 1: Verbal Clause (جملة فعلية)</h2>
-
-            <div class="bg-blue-50 p-4 rounded-lg mb-4">
-                <div class="arabic">رأيت <span class="text-red-600">طفلاً</span> <span class="text-green-700">يلعب في الحديقة</span></div>
-                <p class="text-lg mt-2">I saw a <b>child</b> <span class="text-green-700">who is playing in the park</span>.</p>
+        <!-- Slide 2: The Golden Rule -->
+        <div id="slide-2" class="slide">
+             <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-xl font-bold shadow-sm"><i class="fas fa-key"></i></div>
+                <h2 class="text-4xl font-extrabold text-slate-800">The Golden Rule</h2>
             </div>
 
-            <div class="bg-blue-50 p-4 rounded-lg mb-4">
-                <div class="arabic">قابلت <span class="text-red-600">رجلًا</span> <span class="text-green-700">يعمل في المدرسة</span></div>
-                <p class="text-lg mt-2">I met a <b>man</b> <span class="text-green-700">who works at the school</span>.</p>
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-xl mb-8 shadow-sm">
+                <p class="text-2xl text-slate-800 mb-2">A sentence functions as <b>جملة الصفة</b> ONLY when the noun it describes is <span class="hl-noun bg-white px-2 py-1 rounded border border-red-200">نكرة (indefinite)</span>.</p>
+                <p class="text-slate-600 mt-2">If the noun is definite (starts with الـ or is a specific name), Arabic <b>must</b> use a relative pronoun like <span class="arabic">الذي</span> (who/which) to connect the sentence.</p>
             </div>
 
-            <div class="bg-blue-50 p-4 rounded-lg">
-                <div class="arabic">اشترينا <span class="text-red-600">كتابًا</span> <span class="text-green-700">يشرح القواعد</span></div>
-                <p class="text-lg mt-2">We bought a <b>book</b> <span class="text-green-700">that explains grammar</span>.</p>
-            </div>
+            <h3 class="text-xl font-bold text-slate-700 mb-4">Interactive Comparison: See the difference</h3>
+            
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-md">
+                <div class="flex justify-center mb-6">
+                    <div class="toggle-container">
+                        <div class="toggle-option active" id="btn-indefinite" onclick="toggleDefiniteness('indefinite')">Indefinite (جملة الصفة)</div>
+                        <div class="toggle-option" id="btn-definite" onclick="toggleDefiniteness('definite')">Definite (اسم موصول)</div>
+                    </div>
+                </div>
 
-            <p class="text-base text-gray-600 mt-4 italic">The green part (<b>جملة الصفة</b>) includes a pronoun that links back to the red noun (<b>الضمير الرابط</b>).</p>
+                <!-- Indefinite View -->
+                <div id="view-indefinite" class="text-center transition-all duration-300">
+                    <div class="arabic text-3xl mb-4">
+                        قابلتُ <span class="hl-noun">رجلًا</span> <span class="hl-clause">يعملُ في المدرسةِ</span>.
+                    </div>
+                    <p class="text-xl">I met <span class="hl-noun font-bold">a man</span> <span class="text-slate-500 italic">(who)</span> <span class="hl-clause">works at the school</span>.</p>
+                    <div class="mt-6 inline-block bg-red-50 text-red-700 px-4 py-2 rounded-lg border border-red-100 text-sm font-medium">
+                        Rule applied: Indefinite Noun + Sentence
+                    </div>
+                </div>
+
+                <!-- Definite View -->
+                <div id="view-definite" class="text-center hidden transition-all duration-300">
+                    <div class="arabic text-3xl mb-4">
+                        قابلتُ <span class="text-blue-600 font-bold">الرجلَ</span> <span class="text-slate-400">الذي</span> <span class="hl-clause">يعملُ في المدرسةِ</span>.
+                    </div>
+                    <p class="text-xl">I met <span class="text-blue-600 font-bold">the man</span> <span class="text-slate-500 font-bold underline">who</span> <span class="hl-clause">works at the school</span>.</p>
+                    <div class="mt-6 inline-block bg-blue-50 text-blue-700 px-4 py-2 rounded-lg border border-blue-100 text-sm font-medium">
+                        Rule applied: Definite Noun + Relative Pronoun (الذي) + Sentence
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="slide-4" class="slide flex-col">
-            <h2 class="text-4xl text-pink-700 font-bold mb-6">Type 2: Nominal Clause (جملة اسمية)</h2>
-            <p class="text-lg mb-4 bg-purple-50 p-4 rounded-lg border border-purple-200">Here, the describing sentence starts with a noun or pronoun (a nominal sentence).</p>
-
-            <div class="bg-purple-50 p-4 rounded-lg mb-4">
-                <div class="arabic">هذه <span class="text-red-600">قطة</span> <span class="text-green-700">شعرها طويل</span></div>
-                <p class="text-lg mt-2">This is a <b>cat</b> <span class="text-green-700">whose hair is long</span>.</p>
+        <!-- Slide 3: Hidden Pronoun (Subject) -->
+        <div id="slide-3" class="slide">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl font-bold shadow-sm">3</div>
+                <h2 class="text-4xl font-extrabold text-slate-800">1. The Hidden Subject Pronoun</h2>
             </div>
+            
+            <p class="text-lg text-slate-600 mb-6">
+                Because the defining sentence is a complete thought, it must contain a <b>pronoun (الضمير الرابط)</b> that links back to the indefinite noun. <br><br>
+                When the noun acts as the <i>subject</i> of the new clause, the linking pronoun is usually <b>hidden inside the conjugated verb</b>.
+            </p>
 
-            <div class="bg-purple-50 p-4 rounded-lg">
-                <div class="arabic">رأيت <span class="text-red-600">بنتًا</span> <span class="text-green-700">ملابسها جميلة</span></div>
-                <p class="text-lg mt-2">I saw a <b>girl</b> <span class="text-green-700">whose clothes are pretty</span>.</p>
+            <div class="space-y-6">
+                <!-- Example 1 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-md">
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-4">
+                        <div class="text-lg">
+                            ...a <span class="hl-noun">professor</span> 
+                            <span class="sync-hover" data-sync="s3-ex1" onmouseover="syncHover('s3-ex1', true)" onmouseout="syncHover('s3-ex1', false)">
+                                <span class="text-slate-400 italic">[who]</span> <span class="hl-pronoun">(he)</span> <span class="hl-clause">teaches</span>
+                            </span>...
+                        </div>
+                        <div class="arabic">
+                            ... <span class="hl-noun">أستاذ</span> 
+                            <span id="s3-ex1" class="sync-hover hl-clause" onmouseover="syncHover('s3-ex1', true)" onmouseout="syncHover('s3-ex1', false)">يدرّس</span> ...
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-500"><i class="fas fa-hand-pointer mr-1"></i> Hover over the English verb section to see the hidden pronoun link in Arabic. The "he" is inside the verb يدرّس (yudarris).</p>
+                </div>
+
+                <!-- Example 2 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-md">
+                    <div class="reveal-wrapper">
+                        <button class="reveal-btn" onclick="this.parentElement.classList.add('revealed')">
+                            Translate: "...a woman who works"
+                        </button>
+                        <div class="reveal-content flex justify-between items-center">
+                            <div class="text-lg">
+                                ...a <span class="hl-noun">woman</span> 
+                                <span class="sync-hover" data-sync="s3-ex2" onmouseover="syncHover('s3-ex2', true)" onmouseout="syncHover('s3-ex2', false)">
+                                    <span class="text-slate-400 italic">[who]</span> <span class="hl-pronoun">(she)</span> <span class="hl-clause">works</span>
+                                </span>...
+                            </div>
+                            <div class="arabic">
+                                ... <span class="hl-noun">امرأة</span> 
+                                <span id="s3-ex2" class="sync-hover hl-clause" onmouseover="syncHover('s3-ex2', true)" onmouseout="syncHover('s3-ex2', false)">تعمل</span> ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <p class="text-base text-gray-600 mt-4 italic">The linking pronoun is inside the green clause, such as <b>ـها</b> or <b>ـه</b>, referring back to the red noun.</p>
         </div>
-    </div>
 
-    <div class="mt-8 flex justify-between">
-        <button id="prev-btn" onclick="changeSlide(-1)" class="px-6 py-3 bg-gray-200 font-bold rounded-xl hover:bg-gray-300">← Previous</button>
-        <button id="next-btn" onclick="changeSlide(1)" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700">Next →</button>
-    </div>
+        <!-- Slide 4: Object Pronoun -->
+        <div id="slide-4" class="slide">
+             <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl font-bold shadow-sm">4</div>
+                <h2 class="text-4xl font-extrabold text-slate-800">2. Attached Object Pronouns</h2>
+            </div>
+            
+            <p class="text-lg text-slate-600 mb-6">
+                If the described noun is the <b>object</b> of the verb within the descriptive clause, the linking pronoun cannot be hidden. It must be explicitly attached as an object suffix (e.g., <b>ـه</b>, <b>ـها</b>, <b>ـهم</b>).
+            </p>
+
+            <div class="grid gap-6">
+                <!-- Book Example 1 -->
+                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 shadow-sm relative">
+                    <div class="arabic text-right mb-4 text-3xl">
+                        شاهدت <span class="hl-noun">مباراةً</span> <span class="hl-clause">استمتعت بـ<span class="hl-pronoun bg-purple-200 px-1 rounded">ـها</span></span>.
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-language text-indigo-400 text-2xl"></i>
+                        <p class="text-xl">I saw a <span class="hl-noun">game</span> I enjoyed <span class="hl-pronoun font-bold text-2xl bg-purple-100 px-2 rounded">[it]</span>.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-indigo-200 text-slate-600 text-sm">
+                        <b>Breakdown:</b> "Game" (مباراة) is feminine. The clause "I enjoyed" (استمتعت بـ) needs an object to be complete. We attach "it" (ها) to link back to the game.
+                    </div>
+                </div>
+
+                <!-- Book Example 2 -->
+                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 shadow-sm relative">
+                    <div class="reveal-wrapper">
+                        <button class="reveal-btn" onclick="this.parentElement.classList.add('revealed')">
+                            <i class="fas fa-play mr-2"></i> Reveal Example 2
+                        </button>
+                        <div class="reveal-content">
+                            <div class="arabic text-right mb-4 text-3xl">
+                                هذه أول <span class="hl-noun">سيجارة</span> <span class="hl-clause">دخّنتـ<span class="hl-pronoun bg-purple-200 px-1 rounded">ـها</span></span>.
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-language text-indigo-400 text-2xl"></i>
+                                <p class="text-xl">This is the first <span class="hl-noun">cigarette</span> I smoked <span class="hl-pronoun font-bold text-2xl bg-purple-100 px-2 rounded">[it]</span>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Linking through Prepositions -->
+        <div id="slide-5" class="slide">
+             <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl font-bold shadow-sm">5</div>
+                <h2 class="text-4xl font-extrabold text-slate-800">3. Linking via Prepositions</h2>
+            </div>
+            
+            <p class="text-lg text-slate-600 mb-6">
+                Similarly, if the described noun acts as the object of a <b>preposition</b> within the clause, the linking pronoun attaches directly to that preposition. The textbook calls this "filling the hole left by the topic noun."
+            </p>
+
+            <div class="bg-slate-800 text-white p-8 rounded-2xl shadow-xl overflow-hidden relative">
+                <div class="absolute -right-10 -top-10 opacity-10"><i class="fas fa-quote-right text-9xl"></i></div>
+                
+                <div class="text-center z-10 relative">
+                    <div class="arabic text-4xl mb-6 text-white leading-loose">
+                        هذا أكبر <span class="text-red-400">سوقٍ</span> <span class="text-green-400">ذهبت إليـ<span class="text-purple-400 border-b-4 border-purple-400">ـه</span></span>!
+                    </div>
+                    
+                    <p class="text-2xl font-light mb-8">
+                        This is the biggest <span class="text-red-400 font-bold">market</span> I've ever been to <span class="text-purple-400 font-bold bg-white/10 px-3 py-1 rounded-lg">[it]</span>!
+                    </p>
+                </div>
+
+                <div class="bg-white/10 p-5 rounded-xl border border-white/20 mt-4">
+                    <h4 class="font-bold text-blue-300 mb-2"><i class="fas fa-exclamation-triangle mr-2"></i> Important Difference:</h4>
+                    <p class="text-slate-300">
+                        In English, we can end a sentence with a preposition ("...been <b>to</b>."). <br>
+                        In Arabic, a preposition <b>cannot</b> be left hanging. It must have an object. Since "market" was moved to the front, we replace it with the pronoun <b>ـه</b> (him/it) attached to إلى (to) -> <b>إليه</b>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Nominal Clauses -->
+        <div id="slide-6" class="slide">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl font-bold shadow-sm">6</div>
+                <h2 class="text-4xl font-extrabold text-slate-800">4. Nominal Clauses (الجملة الاسمية)</h2>
+            </div>
+            
+            <p class="text-lg text-slate-600 mb-6">
+                The describing sentence does not have to be a verb. It can be a <b>Nominal Sentence (الجملة الاسمية)</b>—a sentence starting with a noun. <br>
+                This structure is often used to translate the English word <b>"whose"</b>. The linking pronoun usually attaches to the first noun of the embedded clause.
+            </p>
+
+            <div class="space-y-4">
+                <!-- Example 1 -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="text-lg w-full md:w-1/2">
+                        ...a <span class="hl-noun">picture</span> <span class="hl-clause text-slate-500 italic"><span class="hl-pronoun font-bold text-purple-600">whose</span> age is over 100 years.</span>
+                    </div>
+                    <div class="arabic w-full md:w-1/2 text-right text-2xl bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        ... <span class="hl-noun">صورة</span> <span class="hl-clause">عمر<span class="hl-pronoun bg-purple-200 px-1 rounded-sm">ها</span> أكبر من ١٠٠ سنة</span>.
+                        <div class="text-xs font-sans text-slate-400 mt-2 text-right tracking-normal direction-ltr">(Literally: A picture, her age is greater than 100 years)</div>
+                    </div>
+                </div>
+
+                <!-- Example 2 -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="text-lg w-full md:w-1/2">
+                        I have a <span class="hl-noun">friend</span> <span class="hl-clause text-slate-500 italic"><span class="hl-pronoun font-bold text-purple-600">whose</span> name is Laila.</span>
+                    </div>
+                    <div class="arabic w-full md:w-1/2 text-right text-2xl bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        لي <span class="hl-noun">صديقة</span> <span class="hl-clause">اسم<span class="hl-pronoun bg-purple-200 px-1 rounded-sm">ها</span> ليلى</span>.
+                        <div class="text-xs font-sans text-slate-400 mt-2 text-right tracking-normal direction-ltr">(Literally: To me a friend, her name is Laila)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Interactive Practice Quiz -->
+        <div id="slide-7" class="slide">
+             <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl font-bold shadow-sm"><i class="fas fa-dumbbell"></i></div>
+                <h2 class="text-4xl font-extrabold text-slate-800">Knowledge Check</h2>
+            </div>
+            
+            <p class="text-lg text-slate-600 mb-8">
+                Based on <b>Exercise 10</b> in your textbook. Select the correct Arabic translation containing the proper <i>Jumlat As-Sifah</i> and linking pronoun.
+            </p>
+
+            <div id="quiz-container" class="max-w-2xl mx-auto">
+                <!-- Question Area -->
+                <div class="bg-slate-800 text-white p-6 rounded-t-xl text-center">
+                    <span class="text-sm uppercase tracking-widest text-slate-400 font-bold mb-2 block">Translate this sentence:</span>
+                    <h3 id="quiz-question" class="text-2xl font-bold">"He's in love with a woman he met last week!"</h3>
+                </div>
+                
+                <!-- Options Area -->
+                <div class="bg-white border-x border-b border-slate-200 p-6 rounded-b-xl shadow-lg" id="quiz-options">
+                    <!-- Options injected by JS -->
+                </div>
+
+                <!-- Feedback Area -->
+                <div id="quiz-feedback" class="mt-6 text-center text-lg font-bold hidden opacity-0 transition-opacity duration-300">
+                    <!-- Feedback injected by JS -->
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <button id="next-q-btn" onclick="nextQuestion()" class="hidden px-6 py-3 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors shadow-md">Next Question <i class="fas fa-arrow-right ml-2"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Navigation -->
+        <div class="fixed bottom-0 left-0 md:left-[280px] right-0 bg-white border-t border-slate-200 p-4 px-8 flex justify-between items-center z-50">
+            <button id="prev-btn" onclick="changeSlide(-1)" class="px-5 py-2.5 bg-slate-100 text-slate-700 font-semibold rounded-lg hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                <i class="fas fa-chevron-left"></i> Prev
+            </button>
+            
+            <div class="text-slate-500 font-medium text-sm hidden sm:block">
+                Slide <span id="current-slide-number" class="text-blue-600 font-bold">1</span> of <span id="total-slide-number">7</span>
+            </div>
+
+            <button id="next-btn" onclick="changeSlide(1)" class="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-sm">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+    </main>
 </div>
 
 <script>
+    // --- Slide Navigation Logic ---
     let currentSlide = 1;
-    const totalSlides = 4;
+    const totalSlides = 7;
     const slideNumberDisplay = document.getElementById('current-slide-number');
+    const totalSlideDisplay = document.getElementById('total-slide-number');
+    
+    // Initialize
+    totalSlideDisplay.textContent = totalSlides;
+    updateSidebar();
 
-    function updateSlide() {
-        document.querySelectorAll('.slide').forEach((slide, i) => {
-            slide.classList.toggle('active', i + 1 === currentSlide);
-        });
-        document.getElementById('prev-btn').disabled = currentSlide === 1;
-        document.getElementById('next-btn').disabled = currentSlide === totalSlides;
-        slideNumberDisplay.textContent = currentSlide;
+    function goToSlide(slideNum) {
+        currentSlide = slideNum;
+        updateSlideVisibility();
     }
 
     function changeSlide(delta) {
         currentSlide = Math.min(Math.max(1, currentSlide + delta), totalSlides);
-        updateSlide();
+        updateSlideVisibility();
     }
+
+    function updateSlideVisibility() {
+        // Hide all slides
+        document.querySelectorAll('.slide').forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i + 1 === currentSlide) {
+                // Add active after a tiny delay to trigger CSS animation
+                setTimeout(() => slide.classList.add('active'), 10);
+            }
+        });
+
+        // Update buttons
+        document.getElementById('prev-btn').disabled = currentSlide === 1;
+        document.getElementById('next-btn').disabled = currentSlide === totalSlides;
+        
+        // Update counters & sidebar
+        slideNumberDisplay.textContent = currentSlide;
+        updateSidebar();
+        
+        // Scroll to top of main content
+        document.getElementById('main-content').scrollTo(0,0);
+    }
+
+    function updateSidebar() {
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach((item, index) => {
+            if (index + 1 === currentSlide) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') changeSlide(1);
+        if (e.key === 'ArrowLeft') changeSlide(-1);
+    });
+
+    // --- Interactive Toggle (Slide 2) ---
+    function toggleDefiniteness(type) {
+        const indefiniteBtn = document.getElementById('btn-indefinite');
+        const definiteBtn = document.getElementById('btn-definite');
+        const indefiniteView = document.getElementById('view-indefinite');
+        const definiteView = document.getElementById('view-definite');
+
+        if (type === 'indefinite') {
+            indefiniteBtn.classList.add('active');
+            definiteBtn.classList.remove('active');
+            indefiniteView.classList.remove('hidden');
+            definiteView.classList.add('hidden');
+        } else {
+            definiteBtn.classList.add('active');
+            indefiniteBtn.classList.remove('active');
+            definiteView.classList.remove('hidden');
+            indefiniteView.classList.add('hidden');
+        }
+    }
+
+    // --- Sync Hover Interactivity (Slide 3) ---
+    function syncHover(targetId, isHovering) {
+        const elements = document.querySelectorAll(`[data-sync="${targetId}"], #${targetId}`);
+        elements.forEach(el => {
+            if (isHovering) {
+                el.classList.add('active-sync');
+            } else {
+                el.classList.remove('active-sync');
+            }
+        });
+    }
+
+    // --- Quiz Logic (Slide 7) ---
+    const quizData = [
+        {
+            question: "I saw a movie I didn't like.",
+            options: [
+                { text: "رأيت الفيلم لم أحبه.", isCorrect: false, feedback: "Incorrect. 'الفيلم' is definite, so it requires 'الذي'." },
+                { text: "رأيت فيلماً لم أحبه.", isCorrect: true, feedback: "Correct! Indefinite noun (فيلماً) + Clause with attached pronoun (أحبـه)." },
+                { text: "رأيت فيلماً لم أحب.", isCorrect: false, feedback: "Incorrect. Missing the linking pronoun 'ـه' at the end of the verb." }
+            ]
+        },
+        {
+            question: "He's in love with a woman he met last week!",
+            options: [
+                { text: "هو مغرم بامرأة قابلها الأسبوع الماضي.", isCorrect: true, feedback: "Excellent! 'امرأة' is indefinite, and 'قابلـها' contains the linking object pronoun." },
+                { text: "هو مغرم بالمرأة قابلها الأسبوع الماضي.", isCorrect: false, feedback: "Incorrect. 'المرأة' is definite. It would need 'التي'." }
+            ]
+        },
+        {
+            question: "We want a government that listens to people.",
+            options: [
+                { text: "نريد حكومة التي تستمع للناس.", isCorrect: false, feedback: "Incorrect. 'حكومة' is indefinite, so you DO NOT use 'التي'." },
+                { text: "نريد حكومة تستمع للناس.", isCorrect: true, feedback: "Perfect! Indefinite noun + verbal sentence directly attached. (The pronoun is hidden inside تستمع)." }
+            ]
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function loadQuestion() {
+        const qData = quizData[currentQuestionIndex];
+        document.getElementById('quiz-question').textContent = `"${qData.question}"`;
+        
+        const optionsContainer = document.getElementById('quiz-options');
+        optionsContainer.innerHTML = '';
+        
+        qData.options.forEach((opt, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'quiz-option arabic text-xl py-4 text-center';
+            btn.innerHTML = `${opt.text}`;
+            btn.onclick = () => checkAnswer(btn, opt);
+            optionsContainer.appendChild(btn);
+        });
+
+        // Reset UI
+        const feedbackEl = document.getElementById('quiz-feedback');
+        feedbackEl.style.display = 'none';
+        feedbackEl.style.opacity = '0';
+        document.getElementById('next-q-btn').classList.add('hidden');
+    }
+
+    function checkAnswer(clickedElement, optionData) {
+        // Disable clicking other options
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.style.pointerEvents = 'none');
+
+        const feedbackEl = document.getElementById('quiz-feedback');
+        feedbackEl.style.display = 'block';
+        
+        // Trigger reflow
+        void feedbackEl.offsetWidth; 
+        feedbackEl.style.opacity = '1';
+
+        if (optionData.isCorrect) {
+            clickedElement.classList.add('correct');
+            clickedElement.innerHTML += ' <i class="fas fa-check-circle text-green-500 mr-2"></i>';
+            feedbackEl.innerHTML = `<span class="text-green-600"><i class="fas fa-check"></i> ${optionData.feedback}</span>`;
+        } else {
+            clickedElement.classList.add('incorrect');
+            clickedElement.innerHTML += ' <i class="fas fa-times-circle text-red-500 mr-2"></i>';
+            feedbackEl.innerHTML = `<span class="text-red-600"><i class="fas fa-times"></i> ${optionData.feedback}</span>`;
+            
+            // Highlight the correct one
+            options.forEach((opt, idx) => {
+                if(quizData[currentQuestionIndex].options[idx].isCorrect) {
+                    opt.classList.add('correct');
+                }
+            });
+        }
+
+        // Show Next button if not last question, otherwise show completion
+        if (currentQuestionIndex < quizData.length - 1) {
+            document.getElementById('next-q-btn').classList.remove('hidden');
+            document.getElementById('next-q-btn').innerHTML = 'Next Question <i class="fas fa-arrow-right ml-2"></i>';
+        } else {
+            document.getElementById('next-q-btn').classList.remove('hidden');
+            document.getElementById('next-q-btn').innerHTML = 'Restart Practice <i class="fas fa-redo ml-2"></i>';
+            document.getElementById('next-q-btn').onclick = () => {
+                currentQuestionIndex = 0;
+                loadQuestion();
+                document.getElementById('next-q-btn').onclick = nextQuestion;
+            };
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if(currentQuestionIndex < quizData.length) {
+            loadQuestion();
+        }
+    }
+
+    // Initialize Quiz
+    loadQuestion();
+
 </script>
-
-
-    <!-- Global AI Assistant -->
-    <script src="../ai-assistant.js"></script>
 
 </body>
 </html>
