@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arabic Travel Vocabulary Activities</title>
+  <style>
+    :root {
+      --bg: #f7f4ee;
+      --card: #ffffff;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #8b5e34;
+      --accent-2: #c79a5f;
+      --soft: #fff7ed;
+      --correct: #166534;
+      --correct-bg: #dcfce7;
+      --wrong: #991b1b;
+      --wrong-bg: #fee2e2;
+      --focus: #2563eb;
+      --shadow: 0 18px 45px rgba(31, 41, 55, 0.12);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(199, 154, 95, 0.22), transparent 36rem),
+        linear-gradient(135deg, #f9fafb 0%, var(--bg) 55%, #fef3c7 100%);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 56px;
+    }
+
+    header.hero {
+      background: linear-gradient(135deg, #3b2f2f 0%, #7c4f2c 62%, #b8793e 100%);
+      color: white;
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header.hero::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      right: -80px;
+      top: -120px;
+      background: rgba(255,255,255,0.14);
+      border-radius: 50%;
+    }
+
+    .eyebrow {
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: .82rem;
+      opacity: .86;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.05;
+      max-width: 780px;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      font-size: 1.05rem;
+      opacity: .92;
+      margin: 18px 0 0;
+      line-height: 1.65;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      font-size: .96rem;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+    .btn-primary {
+      background: #111827;
+      color: white;
+      box-shadow: 0 10px 25px rgba(17, 24, 39, .22);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.92);
+      color: #4b2e1f;
+    }
+
+    .btn-soft {
+      background: var(--soft);
+      color: #7c2d12;
+      border: 1px solid #fed7aa;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 26px;
+    }
+
+    section.activity {
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(229,231,235,.78);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: 0 10px 30px rgba(31,41,55,.08);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2.1rem);
+    }
+
+    .instructions {
+      color: var(--muted);
+      margin: 8px 0 0;
+      line-height: 1.55;
+    }
+
+    .score-pill {
+      white-space: nowrap;
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 800;
+      min-width: 132px;
+      text-align: center;
+    }
+
+    .question-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .question-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      min-height: 232px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+    }
+
+    .question-card.correct { border-color: #86efac; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%); }
+    .question-card.wrong { border-color: #fecaca; background: linear-gradient(180deg, #ffffff 0%, #fff1f2 100%); }
+
+    .q-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #f3eadc;
+      color: #7c4f2c;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .prompt-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .arabic {
+      direction: rtl;
+      text-align: right;
+      font-family: "Noto Naskh Arabic", "Amiri", "Scheherazade New", "Tahoma", system-ui, sans-serif;
+      font-size: 1.22rem;
+      line-height: 2.05;
+      flex: 1;
+    }
+
+    .options {
+      display: grid;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .option {
+      direction: rtl;
+      text-align: right;
+      border: 1px solid var(--line);
+      background: #fafafa;
+      border-radius: 14px;
+      padding: 11px 12px;
+      font-family: "Noto Naskh Arabic", "Amiri", "Tahoma", system-ui, sans-serif;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-start;
+      align-items: center;
+      transition: border .15s ease, background .15s ease, transform .15s ease;
+    }
+
+    .option:hover { background: #fff7ed; border-color: #fdba74; transform: translateX(-2px); }
+    .option input { transform: scale(1.1); cursor: pointer; }
+    .option.correct-choice { background: var(--correct-bg); color: var(--correct); border-color: #86efac; }
+    .option.wrong-choice { background: var(--wrong-bg); color: var(--wrong); border-color: #fca5a5; }
+
+    .feedback {
+      min-height: 26px;
+      font-size: .94rem;
+      font-weight: 760;
+      color: var(--muted);
+    }
+    .feedback.ok { color: var(--correct); }
+    .feedback.bad { color: var(--wrong); }
+
+    .word-bank {
+      background: #fff7ed;
+      border: 1px dashed #fdba74;
+      border-radius: 22px;
+      padding: 16px;
+      margin: 6px 0 18px;
+    }
+
+    .word-bank-title {
+      font-weight: 850;
+      color: #7c2d12;
+      margin-bottom: 12px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      direction: rtl;
+      justify-content: flex-start;
+    }
+
+    .chip {
+      background: white;
+      border: 1px solid #fed7aa;
+      color: #7c2d12;
+      box-shadow: 0 3px 12px rgba(124, 45, 18, .08);
+      font-family: "Noto Naskh Arabic", "Amiri", "Tahoma", system-ui, sans-serif;
+      font-size: 1.05rem;
+      padding: 9px 14px;
+    }
+
+    .chip.selected {
+      background: #7c2d12;
+      color: white;
+      border-color: #7c2d12;
+      transform: translateY(-2px);
+    }
+
+    .fill-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .fill-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: 44px 1fr minmax(150px, 220px);
+      gap: 12px;
+      align-items: center;
+    }
+
+    .fill-card.correct { border-color: #86efac; background: #f0fdf4; }
+    .fill-card.wrong { border-color: #fca5a5; background: #fff1f2; }
+
+    .blank-select {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 14px;
+      padding: 12px;
+      background: #fafafa;
+      color: var(--ink);
+      font-family: "Noto Naskh Arabic", "Amiri", "Tahoma", system-ui, sans-serif;
+      font-size: 1.05rem;
+      direction: rtl;
+    }
+
+    .sentence-line {
+      direction: rtl;
+      text-align: right;
+      font-family: "Noto Naskh Arabic", "Amiri", "Tahoma", system-ui, sans-serif;
+      font-size: 1.18rem;
+      line-height: 1.85;
+    }
+
+    .blank-mark {
+      display: inline-block;
+      min-width: 90px;
+      border-bottom: 2px solid #9ca3af;
+      margin: 0 4px;
+      transform: translateY(-3px);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+
+    .answer-key {
+      display: none;
+      margin-top: 16px;
+      background: #f9fafb;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .answer-key.show { display: block; }
+
+    .answer-key h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .answer-grid {
+      columns: 2;
+      column-gap: 30px;
+      direction: rtl;
+      text-align: right;
+      font-family: "Noto Naskh Arabic", "Amiri", "Tahoma", system-ui, sans-serif;
+      font-size: 1.06rem;
+      line-height: 1.9;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(20px);
+      background: #111827;
+      color: white;
+      border-radius: 999px;
+      padding: 12px 18px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      z-index: 10;
+      font-weight: 750;
+      box-shadow: 0 10px 25px rgba(17, 24, 39, .24);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: .92rem;
+      margin-top: 22px;
+    }
+
+    @media (max-width: 900px) {
+      .question-grid { grid-template-columns: 1fr; }
+      .fill-card { grid-template-columns: 38px 1fr; }
+      .blank-select { grid-column: 2 / -1; }
+      .section-head { flex-direction: column; }
+      .score-pill { align-self: flex-start; }
+    }
+
+    @media (max-width: 560px) {
+      .page { width: min(100% - 20px, 1120px); padding-top: 12px; }
+      header.hero, section.activity { padding: 20px; border-radius: 22px; }
+      .arabic { font-size: 1.12rem; }
+      .question-card { padding: 14px; }
+      .answer-grid { columns: 1; }
+    }
+
+    @media print {
+      body { background: white; }
+      header.hero, section.activity { box-shadow: none; border: 1px solid #ddd; }
+      .toolbar, .actions, .feedback, .toast { display: none !important; }
+      .answer-key { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="eyebrow">Arabic Vocabulary Practice</div>
+      <h1>Travel, Relationships, and Summer Plans</h1>
+      <p class="subtitle">Complete the two activities. In Activity 1, choose the best answer. In Activity 2, use the word bank to complete each sentence.</p>
+      <div class="toolbar">
+        <button class="btn-secondary" onclick="document.getElementById('activity1').scrollIntoView({behavior:'smooth'})">Activity 1</button>
+        <button class="btn-secondary" onclick="document.getElementById('activity2').scrollIntoView({behavior:'smooth'})">Activity 2</button>
+        <button class="btn-primary" onclick="checkAll()">Check All Answers</button>
+        <button class="btn-secondary" onclick="resetAll()">Reset Page</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <section class="activity" id="activity1">
+        <div class="section-head">
+          <div class="section-title">
+            <h2>Activity 1: Multiple Choice</h2>
+            <p class="instructions">Read each context carefully and select the most appropriate Arabic word or phrase.</p>
+          </div>
+          <div class="score-pill" id="mcq-score">Score: 0 / 10</div>
+        </div>
+        <div class="question-grid" id="mcq-container"></div>
+        <div class="actions">
+          <button class="btn-primary" onclick="checkMcq()">Check Activity 1</button>
+          <button class="btn-soft" onclick="resetMcq()">Reset Activity 1</button>
+          <button class="btn-secondary" onclick="toggleAnswers('mcq-key')">Show / Hide Answers</button>
+        </div>
+        <div class="answer-key" id="mcq-key">
+          <h3>Activity 1 Answer Key</h3>
+          <div class="answer-grid" id="mcq-answers"></div>
+        </div>
+      </section>
+
+      <section class="activity" id="activity2">
+        <div class="section-head">
+          <div class="section-title">
+            <h2>Activity 2: Word Bank</h2>
+            <p class="instructions">Choose the best word from the word bank for each blank. Two words are extra.</p>
+          </div>
+          <div class="score-pill" id="fill-score">Score: 0 / 10</div>
+        </div>
+
+        <div class="word-bank">
+          <div class="word-bank-title">بنك الكلمات</div>
+          <div class="chips" id="word-bank"></div>
+        </div>
+
+        <div class="fill-list" id="fill-container"></div>
+
+        <div class="actions">
+          <button class="btn-primary" onclick="checkFill()">Check Activity 2</button>
+          <button class="btn-soft" onclick="resetFill()">Reset Activity 2</button>
+          <button class="btn-secondary" onclick="toggleAnswers('fill-key')">Show / Hide Answers</button>
+        </div>
+        <div class="answer-key" id="fill-key">
+          <h3>Activity 2 Answer Key</h3>
+          <div class="answer-grid" id="fill-answers"></div>
+        </div>
+      </section>
+    </div>
+
+    <footer>Self-contained classroom activity page. No internet connection required.</footer>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const mcqData = [
+      {
+        prompt: 'مريم وأصدقاؤها يخططون للعطلة الصيفية. قالت مريم:<br>"أنا أحب البحر، لكن __________ يُفضل الجبال."',
+        options: ['لا أحد', 'مُعظمنا', 'عاطفي', 'انقطَع'],
+        answer: 'مُعظمنا'
+      },
+      {
+        prompt: 'سافر يوسف إلى المغرب في برنامج تبادل، وهناك __________ على طلاب من دول مختلفة.',
+        options: ['تعرّف', 'تجمّع', 'انقطَع', 'خَجِل'],
+        answer: 'تعرّف'
+      },
+      {
+        prompt: 'دخل خالد الفندق وقال غاضبًا:<br>"الإنترنت __________ منذ أمس ولا أستطيع العمل!"',
+        options: ['تَبادَل', 'انقطَع', 'خطب', 'خجل'],
+        answer: 'انقطَع'
+      },
+      {
+        prompt: 'ريم تبكي بسرعة وتشعر كثيرًا بالآخرين. يمكن أن نقول إنها:',
+        options: ['لا أحد', 'عاطفية', 'مُعظم', 'سياحية'],
+        answer: 'عاطفية'
+      },
+      {
+        prompt: 'في سوق مدينة مراكش، وجدنا __________ رائعة وهدايا يدوية جميلة.',
+        options: ['جولات', 'فنادق', 'علاقات', 'تجارب'],
+        answer: 'تجارب'
+      },
+      {
+        prompt: 'اليوم عندنا __________ في المدينة القديمة لزيارة الأماكن التاريخية.',
+        options: ['تجربة', 'خطبة', 'جولة', 'علاقة'],
+        answer: 'جولة'
+      },
+      {
+        prompt: 'في نهاية الصف، خرج الطلاب من الفصل',
+        options: ['معًا', 'لا أحد', 'انقطعوا', 'تعرّفوا'],
+        answer: 'معًا'
+      },
+      {
+        prompt: 'سافرت ليلى إلى تركيا في رحلة قصيرة. عند عودتها قالت:<br>"كانت أفضل __________ في حياتي."',
+        options: ['علاقة', 'تجربة', 'خطبة', 'انقطاع'],
+        answer: 'تجربة'
+      },
+      {
+        prompt: 'في اللقاء الأول بين الحبيبين، بدآ الحديث عن __________ السابقة.',
+        options: ['العلاقات العاطفية', 'جولة سياحية', 'انقطاع الكهرباء', 'تبادل الأطعمة'],
+        answer: 'العلاقات العاطفية'
+      },
+      {
+        prompt: 'نزلت عائلتنا في فندق خمس نجوم، لكن السعر كان:',
+        options: ['خطيب', 'تَبادُل', 'غاليًا', 'سوق'],
+        answer: 'غاليًا'
+      }
+    ];
+
+    const wordBank = ['غالية', 'مرة', 'فندق', 'جولة', 'تجمّع', 'خطب', 'معًا', 'تعرّف', 'انقطَعت', 'علاقة', 'تجربة', 'أحد'];
+
+    const fillData = [
+      { sentence: 'سافرت لأول ___ إلى فرنسا، وكانت الرحلة رائعة.', answer: 'مرة' },
+      { sentence: 'في نهاية الحفل، ___ كل الطلاب في الساحة لالتقاط صورة جماعية.', answer: 'تجمّع' },
+      { sentence: 'لم أجد ___ أعرفه في الحفل، فجلست وحدي.', answer: 'أحد' },
+      { sentence: 'خلال المحاضرة، ___ الكهرباء فجأة، ولم أستطع أن أكمّل الشرح.', answer: 'انقطَعت' },
+      { sentence: 'أحمد سافر إلى ألمانيا في برنامج تبادل، وهناك ___ على طلاب من ٦ دول.', answer: 'تعرّف' },
+      { sentence: 'هناك ___ قوية بيني وبين أستاذي، مبنية على الاحترام.', answer: 'علاقة' },
+      { sentence: 'أردنا أن نحجز في هذا ___، لكن السعر كان مرتفعًا جدًا.', answer: 'فندق' },
+      { sentence: 'أحسن شيء في الرحلة كان ___ القارب في النهر وسط الطبيعة.', answer: 'جولة' },
+      { sentence: 'بعد سنتين من الصداقة، ___ سارة لعلي أمام عائلتها.', answer: 'خطب' },
+      { sentence: 'جلسنا في الحديقة ___ نأكل، ونتحدث، ونضحك.', answer: 'معًا' }
+    ];
+
+    const arabicLetters = ['أ', 'ب', 'ج', 'د'];
+    let selectedChip = null;
+
+    function renderMcq() {
+      const container = document.getElementById('mcq-container');
+      container.innerHTML = '';
+      mcqData.forEach((q, index) => {
+        const card = document.createElement('article');
+        card.className = 'question-card';
+        card.id = `mcq-card-${index}`;
+        card.innerHTML = `
+          <div class="prompt-row">
+            <span class="q-number">${index + 1}</span>
+            <div class="arabic">${q.prompt}</div>
+          </div>
+          <div class="options">
+            ${q.options.map((option, optIndex) => `
+              <label class="option" id="mcq-${index}-${optIndex}">
+                <input type="radio" name="mcq-${index}" value="${escapeHtml(option)}">
+                <span>${arabicLetters[optIndex]}. ${option}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="feedback" id="mcq-feedback-${index}"></div>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('mcq-answers').innerHTML = mcqData
+        .map((q, i) => `<div>${i + 1}. ${q.answer}</div>`)
+        .join('');
+    }
+
+    function renderFill() {
+      const bank = document.getElementById('word-bank');
+      bank.innerHTML = '';
+      wordBank.forEach(word => {
+        const chip = document.createElement('button');
+        chip.className = 'chip';
+        chip.type = 'button';
+        chip.textContent = word;
+        chip.onclick = () => selectChip(chip, word);
+        bank.appendChild(chip);
+      });
+
+      const container = document.getElementById('fill-container');
+      container.innerHTML = '';
+      fillData.forEach((item, index) => {
+        const card = document.createElement('article');
+        card.className = 'fill-card';
+        card.id = `fill-card-${index}`;
+        const sentence = item.sentence.replace('___', '<span class="blank-mark"></span>');
+        card.innerHTML = `
+          <span class="q-number">${index + 1}</span>
+          <div class="sentence-line">${sentence}</div>
+          <select class="blank-select" id="fill-${index}" aria-label="Answer for question ${index + 1}">
+            <option value="">اختر كلمة...</option>
+            ${wordBank.map(word => `<option value="${escapeHtml(word)}">${word}</option>`).join('')}
+          </select>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('fill-answers').innerHTML = fillData
+        .map((item, i) => `<div>${i + 1}. ${item.answer}</div>`)
+        .join('');
+    }
+
+    function selectChip(chip, word) {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+      selectedChip = word;
+      chip.classList.add('selected');
+      showToast(`Selected: ${word}`);
+    }
+
+    document.addEventListener('change', event => {
+      if (event.target.classList.contains('blank-select') && selectedChip) {
+        event.target.value = selectedChip;
+      }
+    });
+
+    function checkMcq() {
+      let score = 0;
+      mcqData.forEach((q, index) => {
+        const card = document.getElementById(`mcq-card-${index}`);
+        const feedback = document.getElementById(`mcq-feedback-${index}`);
+        card.classList.remove('correct', 'wrong');
+        feedback.className = 'feedback';
+        q.options.forEach((_, optIndex) => {
+          document.getElementById(`mcq-${index}-${optIndex}`).classList.remove('correct-choice', 'wrong-choice');
+        });
+
+        const selected = document.querySelector(`input[name="mcq-${index}"]:checked`);
+        if (!selected) {
+          feedback.textContent = 'Choose an answer first.';
+          return;
+        }
+
+        const selectedValue = selected.value;
+        const selectedLabel = [...document.querySelectorAll(`input[name="mcq-${index}"]`)]
+          .findIndex(input => input.value === selectedValue);
+        const correctIndex = q.options.indexOf(q.answer);
+        document.getElementById(`mcq-${index}-${correctIndex}`).classList.add('correct-choice');
+
+        if (selectedValue === q.answer) {
+          score++;
+          card.classList.add('correct');
+          feedback.textContent = 'Correct.';
+          feedback.classList.add('ok');
+        } else {
+          card.classList.add('wrong');
+          document.getElementById(`mcq-${index}-${selectedLabel}`).classList.add('wrong-choice');
+          feedback.textContent = `Try again. Correct answer: ${q.answer}`;
+          feedback.classList.add('bad');
+        }
+      });
+      document.getElementById('mcq-score').textContent = `Score: ${score} / ${mcqData.length}`;
+      showToast(`Activity 1 score: ${score} / ${mcqData.length}`);
+      return score;
+    }
+
+    function checkFill() {
+      let score = 0;
+      fillData.forEach((item, index) => {
+        const select = document.getElementById(`fill-${index}`);
+        const card = document.getElementById(`fill-card-${index}`);
+        card.classList.remove('correct', 'wrong');
+        select.style.borderColor = '#d1d5db';
+
+        if (!select.value) return;
+
+        if (select.value === item.answer) {
+          score++;
+          card.classList.add('correct');
+          select.style.borderColor = '#86efac';
+        } else {
+          card.classList.add('wrong');
+          select.style.borderColor = '#fca5a5';
+        }
+      });
+      document.getElementById('fill-score').textContent = `Score: ${score} / ${fillData.length}`;
+      showToast(`Activity 2 score: ${score} / ${fillData.length}`);
+      return score;
+    }
+
+    function checkAll() {
+      const s1 = checkMcq();
+      const s2 = checkFill();
+      showToast(`Total score: ${s1 + s2} / ${mcqData.length + fillData.length}`);
+    }
+
+    function resetMcq() {
+      document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+      document.querySelectorAll('#mcq-container .question-card').forEach(card => card.classList.remove('correct', 'wrong'));
+      document.querySelectorAll('.option').forEach(option => option.classList.remove('correct-choice', 'wrong-choice'));
+      document.querySelectorAll('#mcq-container .feedback').forEach(feedback => {
+        feedback.textContent = '';
+        feedback.className = 'feedback';
+      });
+      document.getElementById('mcq-score').textContent = `Score: 0 / ${mcqData.length}`;
+    }
+
+    function resetFill() {
+      document.querySelectorAll('.blank-select').forEach(select => {
+        select.value = '';
+        select.style.borderColor = '#d1d5db';
+      });
+      document.querySelectorAll('#fill-container .fill-card').forEach(card => card.classList.remove('correct', 'wrong'));
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+      selectedChip = null;
+      document.getElementById('fill-score').textContent = `Score: 0 / ${fillData.length}`;
+    }
+
+    function resetAll() {
+      resetMcq();
+      resetFill();
+      document.querySelectorAll('.answer-key').forEach(key => key.classList.remove('show'));
+      showToast('Page reset.');
+    }
+
+    function toggleAnswers(id) {
+      document.getElementById(id).classList.toggle('show');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => toast.classList.remove('show'), 1700);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    renderMcq();
+    renderFill();
+  </script>
+</body>
+</html>
