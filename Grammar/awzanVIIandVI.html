@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Arabic Verb Forms Review</title>
+  <style>
+    :root{
+      --ink:#1f2937;
+      --muted:#64748b;
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --line:#e5e7eb;
+      --brand:#312e81;
+      --brand2:#6d28d9;
+      --soft:#f1efff;
+      --good:#166534;
+      --good-bg:#dcfce7;
+      --bad:#991b1b;
+      --bad-bg:#fee2e2;
+      --warn:#92400e;
+      --warn-bg:#fef3c7;
+      --shadow:0 14px 34px rgba(31,41,55,.10);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Segoe UI", Tahoma, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(109,40,217,.16), transparent 34%),
+        linear-gradient(180deg,#fbfbff 0%,var(--bg) 45%,#eef2ff 100%);
+      line-height:1.7;
+    }
+    header{max-width:1120px;margin:0 auto;padding:40px 18px 20px}
+    .hero{
+      background:linear-gradient(135deg,#27235d,#4338ca 55%,#6d28d9);
+      color:white;
+      border-radius:28px;
+      padding:34px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:330px;height:330px;border-radius:50%;
+      background:rgba(255,255,255,.10);
+      right:-120px;top:-145px;
+    }
+    .hero h1{margin:0 0 10px;font-size:clamp(28px,4vw,44px);letter-spacing:.2px}
+    .hero p{margin:0;max-width:850px;color:#eef2ff;font-size:18px}
+    .container{max-width:1120px;margin:0 auto;padding:0 18px 44px}
+    .arabic{direction:rtl;text-align:right;font-family:"Segoe UI", Tahoma, Arial, sans-serif}
+    .arabic.center{text-align:center}
+    .toolbar{
+      display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:18px 0;
+    }
+    .scorebox{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .pill{
+      background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 14px;
+      box-shadow:0 6px 16px rgba(31,41,55,.06);font-weight:750;
+    }
+    button{
+      border:0;cursor:pointer;font-weight:800;border-radius:13px;padding:11px 16px;
+      transition:.18s ease;font-family:inherit;font-size:15px;
+    }
+    button.primary{background:var(--brand);color:#fff}
+    button.secondary{background:#fff;color:var(--brand);border:1px solid #d8d4ff}
+    button.ghost{background:transparent;color:var(--brand);border:1px solid var(--line)}
+    button:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(31,41,55,.13)}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 26px}
+    .mini-card{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;
+      box-shadow:0 8px 18px rgba(31,41,55,.06);
+    }
+    .mini-card h3{margin:0 0 6px;color:var(--brand);font-size:19px}
+    .mini-card .pattern{font-size:25px;font-weight:900;margin-bottom:7px;color:#111827}
+    .mini-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+    .section{
+      background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:24px;margin:22px 0;
+      box-shadow:var(--shadow);overflow:hidden;
+    }
+    .section-head{
+      padding:21px 24px;background:linear-gradient(90deg,#ffffff,#f1efff);border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+    }
+    .section h2{margin:0;color:var(--brand);font-size:26px}
+    .section .instruction{color:var(--muted);font-size:15px;margin-top:4px;line-height:1.45;max-width:780px}
+    .section-body{padding:22px}
+    .item{
+      border:1px solid var(--line);background:#fff;border-radius:18px;padding:18px;margin:13px 0;transition:.18s ease;
+    }
+    .item.correct{border-color:#86efac;background:linear-gradient(180deg,#fff,#f0fdf4)}
+    .item.wrong{border-color:#fecaca;background:linear-gradient(180deg,#fff,#fff1f2)}
+    .stem{font-size:20px;margin:0 0 12px}
+    .stem .num{
+      display:inline-flex;width:31px;height:31px;border-radius:999px;background:var(--soft);color:var(--brand);
+      align-items:center;justify-content:center;margin-right:8px;font-weight:900;direction:ltr;
+    }
+    .arabic .num{margin-right:0;margin-left:8px}
+    .options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .option{
+      display:flex;gap:9px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:14px;
+      background:#fafafa;cursor:pointer;transition:.15s ease;font-size:18px;
+    }
+    .option:hover{background:#f7f4ff;border-color:#c4b5fd}
+    .option input{accent-color:var(--brand);transform:scale(1.15)}
+    .option .arabic{flex:1}
+    .input-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    input[type="text"]{
+      border:1px solid #cfd5e1;border-radius:13px;padding:11px 12px;min-width:260px;font-size:18px;
+      font-family:inherit;background:#fff;color:var(--ink);text-align:center;font-weight:800;
+    }
+    .hint{color:var(--muted);font-size:14px;margin-top:8px}
+    .feedback{margin-top:12px;padding:10px 12px;border-radius:13px;display:none;font-weight:750}
+    .feedback.good{display:block;background:var(--good-bg);color:var(--good)}
+    .feedback.bad{display:block;background:var(--bad-bg);color:var(--bad)}
+    .feedback.warn{display:block;background:var(--warn-bg);color:var(--warn)}
+    .answer-key{display:none;background:#fcfcff;border:1px dashed #c4b5fd;border-radius:18px;padding:16px 18px;margin:18px 0 0}
+    .answer-key.show{display:block}
+    .answer-key h3{margin:0 0 8px;color:var(--brand)}
+    .answer-key ol{margin:0;padding-left:24px}
+    .answer-key li{margin:4px 0}
+    .bank{display:flex;gap:8px;flex-wrap:wrap;padding:12px;background:#f8fafc;border:1px solid var(--line);border-radius:18px;margin-bottom:12px}
+    .chip{border:1px solid #d8d4ff;background:#fff;color:var(--brand);border-radius:999px;padding:7px 12px;font-weight:800;font-size:16px}
+    .note{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;border-radius:18px;padding:14px 16px;margin-top:18px;font-size:15px}
+    .progress-wrap{width:210px;height:11px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:8px}
+    #progressBar{height:100%;width:0;background:linear-gradient(90deg,#6d28d9,#312e81);transition:.25s ease}
+    footer{max-width:1120px;margin:0 auto;padding:0 18px 35px;color:var(--muted);font-size:13px;text-align:center}
+    @media (max-width:850px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .options{grid-template-columns:1fr}
+      .section-head{display:block}
+      .progress-wrap{width:100%}
+    }
+    @media (max-width:560px){
+      .grid{grid-template-columns:1fr}
+      .hero{padding:24px}
+      input[type="text"]{min-width:100%;width:100%}
+      .toolbar{align-items:stretch}
+      .toolbar button{width:100%}
+      .scorebox{width:100%}
+      .pill{flex:1;text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <h1>Interactive Review: Arabic Verb Forms</h1>
+      <p>Review Forms II, V, VI, and VII through contextual verb choices and short production. Read the whole sentence first, then choose or write the verb that best matches the meaning.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="toolbar">
+      <div class="scorebox">
+        <div class="pill">Score: <span id="score">0</span> / <span id="total">0</span></div>
+        <div class="pill">Percentage: <span id="percent">0%</span></div>
+      </div>
+      <div>
+        <button class="primary" onclick="checkAll()">Check all answers</button>
+        <button class="secondary" onclick="toggleAnswers()">Show / hide answer key</button>
+        <button class="ghost" onclick="resetAll()">Reset</button>
+      </div>
+    </div>
+
+    <div class="grid" aria-label="Quick form review">
+      <div class="mini-card">
+        <h3>Form II</h3>
+        <div class="pattern arabic center">فَعَّلَ / يُفَعِّل</div>
+        <p>Often causative, transitive, or intensive: <span class="arabic">عَرَّفَ، ذَكَّرَ، غَيَّرَ</span>.</p>
+      </div>
+      <div class="mini-card">
+        <h3>Form V</h3>
+        <div class="pattern arabic center">تَفَعَّلَ / يَتَفَعَّل</div>
+        <p>Often reflexive or self-directed; the subject undergoes the change: <span class="arabic">تَعَرَّفَ، تَذَكَّرَ، تَغَيَّرَ</span>.</p>
+      </div>
+      <div class="mini-card">
+        <h3>Form VI</h3>
+        <div class="pattern arabic center">تَفَاعَلَ / يَتَفَاعَل</div>
+        <p>Often reciprocal or collaborative: <span class="arabic">تَبَادَلَ، تَعَاوَنَ، تَرَاسَلَ</span>.</p>
+      </div>
+      <div class="mini-card">
+        <h3>Form VII</h3>
+        <div class="pattern arabic center">اِنْفَعَلَ / يَنْفَعِل</div>
+        <p>Often passive-like or resultative: <span class="arabic">اِنْقَطَعَ، اِنْفَتَحَ، اِنْكَسَرَ</span>.</p>
+      </div>
+    </div>
+
+    <section class="section" id="q1">
+      <div class="section-head">
+        <div>
+          <h2>Question 1: Choose the correct verb</h2>
+          <div class="instruction">Choose the Arabic verb that best completes each sentence. Focus on the meaning in context, not on naming the form.</div>
+        </div>
+        <div>
+          <strong>8 items</strong>
+          <div class="progress-wrap"><div id="progressBar"></div></div>
+        </div>
+      </div>
+      <div class="section-body" id="q1-body"></div>
+      <div class="answer-key" id="key1"><h3>Answer key</h3><ol id="key1-list"></ol></div>
+    </section>
+
+    <section class="section" id="q2">
+      <div class="section-head">
+        <div>
+          <h2>Question 2: Choose the sentence that matches the meaning</h2>
+          <div class="instruction">Read the English cue, then choose the Arabic sentence that expresses the same meaning most accurately.</div>
+        </div>
+        <strong>6 items</strong>
+      </div>
+      <div class="section-body" id="q2-body"></div>
+      <div class="answer-key" id="key2"><h3>Answer key</h3><ol id="key2-list"></ol></div>
+    </section>
+
+    <section class="section" id="q3">
+      <div class="section-head">
+        <div>
+          <h2>Question 3: Write the correct verb</h2>
+          <div class="instruction">Use the sentence context and the word bank to write the correct Arabic verb. Diacritics are optional.</div>
+        </div>
+        <strong>8 items</strong>
+      </div>
+      <div class="section-body">
+        <div class="bank" aria-label="Word bank">
+          <span class="chip arabic">عَرَّفَ</span><span class="chip arabic">تَعَرَّفَ</span><span class="chip arabic">ذَكَّرَ</span><span class="chip arabic">تَذَكَّرَ</span>
+          <span class="chip arabic">غَيَّرَ</span><span class="chip arabic">تَغَيَّرَ</span><span class="chip arabic">تَبَادَلَ</span><span class="chip arabic">اِنْقَطَعَ</span>
+          <span class="chip arabic">اِنْفَتَحَ</span><span class="chip arabic">تَعَاوَنَ</span>
+        </div>
+        <div id="q3-body"></div>
+      </div>
+      <div class="answer-key" id="key3"><h3>Answer key</h3><ol id="key3-list"></ol></div>
+    </section>
+
+    <div class="note">
+      Teacher note: Question 1 now asks students to choose the actual verb. The grammatical terms are kept only as a quick review above the activity and in the answer explanations.
+    </div>
+  </main>
+
+  <footer>This standalone HTML file works offline and can be uploaded to Canvas or GitHub Pages.</footer>
+
+  <script>
+    const q1 = [
+      {
+        stem:'في بداية البرنامج، _______ الأستاذُ الطلابَ بنفسه.',
+        options:['عَرَّفَ','تَعَرَّفَ','تَبَادَلَ','اِنْقَطَعَ'],
+        answer:0,
+        explain:'عَرَّفَ = introduced; Form II makes someone know someone/something.'
+      },
+      {
+        stem:'في المغرب، _______ يوسف على طلاب من دول مختلفة.',
+        options:['عَرَّفَ','تَعَرَّفَ','اِنْقَطَعَ','غَيَّرَ'],
+        answer:1,
+        explain:'تَعَرَّفَ على = got to know / became acquainted with.'
+      },
+      {
+        stem:'بعد الرحلة، _______ الطلابُ أرقامَ الهاتف والصور.',
+        options:['تَبَادَلَ','غَيَّرَ','اِنْفَتَحَ','تَذَكَّرَ'],
+        answer:0,
+        explain:'تَبَادَلَ = exchanged with each other; Form VI is often reciprocal.'
+      },
+      {
+        stem:'أثناء العاصفة، _______ الإنترنت في الفندق فجأة.',
+        options:['قَطَعَ','قَطَّعَ','اِنْقَطَعَ','تَبَادَلَ'],
+        answer:2,
+        explain:'اِنْقَطَعَ = was cut off / stopped working; passive-like result.'
+      },
+      {
+        stem:'قبل الامتحان، _______ صديقي بموعد المراجعة.',
+        options:['ذَكَرَني','ذَكَّرَني','تَذَكَّرَني','اِنْذَكَرَني'],
+        answer:1,
+        explain:'ذَكَّرَني = reminded me; Form II is causative here.'
+      },
+      {
+        stem:'عندما رأيتُ الصورة القديمة، _______ اسمَ المدرسة.',
+        options:['ذَكَّرْتُ','تَذَكَّرْتُ','تَبَادَلْتُ','اِنْقَطَعْتُ'],
+        answer:1,
+        explain:'تَذَكَّرْتُ = I remembered / recalled.'
+      },
+      {
+        stem:'بعد السفر، _______ عنواني في ملفات الجامعة.',
+        options:['غَيَّرَ','تَغَيَّرَ','تَبَادَلَ','اِنْفَتَحَ'],
+        answer:1,
+        explain:'تَغَيَّرَ = changed / became different. The address itself changed.'
+      },
+      {
+        stem:'بسبب الريح القوية، _______ بابُ الشرفة وحده.',
+        options:['فَتَحَ','فَتَّحَ','اِنْفَتَحَ','تَعَرَّفَ'],
+        answer:2,
+        explain:'اِنْفَتَحَ = opened / got opened without mentioning an agent.'
+      }
+    ];
+
+    const q2 = [
+      {
+        cue:'The teacher introduced himself to the students.',
+        options:['عَرَّفَ الأستاذُ نفسَه للطلاب.','تَعَرَّفَ الأستاذُ على نفسِه.','تَبَادَلَ الأستاذُ نفسَه مع الطلاب.','اِنْقَطَعَ الأستاذُ عن الطلاب.'],
+        answer:0,
+        explain:'عَرَّفَ نفسَه = introduced himself.'
+      },
+      {
+        cue:'The students exchanged messages after the trip.',
+        options:['ذَكَّرَ الطلابُ الرسائل بعد الرحلة.','تَبَادَلَ الطلابُ الرسائل بعد الرحلة.','اِنْقَطَعَ الطلابُ الرسائل بعد الرحلة.','تَغَيَّرَ الطلابُ الرسائل بعد الرحلة.'],
+        answer:1,
+        explain:'تَبَادَلَ الرسائل = exchanged messages.'
+      },
+      {
+        cue:'The electricity went out for two hours.',
+        options:['قَطَعَت الكهرباءُ ساعتين.','قَطَّعَت الكهرباءُ ساعتين.','اِنْقَطَعَت الكهرباءُ لمدة ساعتين.','تَبَادَلَت الكهرباءُ لمدة ساعتين.'],
+        answer:2,
+        explain:'اِنْقَطَعَت الكهرباء = the electricity went out.'
+      },
+      {
+        cue:'Sarah reminded her friend of the meeting.',
+        options:['ذَكَّرَتْ سارةُ صديقتَها بالاجتماع.','تَذَكَّرَتْ سارةُ صديقتَها بالاجتماع.','تَبَادَلَتْ سارةُ صديقتَها بالاجتماع.','اِنْفَتَحَتْ سارةُ صديقتَها بالاجتماع.'],
+        answer:0,
+        explain:'ذَكَّرَتْ صديقتَها = reminded her friend.'
+      },
+      {
+        cue:'My schedule changed after the trip.',
+        options:['غَيَّرَ جدولي بعد الرحلة.','تَغَيَّرَ جدولي بعد الرحلة.','تَبَادَلَ جدولي بعد الرحلة.','عَرَّفَ جدولي بعد الرحلة.'],
+        answer:1,
+        explain:'تَغَيَّرَ جدولي = my schedule changed.'
+      },
+      {
+        cue:'The classmates cooperated to solve the problem.',
+        options:['عَاوَنَ الطلابُ معًا لحل المشكلة.','تَعَاوَنَ الطلابُ لحل المشكلة.','اِنْقَطَعَ الطلابُ لحل المشكلة.','تَذَكَّرَ الطلابُ لحل المشكلة.'],
+        answer:1,
+        explain:'تَعَاوَنَ الطلاب = the students cooperated.'
+      }
+    ];
+
+    const q3 = [
+      {
+        stem:'في اللقاء الأول، _______ نادية على زميلتها الجديدة.',
+        answer:['تعرّفت','تعرفت','تَعَرَّفَتْ'],
+        explain:'تَعَرَّفَتْ — because Nadia got to know someone.'
+      },
+      {
+        stem:'في بداية الصف، _______ الطالبُ نفسَه للأستاذة.',
+        answer:['عرّف','عرف','عَرَّفَ'],
+        explain:'عَرَّفَ — because he introduced himself.'
+      },
+      {
+        stem:'عندما رأيتُ صديقي القديم، _______ أيامَ الجامعة.',
+        answer:['تذكّرت','تذكرت','تَذَكَّرْتُ'],
+        explain:'تَذَكَّرْتُ — because the speaker remembered something.'
+      },
+      {
+        stem:'قبل الموعد، _______ ليلى صديقتَها بالاجتماع.',
+        answer:['ذكّرت','ذكرت','ذَكَّرَتْ'],
+        explain:'ذَكَّرَتْ — because Layla reminded her friend.'
+      },
+      {
+        stem:'في النشاط، _______ الطلابُ الآراء حول الرحلة.',
+        answer:['تبادل','تَبَادَلَ','تبادلوا','تَبَادَلُوا'],
+        explain:'تَبَادَلَ / تَبَادَلُوا — because the students exchanged opinions.'
+      },
+      {
+        stem:'بعد المطر، _______ الطريقُ بين القريتين.',
+        answer:['انقطع','اِنْقَطَعَ','انْقطع'],
+        explain:'اِنْقَطَعَ — because the road was cut off.'
+      },
+      {
+        stem:'في المشروع، _______ الطلابُ معًا لحل المشكلة.',
+        answer:['تعاون','تَعَاوَنَ','تعاونوا','تَعَاوَنُوا'],
+        explain:'تَعَاوَنَ / تَعَاوَنُوا — because they cooperated.'
+      },
+      {
+        stem:'بسبب الهواء، _______ البابُ فجأة.',
+        answer:['انفتح','اِنْفَتَحَ','انْفتح'],
+        explain:'اِنْفَتَحَ — because the door opened by itself / got opened.'
+      }
+    ];
+
+    function normalizeArabic(s){
+      return (s || '')
+        .trim()
+        .replace(/[\u064B-\u065F\u0670]/g,'')
+        .replace(/[إأآا]/g,'ا')
+        .replace(/ى/g,'ي')
+        .replace(/ة/g,'ه')
+        .replace(/ـ/g,'')
+        .replace(/[ًٌٍَُِّْ]/g,'')
+        .replace(/\s+/g,'');
+    }
+
+    function renderRadioQuestion(containerId, keyId, data, useCue=false){
+      const body=document.getElementById(containerId);
+      const key=document.getElementById(keyId);
+      body.innerHTML=''; key.innerHTML='';
+      data.forEach((it,i)=>{
+        const div=document.createElement('div');
+        div.className='item';
+        div.dataset.type='radio';
+        div.dataset.answer=it.answer;
+        const stem = useCue
+          ? `<p class="stem"><span class="num">${i+1}</span>${it.cue}</p>`
+          : `<p class="stem arabic"><span class="num">${i+1}</span>${it.stem}</p>`;
+        div.innerHTML = `${stem}
+          <div class="options">
+            ${it.options.map((o,idx)=>`<label class="option"><input type="radio" name="${containerId}_${i}" value="${idx}"> <span class="arabic">${o}</span></label>`).join('')}
+          </div>
+          <div class="feedback"></div>`;
+        body.appendChild(div);
+        key.innerHTML += `<li><span class="arabic">${it.options[it.answer]}</span> — ${it.explain}</li>`;
+      });
+    }
+
+    function renderQ3(){
+      const body=document.getElementById('q3-body');
+      const key=document.getElementById('key3-list');
+      body.innerHTML=''; key.innerHTML='';
+      q3.forEach((it,i)=>{
+        const div=document.createElement('div');
+        div.className='item';
+        div.dataset.type='input';
+        div.dataset.answers=JSON.stringify(it.answer.map(normalizeArabic));
+        div.innerHTML = `<p class="stem arabic"><span class="num">${i+1}</span>${it.stem}</p>
+          <div class="input-row"><input class="arabic" type="text" placeholder="اكتب الفعل هنا" autocomplete="off"></div>
+          <div class="hint">Use the sentence context. Diacritics are optional.</div>
+          <div class="feedback"></div>`;
+        body.appendChild(div);
+        key.innerHTML += `<li><span class="arabic">${it.answer[0]}</span> — ${it.explain}</li>`;
+      });
+    }
+
+    function evaluateItem(item){
+      const type=item.dataset.type;
+      const fb=item.querySelector('.feedback');
+      item.classList.remove('correct','wrong');
+      fb.className='feedback'; fb.textContent='';
+      let correct=false, answered=true;
+      if(type==='radio'){
+        const checked=item.querySelector('input[type="radio"]:checked');
+        if(!checked) answered=false;
+        correct=checked && Number(checked.value)===Number(item.dataset.answer);
+      } else if(type==='input'){
+        const val=normalizeArabic(item.querySelector('input').value);
+        if(!val) answered=false;
+        const answers=JSON.parse(item.dataset.answers);
+        correct=answers.includes(val);
+      }
+      if(!answered){
+        fb.classList.add('warn'); fb.textContent='No answer yet.';
+        return {answered:false,correct:false};
+      }
+      if(correct){
+        item.classList.add('correct'); fb.classList.add('good'); fb.textContent='Correct.';
+      } else {
+        item.classList.add('wrong'); fb.classList.add('bad'); fb.textContent='Not correct. Check the meaning of the verb in context.';
+      }
+      return {answered:true,correct};
+    }
+
+    function checkAll(){
+      const items=[...document.querySelectorAll('.item')];
+      let score=0, answered=0;
+      items.forEach(item=>{
+        const r=evaluateItem(item);
+        if(r.answered) answered++;
+        if(r.correct) score++;
+      });
+      const total=items.length;
+      document.getElementById('score').textContent=score;
+      document.getElementById('total').textContent=total;
+      document.getElementById('percent').textContent=Math.round(score/total*100)+'%';
+      document.getElementById('progressBar').style.width=Math.round(answered/total*100)+'%';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function toggleAnswers(){
+      document.querySelectorAll('.answer-key').forEach(k=>k.classList.toggle('show'));
+    }
+
+    function resetAll(){
+      document.querySelectorAll('input[type="radio"]').forEach(r=>r.checked=false);
+      document.querySelectorAll('input[type="text"]').forEach(i=>i.value='');
+      document.querySelectorAll('.item').forEach(item=>item.classList.remove('correct','wrong'));
+      document.querySelectorAll('.feedback').forEach(f=>{f.className='feedback';f.textContent='';});
+      document.querySelectorAll('.answer-key').forEach(k=>k.classList.remove('show'));
+      document.getElementById('score').textContent='0';
+      document.getElementById('percent').textContent='0%';
+      document.getElementById('progressBar').style.width='0';
+      document.getElementById('total').textContent=document.querySelectorAll('.item').length;
+    }
+
+    renderRadioQuestion('q1-body','key1-list',q1,false);
+    renderRadioQuestion('q2-body','key2-list',q2,true);
+    renderQ3();
+    document.getElementById('total').textContent=document.querySelectorAll('.item').length;
+  </script>
+</body>
+</html>
