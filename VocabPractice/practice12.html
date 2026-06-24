@@ -1,0 +1,820 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التدريب التفاعلية للغة العربية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background: radial-gradient(circle at top right, #f0fdf4 0%, #f0f9ff 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .drag-over {
+            border-color: #3b82f6 !important;
+            background-color: #eff6ff !important;
+            transform: scale(1.02);
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between custom-scrollbar">
+
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-gradient-to-tr from-emerald-500 to-teal-600 rounded-2xl text-white shadow-lg shadow-emerald-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">منصة التدريب اللغوي</h1>
+                    <p class="text-xs text-slate-500">تمارين تطبيقية وتفاعلية لكافة المفردات</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 flex-wrap">
+                <button onclick="switchTab('study')" id="tab-study" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100 transition-all">
+                    🗂️ بطاقات الدراسة
+                </button>
+                <button onclick="switchTab('act1')" id="tab-act1" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all">
+                    📝 الاختيار المتعدد
+                </button>
+                <button onclick="switchTab('act2')" id="tab-act2" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all">
+                    📖 إكمال القصة
+                </button>
+                <button onclick="switchTab('act3')" id="tab-act3" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all">
+                    🧩 التوصيل الذكي
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl w-full mx-auto px-4 py-8 flex-grow">
+        
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 mb-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-3xl">
+                    🎯
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">مرحباً بك في تحدي المفردات!</h2>
+                    <p class="text-sm text-slate-500">أكمل الأنشطة الثلاثة لتتقن جميع المفردات الـ 24 بامتياز.</p>
+                </div>
+            </div>
+            
+            <div class="flex gap-4 items-center">
+                <div class="bg-slate-50 border border-slate-100 px-5 py-3 rounded-2xl text-center">
+                    <span class="block text-xs text-slate-400 font-bold uppercase tracking-wider">مجموع النقاط</span>
+                    <span id="global-score" class="text-2xl font-black text-emerald-600">0</span>
+                </div>
+                <div class="bg-slate-50 border border-slate-100 px-5 py-3 rounded-2xl text-center">
+                    <span class="block text-xs text-slate-400 font-bold uppercase tracking-wider">دقة الإجابات</span>
+                    <span id="accuracy-rate" class="text-2xl font-black text-indigo-600">0%</span>
+                </div>
+                <button onclick="resetAllProgress()" class="p-3 bg-red-50 hover:bg-red-100 text-red-600 rounded-2xl border border-red-100 transition-all tooltip" title="إعادة تعيين التقدم">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 15H19" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <section id="view-study" class="tab-view block space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                <div>
+                    <h3 class="text-2xl font-black text-slate-900">🗂️ معجم المفردات الـ 24 وسياقاتها</h3>
+                    <p class="text-slate-500 text-sm">راجع هذه الكلمات وجملها التوضيحية أولاً لتسهيل حل التحديات الثلاثة.</p>
+                </div>
+                <div class="relative w-full md:w-72">
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">🔍</span>
+                    <input type="text" id="vocab-search" oninput="searchVocabulary()" placeholder="ابحث عن كلمة بالعربية أو الإنجليزية..." class="w-full pr-10 pl-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white shadow-sm transition-all">
+                </div>
+            </div>
+
+            <div id="vocab-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </section>
+
+        <section id="view-act1" class="tab-view hidden space-y-6">
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-3xl p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="space-y-1">
+                    <span class="px-3 py-1 text-xs font-bold bg-emerald-600 text-white rounded-full">النشاط الأول</span>
+                    <h3 class="text-xl font-extrabold text-slate-900">📝 اختبار الخيارات المتعددة (MCQ)</h3>
+                    <p class="text-slate-600 text-sm">اختر الإجابة الصحيحة التي تناسب الجملة السياقية لجميع الكلمات.</p>
+                </div>
+                <div class="text-emerald-700 font-bold bg-white px-4 py-2 rounded-xl shadow-sm border border-emerald-100">
+                    السؤال: <span id="mcq-progress">1 / 23</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm max-w-3xl mx-auto space-y-6">
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div id="mcq-progress-bar" class="bg-gradient-to-l from-emerald-500 to-teal-500 h-full transition-all duration-300" style="width: 0%;"></div>
+                </div>
+
+                <div class="space-y-3">
+                    <span class="text-xs uppercase font-extrabold text-slate-400 tracking-wider">املأ الفراغ بالكلمة المناسبة:</span>
+                    <p id="mcq-question-arabic" class="text-2xl font-bold text-slate-800 leading-relaxed text-right"></p>
+                    <p id="mcq-question-english" class="text-sm text-slate-500 italic text-right" dir="ltr"></p>
+                </div>
+
+                <div id="mcq-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                    </div>
+
+                <div id="mcq-feedback" class="hidden rounded-2xl p-4 text-sm transition-all duration-300 flex items-start gap-3">
+                    </div>
+
+                <div class="flex justify-end pt-4">
+                    <button id="mcq-next-btn" onclick="nextMcqQuestion()" class="hidden px-6 py-3 bg-slate-950 text-white rounded-xl text-sm font-semibold hover:bg-slate-800 transition-all flex items-center gap-2">
+                        <span>السؤال التالي</span>
+                        <span dir="ltr">→</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-act2" class="tab-view hidden space-y-6">
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-3xl p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="space-y-1">
+                    <span class="px-3 py-1 text-xs font-bold bg-blue-600 text-white rounded-full">النشاط الثاني</span>
+                    <h3 class="text-xl font-extrabold text-slate-900">📖 إكمال القصة السياقية</h3>
+                    <p class="text-slate-600 text-sm">انقر على كلمة ثم انقر على الفراغ المناسب لملء القصة العربية الجميلة.</p>
+                </div>
+                <button onclick="resetStoryGame()" class="px-4 py-2 bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold transition-all shadow-sm">
+                    🔄 إعادة ضبط القصة
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-4 bg-slate-50/50 rounded-3xl p-5 border border-slate-100 space-y-4">
+                    <h4 class="font-extrabold text-slate-700 text-sm border-b border-slate-200/60 pb-2">📦 الكلمات المتوفرة (24 كلمة):</h4>
+                    <p class="text-xs text-slate-400">انقر على الكلمة ثم انقر على الفراغ.</p>
+                    <div id="story-pool" class="flex flex-wrap gap-2.5">
+                        </div>
+                </div>
+
+                <div class="lg:col-span-8 bg-white rounded-3xl p-8 border border-slate-100 shadow-sm space-y-6 relative overflow-hidden">
+                    <span class="absolute top-4 left-6 text-slate-50 text-9xl font-serif select-none pointer-events-none">”</span>
+                    <h4 class="font-black text-lg text-slate-800 relative z-10 flex items-center gap-2">
+                        <span>📝 مغامرة سامي وقراراته</span>
+                        <span class="text-xs text-slate-400 font-normal">(قصة متكاملة)</span>
+                    </h4>
+                    <div class="text-xl md:text-2xl leading-loose text-slate-700 relative z-10 text-justify font-medium" id="story-text-container">
+                        </div>
+                    <div id="story-feedback" class="hidden p-4 rounded-2xl flex items-center gap-3 mt-4"></div>
+                    <div class="flex justify-end gap-3 pt-4 border-t border-slate-100 mt-6">
+                        <button onclick="checkStoryAnswers()" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl text-sm hover:bg-blue-700 transition-all shadow-md shadow-blue-500/10">
+                            🔍 تحقق من صحة القصة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-act3" class="tab-view hidden space-y-6">
+            <div class="bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-100 rounded-3xl p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="space-y-1">
+                    <span class="px-3 py-1 text-xs font-bold bg-violet-600 text-white rounded-full">النشاط الثالث</span>
+                    <h3 class="text-xl font-extrabold text-slate-900">🧩 لعبة التوصيل والمطابقة الذكية</h3>
+                    <p class="text-slate-600 text-sm">حدد بطاقة باللغة العربية من اليمين ثم طابقها مع تعريفها/سياقها الصحيح بالإنجليزية من اليسار (24 كلمة).</p>
+                </div>
+                <button onclick="initMatchingGame()" class="px-4 py-2 bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold transition-all shadow-sm">
+                    🔄 خلط وتوليد بطاقات جديدة
+                </button>
+            </div>
+
+            <div class="w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+                <div class="space-y-3">
+                    <h4 class="font-extrabold text-sm text-slate-500 uppercase tracking-widest text-right pr-2">الكلمة العربية</h4>
+                    <div id="match-arabic-cols" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="font-extrabold text-sm text-slate-500 uppercase tracking-widest text-left pl-2" dir="ltr">English Meaning / Translation</h4>
+                    <div id="match-english-cols" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        </div>
+                </div>
+            </div>
+
+            <div id="match-game-finished" class="hidden max-w-md mx-auto text-center p-8 bg-white border border-slate-100 rounded-3xl shadow-sm space-y-4 mt-8">
+                <div class="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-3xl mx-auto">🎉</div>
+                <h3 class="text-xl font-black text-slate-800">عمل رائع! أكملت المطابقة بنجاح.</h3>
+                <p class="text-sm text-slate-500">تمت مطابقة الكلمات الـ 24 المخصصة لهذا التحدي بدقة تامة.</p>
+                <button onclick="initMatchingGame()" class="px-6 py-2.5 bg-violet-600 text-white rounded-xl text-sm font-bold hover:bg-violet-700 transition-all mt-4">
+                    العب مرة أخرى
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="celebration-overlay" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 border border-slate-100 shadow-2xl text-center space-y-5 transform scale-95 transition-transform duration-300">
+            <div class="w-20 h-20 bg-amber-50 rounded-3xl flex items-center justify-center text-4xl mx-auto border border-amber-200 animate-bounce">👑</div>
+            <div class="space-y-2">
+                <h3 class="text-2xl font-black text-slate-900">أنت بطل متميز!</h3>
+                <p class="text-sm text-slate-500">لقد انتهيت من ممارسة وحل الأنشطة بفاعلية واحترافية.</p>
+            </div>
+            <div class="bg-slate-50 rounded-2xl p-4 flex justify-around border border-slate-100">
+                <div>
+                    <span class="block text-xs text-slate-400">النتيجة الكلية</span>
+                    <span id="popup-score" class="text-lg font-black text-emerald-600">0</span>
+                </div>
+                <div class="border-l border-slate-200"></div>
+                <div>
+                    <span class="block text-xs text-slate-400">معدل الدقة</span>
+                    <span id="popup-accuracy" class="text-lg font-black text-indigo-600">0%</span>
+                </div>
+            </div>
+            <button onclick="closeCelebration()" class="w-full py-3 bg-slate-950 hover:bg-slate-800 text-white text-sm font-bold rounded-2xl transition-all">
+                متابعة التعلم
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-12">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>© 2026 منصة التدريب اللغوي للغة العربية. صُممت بحب لتدريب ممتع وذكي.</p>
+            <div class="flex gap-4">
+                <a href="#" class="hover:text-white transition-all">الدعم التعليمي</a>
+                <span>•</span>
+                <a href="#" class="hover:text-white transition-all">فهرس المفردات</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. DATASETS
+        const vocabularyData = [
+            { id: 1, word: "آخِر", definition: "last, final", arabicSentence: "في آخِر الدرس، سألت المعلمة سؤالاً مهماً.", englishSentence: "At the end of the lesson, the teacher asked an important question." },
+            { id: 2, word: "أَخَذَ", definition: "to take", arabicSentence: "أَخَذَ الطالبُ الكتابَ من المكتبة.", englishSentence: "The student took the book from the library." },
+            { id: 3, word: "إجازة/ات", definition: "holiday, vacation", arabicSentence: "في الصيف عندنا إجازة طويلة.", englishSentence: "In the summer we have a long vacation." },
+            { id: 4, word: "بِالإضافة إلى", definition: "in addition to", arabicSentence: "أحب القراءة بِالإضافة إلى الكتابة.", englishSentence: "I like reading in addition to writing." },
+            { id: 5, word: "تَغَيَّبَ عن", definition: "to be absent from", arabicSentence: "عمر تَغَيَّبَ عن الدرسَ اليوم لأنه مريض.", englishSentence: "Omar was absent from the lesson today because he is sick." },
+            { id: 6, word: "جَميعاً", definition: "all together, all of us/them", arabicSentence: "ذهبنا إلى المطعم جَميعاً بعد الامتحان.", englishSentence: "We all went to the restaurant together after the exam." },
+            { id: 7, word: "زار", definition: "to visit", arabicSentence: "زار الأستاذُ المتحفَ مع الطلاب.", englishSentence: "The professor visited the museum with the students." },
+            { id: 8, word: "طَبْعاً", definition: "of course, naturally", arabicSentence: "هل ستأتي إلى الحفلة؟ طَبْعاً، سأكون هناك.", englishSentence: "Will you come to the party? Of course, I will be there." },
+            { id: 9, word: "عَلِمَ ب", definition: "to learn of, to know about", arabicSentence: "عَلِمَ المديرُ بغيابِ الطالبِ من الرسالة.", englishSentence: "The manager learned of the student's absence from the letter." },
+            { id: 10, word: "عُطلة", definition: "holiday, day off", arabicSentence: "لدينا عُطلة يوم الجمعة، لذلك لا توجد محاضرة.", englishSentence: "We have a holiday on Friday, so there is no lecture." },
+            { id: 11, word: "عُيِّنْتُ", definition: "I was appointed", arabicSentence: "عُيِّنْتُ مدرساً جديداً في الجامعة.", englishSentence: "I was appointed as a new teacher at the university." },
+            { id: 12, word: "قادِم", definition: "coming, next", arabicSentence: "سأراك الأسبوع القادِم.", englishSentence: "I will see you next week." },
+            { id: 13, word: "قرَّرَ", definition: "to decide", arabicSentence: "قرَّرَ خالد أن يدرس في الخارج.", englishSentence: "Khaled decided to study abroad." },
+            { id: 14, word: "قَرار", definition: "decision", arabicSentence: "هذا قَرار صعب، لكنه ضروري.", englishSentence: "This is a difficult decision, but it is necessary." },
+            { id: 15, word: "قَضى", definition: "to spend (time)", arabicSentence: "قَضى سامي ساعتين في المكتبة.", englishSentence: "Sami spent two hours in the library." },
+            { id: 16, word: "لم يُسافِر", definition: "he did not travel (Jussive negation)", arabicSentence: "بسبب المطر، لم يُسافِر كريم إلى القرية.", englishSentence: "Because of the rain, Karim did not travel to the village." },
+            { id: 17, word: "ما سافر", definition: "he did not travel (Past negation)", arabicSentence: "هذا العام، أحمد ما سافر إلى أي بلد.", englishSentence: "This year, Ahmed did not travel to any country." },
+            { id: 18, word: "مَوت", definition: "death", arabicSentence: "كان خبر مَوت الجدِّ حزيناً للعائلة.", englishSentence: "The news of the grandfather's death was sad for the family." },
+            { id: 19, word: "مُدير", definition: "manager, director", arabicSentence: "سأقابل مُدير المدرسة بعد الحصة.", englishSentence: "I will meet the school principal after class." },
+            { id: 20, word: "مُقارَنة", definition: "comparative", arabicSentence: "نقرأ دراسة مُقارَنة بين العربية والإنجليزية.", englishSentence: "We are reading a comparative study between Arabic and English." },
+            { id: 21, word: "مِنْحة", definition: "grant, scholarship", arabicSentence: "حصلت ريم على مِنْحة للدراسة في الخارج.", englishSentence: "Reem received a scholarship to study abroad." },
+            { id: 22, word: "هُنا", definition: "here", arabicSentence: "اجلس هُنا من فضلك.", englishSentence: "Sit here, please." },
+            { id: 23, word: "هُناك", definition: "there", arabicSentence: "بيتي ليس قريباً؛ هو هُناك خلف الجامعة.", englishSentence: "My house is not close; it is there behind the university." },
+            { id: 24, word: "وَفاة", definition: "demise, death", arabicSentence: "أعلنت الجامعة عن وَفاة الأستاذ.", englishSentence: "The university announced the demise of the professor." }
+        ];
+
+        const mcqPool = [
+            { word: "آخِر", arQuestion: "في ___ الدرس، سألت المعلمة سؤالاً مهماً.", enQuestion: "At the ___ of the lesson, the teacher asked an important question.", options: ["آخِر", "قادِم", "هُناك", "قَرار"], explanation: "The correct option is 'آخِر' (last/end)." },
+            { word: "أَخَذَ", arQuestion: "___ الطالبُ الكتابَ من المكتبة.", enQuestion: "The student ___ the book from the library.", options: ["أَخَذَ", "زار", "قَضى", "قرَّرَ"], explanation: "The verb 'أَخَذَ' means 'to take'." },
+            { word: "إجازة", arQuestion: "في الصيف عندنا ___ طويلة.", enQuestion: "In the summer we have a long ___.", options: ["إجازة", "مِنْحة", "وَفاة", "عُطلة"], explanation: "'إجازة' specifically refers to a vacation or holiday period." },
+            { word: "بِالإضافة إلى", arQuestion: "أحب القراءة ___ الكتابة.", enQuestion: "I like reading ___ writing.", options: ["بِالإضافة إلى", "جَميعاً", "طَبْعاً", "هُنا"], explanation: "The phrase 'بِالإضافة إلى' translates directly to 'in addition to'." },
+            { word: "تَغَيَّبَ عن", arQuestion: "عمر ___ الدرسَ اليوم لأنه مريض.", enQuestion: "Omar ___ the lesson today because he is sick.", options: ["تَغَيَّبَ عن", "قرَّرَ", "زار", "قَضى"], explanation: "The verb phrase 'تَغَيَّبَ عن' means 'to be absent from'." },
+            { word: "جَميعاً", arQuestion: "ذهبنا إلى المطعم ___ بعد الامتحان.", enQuestion: "We ___ went to the restaurant after the exam.", options: ["جَميعاً", "هُناك", "قادِم", "مُدير"], explanation: "'جَميعاً' is an adverbial accusative meaning 'all together'." },
+            { word: "زار", arQuestion: "___ الأستاذُ المتحفَ مع الطلاب.", enQuestion: "The professor ___ the museum with the students.", options: ["زار", "أَخَذَ", "قرَّرَ", "قَضى"], explanation: "The verb 'زار' means 'visited'." },
+            { word: "طَبْعاً", arQuestion: "هل ستأتي إلى الحفلة؟ ___، سأكون هناك.", enQuestion: "Will you come to the party? ___, I will be there.", options: ["طَبْعاً", "هُنا", "قَرار", "لم يُسافِر"], explanation: "'طَبْعاً' is used colloquially and formally for 'of course' or 'naturally'." },
+            { word: "عَلِمَ ب", arQuestion: "___ المديرُ بغيابِ الطالبِ من الرسالة.", enQuestion: "The manager ___ the student's absence from the letter.", options: ["عَلِمَ ب", "تَغَيَّبَ عن", "أَخَذَ", "زار"], explanation: "The verb 'عَلِمَ' (paired with the preposition بـ) means 'to learn of' or 'to know about'." },
+            { word: "عُطلة", arQuestion: "لدينا ___ يوم الجمعة، لذلك لا توجد محاضرة.", enQuestion: "We have a ___ on Friday, so there is no lecture.", options: ["عُطلة", "مُدير", "مَوت", "هُناك"], explanation: "'عُطلة' means a day off or holiday." },
+            { word: "عُيِّنْتُ", arQuestion: "___ مدرساً جديداً في الجامعة.", enQuestion: "I ___ a new teacher at the university.", options: ["عُيِّنْتُ", "قرَّرَ", "ما سافر", "زار"], explanation: "'عُيِّنْتُ' is the first-person passive perfect meaning 'I was appointed'." },
+            { word: "القادِم", arQuestion: "سأراك الأسبوع ___.", enQuestion: "I will see you ___ week.", options: ["القادِم", "الآخِر", "جَميعاً", "هُناك"], explanation: "'القادِم' means 'coming' or 'next'." },
+            { word: "قرَّرَ", arQuestion: "___ خالد أن يدرس في الخارج.", enQuestion: "Khaled ___ to study abroad.", options: ["قرَّرَ", "أَخَذَ", "تَغَيَّبَ عن", "مُدير"], explanation: "The verb 'قرَّرَ' means 'he decided'." },
+            { word: "قَرار", arQuestion: "هذا ___ صعب، لكنه ضروري.", enQuestion: "This is a difficult ___, but it is necessary.", options: ["قَرار", "إجازة", "مِنْحة", "طَبْعاً"], explanation: "'قَرار' is the noun for 'decision'." },
+            { word: "قَضى", arQuestion: "___ سامي ساعتين في المكتبة.", enQuestion: "Sami ___ two hours in the library.", options: ["قَضى", "زار", "عَلِمَ ب", "قادِم"], explanation: "The verb 'قَضى' is used for spending time." },
+            { word: "لم يُسافِر", arQuestion: "بسبب المطر، ___ كريم إلى القرية.", enQuestion: "Because of the rain, Karim ___ to the village.", options: ["لم يُسافِر", "هُنا", "جَميعاً", "قَرار"], explanation: "'لم يُسافِر' is the jussive negation for the past tense." },
+            { word: "ما سافر", arQuestion: "هذا العام، أحمد ___ إلى أي بلد.", enQuestion: "This year, Ahmed ___ to any country.", options: ["ما سافر", "عُيِّنْتُ", "بِالإضافة إلى", "هُناك"], explanation: "'ما سافر' is the standard past negation." },
+            { word: "مَوت", arQuestion: "كان خبر ___ الجدِّ حزيناً للعائلة.", enQuestion: "The news of the grandfather's ___ was sad for the family.", options: ["مَوت", "مُقارَنة", "عُطلة", "أَخَذَ"], explanation: "'مَوت' is the general noun for death." },
+            { word: "مُدير", arQuestion: "سأقابل ___ المدرسة بعد الحصة.", enQuestion: "I will meet the school ___ after class.", options: ["مُدير", "آخِر", "مِنْحة", "زار"], explanation: "'مُدير' means manager or principal." },
+            { word: "مُقارَنة", arQuestion: "نقرأ دراسة ___ بين العربية والإنجليزية.", enQuestion: "We are reading a ___ study between Arabic and English.", options: ["مُقارَنة", "جَميعاً", "قَضى", "وَفاة"], explanation: "The active participle 'مُقارَنة' means comparative." },
+            { word: "مِنْحة", arQuestion: "حصلت ريم على ___ للدراسة في الخارج.", enQuestion: "Reem received a ___ to study abroad.", options: ["مِنْحة", "قَرار", "مَوت", "عُطلة"], explanation: "'مِنْحة' refers to a grant or scholarship." },
+            { word: "هُنا", arQuestion: "اجلس ___ من فضلك.", enQuestion: "Sit ___, please.", options: ["هُنا", "هُناك", "قادِم", "قرَّرَ"], explanation: "The spatial adverb 'هُنا' indicates proximity (here)." },
+            { word: "هُناك", arQuestion: "بيتي ليس قريباً؛ هو ___ خلف الجامعة.", enQuestion: "My house is not close; it is ___ behind the university.", options: ["هُناك", "هُنا", "طَبْعاً", "أَخَذَ"], explanation: "The spatial adverb 'هُناك' indicates distance (there)." }
+        ];
+
+        const storyWords = [
+            { key: "القادِم", label: "القادِم" }, { key: "قرَّرَ", label: "قرَّرَ" }, { key: "أَخَذَ", label: "أَخَذَ" }, { key: "إجازة", label: "إجازة" },
+            { key: "مُدير", label: "مُدير" }, { key: "عُطلة", label: "عُطلة" }, { key: "تَغَيَّبَ عن", label: "تَغَيَّبَ عن" }, { key: "بِالإضافة إلى", label: "بِالإضافة إلى" },
+            { key: "زار", label: "زار" }, { key: "جَميعاً", label: "جَميعاً" }, { key: "هُنا", label: "هُنا" }, { key: "هُناك", label: "هُناك" },
+            { key: "قَضى", label: "قَضى" }, { key: "آخِر", label: "آخِر" }, { key: "عَلِمَ ب", label: "عَلِمَ ب" }, { key: "قَرار", label: "قَرار" },
+            { key: "عُيِّنْتُ", label: "عُيِّنْتُ" }, { key: "مِنْحة", label: "مِنْحة" }, { key: "مُقارَنة", label: "مُقارَنة" }, { key: "لم يُسافِر", label: "لم يُسافِر" },
+            { key: "ما سافر", label: "ما سافر" }, { key: "طَبْعاً", label: "طَبْعاً" }, { key: "وَفاة", label: "وَفاة" }, { key: "مَوت", label: "مَوت" }
+        ];
+
+        const matchDataPool = [
+            { id: "m1", ar: "آخِر", en: "last, final" },
+            { id: "m2", ar: "أَخَذَ", en: "to take" },
+            { id: "m3", ar: "إجازة/ات", en: "holiday, vacation" },
+            { id: "m4", ar: "بِالإضافة إلى", en: "in addition to" },
+            { id: "m5", ar: "تَغَيَّبَ عن", en: "to be absent from" },
+            { id: "m6", ar: "جَميعاً", en: "all together, all of us/them" },
+            { id: "m7", ar: "زار", en: "visited; to visit" },
+            { id: "m8", ar: "طَبْعاً", en: "of course, naturally" },
+            { id: "m9", ar: "عَلِمَ ب", en: "to learn of, to know about" },
+            { id: "m10", ar: "عُطلة", en: "holiday, day off" },
+            { id: "m11", ar: "عُيِّنْتُ", en: "I was appointed" },
+            { id: "m12", ar: "قادِم", en: "coming, next" },
+            { id: "m13", ar: "قرَّرَ", en: "decided; to decide" },
+            { id: "m14", ar: "قَرار", en: "decision" },
+            { id: "m15", ar: "قَضى", en: "to spend time" },
+            { id: "m16", ar: "لم يُسافِر", en: "he did not travel (Jussive negation)" },
+            { id: "m17", ar: "ما سافر", en: "he did not travel (Past negation)" },
+            { id: "m18", ar: "مَوت", en: "death (general noun)" },
+            { id: "m19", ar: "مُدير", en: "manager, director" },
+            { id: "m20", ar: "مُقارَنة", en: "comparative" },
+            { id: "m21", ar: "مِنْحة", en: "grant, scholarship" },
+            { id: "m22", ar: "هُنا", en: "here" },
+            { id: "m23", ar: "هُناك", en: "there" },
+            { id: "m24", ar: "وَفاة", en: "demise, passing away of someone" }
+        ];
+
+        let totalScore = 0;
+        let totalAttempts = 0;
+        let correctAnswersCount = 0;
+
+        // Audio System
+        let audioCtx;
+        function playSound(type) {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+                } else if (type === 'incorrect') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'completed') {
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((freq, idx) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g); g.connect(audioCtx.destination);
+                        o.frequency.value = freq;
+                        g.gain.setValueAtTime(0, audioCtx.currentTime);
+                        g.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + (idx * 0.1) + 0.05);
+                        g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + (idx * 0.1) + 0.3);
+                        o.start(audioCtx.currentTime + (idx * 0.1));
+                        o.stop(audioCtx.currentTime + (idx * 0.1) + 0.3);
+                    });
+                }
+            } catch (e) { console.log('Audio Context error'); }
+        }
+
+        function updateStats(isCorrectIncrement) {
+            totalAttempts++;
+            if (isCorrectIncrement) {
+                totalScore += 10;
+                correctAnswersCount++;
+            } else {
+                totalScore = Math.max(0, totalScore - 3);
+            }
+            document.getElementById('global-score').innerText = totalScore;
+            const accuracy = Math.round((correctAnswersCount / totalAttempts) * 100) || 0;
+            document.getElementById('accuracy-rate').innerText = accuracy + '%';
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-view').forEach(view => {
+                view.classList.add('hidden'); view.classList.remove('block');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-all";
+            });
+
+            const targetView = document.getElementById(`view-${tabId}`);
+            if (targetView) { targetView.classList.remove('hidden'); targetView.classList.add('block'); }
+
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            if (activeBtn) {
+                if (tabId === 'study') activeBtn.className = "tab-btn px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 transition-all";
+                else if (tabId === 'act1') activeBtn.className = "tab-btn px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 transition-all";
+                else if (tabId === 'act2') activeBtn.className = "tab-btn px-4 py-2 rounded-xl text-sm font-semibold bg-blue-50 text-blue-700 border border-blue-100 transition-all";
+                else if (tabId === 'act3') activeBtn.className = "tab-btn px-4 py-2 rounded-xl text-sm font-semibold bg-violet-50 text-violet-700 border border-violet-100 transition-all";
+            }
+        }
+
+        function resetAllProgress() {
+            totalScore = 0; totalAttempts = 0; correctAnswersCount = 0;
+            document.getElementById('global-score').innerText = '0';
+            document.getElementById('accuracy-rate').innerText = '0%';
+            initStudyDeck(); initMcqGame(); resetStoryGame(); initMatchingGame();
+            playSound('completed');
+        }
+
+        // --- STUDY DECK ---
+        function initStudyDeck() {
+            const grid = document.getElementById('vocab-grid');
+            grid.innerHTML = '';
+            vocabularyData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-100 hover:border-emerald-200 p-6 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group relative overflow-hidden";
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100/60">مفردة رقم ${item.id}</span>
+                            <button onclick="readAloud('${item.word}')" class="text-slate-400 hover:text-emerald-600 transition-colors text-lg" title="استمع للنطق">🔊</button>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-black text-slate-800 tracking-tight group-hover:text-emerald-600 transition-all">${item.word}</h4>
+                            <p class="text-sm font-bold text-slate-400 mt-1" dir="ltr">${item.definition}</p>
+                        </div>
+                        <div class="border-t border-slate-50 pt-4 space-y-2">
+                            <p class="text-sm text-slate-600 font-medium leading-relaxed">${item.arabicSentence}</p>
+                            <p class="text-xs text-slate-400 italic" dir="ltr">${item.englishSentence}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function searchVocabulary() {
+            const term = document.getElementById('vocab-search').value.toLowerCase().trim();
+            const grid = document.getElementById('vocab-grid');
+            grid.innerHTML = '';
+            const filtered = vocabularyData.filter(item => item.word.toLowerCase().includes(term) || item.definition.toLowerCase().includes(term));
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400"><p class="text-lg font-bold">لا توجد مفردات تطابق البحث.</p></div>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-100 hover:border-emerald-200 p-6 rounded-3xl shadow-sm transition-all flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">مفردة رقم ${item.id}</span>
+                            <button onclick="readAloud('${item.word}')" class="text-slate-400 hover:text-emerald-600 transition-colors text-lg">🔊</button>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-black text-slate-800 tracking-tight group-hover:text-emerald-600 transition-all">${item.word}</h4>
+                            <p class="text-sm font-bold text-slate-400 mt-1" dir="ltr">${item.definition}</p>
+                        </div>
+                        <div class="border-t border-slate-50 pt-4 space-y-2">
+                            <p class="text-sm text-slate-600 font-medium leading-relaxed">${item.arabicSentence}</p>
+                            <p class="text-xs text-slate-400 italic" dir="ltr">${item.englishSentence}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function readAloud(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA'; utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // --- MCQ ---
+        let mcqCurrentIndex = 0; let mcqAnswered = false;
+
+        function initMcqGame() {
+            mcqCurrentIndex = 0; mcqAnswered = false; showMcqQuestion();
+        }
+
+        function showMcqQuestion() {
+            mcqAnswered = false;
+            document.getElementById('mcq-feedback').className = "hidden rounded-2xl p-4 text-sm transition-all duration-300 flex items-start gap-3";
+            document.getElementById('mcq-next-btn').classList.add('hidden');
+            
+            const current = mcqPool[mcqCurrentIndex];
+            document.getElementById('mcq-progress').innerText = `${mcqCurrentIndex + 1} / ${mcqPool.length}`;
+            document.getElementById('mcq-progress-bar').style.width = `${((mcqCurrentIndex + 1) / mcqPool.length) * 100}%`;
+
+            document.getElementById('mcq-question-arabic').innerText = current.arQuestion;
+            document.getElementById('mcq-question-english').innerText = current.enQuestion;
+
+            const optionsContainer = document.getElementById('mcq-options');
+            optionsContainer.innerHTML = '';
+            const shuffledOptions = [...current.options].sort(() => Math.random() - 0.5);
+
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-right p-4 rounded-2xl border-2 border-slate-100 hover:border-slate-300 hover:bg-slate-50 font-semibold transition-all flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span><span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center text-xs text-transparent">✓</span>`;
+                btn.onclick = () => selectMcqAnswer(btn, opt, current.word);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectMcqAnswer(buttonElement, chosenVal, correctWord) {
+            if (mcqAnswered) return;
+            mcqAnswered = true;
+
+            const isCorrect = (chosenVal === correctWord || chosenVal.includes(correctWord));
+            updateStats(isCorrect);
+
+            const feedbackBox = document.getElementById('mcq-feedback');
+            const nextBtn = document.getElementById('mcq-next-btn');
+
+            document.querySelectorAll('#mcq-options button').forEach(btn => {
+                const label = btn.querySelector('span').innerText;
+                const checkmark = btn.querySelector('span:last-child');
+                btn.className = "w-full text-right p-4 rounded-2xl border-2 font-semibold transition-all flex items-center justify-between pointer-events-none ";
+                
+                if (label === correctWord || label.includes(correctWord)) {
+                    btn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-900');
+                    checkmark.className = "w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold"; checkmark.innerText = "✓";
+                } else if (btn === buttonElement) {
+                    btn.classList.add('border-red-500', 'bg-red-50', 'text-red-900');
+                    checkmark.className = "w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center text-xs font-bold"; checkmark.innerText = "✗";
+                } else { btn.classList.add('border-slate-100', 'text-slate-400'); }
+            });
+
+            feedbackBox.classList.remove('hidden');
+            if (isCorrect) {
+                playSound('correct');
+                feedbackBox.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-100');
+                feedbackBox.innerHTML = `<div class="text-xl">🎉</div><div><p class="font-bold">رائع! إجابتك صحيحة تماماً.</p><p class="text-xs mt-1 text-emerald-700/80">${mcqPool[mcqCurrentIndex].explanation}</p></div>`;
+            } else {
+                playSound('incorrect');
+                feedbackBox.classList.add('bg-red-50', 'text-red-800', 'border', 'border-red-100');
+                feedbackBox.innerHTML = `<div class="text-xl">💡</div><div><p class="font-bold">للأسف، إجابة غير دقيقة.</p><p class="text-xs mt-1 text-red-700/80">${mcqPool[mcqCurrentIndex].explanation}</p></div>`;
+            }
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextMcqQuestion() {
+            mcqCurrentIndex++;
+            if (mcqCurrentIndex < mcqPool.length) showMcqQuestion();
+            else { playSound('completed'); showFinishedPopup(); }
+        }
+
+        // --- STORY ---
+        let activeSelectedWord = null;
+
+        function resetStoryGame() {
+            activeSelectedWord = null;
+            initStoryPool(); initStoryText();
+            document.getElementById('story-feedback').className = "hidden p-4 rounded-2xl flex items-center gap-3";
+        }
+
+        function initStoryPool() {
+            const pool = document.getElementById('story-pool');
+            pool.innerHTML = '';
+            const shuffled = [...storyWords].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach(word => {
+                const btn = document.createElement('div');
+                btn.className = "story-draggable px-3 py-1.5 bg-white hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-400 rounded-xl font-semibold text-sm cursor-pointer select-none transition-all shadow-sm flex items-center gap-2";
+                btn.id = `story-word-${word.key}`;
+                btn.setAttribute('data-word', word.key);
+                btn.innerHTML = `<span>${word.label}</span>`;
+                btn.onclick = () => selectStoryWordTap(word.key);
+                pool.appendChild(btn);
+            });
+        }
+
+        function selectStoryWordTap(wordKey) {
+            document.querySelectorAll('.story-draggable').forEach(btn => btn.classList.remove('border-blue-500', 'bg-blue-100', 'text-blue-900'));
+            if (activeSelectedWord === wordKey) { activeSelectedWord = null; }
+            else {
+                activeSelectedWord = wordKey;
+                const currentEl = document.getElementById(`story-word-${wordKey}`);
+                if (currentEl) currentEl.classList.add('border-blue-500', 'bg-blue-100', 'text-blue-900');
+            }
+        }
+
+        function initStoryText() {
+            const container = document.getElementById('story-text-container');
+            const createBlank = (id, expected) => `<span class="story-blank inline-flex items-center justify-center min-w-24 px-3 py-0.5 bg-slate-100 hover:bg-slate-200 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer text-blue-600 transition-all font-bold text-center text-lg mx-1" data-expected="${expected}" id="blank-${id}" onclick="fillBlank('blank-${id}')">...</span>`;
+
+            container.innerHTML = `
+                <p class="mb-4">في الأسبوع ${createBlank(1, 'القادِم')}، ${createBlank(2, 'قرَّرَ')} سامي أن يزور مدينةً قريبةً. قبل السفر، ${createBlank(3, 'أَخَذَ')} حقيبته من البيت، وطلب ${createBlank(4, 'إجازة')} قصيرةً من العمل.</p>
+                <p class="mb-4">تحدث سامي مع ${createBlank(5, 'مُدير')} البرنامج، وقال له: عندنا ${createBlank(6, 'عُطلة')} يوم الجمعة، لذلك أريد أن أسافر. في اليوم السابق، ${createBlank(7, 'تَغَيَّبَ عن')} المحاضرة لأنه كان مريضاً، لكنه قرأ الدرس ${createBlank(8, 'بِالإضافة إلى')} مراجعة المفردات.</p>
+                <p class="mb-4">بعد ذلك، ${createBlank(9, 'زار')} سامي صديقه في مدينة قريبة، وخرج الأصدقاء إلى المتحف ${createBlank(10, 'جَميعاً')}. قال سامي: سأجلس ${createBlank(11, 'هُنا')} قرب النافذة، وأنتم اجلسوا ${createBlank(12, 'هُناك')} قرب الباب.</p>
+                <p class="mb-4">${createBlank(13, 'قَضى')} سامي وقتاً ممتعاً، وفي ${createBlank(14, 'آخِر')} اليوم كتب رسالة قصيرة لأسرته. عندما ${createBlank(15, 'عَلِمَ ب')} المدير بالخطة، قال إن هذا ${createBlank(16, 'قَرار')} مناسب.</p>
+                <p class="mb-4">في الرسالة، كتبت مريم: ${createBlank(17, 'عُيِّنْتُ')} في وظيفة جديدة، وحصلت أيضاً على ${createBlank(18, 'مِنْحة')} للدراسة. ثم بدأت أكتب دراسة ${createBlank(19, 'مُقارَنة')} بين العربية والإنجليزية.</p>
+                <p class="mb-4">أما أخو سامي، فـ ${createBlank(20, 'لم يُسافِر')} معه بسبب المرض. وقال سامي عنه بلغة بسيطة: هو ${createBlank(21, 'ما سافر')} هذا العام. سأله صديقه: هل ستزوره قريباً؟ قال سامي: ${createBlank(22, 'طَبْعاً')}.</p>
+                <p class="mb-4">وفي نهاية الأسبوع، سمعت الأسرة خبر ${createBlank(23, 'وَفاة')} جارهم القديم، وكان خبر ${createBlank(24, 'مَوت')} الجار حزيناً للجميع.</p>
+            `;
+        }
+
+        function fillBlank(blankId) {
+            const blank = document.getElementById(blankId);
+            if (activeSelectedWord) {
+                const wordObj = storyWords.find(w => w.key === activeSelectedWord);
+                document.querySelectorAll('.story-blank').forEach(b => {
+                    if (b.innerText === wordObj.label) {
+                        b.innerText = '...'; b.classList.remove('bg-blue-50', 'border-blue-300'); b.classList.add('bg-slate-100', 'border-slate-300');
+                    }
+                });
+                blank.innerText = wordObj.label;
+                blank.classList.add('bg-blue-50', 'border-blue-300'); blank.classList.remove('bg-slate-100', 'border-slate-300');
+                activeSelectedWord = null;
+                document.querySelectorAll('.story-draggable').forEach(btn => btn.classList.remove('border-blue-500', 'bg-blue-100', 'text-blue-900'));
+            } else {
+                if (blank.innerText !== '...') {
+                    blank.innerText = '...'; blank.classList.remove('bg-blue-50', 'border-blue-300'); blank.classList.add('bg-slate-100', 'border-slate-300');
+                }
+            }
+        }
+
+        function checkStoryAnswers() {
+            let allCorrect = true; let filledCount = 0; let correctCount = 0;
+
+            document.querySelectorAll('.story-blank').forEach(blank => {
+                const expected = blank.getAttribute('data-expected');
+                const filledText = blank.innerText.trim();
+
+                if (filledText === '...') {
+                    allCorrect = false;
+                    blank.className = "story-blank inline-flex items-center justify-center min-w-24 px-3 py-0.5 bg-amber-50 border-2 border-dashed border-amber-400 rounded-xl cursor-pointer text-amber-700 font-bold text-center text-lg mx-1";
+                } else {
+                    filledCount++;
+                    const matchedWord = storyWords.find(w => w.label === filledText);
+                    if (matchedWord && matchedWord.key === expected) {
+                        correctCount++;
+                        blank.className = "story-blank inline-flex items-center justify-center min-w-24 px-3 py-0.5 bg-emerald-50 border-2 border-emerald-500 rounded-xl cursor-pointer text-emerald-700 font-bold text-center text-lg mx-1";
+                    } else {
+                        allCorrect = false;
+                        blank.className = "story-blank inline-flex items-center justify-center min-w-24 px-3 py-0.5 bg-red-50 border-2 border-red-500 rounded-xl cursor-pointer text-red-700 font-bold text-center text-lg mx-1";
+                    }
+                }
+            });
+
+            const feedback = document.getElementById('story-feedback');
+            feedback.classList.remove('hidden');
+
+            if (filledCount < storyWords.length) {
+                playSound('incorrect');
+                feedback.className = "p-4 rounded-2xl flex items-center gap-3 bg-amber-50 text-amber-800 border border-amber-100";
+                feedback.innerHTML = `<div class="text-xl">⚠️</div><div><p class="font-bold">يرجى ملء جميع الفراغات الـ 24 أولاً!</p></div>`;
+            } else if (allCorrect) {
+                playSound('correct');
+                feedback.className = "p-4 rounded-2xl flex items-center gap-3 bg-emerald-50 text-emerald-800 border border-emerald-100";
+                feedback.innerHTML = `<div class="text-xl">🎉</div><div><p class="font-bold">أحسنت صنعاً! القصة متكاملة بنجاح.</p></div>`;
+                updateStats(true); updateStats(true);
+            } else {
+                playSound('incorrect');
+                feedback.className = "p-4 rounded-2xl flex items-center gap-3 bg-red-50 text-red-800 border border-red-100";
+                feedback.innerHTML = `<div class="text-xl">💡</div><div><p class="font-bold">توجد كلمات في غير سياقها الصحيح.</p><p class="text-xs">راجع تركيب القصة (أصبت ${correctCount} من ${storyWords.length}).</p></div>`;
+                updateStats(false);
+            }
+        }
+
+        // --- MATCHING ---
+        let selectedArabicCard = null; let selectedEnglishCard = null; let matchesFound = 0;
+
+        function initMatchingGame() {
+            selectedArabicCard = null; selectedEnglishCard = null; matchesFound = 0;
+            document.getElementById('match-game-finished').classList.add('hidden');
+            const arabicCol = document.getElementById('match-arabic-cols');
+            const englishCol = document.getElementById('match-english-cols');
+            arabicCol.innerHTML = ''; englishCol.innerHTML = '';
+
+            const shuffledArabic = [...matchDataPool].sort(() => Math.random() - 0.5);
+            const shuffledEnglish = [...matchDataPool].sort(() => Math.random() - 0.5);
+
+            shuffledArabic.forEach(item => {
+                const card = document.createElement('button');
+                card.id = `match-ar-${item.id}`;
+                card.className = "w-full p-3 rounded-xl bg-white border-2 border-slate-100 hover:border-violet-300 text-right font-black text-md transition-all shadow-sm flex justify-between items-center";
+                card.innerHTML = `<span>${item.ar}</span><span class="text-slate-300 text-xs">🔗</span>`;
+                card.onclick = () => selectArabicMatch(item.id);
+                arabicCol.appendChild(card);
+            });
+
+            shuffledEnglish.forEach(item => {
+                const card = document.createElement('button');
+                card.id = `match-en-${item.id}`;
+                card.className = "w-full p-3 rounded-xl bg-white border-2 border-slate-100 hover:border-violet-300 text-left font-semibold text-xs transition-all shadow-sm flex justify-between items-center";
+                card.dir = "ltr";
+                card.innerHTML = `<span class="text-slate-300 text-xs">🔗</span><span>${item.en}</span>`;
+                card.onclick = () => selectEnglishMatch(item.id);
+                englishCol.appendChild(card);
+            });
+        }
+
+        function selectArabicMatch(id) {
+            document.querySelectorAll('[id^="match-ar-"]').forEach(el => {
+                if (!el.classList.contains('bg-emerald-50')) el.className = "w-full p-3 rounded-xl bg-white border-2 border-slate-100 hover:border-violet-300 text-right font-black text-md transition-all shadow-sm flex justify-between items-center";
+            });
+            const card = document.getElementById(`match-ar-${id}`);
+            if (card.classList.contains('bg-emerald-50')) return;
+            selectedArabicCard = id;
+            card.className = "w-full p-3 rounded-xl bg-violet-50 border-2 border-violet-500 text-violet-900 text-right font-black text-md transition-all shadow-sm flex justify-between items-center";
+            checkMatchSuccess();
+        }
+
+        function selectEnglishMatch(id) {
+            document.querySelectorAll('[id^="match-en-"]').forEach(el => {
+                if (!el.classList.contains('bg-emerald-50')) el.className = "w-full p-3 rounded-xl bg-white border-2 border-slate-100 hover:border-violet-300 text-left font-semibold text-xs transition-all shadow-sm flex justify-between items-center";
+            });
+            const card = document.getElementById(`match-en-${id}`);
+            if (card.classList.contains('bg-emerald-50')) return;
+            selectedEnglishCard = id;
+            card.className = "w-full p-3 rounded-xl bg-violet-50 border-2 border-violet-500 text-violet-900 text-left font-semibold text-xs transition-all shadow-sm flex justify-between items-center";
+            checkMatchSuccess();
+        }
+
+        function checkMatchSuccess() {
+            if (selectedArabicCard && selectedEnglishCard) {
+                const arEl = document.getElementById(`match-ar-${selectedArabicCard}`);
+                const enEl = document.getElementById(`match-en-${selectedEnglishCard}`);
+
+                if (selectedArabicCard === selectedEnglishCard) {
+                    playSound('correct'); updateStats(true);
+                    arEl.className = "w-full p-3 rounded-xl bg-emerald-50 border-2 border-emerald-500 text-emerald-900 text-right font-black text-md transition-all shadow-sm flex justify-between items-center pointer-events-none opacity-50";
+                    arEl.querySelector('span:last-child').innerText = "✓";
+                    enEl.className = "w-full p-3 rounded-xl bg-emerald-50 border-2 border-emerald-500 text-emerald-900 text-left font-semibold text-xs transition-all shadow-sm flex justify-between items-center pointer-events-none opacity-50";
+                    enEl.querySelector('span:first-child').innerText = "✓";
+
+                    matchesFound++;
+                    if (matchesFound === matchDataPool.length) {
+                        setTimeout(() => { playSound('completed'); document.getElementById('match-game-finished').classList.remove('hidden'); }, 500);
+                    }
+                } else {
+                    playSound('incorrect'); updateStats(false);
+                    arEl.className = "w-full p-3 rounded-xl bg-red-50 border-2 border-red-500 text-red-900 text-right font-black text-md transition-all shadow-sm flex justify-between items-center animate-shake";
+                    enEl.className = "w-full p-3 rounded-xl bg-red-50 border-2 border-red-500 text-red-900 text-left font-semibold text-xs transition-all shadow-sm flex justify-between items-center animate-shake";
+
+                    setTimeout(() => {
+                        if (!arEl.classList.contains('bg-emerald-50')) arEl.className = "w-full p-3 rounded-xl bg-white border-2 border-slate-100 hover:border-violet-300 text-right font-black text-md transition-all shadow-sm flex justify-between items-center";
+                        if (!enEl.classList.contains('bg-emerald-50')) enEl.className = "w-full p-3 rounded-xl bg-white border-2 border-slate-100 hover:border-violet-300 text-left font-semibold text-xs transition-all shadow-sm flex justify-between items-center";
+                    }, 800);
+                }
+                selectedArabicCard = null; selectedEnglishCard = null;
+            }
+        }
+
+        // --- POPUP ---
+        function showFinishedPopup() {
+            document.getElementById('popup-score').innerText = totalScore;
+            const accuracy = Math.round((correctAnswersCount / totalAttempts) * 100) || 0;
+            document.getElementById('popup-accuracy').innerText = accuracy + '%';
+            const overlay = document.getElementById('celebration-overlay');
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                overlay.classList.add('opacity-100');
+                overlay.querySelector('div').classList.remove('scale-95'); overlay.querySelector('div').classList.add('scale-100');
+            }, 50);
+        }
+
+        function closeCelebration() {
+            const overlay = document.getElementById('celebration-overlay');
+            overlay.classList.remove('opacity-100');
+            overlay.querySelector('div').classList.remove('scale-100'); overlay.querySelector('div').classList.add('scale-95');
+            setTimeout(() => { overlay.classList.add('hidden'); }, 300);
+        }
+
+        window.onload = function () {
+            initStudyDeck(); initMcqGame(); resetStoryGame(); initMatchingGame();
+        }
+    </script>
+</body>
+</html>
