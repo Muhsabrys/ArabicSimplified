@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arabic Case and Verb Mood Endings</title>
+
+<style>
+  :root {
+    /* Primary modern educational palette */
+    --nom: #10b981;       /* Emerald */
+    --nom-bg: #ecfdf5;
+    --nom-dark: #065f46;
+
+    --acc: #f97316;       /* Terracotta Amber */
+    --acc-bg: #fff7ed;
+    --acc-dark: #9a3412;
+
+    --gen: #3b82f6;       /* Classic Deep Blue */
+    --gen-bg: #eff6ff;
+    --gen-dark: #1e40af;
+
+    --jus: #64748b;       /* Slate Gray */
+    --jus-bg: #f8fafc;
+    --jus-dark: #334155;
+
+    --dark: #1e293b;
+    --muted: #475569;
+    --border: #e2e8f0;
+    --soft: #f1f5f9;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: #f8fafc;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  header {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    color: white;
+    padding: 60px 24px;
+    text-align: center;
+    box-shadow: inset 0 -4px 12px rgba(0,0,0,0.1);
+  }
+
+  header h1 {
+    margin: 0 0 12px;
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  header p {
+    max-width: 750px;
+    margin: 0 auto;
+    font-size: 1.15rem;
+    color: #93c5fd;
+    line-height: 1.6;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 24px 60px;
+  }
+
+  section {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    padding: 32px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01);
+  }
+
+  h2 {
+    margin-top: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+    border-bottom: 2px solid var(--soft);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    color: #1e293b;
+  }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .case-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    background: white;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .case-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  }
+
+  .nom-card { border-top: 6px solid var(--nom); background: var(--nom-bg); }
+  .acc-card { border-top: 6px solid var(--acc); background: var(--acc-bg); }
+  .gen-card { border-top: 6px solid var(--gen); background: var(--gen-bg); }
+  .jus-card { border-top: 6px solid var(--jus); background: var(--jus-bg); }
+
+  .case-card h3 {
+    font-size: 1.5rem;
+    margin: 0 0 4px;
+  }
+
+  .label {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .nom-label { background: var(--nom-bg); color: var(--nom-dark); border: 1px solid rgba(16,185,129,0.2); }
+  .acc-label { background: var(--acc-bg); color: var(--acc-dark); border: 1px solid rgba(249,115,22,0.2); }
+  .gen-label { background: var(--gen-bg); color: var(--gen-dark); border: 1px solid rgba(59,130,246,0.2); }
+  .jus-label { background: var(--jus-bg); color: var(--jus-dark); border: 1px solid rgba(100,116,139,0.2); }
+
+  .rule-box {
+    border-left: 4px solid #1e3a8a;
+    background: #f0f4f8;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    color: #1e293b;
+  }
+
+  .warning-box {
+    border-left: 4px solid #ef4444;
+    background: #fef2f2;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    color: #991b1b;
+  }
+
+  .note {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  th {
+    background: #1e293b;
+    color: white;
+    text-align: left;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  td {
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    padding: 16px 18px;
+    vertical-align: middle;
+    background: white;
+  }
+  
+  td:last-child {
+    border-right: none;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  /* Optimized Arabic Typography */
+  .arabic {
+    direction: rtl;
+    text-align: right;
+    font-family: "Amiri", "Noto Naskh Arabic", "Scheherazade New", Georgia, serif;
+    font-size: 1.5rem;
+    line-height: 2;
+    unicode-bidi: isolate;
+  }
+
+  .small-arabic {
+    direction: rtl;
+    text-align: right;
+    font-family: "Amiri", "Noto Naskh Arabic", Tahoma, sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.8;
+    background: var(--soft);
+    padding: 12px 18px;
+    border-radius: 8px;
+    letter-spacing: 1px;
+  }
+
+  .ending {
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 6px;
+    margin: 0 2px;
+  }
+
+  .nom { color: var(--nom-dark); background: rgba(16,185,129,0.15); }
+  .acc { color: var(--acc-dark); background: rgba(249,115,22,0.15); }
+  .gen { color: var(--gen-dark); background: rgba(59,130,246,0.15); }
+  .jus { color: var(--jus-dark); background: rgba(100,116,139,0.15); }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .two-col > div {
+    background: var(--jus-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .example-list {
+    margin: 10px 0 0;
+    padding-left: 20px;
+  }
+
+  .example-list li {
+    margin-bottom: 8px;
+  }
+
+  .mini-title {
+    font-weight: 700;
+    margin-top: 12px;
+    color: var(--dark);
+  }
+
+  .case-section {
+    border-top: 6px solid;
+  }
+
+  .nominative-section { border-color: var(--nom); }
+  .accusative-section { border-color: var(--acc); }
+  .genitive-section { border-color: var(--gen); }
+  .jussive-section { border-color: var(--jus); }
+
+  .decision-list {
+    counter-reset: steps;
+    list-style: none;
+    padding: 0;
+  }
+
+  .decision-list li {
+    counter-increment: steps;
+    margin-bottom: 16px;
+    padding: 18px 20px 18px 60px;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .decision-list li::before {
+    content: counter(steps);
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    background: #1e293b;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: #f8fafc;
+    margin-top: 16px;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: #1e293b;
+    outline: none;
+  }
+  
+  summary:hover {
+    color: #000;
+  }
+
+  .practice {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 24px;
+    margin-top: 16px;
+  }
+
+  .practice ol li {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  
+  .practice ol li:last-child {
+    border-bottom: none;
+  }
+
+  .footer-note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-top: 40px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .intro-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .intro-grid {
+      grid-template-columns: 1fr;
+    }
+    header h1 {
+      font-size: 1.8rem;
+    }
+    section {
+      padding: 20px;
+    }
+    th, td {
+      padding: 12px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Arabic Case Endings & Verb Moods</h1>
+  <p>
+    A visual, color-coded dashboard mapping <strong>Marfūʿ</strong> (Nominative/Indicative), <strong>Manṣūb</strong> (Accusative/Subjunctive),
+    <strong>Majrūr</strong> (Genitive), and <strong>Majzūm</strong> (Jussive) grammatical structures.
+  </p>
+</header>
+
+<main>
+
+<section>
+  <h2>The Big Idea</h2>
+
+  <p>
+    In Arabic, the ending of a word tells us its grammatical job.
+    For nouns, the ending shows case: nominative, accusative, or genitive.
+    For present-tense verbs, the ending shows mood: indicative, subjunctive, or jussive.
+  </p>
+
+  <div class="rule-box">
+    <strong>The default form is usually Marfūʿ.</strong>
+    A noun is usually nominative when it is the subject or predicate.
+    A present-tense verb is usually nominative/indicative when no special particle comes before it.
+  </div>
+
+  <div class="intro-grid">
+    <div class="case-card nom-card">
+      <span class="nom-label label">Noun & Verb</span>
+      <h3>Marfūʿ</h3>
+      <p><strong>Nominative / Indicative</strong></p>
+      <p class="note">Default for subjects, predicates, and un-particles present verbs.</p>
+      <p class="arabic">ـ<span class="ending nom">ُ</span> / ـ<span class="ending nom">ون</span></p>
+    </div>
+
+    <div class="case-card acc-card">
+      <span class="acc-label label">Noun & Verb</span>
+      <h3>Manṣūb</h3>
+      <p><strong>Accusative / Subjunctive</strong></p>
+      <p class="note">Used after subjunctive particles, objects, adverbs, and Kānah predicates.</p>
+      <p class="arabic">ـ<span class="ending acc">َ</span> / ـ<span class="ending acc">ين</span></p>
+    </div>
+
+    <div class="case-card gen-card">
+      <span class="gen-label label">Nouns Only</span>
+      <h3>Majrūr</h3>
+      <p><strong>Genitive</strong></p>
+      <p class="note">Used directly after prepositions and for the second word in an iḍāfa.</p>
+      <p class="arabic">ـ<span class="ending gen">ِ</span> / ـ<span class="ending gen">ين</span></p>
+    </div>
+
+    <div class="case-card jus-card">
+      <span class="jus-label label">Verbs Only</span>
+      <h3>Majzūm</h3>
+      <p><strong>Jussive</strong></p>
+      <p class="note">Triggered by cutting tools like Lam. Used only with verbs, never with nouns.</p>
+      <p class="arabic">ـ<span class="ending jus">ْ</span> / remove ن</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Quick Decision Guide</h2>
+
+  <ol class="decision-list">
+    <li>
+      <div><strong>Is the word a noun after a preposition?</strong></div>
+      <div>Use <span class="gen-label label">Majrūr</span>.</div>
+      <div class="arabic">في البيت<span class="ending gen">ِ</span></div>
+    </li>
+
+    <li>
+      <div><strong>Is the word the second part of an iḍāfa?</strong></div>
+      <div>Use <span class="gen-label label">Majrūr</span>.</div>
+      <div class="arabic">بيتُ الطالب<span class="ending gen">ِ</span></div>
+    </li>
+
+    <li>
+      <div><strong>Is the noun an object, adverbial expression, tamyīz, or predicate of Kānah?</strong></div>
+      <div>Use <span class="acc-label label">Manṣūb</span>.</div>
+      <div class="arabic">قرأتُ الكتاب<span class="ending acc">َ</span></div>
+    </li>
+
+    <li>
+      <div><strong>Is the noun a subject or predicate in a basic sentence?</strong></div>
+      <div>Use <span class="nom-label label">Marfūʿ</span>.</div>
+      <div class="arabic">الطالب<span class="ending nom">ُ</span> مجتهد<span class="ending nom">ٌ</span></div>
+    </li>
+
+    <li>
+      <div><strong>Is the present-tense verb after An, Lan, Kay, Ḥattā, or Li- (lam al-ta'leel)?</strong></div>
+      <div>Use <span class="acc-label label">Manṣūb</span>.</div>
+      <div class="arabic">أريدُ أن أدرس<span class="ending acc">َ</span></div>
+    </li>
+
+    <li>
+      <div><strong>Is the present-tense verb after Lam, Lā of prohibition, Li of command, or a conditional particle?</strong></div>
+      <div>Use <span class="jus-label label">Majzūm</span>.</div>
+      <div class="arabic">لم أذهب<span class="ending jus">ْ</span></div>
+    </li>
+
+    <li>
+      <div><strong>If none of these applies to a present-tense verb, use the default.</strong></div>
+      <div>Use <span class="nom-label label">Marfūʿ</span>.</div>
+      <div class="arabic">أنا أدرس<span class="ending nom">ُ</span></div>
+    </li>
+  </ol>
+</section>
+
+<section class="case-section nominative-section">
+  <h2><span class="nom-label label">Marfūʿ</span> Nominative / Indicative</h2>
+
+  <p>
+    <strong>Marfūʿ</strong> is the default for many nouns and present-tense verbs.
+    For nouns, it often marks the subject or predicate. For present-tense verbs, it is used when
+    no particle changes the verb.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <h3>For Nouns</h3>
+      <p class="mini-title">Common uses:</p>
+      <ul>
+        <li>Subject of a nominal sentence (Al-Mubtada')</li>
+        <li>Predicate of a nominal sentence (Al-Khabar)</li>
+        <li>Subject after a verb (Al-Fā'il)</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>For Verbs</h3>
+      <p class="mini-title">Common use:</p>
+      <ul>
+        <li>Present-tense verb with no particle before it.</li>
+        <li>The “five verbs” keep the noon (ن): <span class="arabic">يدرسون، تدرسين، تذهبان</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Arabic Example</th>
+        <th>Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Noun: subject</td>
+        <td class="arabic">الطلاب<span class="ending nom">ُ</span> يدرسون.</td>
+        <td>The word <strong>Al-Ṭullābu</strong> is the subject, so it is nominative.</td>
+      </tr>
+
+      <tr>
+        <td>Noun: subject after verb</td>
+        <td class="arabic">يدرسُ الطلاب<span class="ending nom">ُ</span>.</td>
+        <td>The sentence begins with a verb, but <strong>Al-Ṭullābu</strong> is still the subject.</td>
+      </tr>
+
+      <tr>
+        <td>Noun: subject and predicate</td>
+        <td class="arabic">الطقس<span class="ending nom">ُ</span> بارد<span class="ending nom">ٌ</span>.</td>
+        <td>Both the subject and the predicate are nominative in a basic nominal sentence.</td>
+      </tr>
+
+      <tr>
+        <td>Noun: sound masculine plural</td>
+        <td class="arabic">المصريون<span class="ending nom">َ</span> يحبون كرةَ القدم.</td>
+        <td>
+          The word <strong>Al-Miṣriyyūna</strong> is nominative because it is the subject.
+          Sound masculine plural nouns use the <strong>oon</strong> ending in the nominative case.
+        </td>
+      </tr>
+
+      <tr>
+        <td>Verb: no particle before it</td>
+        <td class="arabic">أنا أسافر<span class="ending nom">ُ</span> في النهار.</td>
+        <td>The verb <strong>Usāfiru</strong> is a present-tense verb with no particle before it.</td>
+      </tr>
+
+      <tr>
+        <td>Verb: no particle before it</td>
+        <td class="arabic">أخي يخرج<span class="ending nom">ُ</span> في الليل.</td>
+        <td>The verb <strong>Yakhruju</strong> is indicative because nothing comes before it to change it.</td>
+      </tr>
+
+      <tr>
+        <td>Verb: five verbs</td>
+        <td class="arabic">أصدقائي يخرجون معًا كلَّ يوم.</td>
+        <td>The verb <strong>Yakhrujūna</strong> keeps the noon (ن) because it is not preceded by a changing particle.</td>
+      </tr>
+
+      <tr>
+        <td>Verb: plural subject</td>
+        <td class="arabic">أنا وأختي نكتب<span class="ending nom">ُ</span> الواجبَ.</td>
+        <td>The verb <strong>Naktubu</strong> is present indicative.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="case-section accusative-section">
+  <h2><span class="acc-label label">Manṣūb</span> Accusative / Subjunctive</h2>
+
+  <p>
+    <strong>Manṣūb</strong> appears with both nouns and present-tense verbs.
+    With verbs, it is used after certain particles. With nouns, it is used for objects,
+    many adverbial expressions, tamyīz, and the predicate of <strong>Kānah</strong>.
+  </p>
+
+  <div class="rule-box">
+    <strong>Important:</strong>
+    For verbs, particles like <strong>An, Lan, Kay, Ḥattā, and Li-</strong>
+    make the present-tense verb Manṣūb.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Use</th>
+        <th>Arabic Example</th>
+        <th>Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Verb after An</td>
+        <td class="arabic">أختي تحبُّ أنْ تدرس<span class="ending acc">َ</span> في المساءِ.</td>
+        <td>The particle <strong>An</strong> makes the verb <strong>Tadrusa</strong> subjunctive.</td>
+      </tr>
+
+      <tr>
+        <td>Verb after Lan</td>
+        <td class="arabic">نحنُ لن نسافر<span class="ending acc">َ</span> اليومَ.</td>
+        <td>The particle <strong>Lan</strong> makes the present verb Manṣūb.</td>
+      </tr>
+
+      <tr>
+        <td>Verb after Kay</td>
+        <td class="arabic">سافرتُ كي أدرس<span class="ending acc">َ</span> في الخارجِ.</td>
+        <td>The particle <strong>Kay</strong> means “in order to” and makes the verb Manṣūb.</td>
+      </tr>
+
+      <tr>
+        <td>Verb after Ḥattā</td>
+        <td class="arabic">اتصلتُ بأختي حتى أقول<span class="ending acc">َ</span> لها عيدًا سعيدًا.</td>
+        <td>The particle <strong>Ḥattā</strong> can mean “in order to” here and makes the verb Manṣūb.</td>
+      </tr>
+
+      <tr>
+        <td>Verb after Li-</td>
+        <td class="arabic">جئتُ إلى أمريكا لأتعلم<span class="ending acc">َ</span>.</td>
+        <td>The attached <strong>Li-</strong> here means “in order to,” so the verb becomes Manṣūb.</td>
+      </tr>
+
+      <tr>
+        <td>Object</td>
+        <td class="arabic">كتبَ الطالبُ الدرس<span class="ending acc">َ</span>.</td>
+        <td>The word <strong>Al-Darsa</strong> is the direct object of the verb.</td>
+      </tr>
+
+      <tr>
+        <td>Object</td>
+        <td class="arabic">قرأتُ الكتاب<span class="ending acc">َ</span> في المكتبةِ.</td>
+        <td>The word <strong>Al-Kitāba</strong> is what I read, so it takes the accusative case.</td>
+      </tr>
+
+      <tr>
+        <td>Adverb of time</td>
+        <td class="arabic">نمتُ ساعة<span class="ending acc">ً</span> ثم سافرتُ.</td>
+        <td>The word <strong>Sā'atan</strong> tells how long I slept adverbially.</td>
+      </tr>
+
+      <tr>
+        <td>Adverb of place/direction</td>
+        <td class="arabic">سافرتُ جنوب<span class="ending acc">ًا</span>.</td>
+        <td>The word <strong>Janūban</strong> specifies direction/location adverbially.</td>
+      </tr>
+
+      <tr>
+        <td>Tamyīz: distinguishing word</td>
+        <td class="arabic">دفعتُ عشرينَ دولار<span class="ending acc">ًا</span>.</td>
+        <td>The word <strong>Dūlāran</strong> clarifies what structural number "twenty" refers to.</td>
+      </tr>
+
+      <tr>
+        <td>Tamyīz: measurement</td>
+        <td class="arabic">سقتُ السيارةَ عشرينَ كيلومتر<span class="ending acc">ًا</span>.</td>
+        <td>The word <strong>Kīlūmitran</strong> clarifies the unit of distance measurement.</td>
+      </tr>
+
+      <tr>
+        <td>Predicate of Kānah</td>
+        <td class="arabic">كان الطقسُ بارد<span class="ending acc">ًا</span>.</td>
+        <td>After <strong>Kānah</strong>, the subject stays nominative, but the predicate becomes accusative.</td>
+      </tr>
+
+      <tr>
+        <td>Predicate of Kānah</td>
+        <td class="arabic">كان أخي مريض<span class="ending acc">ًا</span>.</td>
+        <td>The word <strong>Marīḍan</strong> is the predicate of Kānah.</td>
+      </tr>
+
+      <tr>
+        <td>Predicate of Kānah (Feminine)</td>
+        <td class="arabic">كانت صديقتي مسافرة<span class="ending acc">ً</span>.</td>
+        <td>The word <strong>Musāfiratan</strong> is the predicate of Kānat.</td>
+      </tr>
+
+      <tr>
+        <td>Predicate of Kānah</td>
+        <td class="arabic">كان الطالبُ غائب<span class="ending acc">ًا</span>.</td>
+        <td>The subject stays nominative, while the word <strong>Ghā'iban</strong> shifts to accusative.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warning-box">
+    <strong>Correction note:</strong>
+    We say <span class="arabic">دفعتُ عشرينَ دولارًا</span>, not
+    <span class="arabic">دفعتُ عشرينًا دولارًا</span>.
+    The specifier word <span class="arabic">دولارًا</span> is what carries the accusative tanween.
+  </div>
+</section>
+
+<section class="case-section genitive-section">
+  <h2><span class="gen-label label">Majrūr</span> Genitive</h2>
+
+  <p>
+    <strong>Majrūr</strong> applies strictly to nouns. Verbs can never be genitive.
+    The two most common structural triggers are prepositions and iḍāfa compound phrases.
+  </p>
+
+  <div class="warning-box">
+    <strong>Important:</strong>
+    There are absolutely no Majrūr verbs. If you are analyzing a verb structure, skip this entire category.
+  </div>
+
+  <h3>Common Prepositions</h3>
+  <p class="small-arabic">
+    في، من، عن، على، إلى، لـ، بـ، بين، فوق، تحت، أمام، خلف، مع
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Use</th>
+        <th>Arabic Example</th>
+        <th>Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>After Fee (في)</td>
+        <td class="arabic">أنا في البيت<span class="ending gen">ِ</span>.</td>
+        <td>The word <strong>Al-Bayti</strong> is genitive because it directly follows a preposition.</td>
+      </tr>
+
+      <tr>
+        <td>After Min (من)</td>
+        <td class="arabic">نحنُ من القاهرة<span class="ending gen">ِ</span>.</td>
+        <td>The word <strong>Al-Qāhirati</strong> is genitive because it follows a preposition.</td>
+      </tr>
+
+      <tr>
+        <td>After Bayna (بين)</td>
+        <td class="arabic">سأقابلكَ بين الخامسة<span class="ending gen">ِ</span> والسادسة<span class="ending gen">ِ</span>.</td>
+        <td>Both time descriptors are genitive because they link back structurally to the word "between".</td>
+      </tr>
+
+      <tr>
+        <td>After multiple prepositions</td>
+        <td class="arabic">حصلَ الطالبُ على هدية<span class="ending gen">ٍ</span> من المدرسين.</td>
+        <td>The word <strong>Hadiyyatin</strong> follows one preposition, and <strong>Al-Mudarrisīna</strong> follows another.</td>
+      </tr>
+
+      <tr>
+        <td>After Li- (لـ)</td>
+        <td class="arabic">اشتريتُ كتابًا للطالب<span class="ending gen">ِ</span>.</td>
+        <td>The prefix <strong>Li-</strong> attached directly to a noun operates as a preposition.</td>
+      </tr>
+
+      <tr>
+        <td>Iḍāfa: second word</td>
+        <td class="arabic">هذا كتابُ الطالب<span class="ending gen">ِ</span>.</td>
+        <td>The second noun in a standard possessive compound link is always genitive.</td>
+      </tr>
+
+      <tr>
+        <td>Iḍāfa after a preposition</td>
+        <td class="arabic">أعيشُ في بيت<span class="ending gen">ِ</span> الطلاب<span class="ending gen">ِ</span>.</td>
+        <td>
+          The word <strong>Bayti</strong> is genitive after a preposition, while 
+          <strong>Al-Ṭullābi</strong> is genitive because it functions as the second word in the phrase.
+        </td>
+      </tr>
+
+      <tr>
+        <td>Iḍāfa inside an object</td>
+        <td class="arabic">عرفتُ اسم<span class="ending acc">َ</span> المدينة<span class="ending gen">ِ</span>.</td>
+        <td>
+          The word <strong>Isma</strong> is accusative because it is the main object, but
+          <strong>Al-Madīnati</strong> is genitive as the second component of the phrase.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="case-section jussive-section">
+  <h2><span class="jus-label label">Majzūm</span> Jussive</h2>
+
+  <p>
+    <strong>Majzūm</strong> applies strictly to present-tense verbs.
+    Nouns can never be jussive.
+  </p>
+
+  <div class="rule-box">
+    The most common jussive tool is the particle <strong>Lam</strong>.
+    It functions as past-tense negation ("did not") and changes the following present verb to the jussive form.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Use</th>
+        <th>Arabic Example</th>
+        <th>Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>After Lam</td>
+        <td class="arabic">لم يذهب<span class="ending jus">ْ</span>.</td>
+        <td>The particle <strong>Lam</strong> puts the verb into the jussive, giving it a sukūn ending.</td>
+      </tr>
+
+      <tr>
+        <td>After Lam</td>
+        <td class="arabic">لم أسافر<span class="ending jus">ْ</span> أمسِ.</td>
+        <td>The verb <strong>Usāfir</strong> takes a sukūn because of the preceding negative particle.</td>
+      </tr>
+
+      <tr>
+        <td>Five verbs: remove noon (ن)</td>
+        <td class="arabic">هم لم يسافروا.</td>
+        <td>The original default verb was <strong>Yusāfirūna</strong>. After Lam, the ending noon is deleted.</td>
+      </tr>
+
+      <tr>
+        <td>Five verbs: remove noon (ن)</td>
+        <td class="arabic">أنتِ لم تدرsi.</td>
+        <td>The original default verb was <strong>Tadrusīna</strong>. After Lam, the ending noon is deleted.</td>
+      </tr>
+
+      <tr>
+        <td>Command prefix (Li-)</td>
+        <td class="arabic">لْنكتب<span class="ending jus">ْ</span> الواجبَ الآن.</td>
+        <td>The command prefix forces the present-tense verb directly into the jussive.</td>
+      </tr>
+
+      <tr>
+        <td>Negative commands</td>
+        <td class="arabic">لا تخرج<span class="ending jus">ْ</span> متأخرًا.</td>
+        <td>The prohibitive particle <strong>Lā</strong> puts the action into a jussive command state.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Endings Summary Table</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Nouns</th>
+        <th>Present-Tense Verbs</th>
+        <th>Common Triggers</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="nom-label label">Marfūʿ</span></td>
+        <td class="arabic">ـ<span class="ending nom">ُ</span> ، ـ<span class="ending nom">ٌ</span> ، ـ<span class="ending nom">ون</span></td>
+        <td class="arabic">ـ<span class="ending nom">ُ</span> ، keeps noon (ن)</td>
+        <td>Default state; sentence subject; sentence predicate; present verbs without particles.</td>
+      </tr>
+
+      <tr>
+        <td><span class="acc-label label">Manṣūb</span></td>
+        <td class="arabic">ـ<span class="ending acc">َ</span> ، ـ<span class="ending acc">ًا</span> ، ـ<span class="ending acc">ين</span></td>
+        <td class="arabic">ـ<span class="ending acc">َ</span> ، drops noon (ن)</td>
+        <td>Direct objects; adverbs; tamyīz; predicates of Kānah; following An, Lan, Kay, Ḥattā, or Li-.</td>
+      </tr>
+
+      <tr>
+        <td><span class="gen-label label">Majrūr</span></td>
+        <td class="arabic">ـ<span class="ending gen">ِ</span> ، ـ<span class="ending gen">ٍ</span> ، ـ<span class="ending gen">ين</span></td>
+        <td>Impossible</td>
+        <td>Following prepositions; second structural position in an iḍāfa compound.</td>
+      </tr>
+
+      <tr>
+        <td><span class="jus-label label">Majzūm</span></td>
+        <td>Never</td>
+        <td class="arabic">ـ<span class="ending jus">ْ</span> ، drops noon (ن)</td>
+        <td>Following Lam, prohibitive Lā, command Li-, and select conditional elements.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Practice</h2>
+
+  <p>
+    Read each sentence. Decide whether the highlighted word should be
+    <strong>Marfūʿ</strong>, <strong>Manṣūb</strong>, <strong>Majrūr</strong>, or <strong>Majzūm</strong>.
+  </p>
+
+  <div class="practice">
+    <ol class="arabic">
+      <li>الطالبُ يكتبُ الدرسَ في البيتِ.</li>
+      <li>أريدُ أن أدرسَ العربيةَ في الجامعةِ.</li>
+      <li>لم يسافرْ أخي أمسِ.</li>
+      <li>كان الجوُّ جميلًا.</li>
+      <li>اشتريتُ كتابَ الطالبِ.</li>
+      <li>نحنُ لن نخرجَ الليلةَ.</li>
+      <li>المعلمون يشرحون الدرسَ.</li>
+      <li>سافرتُ عشرينَ ميلًا.</li>
+    </ol>
+  </div>
+
+  <details>
+    <summary>View Answer Key</summary>
+    <ol>
+      <li>
+        <strong>Al-Ṭullābu:</strong> Marfūʿ because it is the sentence subject (Mubtada').<br>
+        <strong>Yaktubu:</strong> Marfūʿ because it is a present verb with no altering particles.<br>
+        <strong>Al-Darsa:</strong> Manṣūb because it is the direct object (Maf'ūl bihi).<br>
+        <strong>Al-Bayti:</strong> Majrūr because it follows the preposition Fee.
+      </li>
+      <li>
+        <strong>Adrasa:</strong> Manṣūb because it follows the particle An.<br>
+        <strong>Al-ʿArabiyyata:</strong> Manṣūb because it is the direct object.<br>
+        <strong>Al-Jāmiʿati:</strong> Majrūr because it follows the preposition Fee.
+      </li>
+      <li>
+        <strong>Yusāfir:</strong> Majzūm because it follows the negative particle Lam.<br>
+        <strong>Akhī:</strong> Marfūʿ because it is the verb's subject (Fā'il).
+      </li>
+      <li>
+        <strong>Al-Jawwu:</strong> Marfūʿ because it is the subject name of Kānah (Ism Kānah).<br>
+        <strong>Jamīlan:</strong> Manṣūb because it is the predicate statement of Kānah (Khabar Kānah).
+      </li>
+      <li>
+        <strong>Kitāba:</strong> Manṣūb because it is the direct object.<br>
+        <strong>Al-Ṭālibi:</strong> Majrūr because it is the possessive second half of the iḍāfa compound (Mudāf ilayh).
+      </li>
+      <li>
+        <strong>Nakhruja:</strong> Manṣūb because it follows the future negation particle Lan.<br>
+        <strong>Al-Laylata:</strong> Manṣūb because it functions as an adverbial time placement marker.
+      </li>
+      <li>
+        <strong>Al-Muʿallimūna:</strong> Marfūʿ because it is the plural sentence subject.<br>
+        <strong>Yashraḥūna:</strong> Marfūʿ because it is a present verb with no prefix particle, meaning it preserves its noon character.<br>
+        <strong>Al-Darsa:</strong> Manṣūb because it acts as the direct object.
+      </li>
+      <li>
+        <strong>Mīlan:</strong> Manṣūb because it functions as a unit specifier expression (Tamyīz).
+      </li>
+    </ol>
+  </details>
+</section>
+
+<section>
+  <h2>Common Student Mistakes</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Mistake</th>
+        <th>Better Form</th>
+        <th>Why?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="arabic">أنا في البيت<span class="ending acc">َ</span>.</td>
+        <td class="arabic">أنا في البيت<span class="ending gen">ِ</span>.</td>
+        <td>Following standard prepositions, the noun shifts into the genitive state (Majrūr).</td>
+      </tr>
+
+      <tr>
+        <td class="arabic">أريدُ أن أدرس<span class="ending nom">ُ</span>.</td>
+        <td class="arabic">أريدُ أن أدرس<span class="ending acc">َ</span>.</td>
+        <td>Directly following the particle An, a present-tense verb becomes subjunctive (Manṣūb).</td>
+      </tr>
+
+      <tr>
+        <td class="arabic">لم يذهب<span class="ending nom">ُ</span>.</td>
+        <td class="arabic">لم يذهب<span class="ending jus">ْ</span>.</td>
+        <td>Directly following the particle Lam, a present-tense verb converts to jussive (Majzūm).</td>
+      </tr>
+
+      <tr>
+        <td class="arabic">كان الطالبُ غائب<span class="ending nom">ٌ</span>.</td>
+        <td class="arabic">كان الطالبُ غائب<span class="ending acc">ًا</span>.</td>
+        <td>The active predicate statement of any Kānah construction is always accusative (Manṣūb).</td>
+      </tr>
+
+      <tr>
+        <td class="arabic">بيتُ الطالب<span class="ending nom">ُ</span> كبيرٌ.</td>
+        <td class="arabic">بيتُ الطالب<span class="ending gen">ِ</span> كبيرٌ.</td>
+        <td>The second noun in any standard possessive iḍāfa structural pairing is genitive (Majrūr).</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<p class="footer-note">
+  Quick Guide: <span style="color: var(--nom-dark)">● Marfūʿ (Green)</span> | <span style="color: var(--acc-dark)">● Manṣūb (Orange)</span> | <span style="color: var(--gen-dark)">● Majrūr (Blue)</span> | <span style="color: var(--jus-dark)">● Majzūm (Slate)</span>
+</p>
+
+</main>
+
+</body>
+</html>
