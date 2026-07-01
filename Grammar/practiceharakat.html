@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arabic Case Marker Practice</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      /* Primary modern educational palette mapped to Cases */
+      --nom: #10b981;        /* Emerald - Marfūʿ */
+      --nom-bg: #ecfdf5;
+      --nom-border: #34d399;
+      --nom-dark: #065f46;
+
+      --acc: #f97316;        /* Terracotta Amber - Manṣūb */
+      --acc-bg: #fff7ed;
+      --acc-border: #fb923c;
+      --acc-dark: #9a3412;
+
+      --gen: #3b82f6;        /* Classic Deep Blue - Majrūr */
+      --gen-bg: #eff6ff;
+      --gen-border: #60a5fa;
+      --gen-dark: #1e40af;
+
+      --jus: #64748b;        /* Slate Gray - Majzūm */
+      --jus-bg: #f8fafc;
+      --jus-border: #94a3b8;
+      --jus-dark: #334155;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .font-arabic {
+      font-family: 'Amiri', serif;
+      direction: rtl;
+    }
+
+    /* Core Interactive Word Styles */
+    .word-blank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.1rem 0.6rem;
+      margin: 0 0.2rem;
+      background: #e2e8f0;
+      border-bottom: 3px dashed #94a3b8;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 700;
+      color: #334155;
+    }
+    .word-blank:hover {
+      background: #cbd5e1;
+      border-bottom-color: #475569;
+    }
+    .word-blank.active {
+      background: #fef08a;
+      border-bottom: 3px solid #eab308;
+      color: #854d0e;
+      transform: scale(1.05);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    /* Solved State Styles */
+    .word-solved {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.1rem 0.5rem;
+      margin: 0 0.2rem;
+      border-radius: 0.375rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    
+    .marker-char {
+      font-weight: 800;
+      border-radius: 0.25rem;
+      padding: 0 0.2rem;
+      margin-right: -0.1rem; /* Adjusting for right-to-left flow */
+      margin-left: 0.1rem;
+    }
+
+    /* Specific Case Themes */
+    .case-marfu { background: var(--nom-bg); color: var(--nom-dark); border: 1px solid var(--nom-border); }
+    .case-marfu .marker-char { color: var(--nom-dark); background: rgba(16, 185, 129, 0.2); }
+    
+    .case-mansub { background: var(--acc-bg); color: var(--acc-dark); border: 1px solid var(--acc-border); }
+    .case-mansub .marker-char { color: var(--acc-dark); background: rgba(249, 115, 22, 0.2); }
+    
+    .case-majrur { background: var(--gen-bg); color: var(--gen-dark); border: 1px solid var(--gen-border); }
+    .case-majrur .marker-char { color: var(--gen-dark); background: rgba(59, 130, 246, 0.2); }
+    
+    .case-majzum { background: var(--jus-bg); color: var(--jus-dark); border: 1px solid var(--jus-border); }
+    .case-majzum .marker-char { color: var(--jus-dark); background: rgba(100, 116, 139, 0.2); }
+
+    /* Animations */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    .animate-shake {
+      animation: shake 0.4s ease-in-out;
+    }
+    
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(-10px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-pop-in {
+      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col antialiased">
+  <header class="bg-gradient-to-br from-slate-900 to-blue-900 text-white py-12 px-6 text-center shadow-lg">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-4xl font-extrabold tracking-tight mb-4">Arabic Cases Interactive Practice</h1>
+      <p class="text-lg text-blue-200">
+        Apply your knowledge! Click on the highlighted words in each sentence to determine if they should be 
+        <span class="text-emerald-400 font-semibold">Marfūʿ</span>, 
+        <span class="text-orange-400 font-semibold">Manṣūb</span>, 
+        <span class="text-blue-400 font-semibold">Majrūr</span>, or 
+        <span class="text-slate-400 font-semibold">Majzūm</span>.
+      </p>
+    </div>
+  </header>
+
+  <main class="flex-grow w-full max-w-4xl mx-auto p-4 md:p-8">
+    <!-- Progress Indicator -->
+    <div class="bg-white rounded-xl shadow-sm p-4 mb-8 flex items-center justify-between border border-slate-200">
+      <div class="font-semibold text-slate-700 text-lg">Your Progress</div>
+      <div class="flex items-center gap-4">
+        <div class="w-48 h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+          <div id="progress-bar" class="h-full bg-emerald-500 transition-all duration-500 w-0"></div>
+        </div>
+        <div id="progress-text" class="text-slate-600 font-bold min-w-[60px] text-right">0 / 25</div>
+      </div>
+    </div>
+
+    <!-- Application Root for Dynamic Content -->
+    <div id="app-root" class="space-y-6">
+      <!-- Sentences will be injected here via JavaScript -->
+    </div>
+
+    <!-- Completion Message (Hidden by default) -->
+    <div id="completion-message" class="hidden mt-8 bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-8 text-center shadow-sm animate-pop-in">
+      <h2 class="text-3xl font-bold text-emerald-800 mb-4">Mubārak! (Congratulations!) 🎉</h2>
+      <p class="text-lg text-emerald-700 mb-6">You have successfully applied the rules of Arabic case endings and verb moods to all practice sentences.</p>
+      <button onclick="resetApp()" class="px-6 py-3 bg-emerald-600 text-white rounded-lg font-bold shadow hover:bg-emerald-700 transition-colors">
+        Practice Again
+      </button>
+    </div>
+  </main>
+
+  <footer class="mt-12 py-8 text-center text-slate-500 text-sm border-t border-slate-200 bg-white">
+    <p>Based on the provided grammar data • Focuses on Marfūʿ, Manṣūb, Majrūr, and Majzūm rules.</p>
+  </footer>
+
+  <script>
+    // The exact 8 sentences and their answer keys parsed into interactive data
+    const quizData = [
+      {
+        id: 0,
+        elements: [
+          { type: 'blank', base: 'الطالب', correct: 'marfu', marker: 'ُ', eng: 'Al-Ṭālibu', exp: "Marfūʿ because it is the sentence subject (Mubtada')." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'يكتب', correct: 'marfu', marker: 'ُ', eng: 'Yaktubu', exp: "Marfūʿ because it is a present verb with no altering particles." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'الدرس', correct: 'mansub', marker: 'َ', eng: 'Al-Darsa', exp: "Manṣūb because it is the direct object (Maf'ūl bihi)." },
+          { type: 'text', val: ' في ' },
+          { type: 'blank', base: 'البيت', correct: 'majrur', marker: 'ِ', eng: 'Al-Bayti', exp: "Majrūr because it follows the preposition 'في' (Fee)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 1,
+        elements: [
+          { type: 'text', val: 'أريدُ أن ' },
+          { type: 'blank', base: 'أدرس', correct: 'mansub', marker: 'َ', eng: 'Adrasa', exp: "Manṣūb because it follows the particle 'أن' (An)." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'العربية', correct: 'mansub', marker: 'َ', eng: 'Al-ʿArabiyyata', exp: "Manṣūb because it is the direct object." },
+          { type: 'text', val: ' في ' },
+          { type: 'blank', base: 'الجامعة', correct: 'majrur', marker: 'ِ', eng: 'Al-Jāmiʿati', exp: "Majrūr because it follows the preposition 'في' (Fee)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 2,
+        elements: [
+          { type: 'text', val: 'لم ' },
+          { type: 'blank', base: 'يسافر', correct: 'majzum', marker: 'ْ', eng: 'Yusāfir', exp: "Majzūm because it follows the negative particle 'لم' (Lam)." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'أخي', correct: 'marfu', marker: '', eng: 'Akhī', exp: "Marfūʿ because it is the verb's subject (Fā'il). Note: marker is implied/hidden." },
+          { type: 'text', val: ' أمسِ.' }
+        ]
+      },
+      {
+        id: 3,
+        elements: [
+          { type: 'text', val: 'كان ' },
+          { type: 'blank', base: 'الجوّ', correct: 'marfu', marker: 'ُ', eng: 'Al-Jawwu', exp: "Marfūʿ because it is the subject name of Kānah (Ism Kānah)." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'جميل', correct: 'mansub', marker: 'ًا', eng: 'Jamīlan', exp: "Manṣūb because it is the predicate statement of Kānah (Khabar Kānah)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 4,
+        elements: [
+          { type: 'text', val: 'اشتريتُ ' },
+          { type: 'blank', base: 'كتاب', correct: 'mansub', marker: 'َ', eng: 'Kitāba', exp: "Manṣūb because it is the direct object." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'الطالب', correct: 'majrur', marker: 'ِ', eng: 'Al-Ṭālibi', exp: "Majrūr because it is the possessive second half of the iḍāfa compound (Mudāf ilayh)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 5,
+        elements: [
+          { type: 'text', val: 'نحنُ لن ' },
+          { type: 'blank', base: 'نخرج', correct: 'mansub', marker: 'َ', eng: 'Nakhruja', exp: "Manṣūb because it follows the future negation particle 'لن' (Lan)." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'الليلة', correct: 'mansub', marker: 'َ', eng: 'Al-Laylata', exp: "Manṣūb because it functions as an adverbial time placement marker." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 6,
+        elements: [
+          { type: 'blank', base: 'المعلم', correct: 'marfu', marker: 'ون', eng: 'Al-Muʿallimūna', exp: "Marfūʿ because it is the plural sentence subject." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'يشرح', correct: 'marfu', marker: 'ون', eng: 'Yashraḥūna', exp: "Marfūʿ because it is a present verb with no prefix particle, meaning it preserves its noon character." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'الدرس', correct: 'mansub', marker: 'َ', eng: 'Al-Darsa', exp: "Manṣūb because it acts as the direct object." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 7,
+        elements: [
+          { type: 'text', val: 'سافرتُ عشرينَ ' },
+          { type: 'blank', base: 'ميل', correct: 'mansub', marker: 'ًا', eng: 'Mīlan', exp: "Manṣūb because it functions as a unit specifier expression (Tamyīz)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 8,
+        elements: [
+          { type: 'text', val: 'كانت صديقتي ' },
+          { type: 'blank', base: 'مسافرة', correct: 'mansub', marker: 'ً', eng: 'Musāfiratan', exp: "Manṣūb because it is the predicate statement of Kānat." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 9,
+        elements: [
+          { type: 'text', val: 'سافرتُ كي ' },
+          { type: 'blank', base: 'أدرس', correct: 'mansub', marker: 'َ', eng: 'Adrasa', exp: "Manṣūb because it follows the subjunctive particle 'كي' (Kay)." },
+          { type: 'text', val: ' في ' },
+          { type: 'blank', base: 'الخارج', correct: 'majrur', marker: 'ِ', eng: 'Al-Khāriji', exp: "Majrūr because it directly follows the preposition 'في' (Fee)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 10,
+        elements: [
+          { type: 'text', val: 'عرفتُ ' },
+          { type: 'blank', base: 'اسم', correct: 'mansub', marker: 'َ', eng: 'Isma', exp: "Manṣūb because it is the direct object of the verb." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'المدينة', correct: 'majrur', marker: 'ِ', eng: 'Al-Madīnati', exp: "Majrūr because it is the second part of the iḍāfa compound (Mudāf ilayh)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 11,
+        elements: [
+          { type: 'text', val: 'هم لم ' },
+          { type: 'blank', base: 'يسافر', correct: 'majzum', marker: 'وا', eng: 'Yusāfirū', exp: "Majzūm because it follows the negative particle 'لم' (Lam). The 'noon' is dropped." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 12,
+        elements: [
+          { type: 'text', val: 'لا ' },
+          { type: 'blank', base: 'تخرج', correct: 'majzum', marker: 'ْ', eng: 'Takhruj', exp: "Majzūm because it follows the prohibitive 'لا' (Lā of prohibition)." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'متأخر', correct: 'mansub', marker: 'ًا', eng: 'Muta\'akhiran', exp: "Manṣūb because it is an adverbial modifier of state (Hāl)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 13,
+        elements: [
+          { type: 'text', val: 'ذهبتُ إلى ' },
+          { type: 'blank', base: 'المدرسة', correct: 'majrur', marker: 'ِ', eng: 'Al-Madrasati', exp: "Majrūr because it follows the preposition 'إلى' (Ila)." },
+          { type: 'text', val: ' لِـ' },
+          { type: 'blank', base: 'أتعلم', correct: 'mansub', marker: 'َ', eng: 'Ataʿallama', exp: "Manṣūb because it follows the prefix 'لـ' meaning 'in order to' (Lam al-Ta'leel)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 14,
+        elements: [
+          { type: 'text', val: 'لِـ' },
+          { type: 'blank', base: 'نكتب', correct: 'majzum', marker: 'ْ', eng: 'Naktub', exp: "Majzūm because it follows the command prefix 'لـ' (Lam of Command)." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'الواجب', correct: 'mansub', marker: 'َ', eng: 'Al-Wājiba', exp: "Manṣūb because it is the direct object." },
+          { type: 'text', val: ' الآن.' }
+        ]
+      },
+      {
+        id: 15,
+        elements: [
+          { type: 'text', val: 'حصلَ ' },
+          { type: 'blank', base: 'الطالب', correct: 'marfu', marker: 'ُ', eng: 'Al-Ṭālibu', exp: "Marfūʿ because it is the subject of the verb." },
+          { type: 'text', val: ' على ' },
+          { type: 'blank', base: 'هدية', correct: 'majrur', marker: 'ٍ', eng: 'Hadiyyatin', exp: "Majrūr because it follows the preposition 'على' (Ala)." },
+          { type: 'text', val: ' من ' },
+          { type: 'blank', base: 'المدرس', correct: 'majrur', marker: 'ين', eng: 'Al-Mudarrisīna', exp: "Majrūr because it follows 'من' (Min). Plural takes 'een'." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 16,
+        elements: [
+          { type: 'text', val: 'نمتُ ' },
+          { type: 'blank', base: 'ساعة', correct: 'mansub', marker: 'ً', eng: 'Sāʿatan', exp: "Manṣūb because it is an adverb of time." },
+          { type: 'text', val: ' ثم سافرتُ ' },
+          { type: 'blank', base: 'جنوب', correct: 'mansub', marker: 'ًا', eng: 'Janūban', exp: "Manṣūb because it is an adverb of direction/place." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 17,
+        elements: [
+          { type: 'text', val: 'كان ' },
+          { type: 'blank', base: 'الطقس', correct: 'marfu', marker: 'ُ', eng: 'Al-Ṭaqsu', exp: "Marfūʿ because it is the subject name of Kānah." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'بارد', correct: 'mansub', marker: 'ًا', eng: 'Bāridan', exp: "Manṣūb because it is the predicate of Kānah." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 18,
+        elements: [
+          { type: 'text', val: 'أعيشُ في ' },
+          { type: 'blank', base: 'بيت', correct: 'majrur', marker: 'ِ', eng: 'Bayti', exp: "Majrūr because it follows the preposition 'في' (Fee)." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'الطلاب', correct: 'majrur', marker: 'ِ', eng: 'Al-Ṭullābi', exp: "Majrūr because it is the second part of the iḍāfa compound." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 19,
+        elements: [
+          { type: 'text', val: 'الأصدقاءُ ' },
+          { type: 'blank', base: 'يخرج', correct: 'marfu', marker: 'ون', eng: 'Yakhrujūna', exp: "Marfūʿ because it is a default present verb. The 'noon' is preserved." },
+          { type: 'text', val: ' معًا كلَّ يوم.' }
+        ]
+      },
+      {
+        id: 20,
+        elements: [
+          { type: 'text', val: 'نحنُ من ' },
+          { type: 'blank', base: 'القاهرة', correct: 'majrur', marker: 'ِ', eng: 'Al-Qāhirati', exp: "Majrūr because it directly follows the preposition 'من' (Min)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 21,
+        elements: [
+          { type: 'text', val: 'سقتُ ' },
+          { type: 'blank', base: 'السيارة', correct: 'mansub', marker: 'َ', eng: 'Al-Sayyārata', exp: "Manṣūb because it is the direct object." },
+          { type: 'text', val: ' عشرينَ ' },
+          { type: 'blank', base: 'كيلومتر', correct: 'mansub', marker: 'ًا', eng: 'Kīlūmitran', exp: "Manṣūb as a unit specifier expression (Tamyīz)." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 22,
+        elements: [
+          { type: 'text', val: 'سأقابلكَ بين ' },
+          { type: 'blank', base: 'الخامسة', correct: 'majrur', marker: 'ِ', eng: 'Al-Khāmisati', exp: "Majrūr because it follows the spatial/temporal particle 'بين' (Bayna)." },
+          { type: 'text', val: ' و' },
+          { type: 'blank', base: 'السادسة', correct: 'majrur', marker: 'ِ', eng: 'Al-Sādisati', exp: "Majrūr because it coordinates back to the previous Majrūr word." },
+          { type: 'text', val: '.' }
+        ]
+      },
+      {
+        id: 23,
+        elements: [
+          { type: 'blank', base: 'يدرس', correct: 'marfu', marker: 'ُ', eng: 'Yadrusu', exp: "Marfūʿ because it is a present verb with no altering particles." },
+          { type: 'text', val: ' ' },
+          { type: 'blank', base: 'الطلاب', correct: 'marfu', marker: 'ُ', eng: 'Al-Ṭullābu', exp: "Marfūʿ because it is the subject (Fā'il)." },
+          { type: 'text', val: ' في المكتبة.' }
+        ]
+      },
+      {
+        id: 24,
+        elements: [
+          { type: 'text', val: 'المصريون ' },
+          { type: 'blank', base: 'يحب', correct: 'marfu', marker: 'ون', eng: 'Yuḥibbūna', exp: "Marfūʿ present verb retaining its 'noon'. (Follows a Marfūʿ subject)." },
+          { type: 'text', val: ' كرةَ القدم.' }
+        ]
+      }
+    ];
+
+    // Application State
+    let state = {
+      solvedBlanks: new Set(), // Format: "sId-eIdx"
+      activeBlank: null // { sId: number, eIdx: number } | null
+    };
+
+    function initApp() {
+      state.solvedBlanks.clear();
+      state.activeBlank = null;
+      document.getElementById('completion-message').classList.add('hidden');
+      render();
+    }
+
+    function resetApp() {
+      initApp();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setActiveBlank(sId, eIdx) {
+      // Toggle off if clicking the same blank
+      if (state.activeBlank && state.activeBlank.sId === sId && state.activeBlank.eIdx === eIdx) {
+        state.activeBlank = null;
+      } else {
+        state.activeBlank = { sId, eIdx };
+      }
+      render();
+    }
+
+    function submitAnswer(guessedCase) {
+      if (!state.activeBlank) return;
+      
+      const { sId, eIdx } = state.activeBlank;
+      const targetElement = quizData[sId].elements[eIdx];
+      
+      if (guessedCase === targetElement.correct) {
+        // Correct Answer
+        state.solvedBlanks.add(`${sId}-${eIdx}`);
+        state.activeBlank = null; // Close popover/action area
+        render();
+        checkWinCondition();
+      } else {
+        // Wrong Answer - Trigger shake animation
+        const panel = document.getElementById(`action-panel-${sId}`);
+        if (panel) {
+          panel.classList.remove('animate-shake');
+          // Trigger reflow to restart animation
+          void panel.offsetWidth; 
+          panel.classList.add('animate-shake');
+        }
+      }
+    }
+
+    function checkWinCondition() {
+      const totalBlanks = quizData.reduce((sum, sentence) => 
+        sum + sentence.elements.filter(e => e.type === 'blank').length, 0
+      );
+      
+      if (state.solvedBlanks.size === totalBlanks) {
+        document.getElementById('completion-message').classList.remove('hidden');
+      }
+    }
+
+    function render() {
+      const root = document.getElementById('app-root');
+      root.innerHTML = '';
+      
+      let fullySolvedSentences = 0;
+
+      quizData.forEach((sentence) => {
+        // Build Sentence HTML
+        let htmlParts = [];
+        let blanksInSentence = 0;
+        let solvedInSentence = 0;
+        let explanations = [];
+
+        sentence.elements.forEach((el, idx) => {
+          if (el.type === 'text') {
+            htmlParts.push(`<span>${el.val}</span>`);
+          } else if (el.type === 'blank') {
+            blanksInSentence++;
+            const isSolved = state.solvedBlanks.has(`${sentence.id}-${idx}`);
+            const isActive = state.activeBlank && state.activeBlank.sId === sentence.id && state.activeBlank.eIdx === idx;
+            
+            if (isSolved) {
+              solvedInSentence++;
+              htmlParts.push(`
+                <span class="word-solved case-${el.correct}">
+                  ${el.base}<span class="marker-char">${el.marker}</span>
+                </span>
+              `);
+              explanations.push(`
+                <li class="mb-2 pl-4 border-l-4 border-${getCaseColor(el.correct)}">
+                  <strong>${el.eng}:</strong> <span class="text-slate-700">${el.exp}</span>
+                </li>
+              `);
+            } else {
+              htmlParts.push(`
+                <button onclick="setActiveBlank(${sentence.id}, ${idx})" 
+                        class="word-blank ${isActive ? 'active' : ''}">
+                  ${el.base}<span class="opacity-30 mx-1">...</span>
+                </button>
+              `);
+            }
+          }
+        });
+
+        if (blanksInSentence === solvedInSentence) {
+          fullySolvedSentences++;
+        }
+
+        // Action Panel (if a blank in this sentence is active)
+        let actionPanelHtml = '';
+        if (state.activeBlank && state.activeBlank.sId === sentence.id) {
+          const activeEl = sentence.elements[state.activeBlank.eIdx];
+          actionPanelHtml = `
+            <div id="action-panel-${sentence.id}" class="mt-6 p-5 bg-slate-100 rounded-xl border-2 border-slate-300 shadow-sm animate-pop-in dir-ltr text-left">
+              <p class="font-semibold text-slate-800 mb-4 text-center text-lg">
+                Select the correct grammatical case for: 
+                <span class="font-arabic text-3xl font-bold text-blue-900 mx-2">"${activeEl.base}"</span>
+              </p>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <button onclick="submitAnswer('marfu')" class="flex flex-col items-center p-3 rounded-lg border-2 border-[#34d399] bg-[#ecfdf5] text-[#065f46] hover:bg-[#d1fae5] transition-all font-bold">
+                  <span class="text-2xl font-arabic mb-1">ـُ / ـون</span>
+                  Marfūʿ
+                </button>
+                <button onclick="submitAnswer('mansub')" class="flex flex-col items-center p-3 rounded-lg border-2 border-[#fb923c] bg-[#fff7ed] text-[#9a3412] hover:bg-[#ffedd5] transition-all font-bold">
+                  <span class="text-2xl font-arabic mb-1">ـَ / ـين</span>
+                  Manṣūb
+                </button>
+                <button onclick="submitAnswer('majrur')" class="flex flex-col items-center p-3 rounded-lg border-2 border-[#60a5fa] bg-[#eff6ff] text-[#1e40af] hover:bg-[#dbeafe] transition-all font-bold">
+                  <span class="text-2xl font-arabic mb-1">ـِ / ـين</span>
+                  Majrūr
+                </button>
+                <button onclick="submitAnswer('majzum')" class="flex flex-col items-center p-3 rounded-lg border-2 border-[#94a3b8] bg-[#f8fafc] text-[#334155] hover:bg-[#e2e8f0] transition-all font-bold">
+                  <span class="text-2xl font-arabic mb-1">ـْ / drops ن</span>
+                  Majzūm
+                </button>
+              </div>
+            </div>
+          `;
+        }
+
+        // Explanations Box
+        let explanationsHtml = '';
+        if (explanations.length > 0) {
+          explanationsHtml = `
+            <div class="mt-5 p-4 bg-white rounded-lg border border-slate-200 dir-ltr text-left">
+              <h4 class="text-sm uppercase tracking-wider font-bold text-slate-400 mb-3">Explanations</h4>
+              <ul class="text-sm">
+                ${explanations.join('')}
+              </ul>
+            </div>
+          `;
+        }
+
+        // Sentence Card Frame
+        const isFullySolved = (blanksInSentence === solvedInSentence);
+        const cardStyle = isFullySolved 
+          ? "bg-white border-slate-200 opacity-80 shadow-none" 
+          : "bg-white border-blue-100 shadow-md";
+
+        const cardHtml = `
+          <div class="rounded-xl border-2 p-6 md:p-8 transition-all duration-300 ${cardStyle}">
+            <div class="flex items-start">
+              <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center font-bold mr-4 shrink-0 mt-2 border border-slate-200">
+                ${sentence.id + 1}
+              </div>
+              <div class="w-full">
+                <div class="font-arabic text-3xl md:text-4xl leading-loose text-right dir-rtl">
+                  ${htmlParts.join('')}
+                </div>
+                ${actionPanelHtml}
+                ${explanationsHtml}
+              </div>
+            </div>
+          </div>
+        `;
+
+        root.innerHTML += cardHtml;
+      });
+
+      // Update Progress Tracker
+      const progressPercent = (fullySolvedSentences / quizData.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+      document.getElementById('progress-text').innerText = `${fullySolvedSentences} / ${quizData.length}`;
+    }
+
+    function getCaseColor(caseName) {
+      switch(caseName) {
+        case 'marfu': return 'emerald-500';
+        case 'mansub': return 'orange-500';
+        case 'majrur': return 'blue-500';
+        case 'majzum': return 'slate-500';
+        default: return 'slate-500';
+      }
+    }
+
+    // Initialize application on load
+    window.onload = initApp;
+  </script>
+</body>
+</html>
