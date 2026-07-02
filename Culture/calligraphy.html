@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الخطوط العربية — The Scripts of Arabic Calligraphy</title>
+<meta name="description" content="A visual guide to the major schools of Arabic calligraphy: Kufic, Naskh, Thuluth, Diwani, Ruq'ah, Nastaliq, Maghrebi, Muhaqqaq, Rayhani and Tawqi'.">
+
+<!--
+  ARABIC CALLIGRAPHY GUIDE — build notes
+  =======================================
+  Structure: skip-link -> header/nav -> intro -> comparison table
+             -> style cards (grid of <article>) -> conclusion -> footer
+  Design intent: the page borrows from illuminated-manuscript conventions —
+  parchment ground, black body ink, red "rubrication" for headings (scribes
+  used red ink to mark section breaks/titles), and a muted gold for
+  illumination borders. The recurring 8-point star motif in the background
+  and card corners is drawn from Islamic geometric ornament, kept subtle so
+  it frames the calligraphy rather than competing with it.
+  Fonts: real calligraphic type families are used per style where Google
+  Fonts offers a genuine match (e.g. Aref Ruqaa for Ruq'ah, Noto Nastaliq
+  Urdu for Nastaliq). Where no digital font faithfully reproduces a
+  historical hand (Diwani, Maghrebi, Muhaqqaq, Rayhani, Tawqi'), the closest
+  available face is used and labelled "closest available approximation" —
+  true reproduction of these hands still requires a calligrapher's pen.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Kufi+Arabic:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;700&family=Lateef:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- Design tokens ---------- */
+  :root{
+    --parchment: #ece0c4;      /* page ground, aged paper */
+    --parchment-deep: #e2d3ab; /* card ground, slightly deeper */
+    --ink: #241d13;            /* primary text, iron-gall ink */
+    --ink-soft: #4a4029;       /* secondary text */
+    --rubric: #8a2e1f;         /* scribe's red, used for headings/accents */
+    --rubric-deep: #6e2417;
+    --gold: #a9812f;           /* illumination gold */
+    --gold-pale: #c9a55c;
+    --teal: #1f5c53;           /* secondary accent, lapis/teal pigment */
+    --line: rgba(36,29,19,0.16);
+    --shadow: 0 10px 30px rgba(36,29,19,0.16);
+    --radius: 4px;
+    --max-w: 1180px;
+    --serif-display: "Cormorant Garamond", "Amiri", serif;
+    --serif-body: "EB Garamond", Georgia, serif;
+  }
+
+  /* ---------- Reset & base ---------- */
+  *, *::before, *::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  body{
+    margin:0;
+    background-color: var(--parchment);
+    color: var(--ink);
+    font-family: var(--serif-body);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    /* Subtle geometric ground: a faint repeating 8-point star lattice,
+       evoking manuscript endpaper patterns without distracting from text. */
+    background-image:
+      radial-gradient(circle at 50% 50%, transparent 0 6px, rgba(169,129,47,0.05) 7px, transparent 8px),
+      linear-gradient(var(--parchment), var(--parchment));
+    background-size: 46px 46px, 100% 100%;
+  }
+  img, svg{ display:block; max-width:100%; }
+  a{ color: var(--rubric-deep); }
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+    outline: 3px solid var(--teal);
+    outline-offset: 2px;
+  }
+
+  .skip-link{
+    position:absolute; left:-999px; top:auto;
+    background: var(--ink); color: var(--parchment);
+    padding: 0.75em 1.25em; z-index: 200; border-radius: 0 0 var(--radius) 0;
+  }
+  .skip-link:focus{ left:0; top:0; }
+
+  .wrap{ max-width: var(--max-w); margin-inline:auto; padding-inline: 1.5rem; }
+
+  h1,h2,h3,h4{ font-family: var(--serif-display); color: var(--ink); margin: 0 0 0.5em; font-weight: 600; }
+  h1{ font-size: clamp(2rem, 5vw, 3.1rem); }
+  h2{ font-size: clamp(1.5rem, 3.4vw, 2rem); color: var(--rubric-deep); }
+  h3{ font-size: 1.3rem; }
+  p{ margin: 0 0 1em; }
+  .eyebrow{
+    font-family: var(--serif-body); letter-spacing: 0.14em; text-transform: uppercase;
+    font-size: 0.78rem; color: var(--teal); font-weight: 600; margin-bottom: 0.4em; display:block;
+  }
+
+  /* ---------- Header / illuminated frontispiece ---------- */
+  .site-header{
+    position: relative;
+    background: linear-gradient(180deg, #241d13 0%, #2f2717 100%);
+    color: var(--parchment);
+    padding: 3.2rem 0 2.4rem;
+    border-bottom: 6px double var(--gold);
+    overflow: hidden;
+  }
+  /* corner ornaments referencing manuscript "unwan" frontispiece headers */
+  .site-header::before, .site-header::after{
+    content:"";
+    position:absolute; top: 14px; width: 90px; height: 90px;
+    border: 2px solid var(--gold-pale);
+    opacity:0.55;
+    transform: rotate(45deg);
+  }
+  .site-header::before{ left: -30px; }
+  .site-header::after{ right: -30px; }
+  .header-inner{ position:relative; text-align:center; }
+  .header-inner h1{ color: var(--parchment); }
+  .arabic-title{
+    display:block;
+    font-family:"Amiri Quran","Amiri", serif;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    color: var(--gold-pale);
+    margin-bottom: 0.15em;
+    line-height:1.3;
+  }
+  .subtitle{
+    max-width: 62ch; margin: 0.6em auto 0; color: #d8cba6; font-size: 1.05rem;
+  }
+
+  /* ---------- Nav ---------- */
+  .site-nav{
+    position: sticky; top:0; z-index: 100;
+    background: var(--parchment-deep);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 2px 8px rgba(36,29,19,0.08);
+  }
+  .site-nav .wrap{
+    display:flex; align-items:center; gap: 1rem;
+    padding-block: 0.55rem;
+  }
+  .nav-label{ font-weight:600; font-size:0.85rem; color: var(--ink-soft); white-space:nowrap; }
+  .nav-scroll{
+    display:flex; gap: 0.35rem; overflow-x:auto; scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-scroll a{
+    white-space:nowrap; text-decoration:none; color: var(--ink);
+    font-size:0.88rem; padding: 0.4em 0.8em; border-radius: 999px;
+    border: 1px solid transparent;
+  }
+  .nav-scroll a:hover, .nav-scroll a:focus-visible{
+    border-color: var(--gold); background: rgba(169,129,47,0.12);
+  }
+
+  /* ---------- Generic section rhythm ---------- */
+  section{ padding: 3.2rem 0; }
+  section + section{ border-top: 1px solid var(--line); }
+  .section-head{ max-width: 72ch; margin-bottom: 1.6rem; }
+
+  /* ---------- Intro ---------- */
+  .intro-grid{
+    display:grid; grid-template-columns: 1.3fr 1fr; gap: 2.5rem; align-items:start;
+  }
+  .pull-note{
+    background: var(--parchment-deep);
+    border-inline-start: 4px solid var(--rubric);
+    padding: 1.1rem 1.3rem;
+    border-radius: var(--radius);
+    font-family: var(--serif-display); font-style: italic; font-size:1.15rem;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 800px){ .intro-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- Comparison table ---------- */
+  .table-scroll{ overflow-x:auto; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+  table{ border-collapse: collapse; width:100%; min-width: 720px; background: var(--parchment-deep); }
+  caption{ text-align:left; font-size:0.85rem; color: var(--ink-soft); padding: 0.6rem 1rem 0; caption-side: top; }
+  th, td{ text-align:left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 0.95rem; }
+  thead th{
+    background: var(--ink); color: var(--parchment);
+    position: sticky; top: 0;
+    font-family: var(--serif-body); font-weight:600; font-size:0.82rem;
+    letter-spacing:0.04em; text-transform:uppercase;
+  }
+  tbody tr:nth-child(even){ background: rgba(169,129,47,0.07); }
+  tbody tr:hover{ background: rgba(31,92,83,0.08); }
+  td.arabic-name, th .arabic-name{ font-family:"Amiri", serif; font-size:1.1rem; }
+
+  /* ---------- Style cards ---------- */
+  .styles-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.6rem; }
+  .style-card{
+    background: var(--parchment-deep);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.6rem 1.6rem 1.4rem;
+    position:relative;
+    scroll-margin-top: 5.5rem; /* keeps anchored cards clear of sticky nav */
+  }
+  .style-card::before{
+    /* small geometric corner mark, echoing illumination corner-pieces */
+    content:"";
+    position:absolute; top:10px; right:10px;
+    width:14px; height:14px;
+    border-top:2px solid var(--gold); border-right:2px solid var(--gold);
+    opacity:0.8;
+  }
+  .style-card-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:1rem; flex-wrap:wrap;
+    border-bottom: 1px dashed var(--gold-pale);
+    padding-bottom: 0.6rem; margin-bottom: 0.9rem;
+  }
+  .style-card-head .names{ display:flex; flex-direction:column; }
+  .style-card-head .arabic-name{ font-family:"Amiri", serif; font-size:1.4rem; color: var(--rubric-deep); }
+  .style-card-head .english-name{ font-size:0.95rem; color: var(--ink-soft); }
+  .era-tag{
+    font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase;
+    background: var(--teal); color:#fff; padding: 0.25em 0.6em; border-radius: 999px;
+    white-space:nowrap;
+  }
+  .style-card h4{
+    font-family: var(--serif-body); font-size:0.78rem; letter-spacing:0.08em;
+    text-transform:uppercase; color: var(--teal); margin: 1em 0 0.3em;
+  }
+  .style-card ul{ margin:0; padding-inline-start: 1.1em; }
+  .style-card li{ margin-bottom: 0.25em; }
+
+  .sample-block{
+    margin-top: 1.1rem;
+    background: var(--parchment);
+    border: 1px solid var(--gold-pale);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    text-align:center;
+  }
+  .sample-block .sample-text{
+    direction: rtl;
+    font-size: 2rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .sample-block .sample-gloss{
+    margin-top: 0.5em; font-size: 0.82rem; color: var(--ink-soft); font-style: italic;
+  }
+  .sample-block .font-note{
+    margin-top: 0.35em; font-size: 0.72rem; color: var(--ink-soft); opacity:0.85;
+  }
+
+  /* Per-style sample typography */
+  .font-kufic{ font-family:"Reem Kufi","Noto Kufi Arabic", sans-serif; }
+  .font-naskh{ font-family:"Noto Naskh Arabic","Amiri", serif; }
+  .font-thuluth{ font-family:"Amiri Quran","Amiri", serif; font-weight:700; }
+  .font-diwani{ font-family:"Aref Ruqaa","Amiri", serif; font-style:italic; }
+  .font-ruqah{ font-family:"Aref Ruqaa","Amiri", serif; }
+  .font-nastaliq{ font-family:"Noto Nastaliq Urdu","Amiri", serif; }
+  .font-maghrebi{ font-family:"Lateef","Amiri", serif; }
+  .font-muhaqqaq{ font-family:"Amiri Quran","Amiri", serif; }
+  .font-rayhani{ font-family:"Amiri","Noto Naskh Arabic", serif; font-weight:600; }
+  .font-tawqi{ font-family:"Aref Ruqaa","Amiri", serif; font-weight:700; }
+
+  /* ---------- Conclusion ---------- */
+  .conclusion{
+    background: linear-gradient(180deg, var(--parchment) 0%, var(--parchment-deep) 100%);
+  }
+  .conclusion .wrap{ max-width: 78ch; }
+  .conclusion blockquote{
+    font-family: var(--serif-display); font-size:1.3rem; font-style:italic;
+    color: var(--rubric-deep); border-inline-start: 4px solid var(--gold);
+    padding-inline-start: 1rem; margin: 1.4rem 0;
+  }
+
+  /* ---------- Footer ---------- */
+  .site-footer{
+    background: var(--ink); color: var(--parchment); padding: 2rem 0;
+    text-align:center; font-size:0.85rem; border-top: 6px double var(--gold);
+  }
+  .site-footer a{ color: var(--gold-pale); }
+
+  /* ---------- Utility ---------- */
+  .visually-hidden{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  @media (max-width: 560px){
+    section{ padding: 2.2rem 0; }
+    .style-card-head{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- ============ HEADER: illuminated frontispiece style ============ -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <span class="arabic-title" lang="ar" dir="rtl">فنّ الخط العربي</span>
+    <h1>The Scripts of Arabic Calligraphy</h1>
+    <p class="subtitle">
+      A guide to the major historical hands of Arabic writing — each one a distinct
+      script tradition with its own rules, tools, and purpose, not simply a "font"
+      in the modern sense.
+    </p>
+  </div>
+</header>
+
+<!-- ============ NAV ============ -->
+<nav class="site-nav" aria-label="Calligraphy styles">
+  <div class="wrap">
+    <span class="nav-label">Jump to:</span>
+    <div class="nav-scroll">
+      <a href="#intro">Introduction</a>
+      <a href="#comparison">Comparison</a>
+      <a href="#kufic">Kufic</a>
+      <a href="#naskh">Naskh</a>
+      <a href="#thuluth">Thuluth</a>
+      <a href="#diwani">Diwani</a>
+      <a href="#ruqah">Ruqʿah</a>
+      <a href="#nastaliq">Nastaliq</a>
+      <a href="#maghrebi">Maghrebi</a>
+      <a href="#muhaqqaq">Muhaqqaq</a>
+      <a href="#rayhani">Rayhani</a>
+      <a href="#tawqi">Tawqiʿ</a>
+      <a href="#conclusion">Significance</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+
+  <!-- ============ INTRODUCTION ============ -->
+  <section id="intro" aria-labelledby="intro-heading">
+    <div class="wrap intro-grid">
+      <div>
+        <span class="eyebrow">Introduction</span>
+        <h2 id="intro-heading">Scripts, not fonts</h2>
+        <p>
+          In the Latin-alphabet world, we are used to thinking in terms of "fonts" —
+          interchangeable digital dress that can be swapped over the same letterforms
+          without changing what the writing fundamentally is. Arabic calligraphy does
+          not work this way. Arabic tradition speaks instead of <em>khaṭṭ</em> (خَطّ),
+          meaning "line" or "script": a complete system of proportion, letter
+          construction, and stroke order, codified over centuries by master
+          calligraphers and transmitted through apprenticeship, not simply chosen from
+          a menu.
+        </p>
+        <p>
+          Each script — Kufic, Naskh, Thuluth, and the rest — has its own geometry.
+          The classical scripts are built on a module derived from the rhombic dot
+          made by a reed pen (<em>qalam</em>) cut at a particular angle: the height of
+          the letter <em>alif</em>, the curve of a <em>nun</em>, the proportions of
+          every other letter are measured against that dot. Changing script means
+          changing the underlying rules of construction, not just the outward
+          appearance — closer to the difference between italic handwriting and
+          engineering blueprint lettering than to switching between two typefaces of
+          the same alphabet.
+        </p>
+        <p>
+          Over time, distinct scripts developed for distinct purposes: monumental
+          scripts for stone and stucco, book scripts for copying the Qurʾan and
+          scholarly texts, chancery scripts for royal decrees, and swift cursive
+          hands for everyday correspondence. What follows is an overview of ten of
+          the most historically significant styles.
+        </p>
+      </div>
+      <aside class="pull-note" role="note">
+        "The pen is the tongue of the hand, and its writing is the sweetest speech."
+        — a maxim often repeated in classical calligraphic treatises, underscoring
+        that in Islamic civilisation, writing itself was considered an art on par
+        with poetry.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ COMPARISON TABLE ============ -->
+  <section id="comparison" aria-labelledby="comparison-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">At a glance</span>
+        <h2 id="comparison-heading">Comparing the ten scripts</h2>
+        <p>A quick reference for period, character, and traditional use. Scroll sideways on small screens.</p>
+      </div>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Comparison table of Arabic calligraphy styles">
+        <table>
+          <caption>Ten major Arabic calligraphic scripts compared by origin, form, and function.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Script</th>
+              <th scope="col">Approx. era</th>
+              <th scope="col">Character</th>
+              <th scope="col">Primary traditional use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="arabic-name">كوفي</span> Kufic</td><td>7th–10th c. (and beyond, ornamentally)</td><td>Angular, geometric, monumental</td><td>Early Qurʾans, architecture, coinage</td></tr>
+            <tr><td><span class="arabic-name">نسخ</span> Naskh</td><td>10th c. onward</td><td>Rounded, clear, highly legible</td><td>Qurʾans, books, print, everyday text</td></tr>
+            <tr><td><span class="arabic-name">ثلث</span> Thuluth</td><td>11th c. onward</td><td>Tall, sweeping, ornamental curves</td><td>Architecture, titles, chapter headings</td></tr>
+            <tr><td><span class="arabic-name">ديواني</span> Diwani</td><td>15th–16th c. (Ottoman)</td><td>Dense, looping, deliberately hard to forge</td><td>Ottoman royal decrees, chancery documents</td></tr>
+            <tr><td><span class="arabic-name">رقعة</span> Ruqʿah</td><td>19th c. (Ottoman)</td><td>Simple, compact, fast to write</td><td>Everyday handwriting, correspondence</td></tr>
+            <tr><td><span class="arabic-name">نستعليق</span> Nastaliq</td><td>14th–15th c. (Persian)</td><td>Flowing, hanging baseline, elegant</td><td>Persian & Urdu poetry, literary manuscripts</td></tr>
+            <tr><td><span class="arabic-name">مغربي</span> Maghrebi</td><td>10th c. onward (North Africa/Andalusia)</td><td>Rounded loops, extended curves below the line</td><td>Andalusian & North African Qurʾans and books</td></tr>
+            <tr><td><span class="arabic-name">محقق</span> Muhaqqaq</td><td>13th–15th c. (Mamluk)</td><td>Large, stately, wide letter spacing</td><td>Grand Mamluk-era Qurʾan manuscripts</td></tr>
+            <tr><td><span class="arabic-name">ريحاني</span> Rayhani</td><td>13th–15th c.</td><td>A refined, smaller cousin of Muhaqqaq</td><td>Qurʾans, fine book copying</td></tr>
+            <tr><td><span class="arabic-name">توقيع</span> Tawqiʿ</td><td>10th c. onward (Abbasid chancery)</td><td>Compact cursive, ligature-rich</td><td>Official signatures, administrative correspondence</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STYLE CARDS ============ -->
+  <section id="styles" aria-labelledby="styles-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The scripts</span>
+        <h2 id="styles-heading">Ten major calligraphic styles</h2>
+        <p>Each card gives the script's names, background, defining features, common uses, and a sample phrase set in the closest available digital typeface.</p>
+      </div>
+
+      <div class="styles-grid">
+
+        <!-- KUFIC -->
+        <article class="style-card" id="kufic" aria-labelledby="kufic-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">الخط الكوفي</span>
+              <span class="english-name" id="kufic-h">Kufic</span>
+            </div>
+            <span class="era-tag">7th–10th c.+</span>
+          </div>
+          <p>The oldest formal Arabic script, traditionally associated with the garrison
+          city of Kufa in Iraq, though its angular forms likely evolved from earlier
+          Nabataean and Syriac-influenced writing. Kufic dominated Qurʾanic
+          transcription for roughly its first three centuries and later persisted as
+          a decorative, monumental script long after cursive hands took over
+          book-copying.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Angular, geometric strokes built on straight lines and sharp turns</li>
+            <li>Heavy horizontal emphasis, short vertical strokes</li>
+            <li>Many regional and decorative variants: floriated, plaited, square (bannaʾi)</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>Early Qurʾanic manuscripts on parchment</li>
+            <li>Monumental architectural inscriptions and coinage</li>
+            <li>Later revived purely as ornament on textiles, ceramics, and buildings</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-kufic" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+            <p class="sample-gloss">"In the name of God, the Most Gracious, the Most Merciful" — the phrase most often rendered monumentally in Kufic.</p>
+            <p class="font-note">Rendered in Reem Kufi, a modern geometric revival of Kufic forms.</p>
+          </div>
+        </article>
+
+        <!-- NASKH -->
+        <article class="style-card" id="naskh" aria-labelledby="naskh-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">خط النسخ</span>
+              <span class="english-name" id="naskh-h">Naskh</span>
+            </div>
+            <span class="era-tag">10th c. onward</span>
+          </div>
+          <p>Naskh (literally "copying") was refined in the 10th century, most notably
+          by the vizier and calligrapher Ibn Muqla, who formalised proportional rules
+          based on the rhombic dot and the circle. Its clarity made it the preferred
+          hand for copying manuscripts, and it remains the direct ancestor of most
+          printed and digital Arabic type today.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Rounded, evenly proportioned letters with short verticals</li>
+            <li>High legibility even at small sizes</li>
+            <li>Even baseline with modest, controlled curves</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>The dominant script for Qurʾans since the 11th century</li>
+            <li>Books, newspapers, and nearly all printed and digital Arabic text</li>
+            <li>General everyday reading material</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-naskh" lang="ar" dir="rtl">العِلْمُ نُورٌ</p>
+            <p class="sample-gloss">"Knowledge is light" — a proverb commonly set in Naskh for its clarity.</p>
+            <p class="font-note">Rendered in Noto Naskh Arabic.</p>
+          </div>
+        </article>
+
+        <!-- THULUTH -->
+        <article class="style-card" id="thuluth" aria-labelledby="thuluth-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">خط الثلث</span>
+              <span class="english-name" id="thuluth-h">Thuluth</span>
+            </div>
+            <span class="era-tag">11th c. onward</span>
+          </div>
+          <p>Thuluth ("a third") takes its name from the proportion of straight to
+          curved strokes in its original formulation. Developed in the Abbasid period
+          and elevated to an art of its own by later Ottoman masters, it became the
+          script of grandeur — large, majestic, and demanding of considerable skill,
+          often reserved for the most prestigious commissions.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Tall vertical strokes with long, sweeping curves</li>
+            <li>Letters overlap and interlace, often stacked vertically</li>
+            <li>Highly ornamental, slower and more difficult to execute than Naskh</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>Mosque domes, minarets, and monumental architectural bands</li>
+            <li>Qurʾan chapter headings and illuminated titles</li>
+            <li>Ottoman calligraphic panels (levha) and official seals (tughra) elements</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-thuluth" lang="ar" dir="rtl">لَا إِلَٰهَ إِلَّا اللَّه</p>
+            <p class="sample-gloss">"There is no god but God" — a declaration frequently monumentalised in Thuluth on mosque walls.</p>
+            <p class="font-note">Rendered in Amiri Quran, bolded to suggest Thuluth's sweeping weight (closest available approximation).</p>
+          </div>
+        </article>
+
+        <!-- DIWANI -->
+        <article class="style-card" id="diwani" aria-labelledby="diwani-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">الخط الديواني</span>
+              <span class="english-name" id="diwani-h">Diwani</span>
+            </div>
+            <span class="era-tag">15th–16th c.</span>
+          </div>
+          <p>Developed in the Ottoman chancery (<em>diwan</em>) from the 15th century
+          and closely guarded as a court secret for a time, Diwani was designed
+          partly for its dense, intricate letterforms, which made official documents
+          difficult to forge or alter. A more elaborate variant, Diwani Jali, packs
+          the background between letters with decorative dots and flourishes.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Steeply sloped, tightly interwoven letters with minimal straight strokes</li>
+            <li>Ascending baseline, dense clustering of words</li>
+            <li>Diwani Jali variant fills negative space with ornamental marks</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>Ottoman royal decrees (firmans) and state correspondence</li>
+            <li>Ceremonial certificates and formal decorative panels</li>
+            <li>Modern logo and title design seeking an ornate, regal feel</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-diwani" lang="ar" dir="rtl">دَامَتْ عِزَّتُهُ</p>
+            <p class="sample-gloss">"May his glory endure" — a courtly phrase typical of Ottoman chancery formulas.</p>
+            <p class="font-note">Rendered in Aref Ruqaa, italicised (closest available approximation — no digital font fully captures Diwani's interlace).</p>
+          </div>
+        </article>
+
+        <!-- RUQ'AH -->
+        <article class="style-card" id="ruqah" aria-labelledby="ruqah-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">خط الرقعة</span>
+              <span class="english-name" id="ruqah-h">Ruqʿah</span>
+            </div>
+            <span class="era-tag">19th c.</span>
+          </div>
+          <p>Standardised in the Ottoman civil service during the 19th century, Ruqʿah
+          was designed for speed and simplicity — a practical hand for clerks and
+          ordinary writers rather than an art form for display. It is today the
+          script most people across the Arab world actually learn to handwrite.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Short, simple strokes with minimal curvature</li>
+            <li>Compact letterforms, straight and economical connections</li>
+            <li>Few decorative flourishes; built for legibility at speed</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>Everyday personal handwriting across the Arab world</li>
+            <li>School instruction as the standard cursive hand</li>
+            <li>Informal notes, letters, and quick correspondence</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-ruqah" lang="ar" dir="rtl">مع أطيب التحيات</p>
+            <p class="sample-gloss">"With best regards" — a everyday closing phrase, exactly the register Ruqʿah was made for.</p>
+            <p class="font-note">Rendered in Aref Ruqaa, a digital typeface named for and modelled on this script.</p>
+          </div>
+        </article>
+
+        <!-- NASTALIQ -->
+        <article class="style-card" id="nastaliq" aria-labelledby="nastaliq-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">خط النستعليق</span>
+              <span class="english-name" id="nastaliq-h">Nastaliq</span>
+            </div>
+            <span class="era-tag">14th–15th c.</span>
+          </div>
+          <p>Developed in Iran, Nastaliq's name blends Naskh and the earlier Taʿliq
+          script. Though it uses the Arabic alphabet, it became the definitive script
+          of Persian and, later, Urdu literature, prized for its lyrical, flowing
+          quality that mirrors the poetry it was so often used to record.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Short verticals, elongated horizontal strokes that hang below the baseline</li>
+            <li>Words appear to cascade diagonally across the line</li>
+            <li>Extremely fluid, favouring curvature over straight strokes</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>Classical Persian poetry manuscripts (Rumi, Hafez, Ferdowsi)</li>
+            <li>Urdu literature, newspapers, and print until recent decades</li>
+            <li>Miniature painting captions and album inscriptions</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-nastaliq" lang="fa" dir="rtl">دل به دلبر داد</p>
+            <p class="sample-gloss">"[The] heart gave itself to the beloved" — a lyrical fragment in the register Nastaliq was built to carry.</p>
+            <p class="font-note">Rendered in Noto Nastaliq Urdu, a digital typeface purpose-built for this script.</p>
+          </div>
+        </article>
+
+        <!-- MAGHREBI -->
+        <article class="style-card" id="maghrebi" aria-labelledby="maghrebi-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">الخط المغربي</span>
+              <span class="english-name" id="maghrebi-h">Maghrebi</span>
+            </div>
+            <span class="era-tag">10th c. onward</span>
+          </div>
+          <p>Evolved in the western Islamic lands — Al-Andalus, the Maghreb, and later
+          West Africa — from early Kufic roots along a separate path from the eastern
+          scripts codified by Ibn Muqla. It preserved distinctive letterforms even as
+          Naskh and Thuluth came to dominate the east.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Rounded bowls and generous loops that extend well below the baseline</li>
+            <li>A distinctive final <em>nun</em> and <em>qaf</em> dotted differently from eastern scripts</li>
+            <li>Full, flowing curves with a relaxed, open rhythm</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>Andalusian and North African Qurʾan manuscripts</li>
+            <li>West African (Sudani/Suqi variants) religious and scholarly texts</li>
+            <li>Regional administrative and literary documents historically</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-maghrebi" lang="ar" dir="rtl">بَارَكَ اللَّهُ فِيكُم</p>
+            <p class="sample-gloss">"May God bless you" — a common devotional phrase found in Maghrebi manuscript colophons.</p>
+            <p class="font-note">Rendered in Lateef, chosen for its open, rounded forms (closest available approximation).</p>
+          </div>
+        </article>
+
+        <!-- MUHAQQAQ -->
+        <article class="style-card" id="muhaqqaq" aria-labelledby="muhaqqaq-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">خط المحقق</span>
+              <span class="english-name" id="muhaqqaq-h">Muhaqqaq</span>
+            </div>
+            <span class="era-tag">13th–15th c.</span>
+          </div>
+          <p>One of the six classical "proportioned" scripts (al-aqlam al-sittah)
+          codified after Ibn Muqla's system, Muhaqqaq reached its height under the
+          Mamluks, prized for producing some of the largest and most magnificent
+          Qurʾan manuscripts ever made, their pages sometimes exceeding a metre in
+          height.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Large scale, generous horizontal spacing between letters</li>
+            <li>Bold, stately, deliberately unhurried strokes</li>
+            <li>Sharp, angular terminal flourishes on certain letters</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>Grand Mamluk-era Qurʾan manuscripts commissioned for royal endowments</li>
+            <li>Large-format religious texts intended for ceremonial display</li>
+            <li>Largely fell out of everyday use after the 15th century</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-muhaqqaq" lang="ar" dir="rtl">وَقُل رَبِّ زِدْنِي عِلْمًا</p>
+            <p class="sample-gloss">"And say: My Lord, increase me in knowledge" (Qurʾan 20:114) — the register of grand Mamluk manuscripts.</p>
+            <p class="font-note">Rendered in Amiri Quran (closest available approximation of this classical proportioned script).</p>
+          </div>
+        </article>
+
+        <!-- RAYHANI -->
+        <article class="style-card" id="rayhani" aria-labelledby="rayhani-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">خط الريحاني</span>
+              <span class="english-name" id="rayhani-h">Rayhani</span>
+            </div>
+            <span class="era-tag">13th–15th c.</span>
+          </div>
+          <p>Often described as a smaller, more delicate sibling of Muhaqqaq, Rayhani
+          ("sweet basil") shares its structural proportions but at a reduced,
+          finer scale, giving it a lighter, more refined presence on the page —
+          another of the six classical proportioned scripts.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Same proportional rules as Muhaqqaq, applied at smaller size</li>
+            <li>Finer strokes, tighter letter spacing than its larger relative</li>
+            <li>Elegant, disciplined, precise curves</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>Qurʾan manuscripts, particularly marginal and interlinear text</li>
+            <li>Fine book copying where Muhaqqaq would be too large</li>
+            <li>Often paired with Muhaqqaq in the same manuscript for hierarchy</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-rayhani" lang="ar" dir="rtl">سُبْحَانَ الَّذِي أَسْرَىٰ</p>
+            <p class="sample-gloss">"Glory be to Him Who took [His servant] by night" (Qurʾan 17:1) — the opening of Surat al-Isra.</p>
+            <p class="font-note">Rendered in Amiri, medium weight, to suggest Rayhani's finer scale relative to Muhaqqaq (closest available approximation).</p>
+          </div>
+        </article>
+
+        <!-- TAWQI' -->
+        <article class="style-card" id="tawqi" aria-labelledby="tawqi-h">
+          <div class="style-card-head">
+            <div class="names">
+              <span class="arabic-name" lang="ar" dir="rtl">خط التوقيع</span>
+              <span class="english-name" id="tawqi-h">Tawqiʿ</span>
+            </div>
+            <span class="era-tag">10th c. onward</span>
+          </div>
+          <p>Tawqiʿ ("signature" or "endorsement") emerged in the Abbasid chancery as
+          a compact cursive hand for administrative use, historically considered a
+          smaller relative of Thuluth. It was used by officials to sign and endorse
+          state documents, later feeding into the development of Ruqʿah.</p>
+          <h4>Visual characteristics</h4>
+          <ul>
+            <li>Compact, cursive, with dense ligatures between letters</li>
+            <li>Less formal and slower than Thuluth, but more ornamented than Ruqʿah</li>
+            <li>Efficient for writing at length while retaining some elegance</li>
+          </ul>
+          <h4>Common uses</h4>
+          <ul>
+            <li>Abbasid and later chancery correspondence and endorsements</li>
+            <li>Administrative and legal documentation</li>
+            <li>A historical bridge toward the modern Ruqʿah hand</li>
+          </ul>
+          <div class="sample-block">
+            <p class="sample-text font-tawqi" lang="ar" dir="rtl">صَحَّ وَتَمَّ</p>
+            <p class="sample-gloss">"Verified and completed" — a chancery endorsement formula historically written in Tawqiʿ.</p>
+            <p class="font-note">Rendered in Aref Ruqaa, bolded (closest available approximation).</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONCLUSION ============ -->
+  <section id="conclusion" class="conclusion" aria-labelledby="conclusion-heading">
+    <div class="wrap">
+      <span class="eyebrow">In closing</span>
+      <h2 id="conclusion-heading">Why calligraphy matters</h2>
+      <p>
+        Arabic calligraphy developed such elaborate variety in part because, within
+        classical Islamic visual culture, figural representation played a limited
+        role in religious contexts, and the written word — above all the text of the
+        Qurʾan — carried enormous devotional and artistic weight. Copying scripture
+        beautifully was itself understood as an act of piety, and calligraphers held
+        a status closer to master craftsmen or scholars than to mere scribes.
+      </p>
+      <p>
+        Beyond religion, these scripts recorded the full range of civic and
+        intellectual life: philosophy, medicine, poetry, correspondence, and law
+        were all shaped by the script chosen to carry them, since script itself
+        signalled register, formality, and even trustworthiness — a Diwani-scrawled
+        decree was, quite literally, harder to forge than one in ordinary hand.
+      </p>
+      <blockquote>
+        A single tradition thus produced scripts for the mosque dome, the royal
+        court, the scholar's desk, and the everyday letter — each fit precisely to
+        its purpose.
+      </blockquote>
+      <p>
+        Today, calligraphy remains a living art. Contemporary calligraphers continue
+        to train for years in the classical proportional systems, and the scripts
+        described here inform everything from mosque architecture to graphic design,
+        branding, and digital typography across the Arabic-writing world — a
+        continuous thread running from the 7th century to the present.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Compiled as an educational overview of Arabic calligraphic traditions. Historical dates are approximate; regional variation within each school was considerable.</p>
+  </div>
+</footer>
+
+</body>
+</html>
