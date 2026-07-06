@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الفصل الثامن: جيسيكا وسارة وزياد</title>
+  <style>
+    :root {
+      --bg: #f6f2ea;
+      --paper: #fffaf2;
+      --ink: #222222;
+      --muted: #6b6257;
+      --line: #e2d6c7;
+      --accent: #8a4f2d;
+      --accent-2: #2f6f73;
+      --soft-accent: #f2dfcf;
+      --soft-blue: #e8f1f2;
+      --good: #1f7a4d;
+      --bad: #a33a32;
+      --empty: #8a6b20;
+      --shadow: 0 12px 28px rgba(58, 39, 20, 0.10);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(138, 79, 45, 0.12), transparent 28rem),
+        radial-gradient(circle at bottom right, rgba(47, 111, 115, 0.10), transparent 24rem),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      line-height: 1.8;
+    }
+
+    .page {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    header.hero {
+      background: linear-gradient(135deg, #3b2c24, #8a4f2d);
+      color: #fffaf2;
+      border-radius: 28px;
+      padding: 38px 34px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header.hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -120px auto;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.09);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 820px;
+      font-size: 1.1rem;
+      color: #f8e9db;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav a {
+      color: #fffaf2;
+      text-decoration: none;
+      border: 1px solid rgba(255, 250, 242, 0.45);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.95rem;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    section {
+      margin-top: 26px;
+      background: rgba(255, 250, 242, 0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section-head {
+      padding: 22px 26px;
+      background: linear-gradient(90deg, var(--soft-accent), rgba(255, 250, 242, 0));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: #3f2b21;
+      font-size: clamp(1.35rem, 2.2vw, 2rem);
+    }
+
+    .section-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .content {
+      padding: 24px 26px 30px;
+    }
+
+    .instruction {
+      background: #fff3df;
+      border: 1px solid #e8c9a9;
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: #493323;
+      margin: 0 0 20px;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .word-bank li {
+      border: 1px solid #d5b391;
+      background: #fff8ee;
+      color: #4f321f;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .vocab-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .vocab-card,
+    .quiz-card,
+    .question-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fffdf8;
+      padding: 16px;
+      transition: 0.2s ease;
+    }
+
+    .vocab-card {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 14px;
+      align-items: center;
+      min-height: 154px;
+    }
+
+    .icon-wrap {
+      width: 82px;
+      height: 82px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: var(--soft-blue);
+      border: 1px solid #cfe0e2;
+    }
+
+    svg.icon {
+      width: 68px;
+      height: 68px;
+    }
+
+    .definition {
+      font-weight: 700;
+      color: #30251e;
+      margin-bottom: 10px;
+    }
+
+    select,
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      border: 1px solid #c9b6a6;
+      border-radius: 10px;
+      padding: 9px 10px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    select:focus,
+    textarea:focus,
+    input[type="text"]:focus {
+      outline: 3px solid rgba(47, 111, 115, 0.20);
+      border-color: var(--accent-2);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button.primary {
+      background: var(--accent);
+      color: #fffaf2;
+    }
+
+    button.secondary {
+      background: #e6ddd2;
+      color: #33251d;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(0.98);
+    }
+
+    .feedback {
+      display: block;
+      margin-top: 10px;
+      font-weight: 700;
+      min-height: 1.4em;
+    }
+
+    .correct {
+      border-color: rgba(31, 122, 77, 0.55);
+      background: #f3fbf6;
+    }
+
+    .correct .feedback {
+      color: var(--good);
+    }
+
+    .wrong {
+      border-color: rgba(163, 58, 50, 0.55);
+      background: #fff6f4;
+    }
+
+    .wrong .feedback {
+      color: var(--bad);
+    }
+
+    .empty {
+      border-color: rgba(138, 107, 32, 0.55);
+      background: #fffaf0;
+    }
+
+    .empty .feedback {
+      color: var(--empty);
+    }
+
+    .reading-box {
+      background:
+        linear-gradient(90deg, rgba(47, 111, 115, 0.08), transparent 40%),
+        #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+      font-size: 1.08rem;
+      line-height: 2.15;
+    }
+
+    .reading-box p {
+      margin: 0 0 18px;
+    }
+
+    .reading-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .dialogue {
+      display: block;
+      margin: 10px 0;
+      padding: 12px 16px;
+      border-right: 5px solid var(--accent-2);
+      background: #f4fbfb;
+      border-radius: 12px;
+    }
+
+    .speaker {
+      font-weight: 800;
+      color: #2f5d61;
+    }
+
+    fieldset {
+      margin: 0;
+      border: 1px solid var(--line);
+    }
+
+    legend {
+      font-weight: 800;
+      color: #3f2b21;
+      padding: 0 6px;
+    }
+
+    .quiz-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .choices {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .choices label {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      background: #fff8ee;
+      border: 1px solid #ead8c7;
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .choices input {
+      margin-top: 9px;
+      accent-color: var(--accent);
+    }
+
+    .open-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    textarea {
+      min-height: 96px;
+      resize: vertical;
+      margin-top: 10px;
+    }
+
+    details {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffdf8;
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 12px 16px;
+      font-weight: 800;
+      color: #3f2b21;
+      background: #f3eadf;
+    }
+
+    details .answer-content {
+      padding: 14px 18px 18px;
+    }
+
+    .answer-content ol,
+    .answer-content ul {
+      margin-top: 0;
+    }
+
+    .answer-content li {
+      margin-bottom: 8px;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .print-note {
+      display: none;
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        width: min(100% - 20px, 1160px);
+        padding-top: 12px;
+      }
+
+      header.hero,
+      .content,
+      .section-head {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .vocab-card {
+        grid-template-columns: 1fr;
+      }
+
+      .icon-wrap {
+        width: 76px;
+        height: 76px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      header.hero,
+      section {
+        box-shadow: none;
+      }
+
+      button,
+      .nav {
+        display: none;
+      }
+
+      .print-note {
+        display: block;
+      }
+
+      details {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>الفصل الثامن: جيسيكا وسارة وزياد</h1>
+      <p>صفحة قراءة وتدريب على المفردات والفهم. ابدأ بمطابقة المفردات، ثم اقرأ النص، ثم أجب عن أسئلة الفهم.</p>
+      <nav class="nav" aria-label="أقسام الصفحة">
+        <a href="#vocab">المفردات</a>
+        <a href="#reading">النص</a>
+        <a href="#truefalse">صح أم خطأ</a>
+        <a href="#mcq">اختيار من متعدد</a>
+        <a href="#wh">أسئلة مفتوحة</a>
+      </nav>
+    </header>
+
+    <section id="vocab">
+      <div class="section-head">
+        <h2>أولًا: المفردات قبل القراءة</h2>
+        <p>اختر الكلمة المناسبة لكل تعريف. الصور تساعدك على تذكّر المعنى.</p>
+      </div>
+
+      <div class="content">
+        <p class="instruction">استخدم بنك الكلمات الآتي لإكمال نشاط المطابقة.</p>
+
+        <ul class="word-bank" aria-label="بنك الكلمات">
+          <li>عودة</li>
+          <li>شارد الذهن</li>
+          <li>في هدوء</li>
+          <li>لم يصدق</li>
+          <li>مختلف</li>
+          <li>غريب</li>
+          <li>حرام عليك</li>
+          <li>مرتبك</li>
+          <li>مشاعر</li>
+          <li>مرتبطة</li>
+        </ul>
+
+        <div class="grid vocab-grid" id="vocabActivity">
+          <article class="vocab-card" data-answer="عودة">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="طريق مع سهم رجوع">
+                <rect x="12" y="55" width="76" height="18" rx="9" fill="#d8e8e9"/>
+                <path d="M72 35 C55 35 43 43 39 57" fill="none" stroke="#2f6f73" stroke-width="8" stroke-linecap="round"/>
+                <path d="M35 54 L25 67 L42 70" fill="none" stroke="#8a4f2d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="76" cy="64" r="6" fill="#8a4f2d"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">الرجوع إلى مكان بعد الذهاب منه.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+
+          <article class="vocab-card" data-answer="شارد الذهن">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="شخص يفكر في شيء بعيد">
+                <circle cx="45" cy="42" r="17" fill="#f2c9a6"/>
+                <path d="M25 85 C28 67 62 67 66 85" fill="#8a4f2d"/>
+                <circle cx="72" cy="22" r="8" fill="#fffaf2" stroke="#2f6f73" stroke-width="4"/>
+                <circle cx="84" cy="14" r="5" fill="#fffaf2" stroke="#2f6f73" stroke-width="3"/>
+                <path d="M36 42 Q45 48 54 42" fill="none" stroke="#3b2c24" stroke-width="3" stroke-linecap="round"/>
+                <path d="M24 30 L13 22 M24 40 L11 40" stroke="#c9b6a6" stroke-width="5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">شخص يفكر في شيء آخر ولا يسمع أو يرى الناس حوله.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+
+          <article class="vocab-card" data-answer="في هدوء">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="وجه ساكن وصوت منخفض">
+                <circle cx="50" cy="50" r="34" fill="#f2dfcf"/>
+                <path d="M33 44 Q39 39 45 44" fill="none" stroke="#3b2c24" stroke-width="4" stroke-linecap="round"/>
+                <path d="M55 44 Q61 39 67 44" fill="none" stroke="#3b2c24" stroke-width="4" stroke-linecap="round"/>
+                <path d="M40 64 Q50 70 60 64" fill="none" stroke="#3b2c24" stroke-width="4" stroke-linecap="round"/>
+                <path d="M18 22 L8 12 M82 22 L92 12" stroke="#2f6f73" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">بدون صوت عالٍ، بهدوء شديد.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+
+          <article class="vocab-card" data-answer="لم يصدق">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="علامة استفهام ورفض">
+                <circle cx="50" cy="50" r="35" fill="#fff3df" stroke="#d6b18e" stroke-width="4"/>
+                <path d="M42 38 C43 27 62 28 62 40 C62 50 50 50 50 60" fill="none" stroke="#8a4f2d" stroke-width="7" stroke-linecap="round"/>
+                <circle cx="50" cy="73" r="4" fill="#8a4f2d"/>
+                <path d="M24 24 L76 76" stroke="#a33a32" stroke-width="7" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">لم يعتقد أن الشيء صحيح.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+
+          <article class="vocab-card" data-answer="مختلف">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="شكل مختلف بين أشكال متشابهة">
+                <rect x="18" y="22" width="20" height="20" rx="5" fill="#d8e8e9" stroke="#2f6f73" stroke-width="3"/>
+                <rect x="18" y="58" width="20" height="20" rx="5" fill="#d8e8e9" stroke="#2f6f73" stroke-width="3"/>
+                <rect x="62" y="22" width="20" height="20" rx="5" fill="#d8e8e9" stroke="#2f6f73" stroke-width="3"/>
+                <circle cx="72" cy="68" r="12" fill="#f2dfcf" stroke="#8a4f2d" stroke-width="4"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">ليس مثل الآخرين، ليس نفسه.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+
+          <article class="vocab-card" data-answer="غريب">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="شيء غير عادي">
+                <path d="M50 12 L61 39 L90 42 L68 61 L75 89 L50 74 L25 89 L32 61 L10 42 L39 39 Z" fill="#f2dfcf" stroke="#8a4f2d" stroke-width="4" stroke-linejoin="round"/>
+                <circle cx="41" cy="47" r="4" fill="#3b2c24"/>
+                <circle cx="59" cy="47" r="4" fill="#3b2c24"/>
+                <path d="M39 62 Q50 55 61 62" fill="none" stroke="#3b2c24" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">غير عادي، غير معروف.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+
+          <article class="vocab-card" data-answer="حرام عليك">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="شخص متعب أمام طلب صعب">
+                <circle cx="37" cy="39" r="14" fill="#f2c9a6"/>
+                <path d="M18 84 C22 63 54 63 59 84" fill="#8a4f2d"/>
+                <rect x="58" y="25" width="24" height="33" rx="8" fill="#fffaf2" stroke="#2f6f73" stroke-width="4"/>
+                <path d="M64 34 H76 M64 44 H72" stroke="#2f6f73" stroke-width="4" stroke-linecap="round"/>
+                <path d="M30 38 Q37 45 44 38" fill="none" stroke="#3b2c24" stroke-width="3" stroke-linecap="round"/>
+                <path d="M63 70 C72 76 82 76 89 68" fill="none" stroke="#a33a32" stroke-width="5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">جملة نقولها عندما يطلب شخص شيئًا صعبًا.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+
+          <article class="vocab-card" data-answer="مرتبك">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="شخص متوتر وغير متأكد">
+                <circle cx="50" cy="46" r="22" fill="#f2c9a6"/>
+                <path d="M29 88 C32 69 68 69 71 88" fill="#2f6f73"/>
+                <path d="M39 43 L45 47 M61 43 L55 47" stroke="#3b2c24" stroke-width="4" stroke-linecap="round"/>
+                <path d="M42 61 Q50 56 58 61" fill="none" stroke="#3b2c24" stroke-width="4" stroke-linecap="round"/>
+                <path d="M21 25 L13 17 M79 25 L87 17 M50 15 V5" stroke="#a33a32" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">غير متأكد، متوتر، لا يعرف ماذا يفعل.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+
+          <article class="vocab-card" data-answer="مشاعر">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="قلب ومشاعر">
+                <path d="M50 82 C27 64 17 51 20 37 C22 25 36 20 50 34 C64 20 78 25 80 37 C83 51 73 64 50 82 Z" fill="#f2dfcf" stroke="#8a4f2d" stroke-width="5"/>
+                <circle cx="31" cy="25" r="5" fill="#d8e8e9" stroke="#2f6f73" stroke-width="3"/>
+                <circle cx="72" cy="28" r="4" fill="#d8e8e9" stroke="#2f6f73" stroke-width="3"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">أحاسيس الإنسان مثل الفرح والحزن والغضب.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+
+          <article class="vocab-card" data-answer="مرتبطة">
+            <div class="icon-wrap">
+              <svg class="icon" viewBox="0 0 100 100" role="img" aria-label="شخصان بينهما علاقة">
+                <circle cx="32" cy="34" r="12" fill="#f2c9a6"/>
+                <circle cx="68" cy="34" r="12" fill="#f2c9a6"/>
+                <path d="M15 82 C18 61 46 61 49 82" fill="#8a4f2d"/>
+                <path d="M51 82 C54 61 82 61 85 82" fill="#2f6f73"/>
+                <path d="M41 48 C48 56 52 56 59 48" fill="none" stroke="#a33a32" stroke-width="5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="definition">عنده/ا علاقة مع شخص آخر: حُب، زواج، أو ارتباط.</div>
+              <select aria-label="اختر الكلمة المناسبة">
+                <option value="">اختر الكلمة</option>
+              </select>
+              <span class="feedback"></span>
+            </div>
+          </article>
+        </div>
+
+        <div class="button-row">
+          <button class="primary" type="button" onclick="checkActivity('vocabActivity')">تحقق من الإجابات</button>
+          <button class="secondary" type="button" onclick="resetActivity('vocabActivity')">إعادة المحاولة</button>
+        </div>
+
+        <details>
+          <summary>مفتاح إجابات المفردات</summary>
+          <div class="answer-content">
+            <ol>
+              <li>الرجوع إلى مكان بعد الذهاب منه: <strong>عودة</strong></li>
+              <li>شخص يفكر في شيء آخر ولا يسمع أو يرى الناس حوله: <strong>شارد الذهن</strong></li>
+              <li>بدون صوت عالٍ، بهدوء شديد: <strong>في هدوء</strong></li>
+              <li>لم يعتقد أن الشيء صحيح: <strong>لم يصدق</strong></li>
+              <li>ليس مثل الآخرين، ليس نفسه: <strong>مختلف</strong></li>
+              <li>غير عادي، غير معروف: <strong>غريب</strong></li>
+              <li>جملة نقولها عندما يطلب شخص شيئًا صعبًا: <strong>حرام عليك</strong></li>
+              <li>غير متأكد، متوتر، لا يعرف ماذا يفعل: <strong>مرتبك</strong></li>
+              <li>أحاسيس الإنسان مثل الفرح والحزن والغضب: <strong>مشاعر</strong></li>
+              <li>عنده/ا علاقة مع شخص آخر: <strong>مرتبطة</strong></li>
+            </ol>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="reading">
+      <div class="section-head">
+        <h2>ثانيًا: النص</h2>
+        <p>اقرأ النص، ثم انتقل إلى أسئلة الفهم.</p>
+      </div>
+
+      <div class="content">
+        <article class="reading-box">
+          <p>أَثْنَاء عَوْدَة جيسيكا إلى البَيْتِ مَعَ سَارَة بَعْدَ شِفَائِهَا، كَانَتْ جيسيكا شَارِدَةَ الذِّهْنِ.</p>
+
+          <p class="dialogue"><span class="speaker">سَارَة:</span> "مَالِكْ يَا جِيسيكا؟ بِتْفَكَّرِي فِي ايه؟"</p>
+
+          <p class="dialogue"><span class="speaker">جيسيكا:</span> "لَا شَيءْ."</p>
+
+          <p>رَدَّت جيسيكا في هُدُوء. لَمْ تُصَدِّقْهَا سَارَة لِأَنَّها بَدَت مُختَلِفَة مُنْذُ أَنْ جَاءَتْ إلى المُسْتَشْفَى، فَقَالَتْ لَها:</p>
+
+          <p class="dialogue"><span class="speaker">سَارَة:</span> "لَأْ، أَنَا عَارْفَاكِي كُوَيِّس، أَكِيد فِي حَاجَة حَصَلِت!"</p>
+
+          <p class="dialogue"><span class="speaker">جيسيكا:</span> "حَسَنًا، شَيءٌ غَرِيب حَدَثَ بِالْأَمْسِ."</p>
+
+          <p class="dialogue"><span class="speaker">سَارَة:</span> "خِيرْ إِنْ شَاءَ اللَّه! إيه الِّي حَصَلْ؟"</p>
+
+          <p class="dialogue"><span class="speaker">جيسيكا:</span> "سَوْفَ أحْكِي لكِ كُلَّ شَيء عِنْدَمَا نَصِلُ إِلَى البيتِ إِذَا طَبَخْتِ لِي دَجَاجًا مَشوِيّ."</p>
+
+          <p class="dialogue"><span class="speaker">سَارَة:</span> "حَرَام عَلِيكي، أنا لِسَّه خَارْجَه مِنْ المُسْتَشْفَى."</p>
+
+          <p>ضَحِكَتْ جيسيكا وقالت لها:</p>
+
+          <p class="dialogue"><span class="speaker">جيسيكا:</span> "حَسَنًا، بِالْأَمْسِ، قَبْلَ أن أَجِيءَ إلى المُسْتَشْفَى، قَالَ لِي زِيَاد أَنَّهُ يُحِبُّنِي."</p>
+
+          <p class="dialogue"><span class="speaker">سَارَة:</span> "إيه!" رَدَّتْ سَارَة باندهاش! "طَيِّبْ، وِأنتِ قُلْتِي لُهْ إيه؟"</p>
+
+          <p class="dialogue"><span class="speaker">جيسيكا:</span> "لَا شَيْء، تَرَكْتُه ومَشيتْ. كُنتُ مُتفَاجِئَة ومُرْتَبِكَة جِدًا."</p>
+
+          <p>صَمَتَتْ سَارَة لدَقَيقَة تُفَكِّر ثُم سَأَلَتْهَا:</p>
+
+          <p class="dialogue"><span class="speaker">سَارَة:</span> "جيسيكا، أنتِ حَاسَّة إيه؟ هَل عَنِدكْ مَشَاعِر لِزيَاد؟"</p>
+
+          <p class="dialogue"><span class="speaker">جيسيكا:</span> "بِصَرَاحَة، نَعَم. أَنَا بِالْفِعْل عِنْدِي مَشَاعِرْ ...... وَلكِنْ ..... لَيْسَت لِزِيَادْ."</p>
+
+          <p>رَامِي في نَفسِ الوَقتْ كَانِ مَعَ زِيَادْ في النادي... يَتَكلَّمُ مَعَهُ عَن نَفْسِ الْمَوْضُوعْ. سَأَلَهُ زِيادْ عَن رَأْيِهِ فَرَدَّ رامِي:</p>
+
+          <p class="dialogue"><span class="speaker">رَامِي:</span> "بِصَرَاحَةْ يَا زِيَادْ، الْمَوْضُوعْ صَعْبْ، جِيسيكا مِنْ ثَقَافَة مُخْتَلِفَة تَمَامًا عَنَّك، وِأنتُم مَاتِعْرَفُوش بَعضْ مِن وَقْتْ طَوِيلْ .... وَكَمَانْ كَانْ لَازِمْ تِسْأَل الْأوَّلْ... هَلْ هِيَّ مُرْتَبِطَة أو عَنْدَهَا مَشَاعِر لِحَدْ تَانِي وَلَّا لَأْ."</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="truefalse">
+      <div class="section-head">
+        <h2>ثالثًا: صح أم خطأ</h2>
+        <p>اختر صح أو خطأ حسب النص.</p>
+      </div>
+
+      <div class="content">
+        <div class="grid quiz-grid" id="tfActivity">
+          <fieldset class="quiz-card" data-answer="true">
+            <legend>1. كانت جيسيكا شاردة الذهن أثناء عودتها إلى البيت مع سارة.</legend>
+            <div class="choices">
+              <label><input type="radio" name="tf1" value="true"> صح</label>
+              <label><input type="radio" name="tf1" value="false"> خطأ</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="false">
+            <legend>2. صدّقت سارة فورًا أن جيسيكا لا تفكر في شيء.</legend>
+            <div class="choices">
+              <label><input type="radio" name="tf2" value="true"> صح</label>
+              <label><input type="radio" name="tf2" value="false"> خطأ</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="true">
+            <legend>3. طلبت جيسيكا من سارة أن تطبخ لها دجاجًا مشويًا.</legend>
+            <div class="choices">
+              <label><input type="radio" name="tf3" value="true"> صح</label>
+              <label><input type="radio" name="tf3" value="false"> خطأ</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="false">
+            <legend>4. أخبر زياد جيسيكا أنه يكرهها.</legend>
+            <div class="choices">
+              <label><input type="radio" name="tf4" value="true"> صح</label>
+              <label><input type="radio" name="tf4" value="false"> خطأ</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="false">
+            <legend>5. قالت جيسيكا إن مشاعرها كانت لزياد.</legend>
+            <div class="choices">
+              <label><input type="radio" name="tf5" value="true"> صح</label>
+              <label><input type="radio" name="tf5" value="false"> خطأ</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="true">
+            <legend>6. كان رامي مع زياد في النادي ويتكلم معه عن الموضوع نفسه.</legend>
+            <div class="choices">
+              <label><input type="radio" name="tf6" value="true"> صح</label>
+              <label><input type="radio" name="tf6" value="false"> خطأ</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+        </div>
+
+        <div class="button-row">
+          <button class="primary" type="button" onclick="checkActivity('tfActivity')">تحقق من الإجابات</button>
+          <button class="secondary" type="button" onclick="resetActivity('tfActivity')">إعادة المحاولة</button>
+        </div>
+
+        <details>
+          <summary>مفتاح إجابات صح أم خطأ</summary>
+          <div class="answer-content">
+            <ol>
+              <li>صح</li>
+              <li>خطأ</li>
+              <li>صح</li>
+              <li>خطأ</li>
+              <li>خطأ</li>
+              <li>صح</li>
+            </ol>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="mcq">
+      <div class="section-head">
+        <h2>رابعًا: اختيار من متعدد</h2>
+        <p>اختر الإجابة الصحيحة. لا توجد إجابتان مكررتان.</p>
+      </div>
+
+      <div class="content">
+        <div class="grid quiz-grid" id="mcqActivity">
+          <fieldset class="quiz-card" data-answer="إلى البيت">
+            <legend>1. أين كانت جيسيكا وسارة ذاهبتين؟</legend>
+            <div class="choices">
+              <label><input type="radio" name="mcq1" value="إلى البيت"> إلى البيت</label>
+              <label><input type="radio" name="mcq1" value="إلى النادي"> إلى النادي</label>
+              <label><input type="radio" name="mcq1" value="إلى الجامعة"> إلى الجامعة</label>
+              <label><input type="radio" name="mcq1" value="إلى السوق"> إلى السوق</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="لأنها بدت مختلفة">
+            <legend>2. لماذا لم تصدق سارة كلام جيسيكا؟</legend>
+            <div class="choices">
+              <label><input type="radio" name="mcq2" value="لأنها كانت نائمة"> لأنها كانت نائمة</label>
+              <label><input type="radio" name="mcq2" value="لأنها بدت مختلفة"> لأنها بدت مختلفة</label>
+              <label><input type="radio" name="mcq2" value="لأنها نسيت القصة"> لأنها نسيت القصة</label>
+              <label><input type="radio" name="mcq2" value="لأنها كانت غاضبة من رامي"> لأنها كانت غاضبة من رامي</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="قال إنه يحبها">
+            <legend>3. ماذا قال زياد لجيسيكا؟</legend>
+            <div class="choices">
+              <label><input type="radio" name="mcq3" value="قال إنه يحبها"> قال إنه يحبها</label>
+              <label><input type="radio" name="mcq3" value="قال إنه مسافر"> قال إنه مسافر</label>
+              <label><input type="radio" name="mcq3" value="قال إنه مريض"> قال إنه مريض</label>
+              <label><input type="radio" name="mcq3" value="قال إنه يريد الدجاج"> قال إنه يريد الدجاج</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="تركته ومشت">
+            <legend>4. كيف ردّت جيسيكا عندما سمعت كلام زياد؟</legend>
+            <div class="choices">
+              <label><input type="radio" name="mcq4" value="ضحكت كثيرًا"> ضحكت كثيرًا</label>
+              <label><input type="radio" name="mcq4" value="وافقت فورًا"> وافقت فورًا</label>
+              <label><input type="radio" name="mcq4" value="تركته ومشت"> تركته ومشت</label>
+              <label><input type="radio" name="mcq4" value="اتصلت بسارة"> اتصلت بسارة</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="في النادي">
+            <legend>5. أين كان رامي مع زياد؟</legend>
+            <div class="choices">
+              <label><input type="radio" name="mcq5" value="في البيت"> في البيت</label>
+              <label><input type="radio" name="mcq5" value="في المستشفى"> في المستشفى</label>
+              <label><input type="radio" name="mcq5" value="في النادي"> في النادي</label>
+              <label><input type="radio" name="mcq5" value="في المطعم"> في المطعم</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+
+          <fieldset class="quiz-card" data-answer="كان عليه أن يسأل أولًا">
+            <legend>6. ما رأي رامي في موقف زياد؟</legend>
+            <div class="choices">
+              <label><input type="radio" name="mcq6" value="كان عليه أن يسأل أولًا"> كان عليه أن يسأل أولًا</label>
+              <label><input type="radio" name="mcq6" value="كان عليه أن يسافر"> كان عليه أن يسافر</label>
+              <label><input type="radio" name="mcq6" value="كان عليه أن يطبخ"> كان عليه أن يطبخ</label>
+              <label><input type="radio" name="mcq6" value="كان عليه أن يزور المستشفى"> كان عليه أن يزور المستشفى</label>
+            </div>
+            <span class="feedback"></span>
+          </fieldset>
+        </div>
+
+        <div class="button-row">
+          <button class="primary" type="button" onclick="checkActivity('mcqActivity')">تحقق من الإجابات</button>
+          <button class="secondary" type="button" onclick="resetActivity('mcqActivity')">إعادة المحاولة</button>
+        </div>
+
+        <details>
+          <summary>مفتاح إجابات الاختيار من متعدد</summary>
+          <div class="answer-content">
+            <ol>
+              <li>إلى البيت</li>
+              <li>لأنها بدت مختلفة</li>
+              <li>قال إنه يحبها</li>
+              <li>تركته ومشت</li>
+              <li>في النادي</li>
+              <li>كان عليه أن يسأل أولًا</li>
+            </ol>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="wh">
+      <div class="section-head">
+        <h2>خامسًا: أسئلة مفتوحة</h2>
+        <p>اكتب إجابة قصيرة من النص. يمكن للمدرس قبول صيغ أخرى إذا كان المعنى صحيحًا.</p>
+      </div>
+
+      <div class="content">
+        <div class="grid open-grid">
+          <div class="question-card">
+            <strong>1. مَنْ كان مع جيسيكا أثناء عودتها إلى البيت؟</strong>
+            <textarea placeholder="اكتب إجابتك هنا"></textarea>
+          </div>
+
+          <div class="question-card">
+            <strong>2. ماذا طلبت جيسيكا من سارة قبل أن تحكي لها كل شيء؟</strong>
+            <textarea placeholder="اكتب إجابتك هنا"></textarea>
+          </div>
+
+          <div class="question-card">
+            <strong>3. متى قال زياد لجيسيكا إنه يحبها؟</strong>
+            <textarea placeholder="اكتب إجابتك هنا"></textarea>
+          </div>
+
+          <div class="question-card">
+            <strong>4. لماذا قال رامي إن الموضوع صعب؟</strong>
+            <textarea placeholder="اكتب إجابتك هنا"></textarea>
+          </div>
+        </div>
+
+        <details>
+          <summary>إجابات مقترحة للأسئلة المفتوحة</summary>
+          <div class="answer-content">
+            <ol>
+              <li>كانت سارة مع جيسيكا.</li>
+              <li>طلبت منها أن تطبخ لها دجاجًا مشويًا.</li>
+              <li>قال لها ذلك بالأمس قبل أن تجيء إلى المستشفى.</li>
+              <li>لأن جيسيكا من ثقافة مختلفة، ولأنهما لا يعرفان بعضهما من وقت طويل.</li>
+            </ol>
+          </div>
+        </details>
+
+        <p class="footer-note print-note">ملاحظة للطباعة: يمكن للمدرس حذف مفاتيح الإجابة قبل توزيع الصفحة على الطلاب.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const wordOptions = [
+      "عودة",
+      "شارد الذهن",
+      "في هدوء",
+      "لم يصدق",
+      "مختلف",
+      "غريب",
+      "حرام عليك",
+      "مرتبك",
+      "مشاعر",
+      "مرتبطة"
+    ];
+
+    function populateVocabularyDropdowns() {
+      const selects = document.querySelectorAll("#vocabActivity select");
+      selects.forEach((select) => {
+        wordOptions.forEach((word) => {
+          const option = document.createElement("option");
+          option.value = word;
+          option.textContent = word;
+          select.appendChild(option);
+        });
+      });
+    }
+
+    function getSelectedValue(card) {
+      const select = card.querySelector("select");
+      if (select) {
+        return select.value;
+      }
+
+      const checkedRadio = card.querySelector("input[type='radio']:checked");
+      if (checkedRadio) {
+        return checkedRadio.value;
+      }
+
+      return "";
+    }
+
+    function setFeedback(card, message, statusClass) {
+      card.classList.remove("correct", "wrong", "empty");
+      card.classList.add(statusClass);
+      const feedback = card.querySelector(".feedback");
+      if (feedback) {
+        feedback.textContent = message;
+      }
+    }
+
+    function checkActivity(activityId) {
+      const activity = document.getElementById(activityId);
+      const cards = activity.querySelectorAll("[data-answer]");
+
+      cards.forEach((card) => {
+        const answer = card.dataset.answer;
+        const selected = getSelectedValue(card);
+
+        if (!selected) {
+          setFeedback(card, "اختر إجابة أولًا.", "empty");
+        } else if (selected === answer) {
+          setFeedback(card, "صحيح.", "correct");
+        } else {
+          setFeedback(card, "حاول مرة أخرى.", "wrong");
+        }
+      });
+    }
+
+    function resetActivity(activityId) {
+      const activity = document.getElementById(activityId);
+      const cards = activity.querySelectorAll("[data-answer]");
+
+      cards.forEach((card) => {
+        card.classList.remove("correct", "wrong", "empty");
+
+        const select = card.querySelector("select");
+        if (select) {
+          select.value = "";
+        }
+
+        const radios = card.querySelectorAll("input[type='radio']");
+        radios.forEach((radio) => {
+          radio.checked = false;
+        });
+
+        const feedback = card.querySelector(".feedback");
+        if (feedback) {
+          feedback.textContent = "";
+        }
+      });
+    }
+
+    populateVocabularyDropdowns();
+  </script>
+</body>
+</html>
