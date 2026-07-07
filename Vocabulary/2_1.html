@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Arabic Self-Study Studio</title>
+<style>
+:root{
+  --bg:#f6f5f2;
+  --panel:#ffffff;
+  --ink:#172033;
+  --muted:#657084;
+  --line:#e6e2d9;
+  --brand:#1f4f7a;
+  --brand-2:#6e4e9e;
+  --brand-3:#1f7a5f;
+  --warn:#9b5b20;
+  --bad:#a33a3a;
+  --good:#24724a;
+  --soft:#eef5fa;
+  --soft-2:#f4eff9;
+  --soft-3:#edf8f3;
+  --shadow:0 18px 50px rgba(23,32,51,.08);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left, rgba(31,79,122,.13), transparent 34rem),
+    radial-gradient(circle at top right, rgba(110,78,158,.12), transparent 30rem),
+    linear-gradient(180deg,#fbfaf7 0%,var(--bg) 55%,#f2f0eb 100%);
+  color:var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+.ar{
+  direction:rtl;
+  font-family:"Noto Naskh Arabic","Amiri","Scheherazade New",Tahoma,Arial,sans-serif;
+  line-height:1.85;
+}
+.app-shell{max-width:1180px;margin:0 auto;padding:22px}
+.hero{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(230,226,217,.9);
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(14px);
+  box-shadow:var(--shadow);
+  border-radius:32px;
+  padding:28px;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  inset:auto -80px -140px auto;
+  width:360px;
+  height:360px;
+  border-radius:50%;
+  background:linear-gradient(135deg, rgba(31,79,122,.16), rgba(110,78,158,.14));
+  pointer-events:none;
+}
+.header-top{
+  display:flex;
+  gap:18px;
+  align-items:flex-start;
+  justify-content:space-between;
+  position:relative;
+  z-index:1;
+}
+.title-block h1{
+  margin:0;
+  font-size:clamp(2rem,5vw,4.3rem);
+  letter-spacing:-.055em;
+  line-height:.97;
+}
+.title-block p{
+  margin:14px 0 0;
+  color:var(--muted);
+  max-width:760px;
+  font-size:1.02rem;
+  line-height:1.65;
+}
+.hero-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.btn{
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--ink);
+  padding:11px 15px;
+  border-radius:999px;
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:.18s ease;
+  text-decoration:none;
+  user-select:none;
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(23,32,51,.08)}
+.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn.good{background:var(--good);color:#fff;border-color:var(--good)}
+.btn.ghost{background:rgba(255,255,255,.55)}
+.btn.danger{background:#fff1f1;color:var(--bad);border-color:#f1caca}
+.kbd{
+  border:1px solid #cfd4dc;
+  background:#fff;
+  padding:2px 7px;
+  border-radius:7px;
+  font-size:.82rem;
+  color:#465063;
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-top:24px;
+  position:relative;
+  z-index:1;
+}
+.stat{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.76);
+  border-radius:20px;
+  padding:16px;
+}
+.stat b{font-size:1.75rem;display:block;letter-spacing:-.04em}
+.stat span{display:block;margin-top:4px;color:var(--muted);font-size:.92rem}
+.tabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:20px 0;
+  position:sticky;
+  top:0;
+  z-index:20;
+  padding:12px 0;
+  background:linear-gradient(180deg,rgba(246,245,242,.98),rgba(246,245,242,.78));
+  backdrop-filter:blur(10px);
+}
+.tab{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.74);
+  color:var(--muted);
+  border-radius:999px;
+  padding:11px 15px;
+}
+.tab[aria-selected="true"]{
+  color:#fff;
+  background:var(--ink);
+  border-color:var(--ink);
+  box-shadow:0 12px 26px rgba(23,32,51,.16);
+}
+.panel{
+  background:rgba(255,255,255,.86);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:18px;
+}
+.panel h2,.panel h3{margin:0 0 10px;letter-spacing:-.025em}
+.panel p{color:var(--muted);line-height:1.65}
+.toolbar{
+  display:grid;
+  grid-template-columns:1.4fr .8fr .8fr auto;
+  gap:10px;
+  align-items:center;
+  margin-top:18px;
+}
+.field{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:12px 14px;
+  background:#fff;
+  color:var(--ink);
+  outline:none;
+}
+.field:focus{border-color:rgba(31,79,122,.55);box-shadow:0 0 0 4px rgba(31,79,122,.09)}
+.grid{
+  display:grid;
+  gap:14px;
+}
+.vocab-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.vocab-card{
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#fff,#fbfaf7);
+  border-radius:20px;
+  padding:18px;
+  transition:.16s ease;
+}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(23,32,51,.08)}
+.vocab-head{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:12px;
+  align-items:flex-start;
+}
+.ar-term{font-size:1.35rem;font-weight:800;color:var(--brand)}
+.en-term{font-weight:750;font-size:1rem;color:#2a3447}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px;
+  padding:4px 9px;
+  font-size:.78rem;
+  background:var(--soft);
+  color:var(--brand);
+  border:1px solid rgba(31,79,122,.12);
+}
+.tag.shami{background:var(--soft-2);color:var(--brand-2)}
+.tag.masri{background:var(--soft-3);color:var(--brand-3)}
+.example{
+  margin-top:12px;
+  border-radius:16px;
+  background:#fff;
+  border:1px solid #eee8dc;
+  padding:12px 14px;
+}
+.example .ar{font-weight:650;color:#1e2638;font-size:1.05rem}
+.example .trans{margin-top:3px;color:var(--muted);font-size:.94rem}
+.flash-wrap{
+  display:grid;
+  grid-template-columns:1fr 330px;
+  gap:18px;
+  align-items:stretch;
+}
+.flash-stage{
+  min-height:520px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+.flashcard{
+  position:relative;
+  width:min(100%,720px);
+  height:390px;
+  perspective:1000px;
+}
+.flash-inner{
+  position:absolute;
+  inset:0;
+  transform-style:preserve-3d;
+  transition:transform .48s cubic-bezier(.2,.7,.2,1);
+}
+.flash-inner.flipped{transform:rotateY(180deg)}
+.face{
+  position:absolute;
+  inset:0;
+  border-radius:30px;
+  border:1px solid var(--line);
+  box-shadow:0 25px 60px rgba(23,32,51,.12);
+  background:linear-gradient(145deg,#fff,#f8fbfd);
+  backface-visibility:hidden;
+  padding:34px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.face.back{
+  transform:rotateY(180deg);
+  background:linear-gradient(145deg,#eef5fa,#fff);
+}
+.fc-term{font-size:clamp(2rem,5vw,3.7rem);font-weight:850;color:var(--brand);margin-bottom:18px}
+.fc-eng{font-size:clamp(1.7rem,4vw,2.8rem);font-weight:850;margin-bottom:18px}
+.flash-controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+.side-panel{
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:#fff;
+  padding:18px;
+}
+.progress-row{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  padding:11px 0;
+  border-bottom:1px solid var(--line);
+}
+.progress-row:last-child{border-bottom:0}
+.meter{
+  height:10px;
+  background:#ebe8df;
+  border-radius:999px;
+  overflow:hidden;
+  margin:10px 0;
+}
+.meter>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand-2));border-radius:999px;transition:.3s ease}
+.exercise-card{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:14px;
+}
+.exercise-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+  margin-bottom:12px;
+}
+.badge{
+  border:1px solid var(--line);
+  background:#f7f5ef;
+  padding:4px 10px;
+  border-radius:999px;
+  color:#596273;
+  font-size:.82rem;
+  font-weight:700;
+}
+.sentence{
+  font-size:1.28rem;
+  background:#fbfaf7;
+  border:1px solid #efe9df;
+  border-radius:18px;
+  padding:16px;
+  margin:0 0 14px;
+}
+.blank{
+  min-width:96px;
+  display:inline-flex;
+  justify-content:center;
+  border-bottom:2px dashed #8d98a8;
+  color:transparent;
+}
+.options{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.option{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:15px;
+  padding:12px 14px;
+  text-align:center;
+  min-height:48px;
+}
+.option.selected{border-color:var(--brand);background:var(--soft);color:var(--brand);font-weight:800}
+.inline-input{
+  min-width:145px;
+  width:145px;
+  max-width:70vw;
+  border:0;
+  border-bottom:2px solid var(--brand);
+  background:#eef5fa;
+  border-radius:10px 10px 0 0;
+  padding:5px 8px;
+  text-align:center;
+  outline:none;
+  color:var(--ink);
+}
+.feedback{
+  min-height:24px;
+  font-weight:800;
+}
+.feedback.good{color:var(--good)}
+.feedback.bad{color:var(--bad)}
+.feedback.warn{color:var(--warn)}
+.practice-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  margin-top:14px;
+}
+.match-area{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.match-list{display:grid;gap:8px}
+.match-item{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:15px;
+  padding:12px;
+  min-height:48px;
+}
+.match-item.active{border-color:var(--brand);background:var(--soft)}
+.match-item.done{opacity:.55;text-decoration:line-through}
+.import-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+textarea.field{min-height:160px;resize:vertical;line-height:1.55}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{border-bottom:1px solid var(--line);padding:12px 14px;text-align:left;vertical-align:top}
+th{background:#f7f5ef;color:#465063;font-size:.88rem}
+tr:last-child td{border-bottom:0}
+.empty-state{
+  border:1px dashed #c9c3b8;
+  background:#fff;
+  border-radius:20px;
+  padding:34px;
+  text-align:center;
+  color:var(--muted);
+}
+.small{font-size:.9rem;color:var(--muted)}
+.print-only{display:none}
+@media(max-width:860px){
+  .header-top,.flash-wrap,.import-grid{grid-template-columns:1fr;display:grid}
+  .hero-actions{justify-content:flex-start}
+  .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .toolbar{grid-template-columns:1fr}
+  .vocab-grid{grid-template-columns:1fr}
+  .flashcard{height:420px}
+  .options,.match-area{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+  .app-shell{padding:12px}
+  .hero{padding:20px;border-radius:24px}
+  .stats-grid{grid-template-columns:1fr}
+  .panel{padding:16px}
+  .tabs{position:static}
+  .tab,.btn{width:100%}
+  .flash-controls .btn{width:auto}
+}
+@media print{
+  body{background:#fff}
+  .tabs,.hero-actions,.toolbar,.flash-controls,.practice-actions,.side-panel,.import-grid{display:none!important}
+  .hero,.panel,.vocab-card,.exercise-card{box-shadow:none;border-color:#999}
+  .vocab-grid{grid-template-columns:1fr}
+  .print-only{display:block}
+}
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <header class="hero">
+    <div class="header-top">
+      <div class="title-block">
+        <h1>Arabic Self-Study Studio</h1>
+        <p>
+          A compact, self-contained vocabulary and practice app for Arabic learners.
+          It includes searchable vocabulary, flashcards, exercise checking, matching practice,
+          progress tracking, and JSON import/export for future lessons.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <button class="btn primary" id="startStudyBtn">Start study session</button>
+        <button class="btn ghost" id="printBtn">Print worksheet</button>
+      </div>
+    </div>
+    <div class="stats-grid" aria-label="Course statistics">
+      <div class="stat"><b id="statVocab">0</b><span>Vocabulary items</span></div>
+      <div class="stat"><b id="statExercises">0</b><span>Exercises</span></div>
+      <div class="stat"><b id="statMastered">0</b><span>Cards marked known</span></div>
+      <div class="stat"><b id="statScore">0%</b><span>Practice accuracy</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Main sections">
+    <button class="tab" data-tab="dashboard" aria-selected="true">Dashboard</button>
+    <button class="tab" data-tab="vocabulary">Vocabulary</button>
+    <button class="tab" data-tab="flashcards">Flashcards</button>
+    <button class="tab" data-tab="practice">Practice</button>
+    <button class="tab" data-tab="matching">Matching</button>
+    <button class="tab" data-tab="data">Data</button>
+  </nav>
+
+  <main>
+    <section id="tab-dashboard" class="tab-panel">
+      <div class="panel">
+        <h2>Study overview</h2>
+        <p>
+          Use the vocabulary section for controlled review, flashcards for active recall,
+          and practice for sentence-level production. Progress is stored locally in this browser only.
+        </p>
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:16px">
+          <div class="side-panel">
+            <h3>Recommended sequence</h3>
+            <p class="small">1. Read the vocabulary cards. 2. Review flashcards. 3. Complete practice exercises. 4. Use matching for quick recall.</p>
+          </div>
+          <div class="side-panel">
+            <h3>Arabic input checking</h3>
+            <p class="small">The checker accepts exact answers and also uses a forgiving Arabic comparison that ignores short vowels and tatweel.</p>
+          </div>
+          <div class="side-panel">
+            <h3>Teacher controls</h3>
+            <p class="small">The Data tab lets you paste or import JSON, export the current dataset, and reset saved progress.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Progress</h2>
+        <div class="meter" aria-label="Known cards progress"><span id="knownMeter"></span></div>
+        <p id="progressText" class="small">No progress yet.</p>
+        <div id="weakList" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:14px"></div>
+      </div>
+    </section>
+
+    <section id="tab-vocabulary" class="tab-panel" hidden>
+      <div class="panel">
+        <h2>Vocabulary</h2>
+        <p>Search by Arabic, English, Shami, or Egyptian Arabic. You can also filter by entries that include dialect forms.</p>
+        <div class="toolbar">
+          <input class="field" id="searchBox" placeholder="Search vocabulary..." aria-label="Search vocabulary">
+          <select class="field" id="dialectFilter" aria-label="Dialect filter">
+            <option value="all">All entries</option>
+            <option value="dialects">Entries with dialect forms</option>
+            <option value="shami">Has Shami</option>
+            <option value="masri">Has Egyptian</option>
+          </select>
+          <select class="field" id="sortMode" aria-label="Sort vocabulary">
+            <option value="original">Original order</option>
+            <option value="english">Sort by English</option>
+            <option value="arabic">Sort by Arabic</option>
+          </select>
+          <button class="btn" id="clearSearchBtn">Clear</button>
+        </div>
+      </div>
+      <div id="vocabGrid" class="grid vocab-grid"></div>
+    </section>
+
+    <section id="tab-flashcards" class="tab-panel" hidden>
+      <div class="flash-wrap">
+        <div class="panel flash-stage">
+          <div class="small" id="flashCounter">Card 1 of 1</div>
+          <div class="flashcard" id="flashCard" role="button" tabindex="0" aria-label="Flashcard. Press space to flip.">
+            <div class="flash-inner" id="flashInner">
+              <div class="face front">
+                <div class="small">Arabic</div>
+                <div class="fc-term ar" id="fcTerm"></div>
+                <div class="tags" id="fcDialectTags"></div>
+                <div class="small">Click or press <span class="kbd">Space</span> to flip</div>
+              </div>
+              <div class="face back">
+                <div class="small">Meaning</div>
+                <div class="fc-eng" id="fcEnglish"></div>
+                <div class="example" style="width:100%">
+                  <div class="ar" id="fcSentence"></div>
+                  <div class="trans" id="fcTranslation"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flash-controls">
+            <button class="btn" id="prevCardBtn">Previous</button>
+            <button class="btn primary" id="flipCardBtn">Flip</button>
+            <button class="btn" id="nextCardBtn">Next</button>
+            <button class="btn good" id="knownBtn">Mark known</button>
+            <button class="btn danger" id="needsWorkBtn">Needs work</button>
+          </div>
+          <p class="small">Keyboard: <span class="kbd">Space</span> flip, <span class="kbd">Left</span>/<span class="kbd">Right</span> move, <span class="kbd">K</span> known, <span class="kbd">N</span> needs work.</p>
+        </div>
+        <aside class="side-panel">
+          <h3>Flashcard status</h3>
+          <div class="progress-row"><span>Known</span><b id="knownCount">0</b></div>
+          <div class="progress-row"><span>Needs work</span><b id="needsWorkCount">0</b></div>
+          <div class="progress-row"><span>Unmarked</span><b id="unmarkedCount">0</b></div>
+          <div class="meter"><span id="flashMeter"></span></div>
+          <button class="btn" id="shuffleBtn" style="width:100%;margin-top:10px">Shuffle cards</button>
+          <button class="btn" id="studyWeakBtn" style="width:100%;margin-top:10px">Study needs-work cards</button>
+          <button class="btn" id="studyAllBtn" style="width:100%;margin-top:10px">Study all cards</button>
+        </aside>
+      </div>
+    </section>
+
+    <section id="tab-practice" class="tab-panel" hidden>
+      <div class="panel">
+        <h2>Sentence practice</h2>
+        <p>
+          Multiple-choice items can be answered by clicking. Open blanks require typing.
+          Use “Reveal” when you want a worksheet-style answer key.
+        </p>
+        <div class="toolbar" style="grid-template-columns:1fr auto auto auto">
+          <input class="field" id="exerciseSearch" placeholder="Search exercises..." aria-label="Search exercises">
+          <button class="btn good" id="checkAllBtn">Check all</button>
+          <button class="btn" id="revealAllBtn">Reveal all</button>
+          <button class="btn danger" id="resetPracticeBtn">Reset</button>
+        </div>
+      </div>
+      <div id="exerciseList"></div>
+    </section>
+
+    <section id="tab-matching" class="tab-panel" hidden>
+      <div class="panel">
+        <h2>Matching practice</h2>
+        <p>Select an Arabic term, then select its English meaning. The set refreshes with a sample of the vocabulary list.</p>
+        <div class="practice-actions" style="border-top:0;margin-top:0;padding-top:0">
+          <button class="btn primary" id="newMatchBtn">New set</button>
+          <span class="feedback" id="matchFeedback"></span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="match-area">
+          <div>
+            <h3>Arabic</h3>
+            <div id="matchArabic" class="match-list"></div>
+          </div>
+          <div>
+            <h3>English</h3>
+            <div id="matchEnglish" class="match-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-data" class="tab-panel" hidden>
+      <div class="panel">
+        <h2>Data tools</h2>
+        <p>
+          Import a lesson as JSON. Accepted shapes: an array of vocabulary items, an object with
+          <code>vocabularyData</code> and <code>exerciseData</code>, or an object with
+          <code>vocabulary</code> and <code>exercises</code>.
+        </p>
+        <div class="import-grid">
+          <div>
+            <h3>Paste JSON</h3>
+            <textarea class="field" id="jsonInput" spellcheck="false" placeholder='{"vocabularyData":[...],"exerciseData":[...]}'></textarea>
+            <div class="practice-actions">
+              <button class="btn primary" id="loadJsonBtn">Load pasted JSON</button>
+              <span class="feedback" id="jsonFeedback"></span>
+            </div>
+          </div>
+          <div>
+            <h3>Import or export</h3>
+            <input class="field" type="file" id="jsonFile" accept=".json,application/json">
+            <div style="display:grid;gap:10px;margin-top:12px">
+              <button class="btn" id="exportJsonBtn">Download current JSON</button>
+              <button class="btn danger" id="resetProgressBtn">Reset saved progress</button>
+              <button class="btn" id="restoreDefaultBtn">Restore default lesson</button>
+            </div>
+            <p class="small">The app is offline-ready because it does not rely on Tailwind, icon libraries, or external scripts.</p>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Current dataset preview</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Arabic</th><th>English</th><th>Example</th></tr></thead>
+            <tbody id="dataPreview"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+const DEFAULT_VOCAB = [
+  {
+    "id": 1,
+    "fusha": "اِسْتَأْجَرَ، يَسْتَأْجِر، الاِسْتِئْجار",
+    "shami": "يِستَأجِر",
+    "masri": "أَجَّر، يِأَجَّر",
+    "english": "to rent",
+    "sentenceFusha": "أريد أن أستأجر شقة جديدة.",
+    "sentenceTranslation": "I want to rent a new apartment."
+  },
+  {
+    "id": 2,
+    "fusha": "الإيجار",
+    "shami": "-",
+    "masri": "-",
+    "english": "rent",
+    "sentenceFusha": "الإيجار غالي جداً.",
+    "sentenceTranslation": "The rent is very expensive."
+  },
+  {
+    "id": 3,
+    "fusha": "أَم",
+    "shami": "-",
+    "masri": "-",
+    "english": "or (used in questions)",
+    "sentenceFusha": "هل تحب الشاي أم القهوة؟",
+    "sentenceTranslation": "Do you like tea or coffee?"
+  },
+  {
+    "id": 4,
+    "fusha": "إمّا ... أو",
+    "shami": "-",
+    "masri": "-",
+    "english": "either ... or",
+    "sentenceFusha": "سأذهب إما إلى السينما أو إلى المطعم.",
+    "sentenceTranslation": "I will go either to the cinema or to the restaurant."
+  },
+  {
+    "id": 5,
+    "fusha": "بَسيط/ة ج. بُسَطاء",
+    "shami": "ج. بُسَطا",
+    "masri": "ج. بُسَطا",
+    "english": "simple",
+    "sentenceFusha": "هذا الدرس بسيط جداً.",
+    "sentenceTranslation": "This lesson is very simple."
+  },
+  {
+    "id": 6,
+    "fusha": "تَحْت",
+    "shami": "-",
+    "masri": "-",
+    "english": "beneath, below",
+    "sentenceFusha": "القطة تحت الطاولة.",
+    "sentenceTranslation": "The cat is beneath the table."
+  },
+  {
+    "id": 7,
+    "fusha": "تَرَكَ ، يَتْرُك ، التَّرْك",
+    "shami": "يِترُك",
+    "masri": "ساب ، يِسيب",
+    "english": "to leave (someone or something)",
+    "sentenceFusha": "ترك عمله القديم.",
+    "sentenceTranslation": "He left his old job."
+  },
+  {
+    "id": 8,
+    "fusha": "جانِب ج. جَوانِب",
+    "shami": "جَنب (جَمب)",
+    "masri": "جَنب (جَمب)",
+    "english": "side",
+    "sentenceFusha": "انظر إلى الجانب الإيجابي.",
+    "sentenceTranslation": "Look at the positive side."
+  },
+  {
+    "id": 9,
+    "fusha": "بِجانِب",
+    "shami": "جَنب (جَمب)",
+    "masri": "جَنب (جَمب)",
+    "english": "next to, beside",
+    "sentenceFusha": "بيتي بجانب المسجد.",
+    "sentenceTranslation": "My house is next to the mosque."
+  },
+  {
+    "id": 10,
+    "fusha": "جيل ج. أَجْيال",
+    "shami": "-",
+    "masri": "-",
+    "english": "generation",
+    "sentenceFusha": "هذا جيل جديد.",
+    "sentenceTranslation": "This is a new generation."
+  },
+  {
+    "id": 11,
+    "fusha": "حَديقَة ج. حَدائِق",
+    "shami": "جنينة ج. جناين",
+    "masri": "جنينة ج. جناين",
+    "english": "garden, yard, park",
+    "sentenceFusha": "لدينا حديقة جميلة في بيتنا.",
+    "sentenceTranslation": "We have a beautiful garden in our house."
+  },
+  {
+    "id": 12,
+    "fusha": "حَديقَة عامَّة",
+    "shami": "-",
+    "masri": "-",
+    "english": "public park",
+    "sentenceFusha": "نلعب في الحديقة العامة.",
+    "sentenceTranslation": "We play in the public park."
+  },
+  {
+    "id": 13,
+    "fusha": "حَلّ ج. حُلول",
+    "shami": "-",
+    "masri": "-",
+    "english": "solution",
+    "sentenceFusha": "يجب أن نجد حلاً لهذه المشكلة.",
+    "sentenceTranslation": "We must find a solution to this problem."
+  },
+  {
+    "id": 14,
+    "fusha": "حَمّام ج. -ات",
+    "shami": "-",
+    "masri": "-",
+    "english": "bathroom, bath, bathhouse",
+    "sentenceFusha": "أين الحمام من فضلك؟",
+    "sentenceTranslation": "Where is the bathroom, please?"
+  },
+  {
+    "id": 15,
+    "fusha": "حَماة ج. حَمَوات",
+    "shami": "-",
+    "masri": "-",
+    "english": "mother-in-law",
+    "sentenceFusha": "حماتي امرأة طيبة.",
+    "sentenceTranslation": "My mother-in-law is a kind woman."
+  },
+  {
+    "id": 16,
+    "fusha": "خِلاف ج. -ات",
+    "shami": "-",
+    "masri": "-",
+    "english": "disagreement, dispute",
+    "sentenceFusha": "هناك خلاف بسيط بيننا.",
+    "sentenceTranslation": "There is a small disagreement between us."
+  },
+  {
+    "id": 17,
+    "fusha": "الرَّبّ ، رَبُّنا",
+    "shami": "-",
+    "masri": "-",
+    "english": "God, (our) Lord",
+    "sentenceFusha": "الرب يعلم كل شيء.",
+    "sentenceTranslation": "God knows everything."
+  },
+  {
+    "id": 18,
+    "fusha": "السُّفْرة",
+    "shami": "-",
+    "masri": "-",
+    "english": "dining (room)",
+    "sentenceFusha": "الأكل جاهز على السفرة.",
+    "sentenceTranslation": "The food is ready on the dining table."
+  },
+  {
+    "id": 19,
+    "fusha": "شَقَّة ج. شُقَق ، شِقَق",
+    "shami": "شِقَّة ج. شُقَق",
+    "masri": "شَقَّة ج. شُقَق",
+    "english": "apartment",
+    "sentenceFusha": "أسكن في شقة صغيرة.",
+    "sentenceTranslation": "I live in a small apartment."
+  },
+  {
+    "id": 20,
+    "fusha": "طَبَخَ ، يَطْبُخ ، الطَّبْخ",
+    "shami": "يِطبُخ",
+    "masri": "يُطبُخ",
+    "english": "to cook",
+    "sentenceFusha": "أمي تطبخ طعاماً لذيذاً.",
+    "sentenceTranslation": "My mother cooks delicious food."
+  },
+  {
+    "id": 21,
+    "fusha": "مَطبَخ ج. مَطابِخ",
+    "shami": "-",
+    "masri": "-",
+    "english": "kitchen",
+    "sentenceFusha": "المطبخ نظيف.",
+    "sentenceTranslation": "The kitchen is clean."
+  },
+  {
+    "id": 22,
+    "fusha": "طابِق ج. طَوابِق",
+    "shami": "-",
+    "masri": "دور ج. أدوار",
+    "english": "floor, story",
+    "sentenceFusha": "شقتي في الطابق الخامس.",
+    "sentenceTranslation": "My apartment is on the fifth floor."
+  },
+  {
+    "id": 23,
+    "fusha": "الطَّلاق",
+    "shami": "-",
+    "masri": "-",
+    "english": "divorce",
+    "sentenceFusha": "الطلاق قرار صعب.",
+    "sentenceTranslation": "Divorce is a difficult decision."
+  },
+  {
+    "id": 24,
+    "fusha": "أَعَدَّ ، يُعِدّ ، الإعْداد",
+    "shami": "جَهَّز ، يِجَهِّز",
+    "masri": "جَهَّز ، بِيِجَهِّز",
+    "english": "to prepare, get (something) ready",
+    "sentenceFusha": "أعدت الفطور لعائلتها.",
+    "sentenceTranslation": "She prepared breakfast for her family."
+  },
+  {
+    "id": 25,
+    "fusha": "عَدَم + مصدر",
+    "shami": "-",
+    "masri": "-",
+    "english": "non - (negates a مصدر)",
+    "sentenceFusha": "عدم الحضور مشكلة.",
+    "sentenceTranslation": "Non-attendance is a problem."
+  },
+  {
+    "id": 26,
+    "fusha": "فاضي/ة ج. -ين",
+    "shami": "فاضي/ة ج. -ين",
+    "masri": "فاضي/ة ج. -ين",
+    "english": "unoccupied, not busy",
+    "sentenceFusha": "هل أنت فاضي اليوم؟",
+    "sentenceTranslation": "Are you unoccupied today?"
+  },
+  {
+    "id": 27,
+    "fusha": "فَوْق",
+    "shami": "فوق",
+    "masri": "فوق",
+    "english": "above, upstairs",
+    "sentenceFusha": "السماء فوقنا.",
+    "sentenceTranslation": "The sky is above us."
+  },
+  {
+    "id": 28,
+    "fusha": "كَنيسَة ج. كَنائِس",
+    "shami": "كنيسة ج. كَنايس",
+    "masri": "كنيسة ج. كَنايس",
+    "english": "church",
+    "sentenceFusha": "الكنيسة القديمة جميلة.",
+    "sentenceTranslation": "The old church is beautiful."
+  },
+  {
+    "id": 29,
+    "fusha": "مَمْنوع",
+    "shami": "-",
+    "masri": "-",
+    "english": "forbidden",
+    "sentenceFusha": "التدخين ممنوع هنا.",
+    "sentenceTranslation": "Smoking is forbidden here."
+  },
+  {
+    "id": 30,
+    "fusha": "يَتَمَنّى (أَن)",
+    "shami": "بِيِتْمَنّى (إنّو)",
+    "masri": "بِيِتْمَنّى (إنّ)",
+    "english": "to hope, wish (for someone to)",
+    "sentenceFusha": "أتمنى أن تنجح.",
+    "sentenceTranslation": "I hope you succeed."
+  },
+  {
+    "id": 31,
+    "fusha": "اِنْتَقَلَ إلى ، يَنْتَقِل ، الاِنْتِقال",
+    "shami": "بِيِنتِقِل لَـ",
+    "masri": "اِتْنَقل لِـ ، يِتْنِقِل لِـ",
+    "english": "to move to",
+    "sentenceFusha": "انتقلنا إلى بيت جديد.",
+    "sentenceTranslation": "We moved to a new house."
+  },
+  {
+    "id": 32,
+    "fusha": "وَراء",
+    "shami": "وَرا",
+    "masri": "وَرا",
+    "english": "behind, in back of",
+    "sentenceFusha": "الحديقة وراء البيت.",
+    "sentenceTranslation": "The garden is behind the house."
+  }
+];
+const DEFAULT_EXERCISES = [
+  {
+    "id": 1,
+    "text": "معظم الناس أن يقضوا عطلتهم في الشغل، ولكن زوج أمي فعل ذلك عندما سافر مع الصليب الأحمر Red Cross إلى هايتي لمساعدة الناس هناك.",
+    "answer": "لا يتمنون",
+    "type": "fill-in",
+    "options": [
+      "لا يتمنون",
+      "أتمنى",
+      "يتمنى",
+      "تتمنين"
+    ]
+  },
+  {
+    "id": 2,
+    "text": "عندما كنت صغيرة، _______ أن أصبح دكتورة، وأخي صالح _______ أن يعمل في المسرح، أما أختي فدوى فـ _______ أن تصير ضابطة في الشرطة (البوليس)، ولكن كلّنا _______ أن نسكن في نفس البناية مع والدي ووالدتي.",
+    "answer": [
+      "كنت أتمنى",
+      "كان يتمنى",
+      "كانت تتمنى",
+      "كنا نتمنى"
+    ],
+    "type": "multi-fill",
+    "inputs": [
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  {
+    "id": 3,
+    "text": "أظن أن معظم الموظفين في الشركة _______ أن تفصل الشركة مديرهم لأنهم لا يحبونه.",
+    "answer": "يتمنون",
+    "type": "fill-in",
+    "options": [
+      "تتمنى",
+      "يتمنون",
+      "يتمنى",
+      "أتمنى"
+    ]
+  },
+  {
+    "id": 4,
+    "text": "يا شباب، ماذا _______ أن تعملوا في المستقبل؟",
+    "answer": "تتمنون",
+    "type": "fill-in",
+    "options": [
+      "يتمنون",
+      "تتمنين",
+      "تتمنون",
+      "أتمنى"
+    ]
+  },
+  {
+    "id": 5,
+    "text": "ما زالت خطيبتي، منذ طفولتها، _______ أن تزور جبال الألب في أوروبا.",
+    "answer": "تتمنى",
+    "type": "fill-in",
+    "options": [
+      "يتمنى",
+      "أتمنى",
+      "تتمنى",
+      "تتمنين"
+    ]
+  },
+  {
+    "id": 6,
+    "text": "أعرف أنكِ تحبينني و _______ لي السعادة والنجاح في حياتي.",
+    "answer": "تتمنين",
+    "type": "fill-in",
+    "options": [
+      "تتمنى",
+      "أتمنى",
+      "تتمنين",
+      "يتمنى"
+    ]
+  },
+  {
+    "id": 7,
+    "text": "كل صباح _______ الفطور لأولادي قبل ذهابهم الى المدرسة.",
+    "answer": "أُعِدّ",
+    "type": "fill-in",
+    "options": [
+      "أُعِدّ",
+      "يُعِدّ",
+      "تُعِدّ",
+      "نُعِدّ"
+    ]
+  },
+  {
+    "id": 8,
+    "text": "بعد أن تحصل على الماجستير في العلاقات الدولية _______ أختي أن تجد وظيفة في وزارة الخارجية _______ في الأمم المتحدة.",
+    "answer": [
+      "تتمنى",
+      "أو"
+    ],
+    "type": "multi-fill",
+    "inputs": [
+      "",
+      ""
+    ]
+  },
+  {
+    "id": 9,
+    "text": "أكبر مشكلة في هذه المنطقة هي _______ وجود أي مدارس أو مستشفيات فيها. ويتمنى سكان المنطقة أن تجد الحكومة _______اً لهذه المشكلة في المستقبل القريب.",
+    "answer": [
+      "عدم",
+      "حل"
+    ],
+    "type": "multi-fill",
+    "inputs": [
+      "",
+      ""
+    ]
+  },
+  {
+    "id": 10,
+    "text": "هذه هي البناية التي أسكن فيها في مدينة دبي. أسكن في _______ الخامس في _______ صغيرة فيها غرفة جلوس و _______ صغيرة للأكل والعمل و _______ صغير أطبخ فيه وغرفة نوم كبيرة، وفيها أيضاً بلكون صغير. البناية جميلة ومريحة ولكن مشكلتها الوحيدة هي أن _______ فيها غالٍ جداً (٢٠٠٠ دولار في الشهر!!).",
+    "answer": [
+      "الطابق",
+      "شقة",
+      "سفرة",
+      "مطبخ",
+      "الإيجار"
+    ],
+    "type": "multi-fill",
+    "inputs": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  {
+    "id": 11,
+    "text": "هذه واحدة من _______ القديمة الموجودة في مدينة دمشق.",
+    "answer": "الكنائس",
+    "type": "fill-in",
+    "options": [
+      "الحدائق",
+      "الشقق",
+      "الكنائس",
+      "الأجيال"
+    ]
+  },
+  {
+    "id": 12,
+    "text": "كانت تفكّر في الزواج منه ولكنها أخيراً قررت أن _______ له بسبب المشاكل و _______ الكثيرة بينها وبينه.",
+    "answer": [
+      "تتركه",
+      "الخلافات"
+    ],
+    "type": "multi-fill",
+    "inputs": [
+      "",
+      ""
+    ]
+  },
+  {
+    "id": 13,
+    "text": "في هذه الصورة نشاهد البنت والولد _______ الشجرة، والطائر _______ها، والكلب _______ها، والرجل _______ها.",
+    "answer": [
+      "تحت",
+      "فوق",
+      "بجانب",
+      "وراء"
+    ],
+    "type": "multi-fill",
+    "inputs": [
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  {
+    "id": 14,
+    "text": "عندما علمت بأن زوجها كان على علاقة بامرأة أخرى قالت له بأنها تريد _______ منه.",
+    "answer": "الطلاق",
+    "type": "fill-in",
+    "options": [
+      "الزواج",
+      "الطلاق",
+      "الحل",
+      "الإيجار"
+    ]
+  },
+  {
+    "id": 15,
+    "text": "كلمة _______ لها نفس معنى كلمة 'الله'.",
+    "answer": "الرب",
+    "type": "fill-in",
+    "options": [
+      "الجيل",
+      "الجانب",
+      "الرب",
+      "المصدر"
+    ]
+  },
+  {
+    "id": 16,
+    "text": "لا أفهم كيف يفكر شباب _______ الجديد!! هم يريدون كل شيء ويريدونه بسرعة!! في أيام شبابي كانت الحياة _______ جداً وما كان عندنا كل الأشياء التي عندهم ولكننا كنا سعداء.",
+    "answer": [
+      "الجيل",
+      "بسيطة"
+    ],
+    "type": "multi-fill",
+    "inputs": [
+      "",
+      ""
+    ]
+  },
+  {
+    "id": 17,
+    "text": "_______ في كل الأماكن التي نشاهد فيها (صورة ممنوع التدخين).",
+    "answer": "التدخين ممنوع",
+    "type": "fill-in",
+    "options": [
+      "الكلام ممنوع",
+      "الأكل ممنوع",
+      "التدخين ممنوع",
+      "الدخول ممنوع"
+    ]
+  }
+];
+
+let vocabularyData = structuredClone(DEFAULT_VOCAB);
+let exerciseData = structuredClone(DEFAULT_EXERCISES);
+
+const STORE_KEY = "arabicSelfStudyStudio.v1";
+let state = {
+  tab:"dashboard",
+  cardIndex:0,
+  flipped:false,
+  cardOrder:[],
+  statuses:{},
+  exerciseAnswers:{},
+  exerciseResults:{},
+  matchSet:[],
+  matchLeft:null,
+  matchDone:[]
+};
+
+function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
+function $(id){ return document.getElementById(id); }
+function qsa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+
+function loadState(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || "{}");
+    state = {...state, ...saved, flipped:false, matchLeft:null};
+  }catch(e){}
+  if(!Array.isArray(state.cardOrder) || state.cardOrder.length !== vocabularyData.length){
+    state.cardOrder = vocabularyData.map((_,i)=>i);
+  }
+}
+function saveState(){
+  localStorage.setItem(STORE_KEY, JSON.stringify({
+    tab:state.tab,
+    cardIndex:state.cardIndex,
+    cardOrder:state.cardOrder,
+    statuses:state.statuses,
+    exerciseAnswers:state.exerciseAnswers,
+    exerciseResults:state.exerciseResults
+  }));
+}
+function normalizeArabic(value){
+  return String(value || "")
+    .trim()
+    .replace(/[ًٌٍَُِّْٰـ]/g,"")
+    .replace(/[إأآا]/g,"ا")
+    .replace(/ى/g,"ي")
+    .replace(/[ؤ]/g,"و")
+    .replace(/[ئ]/g,"ي")
+    .replace(/\s+/g," ");
+}
+function softEqual(a,b){
+  return normalizeArabic(a) === normalizeArabic(b);
+}
+function stripHTML(s){
+  return String(s || "").replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function hasDialect(item, key){
+  return item[key] && item[key] !== "-";
+}
+function computeCategory(item){
+  const e = (item.english || "").toLowerCase();
+  if(/rent|apartment|floor|bathroom|kitchen|dining|garden|park|church|above|behind|beside|side|below/.test(e)) return "home and places";
+  if(/^to |prepare|cook|leave|move|hope|wish/.test(e)) return "verbs";
+  if(/mother|divorce|disagreement|generation/.test(e)) return "family and society";
+  if(/or|either|non|forbidden|solution|simple|god/.test(e)) return "grammar and abstract";
+  return "general";
+}
+function switchTab(tab){
+  state.tab = tab;
+  qsa(".tab").forEach(btn => btn.setAttribute("aria-selected", String(btn.dataset.tab === tab)));
+  qsa(".tab-panel").forEach(panel => panel.hidden = panel.id !== "tab-" + tab);
+  if(tab === "flashcards") renderFlashcard();
+  if(tab === "practice") renderExercises();
+  if(tab === "matching") renderMatching();
+  if(tab === "data") renderDataPreview();
+  saveState();
+}
+function updateStats(){
+  $("statVocab").textContent = vocabularyData.length;
+  $("statExercises").textContent = exerciseData.length;
+  const known = Object.values(state.statuses).filter(v => v === "known").length;
+  const needs = Object.values(state.statuses).filter(v => v === "needs-work").length;
+  const checked = Object.values(state.exerciseResults);
+  const correct = checked.filter(Boolean).length;
+  const pct = checked.length ? Math.round((correct / checked.length) * 100) : 0;
+  $("statMastered").textContent = known;
+  $("statScore").textContent = pct + "%";
+  $("knownCount").textContent = known;
+  $("needsWorkCount").textContent = needs;
+  $("unmarkedCount").textContent = Math.max(0, vocabularyData.length - known - needs);
+  const knownPct = vocabularyData.length ? Math.round((known / vocabularyData.length) * 100) : 0;
+  $("knownMeter").style.width = knownPct + "%";
+  $("flashMeter").style.width = knownPct + "%";
+  $("progressText").textContent = knownPct
+    ? `${knownPct}% of cards are marked known. ${needs} card(s) still need work.`
+    : "No cards have been marked known yet.";
+  renderWeakList();
+}
+function renderWeakList(){
+  const box = $("weakList");
+  const needs = vocabularyData.filter(item => state.statuses[item.id] === "needs-work").slice(0,6);
+  if(!needs.length){
+    box.innerHTML = `<div class="empty-state">Cards marked “needs work” will appear here.</div>`;
+    return;
+  }
+  box.innerHTML = needs.map(item => `
+    <div class="vocab-card">
+      <div class="ar ar-term">${stripHTML(item.fusha)}</div>
+      <div class="en-term">${stripHTML(item.english)}</div>
+      <div class="example"><div class="ar">${stripHTML(item.sentenceFusha)}</div><div class="trans">${stripHTML(item.sentenceTranslation)}</div></div>
+    </div>
+  `).join("");
+}
+function renderVocabulary(){
+  const query = normalizeArabic($("searchBox").value).toLowerCase();
+  const filter = $("dialectFilter").value;
+  const sortMode = $("sortMode").value;
+  let items = vocabularyData.map((item,idx)=>({...item,_idx:idx,_cat:computeCategory(item)}));
+
+  items = items.filter(item => {
+    const combined = normalizeArabic([item.fusha,item.shami,item.masri,item.english,item.sentenceFusha,item.sentenceTranslation,item._cat].join(" ")).toLowerCase();
+    const queryOk = !query || combined.includes(query);
+    let filterOk = true;
+    if(filter === "dialects") filterOk = hasDialect(item,"shami") || hasDialect(item,"masri");
+    if(filter === "shami") filterOk = hasDialect(item,"shami");
+    if(filter === "masri") filterOk = hasDialect(item,"masri");
+    return queryOk && filterOk;
+  });
+
+  if(sortMode === "english") items.sort((a,b)=>String(a.english).localeCompare(String(b.english)));
+  if(sortMode === "arabic") items.sort((a,b)=>String(a.fusha).localeCompare(String(b.fusha),"ar"));
+
+  $("vocabGrid").innerHTML = items.length ? items.map(item => `
+    <article class="vocab-card">
+      <div class="vocab-head">
+        <div class="ar" style="text-align:right">
+          <div class="ar-term">${stripHTML(item.fusha)}</div>
+          <div class="tags">
+            <span class="tag">${stripHTML(item._cat)}</span>
+            ${hasDialect(item,"shami") ? `<span class="tag shami">Shami: <span class="ar">${stripHTML(item.shami)}</span></span>` : ""}
+            ${hasDialect(item,"masri") ? `<span class="tag masri">Egyptian: <span class="ar">${stripHTML(item.masri)}</span></span>` : ""}
+          </div>
+        </div>
+        <div class="en-term">${stripHTML(item.english)}</div>
+      </div>
+      <div class="example">
+        <div class="ar">${stripHTML(item.sentenceFusha)}</div>
+        <div class="trans">${stripHTML(item.sentenceTranslation)}</div>
+      </div>
+      <div class="practice-actions">
+        <button class="btn" onclick="jumpToCard(${item._idx})">Study card</button>
+        <span class="small">#${item.id}</span>
+      </div>
+    </article>
+  `).join("") : `<div class="empty-state">No vocabulary items match the current search.</div>`;
+}
+function currentCard(){
+  if(!state.cardOrder.length) state.cardOrder = vocabularyData.map((_,i)=>i);
+  state.cardIndex = Math.max(0, Math.min(state.cardIndex, state.cardOrder.length - 1));
+  return vocabularyData[state.cardOrder[state.cardIndex]];
+}
+function renderFlashcard(){
+  const item = currentCard();
+  if(!item){
+    $("fcTerm").textContent = "";
+    $("fcEnglish").textContent = "";
+    $("flashCounter").textContent = "No cards";
+    return;
+  }
+  $("flashCounter").textContent = `Card ${state.cardIndex + 1} of ${state.cardOrder.length}`;
+  $("fcTerm").textContent = item.fusha;
+  $("fcEnglish").textContent = item.english;
+  $("fcSentence").textContent = item.sentenceFusha;
+  $("fcTranslation").textContent = item.sentenceTranslation;
+  $("fcDialectTags").innerHTML = `
+    ${hasDialect(item,"shami") ? `<span class="tag shami">Shami: <span class="ar">${stripHTML(item.shami)}</span></span>` : ""}
+    ${hasDialect(item,"masri") ? `<span class="tag masri">Egyptian: <span class="ar">${stripHTML(item.masri)}</span></span>` : ""}
+  `;
+  $("flashInner").classList.toggle("flipped", state.flipped);
+  updateStats();
+}
+function flipCard(){
+  state.flipped = !state.flipped;
+  renderFlashcard();
+}
+function nextCard(){
+  state.flipped = false;
+  state.cardIndex = (state.cardIndex + 1) % Math.max(1,state.cardOrder.length);
+  renderFlashcard();
+  saveState();
+}
+function prevCard(){
+  state.flipped = false;
+  state.cardIndex = (state.cardIndex - 1 + Math.max(1,state.cardOrder.length)) % Math.max(1,state.cardOrder.length);
+  renderFlashcard();
+  saveState();
+}
+function jumpToCard(originalIndex){
+  state.cardOrder = vocabularyData.map((_,i)=>i);
+  state.cardIndex = originalIndex;
+  state.flipped = false;
+  switchTab("flashcards");
+}
+function markCard(status){
+  const item = currentCard();
+  if(item){
+    state.statuses[item.id] = status;
+    nextCard();
+  }
+  updateStats();
+  saveState();
+}
+function shuffleCards(){
+  const arr = vocabularyData.map((_,i)=>i);
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  state.cardOrder = arr;
+  state.cardIndex = 0;
+  state.flipped = false;
+  renderFlashcard();
+  saveState();
+}
+function studyNeedsWork(){
+  const arr = vocabularyData.map((item,i)=>state.statuses[item.id] === "needs-work" ? i : null).filter(v=>v !== null);
+  state.cardOrder = arr.length ? arr : vocabularyData.map((_,i)=>i);
+  state.cardIndex = 0;
+  state.flipped = false;
+  renderFlashcard();
+  saveState();
+}
+function studyAll(){
+  state.cardOrder = vocabularyData.map((_,i)=>i);
+  state.cardIndex = 0;
+  state.flipped = false;
+  renderFlashcard();
+  saveState();
+}
+function renderExercises(){
+  const query = normalizeArabic($("exerciseSearch").value).toLowerCase();
+  const items = exerciseData.filter(ex => !query || normalizeArabic([ex.text, Array.isArray(ex.answer)?ex.answer.join(" "):ex.answer].join(" ")).toLowerCase().includes(query));
+  $("exerciseList").innerHTML = items.length ? items.map(ex => exerciseHTML(ex)).join("") : `<div class="empty-state">No exercises match the current search.</div>`;
+  restoreExerciseInputs();
+}
+function sentenceWithBlanks(ex){
+  const parts = String(ex.text).split("_______");
+  return parts.map((part,i)=>{
+    if(i === parts.length - 1) return stripHTML(part);
+    if(ex.type === "multi-fill"){
+      return `${stripHTML(part)}<input class="inline-input ar" dir="rtl" data-ex="${ex.id}" data-i="${i}" aria-label="Blank ${i+1} for exercise ${ex.id}">`;
+    }
+    return `${stripHTML(part)}<span class="blank">blank</span>`;
+  }).join("");
+}
+function exerciseHTML(ex){
+  const result = state.exerciseResults[ex.id];
+  const feedbackClass = result === true ? "good" : result === false ? "bad" : "";
+  const feedbackText = result === true ? "Correct." : result === false ? "Not correct yet." : "";
+  let answerArea = "";
+  if(ex.type === "fill-in"){
+    answerArea = `<div class="options" id="options-${ex.id}">${(ex.options || []).map(opt => `
+      <button class="option ar" dir="rtl" data-ex="${ex.id}" data-value="${stripHTML(opt)}" onclick="selectExerciseOption(${ex.id}, this)">${stripHTML(opt)}</button>
+    `).join("")}</div>`;
+  }
+  return `
+    <article class="exercise-card" id="exercise-${ex.id}">
+      <div class="exercise-top">
+        <span class="badge">Exercise ${ex.id}</span>
+        <span class="feedback ${feedbackClass}" id="feedback-${ex.id}">${feedbackText}</span>
+      </div>
+      <p class="sentence ar" dir="rtl">${sentenceWithBlanks(ex)}</p>
+      ${answerArea}
+      <div class="practice-actions">
+        <div>
+          <button class="btn good" onclick="checkExercise(${ex.id})">Check</button>
+          <button class="btn" onclick="revealExercise(${ex.id})">Reveal</button>
+        </div>
+        <span class="small" id="answer-${ex.id}" hidden></span>
+      </div>
+    </article>
+  `;
+}
+function restoreExerciseInputs(){
+  Object.entries(state.exerciseAnswers).forEach(([id,val])=>{
+    const ex = exerciseData.find(e => String(e.id) === String(id));
+    if(!ex) return;
+    if(ex.type === "fill-in"){
+      qsa(`#options-${id} .option`).forEach(btn => {
+        btn.classList.toggle("selected", btn.dataset.value === val);
+      });
+    }else{
+      const vals = Array.isArray(val) ? val : [];
+      qsa(`input[data-ex="${id}"]`).forEach(inp => {
+        inp.value = vals[Number(inp.dataset.i)] || "";
+        inp.addEventListener("input", () => saveMultiInput(id));
+      });
+    }
+  });
+  qsa(".inline-input").forEach(inp => {
+    inp.addEventListener("input", () => saveMultiInput(inp.dataset.ex));
+  });
+}
+function saveMultiInput(exId){
+  const vals = qsa(`input[data-ex="${exId}"]`).map(inp => inp.value.trim());
+  state.exerciseAnswers[exId] = vals;
+  saveState();
+}
+function selectExerciseOption(exId, btn){
+  qsa(`#options-${exId} .option`).forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+  state.exerciseAnswers[exId] = btn.dataset.value;
+  $(`feedback-${exId}`).textContent = "";
+  $(`feedback-${exId}`).className = "feedback";
+  saveState();
+}
+function checkExercise(exId){
+  const ex = exerciseData.find(e => Number(e.id) === Number(exId));
+  if(!ex) return false;
+  let correct = false;
+  let answered = true;
+  if(ex.type === "fill-in"){
+    const selected = document.querySelector(`#options-${exId} .option.selected`);
+    if(!selected) answered = false;
+    else correct = softEqual(selected.dataset.value, ex.answer);
+  }else{
+    const vals = qsa(`input[data-ex="${exId}"]`).map(inp => inp.value.trim());
+    if(vals.some(v => !v)) answered = false;
+    else correct = Array.isArray(ex.answer) && vals.length === ex.answer.length && vals.every((v,i)=>softEqual(v, ex.answer[i]));
+    state.exerciseAnswers[exId] = vals;
+  }
+  const fb = $(`feedback-${exId}`);
+  if(!answered){
+    fb.textContent = "Please answer all blanks.";
+    fb.className = "feedback warn";
+    return false;
+  }
+  state.exerciseResults[exId] = correct;
+  fb.textContent = correct ? "Correct." : "Not correct yet.";
+  fb.className = "feedback " + (correct ? "good" : "bad");
+  updateStats();
+  saveState();
+  return correct;
+}
+function revealExercise(exId){
+  const ex = exerciseData.find(e => Number(e.id) === Number(exId));
+  const ans = $(`answer-${exId}`);
+  const answerText = Array.isArray(ex.answer) ? ex.answer.join(" / ") : ex.answer;
+  ans.innerHTML = `<b>Answer:</b> <span class="ar" dir="rtl">${stripHTML(answerText)}</span>`;
+  ans.hidden = false;
+}
+function checkAllExercises(){
+  exerciseData.forEach(ex => checkExercise(ex.id));
+}
+function revealAllExercises(){
+  exerciseData.forEach(ex => revealExercise(ex.id));
+}
+function resetPractice(){
+  state.exerciseAnswers = {};
+  state.exerciseResults = {};
+  renderExercises();
+  updateStats();
+  saveState();
+}
+function newMatchSet(){
+  const pool = clone(vocabularyData);
+  for(let i=pool.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [pool[i],pool[j]]=[pool[j],pool[i]];
+  }
+  state.matchSet = pool.slice(0, Math.min(10,pool.length)).map(item => item.id);
+  state.matchLeft = null;
+  state.matchDone = [];
+  renderMatching();
+}
+function renderMatching(){
+  if(!state.matchSet.length) newMatchSet();
+  const items = state.matchSet.map(id => vocabularyData.find(v => v.id === id)).filter(Boolean);
+  const shuffledEnglish = clone(items);
+  for(let i=shuffledEnglish.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [shuffledEnglish[i],shuffledEnglish[j]]=[shuffledEnglish[j],shuffledEnglish[i]];
+  }
+  $("matchArabic").innerHTML = items.map(item => `
+    <button class="match-item ar ${state.matchDone.includes(item.id) ? "done" : ""} ${state.matchLeft === item.id ? "active" : ""}" dir="rtl" data-id="${item.id}" onclick="selectMatchLeft(${item.id})">${stripHTML(item.fusha)}</button>
+  `).join("");
+  $("matchEnglish").innerHTML = shuffledEnglish.map(item => `
+    <button class="match-item ${state.matchDone.includes(item.id) ? "done" : ""}" data-id="${item.id}" onclick="selectMatchRight(${item.id})">${stripHTML(item.english)}</button>
+  `).join("");
+  if(state.matchDone.length === state.matchSet.length){
+    $("matchFeedback").textContent = "Set complete.";
+    $("matchFeedback").className = "feedback good";
+  }
+}
+function selectMatchLeft(id){
+  if(state.matchDone.includes(id)) return;
+  state.matchLeft = id;
+  $("matchFeedback").textContent = "";
+  renderMatching();
+}
+function selectMatchRight(id){
+  if(!state.matchLeft || state.matchDone.includes(id)) return;
+  if(state.matchLeft === id){
+    state.matchDone.push(id);
+    state.matchLeft = null;
+    $("matchFeedback").textContent = "Correct.";
+    $("matchFeedback").className = "feedback good";
+  }else{
+    $("matchFeedback").textContent = "Try again.";
+    $("matchFeedback").className = "feedback bad";
+  }
+  renderMatching();
+}
+function parseLessonJSON(raw){
+  let data;
+  try{
+    data = JSON.parse(raw);
+  }catch(e){
+    const lightlyFixed = raw
+      .replace(/,\s*([}\]])/g,"$1")
+      .replace(/([{,]\s*)([A-Za-z_$][\w$]*)\s*:/g,'$1"$2":');
+    data = JSON.parse(lightlyFixed);
+  }
+  let vocab = null, exercises = null;
+  if(Array.isArray(data)) vocab = data;
+  if(data && Array.isArray(data.vocabularyData)) vocab = data.vocabularyData;
+  if(data && Array.isArray(data.vocabulary)) vocab = data.vocabulary;
+  if(data && Array.isArray(data.exerciseData)) exercises = data.exerciseData;
+  if(data && Array.isArray(data.exercises)) exercises = data.exercises;
+  if(!vocab && !exercises) throw new Error("No vocabulary or exercise arrays were found.");
+  return {vocab, exercises};
+}
+function validateVocab(items){
+  return items.map((item,i)=>({
+    id:item.id ?? i+1,
+    fusha:item.fusha ?? item.arabic ?? item.term ?? "",
+    shami:item.shami ?? "-",
+    masri:item.masri ?? item.egyptian ?? "-",
+    english:item.english ?? item.meaning ?? "",
+    sentenceFusha:item.sentenceFusha ?? item.exampleArabic ?? item.example ?? "",
+    sentenceTranslation:item.sentenceTranslation ?? item.exampleEnglish ?? item.translation ?? ""
+  })).filter(item => item.fusha || item.english);
+}
+function loadLesson(raw){
+  const parsed = parseLessonJSON(raw);
+  if(parsed.vocab) vocabularyData = validateVocab(parsed.vocab);
+  if(parsed.exercises) exerciseData = parsed.exercises.map((ex,i)=>({...ex, id:ex.id ?? i+1}));
+  state.cardOrder = vocabularyData.map((_,i)=>i);
+  state.cardIndex = 0;
+  state.flipped = false;
+  state.statuses = {};
+  state.exerciseAnswers = {};
+  state.exerciseResults = {};
+  state.matchSet = [];
+  renderAll();
+  saveState();
+}
+function exportJSON(){
+  const blob = new Blob([JSON.stringify({vocabularyData, exerciseData}, null, 2)], {type:"application/json;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "arabic-self-study-lesson.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+function renderDataPreview(){
+  $("dataPreview").innerHTML = vocabularyData.map((item,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td class="ar" dir="rtl">${stripHTML(item.fusha)}</td>
+      <td>${stripHTML(item.english)}</td>
+      <td><span class="ar" dir="rtl">${stripHTML(item.sentenceFusha)}</span><br><span class="small">${stripHTML(item.sentenceTranslation)}</span></td>
+    </tr>
+  `).join("");
+}
+function renderAll(){
+  renderVocabulary();
+  renderFlashcard();
+  renderExercises();
+  renderDataPreview();
+  updateStats();
+}
+function bindEvents(){
+  qsa(".tab").forEach(btn => btn.addEventListener("click",()=>switchTab(btn.dataset.tab)));
+  $("startStudyBtn").addEventListener("click",()=>switchTab("flashcards"));
+  $("printBtn").addEventListener("click",()=>window.print());
+  ["searchBox","dialectFilter","sortMode"].forEach(id => $(id).addEventListener("input",renderVocabulary));
+  $("clearSearchBtn").addEventListener("click",()=>{ $("searchBox").value=""; $("dialectFilter").value="all"; $("sortMode").value="original"; renderVocabulary(); });
+  $("flashCard").addEventListener("click",flipCard);
+  $("flashCard").addEventListener("keydown",e => { if(e.code === "Space"){ e.preventDefault(); flipCard(); }});
+  $("flipCardBtn").addEventListener("click",flipCard);
+  $("nextCardBtn").addEventListener("click",nextCard);
+  $("prevCardBtn").addEventListener("click",prevCard);
+  $("knownBtn").addEventListener("click",()=>markCard("known"));
+  $("needsWorkBtn").addEventListener("click",()=>markCard("needs-work"));
+  $("shuffleBtn").addEventListener("click",shuffleCards);
+  $("studyWeakBtn").addEventListener("click",studyNeedsWork);
+  $("studyAllBtn").addEventListener("click",studyAll);
+  $("exerciseSearch").addEventListener("input",renderExercises);
+  $("checkAllBtn").addEventListener("click",checkAllExercises);
+  $("revealAllBtn").addEventListener("click",revealAllExercises);
+  $("resetPracticeBtn").addEventListener("click",resetPractice);
+  $("newMatchBtn").addEventListener("click",newMatchSet);
+  $("loadJsonBtn").addEventListener("click",()=>{
+    try{
+      loadLesson($("jsonInput").value);
+      $("jsonFeedback").textContent = "Loaded.";
+      $("jsonFeedback").className = "feedback good";
+    }catch(e){
+      $("jsonFeedback").textContent = e.message;
+      $("jsonFeedback").className = "feedback bad";
+    }
+  });
+  $("jsonFile").addEventListener("change", async e => {
+    const file = e.target.files && e.target.files[0];
+    if(!file) return;
+    try{
+      loadLesson(await file.text());
+      $("jsonFeedback").textContent = "File loaded.";
+      $("jsonFeedback").className = "feedback good";
+    }catch(err){
+      $("jsonFeedback").textContent = err.message;
+      $("jsonFeedback").className = "feedback bad";
+    }
+  });
+  $("exportJsonBtn").addEventListener("click",exportJSON);
+  $("resetProgressBtn").addEventListener("click",()=>{
+    state.statuses = {};
+    state.exerciseAnswers = {};
+    state.exerciseResults = {};
+    updateStats();
+    renderExercises();
+    saveState();
+  });
+  $("restoreDefaultBtn").addEventListener("click",()=>{
+    vocabularyData = clone(DEFAULT_VOCAB);
+    exerciseData = clone(DEFAULT_EXERCISES);
+    state.cardOrder = vocabularyData.map((_,i)=>i);
+    state.cardIndex = 0;
+    state.statuses = {};
+    state.exerciseAnswers = {};
+    state.exerciseResults = {};
+    state.matchSet = [];
+    renderAll();
+    saveState();
+  });
+  document.addEventListener("keydown", e => {
+    if(state.tab !== "flashcards" || /input|textarea|select/i.test(document.activeElement.tagName)) return;
+    if(e.code === "Space"){ e.preventDefault(); flipCard(); }
+    if(e.key === "ArrowRight") nextCard();
+    if(e.key === "ArrowLeft") prevCard();
+    if(e.key.toLowerCase() === "k") markCard("known");
+    if(e.key.toLowerCase() === "n") markCard("needs-work");
+  });
+}
+function init(){
+  loadState();
+  bindEvents();
+  renderAll();
+  switchTab(state.tab || "dashboard");
+}
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
