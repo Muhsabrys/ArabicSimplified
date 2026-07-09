@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>الجملة الاسمية: الخبر المقدَّم لوصف الأماكن</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #f4f6f8;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+    line-height: 1.7;
+  }
+
+  .page {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #1f3a5f, #3f6f9f);
+    color: white;
+    padding: 32px;
+    border-radius: 18px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    direction: rtl;
+    text-align: right;
+  }
+
+  .hero p {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  }
+
+  h2 {
+    margin-top: 0;
+    color: #1f3a5f;
+    border-bottom: 2px solid #d9e5f2;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #294c78;
+    margin-top: 22px;
+  }
+
+  .en {
+    direction: ltr;
+    text-align: left;
+  }
+
+  .ar {
+    direction: rtl;
+    text-align: right;
+    font-size: 22px;
+    font-family: "Arial", "Tahoma", sans-serif;
+  }
+
+  .small-ar {
+    direction: rtl;
+    text-align: right;
+    font-size: 19px;
+  }
+
+  .rule-box {
+    background: #eef5ff;
+    border-right: 6px solid #2f5f9f;
+    padding: 18px;
+    border-radius: 12px;
+    margin: 18px 0;
+  }
+
+  .pattern {
+    background: #fff7e6;
+    border: 1px solid #f1d59b;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 18px 0;
+    text-align: center;
+    font-size: 24px;
+    direction: rtl;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 15px;
+    margin: 3px;
+    background: #e8eef7;
+    color: #1f3a5f;
+    font-weight: bold;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    background: white;
+  }
+
+  th {
+    background: #1f3a5f;
+    color: white;
+    padding: 12px;
+    border: 1px solid #d9e5f2;
+  }
+
+  td {
+    padding: 12px;
+    border: 1px solid #d9e5f2;
+    vertical-align: top;
+  }
+
+  .rtl-table th,
+  .rtl-table td {
+    direction: rtl;
+    text-align: right;
+    font-size: 19px;
+  }
+
+  .example {
+    background: #f8fbff;
+    border: 1px solid #d9e5f2;
+    padding: 14px;
+    border-radius: 12px;
+    margin: 10px 0;
+  }
+
+  .answer-space {
+    width: 95%;
+    padding: 10px;
+    margin: 6px 0;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    font-size: 18px;
+    direction: rtl;
+    text-align: right;
+  }
+
+  textarea {
+    width: 96%;
+    min-height: 110px;
+    padding: 12px;
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    font-size: 18px;
+    direction: rtl;
+    text-align: right;
+    font-family: Arial, Tahoma, sans-serif;
+  }
+
+  details {
+    background: #f7f9fc;
+    border: 1px solid #d8e1ee;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 12px;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #1f3a5f;
+  }
+
+  .word-bank {
+    background: #f9fafb;
+    border: 1px dashed #9aa9bb;
+    border-radius: 12px;
+    padding: 14px;
+    margin: 14px 0;
+  }
+
+  .word-bank span {
+    display: inline-block;
+    background: #ffffff;
+    border: 1px solid #d4dce8;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin: 5px;
+    direction: rtl;
+    font-size: 18px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .mini-card {
+    background: #fafafa;
+    border: 1px solid #dde5ef;
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .note {
+    background: #fff3f3;
+    border-right: 6px solid #b23b3b;
+    padding: 14px;
+    border-radius: 12px;
+    margin: 16px 0;
+  }
+
+  .student-task {
+    background: #f0fff6;
+    border-right: 6px solid #2e8b57;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 800px) {
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+    }
+
+    .ar {
+      font-size: 20px;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <div class="hero">
+    <h1>الجملة الاسمية: الخبر المقدَّم لوصف الأماكن</h1>
+    <p class="en">Lesson focus: using fronted predicates to describe places in Arabic.</p>
+  </div>
+
+  <div class="card">
+    <h2>1. Lesson Goal</h2>
+    <p class="en">
+      In this lesson, you will learn how to describe places in Arabic by saying what exists in them.
+      This structure is very common when describing a house, an apartment, a classroom, a campus, a city, or a neighborhood.
+    </p>
+
+    <div class="rule-box">
+      <p class="en"><strong>Main idea:</strong> When Arabic describes what exists in a place, the sentence often begins with the place expression.</p>
+      <div class="pattern">
+        في + المكان + اسم
+        <br>
+        <span style="font-size:18px;">In / at a place + there is / there are something</span>
+      </div>
+      <p class="ar"><strong>في البيتِ غرفةٌ كبيرةٌ.</strong></p>
+      <p class="en">There is a big room in the house.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2. Grammar Explanation</h2>
+
+    <p class="en">
+      A normal nominal sentence often begins with the subject:
+    </p>
+
+    <div class="example">
+      <p class="ar"><strong>الغرفةُ كبيرةٌ.</strong></p>
+      <p class="en">The room is big.</p>
+    </div>
+
+    <p class="en">
+      But when we want to describe a place, we often begin with the place expression:
+    </p>
+
+    <div class="example">
+      <p class="ar"><strong>في البيتِ غرفةٌ كبيرةٌ.</strong></p>
+      <p class="en">In the house, there is a big room.</p>
+    </div>
+
+    <table class="rtl-table">
+      <tr>
+        <th>الجزء</th>
+        <th>الوظيفة</th>
+        <th>الشرح</th>
+      </tr>
+      <tr>
+        <td>في البيتِ</td>
+        <td>الخبر المقدَّم</td>
+        <td>جاء في بداية الجملة، ويخبرنا عن المكان.</td>
+      </tr>
+      <tr>
+        <td>غرفةٌ كبيرةٌ</td>
+        <td>المبتدأ المؤخَّر</td>
+        <td>الشيء الموجود في المكان.</td>
+      </tr>
+    </table>
+
+    <div class="note">
+      <p class="en"><strong>Important:</strong> In English, this often sounds like “There is” or “There are.”</p>
+      <p class="ar">في الشقّةِ مطبخٌ صغيرٌ.</p>
+      <p class="en">There is a small kitchen in the apartment.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>3. The Basic Pattern</h2>
+
+    <div class="pattern">
+      شبه جملة / مكان + مبتدأ مؤخر
+    </div>
+
+    <table>
+      <tr>
+        <th>Arabic Pattern</th>
+        <th>English Meaning</th>
+      </tr>
+      <tr>
+        <td class="ar">في البيتِ غرفةٌ.</td>
+        <td>There is a room in the house.</td>
+      </tr>
+      <tr>
+        <td class="ar">أمامَ الجامعةِ مطعمٌ.</td>
+        <td>There is a restaurant in front of the university.</td>
+      </tr>
+      <tr>
+        <td class="ar">بجانبِ المكتبةِ مقهى.</td>
+        <td>There is a café next to the library.</td>
+      </tr>
+      <tr>
+        <td class="ar">خلفَ المدرسةِ ملعبٌ.</td>
+        <td>There is a playground behind the school.</td>
+      </tr>
+      <tr>
+        <td class="ar">على الطاولةِ كتابٌ.</td>
+        <td>There is a book on the table.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>4. Useful Place Expressions</h2>
+
+    <p class="en">Use these expressions to begin your sentence.</p>
+
+    <table>
+      <tr>
+        <th>Arabic</th>
+        <th>English</th>
+        <th>Example</th>
+      </tr>
+      <tr>
+        <td class="ar">في</td>
+        <td>in / inside</td>
+        <td class="ar">في الغرفةِ سريرٌ.</td>
+      </tr>
+      <tr>
+        <td class="ar">على</td>
+        <td>on</td>
+        <td class="ar">على المكتبِ كمبيوترٌ.</td>
+      </tr>
+      <tr>
+        <td class="ar">أمامَ</td>
+        <td>in front of</td>
+        <td class="ar">أمامَ البيتِ حديقةٌ.</td>
+      </tr>
+      <tr>
+        <td class="ar">خلفَ / وراءَ</td>
+        <td>behind</td>
+        <td class="ar">خلفَ المبنى موقفٌ.</td>
+      </tr>
+      <tr>
+        <td class="ar">بجانبِ</td>
+        <td>next to</td>
+        <td class="ar">بجانبِ الجامعةِ مطعمٌ.</td>
+      </tr>
+      <tr>
+        <td class="ar">بينَ</td>
+        <td>between</td>
+        <td class="ar">بينَ البيتينِ شارعٌ صغيرٌ.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>5. More Examples</h2>
+
+    <h3>Describing a House</h3>
+    <div class="example">
+      <p class="ar">في البيتِ غرفةُ نومٍ واسعةٌ.</p>
+      <p class="ar">في المطبخِ ثلّاجةٌ جديدةٌ.</p>
+      <p class="ar">أمامَ البيتِ حديقةٌ صغيرةٌ.</p>
+      <p class="ar">خلفَ البيتِ موقفُ سياراتٍ.</p>
+      <p class="ar">في الطابقِ الثاني حمّامٌ كبيرٌ.</p>
+    </div>
+
+    <h3>Describing an Apartment</h3>
+    <div class="example">
+      <p class="ar">في الشقّةِ غرفتان.</p>
+      <p class="ar">في غرفةِ الجلوسِ أريكةٌ مريحةٌ.</p>
+      <p class="ar">بجانبِ المطبخِ حمّامٌ صغيرٌ.</p>
+      <p class="ar">على الحائطِ صورةٌ جميلةٌ.</p>
+      <p class="ar">تحتَ النافذةِ مكتبٌ خشبيٌّ.</p>
+    </div>
+
+    <h3>Describing a Campus</h3>
+    <div class="example">
+      <p class="ar">في الجامعةِ مكتبةٌ كبيرةٌ.</p>
+      <p class="ar">أمامَ المكتبةِ ساحةٌ واسعةٌ.</p>
+      <p class="ar">بجانبِ الساحةِ مقهى صغيرٌ.</p>
+      <p class="ar">في الطابقِ الثالث مكاتبُ الأساتذةِ.</p>
+      <p class="ar">خلفَ المبنى موقفٌ للسياراتِ.</p>
+    </div>
+
+    <h3>Describing a City or Neighborhood</h3>
+    <div class="example">
+      <p class="ar">في المدينةِ مطاعمُ كثيرةٌ.</p>
+      <p class="ar">في الحيِّ مدرسةٌ قديمةٌ.</p>
+      <p class="ar">بجانبِ المدرسةِ حديقةٌ عامّةٌ.</p>
+      <p class="ar">أمامَ المسجدِ سوقٌ صغيرٌ.</p>
+      <p class="ar">قريبٌ من البيتِ متجرٌ جديدٌ.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>6. Important Grammar Notes</h2>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <h3>After Prepositions</h3>
+        <p class="en">After prepositions such as <strong>في، على، من، إلى، بجانب</strong>, the noun is usually genitive.</p>
+        <p class="ar">في البيتِ</p>
+        <p class="ar">على الطاولةِ</p>
+        <p class="ar">بجانبِ المكتبةِ</p>
+      </div>
+
+      <div class="mini-card">
+        <h3>The Delayed Subject</h3>
+        <p class="en">The noun after the place expression is usually nominative because it is the delayed subject.</p>
+        <p class="ar">في البيتِ غرفةٌ.</p>
+        <p class="ar">أمامَ الجامعةِ مطعمٌ.</p>
+        <p class="ar">في المدينةِ متحفٌ.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <p class="en"><strong>Do not confuse these two structures:</strong></p>
+      <table>
+        <tr>
+          <th>Sentence</th>
+          <th>Meaning</th>
+          <th>Focus</th>
+        </tr>
+        <tr>
+          <td class="ar">الغرفةُ في البيتِ.</td>
+          <td>The room is in the house.</td>
+          <td>We are talking about the room.</td>
+        </tr>
+        <tr>
+          <td class="ar">في البيتِ غرفةٌ.</td>
+          <td>There is a room in the house.</td>
+          <td>We are describing the house.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>7. Activity 1: Identify the Parts</h2>
+
+    <p class="en">
+      Instructions: Read each sentence. Identify the <strong>fronted predicate</strong> and the <strong>delayed subject</strong>.
+      Type your answers in Arabic.
+    </p>
+
+    <table>
+      <tr>
+        <th>Sentence</th>
+        <th>Fronted Predicate الخبر المقدَّم</th>
+        <th>Delayed Subject المبتدأ المؤخَّر</th>
+      </tr>
+      <tr>
+        <td class="ar">في الصفِّ طلابٌ كثيرون.</td>
+        <td><input class="answer-space" type="text"></td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+      <tr>
+        <td class="ar">أمامَ الجامعةِ مطعمٌ جديدٌ.</td>
+        <td><input class="answer-space" type="text"></td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+      <tr>
+        <td class="ar">بجانبِ البيتِ حديقةٌ صغيرةٌ.</td>
+        <td><input class="answer-space" type="text"></td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+      <tr>
+        <td class="ar">على الطاولةِ كتابٌ وقلمٌ.</td>
+        <td><input class="answer-space" type="text"></td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+      <tr>
+        <td class="ar">خلفَ المدرسةِ ملعبٌ واسعٌ.</td>
+        <td><input class="answer-space" type="text"></td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+    </table>
+
+    <details>
+      <summary>Show suggested answers</summary>
+      <div class="small-ar">
+        <p>1. الخبر المقدَّم: في الصفِّ / المبتدأ المؤخَّر: طلابٌ كثيرون</p>
+        <p>2. الخبر المقدَّم: أمامَ الجامعةِ / المبتدأ المؤخَّر: مطعمٌ جديدٌ</p>
+        <p>3. الخبر المقدَّم: بجانبِ البيتِ / المبتدأ المؤخَّر: حديقةٌ صغيرةٌ</p>
+        <p>4. الخبر المقدَّم: على الطاولةِ / المبتدأ المؤخَّر: كتابٌ وقلمٌ</p>
+        <p>5. الخبر المقدَّم: خلفَ المدرسةِ / المبتدأ المؤخَّر: ملعبٌ واسعٌ</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>8. Activity 2: Complete the Sentences</h2>
+
+    <p class="en">
+      Instructions: Complete each Arabic sentence with a suitable noun or noun phrase.
+      Try to use adjectives when possible.
+    </p>
+
+    <div class="word-bank">
+      <p class="en"><strong>Possible words:</strong></p>
+      <span>غرفةٌ واسعةٌ</span>
+      <span>مطبخٌ صغيرٌ</span>
+      <span>حديقةٌ جميلةٌ</span>
+      <span>مقهى هادئٌ</span>
+      <span>موقفُ سياراتٍ</span>
+      <span>مكتبٌ جديدٌ</span>
+      <span>سوقٌ قديمٌ</span>
+      <span>طلابٌ كثيرون</span>
+    </div>
+
+    <ol class="ar">
+      <li>في البيتِ <input class="answer-space" type="text"></li>
+      <li>أمامَ الجامعةِ <input class="answer-space" type="text"></li>
+      <li>بجانبِ المكتبةِ <input class="answer-space" type="text"></li>
+      <li>خلفَ المبنى <input class="answer-space" type="text"></li>
+      <li>في الطابقِ الثاني <input class="answer-space" type="text"></li>
+      <li>على المكتبِ <input class="answer-space" type="text"></li>
+      <li>في المدينةِ <input class="answer-space" type="text"></li>
+      <li>تحتَ النافذةِ <input class="answer-space" type="text"></li>
+    </ol>
+
+    <details>
+      <summary>Show possible answers</summary>
+      <div class="small-ar">
+        <p>في البيتِ غرفةٌ واسعةٌ.</p>
+        <p>أمامَ الجامعةِ مقهى هادئٌ.</p>
+        <p>بجانبِ المكتبةِ سوقٌ قديمٌ.</p>
+        <p>خلفَ المبنى موقفُ سياراتٍ.</p>
+        <p>في الطابقِ الثاني مكتبٌ جديدٌ.</p>
+        <p>على المكتبِ كتابٌ وقلمٌ.</p>
+        <p>في المدينةِ مطاعمُ كثيرةٌ.</p>
+        <p>تحتَ النافذةِ كرسيٌّ صغيرٌ.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>9. Activity 3: Transform the Sentence</h2>
+
+    <p class="en">
+      Instructions: Rewrite each sentence so that it begins with the place expression.
+    </p>
+
+    <div class="example">
+      <p class="en"><strong>Example:</strong></p>
+      <p class="ar">الغرفةُ في البيتِ.</p>
+      <p class="ar">في البيتِ غرفةٌ.</p>
+    </div>
+
+    <table>
+      <tr>
+        <th>Original Sentence</th>
+        <th>Your New Sentence</th>
+      </tr>
+      <tr>
+        <td class="ar">المطبخُ في الشقّةِ.</td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+      <tr>
+        <td class="ar">الحديقةُ أمامَ البيتِ.</td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+      <tr>
+        <td class="ar">المطعمُ بجانبِ الجامعةِ.</td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+      <tr>
+        <td class="ar">المكتبةُ في الطابقِ الثالثِ.</td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+      <tr>
+        <td class="ar">السيارةُ خلفَ المبنى.</td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+      <tr>
+        <td class="ar">الكمبيوترُ على المكتبِ.</td>
+        <td><input class="answer-space" type="text"></td>
+      </tr>
+    </table>
+
+    <details>
+      <summary>Show suggested answers</summary>
+      <div class="small-ar">
+        <p>في الشقّةِ مطبخٌ.</p>
+        <p>أمامَ البيتِ حديقةٌ.</p>
+        <p>بجانبِ الجامعةِ مطعمٌ.</p>
+        <p>في الطابقِ الثالثِ مكتبةٌ.</p>
+        <p>خلفَ المبنى سيارةٌ.</p>
+        <p>على المكتبِ كمبيوترٌ.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>10. Activity 4: Choose the Better Sentence</h2>
+
+    <p class="en">
+      Instructions: Choose the sentence that better describes the place using a fronted predicate.
+    </p>
+
+    <div class="example">
+      <p class="en"><strong>1. To say: “There is a garden in front of the house.”</strong></p>
+      <p><label><input type="radio" name="q1"> <span class="ar">الحديقةُ أمامَ البيتِ.</span></label></p>
+      <p><label><input type="radio" name="q1"> <span class="ar">أمامَ البيتِ حديقةٌ.</span></label></p>
+    </div>
+
+    <div class="example">
+      <p class="en"><strong>2. To say: “There is a café next to the library.”</strong></p>
+      <p><label><input type="radio" name="q2"> <span class="ar">بجانبِ المكتبةِ مقهى.</span></label></p>
+      <p><label><input type="radio" name="q2"> <span class="ar">المقهى بجانبِ المكتبةِ.</span></label></p>
+    </div>
+
+    <div class="example">
+      <p class="en"><strong>3. To say: “There are many students in the classroom.”</strong></p>
+      <p><label><input type="radio" name="q3"> <span class="ar">في الصفِّ طلابٌ كثيرون.</span></label></p>
+      <p><label><input type="radio" name="q3"> <span class="ar">الطلابُ الكثيرون في الصفِّ.</span></label></p>
+    </div>
+
+    <details>
+      <summary>Show answers</summary>
+      <div class="small-ar">
+        <p>1. أمامَ البيتِ حديقةٌ.</p>
+        <p>2. بجانبِ المكتبةِ مقهى.</p>
+        <p>3. في الصفِّ طلابٌ كثيرون.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>11. Activity 5: Describe the Picture in Your Mind</h2>
+
+    <p class="en">
+      Instructions: Imagine a place. It can be a house, apartment, classroom, campus, café, or neighborhood.
+      Write five Arabic sentences using fronted predicates.
+    </p>
+
+    <div class="student-task">
+      <p class="en"><strong>Use at least five of these expressions:</strong></p>
+      <p class="ar">في، على، أمامَ، خلفَ، بجانبِ، تحتَ، فوقَ، قريبٌ من</p>
+    </div>
+
+    <textarea placeholder="اكتب وصفك هنا..."></textarea>
+
+    <details>
+      <summary>Show model answer</summary>
+      <div class="small-ar">
+        <p>
+          في شقّتي غرفةُ نومٍ صغيرةٌ. في غرفةِ الجلوسِ أريكةٌ مريحةٌ.
+          بجانبِ المطبخِ حمّامٌ واسعٌ. على الطاولةِ كتابٌ وقلمٌ.
+          أمامَ الشقّةِ حديقةٌ جميلةٌ.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>12. Activity 6: Apartment for Rent</h2>
+
+    <p class="en">
+      Instructions: You are writing a short apartment advertisement. Describe the apartment using fronted predicates.
+      Your description should have 6 to 8 Arabic sentences.
+    </p>
+
+    <div class="word-bank">
+      <p class="en"><strong>Useful words:</strong></p>
+      <span>شقّة</span>
+      <span>غرفة نوم</span>
+      <span>غرفة جلوس</span>
+      <span>مطبخ</span>
+      <span>حمّام</span>
+      <span>حديقة</span>
+      <span>موقف سيارات</span>
+      <span>قريبة من الجامعة</span>
+      <span>هادئة</span>
+      <span>واسعة</span>
+      <span>نظيفة</span>
+    </div>
+
+    <textarea placeholder="اكتب إعلان الشقّة هنا..."></textarea>
+
+    <details>
+      <summary>Show model apartment advertisement</summary>
+      <div class="small-ar">
+        <p>
+          في الشقّةِ غرفتان. في غرفةِ الجلوسِ أريكةٌ كبيرةٌ وتلفزيونٌ جديدٌ.
+          في المطبخِ ثلّاجةٌ وفرنٌ. بجانبِ غرفةِ النومِ حمّامٌ واسعٌ.
+          أمامَ البيتِ حديقةٌ صغيرةٌ. خلفَ البيتِ موقفُ سياراتٍ.
+          قريبٌ من الشقّةِ متجرٌ ومقهى. الشقّةُ هادئةٌ ونظيفةٌ.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>13. Speaking Activity: Guess the Place</h2>
+
+    <p class="en">
+      Instructions: Work with a partner. Student A describes a place without saying its name.
+      Student B guesses the place. Use at least four sentences with fronted predicates.
+    </p>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <h3>Student A</h3>
+        <p class="en">Describe the place. Do not say its name.</p>
+        <p class="ar">في هذا المكان طاولاتٌ كثيرةٌ.</p>
+        <p class="ar">على الطاولاتِ كتبٌ ودفاترُ.</p>
+        <p class="ar">أمامَ الغرفةِ سبورةٌ.</p>
+        <p class="ar">بجانبِ البابِ مكتبٌ صغيرٌ.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3>Student B</h3>
+        <p class="en">Guess the place.</p>
+        <p class="ar">هل هذا المكان غرفةُ الصفِّ؟</p>
+        <p class="ar">هل هذا المكان مكتبةٌ؟</p>
+        <p class="ar">هل هذا المكان مكتبُ أستاذٍ؟</p>
+      </div>
+    </div>
+
+    <h3>Now write your own clues</h3>
+    <textarea placeholder="اكتب أربع جمل تصف مكانًا، ولا تذكر اسم المكان..."></textarea>
+  </div>
+
+  <div class="card">
+    <h2>14. Quick Review</h2>
+
+    <div class="rule-box">
+      <p class="en"><strong>Use this structure when describing what exists in a place:</strong></p>
+      <div class="pattern">
+        في البيتِ غرفةٌ.
+        <br>
+        أمامَ الجامعةِ مطعمٌ.
+        <br>
+        بجانبِ المكتبةِ مقهى.
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>Question</th>
+        <th>Answer</th>
+      </tr>
+      <tr>
+        <td>What comes first?</td>
+        <td>The place expression: في البيتِ، أمامَ الجامعةِ، بجانبِ المكتبةِ</td>
+      </tr>
+      <tr>
+        <td>What comes second?</td>
+        <td>The thing that exists in the place: غرفةٌ، مطعمٌ، مقهى</td>
+      </tr>
+      <tr>
+        <td>What does it often mean in English?</td>
+        <td>There is / There are</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>
