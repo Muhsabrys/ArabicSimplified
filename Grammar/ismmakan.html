@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Grammar: Noun of Place (اسم المكان)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* 3D Flip Card Styles */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .card-flip-duration { transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Enforce clear standard fonts */
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .arabic-text {
+            font-family: Arial, Tahoma, "Times New Roman", serif;
+            direction: rtl;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 antialiased min-h-screen pb-12">
+
+    <!-- Header -->
+    <header class="bg-blue-800 text-white shadow-md py-12 px-4 mb-12 border-b-4 border-blue-600">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-2 arabic-text" dir="rtl">القواعد ٢</h2>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 arabic-text" dir="rtl">اسم المكان</h1>
+            <p class="text-xl text-blue-200 font-medium tracking-wide" dir="ltr">The Noun of Place</p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 space-y-12">
+
+        <!-- Introduction Section -->
+        <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <p class="text-lg mb-6 leading-relaxed flex flex-wrap items-center gap-2" dir="ltr">
+                You have learned a number of words that share 
+                <span class="text-2xl text-blue-700 font-bold arabic-text" dir="rtl">وَزن مَفْعَل(ة)</span>, 
+                including:
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 mb-8" dir="rtl">
+                <span class="px-5 py-3 bg-blue-50 text-blue-900 text-2xl rounded shadow-sm border border-blue-200 arabic-text font-bold">مَكْتَب</span>
+                <span class="px-5 py-3 bg-blue-50 text-blue-900 text-2xl rounded shadow-sm border border-blue-200 arabic-text font-bold">مَكْتَبَة</span>
+                <span class="px-5 py-3 bg-blue-50 text-blue-900 text-2xl rounded shadow-sm border border-blue-200 arabic-text font-bold">مَدْرَسَة</span>
+                <span class="px-5 py-3 bg-blue-50 text-blue-900 text-2xl rounded shadow-sm border border-blue-200 arabic-text font-bold">مَطْبَخ</span>
+                <span class="px-5 py-3 bg-blue-50 text-blue-900 text-2xl rounded shadow-sm border border-blue-200 arabic-text font-bold">مَسْبَح</span>
+                <span class="px-5 py-3 bg-blue-50 text-blue-900 text-2xl rounded shadow-sm border border-blue-200 arabic-text font-bold">مَرْكَز</span>
+                <span class="px-5 py-3 bg-blue-50 text-blue-900 text-2xl rounded shadow-sm border border-blue-200 arabic-text font-bold">مَسْرَح</span>
+            </div>
+
+            <p class="text-lg leading-relaxed mb-6 text-gray-800" dir="ltr">
+                What do the meanings of these words have in common? They all refer to <strong>places</strong>: Places where we write, read books, study, and so forth.
+            </p>
+            <p class="text-lg leading-relaxed text-gray-700 mb-6 flex flex-wrap items-center gap-x-2" dir="ltr">
+                <span>You can see that two of the nouns above end in</span>
+                <span class="text-2xl text-blue-700 font-bold arabic-text" dir="rtl">ة</span>. 
+                <span>This addition is not common. Sometimes it permits a second meaning to be derived from a root, such as the case of the word</span>
+                <span class="text-xl font-bold arabic-text" dir="rtl">مَكْتَبَة</span>, 
+                <span>which has a different meaning than</span>
+                <span class="text-xl font-bold arabic-text" dir="rtl">مَكْتَب</span>. 
+                <span>In other cases, such as</span>
+                <span class="text-xl font-bold arabic-text" dir="rtl">مَدْرَسَة</span>, 
+                <span>there is no corresponding</span>
+                <span class="text-xl font-bold arabic-text" dir="rtl">اسم مكان</span> 
+                <span>without</span>
+                <span class="text-xl font-bold arabic-text" dir="rtl">ة</span>.
+            </p>
+            
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-5 rounded-r-lg my-6">
+                <p class="text-gray-900 text-lg flex flex-wrap items-center gap-x-2" dir="ltr">
+                    <span>Since the use of</span>
+                    <span class="font-bold arabic-text text-xl" dir="rtl">ة</span> 
+                    <span>is uncommon, we will focus on forming</span>
+                    <span class="font-bold arabic-text text-xl" dir="rtl">اسم المكان</span> 
+                    <span>without it, and will specify</span>
+                    <span class="font-bold arabic-text text-xl" dir="rtl">ة</span> 
+                    <span>in the few cases in which it occurs.</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Rule variations -->
+        <section class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4" dir="ltr">The Kasra Exception</h3>
+                <p class="text-gray-700 mb-6 leading-relaxed flex flex-wrap items-center gap-x-2" dir="ltr">
+                    <span>Some</span>
+                    <span class="font-bold text-xl arabic-text" dir="rtl">أسماء مكان</span> 
+                    <span>take the pattern</span>
+                    <span class="font-bold text-xl text-blue-700 arabic-text" dir="rtl">مَفْعِل</span> 
+                    <span>with a</span>
+                    <span class="font-bold arabic-text text-lg" dir="rtl">كسرة</span> 
+                    <span>vowel. This happens when the stem of</span>
+                    <span class="font-bold arabic-text text-lg" dir="rtl">المضارع</span> 
+                    <span>of the verb is also</span>
+                    <span class="font-bold arabic-text text-lg" dir="rtl">كسرة</span>.
+                </p>
+                <div class="space-y-4">
+                    <!-- Flex container with gap guarantees English and Arabic won't overlap -->
+                    <div class="bg-gray-50 p-4 rounded border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <span class="text-gray-600 italic text-left w-full md:w-auto" dir="ltr">council (place where one "sits")</span>
+                        <span class="text-2xl font-bold text-blue-900 text-right w-full md:w-auto arabic-text" dir="rtl">يَجلِس: مَجلِس ج. مَجالِس</span>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <span class="text-gray-600 italic text-left w-full md:w-auto" dir="ltr">residence (place where one stays)</span>
+                        <span class="text-2xl font-bold text-blue-900 text-right w-full md:w-auto arabic-text" dir="rtl">يَنزِل: مَنزِل ج. مَنازِل</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-2 h-full bg-green-500"></div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4" dir="ltr">The Plural Pattern</h3>
+                <p class="text-gray-700 mb-6 leading-relaxed flex flex-wrap items-center gap-x-2" dir="ltr">
+                    <span>The plural of</span>
+                    <span class="font-bold text-xl arabic-text" dir="rtl">أسماء مكان</span> 
+                    <span>is normally</span>
+                    <span class="font-bold text-2xl text-green-700 arabic-text" dir="rtl">مَفاعِل</span>. 
+                    <span>Be on the lookout for this pattern in both singular and plural.</span>
+                </p>
+                <div class="flex flex-wrap justify-end gap-3 mt-8" dir="rtl">
+                    <span class="px-4 py-2 bg-green-50 text-green-900 text-2xl font-bold border border-green-200 rounded arabic-text">مَدارِس</span>
+                    <span class="px-4 py-2 bg-green-50 text-green-900 text-2xl font-bold border border-green-200 rounded arabic-text">مَطابِخ</span>
+                    <span class="px-4 py-2 bg-green-50 text-green-900 text-2xl font-bold border border-green-200 rounded arabic-text">مَسابِح</span>
+                    <span class="px-4 py-2 bg-green-50 text-green-900 text-2xl font-bold border border-green-200 rounded arabic-text">مَنازِل</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Exercise -->
+        <section class="mt-16">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-8 border-b-2 border-gray-300 pb-4 gap-4">
+                <div class="text-center md:text-left">
+                    <h2 class="text-2xl font-bold text-gray-900" dir="ltr">Interactive Exercise 🎧</h2>
+                    <p class="text-gray-600 mt-1" dir="ltr">Click the cards to reveal the Noun of Place and its plural.</p>
+                </div>
+                <h2 class="text-3xl font-bold text-blue-900 arabic-text text-center md:text-right" dir="rtl">تمرين ١٣: اسم المكان (في البيت)</h2>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="flashcard-container">
+                <!-- Cards will be injected by JavaScript -->
+            </div>
+            
+            <div class="mt-10 text-center">
+                <button onclick="flipAllCards()" class="bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-3 px-8 rounded shadow-md transition transform hover:-translate-y-1" dir="ltr">
+                    Flip All Cards
+                </button>
+            </div>
+        </section>
+
+        <!-- Visual Frequency Table -->
+        <section class="mt-16 bg-white border-2 border-gray-300 rounded-2xl p-8 shadow-md">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-3 text-gray-900" dir="ltr">10 Most Frequent Nouns of Place</h2>
+                <p class="text-gray-600 text-lg" dir="ltr">Essential vocabulary for daily communication.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <!-- JS will inject mini cards here -->
+                <script>
+                    const bonusWords = [
+                        { root: 'ط ع م', sing: 'مَطْعَم', pl: 'مَطاعِم', eng: 'Restaurant' },
+                        { root: 'س ج د', sing: 'مَسْجِد', pl: 'مَساجِد', eng: 'Mosque' },
+                        { root: 'ط ي ر', sing: 'مَطار', pl: 'مَطارات', eng: 'Airport' },
+                        { root: 'ع ر ض', sing: 'مَعْرِض', pl: 'مَعارِض', eng: 'Gallery' },
+                        { root: 'ص ن ع', sing: 'مَصْنَع', pl: 'مَصانِع', eng: 'Factory' },
+                        { root: 'خ ب ز', sing: 'مَخْبَز', pl: 'مَخابِز', eng: 'Bakery' },
+                        { root: 'و ق ف', sing: 'مَوْقِف', pl: 'مَواقِف', eng: 'Bus stop' },
+                        { root: 'ق ه و', sing: 'مَقْهَى', pl: 'مَقاهي', eng: 'Café' },
+                        { root: 'ح ك م', sing: 'مَحْكَمَة', pl: 'مَحاكِم', eng: 'Court' },
+                        { root: 'ز ر ع', sing: 'مَزْرَعَة', pl: 'مَزارِع', eng: 'Farm' },
+                    ];
+
+                    // White background with clear dark text for high contrast
+                    document.write(bonusWords.map(word => `
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-300 text-center hover:bg-blue-50 transition cursor-default flex flex-col items-center gap-2">
+                            <div class="text-2xl text-blue-800 font-bold arabic-text" dir="rtl">${word.sing}</div>
+                            <div class="text-xl text-gray-600 font-bold arabic-text" dir="rtl">${word.pl}</div>
+                            <div class="h-px w-full bg-gray-200 my-1"></div>
+                            <div class="text-sm text-gray-800 font-semibold uppercase tracking-wide" dir="ltr">${word.eng}</div>
+                        </div>
+                    `).join(''));
+                </script>
+            </div>
+        </section>
+
+        <!-- Footnote -->
+        <footer class="mt-12 pt-6 border-t border-gray-300 text-sm text-gray-600">
+            <p class="flex flex-wrap gap-1 items-center" dir="ltr">
+                <span><sup>1</sup> The</span>
+                <span class="font-bold text-base arabic-text" dir="rtl">اسم مكان</span> 
+                <span>can also be formed from awzaan II-X using a different pattern that you will learn soon. One example is the word</span>
+                <span class="font-bold text-base arabic-text" dir="rtl">مُسْتَشْفَى</span> 
+                <span>that is derived from ش ف ي.</span>
+            </p>
+        </footer>
+
+    </main>
+
+    <script>
+        const exerciseData = [
+            { root: 'س ك ن', eng: 'residence', sing: 'مَسْكَن', pl: 'مَساكِن' },
+            { root: 'ل ع ب', eng: 'playing field', sing: 'مَلْعَب', pl: 'مَلاعِب' },
+            { root: 'م ل ك', note: '(مَفْعَلة)', eng: 'kingdom', sing: 'مَمْلَكَة', pl: 'مَمالِك' },
+            { root: 'ع م ل', eng: 'laboratory, factory', sing: 'مَعْمَل', pl: 'مَعامِل' },
+            { root: 'د خ ل', eng: 'entrance', sing: 'مَدْخَل', pl: 'مَداخِل' },
+            { root: 'خ ر ج', eng: 'exit', sing: 'مَخْرَج', pl: 'مَخارِج' },
+            { root: 'ذ ه ب', eng: 'path (school of law)', sing: 'مَذْهَب', pl: 'مَذاهِب' }
+        ];
+
+        const container = document.getElementById('flashcard-container');
+        let isAllFlipped = false;
+
+        function createCard(data, index) {
+            const rootNote = data.note ? `<span class="block text-sm text-red-600 mt-2 arabic-text" dir="rtl">${data.note}</span>` : '';
+            
+            return `
+            <div class="h-56 w-full perspective-1000 cursor-pointer" onclick="toggleFlip(${index})">
+                <div id="card-inner-${index}" class="relative w-full h-full transform-style-3d card-flip-duration shadow-md rounded-xl">
+                    
+                    <!-- Front of Card (Question) - High Contrast Light Mode -->
+                    <div class="absolute w-full h-full backface-hidden bg-white border-2 border-gray-300 rounded-xl flex flex-col items-center justify-center p-6 text-center">
+                        <div class="text-gray-500 text-xs font-bold uppercase tracking-wider mb-3" dir="ltr">Root</div>
+                        <div class="text-4xl font-bold text-gray-900 mb-2 arabic-text flex flex-col items-center" dir="rtl">
+                            ${data.root} 
+                            ${rootNote}
+                        </div>
+                        <div class="text-base text-gray-700 italic mt-3" dir="ltr">${data.eng}</div>
+                    </div>
+
+                    <!-- Back of Card (Answer) - High Contrast Light Blue Mode -->
+                    <div class="absolute w-full h-full backface-hidden bg-blue-50 border-2 border-blue-300 rounded-xl flex flex-col items-center justify-center p-6 rotate-y-180 shadow-inner">
+                        <div class="w-full flex justify-between items-center mb-4 border-b-2 border-blue-200 pb-4 gap-4">
+                            
+                            <!-- Singular Column -->
+                            <div class="text-center w-1/2 flex flex-col items-center">
+                                <span class="block text-blue-700 text-xs font-bold uppercase mb-2" dir="ltr">Singular</span>
+                                <span class="text-3xl font-bold text-blue-900 arabic-text" dir="rtl">${data.sing}</span>
+                            </div>
+                            
+                            <!-- Divider -->
+                            <div class="w-px h-16 bg-blue-300"></div>
+
+                            <!-- Plural Column -->
+                            <div class="text-center w-1/2 flex flex-col items-center">
+                                <span class="block text-blue-700 text-xs font-bold uppercase mb-2" dir="ltr">Plural</span>
+                                <span class="text-3xl font-bold text-blue-900 arabic-text" dir="rtl">${data.pl}</span>
+                            </div>
+
+                        </div>
+                        <div class="text-blue-600 text-sm font-medium" dir="ltr">Click to flip back</div>
+                    </div>
+
+                </div>
+            </div>
+            `;
+        }
+
+        // Render cards
+        container.innerHTML = exerciseData.map((data, idx) => createCard(data, idx)).join('');
+
+        function toggleFlip(index) {
+            const cardInner = document.getElementById(`card-inner-${index}`);
+            if (cardInner.style.transform === 'rotateY(180deg)') {
+                cardInner.style.transform = 'rotateY(0deg)';
+            } else {
+                cardInner.style.transform = 'rotateY(180deg)';
+            }
+        }
+
+        function flipAllCards() {
+            isAllFlipped = !isAllFlipped;
+            const rotation = isAllFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+            
+            exerciseData.forEach((_, index) => {
+                const cardInner = document.getElementById(`card-inner-${index}`);
+                cardInner.style.transform = rotation;
+            });
+        }
+    </script>
+</body>
+</html>
