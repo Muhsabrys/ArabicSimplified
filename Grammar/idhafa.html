@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Grammar: Definite and Indefinite Idafa</title>
+    <style>
+        :root {
+            --bg-color: #f9fafb;
+            --text-color: #1f2937;
+            --primary-color: #2563eb;
+            --accent-color: #f59e0b;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #4b5563;
+        }
+
+        .arabic {
+            font-family: 'Amiri', 'Scheherazade New', 'Times New Roman', serif;
+            font-size: 1.4rem;
+            font-weight: bold;
+            direction: rtl;
+            color: #1d4ed8;
+            padding: 0 0.3rem;
+        }
+
+        .example-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-item {
+            text-align: center;
+            border-right: 1px solid var(--border-color);
+            padding-right: 1.5rem;
+        }
+
+        .example-item:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .english-translation {
+            display: block;
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        th {
+            background-color: #eff6ff;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        /* Interactivity Styles */
+        .interactive-bar {
+            background-color: #e0f2fe;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .highlight-word {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .note {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="arabic">القواعد ٣</span>
+        <h1>الإضافة: معرفة ونكرة</h1>
+        <div class="subtitle">Definite and Indefinite <em>Idafa</em></div>
+    </header>
+
+    <div class="interactive-bar">
+        <div>
+            <strong>Interactive Tool:</strong> The rule states that the definiteness of an <em>Idafa</em> depends <strong>solely on its final word</strong>.
+        </div>
+        <button id="highlightBtn" onclick="toggleHighlights()">Highlight Final Words</button>
+    </div>
+
+    <p>In the story in this lesson, you heard descriptions of houses containing many <span class="arabic">إضافات</span>, such as:</p>
+
+    <div class="example-box">
+        <div class="example-item">
+            <span class="arabic idafa-phrase">غرفة المعيشة</span>
+        </div>
+        <div class="example-item">
+            <span class="arabic idafa-phrase">غرفة الاستقبال</span>
+        </div>
+        <div class="example-item">
+            <span class="arabic idafa-phrase">غرفة النوم</span>
+        </div>
+    </div>
+
+    <p>As you have come to expect, these <span class="arabic">إضافات</span> are all definite. In addition to the definite <span class="arabic">إضافات</span>, however, you also heard a couple of <span class="arabic">إضافات</span> that are not definite: <span class="arabic idafa-phrase">حمّام سباحة</span> (literally, "a pool of swimming"), and <span class="arabic idafa-phrase">٤ غرف نوم</span>. We know that these phrases are indefinite because the last noun in each <span class="arabic">إضافة</span> is indefinite, having neither <span class="arabic">ال</span> nor a possessive pronoun. (Even though both of these nouns are <span class="arabic">مصدر</span>, this is one case in which <span class="arabic">المصدر</span> may be indefinite.) The indefiniteness of the final noun makes the entire <span class="arabic">إضافة</span> indefinite. We can make all the definite <span class="arabic">إضافات</span> above indefinite just by removing <span class="arabic">ال</span> from the final noun:</p>
+
+    <div class="example-box">
+        <div class="example-item">
+            <span class="arabic idafa-phrase">غرفة معيشة</span>
+            <span class="english-translation">a family room</span>
+        </div>
+        <div class="example-item">
+            <span class="arabic idafa-phrase">غرفة استقبال</span>
+            <span class="english-translation">a formal living room</span>
+        </div>
+        <div class="example-item">
+            <span class="arabic idafa-phrase">غرفة نوم</span>
+            <span class="english-translation">a bedroom</span>
+        </div>
+    </div>
+
+    <p>What contexts call for an indefinite <span class="arabic">إضافة</span>? Think about when we use indefinite nouns in English. When would you say "a bedroom" instead of "the bedroom?" In Arabic, two of the most frequently occurring contexts in which indefinite nouns and <span class="arabic">إضافات</span> are used include existential sentences (e.g., "there is" or "there isn't") and counting with numbers from ٣ to ١٠, including the use of <span class="arabic">عدّة</span> <em>several</em>:</p>
+
+    <div class="example-box">
+        <div class="example-item">
+            <span class="arabic">عندي غرفة نوم كبيرة.</span>
+        </div>
+        <div class="example-item">
+            <span class="arabic">وراء المنزل حمّام سباحة.</span>
+        </div>
+        <div class="example-item">
+            <span class="arabic">فيه ٤ غرف نوم.</span>
+        </div>
+        <div class="example-item">
+            <span class="arabic">هناك عدّة حلول ممكنة.</span>
+        </div>
+    </div>
+
+    <p>To express meaning accurately, it is important to think about the choice of definite and indefinite nouns and noun phrases. For example, do you mean to say <em>a lunch break</em> or <em>the lunch break</em>? Your listener will interpret these two phrases differently. Sometimes the choice between definite and indefinite <span class="arabic">إضافة</span> carries important implications. You might call someone who does something nice for you <span class="arabic">ابن حلال</span> or <span class="arabic">بنت حلال</span> but not <span class="arabic">ابن الحلال</span> or <span class="arabic">بنت الحلال</span>. The definite <span class="arabic">ابن الحلال</span> is <em>the</em> person you should or could marry, whereas an indefinite <span class="arabic">ابن حلال</span> is one of a number of possible candidates:</p>
+
+    <div class="example-box">
+        <div class="example-item">
+            <span class="arabic idafa-phrase">ابن/بنت حلال</span>
+            <span class="english-translation">a possible mate, i.e., a great person</span>
+        </div>
+        <div class="example-item">
+            <span class="arabic idafa-phrase">ابن/بنت الحلال</span>
+            <span class="english-translation">the one for you</span>
+        </div>
+    </div>
+
+    <div class="note">
+        <strong>Key Rule:</strong> Grammatically, the definiteness or indefiniteness of <span class="arabic">الإضافة</span> depends solely on its <strong>final word</strong>. When that final word is definite, either with <span class="arabic">ال</span> or with a pronoun, <span class="arabic">الإضافة</span> is definite. When the final word is indefinite, <span class="arabic">الإضافة</span> is indefinite. 
+    </div>
+
+    <p>The following table gives you some examples for comparison:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th><span class="arabic">إضافة نكرة</span><br><span style="font-size: 0.9rem; color: #4b5563; font-weight: normal;">Indefinite</span></th>
+                <th><span class="arabic">إضافة معرفة</span><br><span style="font-size: 0.9rem; color: #4b5563; font-weight: normal;">Definite</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="arabic idafa-phrase">ثلاث غرف نوم</span></td>
+                <td><span class="arabic idafa-phrase">غرف النوم، غرف نومنا</span></td>
+            </tr>
+            <tr>
+                <td><span class="arabic idafa-phrase">سوق سمك</span></td>
+                <td><span class="arabic idafa-phrase">سوق السمك</span></td>
+            </tr>
+            <tr>
+                <td><span class="arabic idafa-phrase">استراحة غداء</span></td>
+                <td><span class="arabic idafa-phrase">استراحة الغداء</span></td>
+            </tr>
+            <tr>
+                <td><span class="arabic idafa-phrase">مرتب وزير</span></td>
+                <td><span class="arabic idafa-phrase">مرتب الوزير الجديد</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Indefinite <span class="arabic">إضافات</span> behave in sentences just like indefinite nouns. For example, adjectives modifying them are indefinite and agree with the noun they modify. In the following sentences, the adjectives <span class="arabic">كبيرة</span> and <span class="arabic">جميلة</span> are <span class="arabic">مؤنث</span> because they modify <span class="arabic">غرفة</span>:</p>
+
+    <div class="example-box">
+        <div class="example-item">
+            <span class="arabic">أريد غرفة نوم كبيرة.</span>
+        </div>
+        <div class="example-item">
+            <span class="arabic">هذه غرفة استقبال جميلة.</span>
+        </div>
+    </div>
+
+    <div class="note">
+        Remember to pronounce <span class="arabic">ة</span> on all nonfinal words of any <span class="arabic">إضافة</span>.
+    </div>
+
+    <p>Finally, notice that <span class="arabic">أفعل التفضيل</span> is also an indefinite <span class="arabic">إضافة</span> in the superlative construction. Although the superlative is definite in English, it is indefinite in Arabic and behaves accordingly:</p>
+
+    <div class="example-box" style="flex-direction: column; align-items: flex-end; text-align: right;">
+        <span class="arabic">سنستأجر (رح نستأجر ، حنأجّر) أحسن شقة بالشام كلها.</span>
+        <span class="arabic">أين توجد أقدم كنيسة كاثوليكية في العالم العربي؟</span>
+        <span class="arabic">أختي أخذت (أخَدِت، خَدِت) أكبر غرفة نوم في البيت.</span>
+    </div>
+
+    <script>
+        let isHighlighted = false;
+
+        function toggleHighlights() {
+            const phrases = document.querySelectorAll('.idafa-phrase');
+            const btn = document.getElementById('highlightBtn');
+            
+            if (!isHighlighted) {
+                phrases.forEach(phrase => {
+                    // Split the Arabic phrase by spaces
+                    let words = phrase.innerText.trim().split(' ');
+                    if (words.length > 1) {
+                        // In Arabic (RTL), the "final word" grammatically is the last word in the array
+                        // However, visually it appears on the left.
+                        const lastWord = words.pop();
+                        const newHtml = words.join(' ') + ' <span class="highlight-word">' + lastWord + '</span>';
+                        
+                        // Store original HTML to toggle back
+                        phrase.setAttribute('data-original', phrase.innerHTML);
+                        phrase.innerHTML = newHtml;
+                    }
+                });
+                btn.innerText = "Remove Highlights";
+                btn.style.backgroundColor = "#ef4444"; // Red color for off state
+                isHighlighted = true;
+            } else {
+                phrases.forEach(phrase => {
+                    if (phrase.hasAttribute('data-original')) {
+                        phrase.innerHTML = phrase.getAttribute('data-original');
+                    }
+                });
+                btn.innerText = "Highlight Final Words";
+                btn.style.backgroundColor = ""; // Back to default CSS
+                isHighlighted = false;
+            }
+        }
+    </script>
+</body>
+</html>
