@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,60 +88,312 @@
             </div>
         </section>
 
-        <!-- Rule variations -->
+        <!-- Definition and Core Idea -->
+        <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                <div>
+                    <p class="text-sm font-bold uppercase tracking-wider text-blue-700" dir="ltr">The Core Idea</p>
+                    <h2 class="text-3xl font-bold text-gray-900 mt-1" dir="ltr">What is a Noun of Place?</h2>
+                </div>
+                <div class="text-3xl font-bold text-blue-900 arabic-text" dir="rtl">اسم المكان</div>
+            </div>
+
+            <p class="text-lg leading-relaxed text-gray-800 mb-5" dir="ltr">
+                A <strong>noun of place</strong> is a noun derived from a verb. It names the place where the action of that verb happens.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-5 text-center">
+                    <div class="text-sm text-gray-600 font-bold uppercase mb-2" dir="ltr">Verb</div>
+                    <div class="text-2xl font-bold text-blue-900 arabic-text" dir="rtl">كَتَبَ</div>
+                    <div class="text-gray-700 mt-2" dir="ltr">to write</div>
+                </div>
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-5 text-center flex items-center justify-center">
+                    <div class="text-xl font-bold text-gray-700" dir="ltr">action + place</div>
+                </div>
+                <div class="bg-green-50 border border-green-200 rounded-lg p-5 text-center">
+                    <div class="text-sm text-gray-600 font-bold uppercase mb-2" dir="ltr">Noun of Place</div>
+                    <div class="text-2xl font-bold text-green-900 arabic-text" dir="rtl">مَكْتَب</div>
+                    <div class="text-gray-700 mt-2" dir="ltr">office; a place for writing</div>
+                </div>
+            </div>
+
+            <div class="bg-indigo-50 border-l-4 border-indigo-500 p-5 rounded-r-lg">
+                <p class="text-lg leading-relaxed text-gray-800" dir="ltr">
+                    Arabic also has a <strong>noun of time</strong>, <span class="arabic-text font-bold text-xl" dir="rtl">اسم الزمان</span>, which names the time when an action happens. Nouns of place and time are formed by the same rules. Context tells us whether the word refers to a place or a time.
+                </p>
+                <div class="grid md:grid-cols-2 gap-4 mt-4">
+                    <div class="bg-white rounded border border-indigo-200 p-4">
+                        <div class="text-xl font-bold text-indigo-900 arabic-text" dir="rtl">مَوْعِدُ الدَّرْسِ</div>
+                        <div class="text-gray-700 mt-2" dir="ltr">the time of the lesson</div>
+                    </div>
+                    <div class="bg-white rounded border border-indigo-200 p-4">
+                        <div class="text-xl font-bold text-indigo-900 arabic-text" dir="rtl">مَوْضِعُ الكِتابِ</div>
+                        <div class="text-gray-700 mt-2" dir="ltr">the place or position of the book</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Triliteral Verb Rules -->
+        <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <div class="mb-8">
+                <p class="text-sm font-bold uppercase tracking-wider text-blue-700" dir="ltr">Regular Formation</p>
+                <h2 class="text-3xl font-bold text-gray-900 mt-1" dir="ltr">Forming the Noun of Place from a Three-Letter Verb</h2>
+                <p class="text-lg text-gray-700 mt-4 leading-relaxed" dir="ltr">
+                    For most three-letter verbs, look at the vowel in the middle of the <strong>present-tense verb</strong>. This determines whether the noun follows <span class="arabic-text text-2xl font-bold text-blue-800" dir="rtl">مَفْعِل</span> or <span class="arabic-text text-2xl font-bold text-green-800" dir="rtl">مَفْعَل</span>.
+                </p>
+            </div>
+
+            <!-- Rule 1 -->
+            <div class="border-2 border-blue-200 rounded-xl overflow-hidden mb-8">
+                <div class="bg-blue-700 text-white p-5">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
+                        <h3 class="text-2xl font-bold" dir="ltr">Rule 1: Use مَفْعِل with يَفْعِل</h3>
+                        <div class="text-3xl font-bold arabic-text" dir="rtl">يَفْعِل ← مَفْعِل</div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-lg text-gray-800 leading-relaxed mb-5" dir="ltr">
+                        When the middle vowel of the present-tense stem is a <strong>kasra</strong>, the noun of place normally follows the pattern <span class="arabic-text text-xl font-bold text-blue-800" dir="rtl">مَفْعِل</span>.
+                    </p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse text-left" dir="ltr">
+                            <thead>
+                                <tr class="bg-blue-50">
+                                    <th class="border border-blue-200 p-3">Past Verb</th>
+                                    <th class="border border-blue-200 p-3">Present Verb</th>
+                                    <th class="border border-blue-200 p-3">Noun of Place</th>
+                                    <th class="border border-blue-200 p-3">Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">جَلَسَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَجْلِسُ</td><td class="border p-3 arabic-text text-xl font-bold text-blue-900" dir="rtl">مَجْلِس</td><td class="border p-3">sitting room; council</td></tr>
+                                <tr class="bg-gray-50"><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">نَزَلَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَنْزِلُ</td><td class="border p-3 arabic-text text-xl font-bold text-blue-900" dir="rtl">مَنْزِل</td><td class="border p-3">home; place where one stays</td></tr>
+                                <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">عَرَضَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَعْرِضُ</td><td class="border p-3 arabic-text text-xl font-bold text-blue-900" dir="rtl">مَعْرِض</td><td class="border p-3">exhibition hall; gallery</td></tr>
+                                <tr class="bg-gray-50"><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">هَبَطَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَهْبِطُ</td><td class="border p-3 arabic-text text-xl font-bold text-blue-900" dir="rtl">مَهْبِط</td><td class="border p-3">landing place</td></tr>
+                                <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">رَجَعَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَرْجِعُ</td><td class="border p-3 arabic-text text-xl font-bold text-blue-900" dir="rtl">مَرْجِع</td><td class="border p-3">place of return; reference</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rule 2 -->
+            <div class="border-2 border-green-200 rounded-xl overflow-hidden">
+                <div class="bg-green-700 text-white p-5">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
+                        <h3 class="text-2xl font-bold" dir="ltr">Rule 2: Use مَفْعَل with يَفْعَل or يَفْعُل</h3>
+                        <div class="text-3xl font-bold arabic-text" dir="rtl">يَفْعَل / يَفْعُل ← مَفْعَل</div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-lg text-gray-800 leading-relaxed mb-5" dir="ltr">
+                        When the middle vowel of the present-tense stem is a <strong>fatḥa</strong> or a <strong>ḍamma</strong>, the noun of place normally follows the pattern <span class="arabic-text text-xl font-bold text-green-800" dir="rtl">مَفْعَل</span>.
+                    </p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse text-left" dir="ltr">
+                            <thead>
+                                <tr class="bg-green-50">
+                                    <th class="border border-green-200 p-3">Past Verb</th>
+                                    <th class="border border-green-200 p-3">Present Verb</th>
+                                    <th class="border border-green-200 p-3">Noun of Place</th>
+                                    <th class="border border-green-200 p-3">Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">كَتَبَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَكْتُبُ</td><td class="border p-3 arabic-text text-xl font-bold text-green-900" dir="rtl">مَكْتَب</td><td class="border p-3">office; desk</td></tr>
+                                <tr class="bg-gray-50"><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">دَخَلَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَدْخُلُ</td><td class="border p-3 arabic-text text-xl font-bold text-green-900" dir="rtl">مَدْخَل</td><td class="border p-3">entrance</td></tr>
+                                <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">خَرَجَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَخْرُجُ</td><td class="border p-3 arabic-text text-xl font-bold text-green-900" dir="rtl">مَخْرَج</td><td class="border p-3">exit</td></tr>
+                                <tr class="bg-gray-50"><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">لَعِبَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَلْعَبُ</td><td class="border p-3 arabic-text text-xl font-bold text-green-900" dir="rtl">مَلْعَب</td><td class="border p-3">playing field; stadium</td></tr>
+                                <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">شَرِبَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَشْرَبُ</td><td class="border p-3 arabic-text text-xl font-bold text-green-900" dir="rtl">مَشْرَب</td><td class="border p-3">drinking place</td></tr>
+                                <tr class="bg-gray-50"><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">ذَهَبَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَذْهَبُ</td><td class="border p-3 arabic-text text-xl font-bold text-green-900" dir="rtl">مَذْهَب</td><td class="border p-3">way; school of thought</td></tr>
+                                <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">طَبَخَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَطْبُخُ</td><td class="border p-3 arabic-text text-xl font-bold text-green-900" dir="rtl">مَطْبَخ</td><td class="border p-3">kitchen</td></tr>
+                                <tr class="bg-gray-50"><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">سَبَحَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَسْبَحُ</td><td class="border p-3 arabic-text text-xl font-bold text-green-900" dir="rtl">مَسْبَح</td><td class="border p-3">swimming pool</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-5 rounded-r-lg mt-8">
+                <p class="text-lg text-gray-900 leading-relaxed" dir="ltr">
+                    <strong>Important:</strong> Do not choose the pattern by looking only at the past-tense verb. Check the present-tense form: <span class="arabic-text font-bold text-xl" dir="rtl">يَجْلِسُ</span> gives <span class="arabic-text font-bold text-xl" dir="rtl">مَجْلِس</span>, but <span class="arabic-text font-bold text-xl" dir="rtl">يَكْتُبُ</span> gives <span class="arabic-text font-bold text-xl" dir="rtl">مَكْتَب</span>.
+                </p>
+            </div>
+        </section>
+
+        <!-- Weak Verbs -->
+        <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <p class="text-sm font-bold uppercase tracking-wider text-purple-700" dir="ltr">Weak Roots</p>
+            <h2 class="text-3xl font-bold text-gray-900 mt-1 mb-6" dir="ltr">What Happens with Weak Verbs?</h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="border border-purple-200 rounded-xl p-6 bg-purple-50">
+                    <h3 class="text-xl font-bold text-purple-900 mb-4" dir="ltr">1. Verbs beginning with و</h3>
+                    <p class="text-gray-800 leading-relaxed mb-5" dir="ltr">
+                        When a three-letter verb begins with <span class="arabic-text text-xl font-bold" dir="rtl">و</span> and ends with a regular consonant, the noun of place or time usually follows <span class="arabic-text text-xl font-bold" dir="rtl">مَفْعِل</span>.
+                    </p>
+                    <div class="space-y-3">
+                        <div class="bg-white border border-purple-200 rounded p-4 flex flex-col gap-2"><div class="arabic-text text-xl font-bold text-purple-900" dir="rtl">وَعَدَ – يَعِدُ ← مَوْعِد</div><div dir="ltr">appointment; appointed time</div></div>
+                        <div class="bg-white border border-purple-200 rounded p-4 flex flex-col gap-2"><div class="arabic-text text-xl font-bold text-purple-900" dir="rtl">وَضَعَ – يَضَعُ ← مَوْضِع</div><div dir="ltr">place; position</div></div>
+                        <div class="bg-white border border-purple-200 rounded p-4 flex flex-col gap-2"><div class="arabic-text text-xl font-bold text-purple-900" dir="rtl">وَقَعَ – يَقَعُ ← مَوْقِع</div><div dir="ltr">location; site</div></div>
+                    </div>
+                </div>
+
+                <div class="border border-orange-200 rounded-xl p-6 bg-orange-50">
+                    <h3 class="text-xl font-bold text-orange-900 mb-4" dir="ltr">2. Verbs ending in a weak letter</h3>
+                    <p class="text-gray-800 leading-relaxed mb-5" dir="ltr">
+                        When the final root letter is weak, the noun usually follows a form related to <span class="arabic-text text-xl font-bold" dir="rtl">مَفْعَل</span>, often ending in <span class="arabic-text text-xl font-bold" dir="rtl">ى</span>.
+                    </p>
+                    <div class="space-y-3">
+                        <div class="bg-white border border-orange-200 rounded p-4 flex flex-col gap-2"><div class="arabic-text text-xl font-bold text-orange-900" dir="rtl">أَوَى – يَأْوِي ← مَأْوَى</div><div dir="ltr">shelter; refuge</div></div>
+                        <div class="bg-white border border-orange-200 rounded p-4 flex flex-col gap-2"><div class="arabic-text text-xl font-bold text-orange-900" dir="rtl">رَمَى – يَرْمِي ← مَرْمَى</div><div dir="ltr">goal; target; throwing place</div></div>
+                        <div class="bg-white border border-orange-200 rounded p-4 flex flex-col gap-2"><div class="arabic-text text-xl font-bold text-orange-900" dir="rtl">سَعَى – يَسْعَى ← مَسْعَى</div><div dir="ltr">place or course of effort</div></div>
+                        <div class="bg-white border border-orange-200 rounded p-4 flex flex-col gap-2"><div class="arabic-text text-xl font-bold text-orange-900" dir="rtl">جَرَى – يَجْرِي ← مَجْرَى</div><div dir="ltr">course; channel; place where something flows</div></div>
+                        <div class="bg-white border border-orange-200 rounded p-4 flex flex-col gap-2"><div class="arabic-text text-xl font-bold text-orange-900" dir="rtl">ثَوَى – يَثْوِي ← مَثْوَى</div><div dir="ltr">dwelling place; resting place</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Irregular Forms -->
+        <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <p class="text-sm font-bold uppercase tracking-wider text-red-700" dir="ltr">Common Irregular Forms</p>
+            <h2 class="text-3xl font-bold text-gray-900 mt-1 mb-4" dir="ltr">Some Words Do Not Follow the Expected Vowel</h2>
+            <p class="text-lg text-gray-800 leading-relaxed mb-6" dir="ltr">
+                Some frequently used nouns of place have a kasra or fatḥa that is different from what the regular rule predicts. These forms are established by usage, so it is best to learn them as vocabulary.
+            </p>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center"><div class="arabic-text text-2xl font-bold text-red-900" dir="rtl">مَسْجِد</div><div class="mt-2" dir="ltr">mosque</div></div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center"><div class="arabic-text text-2xl font-bold text-red-900" dir="rtl">مَسْكِن</div><div class="mt-2" dir="ltr">dwelling; residence</div></div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center"><div class="arabic-text text-2xl font-bold text-red-900" dir="rtl">مَشْرِق</div><div class="mt-2" dir="ltr">east; place of sunrise</div></div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center"><div class="arabic-text text-2xl font-bold text-red-900" dir="rtl">مَغْرِب</div><div class="mt-2" dir="ltr">west; sunset time</div></div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center"><div class="arabic-text text-2xl font-bold text-red-900" dir="rtl">مَطْلِع</div><div class="mt-2" dir="ltr">rising place or time</div></div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center"><div class="arabic-text text-2xl font-bold text-red-900" dir="rtl">مَرْفِق</div><div class="mt-2" dir="ltr">facility; public service place</div></div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center"><div class="arabic-text text-2xl font-bold text-red-900" dir="rtl">مَنْبِت</div><div class="mt-2" dir="ltr">place where something grows</div></div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center"><div class="arabic-text text-2xl font-bold text-red-900" dir="rtl">مَنْسِك</div><div class="mt-2" dir="ltr">place or rite of worship</div></div>
+            </div>
+
+            <div class="bg-gray-50 border border-gray-300 rounded-lg p-5 mt-6">
+                <p class="text-gray-800 leading-relaxed" dir="ltr">
+                    For example, the fully regular prediction for <span class="arabic-text font-bold text-xl" dir="rtl">سَجَدَ – يَسْجُدُ</span> would be <span class="arabic-text font-bold text-xl" dir="rtl">مَسْجَد</span>, but the common word for “mosque” is <span class="arabic-text font-bold text-xl" dir="rtl">مَسْجِد</span>.
+                </p>
+            </div>
+        </section>
+
+        <!-- Non-triliteral verbs -->
+        <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+            <p class="text-sm font-bold uppercase tracking-wider text-teal-700" dir="ltr">Derived Verb Forms</p>
+            <h2 class="text-3xl font-bold text-gray-900 mt-1 mb-4" dir="ltr">Nouns of Place from Verbs Longer than Three Letters</h2>
+            <p class="text-lg text-gray-800 leading-relaxed mb-6" dir="ltr">
+                With verbs longer than three root-pattern letters, the noun of place normally has the same form as the <strong>passive participle</strong>. Begin with the present-tense verb, replace the present-tense prefix with <span class="arabic-text text-xl font-bold" dir="rtl">مُـ</span>, and place a fatḥa on the letter before the final letter.
+            </p>
+
+            <div class="bg-teal-50 border border-teal-200 rounded-xl p-6 mb-6">
+                <div class="grid md:grid-cols-3 gap-4 items-center text-center">
+                    <div><div class="text-sm font-bold uppercase text-gray-600 mb-2" dir="ltr">Present Verb</div><div class="arabic-text text-2xl font-bold text-teal-900" dir="rtl">يَجْتَمِعُ</div></div>
+                    <div class="text-2xl font-bold text-teal-700" dir="ltr">→</div>
+                    <div><div class="text-sm font-bold uppercase text-gray-600 mb-2" dir="ltr">Noun of Place</div><div class="arabic-text text-2xl font-bold text-teal-900" dir="rtl">مُجْتَمَع</div></div>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-left" dir="ltr">
+                    <thead>
+                        <tr class="bg-teal-50">
+                            <th class="border border-teal-200 p-3">Verb</th>
+                            <th class="border border-teal-200 p-3">Present</th>
+                            <th class="border border-teal-200 p-3">Noun of Place</th>
+                            <th class="border border-teal-200 p-3">Meaning</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">اِجْتَمَعَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَجْتَمِعُ</td><td class="border p-3 arabic-text text-xl font-bold text-teal-900" dir="rtl">مُجْتَمَع</td><td class="border p-3">gathering place; community</td></tr>
+                        <tr class="bg-gray-50"><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">اِنْطَلَقَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَنْطَلِقُ</td><td class="border p-3 arabic-text text-xl font-bold text-teal-900" dir="rtl">مُنْطَلَق</td><td class="border p-3">starting point</td></tr>
+                        <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">اِسْتَقَرَّ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَسْتَقِرُّ</td><td class="border p-3 arabic-text text-xl font-bold text-teal-900" dir="rtl">مُسْتَقَرّ</td><td class="border p-3">settlement; resting place</td></tr>
+                        <tr class="bg-gray-50"><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">اِسْتَوْدَعَ</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَسْتَوْدِعُ</td><td class="border p-3 arabic-text text-xl font-bold text-teal-900" dir="rtl">مُسْتَوْدَع</td><td class="border p-3">warehouse; storage place</td></tr>
+                        <tr><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">اِسْتَشْفَى</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَسْتَشْفِي</td><td class="border p-3 arabic-text text-xl font-bold text-teal-900" dir="rtl">مُسْتَشْفَى</td><td class="border p-3">hospital; place where one seeks healing</td></tr>
+                        <tr class="bg-gray-50"><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">اِلْتَقَى</td><td class="border p-3 arabic-text text-xl font-bold" dir="rtl">يَلْتَقِي</td><td class="border p-3 arabic-text text-xl font-bold text-teal-900" dir="rtl">مُلْتَقَى</td><td class="border p-3">meeting place; forum</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Context and Plurals -->
         <section class="grid md:grid-cols-2 gap-6">
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
-                <h3 class="text-xl font-bold text-gray-900 mb-4" dir="ltr">The Kasra Exception</h3>
-                <p class="text-gray-700 mb-6 leading-relaxed flex flex-wrap items-center gap-x-2" dir="ltr">
-                    <span>Some</span>
-                    <span class="font-bold text-xl arabic-text" dir="rtl">أسماء مكان</span> 
-                    <span>take the pattern</span>
-                    <span class="font-bold text-xl text-blue-700 arabic-text" dir="rtl">مَفْعِل</span> 
-                    <span>with a</span>
-                    <span class="font-bold arabic-text text-lg" dir="rtl">كسرة</span> 
-                    <span>vowel. This happens when the stem of</span>
-                    <span class="font-bold arabic-text text-lg" dir="rtl">المضارع</span> 
-                    <span>of the verb is also</span>
-                    <span class="font-bold arabic-text text-lg" dir="rtl">كسرة</span>.
+                <div class="absolute top-0 right-0 w-2 h-full bg-indigo-500"></div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4" dir="ltr">Context Determines the Meaning</h3>
+                <p class="text-gray-700 mb-5 leading-relaxed" dir="ltr">
+                    The same form may refer to a place, a time, a passive participle, or another established noun. Read the entire sentence rather than translating the form mechanically.
                 </p>
                 <div class="space-y-4">
-                    <!-- Flex container with gap guarantees English and Arabic won't overlap -->
-                    <div class="bg-gray-50 p-4 rounded border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <span class="text-gray-600 italic text-left w-full md:w-auto" dir="ltr">council (place where one "sits")</span>
-                        <span class="text-2xl font-bold text-blue-900 text-right w-full md:w-auto arabic-text" dir="rtl">يَجلِس: مَجلِس ج. مَجالِس</span>
+                    <div class="bg-indigo-50 p-4 rounded border border-indigo-200">
+                        <div class="arabic-text text-xl font-bold text-indigo-900" dir="rtl">هٰذَا مَوْعِدُ الطَّائِرَةِ.</div>
+                        <div class="mt-2" dir="ltr">This is the time of the flight.</div>
                     </div>
-                    <div class="bg-gray-50 p-4 rounded border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <span class="text-gray-600 italic text-left w-full md:w-auto" dir="ltr">residence (place where one stays)</span>
-                        <span class="text-2xl font-bold text-blue-900 text-right w-full md:w-auto arabic-text" dir="rtl">يَنزِل: مَنزِل ج. مَنازِل</span>
+                    <div class="bg-indigo-50 p-4 rounded border border-indigo-200">
+                        <div class="arabic-text text-xl font-bold text-indigo-900" dir="rtl">هٰذَا مُلْتَقَى الطُّلَّابِ.</div>
+                        <div class="mt-2" dir="ltr">This is the students’ meeting place.</div>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded border border-indigo-200">
+                        <div class="arabic-text text-xl font-bold text-indigo-900" dir="rtl">البَابُ مُغْلَقٌ.</div>
+                        <div class="mt-2" dir="ltr">The door is closed. Here the form is a passive participle, not a place.</div>
                     </div>
                 </div>
             </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-2 h-full bg-green-500"></div>
-                <h3 class="text-xl font-bold text-gray-900 mb-4" dir="ltr">The Plural Pattern</h3>
-                <p class="text-gray-700 mb-6 leading-relaxed flex flex-wrap items-center gap-x-2" dir="ltr">
-                    <span>The plural of</span>
-                    <span class="font-bold text-xl arabic-text" dir="rtl">أسماء مكان</span> 
-                    <span>is normally</span>
-                    <span class="font-bold text-2xl text-green-700 arabic-text" dir="rtl">مَفاعِل</span>. 
-                    <span>Be on the lookout for this pattern in both singular and plural.</span>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4" dir="ltr">Common Plural Patterns</h3>
+                <p class="text-gray-700 mb-6 leading-relaxed" dir="ltr">
+                    Many nouns of place on <span class="arabic-text font-bold text-xl" dir="rtl">مَفْعَل</span> or <span class="arabic-text font-bold text-xl" dir="rtl">مَفْعِل</span> have a broken plural on <span class="arabic-text font-bold text-2xl text-green-700" dir="rtl">مَفاعِل</span>. However, not every noun uses this plural, so learn the plural with the singular.
                 </p>
-                <div class="flex flex-wrap justify-end gap-3 mt-8" dir="rtl">
-                    <span class="px-4 py-2 bg-green-50 text-green-900 text-2xl font-bold border border-green-200 rounded arabic-text">مَدارِس</span>
-                    <span class="px-4 py-2 bg-green-50 text-green-900 text-2xl font-bold border border-green-200 rounded arabic-text">مَطابِخ</span>
-                    <span class="px-4 py-2 bg-green-50 text-green-900 text-2xl font-bold border border-green-200 rounded arabic-text">مَسابِح</span>
-                    <span class="px-4 py-2 bg-green-50 text-green-900 text-2xl font-bold border border-green-200 rounded arabic-text">مَنازِل</span>
+                <div class="grid grid-cols-2 gap-3" dir="rtl">
+                    <div class="px-4 py-3 bg-green-50 border border-green-200 rounded text-center"><div class="arabic-text text-xl font-bold">مَدْرَسَة</div><div class="arabic-text text-xl text-green-800">مَدارِس</div></div>
+                    <div class="px-4 py-3 bg-green-50 border border-green-200 rounded text-center"><div class="arabic-text text-xl font-bold">مَطْبَخ</div><div class="arabic-text text-xl text-green-800">مَطابِخ</div></div>
+                    <div class="px-4 py-3 bg-green-50 border border-green-200 rounded text-center"><div class="arabic-text text-xl font-bold">مَسْبَح</div><div class="arabic-text text-xl text-green-800">مَسابِح</div></div>
+                    <div class="px-4 py-3 bg-green-50 border border-green-200 rounded text-center"><div class="arabic-text text-xl font-bold">مَنْزِل</div><div class="arabic-text text-xl text-green-800">مَنازِل</div></div>
+                    <div class="px-4 py-3 bg-green-50 border border-green-200 rounded text-center"><div class="arabic-text text-xl font-bold">مَدْخَل</div><div class="arabic-text text-xl text-green-800">مَداخِل</div></div>
+                    <div class="px-4 py-3 bg-green-50 border border-green-200 rounded text-center"><div class="arabic-text text-xl font-bold">مَخْرَج</div><div class="arabic-text text-xl text-green-800">مَخارِج</div></div>
                 </div>
             </div>
+        </section>
+
+        <!-- Quick Decision Guide -->
+        <section class="bg-gray-900 text-white rounded-xl shadow-md p-8">
+            <p class="text-sm font-bold uppercase tracking-wider text-blue-300" dir="ltr">Quick Reference</p>
+            <h2 class="text-3xl font-bold mt-1 mb-7" dir="ltr">How Do I Choose the Form?</h2>
+            <div class="grid md:grid-cols-4 gap-4">
+                <div class="bg-gray-800 border border-gray-700 rounded-lg p-5">
+                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold mb-4">1</div>
+                    <p class="leading-relaxed" dir="ltr">Is the verb a regular three-letter verb? Check its present-tense middle vowel.</p>
+                </div>
+                <div class="bg-gray-800 border border-gray-700 rounded-lg p-5">
+                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold mb-4">2</div>
+                    <p class="leading-relaxed" dir="ltr"><span class="arabic-text text-xl font-bold" dir="rtl">يَفْعِل</span> usually gives <span class="arabic-text text-xl font-bold" dir="rtl">مَفْعِل</span>.</p>
+                </div>
+                <div class="bg-gray-800 border border-gray-700 rounded-lg p-5">
+                    <div class="w-9 h-9 rounded-full bg-green-600 flex items-center justify-center font-bold mb-4">3</div>
+                    <p class="leading-relaxed" dir="ltr"><span class="arabic-text text-xl font-bold" dir="rtl">يَفْعَل</span> or <span class="arabic-text text-xl font-bold" dir="rtl">يَفْعُل</span> usually gives <span class="arabic-text text-xl font-bold" dir="rtl">مَفْعَل</span>.</p>
+                </div>
+                <div class="bg-gray-800 border border-gray-700 rounded-lg p-5">
+                    <div class="w-9 h-9 rounded-full bg-teal-600 flex items-center justify-center font-bold mb-4">4</div>
+                    <p class="leading-relaxed" dir="ltr">For longer verbs, use the passive-participle pattern beginning with <span class="arabic-text text-xl font-bold" dir="rtl">مُـ</span>.</p>
+                </div>
+            </div>
+            <p class="mt-6 text-gray-300 leading-relaxed" dir="ltr">
+                Finally, check whether the word is a common irregular form. High-frequency words such as <span class="arabic-text text-xl font-bold text-white" dir="rtl">مَسْجِد</span> and <span class="arabic-text text-xl font-bold text-white" dir="rtl">مَسْكِن</span> should be memorized.
+            </p>
         </section>
 
         <!-- Interactive Exercise -->
         <section class="mt-16">
             <div class="flex flex-col md:flex-row items-center justify-between mb-8 border-b-2 border-gray-300 pb-4 gap-4">
                 <div class="text-center md:text-left">
-                    <h2 class="text-2xl font-bold text-gray-900" dir="ltr">Interactive Exercise 🎧</h2>
+                    <h2 class="text-2xl font-bold text-gray-900" dir="ltr">Interactive Exercise</h2>
                     <p class="text-gray-600 mt-1" dir="ltr">Click the cards to reveal the Noun of Place and its plural.</p>
                 </div>
                 <h2 class="text-3xl font-bold text-blue-900 arabic-text text-center md:text-right" dir="rtl">تمرين ١٣: اسم المكان (في البيت)</h2>
@@ -161,8 +414,8 @@
         <!-- Visual Frequency Table -->
         <section class="mt-16 bg-white border-2 border-gray-300 rounded-2xl p-8 shadow-md">
             <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold mb-3 text-gray-900" dir="ltr">10 Most Frequent Nouns of Place</h2>
-                <p class="text-gray-600 text-lg" dir="ltr">Essential vocabulary for daily communication.</p>
+                <h2 class="text-3xl font-bold mb-3 text-gray-900" dir="ltr">Useful Nouns of Place</h2>
+                <p class="text-gray-600 text-lg" dir="ltr">Additional examples for everyday communication.</p>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
@@ -194,14 +447,13 @@
             </div>
         </section>
 
-        <!-- Footnote -->
-        <footer class="mt-12 pt-6 border-t border-gray-300 text-sm text-gray-600">
-            <p class="flex flex-wrap gap-1 items-center" dir="ltr">
-                <span><sup>1</sup> The</span>
-                <span class="font-bold text-base arabic-text" dir="rtl">اسم مكان</span> 
-                <span>can also be formed from awzaan II-X using a different pattern that you will learn soon. One example is the word</span>
-                <span class="font-bold text-base arabic-text" dir="rtl">مُسْتَشْفَى</span> 
-                <span>that is derived from ش ف ي.</span>
+        <!-- Source and Final Note -->
+        <footer class="mt-12 pt-6 border-t border-gray-300 text-sm text-gray-600 space-y-3">
+            <p class="leading-relaxed" dir="ltr">
+                The most useful rule for learners is to connect the noun of place to the present-tense form of the verb. Some words have become independent vocabulary items, so their modern meanings may be broader than the literal meaning of the original verb.
+            </p>
+            <p class="leading-relaxed" dir="ltr">
+                Grammar reference adapted and simplified from <span class="font-semibold">Al-Dorar Al-Saniyyah: اسم الزمان واسم المكان</span>.
             </p>
         </footer>
 
