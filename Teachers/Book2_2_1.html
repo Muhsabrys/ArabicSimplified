@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عرب في أمريكا — الدرس ٢ | Interactive Lesson</title>
+  <style>
+    :root{
+      --ink:#17324d;
+      --muted:#607386;
+      --blue:#dcecf8;
+      --blue-2:#eff7fc;
+      --green:#3d7b69;
+      --green-soft:#e7f4ef;
+      --red:#a84141;
+      --red-soft:#fdecec;
+      --gold:#9a6a19;
+      --gold-soft:#fff4d8;
+      --line:#c7d3df;
+      --panel:#ffffff;
+      --bg:#f5f8fb;
+      --shadow:0 10px 28px rgba(23,50,77,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial,"Noto Sans Arabic","Segoe UI",sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#eef5fa 0,#f8fafc 240px,#f5f8fb 100%);
+      line-height:1.75;
+    }
+    button,input,textarea,select{font:inherit}
+    a{color:inherit}
+    .page-shell{max-width:1180px;margin:0 auto;padding:24px 18px 60px}
+    .hero{
+      background:linear-gradient(135deg,#153956,#245b7d 58%,#397b92);
+      color:#fff;
+      border-radius:26px;
+      padding:34px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:280px;height:280px;
+      right:-90px;top:-120px;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+    }
+    .eyebrow{font-size:.86rem;letter-spacing:.12em;text-transform:uppercase;opacity:.78;margin-bottom:8px}
+    .hero h1{font-size:clamp(2rem,5vw,4.2rem);margin:0;line-height:1.12}
+    .hero p{max-width:780px;margin:14px 0 0;font-size:1.03rem;opacity:.94}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+    .hero-actions button,.hero-actions a{
+      border:none;border-radius:999px;padding:10px 17px;text-decoration:none;cursor:pointer;
+      background:#fff;color:#17324d;font-weight:700;
+    }
+    .hero-actions .secondary{background:rgba(255,255,255,.13);color:white;border:1px solid rgba(255,255,255,.35)}
+    .progress-wrap{margin-top:18px;max-width:560px}
+    .progress-label{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:6px}
+    .progress-track{height:10px;background:rgba(255,255,255,.19);border-radius:99px;overflow:hidden}
+    .progress-bar{height:100%;width:0;background:#fff;border-radius:99px;transition:width .35s ease}
+
+    .quick-nav{
+      position:sticky;top:0;z-index:20;
+      display:flex;gap:8px;overflow-x:auto;
+      background:rgba(245,248,251,.94);backdrop-filter:blur(10px);
+      padding:12px 4px;margin:18px 0 4px;
+      border-bottom:1px solid rgba(199,211,223,.85);
+    }
+    .quick-nav a{white-space:nowrap;text-decoration:none;background:white;border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:.9rem}
+
+    section.card{
+      background:var(--panel);border:1px solid #e1e8ef;border-radius:var(--radius);
+      padding:26px;margin-top:22px;box-shadow:var(--shadow);
+    }
+    .section-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .section-heading h2{margin:0;font-size:1.55rem;line-height:1.35}
+    .section-heading p{margin:5px 0 0;color:var(--muted)}
+    .badge{display:inline-flex;align-items:center;background:var(--blue-2);border:1px solid #c7e1f2;color:#2b668a;border-radius:999px;padding:5px 10px;font-size:.8rem;font-weight:700;white-space:nowrap}
+    .rtl{direction:rtl;text-align:right}
+    .ltr{direction:ltr;text-align:left}
+    .arabic{font-family:"Noto Sans Arabic",Arial,sans-serif;font-size:1.1em}
+    .note{background:var(--blue-2);border-inline-start:5px solid #4c8db6;border-radius:12px;padding:14px 16px;margin:14px 0}
+    .tip{background:var(--gold-soft);border-inline-start:5px solid #d2a040;border-radius:12px;padding:14px 16px;margin:14px 0}
+
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+    .toolbar input,.toolbar select{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#fff;min-width:210px}
+    .toolbar button,.action-btn{
+      border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:700;background:#245b7d;color:#fff;
+    }
+    .toolbar button.secondary,.action-btn.secondary{background:#eef4f8;color:#245b7d;border:1px solid #cbd9e4}
+    .action-btn.warning{background:#8a5c16}
+    .action-btn.danger{background:#8d3d3d}
+
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+    table{border-collapse:collapse;width:100%;min-width:760px;background:white}
+    th,td{border-bottom:1px solid #dce4eb;border-inline-end:1px solid #dce4eb;padding:11px 12px;vertical-align:top}
+    th:last-child,td:last-child{border-inline-end:none}
+    tr:last-child td{border-bottom:none}
+    th{background:#dbeaf5;color:#1d4a69;font-weight:800;text-align:center;position:sticky;top:0}
+    td.meaning{direction:ltr;text-align:left;min-width:220px}
+    td.ar-cell{direction:rtl;text-align:right;min-width:190px}
+    tr.vocab-row:hover{background:#f6fbfe}
+    .speak-btn{border:1px solid #a9c4d8;border-radius:999px;background:#fff;color:#245b7d;padding:4px 9px;cursor:pointer;font-size:.8rem;margin-inline-start:6px}
+    .hidden-row{display:none}
+
+    .visual-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:18px}
+    .visual-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fbfdff}
+    .visual-card svg{display:block;width:100%;height:190px;background:linear-gradient(#f3f8fb,#fff)}
+    .visual-card .caption{padding:12px;text-align:center}
+    .visual-card strong{display:block;font-size:1.06rem}
+    .visual-card span{color:var(--muted);font-size:.9rem}
+
+    details{border:1px solid var(--line);border-radius:12px;margin:10px 0;background:#fcfdff}
+    summary{cursor:pointer;padding:13px 15px;font-weight:800}
+    details .detail-body{padding:0 15px 15px;color:#314a60}
+
+    .conj-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    .conj-tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 13px;cursor:pointer}
+    .conj-tabs button.active{background:#245b7d;color:white;border-color:#245b7d}
+    .conj-panel{display:none}
+    .conj-panel.active{display:block}
+
+    .exercise{border:1px solid #dce5ec;border-radius:16px;padding:20px;margin-top:18px;background:#fbfdff}
+    .exercise h3{margin:0 0 8px;font-size:1.22rem}
+    .exercise-intro{color:var(--muted);margin:0 0 16px}
+    .exercise-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px;align-items:center}
+    .score-box{font-weight:800;padding:7px 11px;border-radius:10px;background:#eef4f8;color:#244b66;min-width:88px;text-align:center}
+
+    input.answer,select.answer{
+      width:100%;min-width:110px;border:1px solid #9fb4c4;border-radius:8px;padding:8px 9px;background:white;
+    }
+    input.answer.correct,select.answer.correct{border-color:#2f7b5f;background:var(--green-soft)}
+    input.answer.incorrect,select.answer.incorrect{border-color:#b55353;background:var(--red-soft)}
+    .feedback{font-size:.86rem;margin-top:4px;min-height:1.3em}
+    .feedback.ok{color:#27684f}
+    .feedback.no{color:#9b3434}
+    .small-answer{max-width:180px;display:inline-block;vertical-align:middle;margin:3px 5px}
+    .sentence-item{padding:12px 0;border-bottom:1px dashed #ced9e2;font-size:1.08rem}
+    .sentence-item:last-child{border-bottom:none}
+    .word-bank{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+    .word-chip{border:1px solid #a9bfd0;background:white;border-radius:999px;padding:7px 12px;cursor:pointer;direction:rtl}
+    .word-chip.used{opacity:.4;text-decoration:line-through}
+    .explanation{display:none;margin-top:10px;border-radius:10px;padding:10px 12px;background:#f0f6fa;color:#274d67}
+    .explanation.show{display:block}
+
+    .derive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .derive-item{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;border:1px solid #dfe7ee;border-radius:12px;padding:12px;background:white}
+    .derive-source{text-align:right;direction:rtl;font-size:1.15rem;font-weight:700}
+
+    .reflection-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .reflection-card{border:1px solid #d9e3ea;border-radius:14px;padding:15px;background:#fcfdff}
+    .reflection-card label{font-weight:800;display:block;margin-bottom:8px}
+    .reflection-card textarea{width:100%;min-height:120px;border:1px solid #aebfcd;border-radius:10px;padding:10px;resize:vertical;background:white}
+
+    .footer{color:#607386;text-align:center;margin-top:26px;font-size:.9rem}
+    .print-only{display:none}
+
+    @media (max-width:900px){
+      .visual-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .derive-grid,.reflection-grid{grid-template-columns:1fr}
+      .hero{padding:26px 22px}
+    }
+    @media (max-width:560px){
+      .visual-grid{grid-template-columns:1fr}
+      section.card{padding:18px}
+      .section-heading{display:block}
+      .badge{margin-top:10px}
+      .small-answer{max-width:100%;width:100%;margin:6px 0}
+    }
+    @media print{
+      body{background:white}
+      .hero-actions,.quick-nav,.toolbar,.exercise-actions,.speak-btn,.word-bank{display:none!important}
+      .page-shell{max-width:none;padding:0}
+      section.card,.hero{box-shadow:none;break-inside:avoid}
+      .print-only{display:block}
+      textarea{min-height:80px}
+    }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <header class="hero" id="top">
+    <div class="eyebrow">Interactive Arabic Lesson</div>
+    <h1 class="rtl">عرب في أمريكا — الدرس ٢</h1>
+    <p>
+      Vocabulary, usage notes, verb conjugation, word derivation, auto-graded practice, and discussion prompts based on the supplied lesson pages.
+    </p>
+    <div class="hero-actions">
+      <a href="#vocabulary">Start with vocabulary</a>
+      <button class="secondary" type="button" onclick="window.print()">Print / Save as PDF</button>
+      <button class="secondary" type="button" onclick="resetAll()">Reset lesson</button>
+    </div>
+    <div class="progress-wrap" aria-label="Lesson progress">
+      <div class="progress-label"><span>Checked responses</span><span id="progressText">0%</span></div>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+  </header>
+
+  <nav class="quick-nav" aria-label="Lesson sections">
+    <a href="#vocabulary">Vocabulary</a>
+    <a href="#visuals">Visual vocabulary</a>
+    <a href="#usage">Usage notes</a>
+    <a href="#conjugation">Verb conjugation</a>
+    <a href="#exercise1">Exercise 1</a>
+    <a href="#exercise2">Exercise 2</a>
+    <a href="#exercise3">Exercise 3</a>
+    <a href="#discussion">Discussion</a>
+  </nav>
+
+  <section class="card" id="vocabulary">
+    <div class="section-heading">
+      <div>
+        <h2>المفردات الجديدة: من القاموس</h2>
+        <p>From this point onward, the vocabulary list gives the dictionary form for verbs whose present tense and verbal noun can be derived from the verb pattern. Listen to the forms and practice conjugating them aloud.</p>
+      </div>
+      <span class="badge">29 vocabulary items</span>
+    </div>
+
+    <div class="toolbar">
+      <input id="vocabSearch" type="search" placeholder="Search English or Arabic..." aria-label="Search vocabulary" />
+      <select id="dialectFilter" aria-label="Filter by dialect">
+        <option value="all">Show all dialect columns</option>
+        <option value="msa">Focus on MSA</option>
+        <option value="levantine">Focus on Levantine</option>
+        <option value="egyptian">Focus on Egyptian</option>
+      </select>
+      <button type="button" class="secondary" onclick="clearVocabFilters()">Clear filters</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="vocabTable">
+        <thead>
+          <tr>
+            <th class="meaning">Meaning</th>
+            <th data-col="egyptian">المصري</th>
+            <th data-col="levantine">الشامي</th>
+            <th data-col="msa">الفصحى</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="vocab-row"><td class="meaning">to look for, search for</td><td class="ar-cell" data-col="egyptian">دوَّر على، يدوَّر، التدوير</td><td class="ar-cell" data-col="levantine">دوَّر على، يدوِّر، التدوير</td><td class="ar-cell" data-col="msa">بَحَثَ عَنْ، يَبْحَثُ، البَحْث <button class="speak-btn" onclick="speakArabic('بَحَثَ عَنْ، يَبْحَثُ، البَحْث')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to remain, stay</td><td class="ar-cell" data-col="egyptian">قَعَد، يِقْعَد</td><td class="ar-cell" data-col="levantine">بِقِي، يِبْقَى</td><td class="ar-cell" data-col="msa">بَقِيَ، يَبْقَى، البَقَاء <button class="speak-btn" onclick="speakArabic('بَقِيَ، يَبْقَى، البَقَاء')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">(a pair of) pants</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">—</td><td class="ar-cell" data-col="msa">بَنْطَلون، ج. بَنْطَلونات <button class="speak-btn" onclick="speakArabic('بَنْطَلون')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">skirt</td><td class="ar-cell" data-col="egyptian">جِيبة، ج. جِيبات</td><td class="ar-cell" data-col="levantine">—</td><td class="ar-cell" data-col="msa">تَنّورة، ج. تَنانير <button class="speak-btn" onclick="speakArabic('تَنّورة')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">community of immigrants; expatriate community</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">—</td><td class="ar-cell" data-col="msa">جالِيَة، ج. جالِيات <button class="speak-btn" onclick="speakArabic('جالِيَة')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to determine; set (for example, a time or topic)</td><td class="ar-cell" data-col="egyptian">حَدَّد، يِحَدِّد</td><td class="ar-cell" data-col="levantine">حَدَّد، يِحَدِّد</td><td class="ar-cell" data-col="msa">حَدَّدَ، يُحَدِّدُ، التَّحْديد <button class="speak-btn" onclick="speakArabic('حَدَّدَ، يُحَدِّدُ، التَّحْديد')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">border; limit</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">حَدّ، ج. حُدود</td><td class="ar-cell" data-col="msa">حَدّ، ج. حُدود <button class="speak-btn" onclick="speakArabic('حَدّ، حُدود')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">(a pair of) shoes</td><td class="ar-cell" data-col="egyptian">جَزْمَة، ج. جِزَم</td><td class="ar-cell" data-col="levantine">للرجال: صِباط، ج. صَبابيط؛ للنساء: كِنْدَرَة، ج. كَنادِر</td><td class="ar-cell" data-col="msa">حِذاء، ج. أَحْذِيَة <button class="speak-btn" onclick="speakArabic('حِذاء، أَحْذِيَة')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">freedom</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">—</td><td class="ar-cell" data-col="msa">الحُرِّيَّة <button class="speak-btn" onclick="speakArabic('الحُرِّيَّة')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">shop; store</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">—</td><td class="ar-cell" data-col="msa">مَحَلّ، ج. مَحَلّات <button class="speak-btn" onclick="speakArabic('مَحَلّ، مَحَلّات')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to increase; become larger (of a number)</td><td class="ar-cell" data-col="egyptian">زاد، يِزيد، الزِّيادَة</td><td class="ar-cell" data-col="levantine">زاد، يِزيد، الزِّيادَة</td><td class="ar-cell" data-col="msa">اِزْدادَ، يَزْدادُ، الازْدِياد <button class="speak-btn" onclick="speakArabic('اِزْدادَ، يَزْدادُ، الازْدِياد')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to permit someone to do something</td><td class="ar-cell" data-col="egyptian">يِسْمَح لِـ (حَدّ)</td><td class="ar-cell" data-col="levantine">يِسْمَح لِـ (حَدا)</td><td class="ar-cell" data-col="msa">سَمَحَ لِـ (أَحَدٍ) بِـ (+ أَنْ / المَصْدَر)، يَسْمَحُ، السَّماح <button class="speak-btn" onclick="speakArabic('سَمَحَ لِأَحَدٍ، يَسْمَحُ، السَّماح')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">person</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">—</td><td class="ar-cell" data-col="msa">شَخْص، ج. أَشْخاص <button class="speak-btn" onclick="speakArabic('شَخْص، أَشْخاص')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">personality; character</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">—</td><td class="ar-cell" data-col="msa">شَخْصِيَّة، ج. شَخْصِيّات <button class="speak-btn" onclick="speakArabic('شَخْصِيَّة')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">north</td><td class="ar-cell" data-col="egyptian">شَمال</td><td class="ar-cell" data-col="levantine">شَمال</td><td class="ar-cell" data-col="msa">شَمال <button class="speak-btn" onclick="speakArabic('شَمال')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">year</td><td class="ar-cell" data-col="egyptian">سَنَة</td><td class="ar-cell" data-col="levantine">سَنَة</td><td class="ar-cell" data-col="msa">عام، ج. أَعْوام <button class="speak-btn" onclick="speakArabic('عام، أَعْوام')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to get angry</td><td class="ar-cell" data-col="egyptian">زِعِل، يِزْعَل، الزَّعَل؛ غَضِب، يِغْضَب</td><td class="ar-cell" data-col="levantine">زِعِل، يِزْعَل، الزَّعَل</td><td class="ar-cell" data-col="msa">غَضِبَ مِنْ، يَغْضَبُ، الغَضَب <button class="speak-btn" onclick="speakArabic('غَضِبَ مِنْ، يَغْضَبُ، الغَضَب')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">angry</td><td class="ar-cell" data-col="egyptian">زَعْلان / زَعْلانة، ج. زَعْلانين</td><td class="ar-cell" data-col="levantine">زَعْلان / زَعْلانة، ج. زَعْلانين</td><td class="ar-cell" data-col="msa">غاضِب / غاضِبَة، ج. غاضِبون / غاضِبين <button class="speak-btn" onclick="speakArabic('غاضِب، غاضِبَة')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">dress</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">فُسْتان، ج. فَساتين</td><td class="ar-cell" data-col="msa">فُسْتان، ج. فَساتين <button class="speak-btn" onclick="speakArabic('فُسْتان، فَساتين')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">shirt</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">—</td><td class="ar-cell" data-col="msa">قَميص، ج. قُمْصان <button class="speak-btn" onclick="speakArabic('قَميص، قُمْصان')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to complete; finish something</td><td class="ar-cell" data-col="egyptian">خَلَّص، يِخَلَّص؛ كَمَّل، يِكَمَّل</td><td class="ar-cell" data-col="levantine">خَلَّص، يِخَلِّص؛ كَمَّل، يِكَمِّل</td><td class="ar-cell" data-col="msa">أَكْمَلَ، يُكْمِلُ، إِكْمال <button class="speak-btn" onclick="speakArabic('أَكْمَلَ، يُكْمِلُ، إِكْمال')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to wear; put on clothes</td><td class="ar-cell" data-col="egyptian">لِبِس، يِلْبِس، اللِّبْس</td><td class="ar-cell" data-col="levantine">لِبِس، يِلْبَس، اللِّبْس</td><td class="ar-cell" data-col="msa">لَبِسَ، يَلْبَسُ، اللِّبْس <button class="speak-btn" onclick="speakArabic('لَبِسَ، يَلْبَسُ، اللِّبْس')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">clothes</td><td class="ar-cell" data-col="egyptian">هُدوم</td><td class="ar-cell" data-col="levantine">تِياب</td><td class="ar-cell" data-col="msa">مَلابِس، ثِياب <button class="speak-btn" onclick="speakArabic('مَلابِس، ثِياب')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">continuously</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">—</td><td class="ar-cell" data-col="msa">بِاسْتِمْرار <button class="speak-btn" onclick="speakArabic('بِاسْتِمْرار')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to be spread out; to spread (intransitive)</td><td class="ar-cell" data-col="egyptian">يِنْتِشِر</td><td class="ar-cell" data-col="levantine">يِنْتِشِر</td><td class="ar-cell" data-col="msa">اِنْتَشَرَ، يَنْتَشِرُ، الانْتِشار <button class="speak-btn" onclick="speakArabic('اِنْتَشَرَ، يَنْتَشِرُ، الانْتِشار')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">spread out; widespread</td><td class="ar-cell" data-col="egyptian">—</td><td class="ar-cell" data-col="levantine">مُنْتَشِر / مُنْتَشِرَة، ج. مُنْتَشِرين</td><td class="ar-cell" data-col="msa">مُنْتَشِر / مُنْتَشِرَة، ج. مُنْتَشِرون / مُنْتَشِرين <button class="speak-btn" onclick="speakArabic('مُنْتَشِر، مُنْتَشِرَة')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to intend to</td><td class="ar-cell" data-col="egyptian">ناوي / ناوْيَة، ج. ناويين</td><td class="ar-cell" data-col="levantine">ناوي / ناوْيَة، ج. ناويين</td><td class="ar-cell" data-col="msa">نَوَى (+ أَنْ / المَصْدَر)، يَنْوي، النِّيَّة <button class="speak-btn" onclick="speakArabic('نَوَى، يَنْوي، النِّيَّة')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">to emigrate; immigrate</td><td class="ar-cell" data-col="egyptian">يِهاجِر</td><td class="ar-cell" data-col="levantine">يِهاجِر</td><td class="ar-cell" data-col="msa">هاجَرَ، يُهاجِرُ، الهِجْرَة <button class="speak-btn" onclick="speakArabic('هاجَرَ، يُهاجِرُ، الهِجْرَة')">Listen</button></td></tr>
+          <tr class="vocab-row"><td class="meaning">immigrant</td><td class="ar-cell" data-col="egyptian">مُهاجِر / مُهاجِرَة، ج. مُهاجِرين</td><td class="ar-cell" data-col="levantine">مُهاجِر / مُهاجِرَة، ج. مُهاجِرين</td><td class="ar-cell" data-col="msa">مُهاجِر / مُهاجِرَة، ج. مُهاجِرون / مُهاجِرين <button class="speak-btn" onclick="speakArabic('مُهاجِر، مُهاجِرَة')">Listen</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" id="visuals">
+    <div class="section-heading">
+      <div><h2>Visual vocabulary</h2><p>Use the pictures to review the clothing and shopping terms in context.</p></div>
+      <span class="badge">Generated vector illustrations</span>
+    </div>
+    <div class="visual-grid">
+      <article class="visual-card">
+        <svg viewBox="0 0 260 190" role="img" aria-label="A person wearing jeans, a T-shirt, and athletic shoes">
+          <rect x="0" y="0" width="260" height="190" fill="#eef6fa"/>
+          <circle cx="130" cy="34" r="18" fill="#c7946f"/>
+          <path d="M112 33 q18-22 36 0 v-10 q-18-20-36 0z" fill="#3b2a25"/>
+          <rect x="101" y="52" width="58" height="53" rx="10" fill="#4f8fb5"/>
+          <rect x="103" y="103" width="24" height="58" rx="6" fill="#60798e"/>
+          <rect x="133" y="103" width="24" height="58" rx="6" fill="#60798e"/>
+          <rect x="94" y="58" width="12" height="54" rx="6" fill="#c7946f" transform="rotate(8 100 85)"/>
+          <rect x="154" y="58" width="12" height="54" rx="6" fill="#c7946f" transform="rotate(-8 160 85)"/>
+          <path d="M96 160 h34 q0 12-16 12H96z" fill="#fff" stroke="#607386" stroke-width="2"/>
+          <path d="M130 160 h34 v12h-18q-16 0-16-12z" fill="#fff" stroke="#607386" stroke-width="2"/>
+          <line x1="95" y1="176" x2="166" y2="176" stroke="#91a9b9" stroke-width="2"/>
+        </svg>
+        <div class="caption"><strong class="arabic">بَنْطَلون جينز، تي شيرت، وحِذاء رياضي</strong><span>jeans, T-shirt, and athletic shoes</span></div>
+      </article>
+      <article class="visual-card">
+        <svg viewBox="0 0 260 190" role="img" aria-label="A black evening dress">
+          <rect x="0" y="0" width="260" height="190" fill="#f8f2f5"/>
+          <circle cx="130" cy="31" r="17" fill="#bd845f"/>
+          <path d="M112 31 q18-25 36 0 v-9q-18-18-36 0z" fill="#3a2624"/>
+          <path d="M118 49 h24 l9 25 25 88H84l25-88z" fill="#2f3137"/>
+          <path d="M118 49 l12 21 12-21" fill="none" stroke="#7f8490" stroke-width="3"/>
+          <path d="M111 57 l-22 54" stroke="#bd845f" stroke-width="10" stroke-linecap="round"/>
+          <path d="M149 57 l22 54" stroke="#bd845f" stroke-width="10" stroke-linecap="round"/>
+          <ellipse cx="130" cy="166" rx="48" ry="6" fill="#d6c5cc"/>
+        </svg>
+        <div class="caption"><strong class="arabic">فُسْتان سَهْرَة أَسْوَد</strong><span>a black evening dress</span></div>
+      </article>
+      <article class="visual-card">
+        <svg viewBox="0 0 260 190" role="img" aria-label="A white skirt">
+          <rect x="0" y="0" width="260" height="190" fill="#eef6f2"/>
+          <rect x="99" y="20" width="62" height="40" rx="10" fill="#4f8d70"/>
+          <path d="M98 60 h64 l25 100H73z" fill="#fffdf7" stroke="#a4b0b7" stroke-width="2"/>
+          <path d="M102 60 l-12 100M118 60l-4 100M142 60l4 100M158 60l12 100" stroke="#dde3e6" stroke-width="2"/>
+          <line x1="69" y1="165" x2="191" y2="165" stroke="#92a59a" stroke-width="2"/>
+        </svg>
+        <div class="caption"><strong class="arabic">تَنّورة بَيْضاء</strong><span>a white skirt</span></div>
+      </article>
+      <article class="visual-card">
+        <svg viewBox="0 0 260 190" role="img" aria-label="A women's clothing shop">
+          <rect x="0" y="0" width="260" height="190" fill="#f6f2ec"/>
+          <rect x="25" y="36" width="210" height="128" rx="4" fill="#e6ddd2" stroke="#8c7b6d" stroke-width="3"/>
+          <rect x="40" y="52" width="180" height="95" fill="#dff0f6" stroke="#8c7b6d" stroke-width="2"/>
+          <rect x="25" y="18" width="210" height="30" fill="#8f5d46"/>
+          <text x="130" y="39" text-anchor="middle" font-size="18" fill="#fff" font-family="Arial">مَلابِس لِلنِّساء</text>
+          <line x1="55" y1="72" x2="205" y2="72" stroke="#6b7f89" stroke-width="3"/>
+          <path d="M78 73 q6 8 12 0 l16 16-12 40H66l-4-40z" fill="#ad6c83"/>
+          <path d="M130 73 q6 8 12 0 l16 16-12 40h-28l-4-40z" fill="#5f83a2"/>
+          <path d="M181 73 q6 8 12 0 l16 16-12 40h-28l-4-40z" fill="#8e7bb0"/>
+          <rect x="107" y="147" width="46" height="17" fill="#c7b7a7"/>
+        </svg>
+        <div class="caption"><strong class="arabic">مَحَلّ مَلابِس نِسائِيَّة</strong><span>a women's clothing shop</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="card" id="usage">
+    <div class="section-heading"><div><h2>Notes on vocabulary usage</h2><p>Open each note to review the distinction and examples.</p></div><span class="badge">3 notes</span></div>
+
+    <details open>
+      <summary>1. “Pants” and “shoes” in Arabic</summary>
+      <div class="detail-body">
+        <p>“Pants” and “shoes” are plural in English, but Arabic usually refers to one pair of either item with the singular form.</p>
+        <p class="rtl arabic">في العالَم العربي، مُعظَمُ الرِّجالِ لا يَلْبَسونَ البَنْطَلونَ القَصيرَ في الشّارِع.</p>
+        <p class="rtl arabic">كِنْدَرْتِك حِلْوِة كْتير!</p>
+        <p class="rtl arabic">الجَزْمَة دي واسْعَة عَلَيَّ!</p>
+      </div>
+    </details>
+    <details>
+      <summary>2. شَخْص versus النّاس</summary>
+      <div class="detail-body">
+        <p><span class="arabic">شَخْص</span> refers to a specific person, specific people, or a specific number of people. Use <span class="arabic">النّاس</span> for people in general.</p>
+        <p class="rtl arabic">حَضَرَ سَبْعَةُ أَشْخاصٍ فَقَط إلى العَمَلِ اليَوْمَ بِسَبَبِ الثَّلْج.</p>
+        <p class="rtl arabic">مُعْظَمُ النّاسِ يَخافونَ مِن حُكوماتِهِم أَحْيانًا.</p>
+      </div>
+    </details>
+    <details>
+      <summary>3. اِنْتَشَرَ is intransitive</summary>
+      <div class="detail-body">
+        <p><span class="arabic">اِنْتَشَرَ</span> does not take a direct object. Use it for something that spreads by itself.</p>
+        <p class="rtl arabic">اِنْتَشَرَتِ الأَخْبارُ بِسُرْعَة.</p>
+        <p>To say “They spread the news,” use a transitive verb from another pattern:</p>
+        <p class="rtl arabic">نَشَروا الأَخْبارَ.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="card" id="conjugation">
+    <div class="section-heading"><div><h2 class="rtl">تَعَلَّموا هذا الفِعْل: بَقِيَ | يَبْقَى | قَعَد</h2><p>Switch between past and present. The three columns show MSA, Levantine, and Egyptian forms.</p></div><span class="badge">Conjugation reference</span></div>
+    <div class="conj-tabs">
+      <button class="active" type="button" data-target="pastPanel">Past tense</button>
+      <button type="button" data-target="presentPanel">Present tense</button>
+    </div>
+    <div id="pastPanel" class="conj-panel active">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pronoun</th><th>الفصحى</th><th>الشامي</th><th>المصري</th></tr></thead>
+          <tbody class="rtl arabic">
+            <tr><td>أنا</td><td>بَقِيتُ</td><td>بْقِيت</td><td>قَعَدْت</td></tr>
+            <tr><td>أنتَ</td><td>بَقِيتَ</td><td>بْقِيت</td><td>قَعَدْت</td></tr>
+            <tr><td>أنتِ</td><td>بَقِيتِ</td><td>بْقِيتِي</td><td>قَعَدْتِي</td></tr>
+            <tr><td>هو</td><td>بَقِيَ</td><td>بْقِي</td><td>قَعَد</td></tr>
+            <tr><td>هي</td><td>بَقِيَتْ</td><td>بْقِيِت</td><td>قَعَدِت</td></tr>
+            <tr><td>نحن</td><td>بَقِينا</td><td>بْقِينا</td><td>قَعَدْنا</td></tr>
+            <tr><td>أنتم</td><td>بَقِيتُم</td><td>بْقِيتوا</td><td>قَعَدْتوا</td></tr>
+            <tr><td>هم</td><td>بَقُوا</td><td>بْقُوا</td><td>قَعَدوا</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="presentPanel" class="conj-panel">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pronoun</th><th>الفصحى</th><th>الشامي</th><th>المصري</th></tr></thead>
+          <tbody class="rtl arabic">
+            <tr><td>أنا</td><td>أَبْقَى</td><td>بَبْقَى</td><td>أَقْعُد</td></tr>
+            <tr><td>أنتَ</td><td>تَبْقَى</td><td>بِتْبْقَى</td><td>تَقْعُد</td></tr>
+            <tr><td>أنتِ</td><td>تَبْقَيْنَ</td><td>بِتْبْقِي</td><td>تَقْعُدي</td></tr>
+            <tr><td>هو</td><td>يَبْقَى</td><td>بِيِبْقَى</td><td>يَقْعُد</td></tr>
+            <tr><td>هي</td><td>تَبْقَى</td><td>بِتْبْقَى</td><td>تَقْعُد</td></tr>
+            <tr><td>نحن</td><td>نَبْقَى</td><td>مْنِبْقَى</td><td>نَقْعُد</td></tr>
+            <tr><td>أنتم</td><td>تَبْقَوْنَ</td><td>بِتْبْقوا</td><td>تَقْعُدوا</td></tr>
+            <tr><td>هم</td><td>يَبْقَوْنَ</td><td>بِيِبْقوا</td><td>يَقْعُدوا</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="exercise1">
+    <div class="section-heading"><div><h2 class="rtl">تَمْرين ١: أَوْزان الأَفْعال الجديدة</h2><p>Complete each row. Then decide whether the verb is transitive or intransitive.</p></div><span class="badge">Auto-graded</span></div>
+
+    <div class="note">
+      <strong>Sound change:</strong> In Form VIII of the root <span class="arabic">ز ي د</span>, the infixed <span class="arabic">ت</span> changes to <span class="arabic">د</span>. The voiced sound <span class="arabic">ز</span> influences the following voiceless <span class="arabic">ت</span>, producing the voiced counterpart <span class="arabic">د</span>: <span class="arabic">اِزْدادَ</span>, not *<span class="arabic">اِزْتادَ</span>.
+    </div>
+
+    <div class="exercise" data-exercise="ex1">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>الجذر</th><th>الوزن</th><th>الماضي</th><th>المضارع</th><th>المصدر</th><th>Transitive / intransitive</th></tr></thead>
+          <tbody class="rtl">
+            <tr>
+              <td><input class="answer" data-answers="حدد|ح د د" value="ح د د" /></td>
+              <td><input class="answer" data-answers="الثاني|II|2|فعل" /></td>
+              <td><input class="answer" data-answers="حدد|حدّد" value="حَدَّدَ" /></td>
+              <td><input class="answer" data-answers="يحدد|يحدّد" /></td>
+              <td><input class="answer" data-answers="التحديد|تحديد" /></td>
+              <td><select class="answer" data-answers="transitive|متعدي"><option value="">Choose</option><option>transitive</option><option>intransitive</option></select></td>
+            </tr>
+            <tr>
+              <td><input class="answer" data-answers="هجر|ه ج ر" value="ه ج ر" /></td>
+              <td><input class="answer" data-answers="الثالث|III|3|فاعل" /></td>
+              <td><input class="answer" data-answers="هاجر" /></td>
+              <td><input class="answer" data-answers="يهاجر" /></td>
+              <td><input class="answer" data-answers="الهجرة|هجرة" value="الهِجْرَة" /></td>
+              <td><select class="answer" data-answers="intransitive|لازم"><option value="">Choose</option><option>transitive</option><option>intransitive</option></select></td>
+            </tr>
+            <tr>
+              <td><input class="answer" data-answers="كمل|ك م ل" /></td>
+              <td><input class="answer" data-answers="الرابع|IV|4|افعل" /></td>
+              <td><input class="answer" data-answers="اكمل|أكمل" value="أَكْمَلَ" /></td>
+              <td><input class="answer" data-answers="يكمل|يُكمل" /></td>
+              <td><input class="answer" data-answers="اكمال|إكمال" /></td>
+              <td><select class="answer" data-answers="transitive|متعدي"><option value="">Choose</option><option>transitive</option><option>intransitive</option></select></td>
+            </tr>
+            <tr>
+              <td><input class="answer" data-answers="زيد|ز ي د" value="ز ي د" /></td>
+              <td><input class="answer" data-answers="الثامن|VIII|8|افتعل" value="VIII" /></td>
+              <td><input class="answer" data-answers="ازداد|إزداد" /></td>
+              <td><input class="answer" data-answers="يزداد" /></td>
+              <td><input class="answer" data-answers="الازدياد|ازدياد|الإزدياد" /></td>
+              <td><select class="answer" data-answers="intransitive|لازم"><option value="">Choose</option><option>transitive</option><option>intransitive</option></select></td>
+            </tr>
+            <tr>
+              <td><input class="answer" data-answers="نشر|ن ش ر" value="ن ش ر" /></td>
+              <td><input class="answer" data-answers="الثامن|VIII|8|افتعل" /></td>
+              <td><input class="answer" data-answers="انتشر" /></td>
+              <td><input class="answer" data-answers="ينتشر" /></td>
+              <td><input class="answer" data-answers="الانتشار|انتشار" /></td>
+              <td><select class="answer" data-answers="intransitive|لازم"><option value="">Choose</option><option>transitive</option><option>intransitive</option></select></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="exercise-actions">
+        <button class="action-btn" type="button" onclick="checkExercise('ex1')">Check answers</button>
+        <button class="action-btn secondary" type="button" onclick="showAnswers('ex1')">Reveal answers</button>
+        <button class="action-btn secondary" type="button" onclick="clearExercise('ex1')">Clear</button>
+        <span class="score-box" id="score-ex1">0 / 30</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="exercise2">
+    <div class="section-heading"><div><h2 class="rtl">تَمْرين ٢: كَلِمات تَبْدَأ بِـ «مُـ»</h2><p>Form the related noun or adjective from each verb.</p></div><span class="badge">Auto-graded</span></div>
+
+    <p>These words are closely related in form and meaning to present-tense verbs from Forms II–X. They typically begin with <span class="arabic">مُـ</span> and have a kasra in the final syllable. In traditional terminology, many of these are active participles.</p>
+    <div class="tip"><strong>Do not confuse them with every word beginning with م.</strong> For example, <span class="arabic">مَلابِس</span> begins with <span class="arabic">مَـ</span>, not <span class="arabic">مُـ</span>, and is not derived by this rule.</div>
+
+    <div class="exercise" data-exercise="ex2a">
+      <h3>Part A: Derive the matching word</h3>
+      <div class="derive-grid">
+        <div class="derive-item"><div class="derive-source">يُهاجِر</div><input class="answer" data-answers="مهاجر" placeholder="..." /></div>
+        <div class="derive-item"><div class="derive-source">يَنْتَشِر</div><input class="answer" data-answers="منتشر" placeholder="..." /></div>
+        <div class="derive-item"><div class="derive-source">يُدير</div><input class="answer" data-answers="مدير" placeholder="..." /></div>
+        <div class="derive-item"><div class="derive-source">يَتَزَوَّج</div><input class="answer" data-answers="متزوج" placeholder="..." /></div>
+        <div class="derive-item"><div class="derive-source">يُتَرْجِم</div><input class="answer" data-answers="مترجم" placeholder="..." /></div>
+        <div class="derive-item"><div class="derive-source">يُمْكِن</div><input class="answer" data-answers="ممكن" placeholder="..." /></div>
+        <div class="derive-item"><div class="derive-source">يَتَأَخَّر</div><input class="answer" data-answers="متأخر|متاخر" placeholder="..." /></div>
+        <div class="derive-item"><div class="derive-source">يَتَخَصَّص في</div><input class="answer" data-answers="متخصص في|متخصص" placeholder="..." /></div>
+      </div>
+      <div class="exercise-actions">
+        <button class="action-btn" type="button" onclick="checkExercise('ex2a')">Check answers</button>
+        <button class="action-btn secondary" type="button" onclick="showAnswers('ex2a')">Reveal answers</button>
+        <button class="action-btn secondary" type="button" onclick="clearExercise('ex2a')">Clear</button>
+        <span class="score-box" id="score-ex2a">0 / 8</span>
+      </div>
+    </div>
+
+    <div class="exercise" data-exercise="ex2b">
+      <h3>Part B: Form the noun and give its meaning</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>المضارع</th><th>الاسم</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="rtl arabic">يُدَرِّس</td><td><input class="answer" data-answers="مدرس|مُدرّس" /></td><td><input class="answer" data-answers="teacher|instructor" /></td></tr>
+            <tr><td class="rtl arabic">يُدَخِّن</td><td><input class="answer" data-answers="مدخن|مُدخّن" /></td><td><input class="answer" data-answers="smoker" /></td></tr>
+            <tr><td class="rtl arabic">يُسافِر</td><td><input class="answer" data-answers="مسافر" /></td><td><input class="answer" data-answers="traveler|traveller" /></td></tr>
+            <tr><td class="rtl arabic">يُساعِد</td><td><input class="answer" data-answers="مساعد" /></td><td><input class="answer" data-answers="assistant|helper" /></td></tr>
+            <tr><td class="rtl arabic">يَتَكَلَّم</td><td><input class="answer" data-answers="متكلم" /></td><td><input class="answer" data-answers="speaker" /></td></tr>
+            <tr><td class="rtl arabic">يَسْتَمِع</td><td><input class="answer" data-answers="مستمع" /></td><td><input class="answer" data-answers="listener" /></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="exercise-actions">
+        <button class="action-btn" type="button" onclick="checkExercise('ex2b')">Check answers</button>
+        <button class="action-btn secondary" type="button" onclick="showAnswers('ex2b')">Reveal answers</button>
+        <button class="action-btn secondary" type="button" onclick="clearExercise('ex2b')">Clear</button>
+        <span class="score-box" id="score-ex2b">0 / 12</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="exercise3">
+    <div class="section-heading"><div><h2 class="rtl">تَمْرين ٣: المُفْرَدات الجديدة</h2><p>Complete each sentence with suitable new vocabulary. Click a word in the bank to place it in the next empty blank.</p></div><span class="badge">Auto-graded</span></div>
+
+    <div class="exercise" data-exercise="ex3">
+      <div class="word-bank" id="wordBank">
+        <button class="word-chip" type="button">أشخاص</button>
+        <button class="word-chip" type="button">باستمرار</button>
+        <button class="word-chip" type="button">الحرية</button>
+        <button class="word-chip" type="button">ينوي</button>
+        <button class="word-chip" type="button">يبحثون</button>
+        <button class="word-chip" type="button">شخصيات</button>
+        <button class="word-chip" type="button">جالية</button>
+        <button class="word-chip" type="button">مهاجرين</button>
+        <button class="word-chip" type="button">تلبس</button>
+        <button class="word-chip" type="button">بنطلون</button>
+        <button class="word-chip" type="button">كندرة</button>
+        <button class="word-chip" type="button">فستان</button>
+        <button class="word-chip" type="button">تنورة</button>
+        <button class="word-chip" type="button">تبقي</button>
+        <button class="word-chip" type="button">المحلات</button>
+        <button class="word-chip" type="button">الملابس</button>
+      </div>
+
+      <div class="rtl arabic">
+        <div class="sentence-item">١. طاوِلَةُ السُّفْرَةِ في شَقَّتي صَغيرةٌ، ولا يُمْكِنُ أَنْ يَجْلِسَ إِلَيْها أَكْثَرُ مِنْ خَمْسَةِ <input class="answer small-answer" data-answers="اشخاص|أشخاص" />.</div>
+        <div class="sentence-item">٢. اِنْقَطَعَتْ عَلاقَتُنا مُنْذُ سَنَةٍ، وَلَكِنِّي أَتَذَكَّرُها وَأُفَكِّرُ فيها <input class="answer small-answer" data-answers="باستمرار" />.</div>
+        <div class="sentence-item">٣. المُشْكِلَةُ في كَثيرٍ مِنَ الدُّوَلِ العَرَبِيَّةِ هِيَ غِيابُ الدِّيمُقْراطِيَّةِ وَعَدَمُ وُجودِ <input class="answer small-answer" data-answers="الحرية|حرية" /> السِّياسِيَّةِ.</div>
+        <div class="sentence-item">٤. لا أَظُنُّ أَنَّهُ <input class="answer small-answer" data-answers="ينوي|ناوي" /> الزَّواجَ مَرَّةً ثانِيَةً بَعْدَ طَلاقِهِ، وَلَكِنْ عَلِمْتُ بِأَنَّ أَهْلَهُ بَدَؤوا <input class="answer small-answer" data-answers="يبحثون|البحث|يبحثوا" /> عَنْ زَوْجَةٍ جَديدةٍ لَهُ.</div>
+        <div class="sentence-item">٥. كانَ البِيتْلْز — وَخاصَّةً جون لِينون — مِنْ <input class="answer small-answer" data-answers="شخصيات|الشخصيات" /> المُوسيقى المَحْبوبَةِ مِنْ شَبابِ جيلِ السِّتّيناتِ.</div>
+        <div class="sentence-item">٦. في مَدينَةِ ديربورن في ميشيغانَ تُوجَدُ <input class="answer small-answer" data-answers="جالية|جاليه" /> عَرَبِيَّةٌ كَبيرةٌ تَتَكَوَّنُ مِنْ <input class="answer small-answer" data-answers="مهاجرين|مهاجرون" /> لُبْنانِيِّينَ وَيَمَنِيِّينَ وَعِراقِيِّينَ هاجَروا إلى الوِلاياتِ المُتَّحِدَةِ وَاسْتَقَرّوا فيها.</div>
+        <div class="sentence-item">٧. في الصّورَةِ الأولى <input class="answer small-answer" data-answers="تلبس|لبست" /> البِنْتُ <input class="answer small-answer" data-answers="بنطلون|بنطلونا" /> «جينز» و«تي شيرت»، و<input class="answer small-answer" data-answers="كندرة|حذاء|جزمة" /> رِياضَة؛ وَفي الصّورَةِ الثّانِيَةِ <input class="answer small-answer" data-answers="فستان" /> سَهْرَةٍ أَسْوَد؛ وَفي الصّورَةِ الثّالِثَةِ <input class="answer small-answer" data-answers="تنورة|جيبة" /> بَيْضاء.</div>
+        <div class="sentence-item">٨. قُلْتُ لِابْنَتي: إِمّا أَنْ تُسافِري مَعَنا أَوْ أَنْ <input class="answer small-answer" data-answers="تبقي|تبقين" /> هُنا في بَغْدادَ، وَلَكِنْ مَعَ جَدَّتِكِ وَفي بَيْتِها؛ فَرَفَضَتْ طَبْعًا.</div>
+        <div class="sentence-item">٩. هذا واحِدٌ مِنَ <input class="answer small-answer" data-answers="المحلات|محلات" /> الكَثيرَةِ المَوْجودَةِ في سوقِ الحَميدِيَّةِ وَالمُتَخَصِّصَةِ بِـ<input class="answer small-answer" data-answers="الملابس|ملابس|الثياب" /> النِّسائِيَّةِ.</div>
+      </div>
+
+      <div class="exercise-actions">
+        <button class="action-btn" type="button" onclick="checkExercise('ex3')">Check answers</button>
+        <button class="action-btn secondary" type="button" onclick="showAnswers('ex3')">Reveal answers</button>
+        <button class="action-btn secondary" type="button" onclick="clearExercise('ex3')">Clear</button>
+        <span class="score-box" id="score-ex3">0 / 16</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="discussion">
+    <div class="section-heading"><div><h2 class="rtl">تَمْرين ٤: اِسْأَلوا زُمَلاءَكُم</h2><p>Prepare questions at home, then ask classmates in Arabic. Open-ended responses are saved automatically in this browser.</p></div><span class="badge">Open response</span></div>
+
+    <div class="reflection-grid" id="reflectionGrid">
+      <div class="reflection-card"><label>1. Clothing and shopping</label><p>Where do they buy their clothes? Which clothes do they wear constantly? Do they prefer small shops or big stores? Why?</p><textarea data-save="discussion1" placeholder="Write your Arabic questions or notes here..."></textarea></div>
+      <div class="reflection-card"><label>2. Plans after study</label><p>What do they intend to do after completing their studies? In which year do they expect to finish? Do they intend to stay in this city or move elsewhere?</p><textarea data-save="discussion2" placeholder="Write your Arabic questions or notes here..."></textarea></div>
+      <div class="reflection-card"><label>3. Permission to travel</label><p>Should the university permit students to travel wherever in the world they want to study? Why or why not?</p><textarea data-save="discussion3" placeholder="Write your Arabic questions or notes here..."></textarea></div>
+      <div class="reflection-card"><label>4. Personality</label><p>How do they know if a person has a good personality? What do they look for in a person?</p><textarea data-save="discussion4" placeholder="Write your Arabic questions or notes here..."></textarea></div>
+      <div class="reflection-card"><label>5. Anger</label><p>What do they think of people who get angry a lot? Is this problem widespread? Why? Is there a solution?</p><textarea data-save="discussion5" placeholder="Write your Arabic questions or notes here..."></textarea></div>
+      <div class="reflection-card"><label>6. Immigrant communities</label><p>Which immigrant communities live in this city? Is the number of immigrants increasing? Are immigrants spread out or concentrated in one area? What shops or businesses do they have?</p><textarea data-save="discussion6" placeholder="Write your Arabic questions or notes here..."></textarea></div>
+      <div class="reflection-card"><label>7. Freedom of speech</label><p>Should there be limits on freedom of speech? If so, who should determine them?</p><textarea data-save="discussion7" placeholder="Write your Arabic questions or notes here..."></textarea></div>
+    </div>
+    <div class="exercise-actions">
+      <button class="action-btn" type="button" onclick="downloadResponses()">Download my responses</button>
+      <button class="action-btn secondary" type="button" onclick="clearResponses()">Clear saved responses</button>
+    </div>
+  </section>
+
+  <p class="footer">Self-contained HTML. No external libraries or image files are required.</p>
+</div>
+
+<script>
+  const arabicDiacritics = /[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]/g;
+
+  function normalizeAnswer(value){
+    return String(value || '')
+      .trim()
+      .toLowerCase()
+      .replace(arabicDiacritics,'')
+      .replace(/ـ/g,'')
+      .replace(/[إأآٱ]/g,'ا')
+      .replace(/ى/g,'ي')
+      .replace(/ؤ/g,'و')
+      .replace(/ئ/g,'ي')
+      .replace(/[.,،؛;:!?؟'"“”()\[\]{}]/g,'')
+      .replace(/\s+/g,' ')
+      .trim();
+  }
+
+  function acceptedAnswers(input){
+    return (input.dataset.answers || '').split('|').map(normalizeAnswer).filter(Boolean);
+  }
+
+  function markInput(input, isCorrect){
+    input.classList.remove('correct','incorrect');
+    input.classList.add(isCorrect ? 'correct' : 'incorrect');
+    input.setAttribute('aria-invalid', String(!isCorrect));
+  }
+
+  function checkExercise(id){
+    const box = document.querySelector(`[data-exercise="${id}"]`);
+    if(!box) return;
+    const inputs = [...box.querySelectorAll('.answer')];
+    let correct = 0;
+    inputs.forEach(input => {
+      const value = normalizeAnswer(input.value);
+      const answers = acceptedAnswers(input);
+      const ok = answers.includes(value);
+      markInput(input, ok);
+      if(ok) correct++;
+    });
+    const score = document.getElementById(`score-${id}`);
+    if(score) score.textContent = `${correct} / ${inputs.length}`;
+    box.dataset.checked = 'true';
+    updateProgress();
+  }
+
+  function showAnswers(id){
+    const box = document.querySelector(`[data-exercise="${id}"]`);
+    if(!box) return;
+    box.querySelectorAll('.answer').forEach(input => {
+      const answers = (input.dataset.answers || '').split('|');
+      input.value = answers[0] || '';
+      markInput(input, true);
+    });
+    const inputs = box.querySelectorAll('.answer');
+    const score = document.getElementById(`score-${id}`);
+    if(score) score.textContent = `${inputs.length} / ${inputs.length}`;
+    box.dataset.checked = 'true';
+    updateProgress();
+  }
+
+  function clearExercise(id){
+    const box = document.querySelector(`[data-exercise="${id}"]`);
+    if(!box) return;
+    box.querySelectorAll('.answer').forEach(input => {
+      input.value = '';
+      input.classList.remove('correct','incorrect');
+      input.removeAttribute('aria-invalid');
+    });
+    const inputs = box.querySelectorAll('.answer');
+    const score = document.getElementById(`score-${id}`);
+    if(score) score.textContent = `0 / ${inputs.length}`;
+    box.dataset.checked = 'false';
+    if(id === 'ex3') document.querySelectorAll('.word-chip').forEach(chip => chip.classList.remove('used'));
+    updateProgress();
+  }
+
+  function updateProgress(){
+    const exercises = [...document.querySelectorAll('[data-exercise]')];
+    const checked = exercises.filter(ex => ex.dataset.checked === 'true').length;
+    const pct = exercises.length ? Math.round((checked / exercises.length) * 100) : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = pct + '%';
+  }
+
+  function resetAll(){
+    if(!confirm('Reset all exercise answers and saved discussion notes?')) return;
+    document.querySelectorAll('[data-exercise]').forEach(ex => clearExercise(ex.dataset.exercise));
+    clearResponses(false);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function speakArabic(text){
+    if(!('speechSynthesis' in window)){
+      alert('Speech playback is not supported in this browser.');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ar-SA';
+    utterance.rate = 0.82;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  const searchInput = document.getElementById('vocabSearch');
+  const dialectFilter = document.getElementById('dialectFilter');
+
+  function filterVocab(){
+    const q = normalizeAnswer(searchInput.value);
+    document.querySelectorAll('#vocabTable tbody tr').forEach(row => {
+      const match = !q || normalizeAnswer(row.innerText).includes(q);
+      row.classList.toggle('hidden-row', !match);
+    });
+    const focus = dialectFilter.value;
+    document.querySelectorAll('#vocabTable [data-col]').forEach(cell => {
+      if(focus === 'all'){
+        cell.style.opacity = '1';
+        cell.style.background = '';
+      } else {
+        const active = cell.dataset.col === focus;
+        cell.style.opacity = active ? '1' : '.34';
+        cell.style.background = active ? '#eff8fd' : '';
+      }
+    });
+  }
+  searchInput.addEventListener('input', filterVocab);
+  dialectFilter.addEventListener('change', filterVocab);
+  function clearVocabFilters(){searchInput.value='';dialectFilter.value='all';filterVocab();}
+
+  document.querySelectorAll('.conj-tabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.conj-tabs button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.conj-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.target).classList.add('active');
+    });
+  });
+
+  let lastFocusedAnswer = null;
+  document.addEventListener('focusin', e => {
+    if(e.target.classList && e.target.classList.contains('answer')) lastFocusedAnswer = e.target;
+  });
+  document.querySelectorAll('.word-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const ex = document.querySelector('[data-exercise="ex3"]');
+      let target = lastFocusedAnswer && ex.contains(lastFocusedAnswer) && !lastFocusedAnswer.value ? lastFocusedAnswer : [...ex.querySelectorAll('.answer')].find(i => !i.value);
+      if(!target) return;
+      target.value = chip.textContent.trim();
+      chip.classList.add('used');
+      target.focus();
+    });
+  });
+
+  document.querySelectorAll('textarea[data-save]').forEach(area => {
+    const key = area.dataset.save;
+    area.value = localStorage.getItem(key) || '';
+    area.addEventListener('input', () => localStorage.setItem(key, area.value));
+  });
+
+  function clearResponses(ask=true){
+    if(ask && !confirm('Clear all saved discussion responses?')) return;
+    document.querySelectorAll('textarea[data-save]').forEach(area => {
+      localStorage.removeItem(area.dataset.save);
+      area.value = '';
+    });
+  }
+
+  function downloadResponses(){
+    const sections = [...document.querySelectorAll('.reflection-card')].map((card, idx) => {
+      const title = card.querySelector('label').textContent.trim();
+      const prompt = card.querySelector('p').textContent.trim();
+      const answer = card.querySelector('textarea').value.trim() || '[No response]';
+      return `${idx+1}. ${title}\nPrompt: ${prompt}\nResponse: ${answer}`;
+    });
+    const blob = new Blob([`Arabs in America — Lesson 2\nDiscussion Responses\n\n${sections.join('\n\n')}`], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'lesson2_discussion_responses.txt';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  // Initialize exercise state and progress.
+  document.querySelectorAll('[data-exercise]').forEach(ex => ex.dataset.checked = 'false');
+  updateProgress();
+</script>
+</body>
+</html>
