@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نشاط استماع: شقّة أحمد والحيّ</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #5f6c7b;
+      --border: #d9e0e7;
+      --accent: #2457a7;
+      --accent-dark: #183f7a;
+      --correct-bg: #eaf7ee;
+      --correct-border: #2e7d32;
+      --incorrect-bg: #fff0f0;
+      --incorrect-border: #c62828;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, "Noto Sans Arabic", Tahoma, sans-serif;
+      line-height: 1.8;
+    }
+
+    .container {
+      width: min(1000px, 94%);
+      margin: 30px auto;
+    }
+
+    header,
+    .audio-card,
+    .activity,
+    .score-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    header {
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      color: var(--accent-dark);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: var(--accent-dark);
+    }
+
+    .subtitle,
+    .instructions,
+    .file-note {
+      color: var(--muted);
+    }
+
+    .audio-card {
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .file-note {
+      margin-bottom: 0;
+      font-size: 0.92rem;
+    }
+
+    .activity {
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .question {
+      padding: 16px;
+      margin: 14px 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fbfcfd;
+    }
+
+    .question.correct {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+    }
+
+    .question.incorrect {
+      background: var(--incorrect-bg);
+      border-color: var(--incorrect-border);
+    }
+
+    .question p {
+      margin-top: 0;
+      font-weight: 700;
+    }
+
+    label {
+      display: block;
+      margin: 7px 0;
+      cursor: pointer;
+    }
+
+    input[type="radio"] {
+      margin-left: 8px;
+      transform: scale(1.1);
+    }
+
+    input[type="text"],
+    select {
+      width: min(100%, 520px);
+      padding: 10px 12px;
+      border: 1px solid #b8c3cf;
+      border-radius: 8px;
+      background: #fff;
+      font: inherit;
+      color: var(--text);
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      outline: 3px solid rgba(36, 87, 167, 0.18);
+      border-color: var(--accent);
+    }
+
+    .feedback {
+      margin: 8px 0 0;
+      min-height: 1.5em;
+      font-weight: 700;
+    }
+
+    .feedback.correct-text {
+      color: var(--correct-border);
+    }
+
+    .feedback.incorrect-text {
+      color: var(--incorrect-border);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 18px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+    }
+
+    button:hover {
+      background: var(--accent-dark);
+    }
+
+    button.secondary {
+      background: #66717d;
+    }
+
+    .section-score {
+      margin: 12px 0 0;
+      font-weight: 700;
+      color: var(--accent-dark);
+    }
+
+    .score-card {
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    #overallScore {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+    }
+
+    .matching-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: 96%;
+        margin: 15px auto;
+      }
+
+      header,
+      .audio-card,
+      .activity,
+      .score-card {
+        border-radius: 10px;
+      }
+
+      header,
+      .activity {
+        padding: 18px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <header>
+      <h1>نشاط استماع: شقّة أحمد والحيّ الذي يسكن فيه</h1>
+      <p class="subtitle">
+        استمع إلى التسجيل، ثم أجب عن الأنشطة الأربعة. يمكنك الاستماع أكثر من مرة.
+      </p>
+    </header>
+
+    <section class="audio-card" aria-labelledby="audio-heading">
+      <h2 id="audio-heading">التسجيل الصوتي</h2>
+      <audio controls preload="metadata">
+        <source src="./شقة أحمد.mp3" type="audio/mpeg">
+        <source src="./شقة أحمد.mp3" type="audio/mpeg">
+        متصفّحك لا يدعم تشغيل الملفات الصوتية.
+      </audio>
+      <p class="file-note">
+        يجب أن يكون ملف الصوت وملف HTML في المجلد نفسه على GitHub.
+      </p>
+    </section>
+
+    <!-- Activity 1 -->
+    <section class="activity" id="trueFalseSection">
+      <h2>النشاط الأوّل: صح أم خطأ؟</h2>
+      <p class="instructions">اختر «صح» أو «خطأ» لكل جملة.</p>
+
+      <div class="question" data-answer="true">
+        <p>١. تقع شقّة أحمد في الطابق الثالث.</p>
+        <label><input type="radio" name="tf1" value="true"> صح</label>
+        <label><input type="radio" name="tf1" value="false"> خطأ</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answer="false">
+        <p>٢. تتكوّن البناية من ثلاثة طوابق فقط.</p>
+        <label><input type="radio" name="tf2" value="true"> صح</label>
+        <label><input type="radio" name="tf2" value="false"> خطأ</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answer="true">
+        <p>٣. لا يوجد تلفاز في غرفة النوم.</p>
+        <label><input type="radio" name="tf3" value="true"> صح</label>
+        <label><input type="radio" name="tf3" value="false"> خطأ</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answer="false">
+        <p>٤. يوجد مستشفى كبير داخل الحيّ.</p>
+        <label><input type="radio" name="tf4" value="true"> صح</label>
+        <label><input type="radio" name="tf4" value="false"> خطأ</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answer="true">
+        <p>٥. توجد محطة حافلات قريبة من الحيّ.</p>
+        <label><input type="radio" name="tf5" value="true"> صح</label>
+        <label><input type="radio" name="tf5" value="false"> خطأ</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="button-row">
+        <button type="button" onclick="checkRadioSection('trueFalseSection')">تحقّق من الإجابات</button>
+      </div>
+      <p class="section-score" id="trueFalseSectionScore"></p>
+    </section>
+
+    <!-- Activity 2 -->
+    <section class="activity" id="mcqSection">
+      <h2>النشاط الثاني: اختر الإجابة الصحيحة</h2>
+
+      <div class="question" data-answer="living">
+        <p>١. ماذا يوجد على يمين المدخل؟</p>
+        <label><input type="radio" name="mcq1" value="kitchen"> المطبخ</label>
+        <label><input type="radio" name="mcq1" value="living"> غرفة الجلوس</label>
+        <label><input type="radio" name="mcq1" value="bedroom"> غرفة النوم</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answer="books">
+        <p>٢. ماذا يوجد في مكتبة غرفة الجلوس؟</p>
+        <label><input type="radio" name="mcq2" value="clothes"> ملابس وأحذية</label>
+        <label><input type="radio" name="mcq2" value="books"> كتب ومجلّات</label>
+        <label><input type="radio" name="mcq2" value="food"> فاكهة وطعام</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answer="balcony">
+        <p>٣. أين يشرب أحمد القهوة عندما يكون الجوّ جميلًا؟</p>
+        <label><input type="radio" name="mcq3" value="balcony"> في الشرفة</label>
+        <label><input type="radio" name="mcq3" value="park"> في الحديقة العامّة</label>
+        <label><input type="radio" name="mcq3" value="cafe"> في المقهى</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answer="twenty">
+        <p>٤. كم دقيقة يحتاج أحمد للوصول إلى الجامعة؟</p>
+        <label><input type="radio" name="mcq4" value="ten"> عشر دقائق</label>
+        <label><input type="radio" name="mcq4" value="twenty"> حوالي عشرين دقيقة</label>
+        <label><input type="radio" name="mcq4" value="forty"> أربعون دقيقة</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answer="quiet">
+        <p>٥. لماذا لا يضع أحمد تلفازًا في غرفة النوم؟</p>
+        <label><input type="radio" name="mcq5" value="expensive"> لأنّ التلفاز غالٍ</label>
+        <label><input type="radio" name="mcq5" value="small"> لأنّ الغرفة صغيرة جدًا</label>
+        <label><input type="radio" name="mcq5" value="quiet"> لأنّه يفضّل أن تكون الغرفة هادئة</label>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="button-row">
+        <button type="button" onclick="checkRadioSection('mcqSection')">تحقّق من الإجابات</button>
+      </div>
+      <p class="section-score" id="mcqSectionScore"></p>
+    </section>
+
+    <!-- Activity 3 -->
+    <section class="activity" id="fillSection">
+      <h2>النشاط الثالث: أكمل الفراغ</h2>
+      <p class="instructions">اكتب كلمة أو عبارة قصيرة كما سمعتها.</p>
+
+      <div class="question" data-answers='["الخامس","خمسة","خمسة طوابق","5","5 طوابق"]'>
+        <p>١. تتكوّن البناية من ______ طوابق.</p>
+        <input type="text" autocomplete="off" aria-label="إجابة السؤال الأول">
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answers='["الحمام","حمام"]'>
+        <p>٢. يوجد ______ بجانب غرفة النوم.</p>
+        <input type="text" autocomplete="off" aria-label="إجابة السؤال الثاني">
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answers='["حاسوب","الحاسوب","كمبيوتر","الكمبيوتر"]'>
+        <p>٣. فوق المكتب يوجد ______ ومصباح.</p>
+        <input type="text" autocomplete="off" aria-label="إجابة السؤال الثالث">
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answers='["الصيدلية","صيدلية"]'>
+        <p>٤. يوجد متجر ومخبز ومطعم و______ في الحيّ.</p>
+        <input type="text" autocomplete="off" aria-label="إجابة السؤال الرابع">
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="question" data-answers='["وسط المدينة","وسط المدينه","مركز المدينة","مركز المدينه"]'>
+        <p>٥. يذهب أحمد إلى ______ عندما يريد مشاهدة فيلم أو استعارة كتاب.</p>
+        <input type="text" autocomplete="off" aria-label="إجابة السؤال الخامس">
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="button-row">
+        <button type="button" onclick="checkFillSection()">تحقّق من الإجابات</button>
+      </div>
+      <p class="section-score" id="fillSectionScore"></p>
+    </section>
+
+    <!-- Activity 4 -->
+    <section class="activity" id="matchingSection">
+      <h2>النشاط الرابع: صِل المكان بالمعلومة المناسبة</h2>
+      <p class="instructions">اختر الوصف الصحيح لكل مكان.</p>
+
+      <div class="matching-grid">
+        <div class="question" data-answer="coffee">
+          <p>١. الشرفة</p>
+          <select aria-label="وصف الشرفة">
+            <option value="">اختر الإجابة</option>
+            <option value="church">توجد فيها كنيسة</option>
+            <option value="coffee">يشرب فيها القهوة ويشاهد الناس</option>
+            <option value="children">فيها أشجار ومقاعد ومكان للأطفال</option>
+            <option value="appliances">فيها ثلّاجة وموقد وفرن</option>
+            <option value="smallgarden">توجد أمامها حديقة صغيرة</option>
+          </select>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+
+        <div class="question" data-answer="appliances">
+          <p>٢. المطبخ</p>
+          <select aria-label="وصف المطبخ">
+            <option value="">اختر الإجابة</option>
+            <option value="church">توجد فيها كنيسة</option>
+            <option value="coffee">يشرب فيها القهوة ويشاهد الناس</option>
+            <option value="children">فيها أشجار ومقاعد ومكان للأطفال</option>
+            <option value="appliances">فيها ثلّاجة وموقد وفرن</option>
+            <option value="smallgarden">توجد أمامها حديقة صغيرة</option>
+          </select>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+
+        <div class="question" data-answer="children">
+          <p>٣. الحديقة العامّة</p>
+          <select aria-label="وصف الحديقة العامة">
+            <option value="">اختر الإجابة</option>
+            <option value="church">توجد فيها كنيسة</option>
+            <option value="coffee">يشرب فيها القهوة ويشاهد الناس</option>
+            <option value="children">فيها أشجار ومقاعد ومكان للأطفال</option>
+            <option value="appliances">فيها ثلّاجة وموقد وفرن</option>
+            <option value="smallgarden">توجد أمامها حديقة صغيرة</option>
+          </select>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+
+        <div class="question" data-answer="church">
+          <p>٤. الحيّ المجاور</p>
+          <select aria-label="وصف الحي المجاور">
+            <option value="">اختر الإجابة</option>
+            <option value="church">توجد فيه كنيسة</option>
+            <option value="coffee">يشرب فيه القهوة ويشاهد الناس</option>
+            <option value="children">فيه أشجار ومقاعد ومكان للأطفال</option>
+            <option value="appliances">فيه ثلّاجة وموقد وفرن</option>
+            <option value="smallgarden">توجد أمامه حديقة صغيرة</option>
+          </select>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+
+        <div class="question" data-answer="smallgarden">
+          <p>٥. البناية</p>
+          <select aria-label="وصف البناية">
+            <option value="">اختر الإجابة</option>
+            <option value="church">توجد فيها كنيسة</option>
+            <option value="coffee">يشرب فيها القهوة ويشاهد الناس</option>
+            <option value="children">فيها أشجار ومقاعد ومكان للأطفال</option>
+            <option value="appliances">فيها ثلّاجة وموقد وفرن</option>
+            <option value="smallgarden">توجد أمامها حديقة صغيرة</option>
+          </select>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button type="button" onclick="checkMatchingSection()">تحقّق من الإجابات</button>
+      </div>
+      <p class="section-score" id="matchingSectionScore"></p>
+    </section>
+
+    <section class="score-card">
+      <h2>النتيجة النهائية</h2>
+      <p id="overallScore">اضغط على الزر لحساب نتيجتك من ٢٠.</p>
+      <div class="button-row" style="justify-content:center;">
+        <button type="button" onclick="checkAll()">تحقّق من جميع الأنشطة</button>
+        <button type="button" class="secondary" onclick="resetAll()">إعادة المحاولة</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function markQuestion(question, isCorrect, correctMessage = "") {
+      const feedback = question.querySelector(".feedback");
+      question.classList.remove("correct", "incorrect");
+      feedback.classList.remove("correct-text", "incorrect-text");
+
+      if (isCorrect) {
+        question.classList.add("correct");
+        feedback.classList.add("correct-text");
+        feedback.textContent = "إجابة صحيحة.";
+      } else {
+        question.classList.add("incorrect");
+        feedback.classList.add("incorrect-text");
+        feedback.textContent = correctMessage || "إجابة غير صحيحة. حاول مرة أخرى.";
+      }
+    }
+
+    function checkRadioSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      const questions = section.querySelectorAll(".question");
+      let score = 0;
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const answer = question.dataset.answer;
+        const isCorrect = selected && selected.value === answer;
+        if (isCorrect) score++;
+        markQuestion(question, isCorrect, selected ? "" : "اختر إجابة أولًا.");
+      });
+
+      document.getElementById(sectionId + "Score").textContent =
+        `النتيجة: ${score} من ${questions.length}`;
+      return score;
+    }
+
+    function normalizeArabic(text) {
+      return text
+        .trim()
+        .toLowerCase()
+        .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, "")
+        .replace(/ـ/g, "")
+        .replace(/[أإآ]/g, "ا")
+        .replace(/ى/g, "ي")
+        .replace(/ة/g, "ه")
+        .replace(/\s+/g, " ");
+    }
+
+    function checkFillSection() {
+      const section = document.getElementById("fillSection");
+      const questions = section.querySelectorAll(".question");
+      let score = 0;
+
+      questions.forEach((question) => {
+        const input = question.querySelector('input[type="text"]');
+        const accepted = JSON.parse(question.dataset.answers).map(normalizeArabic);
+        const response = normalizeArabic(input.value);
+        const isCorrect = response !== "" && accepted.includes(response);
+        if (isCorrect) score++;
+        markQuestion(question, isCorrect, response ? "راجع الإجابة واستمع مرة أخرى." : "اكتب إجابة أولًا.");
+      });
+
+      document.getElementById("fillSectionScore").textContent =
+        `النتيجة: ${score} من ${questions.length}`;
+      return score;
+    }
+
+    function checkMatchingSection() {
+      const section = document.getElementById("matchingSection");
+      const questions = section.querySelectorAll(".question");
+      let score = 0;
+
+      questions.forEach((question) => {
+        const selected = question.querySelector("select").value;
+        const answer = question.dataset.answer;
+        const isCorrect = selected === answer;
+        if (isCorrect) score++;
+        markQuestion(question, isCorrect, selected ? "" : "اختر إجابة أولًا.");
+      });
+
+      document.getElementById("matchingSectionScore").textContent =
+        `النتيجة: ${score} من ${questions.length}`;
+      return score;
+    }
+
+    function checkAll() {
+      const total =
+        checkRadioSection("trueFalseSection") +
+        checkRadioSection("mcqSection") +
+        checkFillSection() +
+        checkMatchingSection();
+
+      const percentage = Math.round((total / 20) * 100);
+      document.getElementById("overallScore").textContent =
+        `نتيجتك النهائية: ${total} من ٢٠ (${percentage}٪)`;
+    }
+
+    function resetAll() {
+      document.querySelectorAll('input[type="radio"]').forEach((input) => {
+        input.checked = false;
+      });
+
+      document.querySelectorAll('input[type="text"]').forEach((input) => {
+        input.value = "";
+      });
+
+      document.querySelectorAll("select").forEach((select) => {
+        select.selectedIndex = 0;
+      });
+
+      document.querySelectorAll(".question").forEach((question) => {
+        question.classList.remove("correct", "incorrect");
+      });
+
+      document.querySelectorAll(".feedback").forEach((feedback) => {
+        feedback.textContent = "";
+        feedback.classList.remove("correct-text", "incorrect-text");
+      });
+
+      document.querySelectorAll(".section-score").forEach((score) => {
+        score.textContent = "";
+      });
+
+      document.getElementById("overallScore").textContent =
+        "اضغط على الزر لحساب نتيجتك من ٢٠.";
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>
