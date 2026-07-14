@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arab in America — Lesson 2 (Part 3) Interactive HTML</title>
+<style>
+:root{
+  --ink:#17324d; --muted:#617488; --blue:#dcecf8; --blue2:#eff7fc; --green:#3d7b69; --green2:#e7f4ef;
+  --gold:#9a6a19; --gold2:#fff4d8; --red:#a84141; --red2:#fdecec; --line:#c9d4df; --panel:#fff;
+  --bg:#f5f8fb; --shadow:0 10px 28px rgba(23,50,77,.08); --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans Arabic","Segoe UI",sans-serif;background:linear-gradient(180deg,#edf5fa 0,#f8fafc 220px,#f5f8fb 100%);color:var(--ink);line-height:1.72}
+a{color:#1c5d83} button,input,textarea,select{font:inherit}
+.shell{max-width:1200px;margin:0 auto;padding:22px 18px 58px}
+.hero{background:linear-gradient(135deg,#143956,#245b7d 58%,#3a7c95);color:#fff;border-radius:26px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-90px;top:-110px;width:270px;height:270px;border-radius:50%;background:rgba(255,255,255,.08)}
+.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.86rem;opacity:.8;margin-bottom:8px}
+h1{font-size:clamp(1.9rem,4.8vw,4rem);margin:0;line-height:1.1}
+.hero p{max-width:820px;margin:14px 0 0;font-size:1.03rem;opacity:.95}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 12px;font-weight:700}
+.topnav{position:sticky;top:0;z-index:50;display:flex;gap:8px;overflow:auto;background:rgba(245,248,251,.95);backdrop-filter:blur(10px);padding:12px 4px;margin:18px 0 0;border-bottom:1px solid #d7e0e8}
+.topnav a{text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;white-space:nowrap}
+.card{background:var(--panel);border:1px solid #e1e8ef;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-top:22px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px}.head h2{margin:0;font-size:1.55rem}.head p{margin:5px 0 0;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;background:var(--blue2);color:#2b678c;border:1px solid #c7deed;border-radius:999px;padding:5px 10px;font-size:.82rem;font-weight:700;white-space:nowrap}
+.rtl{direction:rtl;text-align:right}.arabic{font-family:"Noto Sans Arabic",Arial,sans-serif}
+.note,.tip,.warn{padding:13px 15px;border-radius:12px;margin:12px 0}.note{background:var(--blue2);border-inline-start:5px solid #4c8db6}.tip{background:var(--gold2);border-inline-start:5px solid #d2a040}.warn{background:var(--red2);border-inline-start:5px solid var(--red)}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.btn{border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:700;background:#245b7d;color:#fff}.btn.secondary{background:#eef4f8;color:#245b7d;border:1px solid #cbd9e4}.btn.green{background:#2d7c63}.btn.red{background:#8d3d3d}
+textarea{width:100%;min-height:140px;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+.fill{border:none;border-bottom:2px solid #7ca6c2;background:#f7fbff;padding:4px 6px;min-width:92px;max-width:220px}.fill.short{width:88px}.fill.med{width:135px}.fill.long{width:190px}
+.exercise{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fcfdff;margin:14px 0}.q{padding:12px 0;border-bottom:1px dashed #d8e1e9}.q:last-child{border-bottom:none}
+.feedback{margin-top:12px;padding:10px 12px;border-radius:10px;display:none}.ok{background:var(--green2);border:1px solid #b9e2d5;color:#215948}.bad{background:var(--red2);border:1px solid #efc4c4;color:#7f2e2e}
+.answer-key{display:none;margin-top:12px;background:#f2f7fb;border:1px solid #d2dfeb;border-radius:10px;padding:12px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{border-collapse:collapse;width:100%;min-width:760px;background:#fff}th,td{padding:10px 12px;border-bottom:1px solid #dce4eb;border-inline-end:1px solid #dce4eb;vertical-align:top}th:last-child,td:last-child{border-inline-end:none}tr:last-child td{border-bottom:none}th{background:#dbeaf5;color:#1d4a69;text-align:center;font-weight:800}
+.prompt{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfdff}.prompt h4{margin:0 0 8px}.mini{font-size:.92rem;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{background:#eef4f8;border:1px solid #cbd9e4;border-radius:999px;padding:5px 9px;font-size:.88rem}
+.visual{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fbfdff}.visual svg,.visual img{display:block;width:100%;height:210px;background:linear-gradient(#f3f8fb,#fff)}.caption{padding:12px;text-align:center}.caption strong{display:block;font-size:1.04rem}.caption span{color:var(--muted);font-size:.9rem}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media (max-width:760px){.compare{grid-template-columns:1fr}}
+.colbox{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfdff}.colbox h3{margin-top:0}
+details{border:1px solid var(--line);border-radius:12px;background:#fcfdff;margin:10px 0}summary{cursor:pointer;padding:12px 14px;font-weight:800}
+.small{font-size:.93rem}
+footer{text-align:center;color:var(--muted);font-size:.92rem;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Interactive Arabic Lesson</div>
+    <h1 class="arabic" dir="rtl">عرب في أمريكا — الجزء الثالث: القصة، الثقافة، والاسم الموصول</h1>
+    <p>This file converts the next set of scanned pages into interactive HTML. It includes open discussion tasks, guided listening notes, a clear grammar explanation of <em>الاسم الموصول</em>, an auto-checked exercise on relative pronouns, and creative story-writing activities.</p>
+    <div class="pills">
+      <span class="pill">Interview & speaking tasks</span>
+      <span class="pill">Culture discussion</span>
+      <span class="pill">Relative pronouns in fusha and dialect</span>
+      <span class="pill">Auto-check grammar exercise</span>
+    </div>
+  </header>
+
+  <nav class="topnav">
+    <a href="#ex13">Ex. 13</a>
+    <a href="#ex14">Ex. 14</a>
+    <a href="#ex15">Ex. 15</a>
+    <a href="#ex16">Ex. 16</a>
+    <a href="#ex17">Ex. 17</a>
+    <a href="#ex18">Ex. 18</a>
+    <a href="#ex19">Ex. 19</a>
+    <a href="#grammar">Grammar</a>
+    <a href="#ex20">Ex. 20</a>
+    <a href="#ex21">Ex. 21</a>
+    <a href="#ex22">Ex. 22</a>
+  </nav>
+
+  <section class="card" id="ex13">
+    <div class="head">
+      <div>
+        <h2>Exercise 13 — interview a classmate</h2>
+        <p class="arabic rtl">في البيت ثم في الصف: أعدّوا أسئلة لزملائكم في هذه المواضيع. لا تعدّوا سؤالًا واحدًا فقط، ولكن ٣–٤ أسئلة متابعة.</p>
+      </div>
+      <div class="badge">Open speaking task</div>
+    </div>
+    <div class="grid-4">
+      <div class="prompt rtl arabic"><h4>١. التعليم والبحث عن وظيفة</h4><p>ما الذي تدرسه؟ ما نوع الوظيفة التي تبحث عنها؟ ما المهارات التي تحتاجها؟ ما خطتك بعد التخرّج؟</p></div>
+      <div class="prompt rtl arabic"><h4>٢. الحرية والإنترنت</h4><p>هل يجب أن تكون هناك حدود؟ من يحدّدها؟ هل الإنترنت يزيد الحرية أم يسبّب مشكلات؟</p></div>
+      <div class="prompt rtl arabic"><h4>٣. الهوية والملابس</h4><p>هل الملابس تعبّر عن الهوية؟ هل يختلف ذلك بين الأجيال؟ ما الذي تفضّل أن تلبسه؟</p></div>
+      <div class="prompt rtl arabic"><h4>٤. ازدياد عدد سكان العالم</h4><p>ما الآثار الإيجابية أو السلبية؟ كيف يؤثّر ذلك في العمل والسكن والبيئة؟</p></div>
+    </div>
+    <div class="note">Use the space below to draft your interview questions and write a short summary of your partner’s answers.</div>
+    <textarea class="persist" id="ex13notes" placeholder="Draft your questions and summary here..."></textarea>
+    <div class="toolbar"><button class="btn secondary" onclick="downloadText('ex13notes','lesson2_part3_ex13_interview_notes.txt')">Export my notes</button></div>
+  </section>
+
+  <section class="card" id="ex14">
+    <div class="head">
+      <div>
+        <h2>Exercise 14 — write vocabulary sentences</h2>
+        <p class="arabic rtl">استمعوا إلى جمل المفردات (١٢–٢٣) واكتبوها. بما أن الصوت غير متاح هنا، حُوِّل النشاط إلى مساحة كتابة حرّة للمراجعة.</p>
+      </div>
+      <div class="badge">Open writing</div>
+    </div>
+    <div class="tip">Write 12 short sentences using the newer vocabulary from this lesson. You can use the box as a dictation notebook or as independent review practice.</div>
+    <textarea class="persist" id="ex14notes" placeholder="اكتب جُمَلَك هنا ..."></textarea>
+    <div class="toolbar"><button class="btn secondary" onclick="downloadText('ex14notes','lesson2_part3_ex14_vocabulary_sentences.txt')">Export my writing</button></div>
+  </section>
+
+  <section class="card" id="ex15">
+    <div class="head">
+      <div>
+        <h2>Exercise 15 — the story in spoken Arabic</h2>
+        <p>These pages refer to short videos in the spoken variety students are studying. Since the audio/video is not embedded here, this section preserves the prompts and turns them into guided writing/discussion tasks.</p>
+      </div>
+      <div class="badge">Guided response</div>
+    </div>
+    <div class="compare">
+      <div class="colbox rtl arabic">
+        <h3>الشامي</h3>
+        <div class="chips">
+          <span class="chip">(١) أنا مو سورية ومو أمريكية</span>
+          <span class="chip">(٢) قديش الساعة؟</span>
+          <span class="chip">(٣) آخر مرة</span>
+        </div>
+        <ol>
+          <li>ليش نسرين زعلانة هون؟</li>
+          <li>ليش ماما نسرين زعلانة؟</li>
+          <li>شو بنعرف عن نور هون؟ وشو رأيك بعلاقتها بنسرين؟</li>
+          <li>كيف بتحس نسرين بالنسبة لهويتها؟</li>
+          <li>أي مشكلة أكبر في رأيك: مشكلة الهوية ولا مشكلة مامتها؟ ليش؟ شو الحل؟</li>
+        </ol>
+        <textarea class="persist" id="ex15shami" placeholder="اكتب فقرة أو ملاحظاتك هنا..."></textarea>
+      </div>
+      <div class="colbox rtl arabic">
+        <h3>المصري</h3>
+        <div class="chips">
+          <span class="chip">(١) أنا مش مصرية ومش أمريكية</span>
+          <span class="chip">(٢) كنتِ فين؟!</span>
+        </div>
+        <ol>
+          <li>مها زعلانة ليه هنا؟</li>
+          <li>مامة مها زعلانة ليه؟</li>
+          <li>بنعرف إيه عن ليلى هنا؟ وإيه رأيك في علاقتها بمها؟</li>
+          <li>مها بتحس بإيه بالنسبة لهويتها؟</li>
+          <li>إيه مشكلة أكبر في رأيك: مشكلة الهوية ولا مشكلة مامتها؟ ليه؟ إيه الحل؟</li>
+        </ol>
+        <textarea class="persist" id="ex15masri" placeholder="اكتب فقرة أو ملاحظاتك هنا..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="ex16">
+    <div class="head">
+      <div>
+        <h2>Exercise 16 — role play: <span class="arabic">خير؟ شو فيه؟ / خير؟ فيه إيه؟</span></h2>
+        <p>The page describes a role play in which a family member or friend acts as an intermediary and tries to resolve a conflict.</p>
+      </div>
+      <div class="badge">Role play</div>
+    </div>
+    <div class="note">In Arab culture, interpersonal problems are often handled by a family member or a close friend rather than a professional counselor. Act out a scene in small groups where someone tries to help <span class="arabic">مها ووالدتها</span> or <span class="arabic">نسرين وإمها</span> solve a conflict.</div>
+    <div class="grid-3">
+      <div class="prompt rtl arabic"><h4>الدور ١: الابنة</h4><p>اشرح مشكلتك: ما الذي تريدينه؟ لماذا أنتِ منزعجة؟ ماذا تشعرين؟</p></div>
+      <div class="prompt rtl arabic"><h4>الدور ٢: الأم</h4><p>اشرح موقفك: لماذا تضعين حدودًا؟ ما الذي يقلقك؟ ما الذي تريدينه من ابنتك؟</p></div>
+      <div class="prompt rtl arabic"><h4>الدور ٣: الوسيط / الوسيطة</h4><p>اسأل الطرفين، لخّص المشكلة، اقترح حلاً وسطًا، ثم اختتم باتفاق عملي.</p></div>
+    </div>
+    <textarea class="persist" id="ex16notes" placeholder="Write your group’s role-play plan or script here..."></textarea>
+  </section>
+
+  <section class="card" id="ex17">
+    <div class="head">
+      <div>
+        <h2>Exercise 17 — culture discussion</h2>
+        <p class="arabic rtl">هل الأولاد عندهم حرية أكثر من البنات؟ شاهدوا أو ناقشوا الآراء، ثم اكتبوا رأيكم.</p>
+      </div>
+      <div class="badge">Open response</div>
+    </div>
+    <div class="tip rtl arabic">ما رأيكم فيما يقولون؟ هل هذه الآراء مثل آرائكم؟ اذكروا أمثلة من خبرتكم أو من المجتمع الذي تعرفونه.</div>
+    <textarea class="persist" id="ex17notes" placeholder="Write your response here / اكتب رأيك هنا..."></textarea>
+  </section>
+
+  <section class="card" id="ex18">
+    <div class="head">
+      <div>
+        <h2>Exercise 18 — interviews with Arab American youth</h2>
+        <p>This section preserves the listening questions and the follow-up class discussion prompts.</p>
+      </div>
+      <div class="badge">Listening notes</div>
+    </div>
+    <div class="compare">
+      <div class="colbox rtl arabic">
+        <h3>العامية الشامية — أنجي، رزان، سوزان</h3>
+        <ol>
+          <li>شو عرفنا عن أماكن ولادتهن؟ أماكن سكنهن هلّق؟</li>
+          <li>شو عرفنا عن العيلة؟ هنّ ساكنين مع أهلن؟</li>
+          <li>شو عرفنا عن دراستهن؟</li>
+          <li>بشو بتسمح لهن العيلة؟ وبشو ما بتسمح لهن؟</li>
+          <li>وين بدهن يعيشوا؟ ليش؟</li>
+        </ol>
+        <textarea class="persist" id="ex18shami" placeholder="Listening notes for the Levantine interviews..."></textarea>
+      </div>
+      <div class="colbox rtl arabic">
+        <h3>العامية المصرية — إيريني، هبة، محمد</h3>
+        <ol>
+          <li>عرفنا إيه عن أماكن ولادتهم؟ أماكن سكنهم دلوقتي؟</li>
+          <li>نقدر نعرف إيه عن عيلتهم؟ هم ساكنين مع أهلهم؟</li>
+          <li>بنعرف إيه عن دراستهم؟</li>
+          <li>العيلة بتسمح لهم بإيه؟ وما بتسمحش بإيه؟</li>
+          <li>هم عايزين يعيشوا فين؟ ليه؟</li>
+        </ol>
+        <textarea class="persist" id="ex18masri" placeholder="Listening notes for the Egyptian interviews..."></textarea>
+      </div>
+    </div>
+    <div class="compare" style="margin-top:16px">
+      <div class="colbox rtl arabic">
+        <h3>بعد الاستماع — الشامي</h3>
+        <ol>
+          <li>وين بيحسّوا بالراحة أكتر؟</li>
+          <li>شو علاقتهن بسوريا؟ وشو بيعملوا لما بيسافروا هنيك؟</li>
+          <li>مين أقرب شخص إلهن؟</li>
+          <li>هنّ متلكن؟ وحياتهن مثل حياتكن؟ كيف؟</li>
+        </ol>
+      </div>
+      <div class="colbox rtl arabic">
+        <h3>بعد الاستماع — المصري</h3>
+        <ol>
+          <li>بيحسّوا بالراحة أكتر فين؟</li>
+          <li>إيه علاقتهم بمصر؟ وبيعملوا إيه لما بيسافروا هناك؟</li>
+          <li>مين أقرب شخص ليهم؟ وليه؟</li>
+          <li>هم زيّكو؟ وحياتهم زي حياتكو؟ إزّاي؟</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="ex19">
+    <div class="head">
+      <div>
+        <h2>Exercise 19 — the story in formal Arabic</h2>
+        <p>The original page is a listening-and-dictation activity about <span class="arabic">مها</span>. Since the audio is not provided here, the activity is converted into a guided listening notebook and grammar observation space.</p>
+      </div>
+      <div class="badge">Guided notebook</div>
+    </div>
+    <div class="warn">The scanned page contains numbered dictation blanks tied to audio timestamps. Without the audio, exact auto-checking is not reliable. Instead, use the fields below as a structured listening notebook or classroom note sheet.</div>
+    <div class="grid-3">
+      <div class="prompt rtl arabic"><h4>أ. حدود الحرية</h4><p>كيف تتكلم مها عن الحدود على حريتها؟ ما معنى <span class="arabic">ما</span> هنا عندما تُستعمل اسمًا موصولًا غير محدد؟</p><textarea class="persist" id="ex19a"></textarea></div>
+      <div class="prompt rtl arabic"><h4>ب. ليلى والضمائر</h4><p>كيف تتكلم مها عن ليلى؟ ما الاسم الذي ترجع إليه الضمائر في هذا المقطع؟</p><textarea class="persist" id="ex19b"></textarea></div>
+      <div class="prompt rtl arabic"><h4>ج. والد ليلى ووالدتها</h4><p>ماذا تقول مها عن والد ليلى ووالدتها؟ لاحظوا الضمير <span class="arabic">هما</span>، والأفعال، والصفة <span class="arabic">مشغول</span>.</p><textarea class="persist" id="ex19c"></textarea></div>
+    </div>
+  </section>
+
+  <section class="card" id="grammar">
+    <div class="head">
+      <div>
+        <h2>Grammar focus — <span class="arabic">الاسم الموصول</span> in fusha and spoken Arabic</h2>
+        <p>A cleaned and reorganized version of the grammar pages.</p>
+      </div>
+      <div class="badge">Grammar reference</div>
+    </div>
+
+    <div class="note rtl arabic">
+      <strong>الفكرة الأساسية:</strong> جملة الصفة العادية تصف اسمًا نكرة، مثل: <span class="arabic">طالبةٌ تجلسُ بجانبي</span> أو <span class="arabic">مها لها خالةٌ تسكنُ في كاليفورنيا</span>.<br>
+      لكن إذا كان الاسم معرفة، فنحتاج إلى أداة تربط الاسم بالجملة التي تصفه. هذه الأداة هي <strong>الاسم الموصول</strong>.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Use</th><th class="arabic">الفصحى</th><th class="arabic">العامية</th></tr></thead>
+        <tbody>
+          <tr><td>masculine singular</td><td class="rtl arabic">الذي</td><td class="rtl arabic">اللي</td></tr>
+          <tr><td>feminine singular</td><td class="rtl arabic">التي</td><td class="rtl arabic">اللي</td></tr>
+          <tr><td>human plural</td><td class="rtl arabic">الذين</td><td class="rtl arabic">اللي</td></tr>
+          <tr><td>nonspecific “what / whatever”</td><td class="rtl arabic">ما</td><td class="rtl arabic">ما</td></tr>
+          <tr><td>nonspecific “who / whoever”</td><td class="rtl arabic">مَن</td><td class="rtl arabic">مَن</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details>
+      <summary>Examples from the lesson</summary>
+      <div class="small">
+        <div class="chips">
+          <span class="chip arabic">صديقتي ليلى هي الشخص الوحيد الذي أتكلم معه عن كل شيء.</span>
+          <span class="chip arabic">رفيقتي نور هي الشخص الوحيد اللي بحكي معه عن كل شي.</span>
+          <span class="chip arabic">الشخص الوحيد الذي أعرفه هنا هو أنت!</span>
+          <span class="chip arabic">الملابس البسيطة التي لبستها ما كانت مناسبة.</span>
+          <span class="chip arabic">المهاجرون الجدد الذين تكلّمت معهم ليسوا سعداء هنا.</span>
+        </div>
+      </div>
+    </details>
+
+    <div class="grid-2">
+      <div class="prompt rtl arabic">
+        <h4>ملاحظات مهمة</h4>
+        <ul>
+          <li>في الفصحى، يختلف الاسم الموصول بحسب النوع والعدد.</li>
+          <li>في العامية، تُستعمل <span class="arabic">اللي</span> غالبًا مع جميع الأسماء.</li>
+          <li>الجملة بعد <span class="arabic">الذي/التي/الذين</span> تكون في كثير من الأمثلة <span class="arabic">جملة فعلية</span>.</li>
+          <li>غالبًا يوجد ضمير يعود على الاسم الموصوف داخل الجملة، مثل: <span class="arabic">لبستُها، تكلّمتُ معهم</span>.</li>
+        </ul>
+      </div>
+      <div class="prompt rtl arabic">
+        <h4><span class="arabic">ما</span> و <span class="arabic">مَن</span></h4>
+        <p><strong>ما</strong> تعني “what / whatever”: <span class="arabic">ليلى تفهم ما أشعر به</span>، <span class="arabic">ألبس ما أريد</span>.</p>
+        <p><strong>مَن</strong> تعني “who / whoever”: <span class="arabic">أظن أنكم تعرفون من أقصد</span>، <span class="arabic">ليلى تخرج مع من تريد</span>.</p>
+        <p class="mini">A useful distinction: <span class="arabic">مِنْ</span> with kasra is a preposition (“from”), while <span class="arabic">مَن</span> is the relative/interrogative pronoun.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="ex20">
+    <div class="head">
+      <div>
+        <h2>Exercise 20 — <span class="arabic">الذي / التي / الذين</span></h2>
+        <p>Link the descriptions to their nouns in fusha by choosing <span class="arabic">الذي</span>, <span class="arabic">التي</span>, <span class="arabic">الذين</span>, or no connector where appropriate.</p>
+      </div>
+      <div class="badge">Auto-check</div>
+    </div>
+    <div class="exercise rtl arabic">
+      <div class="q">١. أحبُّ الفستانَ <input class="fill short persist" id="e20_1" data-answers="الذي"> كنتِ تلبسينه في السهرة.</div>
+      <div class="q">٢. ننوي أن نتزوّج في نفس الكنيسة <input class="fill short persist" id="e20_2" data-answers="التي"> تزوّج فيها والدي ووالدتي وجدي وجدتي، وهي كنيسةٌ أورثوذوكسيةٌ قديمةٌ عمرها أكثر من ٢٥٠ عامًا.</div>
+      <div class="q">٣. تعرّفتُ على الجيران الجدد <input class="fill short persist" id="e20_3" data-answers="الذين"> يسكنون في الطابق تحتنا.</div>
+      <div class="q">٤. أشكركم على هذه الفرصة <input class="fill short persist" id="e20_4" data-answers="التي"> سمحت لي بقضاء وقت أطول معكم.</div>
+      <div class="q">٥. لا بدّ من تحديد أسباب الحادث والأشخاص <input class="fill short persist" id="e20_5" data-answers="الذين"> وراءه.</div>
+      <div class="q">٦. بالنسبة لي، هذه كانت أجمل إجازة <input class="fill short persist" id="e20_6" data-answers="التي"> أخذتُها في حياتي.</div>
+      <div class="q">٧. كلُّ الناس <input class="fill short persist" id="e20_7" data-answers="الذين"> تجمّعوا أمام المحل كانوا من أفراد الجالية الهندية.</div>
+      <div class="q">٨. الحلول <input class="fill short persist" id="e20_8" data-answers="التي"> فكّرنا بها من قبل كانت حلولًا مؤقتة انتهت بالفشل.</div>
+      <div class="q">٩. هذه تجربة <input class="fill short persist" id="e20_9" data-answers="التي"> كنتُ أحلم بها منذ وقت طويل.</div>
+      <div class="q">١٠. معظم الفنادق <input class="fill short persist" id="e20_10" data-answers="التي"> نزلوا فيها كانت فنادقَ درجةِ أولى.</div>
+      <div class="q">١١. تسمح الحكومة الأمريكية للأطفال الأجانب <input class="fill short persist" id="e20_11" data-answers="الذين"> يُولَدون في الولايات المتحدة بالحصول على الجنسية الأمريكية.</div>
+      <div class="toolbar">
+        <button class="btn green" onclick="gradeExercise('e20out')">Check answers</button>
+        <button class="btn secondary" onclick="showKey('e20key')">Show answer key</button>
+        <button class="btn red" onclick="resetInputs('e20out')">Reset</button>
+      </div>
+      <div id="e20out"></div>
+      <div id="e20key" class="answer-key rtl arabic">١) الذي &nbsp; ٢) التي &nbsp; ٣) الذين &nbsp; ٤) التي &nbsp; ٥) الذين &nbsp; ٦) التي &nbsp; ٧) الذين &nbsp; ٨) التي &nbsp; ٩) التي &nbsp; ١٠) التي &nbsp; ١١) الذين</div>
+    </div>
+  </section>
+
+  <section class="card" id="ex21">
+    <div class="head">
+      <div>
+        <h2>Exercise 21 — practice reforming sentences with relative clauses</h2>
+        <p>The book asks students to reshape English sentences so they parallel Arabic structure, then translate them into Arabic in both fusha and spoken Arabic.</p>
+      </div>
+      <div class="badge">Open translation task</div>
+    </div>
+    <div class="tip">Example from the page: “I didn’t like the movie I saw.” → “I didn’t like the movie that I saw it.” This awkward English pattern is used only to make the Arabic structure more visible.</div>
+    <div class="exercise">
+      <div class="q"><strong>1.</strong> Many of the persons who I interviewed did not wear appropriate clothes and shoes.<br><textarea class="persist" id="t21_1" placeholder="Rewrite it in the Arabic-style English pattern, then translate into الفصحى and العامية..."></textarea></div>
+      <div class="q"><strong>2.</strong> The number of youth who want to emigrate keeps increasing.<br><textarea class="persist" id="t21_2"></textarea></div>
+      <div class="q"><strong>3.</strong> The apartment I rented last year had four rooms and a kitchen.<br><textarea class="persist" id="t21_3"></textarea></div>
+      <div class="q"><strong>4.</strong> I didn’t find the journals I was looking for in the library.<br><textarea class="persist" id="t21_4"></textarea></div>
+      <div class="q"><strong>5.</strong> She knows a lot about the subjects she teaches.<br><textarea class="persist" id="t21_5"></textarea></div>
+      <div class="q"><strong>6.</strong> Some people do not possess the freedom you enjoy.<br><textarea class="persist" id="t21_6"></textarea></div>
+      <div class="q"><strong>7.</strong> We felt very comfortable at the hotel we stayed in north of Cairo.<br><textarea class="persist" id="t21_7"></textarea></div>
+      <div class="q"><strong>8.</strong> She’s too busy for us with her friends who are visiting her.<br><textarea class="persist" id="t21_8"></textarea></div>
+      <div class="q"><strong>9.</strong> News of the dispute that started between the neighbors spread quickly.<br><textarea class="persist" id="t21_9"></textarea></div>
+      <div class="q"><strong>10.</strong> My favorite vacation was the vacation I spent in Canada because of its beautiful nature.<br><textarea class="persist" id="t21_10"></textarea></div>
+    </div>
+    <div class="toolbar"><button class="btn secondary" onclick="downloadTextGroup(['t21_1','t21_2','t21_3','t21_4','t21_5','t21_6','t21_7','t21_8','t21_9','t21_10'],'lesson2_part3_ex21_translations.txt')">Export all responses</button></div>
+  </section>
+
+  <section class="card" id="ex22">
+    <div class="head">
+      <div>
+        <h2>Exercise 22 — stories using relative pronouns</h2>
+        <p>Use your imagination to create stories for the pictures. Start with a definite noun, such as “the person who ...” or “the woman who ...”.</p>
+      </div>
+      <div class="badge">Creative writing</div>
+    </div>
+    <div class="grid-3">
+      <div class="visual">
+        <svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg" aria-label="A baby on a bed">
+          <rect width="300" height="210" fill="#eef6fb"/>
+          <rect x="18" y="34" width="264" height="142" rx="18" fill="#f6f8fb" stroke="#c6d4df"/>
+          <ellipse cx="150" cy="122" rx="78" ry="42" fill="#f3d7c4"/>
+          <circle cx="205" cy="85" r="26" fill="#f3d7c4"/>
+          <path d="M190 72 q18 -12 34 0" stroke="#8d6b5f" stroke-width="4" fill="none"/>
+          <path d="M95 120 q-32 18 -18 42" stroke="#f3d7c4" stroke-width="18" fill="none"/>
+          <path d="M194 133 q35 11 30 41" stroke="#f3d7c4" stroke-width="18" fill="none"/>
+          <path d="M120 82 q-6 -26 15 -34" stroke="#f3d7c4" stroke-width="18" fill="none"/>
+          <path d="M225 104 q28 -16 35 -42" stroke="#f3d7c4" stroke-width="18" fill="none"/>
+          <rect x="118" y="112" width="64" height="44" fill="#dce4ef"/>
+        </svg>
+        <div class="caption"><strong>Image 1</strong><span>The baby who ...</span></div>
+      </div>
+      <div class="visual">
+        <svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg" aria-label="A graduate">
+          <rect width="300" height="210" fill="#eef6fb"/>
+          <rect x="0" y="150" width="300" height="60" fill="#dde7ef"/>
+          <circle cx="150" cy="70" r="24" fill="#efcdb4"/>
+          <path d="M118 42 l32 -18 l32 18 -32 18z" fill="#2f3544"/>
+          <path d="M180 42 l20 14" stroke="#2f3544" stroke-width="3"/><circle cx="201" cy="57" r="4" fill="#d8ad33"/>
+          <path d="M108 98 q42 -26 84 0 l-10 62 h-64z" fill="#232d3d"/>
+          <path d="M126 96 v48 M174 96 v48" stroke="#8b1e3f" stroke-width="5"/>
+          <path d="M120 138 q30 18 60 0" stroke="#cbd6e2" stroke-width="3" fill="none"/>
+          <path d="M132 120 l18 12 18 -12" fill="#cfd8e1"/>
+          <circle cx="44" cy="130" r="7" fill="#2f3544"/><path d="M44 122 l0 -28" stroke="#2f3544" stroke-width="3"/><rect x="40" y="94" width="8" height="4" fill="#2f3544"/>
+          <circle cx="258" cy="142" r="7" fill="#2f3544"/><path d="M258 134 l0 -28" stroke="#2f3544" stroke-width="3"/><rect x="254" y="106" width="8" height="4" fill="#2f3544"/>
+        </svg>
+        <div class="caption"><strong>Image 2</strong><span>The woman who graduated ...</span></div>
+      </div>
+      <div class="visual">
+        <svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg" aria-label="A messy room">
+          <rect width="300" height="210" fill="#eef6fb"/>
+          <rect x="0" y="160" width="300" height="50" fill="#ded6c9"/>
+          <rect x="220" y="56" width="42" height="88" fill="#9e7a58" stroke="#6d5238"/>
+          <rect x="228" y="62" width="26" height="24" fill="#ba946d" stroke="#6d5238"/>
+          <rect x="40" y="68" width="60" height="42" fill="#6f4f3a" stroke="#523627"/>
+          <rect x="44" y="74" width="52" height="34" fill="#2d2d2d"/>
+          <path d="M120 40 l28 20 -16 22 -32 -20z" fill="#ffffff" stroke="#c7d0d8"/>
+          <path d="M148 44 l46 10 -6 28 -52 -10z" fill="#e9f6ff" stroke="#b8d0df"/>
+          <path d="M74 122 l-20 10 10 18 22 -8z" fill="#ffd95c"/>
+          <path d="M96 130 l20 -14 18 24 -24 16z" fill="#82c997"/>
+          <path d="M130 120 l28 6 -4 22 -30 -8z" fill="#ef8f7f"/>
+          <path d="M164 136 l18 -18 18 20 -20 20z" fill="#98c6ff"/>
+          <path d="M198 126 l20 10 -8 24 -28 -8z" fill="#dcb3ff"/>
+          <path d="M46 150 l34 -6 10 18 -36 12z" fill="#fff" stroke="#c7d0d8"/>
+          <path d="M158 92 l24 20 -20 18 -26 -18z" fill="#cfd7df"/>
+        </svg>
+        <div class="caption"><strong>Image 3</strong><span>The room that ...</span></div>
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:16px">
+      <div class="prompt"><h4>Story starter 1</h4><p class="arabic rtl">الطفل الذي ...</p><textarea class="persist" id="s22_1"></textarea></div>
+      <div class="prompt"><h4>Story starter 2</h4><p class="arabic rtl">المرأة التي ...</p><textarea class="persist" id="s22_2"></textarea></div>
+      <div class="prompt"><h4>Story starter 3</h4><p class="arabic rtl">الغرفة التي ...</p><textarea class="persist" id="s22_3"></textarea></div>
+    </div>
+    <div class="toolbar"><button class="btn secondary" onclick="downloadTextGroup(['s22_1','s22_2','s22_3'],'lesson2_part3_ex22_stories.txt')">Export stories</button></div>
+  </section>
+
+  <footer>
+    Interactive HTML prepared from the scanned pages. Open-ended listening tasks remain open because the source pages depend on audio that was not included in the chat.
+  </footer>
+</div>
+
+<script>
+function normalizeArabic(s){
+  return (s||'').toString().trim().toLowerCase()
+    .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g,'')
+    .replace(/[إأآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/ؤ/g,'و').replace(/ئ/g,'ي')
+    .replace(/ـ/g,'').replace(/[“”"'!؟?.,؛:()]/g,'').replace(/\s+/g,' ');
+}
+function persistInit(){
+  document.querySelectorAll('.persist').forEach(el=>{
+    const key='l2part3_'+(el.id||Math.random());
+    el.dataset.persistKey=key;
+    const saved=localStorage.getItem(key);
+    if(saved!==null) el.value=saved;
+    el.addEventListener('input',()=>localStorage.setItem(key,el.value));
+  });
+}
+function gradeExercise(outputId){
+  const out=document.getElementById(outputId);
+  const card=out.closest('.card');
+  const fields=[...card.querySelectorAll('input[data-answers]')];
+  let correct=0;
+  fields.forEach(f=>{
+    const answers=(f.dataset.answers||'').split(',').map(normalizeArabic);
+    const val=normalizeArabic(f.value);
+    const ok=answers.includes(val);
+    f.style.background=ok?'#ecfaf4':'#fff4f4';
+    f.style.borderBottomColor=ok?'#3d7b69':'#a84141';
+    if(ok) correct++;
+  });
+  out.innerHTML=`<div class="feedback ${correct===fields.length?'ok':'bad'}" style="display:block"><strong>Score:</strong> ${correct} / ${fields.length}</div>`;
+}
+function resetInputs(outputId){
+  const out=document.getElementById(outputId);
+  const card=out.closest('.card');
+  card.querySelectorAll('input[data-answers]').forEach(f=>{
+    f.value='';
+    f.style.background='#f7fbff';
+    f.style.borderBottomColor='#7ca6c2';
+    if(f.dataset.persistKey) localStorage.removeItem(f.dataset.persistKey);
+  });
+  out.innerHTML='';
+}
+function showKey(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+function downloadText(id,filename){
+  const text=document.getElementById(id).value||'';
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function downloadTextGroup(ids,filename){
+  let text='';
+  ids.forEach((id,idx)=>{
+    const el=document.getElementById(id);
+    text += `Section ${idx+1} (${id})\n` + (el.value||'') + '\n\n';
+  });
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+document.addEventListener('DOMContentLoaded', persistInit);
+</script>
+</body>
+</html>
