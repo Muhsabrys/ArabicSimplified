@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arab in America – Lesson 2 (Part 2) Interactive HTML</title>
+<style>
+  :root{
+    --ink:#16324a; --muted:#607386; --blue:#dcecf8; --blue2:#eff7fc; --green:#3d7b69; --green2:#e7f4ef;
+    --gold:#9a6a19; --gold2:#fff4d8; --red:#a84141; --red2:#fdecec; --line:#c8d4e0; --bg:#f5f8fb; --panel:#fff;
+    --shadow:0 10px 26px rgba(20,48,76,.08); --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,"Noto Sans Arabic","Segoe UI",sans-serif;background:linear-gradient(180deg,#edf5fa 0,#f7fafc 220px,#f5f8fb 100%);color:var(--ink);line-height:1.72}
+  a{color:#1e5878} button,input,textarea,select{font:inherit}
+  .shell{max-width:1180px;margin:0 auto;padding:22px 18px 56px}
+  .hero{background:linear-gradient(135deg,#153956,#245b7d 60%,#3a7d95);color:#fff;border-radius:26px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .hero:after{content:"";position:absolute;right:-90px;top:-100px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.08)}
+  .eyebrow{text-transform:uppercase;letter-spacing:.12em;opacity:.78;font-size:.88rem;margin-bottom:8px}
+  h1{margin:0;font-size:clamp(1.9rem,4.8vw,4rem);line-height:1.1}
+  .hero p{max-width:800px;margin:14px 0 0;font-size:1.03rem;opacity:.95}
+  .pillrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 12px;font-weight:700}
+  .topnav{position:sticky;top:0;z-index:20;display:flex;gap:8px;overflow:auto;background:rgba(245,248,251,.95);backdrop-filter:blur(8px);padding:12px 4px;margin:18px 0 0;border-bottom:1px solid #d9e2ea}
+  .topnav a{text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;white-space:nowrap}
+  .card{background:var(--panel);border:1px solid #e0e8f0;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-top:22px}
+  .section-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}
+  .section-head h2{margin:0;font-size:1.55rem}
+  .section-head p{margin:5px 0 0;color:var(--muted)}
+  .badge{display:inline-flex;align-items:center;white-space:nowrap;background:var(--blue2);color:#2a678a;border:1px solid #c8e0ef;border-radius:999px;padding:5px 10px;font-weight:700;font-size:.83rem}
+  .rtl{direction:rtl;text-align:right}
+  .arabic{font-family:"Noto Sans Arabic",Arial,sans-serif}
+  .note{background:var(--blue2);border-inline-start:5px solid #4c8db6;padding:13px 15px;border-radius:12px;margin:12px 0}
+  .tip{background:var(--gold2);border-inline-start:5px solid #d2a040;padding:13px 15px;border-radius:12px;margin:12px 0}
+  .warn{background:var(--red2);border-inline-start:5px solid var(--red);padding:13px 15px;border-radius:12px;margin:12px 0}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .toolbar input,.toolbar select{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#fff;min-width:220px}
+  .btn,.toolbar button{border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:700;background:#245b7d;color:#fff}
+  .btn.secondary{background:#eef4f8;color:#245b7d;border:1px solid #cbd9e4}
+  .btn.green{background:#2d7c63} .btn.gold{background:#8a641c} .btn.red{background:#8d3d3d}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}
+  table{border-collapse:collapse;width:100%;min-width:760px;background:#fff}
+  th,td{border-bottom:1px solid #dce4eb;border-inline-end:1px solid #dce4eb;padding:10px 12px;vertical-align:top}
+  th:last-child,td:last-child{border-inline-end:none} tr:last-child td{border-bottom:none}
+  th{background:#dbeaf5;color:#1d4a69;text-align:center;font-weight:800}
+  td.meaning{direction:ltr;text-align:left;min-width:210px} td.ar{direction:rtl;text-align:right;min-width:175px}
+  .mini{font-size:.92rem;color:var(--muted)} .small{font-size:.92rem}
+  .speak{border:1px solid #abc6db;border-radius:999px;background:#fff;color:#245b7d;padding:4px 9px;cursor:pointer;font-size:.8rem;margin-inline-start:6px}
+  .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  @media (max-width:920px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+  .visual-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fbfdff}
+  .visual-card svg,.visual-card img{display:block;width:100%;height:190px;background:linear-gradient(#f3f8fb,#fff);object-fit:cover}
+  .visual-card .caption{padding:12px;text-align:center}
+  .visual-card strong{display:block;font-size:1.05rem}
+  .visual-card span{color:var(--muted);font-size:.9rem}
+  .exercise{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fcfdff;margin:14px 0}
+  .q{padding:12px 0;border-bottom:1px dashed #d8e1e9} .q:last-child{border-bottom:none}
+  .q label{display:block;font-weight:700;margin-bottom:6px}
+  .fill{border:none;border-bottom:2px solid #7ca6c2;background:#f7fbff;padding:4px 6px;min-width:88px;max-width:220px}
+  .fill.short{width:90px} .fill.med{width:130px} .fill.long{width:180px}
+  .feedback{margin-top:12px;padding:10px 12px;border-radius:10px;display:none}
+  .ok{background:var(--green2);color:#215948;border:1px solid #b9e2d5}
+  .bad{background:var(--red2);color:#7f2e2e;border:1px solid #efc4c4}
+  .scorebox{font-weight:800;margin-top:8px}
+  .answer-key{display:none;margin-top:12px;background:#f2f7fb;border:1px solid #d2dfeb;border-radius:10px;padding:12px}
+  textarea{width:100%;min-height:150px;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+  .prompt-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfdff}
+  .prompt-card h4{margin:0 0 8px}
+  .save-msg{font-size:.88rem;color:var(--muted)}
+  details{border:1px solid var(--line);border-radius:12px;background:#fcfdff;margin:10px 0}
+  summary{cursor:pointer;padding:12px 14px;font-weight:800}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:760px){.compare{grid-template-columns:1fr}}
+  .dialect-box{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfdff}
+  .dialect-box h3{margin-top:0}
+  ol.tight li{margin:8px 0}
+  .mcq-option{display:block;padding:8px 10px;border:1px solid #d6e0e8;border-radius:10px;margin:7px 0;background:#fff;cursor:pointer}
+  .mcq-option input{margin-inline-end:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .chip{background:#eef4f8;border:1px solid #cbd9e4;border-radius:999px;padding:5px 9px;font-size:.88rem}
+  footer{margin-top:28px;color:var(--muted);font-size:.92rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Interactive Arabic Lesson</div>
+    <h1 class="arabic" dir="rtl">عرب في أمريكا — المفردات الجديدة ٢: من جذور نعرفها</h1>
+    <p>This companion HTML converts the additional pages into an interactive lesson. It includes typed vocabulary tables, usage notes, auto-checked exercises, generated visuals, and open-ended speaking/writing tasks with save and export tools.</p>
+    <div class="pillrow">
+      <span class="pill">Vocabulary + dialect comparison</span>
+      <span class="pill">Auto-check exercises</span>
+      <span class="pill">Generated visuals</span>
+      <span class="pill">Open speaking/writing practice</span>
+    </div>
+  </header>
+
+  <nav class="topnav">
+    <a href="#vocab">Vocabulary</a>
+    <a href="#notes">Usage Notes</a>
+    <a href="#laysa">ليس</a>
+    <a href="#ex0">Exercise 0</a>
+    <a href="#ex1">Exercise 1</a>
+    <a href="#ex8">Exercise 8</a>
+    <a href="#geo">Geography</a>
+    <a href="#immigration">Immigration Stories</a>
+    <a href="#clothes">Clothing</a>
+    <a href="#spoken">Spoken Arabic</a>
+  </nav>
+
+  <section class="card" id="vocab">
+    <div class="section-head">
+      <div>
+        <h2>Vocabulary tables</h2>
+        <p>Search the list, filter by part, and click <strong>Speak</strong> to hear Arabic items using your browser’s text-to-speech.</p>
+      </div>
+      <div class="badge">19 items</div>
+    </div>
+
+    <div class="toolbar">
+      <input id="vocabSearch" placeholder="Search English / Arabic / dialect...">
+      <select id="vocabFilter">
+        <option value="all">Show all</option>
+        <option value="part1">Part 1: first vocabulary box</option>
+        <option value="part2">Part 2: second vocabulary box</option>
+      </select>
+      <button onclick="resetVocabFilters()">Reset</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="vocabTable">
+        <thead>
+          <tr>
+            <th>Meaning</th>
+            <th class="arabic">المصري</th>
+            <th class="arabic">الشامي</th>
+            <th class="arabic">الفصحى</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="vrow" data-part="part1"><td class="meaning">except*</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">إلّا <button class="speak" data-speak="إلا">Speak</button></td></tr>
+          <tr class="vrow" data-part="part1"><td class="meaning">the Mediterranean Sea</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">البحر الأبيض المتوسّط <button class="speak" data-speak="البحر الأبيض المتوسط">Speak</button></td></tr>
+          <tr class="vrow" data-part="part1"><td class="meaning">(a) group (of)</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">جماعة، ج. جماعات<br>مجموعة (من)، ج. مجموعات <button class="speak" data-speak="جماعة مجموعة من">Speak</button></td></tr>
+          <tr class="vrow" data-part="part1"><td class="meaning">south</td><td class="ar"></td><td class="ar arabic">جنوب <button class="speak" data-speak="جنوب">Speak</button></td><td class="ar arabic">جنوب <button class="speak" data-speak="جنوب">Speak</button></td></tr>
+          <tr class="vrow" data-part="part1"><td class="meaning">foreign, foreigner</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">أجنبي / أجنبية، ج. أجانب <button class="speak" data-speak="أجنبي أجنبية أجانب">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">to share, have in common, participate in</td><td class="ar arabic">يشترك في <button class="speak" data-speak="يشترك في">Speak</button></td><td class="ar arabic">اشترك بـ، يشترك <button class="speak" data-speak="اشترك بيشترك">Speak</button></td><td class="ar arabic">اشترك في <button class="speak" data-speak="اشترك في">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">too busy (to have time) for</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">مشغول/ة عن + اسم <button class="speak" data-speak="مشغول عن">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">nature</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">طبيعة <button class="speak" data-speak="طبيعة">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">to teach, educate (someone)</td><td class="ar arabic">علّم، يعلِّم <button class="speak" data-speak="علم يعلم">Speak</button></td><td class="ar arabic">يعلِّم <button class="speak" data-speak="يعلم">Speak</button></td><td class="ar arabic">علَّمَ، يُعلِّمُ <button class="speak" data-speak="علم يعلم">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">education</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">التعليم <button class="speak" data-speak="التعليم">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">to learn</td><td class="ar arabic">اتعلّم، يتعلّم <button class="speak" data-speak="اتعلم يتعلم">Speak</button></td><td class="ar arabic">تعلَّم، يتعلَّم <button class="speak" data-speak="تعلم يتعلم">Speak</button></td><td class="ar arabic">تعلَّمَ، يتعلَّمُ <button class="speak" data-speak="تعلم يتعلم">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">west</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">غرب <button class="speak" data-speak="غرب">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">like, as ...</td><td class="ar arabic">زي <button class="speak" data-speak="زي">Speak</button></td><td class="ar arabic">مثل <button class="speak" data-speak="مثل">Speak</button></td><td class="ar arabic">كَـ + اسم <button class="speak" data-speak="ك">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">I am not</td><td class="ar arabic">(أنا) مش <button class="speak" data-speak="انا مش">Speak</button></td><td class="ar arabic">(أنا) مو <button class="speak" data-speak="انا مو">Speak</button></td><td class="ar arabic">لستُ <button class="speak" data-speak="لست">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">to own, possess</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">مَلَكَ، يَملِك، المِلك <button class="speak" data-speak="ملك يملك الملك">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">(him, her, ...) self</td><td class="ar arabic">نفسه (له، لها...)، ج. نفسهم <button class="speak" data-speak="نفسه نفسها نفسهم">Speak</button></td><td class="ar arabic">حالُه / حالها ...، ج. حالن <button class="speak" data-speak="حاله حالها حالن">Speak</button></td><td class="ar arabic">نفسُه / نفسها ...، ج. أنفسهم <button class="speak" data-speak="نفسه نفسها أنفسهم">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">this / these</td><td class="ar arabic">دول <button class="speak" data-speak="دول">Speak</button></td><td class="ar arabic">هول، هادول، هيدول <button class="speak" data-speak="هول هادول هيدول">Speak</button></td><td class="ar arabic">هذا، هذه، هؤلاء <button class="speak" data-speak="هذا هذه هؤلاء">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">identity</td><td class="ar"></td><td class="ar"></td><td class="ar arabic">هويّة، ج. هويّات <button class="speak" data-speak="هوية هويات">Speak</button></td></tr>
+          <tr class="vrow" data-part="part2"><td class="meaning">she was born / I was born</td><td class="ar arabic">اتولدت / اتولدت <button class="speak" data-speak="اتولدت">Speak</button></td><td class="ar arabic">وُلدت / وُلدت <button class="speak" data-speak="ولدت">Speak</button></td><td class="ar arabic">وُلِدَت / وُلِدتُ <button class="speak" data-speak="ولدت ولدت">Speak</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details>
+      <summary>Quick study tips</summary>
+      <div class="note small rtl arabic">
+        <strong>إلّا</strong> often works with a negative sentence and gives a strong meaning of “only.”<br>
+        <strong>ليس</strong> is the formal negation used when there is no other verb in the sentence.<br>
+        A few entries in the dialect columns were reconstructed from the scanned pages; the MSA forms are the main reference here.
+      </div>
+    </details>
+  </section>
+
+  <section class="card" id="notes">
+    <div class="section-head">
+      <div>
+        <h2>Notes on vocabulary usage</h2>
+        <p>These notes convert the explanation page into readable digital format.</p>
+      </div>
+      <div class="badge">Reference notes</div>
+    </div>
+
+    <div class="note">
+      <strong>1) إلّا with negation</strong><br>
+      The particle <span class="arabic">إلّا</span> is often used with a negative verb to give an emphatic meaning of <em>only</em> (literally, “not ... except”).
+      <ul>
+        <li class="arabic" dir="rtl">لا يقرؤون إلّا جريدةً واحدة: «النيويورك تايمز».</li>
+        <li>They only read one newspaper: <em>The New York Times</em>.</li>
+        <li class="arabic" dir="rtl">لن نبقى إلّا ثلاثةَ أيّامٍ.</li>
+        <li>We will only stay for three days.</li>
+        <li class="arabic" dir="rtl">ليس عندي وقتٌ إلّا لزيارةٍ قصيرةٍ.</li>
+        <li>I only have time for a short visit.</li>
+      </ul>
+    </div>
+
+    <div class="note">
+      <strong>2) ليس</strong><br>
+      The formal Arabic verb <span class="arabic">ليس</span> negates a sentence that has no other verb, similar in function to <span class="arabic">مو</span> or <span class="arabic">مش</span> in spoken Arabic. In yes/no questions, it often appears with <span class="arabic">أ</span> rather than <span class="arabic">هل</span>.
+      <div class="chips">
+        <span class="chip arabic">أنتِ لبنانية؟ لا، لستُ لبنانية. أنا سورية.</span>
+        <span class="chip arabic">نحن مشغولون، ولكن لسنا مشغولين عنك.</span>
+        <span class="chip arabic">لماذا ترفضون مساعدتهم؟ أليسوا ناسًا مثلكم؟</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="laysa">
+    <div class="section-head">
+      <div>
+        <h2>Conjugation of <span class="arabic">ليس</span></h2>
+        <p>A clean digital version of the small chart on the page.</p>
+      </div>
+      <div class="badge">Grammar reference</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>English</th><th class="arabic">العربية</th><th>English</th><th class="arabic">العربية</th></tr></thead>
+        <tbody>
+          <tr><td>I am not</td><td class="ar arabic">لستُ</td><td>we are not</td><td class="ar arabic">لسنا</td></tr>
+          <tr><td>you (m.) are not</td><td class="ar arabic">لستَ</td><td>you (pl.) are not</td><td class="ar arabic">لستم</td></tr>
+          <tr><td>you (f.) are not</td><td class="ar arabic">لستِ</td><td>they are not</td><td class="ar arabic">ليسوا</td></tr>
+          <tr><td>he / it is not</td><td class="ar arabic">ليس</td><td>she / it is not</td><td class="ar arabic">ليست</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" id="ex0">
+    <div class="section-head">
+      <div>
+        <h2>Exercise 0 — <span class="arabic">ليس</span></h2>
+        <p>Complete each sentence with the correct form of <span class="arabic">ليس</span>. Then click <strong>Check</strong>.</p>
+      </div>
+      <div class="badge">Auto-check</div>
+    </div>
+
+    <div class="exercise rtl arabic">
+      <div class="q">١. لماذا <input class="fill short persist" data-answers="ليس" id="e0_1"> كلُّ الموظفين في مكاتبهم؟!</div>
+      <div class="q">٢. مشكلتك <input class="fill short persist" data-answers="ليست" id="e0_2"> عدمَ الفهم ولكن عدمَ الرغبة في الفهم.</div>
+      <div class="q">٣. يا محمد، لماذا <input class="fill short persist" data-answers="لست" id="e0_3"> مثلَ أختِك؟!</div>
+      <div class="q">٤. الأجانب <input class="fill short persist" data-answers="ليسوا" id="e0_4"> ممنوعين من الالتحاق بالجيش.</div>
+      <div class="q">٥. أنا وصاحبي <input class="fill short persist" data-answers="لسنا" id="e0_5"> مخطوبين ولكننا بدأنا نفكِّر ونحلم بالمستقبل معًا.</div>
+      <div class="q">٦. يا حبيبتي، <input class="fill short persist" data-answers="لست" id="e0_6"> أولَ قصةِ حبٍّ في حياتي ولكنك ستكونين الأخيرة!</div>
+      <div class="q">٧. أعرف أن الخلافات بينك وبينهم <input class="fill short persist" data-answers="ليست" id="e0_7"> بسيطةً.</div>
+      <div class="q">٨. أحيانًا أشعر بأنكم <input class="fill short persist" data-answers="لستم" id="e0_8"> أولادي وأنكم من عالمٍ آخر!!</div>
+      <div class="q">٩. <input class="fill short persist" data-answers="ليس" id="e0_9"> في كلِّ المحلّات بهذا السوق الكبير حذاءٌ واحدٌ أحبُّه!</div>
+      <div class="q">١٠. <input class="fill short persist" data-answers="لست" id="e0_10"> أولَ شخصٍ يفشل في هذه التجربة ولن أكون الأخير.</div>
+      <div class="toolbar">
+        <button class="btn green" onclick="gradeExercise('ex0Wrap')">Check answers</button>
+        <button class="btn secondary" onclick="showKey('ex0Key')">Show answer key</button>
+        <button class="btn red" onclick="resetInputs('ex0Wrap')">Reset</button>
+      </div>
+      <div id="ex0Wrap"></div>
+      <div id="ex0Key" class="answer-key rtl arabic">
+        ١) ليس &nbsp; ٢) ليست &nbsp; ٣) لستَ &nbsp; ٤) ليسوا &nbsp; ٥) لسنا<br>
+        ٦) لستِ &nbsp; ٧) ليست &nbsp; ٨) لستم &nbsp; ٩) ليس &nbsp; ١٠) لستُ
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="ex1">
+    <div class="section-head">
+      <div>
+        <h2>Exercise 1 — patterns of the new verbs</h2>
+        <p>Fill in the table with the verb forms. A few answers are accepted without final diacritics.</p>
+      </div>
+      <div class="badge">Auto-check</div>
+    </div>
+    <div class="exercise">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Root</th><th>Pattern</th><th>Past</th><th>Present</th><th>Masdar</th><th>Transitive or intransitive?</th>
+            </tr>
+          </thead>
+          <tbody class="rtl arabic">
+            <tr>
+              <td class="ar">ع ل م</td>
+              <td class="ar">فعّل II</td>
+              <td class="ar"><input class="fill med persist" id="e1_1" data-answers="علّم"></td>
+              <td class="ar"><input class="fill med persist" id="e1_2" data-answers="يعلّم"></td>
+              <td class="ar"><input class="fill med persist" id="e1_3" data-answers="التعليم,تعليم"></td>
+              <td class="ar"><input class="fill med persist" id="e1_4" data-answers="متعد,متعدي,transitive"></td>
+            </tr>
+            <tr>
+              <td class="ar">ع ل م</td>
+              <td class="ar"><input class="fill med persist" id="e1_5" data-answers="تفعّل,form v,فعّل v"></td>
+              <td class="ar">تعلّم</td>
+              <td class="ar"><input class="fill med persist" id="e1_6" data-answers="يتعلّم"></td>
+              <td class="ar"><input class="fill med persist" id="e1_7" data-answers="تعلّم"></td>
+              <td class="ar"><input class="fill med persist" id="e1_8" data-answers="لازم,غير متعد,intransitive"></td>
+            </tr>
+            <tr>
+              <td class="ar">ش ر ك</td>
+              <td class="ar">افتعل VIII</td>
+              <td class="ar"><input class="fill med persist" id="e1_9" data-answers="اشترك"></td>
+              <td class="ar"><input class="fill med persist" id="e1_10" data-answers="يشترك"></td>
+              <td class="ar"><input class="fill med persist" id="e1_11" data-answers="اشتراك"></td>
+              <td class="ar"><input class="fill med persist" id="e1_12" data-answers="لازم,غير متعد,intransitive"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="toolbar" style="margin-top:12px">
+        <button class="btn green" onclick="gradeExercise('ex1Wrap')">Check answers</button>
+        <button class="btn secondary" onclick="showKey('ex1Key')">Show model answers</button>
+        <button class="btn red" onclick="resetInputs('ex1Wrap')">Reset</button>
+      </div>
+      <div id="ex1Wrap"></div>
+      <div id="ex1Key" class="answer-key rtl arabic">
+        الصف ١: علَّم — يعلِّم — تعليم / التعليم — فعل متعدٍّ<br>
+        الصف ٢: تفعَّل (Form V) — يتعلَّم — تعلُّم / تعلُّم — فعل لازم / غير متعدٍّ<br>
+        الصف ٣: اشترك — يشترك — اشتراك — فعل لازم / غير متعدٍّ
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="section-head">
+      <div>
+        <h2>Exercise 7 — vocabulary sentence writing</h2>
+        <p>The scanned page asks students to listen to vocabulary sentences and write them. Since the audio was not provided here, this section is converted into a guided practice space.</p>
+      </div>
+      <div class="badge">Open practice</div>
+    </div>
+    <div class="note">Write 5–11 short sentences using today’s vocabulary. You can save your work in the browser and export it as a text file.</div>
+    <textarea class="persist" id="ex7notes" placeholder="اكتب جُمَلَكَ هنا ...&#10;&#10;Example: وُلِدتُ في مصر، ولكنني أعيش الآن في أمريكا."></textarea>
+    <div class="toolbar">
+      <button class="btn secondary" onclick="downloadText('ex7notes','lesson2_part2_ex7_sentences.txt')">Export my writing</button>
+    </div>
+  </section>
+
+  <section class="card" id="ex8">
+    <div class="section-head">
+      <div>
+        <h2>Exercise 8 — fill in the new vocabulary</h2>
+        <p>Some items allow more than one reasonable answer. The checker accepts common spelling variants and shows a model answer key.</p>
+      </div>
+      <div class="badge">Auto-check</div>
+    </div>
+    <div class="warn small">Because the source pages are scanned images, a few exercise items were reconstructed carefully. The auto-check is intentionally flexible for likely alternatives.</div>
+
+    <div class="exercise rtl arabic">
+      <div class="q">١. <input class="fill med persist" id="e8_1a" data-answers="ولد,وُلِدَ"> النبيُّ محمد (صلّى الله عليه وسلّم) في مكة <input class="fill short persist" id="e8_1b" data-answers="سنة"> 570، ومات في المدينة المنوّرة وعمره 62.</div>
+      <div class="q">٢. إلى الآن لم <input class="fill med persist" id="e8_2a" data-answers="تحدد,تحدِّد"> إدارةُ الجامعة مواعيدَ الامتحانات النهائية، لذلك ذهبت <input class="fill med persist" id="e8_2b" data-answers="مجموعة,جماعة"> من الطلاب لمقابلة رئيسة الجامعة للكلام معها عن هذا الموضوع.</div>
+      <div class="q">٣. لبنان هي: سوريا في الشرق و<input class="fill short persist" id="e8_3a" data-answers="الشمال,شمال">، وإسرائيل في <input class="fill short persist" id="e8_3b" data-answers="الجنوب,جنوب">، والبحر <input class="fill med persist" id="e8_3c" data-answers="الأبيض المتوسط,الأبيض المتوسّط,البحر الأبيض المتوسط"> في <input class="fill short persist" id="e8_3d" data-answers="الغرب,غرب">.</div>
+      <div class="q">٤. سؤال <input class="fill med persist" id="e8_4a" data-answers="الهوية,هويّة,هوية"> ما زال سؤالًا كبيرًا في لبنان لأن هناك لبنانيين لا يفكّرون في <input class="fill med persist" id="e8_4b" data-answers="أنفسهم,نفسهم"> هم عرب ولكن يقولون إنهم لبنانيون ولبنانيون فقط.</div>
+      <div class="q">٥. <input class="fill med persist" id="e8_5a" data-answers="زعلت"> والدتُها منها لأنها رفضت مساعدة أختها في إعداد الغداء وأيضًا لأنها لم <input class="fill med persist" id="e8_5b" data-answers="تكمل,تكمّل,تُكمِل"> واجباتِها، ولذلك لن <input class="fill med persist" id="e8_5c" data-answers="تسمح"> لها بالخروج مع صديقاتها الليلة إلا بعد أن تنتهي من كل شيء.</div>
+      <div class="q">٦. لم أترجم الكتاب وحدي ولكن <input class="fill med persist" id="e8_6" data-answers="اشترك,شارك"> معي في ترجمته بعضُ طلابِ المعيدين.</div>
+      <div class="q">٧. في السنوات الأخيرة <input class="fill med persist" id="e8_7a" data-answers="ازداد"> عددُ الجامعات الخاصة في العالم العربي وأصبحت هذه الجامعات <input class="fill med persist" id="e8_7b" data-answers="منتشرة"> في كل البلاد العربية، ويدرِّس معظمُ هذه الجامعات باللغة العربية، ولكن بعضها يدرِّس بلغاتٍ <input class="fill med persist" id="e8_7c" data-answers="أجنبية,اجنبية"> وخاصةً الإنجليزية. وهذه الجامعات غالية، ولكن بعض الناس يرغبون فيها لأولادهم لأن <input class="fill med persist" id="e8_7d" data-answers="التعليم"> فيها أحسن من الجامعات الحكومية في رأيهم. أنا وإخوتي كلنا <input class="fill med persist" id="e8_7e" data-answers="تعلّمنا,تعلمنا"> في جامعاتٍ حكومية وكانت تجربتنا فيها ممتازة.</div>
+      <div class="q">٨. أختي دائمًا <input class="fill med persist" id="e8_8a" data-answers="مشغولة عن,مشغولة"> بيتِها وأولادِها ولا تقضي أيَّ وقتٍ معهم، وعندما أتكلم معها عن هذا تقول لي إن حياةَ المرأة اليوم ليست <input class="fill med persist" id="e8_8b" data-answers="مثل,ك"> حياةَ جيلِ أمّنا.</div>
+      <div class="q">٩. ليس عنده أهلٌ ولا مالٌ، ولا <input class="fill med persist" id="e8_9" data-answers="يملك"> أيَّ شيءٍ إلا الملابسَ التي عليه!!</div>
+      <div class="q">١٠. ليس عندها <input class="fill short persist" id="e8_10" data-answers="إلا,الا"> فستانُ سهرةٍ واحدٌ، وهي لبسته في الحفلة في الأسبوع الماضي.</div>
+      <div class="q">١١. <input class="fill med persist" id="e8_11" data-answers="طبعا,طبعا,بالطبع,بطبيعتهم"> الأولادُ يستمتعون باللعب على الثلج.</div>
+      <div class="q">١٢. في هذه المنطقة <input class="fill med persist" id="e8_12" data-answers="الطبيعة,طبيعتها"> جميلةٌ جدًّا ببحرها وأشجارها وجبالها.</div>
+      <div class="toolbar">
+        <button class="btn green" onclick="gradeExercise('ex8Wrap')">Check answers</button>
+        <button class="btn secondary" onclick="showKey('ex8Key')">Show model answers</button>
+        <button class="btn red" onclick="resetInputs('ex8Wrap')">Reset</button>
+      </div>
+      <div id="ex8Wrap"></div>
+      <div id="ex8Key" class="answer-key rtl arabic">
+        ١) وُلِدَ — سنة<br>
+        ٢) تُحدِّد — مجموعة / جماعة<br>
+        ٣) الشمال — الجنوب — الأبيض المتوسّط — الغرب<br>
+        ٤) الهويّة — أنفسهم<br>
+        ٥) زعلت — تكمل / تُكمِل — تسمح<br>
+        ٦) اشترك<br>
+        ٧) ازداد — منتشرة — أجنبية — التعليم — تعلّمنا<br>
+        ٨) مشغولة عن — مثل / كَـ<br>
+        ٩) يملك<br>
+        ١٠) إلّا<br>
+        ١١) بالطبع / طبعًا (accepted flexibly here)<br>
+        ١٢) الطبيعة / طبيعتها
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="geo">
+    <div class="section-head">
+      <div>
+        <h2>Exercise 9 — geography practice</h2>
+        <p>The book activity is open-ended, so this version includes a generated practice map plus a small auto-check quiz.</p>
+      </div>
+      <div class="badge">Generated map + quiz</div>
+    </div>
+    <div class="grid-2">
+      <div class="visual-card">
+        <svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg" aria-label="Simplified regional map">
+          <rect width="480" height="320" fill="#eaf3fb"/>
+          <rect x="0" y="210" width="480" height="110" fill="#f0ebc7"/>
+          <rect x="55" y="70" width="52" height="70" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="81" y="108" font-size="18" text-anchor="middle">Spain</text>
+          <rect x="20" y="74" width="28" height="72" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="34" y="112" font-size="14" text-anchor="middle">PT</text>
+          <rect x="215" y="96" width="44" height="28" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="237" y="114" font-size="15" text-anchor="middle">TR</text>
+          <rect x="255" y="130" width="34" height="24" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="272" y="146" font-size="14" text-anchor="middle">SY</text>
+          <rect x="258" y="156" width="24" height="18" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="270" y="169" font-size="11" text-anchor="middle">LB</text>
+          <rect x="248" y="176" width="20" height="17" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="258" y="188" font-size="10" text-anchor="middle">IL</text>
+          <rect x="233" y="160" width="20" height="50" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="243" y="188" font-size="10" text-anchor="middle">JO</text>
+          <rect x="218" y="176" width="48" height="60" fill="#f6d98d" stroke="#8b7b38" opacity=".92"/>
+          <text x="242" y="212" font-size="14" text-anchor="middle">SA</text>
+          <rect x="185" y="170" width="42" height="42" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="206" y="195" font-size="14" text-anchor="middle">Egypt</text>
+          <rect x="110" y="160" width="60" height="48" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="140" y="188" font-size="14" text-anchor="middle">Algeria</text>
+          <rect x="60" y="158" width="38" height="40" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="79" y="182" font-size="14" text-anchor="middle">MA</text>
+          <rect x="175" y="214" width="80" height="50" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="215" y="242" font-size="15" text-anchor="middle">Sudan</text>
+          <rect x="220" y="238" width="40" height="42" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="240" y="262" font-size="14" text-anchor="middle">ER</text>
+          <rect x="261" y="250" width="42" height="28" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="282" y="267" font-size="12" text-anchor="middle">YE</text>
+          <rect x="306" y="132" width="56" height="42" fill="#f6d98d" stroke="#8b7b38"/>
+          <text x="334" y="157" font-size="14" text-anchor="middle">Iran</text>
+          <text x="322" y="110" font-size="20" fill="#4c7ba2">Persian Gulf</text>
+          <text x="265" y="144" font-size="20" fill="#4c7ba2">Mediterranean Sea</text>
+          <text x="0" y="24" font-size="18" fill="#355c7e">Use the model phrases:</text>
+          <text x="16" y="48" font-size="17" fill="#355c7e">to the north of / to the south of / to the west of / to the east of</text>
+        </svg>
+        <div class="caption"><strong>Generated study map</strong><span>Simplified visual for practice, not a political map.</span></div>
+      </div>
+      <div>
+        <div class="tip rtl arabic">مثال: الجواب: هو بلد يوجد إلى الغرب من أسبانيا. السؤال: ما هو البرتغال؟</div>
+        <div class="exercise rtl arabic">
+          <div class="q">١. ما البلد الذي يقع إلى الغرب من إسبانيا؟ <input class="fill med persist" id="g1" data-answers="البرتغال,برتغال,Portugal"></div>
+          <div class="q">٢. ما البحر الذي يقع إلى الغرب من لبنان؟ <input class="fill med persist" id="g2" data-answers="البحر الأبيض المتوسط,الأبيض المتوسط,البحر المتوسط"></div>
+          <div class="q">٣. ما البلد الذي يقع إلى الجنوب من تركيا؟ <input class="fill med persist" id="g3" data-answers="سوريا,سورية"></div>
+          <div class="q">٤. ما البلد الذي يقع إلى الشرق من المغرب؟ <input class="fill med persist" id="g4" data-answers="الجزائر,جزاير,Algeria"></div>
+          <div class="q">٥. ما البلد الذي يقع إلى الشمال من السودان؟ <input class="fill med persist" id="g5" data-answers="مصر,Egypt"></div>
+          <div class="q">٦. ما البلد الذي يقع إلى الجنوب من السعودية؟ <input class="fill med persist" id="g6" data-answers="اليمن,Yemen"></div>
+          <div class="toolbar">
+            <button class="btn green" onclick="gradeExercise('geoWrap')">Check answers</button>
+            <button class="btn secondary" onclick="showKey('geoKey')">Show answer key</button>
+          </div>
+          <div id="geoWrap"></div>
+          <div id="geoKey" class="answer-key rtl arabic">١) البرتغال &nbsp; ٢) البحر الأبيض المتوسط &nbsp; ٣) سوريا &nbsp; ٤) الجزائر &nbsp; ٥) مصر &nbsp; ٦) اليمن</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="immigration">
+    <div class="section-head">
+      <div>
+        <h2>Exercise 10 — stories of immigration and immigrants</h2>
+        <p>The original book page is a speaking activity. Here, it becomes a guided discussion and writing task.</p>
+      </div>
+      <div class="badge">Open speaking / writing</div>
+    </div>
+    <div class="grid-2">
+      <div class="visual-card">
+        <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" aria-label="Generated historical immigrant family">
+          <rect width="420" height="280" fill="#efefef"/>
+          <rect x="0" y="205" width="420" height="75" fill="#dbdbdb"/>
+          <circle cx="60" cy="92" r="18" fill="#c7c7c7" stroke="#555"/>
+          <rect x="44" y="110" width="32" height="68" fill="#8f8f8f" stroke="#555"/>
+          <circle cx="125" cy="105" r="20" fill="#c7c7c7" stroke="#555"/>
+          <rect x="104" y="125" width="42" height="86" fill="#7d7d7d" stroke="#555"/>
+          <circle cx="187" cy="84" r="20" fill="#c7c7c7" stroke="#555"/>
+          <rect x="166" y="104" width="42" height="92" fill="#707070" stroke="#555"/>
+          <circle cx="252" cy="82" r="22" fill="#c7c7c7" stroke="#555"/>
+          <rect x="226" y="104" width="52" height="100" fill="#5f5f5f" stroke="#555"/>
+          <circle cx="315" cy="98" r="19" fill="#c7c7c7" stroke="#555"/>
+          <rect x="295" y="117" width="40" height="89" fill="#7a7a7a" stroke="#555"/>
+          <circle cx="216" cy="50" r="13" fill="#c7c7c7" stroke="#555"/>
+          <rect x="204" y="63" width="24" height="40" fill="#919191" stroke="#555"/>
+          <circle cx="138" cy="176" r="14" fill="#c7c7c7" stroke="#555"/>
+          <rect x="126" y="190" width="24" height="48" fill="#929292" stroke="#555"/>
+          <circle cx="195" cy="180" r="14" fill="#c7c7c7" stroke="#555"/>
+          <rect x="183" y="194" width="24" height="48" fill="#929292" stroke="#555"/>
+        </svg>
+        <div class="caption"><strong>Image 1</strong><span>A historical immigrant family, generated as a study illustration.</span></div>
+      </div>
+      <div class="visual-card">
+        <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" aria-label="Generated contemporary immigrant community">
+          <rect width="420" height="280" fill="#eef7f5"/>
+          <rect x="0" y="205" width="420" height="75" fill="#dbeae5"/>
+          <circle cx="60" cy="110" r="22" fill="#6b4b3a"/><rect x="40" y="134" width="40" height="78" fill="#f4f4f4"/>
+          <circle cx="125" cy="115" r="22" fill="#cf9d7c"/><path d="M106 138 h38 v74 h-38 z" fill="#d67c7c"/><path d="M110 106 q15 -26 30 0" fill="#b14c4c"/>
+          <circle cx="200" cy="102" r="22" fill="#f0d1b1"/><rect x="178" y="126" width="44" height="82" fill="#f0f0f0"/>
+          <circle cx="280" cy="105" r="22" fill="#efcfaa"/><rect x="258" y="128" width="44" height="80" fill="#c7c7c7"/>
+          <circle cx="154" cy="170" r="16" fill="#caa07f"/><rect x="141" y="186" width="26" height="42" fill="#fff1c1"/>
+          <circle cx="333" cy="138" r="18" fill="#9a6c50"/><rect x="318" y="156" width="30" height="52" fill="#d8d85d"/>
+          <circle cx="360" cy="120" r="18" fill="#6b4b3a"/><rect x="345" y="138" width="30" height="70" fill="#95c99c"/>
+          <path d="M52 150 q20 -10 40 0" stroke="#8b0000" stroke-width="4" fill="none"/>
+          <path d="M117 150 q20 -10 40 0" stroke="#8b0000" stroke-width="4" fill="none"/>
+          <path d="M191 140 q20 -10 40 0" stroke="#8b0000" stroke-width="4" fill="none"/>
+          <path d="M271 142 q20 -10 40 0" stroke="#8b0000" stroke-width="4" fill="none"/>
+        </svg>
+        <div class="caption"><strong>Image 2</strong><span>A contemporary immigrant community, generated as a study illustration.</span></div>
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:16px">
+      <div class="prompt-card"><h4>Discussion prompts</h4><ul class="tight arabic rtl"><li>من هؤلاء الناس؟</li><li>من أين هاجروا؟</li><li>متى وكيف هاجروا؟</li><li>هل عاشوا وسط جالية من نفس البلد؟</li></ul></div>
+      <div class="prompt-card"><h4>More prompts</h4><ul class="tight arabic rtl"><li>عمَّ كانوا يبحثون في البلد الجديد؟</li><li>هل أكملوا تعليمهم؟</li><li>من بقي في البلد الأصلي؟</li><li>ما علاقتهم بعائلاتهم الآن؟</li></ul></div>
+      <div class="prompt-card"><h4>Writing task</h4><p class="arabic rtl">اكتب قصة قصيرة عن إحدى الصورتين. استعمل 6 كلمات جديدة على الأقل.</p></div>
+    </div>
+    <textarea class="persist" id="immigrationNotes" placeholder="Write your short story here / اكتب قصتك هنا..."></textarea>
+    <div class="toolbar"><button class="btn secondary" onclick="downloadText('immigrationNotes','immigration_story.txt')">Export my story</button></div>
+  </section>
+
+  <section class="card" id="clothes">
+    <div class="section-head">
+      <div>
+        <h2>Exercise 11 — clothing vocabulary</h2>
+        <p>Generated study illustrations for the clothing items on the page, followed by a short auto-check quiz.</p>
+      </div>
+      <div class="badge">Generated visuals + quiz</div>
+    </div>
+    <div class="grid-4">
+      <div class="visual-card"><svg viewBox="0 0 180 190" xmlns="http://www.w3.org/2000/svg"><rect width="180" height="190" fill="#eef6fb"/><circle cx="90" cy="38" r="18" fill="#e7c5a3"/><rect x="72" y="56" width="36" height="16" fill="#a98964"/><path d="M60 70 q30 -12 60 0 v88 h-60 z" fill="#8f6d55" stroke="#5c4638"/><path d="M60 80 q-10 24 -8 60" stroke="#5c4638" stroke-width="5"/><path d="M120 80 q10 24 8 60" stroke="#5c4638" stroke-width="5"/></svg><div class="caption"><strong class="arabic">جلابية</strong><span>jalabiyya</span></div></div>
+      <div class="visual-card"><svg viewBox="0 0 180 190" xmlns="http://www.w3.org/2000/svg"><rect width="180" height="190" fill="#eef6fb"/><circle cx="55" cy="34" r="14" fill="#e7c5a3"/><path d="M42 28 q13 -18 26 0" fill="#333"/><path d="M34 48 h42 v110 h-42 z" fill="#2f2f2f"/><path d="M100 48 h48 v112 h-48 z" fill="#474747"/><rect x="116" y="28" width="18" height="20" fill="#e7c5a3"/><circle cx="125" cy="24" r="12" fill="#e7c5a3"/><path d="M112 16 q15 -14 28 0 l-2 10 h-24 z" fill="#f1d5a1"/></svg><div class="caption"><strong class="arabic">عباية</strong><span>abaya</span></div></div>
+      <div class="visual-card"><svg viewBox="0 0 180 190" xmlns="http://www.w3.org/2000/svg"><rect width="180" height="190" fill="#eef6fb"/><circle cx="90" cy="74" r="28" fill="#e7c5a3"/><path d="M56 70 q34 -46 68 0 l-6 18 q-28 -20 -56 0 z" fill="#e7e7e7" stroke="#c45555" stroke-width="3"/><path d="M56 70 l16 96 M72 70 l16 96 M88 70 l16 96 M104 70 l16 96" stroke="#c45555" stroke-width="2"/><rect x="70" y="102" width="40" height="46" fill="#dfeff5"/></svg><div class="caption"><strong class="arabic">كوفية</strong><span>keffiyeh</span></div></div>
+      <div class="visual-card"><svg viewBox="0 0 180 190" xmlns="http://www.w3.org/2000/svg"><rect width="180" height="190" fill="#eef6fb"/><path d="M90 24 q20 8 20 28 q0 17 -8 30 l-12 17 -12 -17 q-8 -13 -8 -30 q0 -20 20 -28z" fill="#c5db59" stroke="#6e7b17"/><path d="M90 50 v84" stroke="#6e7b17" stroke-width="5"/><path d="M75 34 l30 16 M73 48 l34 16 M72 64 l36 16" stroke="#6e7b17" stroke-width="2"/></svg><div class="caption"><strong class="arabic">كرافاتة</strong><span>tie</span></div></div>
+      <div class="visual-card"><svg viewBox="0 0 180 190" xmlns="http://www.w3.org/2000/svg"><rect width="180" height="190" fill="#eef6fb"/><circle cx="58" cy="32" r="14" fill="#e7c5a3"/><path d="M42 48 h32 v72 h-32 z" fill="#7c7c7c"/><path d="M36 48 l22 22 l22 -22" fill="#999"/><path d="M40 120 h13 v45 h-13zM63 120 h13 v45 h-13z" fill="#707070"/><circle cx="122" cy="32" r="14" fill="#e7c5a3"/><path d="M107 48 h30 v55 h-30 z" fill="#966b8b"/><path d="M103 102 h38 l-6 58 h-26z" fill="#b183a6"/><path d="M115 104 h14" stroke="#734568" stroke-width="2"/></svg><div class="caption"><strong class="arabic">بدلة</strong><span>suit</span></div></div>
+    </div>
+    <div class="exercise" style="margin-top:18px">
+      <div class="q"><label>1. Which word means “tie”?</label>
+        <label class="mcq-option"><input type="radio" name="c1" value="0"> <span class="arabic">جلابية</span></label>
+        <label class="mcq-option"><input type="radio" name="c1" value="1"> <span class="arabic">كرافاتة</span></label>
+        <label class="mcq-option"><input type="radio" name="c1" value="0"> <span class="arabic">بدلة</span></label>
+      </div>
+      <div class="q"><label>2. Which item is the <em>keffiyeh</em>?</label>
+        <label class="mcq-option"><input type="radio" name="c2" value="0"> <span class="arabic">عباية</span></label>
+        <label class="mcq-option"><input type="radio" name="c2" value="1"> <span class="arabic">كوفية</span></label>
+        <label class="mcq-option"><input type="radio" name="c2" value="0"> <span class="arabic">جلابية</span></label>
+      </div>
+      <div class="q"><label>3. Which word means “suit”?</label>
+        <label class="mcq-option"><input type="radio" name="c3" value="0"> <span class="arabic">عباية</span></label>
+        <label class="mcq-option"><input type="radio" name="c3" value="1"> <span class="arabic">بدلة</span></label>
+        <label class="mcq-option"><input type="radio" name="c3" value="0"> <span class="arabic">كرافاتة</span></label>
+      </div>
+      <div class="q"><label>4. Which word means a loose traditional robe?</label>
+        <label class="mcq-option"><input type="radio" name="c4" value="1"> <span class="arabic">جلابية</span></label>
+        <label class="mcq-option"><input type="radio" name="c4" value="0"> <span class="arabic">بدلة</span></label>
+        <label class="mcq-option"><input type="radio" name="c4" value="0"> <span class="arabic">كوفية</span></label>
+      </div>
+      <div class="q"><label>5. Which word means <em>abaya</em>?</label>
+        <label class="mcq-option"><input type="radio" name="c5" value="1"> <span class="arabic">عباية</span></label>
+        <label class="mcq-option"><input type="radio" name="c5" value="0"> <span class="arabic">جلابية</span></label>
+        <label class="mcq-option"><input type="radio" name="c5" value="0"> <span class="arabic">بدلة</span></label>
+      </div>
+      <div class="toolbar"><button class="btn green" onclick="gradeMCQ()">Check quiz</button></div>
+      <div id="mcqOut"></div>
+    </div>
+  </section>
+
+  <section class="card" id="spoken">
+    <div class="section-head">
+      <div>
+        <h2>Exercise 12 — ask your classmates in spoken Arabic</h2>
+        <p>The book gives dialect prompts in Levantine and Egyptian Arabic. Here they are typed clearly, with space for notes.</p>
+      </div>
+      <div class="badge">Open speaking practice</div>
+    </div>
+    <div class="compare">
+      <div class="dialect-box rtl arabic">
+        <h3>الشامي</h3>
+        <ol class="tight">
+          <li>شو بتحبّوا تلبسوا بالطّقس الشوب؟ وبالطّقس البارد؟ لما بتروحوا عالشغل؟ وبالويك إند؟</li>
+          <li>شو ناويين تلبسوا بكرا؟</li>
+          <li>وين المحلّات اللي ممكن الواحد يلاقي فيها تياب منيحة ومو غالية؟</li>
+          <li>ببعض الجاليات الناس بيلبسوا نفس التياب اللي كانوا بيلبسوها ببلادهم الأصلية. هيدا شي منيح برأيكن؟ ليش / ليش لأ؟</li>
+          <li>شو رأيكن بالمدارس اللي بتحدّد للطلاب التياب اللي لازم يلبسوها؟</li>
+        </ol>
+      </div>
+      <div class="dialect-box rtl arabic">
+        <h3>المصري</h3>
+        <ol class="tight">
+          <li>إيه بتحبّوا تلبسوا إيه في الجو الحرّ؟ وفي الجو البارد؟ لما بتروحوا الشغل؟ وفي الويك إند؟</li>
+          <li>ناويين تلبسوا إيه بكرة؟</li>
+          <li>فين المحلّات اللي الواحد ممكن يلاقي فيها هدوم كويسة ومش غالية؟</li>
+          <li>في بعض الجاليات الناس بيلبسوا نفس الهدوم اللي كانوا بيلبسوها ببلادهم الأصلية. دي حاجة كويسة في رأيكوا؟ ليه / ليه لأ؟</li>
+          <li>إيه رأيكوا بالمدارس اللي بتحدّد للطلاب الهدوم اللي لازم يلبسوها؟</li>
+        </ol>
+      </div>
+    </div>
+    <div class="note">You can use the box below to draft your own answers or class discussion notes.</div>
+    <textarea class="persist" id="spokenNotes" placeholder="Type notes from your discussion here..."></textarea>
+    <div class="toolbar"><button class="btn secondary" onclick="downloadText('spokenNotes','spoken_arabic_notes.txt')">Export my notes</button></div>
+  </section>
+
+  <footer>
+    Interactive HTML prepared from the scanned lesson pages. Generated visuals are included so the file works without external image links.
+  </footer>
+</div>
+
+<script>
+function normalizeArabic(s){
+  return (s||"")
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g,'')
+    .replace(/[إأآٱ]/g,'ا')
+    .replace(/ى/g,'ي')
+    .replace(/ة/g,'ه')
+    .replace(/ؤ/g,'و')
+    .replace(/ئ/g,'ي')
+    .replace(/ـ/g,'')
+    .replace(/[“”"'!؟?.,؛:]/g,'')
+    .replace(/\s+/g,' ');
+}
+
+function persistInit(){
+  document.querySelectorAll('.persist').forEach(el=>{
+    const key='l2part2_'+(el.id||Math.random());
+    el.dataset.persistKey=key;
+    const saved=localStorage.getItem(key);
+    if(saved!==null) el.value=saved;
+    el.addEventListener('input',()=>localStorage.setItem(key,el.value));
+  });
+}
+
+function gradeExercise(outputId){
+  const allInputs=[...document.querySelectorAll('input[data-answers]')].filter(i=>i.offsetParent!==null || i.closest('.exercise')||i.closest('table'));
+  let group=[];
+  const wrap=document.getElementById(outputId);
+  // limit to nearby section: find the closest card from the output div and only score its inputs
+  const card=wrap.closest('.card');
+  group=[...card.querySelectorAll('input[data-answers]')];
+  let correct=0;
+  group.forEach(input=>{
+    const ansList=(input.dataset.answers||'').split(',').map(x=>normalizeArabic(x));
+    const val=normalizeArabic(input.value);
+    const ok=ansList.includes(val);
+    input.style.background=ok?'#ecfaf4':'#fff4f4';
+    input.style.borderBottomColor=ok?'#3d7b69':'#a84141';
+    if(ok) correct++;
+  });
+  const total=group.length;
+  wrap.innerHTML=`<div class="feedback ${correct===total?'ok':'bad'}" style="display:block"><strong>Score:</strong> ${correct} / ${total}</div>`;
+}
+
+function resetInputs(outputId){
+  const card=document.getElementById(outputId).closest('.card');
+  card.querySelectorAll('input[data-answers]').forEach(input=>{
+    input.value='';
+    input.style.background='#f7fbff';
+    input.style.borderBottomColor='#7ca6c2';
+    if(input.dataset.persistKey) localStorage.removeItem(input.dataset.persistKey);
+  });
+  document.getElementById(outputId).innerHTML='';
+}
+
+function showKey(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+
+function gradeMCQ(){
+  let total=5, correct=0;
+  for(let i=1;i<=5;i++){
+    const checked=document.querySelector(`input[name="c${i}"]:checked`);
+    if(checked && checked.value==='1') correct++;
+  }
+  const out=document.getElementById('mcqOut');
+  out.innerHTML=`<div class="feedback ${correct===total?'ok':'bad'}" style="display:block"><strong>Score:</strong> ${correct} / ${total}</div>`;
+}
+
+function downloadText(id,filename){
+  const text=document.getElementById(id).value||'';
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
+function setupSpeak(){
+  document.querySelectorAll('.speak').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const txt=btn.dataset.speak || btn.parentElement.innerText;
+      if(!('speechSynthesis' in window)){ alert('Speech synthesis is not supported in this browser.'); return; }
+      const u=new SpeechSynthesisUtterance(txt);
+      u.lang='ar'; u.rate=.9;
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    });
+  });
+}
+
+function setupVocabFilter(){
+  const search=document.getElementById('vocabSearch');
+  const filter=document.getElementById('vocabFilter');
+  function apply(){
+    const q=(search.value||'').toLowerCase();
+    const part=filter.value;
+    document.querySelectorAll('#vocabTable tbody tr').forEach(row=>{
+      const txt=row.innerText.toLowerCase();
+      const okText=!q || txt.includes(q);
+      const okPart=part==='all' || row.dataset.part===part;
+      row.style.display=(okText && okPart)?'':'none';
+    });
+  }
+  search.addEventListener('input',apply); filter.addEventListener('change',apply);
+  window.resetVocabFilters=function(){search.value=''; filter.value='all'; apply();}
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  persistInit();
+  setupSpeak();
+  setupVocabFilter();
+});
+</script>
+</body>
+</html>
