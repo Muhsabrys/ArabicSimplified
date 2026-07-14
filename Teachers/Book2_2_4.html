@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arab in America — Lesson 2 (Part 4) Interactive HTML</title>
+<style>
+:root{
+  --ink:#17324d; --muted:#607487; --blue:#dcecf8; --blue2:#f1f8fd; --green:#2f7a63; --green2:#eaf7f2;
+  --gold:#a06d1f; --gold2:#fff5de; --red:#9e4444; --red2:#fdeeee; --line:#d2dde7; --panel:#fff; --bg:#f5f8fb;
+  --shadow:0 10px 28px rgba(23,50,77,.08); --radius:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans Arabic","Segoe UI",sans-serif;background:linear-gradient(180deg,#edf5fa 0,#f9fbfd 220px,#f5f8fb 100%);color:var(--ink);line-height:1.72}
+a{color:#1f648c}
+button,input,textarea,select{font:inherit}
+.shell{max-width:1220px;margin:0 auto;padding:22px 18px 56px}
+.hero{background:linear-gradient(135deg,#143956,#245b7d 60%,#3f7e97);color:#fff;border-radius:26px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-100px;top:-110px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.08)}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:.86rem;opacity:.8;margin-bottom:8px}
+h1{font-size:clamp(1.9rem,4.9vw,3.9rem);margin:0;line-height:1.08}
+.hero p{max-width:860px;margin:14px 0 0;font-size:1.03rem;opacity:.96}
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 12px;font-weight:700}
+.topnav{position:sticky;top:0;z-index:40;display:flex;gap:8px;overflow:auto;background:rgba(245,248,251,.95);backdrop-filter:blur(10px);padding:12px 4px;margin-top:18px;border-bottom:1px solid #d8e2ea}
+.topnav a{text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;white-space:nowrap}
+.card{background:#fff;border:1px solid #e1e8ef;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-top:22px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:16px}.head h2{margin:0;font-size:1.55rem}.head p{margin:6px 0 0;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;background:var(--blue2);border:1px solid #c8dfed;color:#2a658a;border-radius:999px;padding:5px 10px;font-size:.82rem;font-weight:700;white-space:nowrap}
+.rtl{direction:rtl;text-align:right}.arabic{font-family:"Noto Sans Arabic",Arial,sans-serif}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}@media(max-width:980px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+.note,.tip,.warn{padding:13px 15px;border-radius:12px;margin:12px 0}.note{background:var(--blue2);border-inline-start:5px solid #4c8db6}.tip{background:var(--gold2);border-inline-start:5px solid #d1a344}.warn{background:var(--red2);border-inline-start:5px solid var(--red)}
+.prompt{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfdff}.prompt h4{margin:0 0 8px}
+textarea{width:100%;min-height:130px;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}.btn{border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:700;background:#245b7d;color:#fff}.btn.secondary{background:#eef4f8;color:#245b7d;border:1px solid #cad8e3}.btn.green{background:#2f7a63}.btn.red{background:#9a4747}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{border-collapse:collapse;width:100%;min-width:720px;background:#fff}th,td{padding:10px 12px;border-bottom:1px solid #dbe4ec;border-inline-end:1px solid #dbe4ec;vertical-align:top}th:last-child,td:last-child{border-inline-end:none}tr:last-child td{border-bottom:none}th{background:#dbeaf5;color:#1d4a69;text-align:center;font-weight:800}
+.exercise{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fcfdff;margin:14px 0}.q{padding:12px 0;border-bottom:1px dashed #d8e1e9}.q:last-child{border-bottom:none}
+.fill{border:none;border-bottom:2px solid #7ca6c2;background:#f7fbff;padding:4px 6px;min-width:96px;max-width:250px}.fill.short{width:92px}.fill.med{width:140px}.fill.long{width:220px}
+.feedback{margin-top:12px;padding:10px 12px;border-radius:10px;display:none}.ok{background:var(--green2);border:1px solid #b9e2d5;color:#215948}.bad{background:var(--red2);border:1px solid #efc4c4;color:#7f2e2e}.answer-key{display:none;margin-top:12px;background:#f2f7fb;border:1px solid #d3dfeb;border-radius:10px;padding:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chip{background:#eef4f8;border:1px solid #ccdae5;border-radius:999px;padding:5px 9px;font-size:.88rem}
+details{border:1px solid var(--line);border-radius:12px;background:#fcfdff;margin:10px 0}summary{cursor:pointer;padding:12px 14px;font-weight:800}.small{font-size:.93rem;color:var(--muted)}
+.audio-note{font-size:.93rem;color:var(--muted);margin-top:8px}
+.checklist li{margin:8px 0}
+footer{text-align:center;color:var(--muted);font-size:.92rem;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="hero">
+    <div class="eyebrow">Interactive Arabic Lesson</div>
+    <h1 class="arabic" dir="rtl">عرب في أمريكا — الجزء الأخير: القراءة، النفي، ومثل / كـ / كما</h1>
+    <p>This HTML converts the last section of the scanned lesson into an interactive format. Audio-based tasks are turned into guided note sheets, grammar sections are cleaned and organized, and the negation drill is automated so students can check their work.</p>
+    <div class="pills">
+      <span class="pill">Listening notebooks</span>
+      <span class="pill">Negation review</span>
+      <span class="pill">Reading passage</span>
+      <span class="pill">Grammar reference</span>
+      <span class="pill">Writing prompts</span>
+    </div>
+  </header>
+
+  <nav class="topnav">
+    <a href="#ex23">Ex. 23</a>
+    <a href="#ex24">Ex. 24</a>
+    <a href="#negation">Negation</a>
+    <a href="#ex25">Ex. 25</a>
+    <a href="#ex26">Ex. 26</a>
+    <a href="#ex27">Ex. 27</a>
+    <a href="#reading">Article</a>
+    <a href="#ex28">Ex. 28</a>
+    <a href="#ex29">Ex. 29</a>
+    <a href="#ex30">Ex. 30</a>
+    <a href="#similes">مثل / كـ / كما</a>
+    <a href="#ex31">Ex. 31</a>
+  </nav>
+
+  <section class="card" id="ex23">
+    <div class="head">
+      <div>
+        <h2>Exercise 23 — <span class="arabic">مي يماني</span></h2>
+        <p class="arabic rtl">استمعوا إلى المقابلة مع الدكتورة مي يماني واكتبوا ما عرفتم عن حياتها.</p>
+      </div>
+      <div class="badge">Listening notebook</div>
+    </div>
+    <div class="warn">This activity depends on audio/video from the textbook package. Since the media is not included here, use this section as a guided listening note sheet.</div>
+    <div class="grid-2">
+      <div class="prompt rtl arabic"><h4>أ. ماذا عرفنا عنها؟</h4><ol>
+        <li>بلدها ومكان ولادتها</li>
+        <li>أفراد عائلتها والأشياء التي عرفناها عنهم</li>
+        <li>دراستها وأماكن الدراسة</li>
+        <li>عملها والأماكن التي عملت فيها</li>
+        <li>الأماكن التي عاشت فيها</li>
+        <li>ثلاثة أشياء أخرى عرفناها عنها من المقابلة</li>
+      </ol><textarea class="persist" id="ex23a"></textarea></div>
+      <div class="prompt rtl arabic"><h4>ب. بعد الاستماع في الصف</h4><ol>
+        <li>كيف تشعر بالنسبة لوالدها؟ وما سبب هذا الشعور؟</li>
+        <li>من هي الملكة عفت؟ ولماذا ذكرتها في المقابلة؟</li>
+        <li>ماذا قالت عن الزواج في السعودية اليوم؟</li>
+        <li>ماذا قالت عن زواجها هي؟</li>
+        <li>تكلّموا معًا عن آرائكم أنتم في شخصيتها وآرائها.</li>
+      </ol><textarea class="persist" id="ex23b"></textarea></div>
+    </div>
+  </section>
+
+  <section class="card" id="ex24">
+    <div class="head">
+      <div>
+        <h2>Exercise 24 — close listening</h2>
+        <p class="arabic rtl">اكتبوا الكلمات التي قالتها الدكتورة اليماني. حُوِّل هذا النشاط هنا إلى دفتر ملاحظات منظم.</p>
+      </div>
+      <div class="badge">Audio-dependent</div>
+    </div>
+    <div class="tip">Use the boxes below as dictation space while listening. The original page had many numbered blanks tied to time stamps, so this HTML keeps the activity open-ended rather than pretending to auto-grade missing audio.</div>
+    <div class="grid-2">
+      <div class="prompt rtl arabic"><h4>أ. من ١:٣١ إلى ١:٣٨</h4><textarea class="persist" id="ex24a" placeholder="اكتب الكلمات أو الجمل هنا..."></textarea></div>
+      <div class="prompt rtl arabic"><h4>ب. من ٢:٤٠ إلى نهاية الفيديو</h4><textarea class="persist" id="ex24b" placeholder="اكتب الكلمات أو الجمل هنا..."></textarea></div>
+    </div>
+  </section>
+
+  <section class="card" id="negation">
+    <div class="head">
+      <div>
+        <h2>Grammar review — negation in fusha and spoken Arabic</h2>
+        <p class="arabic rtl">مراجعة النفي بالفصحى والعامية</p>
+      </div>
+      <div class="badge">Reference</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Meaning / tense</th><th class="arabic">الفصحى</th><th class="arabic">الشامي</th><th class="arabic">المصري</th></tr></thead>
+        <tbody>
+          <tr><td>past</td><td class="rtl arabic">لَم + المضارع المجزوم<br>ما + الماضي</td><td class="rtl arabic">ما</td><td class="rtl arabic">ما ... ش</td></tr>
+          <tr><td>present</td><td class="rtl arabic">لا + المضارع المرفوع</td><td class="rtl arabic">ما</td><td class="rtl arabic">ما ... ش / مش + ب</td></tr>
+          <tr><td>future</td><td class="rtl arabic">لن + المضارع المنصوب</td><td class="rtl arabic">ما رح</td><td class="rtl arabic">مش حَـ</td></tr>
+          <tr><td>nominal sentence / no verb</td><td class="rtl arabic">ليس</td><td class="rtl arabic">مو</td><td class="rtl arabic">مش</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note rtl arabic">الفكرة الأساسية: اختر أداة النفي حسب الزمن والبنية. إذا كانت الجملة اسمية نستخدم <strong>ليس</strong> في الفصحى، وإذا كان الفعل مضارعًا في الزمن الحاضر نستخدم <strong>لا</strong>، وإذا كان الحديث عن المستقبل نستخدم <strong>لن</strong>.</div>
+  </section>
+
+  <section class="card" id="ex25">
+    <div class="head">
+      <div>
+        <h2>Exercise 25 — negation in fusha</h2>
+        <p class="arabic rtl">اكتبوا الفعل بالنفي بالفصحى مع <span class="arabic">لا</span> أو <span class="arabic">ما</span> أو <span class="arabic">لم</span> أو <span class="arabic">لن</span> أو <span class="arabic">ليس</span> بالشكل المناسب.</p>
+      </div>
+      <div class="badge">Auto-check</div>
+    </div>
+    <div class="exercise rtl arabic">
+      <div class="q">١. أمس ظننت أن أهلي سيكونون في المطار لاستقبالي، ولكنهم <input class="fill long persist" id="e25_1" data-answers="لم يستقبلوني,ما استقبلوني"> بني! (استقبل)</div>
+      <div class="q">٢. قررت أن أطلقه لأنه ترك وظيفته وقال لي إنه <input class="fill med persist" id="e25_2" data-answers="لن يبحث"> عن وظيفةٍ أخرى في المستقبل لأنه يرغب في أن يبقى في البيت. (يبحث)</div>
+      <div class="q">٣. أظن أنهم، إلى الآن، <input class="fill med persist" id="e25_3" data-answers="لم يجدوا,ما وجدوا"> الحل الذي يبحثون عنه لمشكلتهم. (وجد)</div>
+      <div class="q">٤. في رأيي، الخلاف الذي بينهم <input class="fill med persist" id="e25_4a" data-answers="لن ينتهي"> قريبًا لأنه قديم جدًا و <input class="fill med persist" id="e25_4b" data-answers="ليس"> له حل. (انتهى / ليس)</div>
+      <div class="q">٥. إذا <input class="fill med persist" id="e25_5" data-answers="لم تحدد,لم تحددوا,ما حددت,ما حددتم"> لي كم شخصًا سيحضر العشاء، فكيف أقرّر ماذا سأطبخ؟! (حدّد)</div>
+      <div class="q">٦. والدي <input class="fill med persist" id="e25_6a" data-answers="لا يغضب"> مني عادةً إذا عندما أفشل في امتحانات المدرسة، وهو <input class="fill med persist" id="e25_6b" data-answers="لن يغضب"> مني في الأسبوع القادمة لأنه <input class="fill med persist" id="e25_6c" data-answers="ليس"> عندنا أي امتحانات أبدًا! (غضب / ليس)</div>
+      <div class="q">٧. ذكرت معظم الدراسات الاقتصادية التي قرأتها أن عدد الشقق المخصصة للإيجار <input class="fill med persist" id="e25_7" data-answers="لن يزداد"> في المستقبل القريب. (ازداد)</div>
+      <div class="q">٨. في الحقيقة، <input class="fill med persist" id="e25_8" data-answers="ليس"> السبب في فصله من وظيفته مرتبته الكبيرة – كما يقول هو – ولكن شخصيته الصعبة وعدم رغبة الآخرين في العمل معه. (ليس)</div>
+      <div class="q">٩. زوجي رجل “شيك” جدًّا. <input class="fill med persist" id="e25_9" data-answers="لا يلبس"> أي كرافات وبدلات وأحذية إلا إذا كان عليها اسم مشهور كـ “أرماني” أو “رالف لورين” أو “فيرساتشي”. (لبس)</div>
+      <div class="toolbar">
+        <button class="btn green" onclick="gradeExercise('e25out')">Check answers</button>
+        <button class="btn secondary" onclick="showKey('e25key')">Show answer key</button>
+        <button class="btn red" onclick="resetInputs('e25out')">Reset</button>
+      </div>
+      <div id="e25out"></div>
+      <div id="e25key" class="answer-key rtl arabic">
+        ١) لم يستقبلوني / ما استقبلوني<br>
+        ٢) لن يبحث<br>
+        ٣) لم يجدوا / ما وجدوا<br>
+        ٤) لن ينتهي — ليس<br>
+        ٥) لم تحدد / لم تحددوا (answers may vary with the subject you choose)<br>
+        ٦) لا يغضب — لن يغضب — ليس<br>
+        ٧) لن يزداد<br>
+        ٨) ليس<br>
+        ٩) لا يلبس
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="ex26">
+    <div class="head">
+      <div>
+        <h2>Exercise 26 — negation in spoken Arabic and fusha</h2>
+        <p class="arabic rtl">احكوا بالعامية واكتبوا بالفصحى.</p>
+      </div>
+      <div class="badge">Speaking + writing</div>
+    </div>
+    <div class="prompt rtl arabic">
+      <h4>الموضوعات المقترحة</h4>
+      <ol>
+        <li>أول سنة لك في الجامعة: كيف / إزّاي؟ وليش / ليه كانت سنة صعبة؟</li>
+        <li>الأشياء أو الحاجات التي ما راح / مش حَ / لن تعملها في حياتك.</li>
+        <li>أهلك وأقاربك: What are they not?</li>
+      </ol>
+      <p><strong>مثال:</strong> <span class="arabic">بابا مو كبير بالعمر / أختي مش ساكنة مع أهلي في البيت دلوقتي.</span></p>
+      <textarea class="persist" id="ex26notes" placeholder="Write your spoken-Arabic examples here, then rewrite them in fusha..."></textarea>
+    </div>
+  </section>
+
+  <section class="card" id="ex27">
+    <div class="head">
+      <div>
+        <h2>Exercise 27 — reading: <span class="arabic">عرب في أميركا أم أميركيون عرب؟</span></h2>
+        <p class="arabic rtl">اقرأوا المقالة ولا تبحثوا عن أي كلمة في القاموس أولًا، ثم دوّنوا ملاحظاتكم استعدادًا للنقاش.</p>
+      </div>
+      <div class="badge">Reading prep</div>
+    </div>
+    <div class="grid-2">
+      <div class="prompt rtl arabic"><h4>أسئلة القراءة في البيت</h4><ol>
+        <li>ماذا عرفنا من المقالة عن الجالية العربية في ميشيغان، والجالية العربية في كاليفورنيا؟</li>
+        <li>ماذا الكاتبة، مقارنة بين ميشيغان وكاليفورنيا، ماذا قالت؟</li>
+        <li>ما هي الشخصيات الأميركية العربية التي ذكرتها المقالة؟</li>
+        <li>ماذا تقول المقالة عن الأميركيين العرب؟ اذكروا ٣ أشياء.</li>
+      </ol><textarea class="persist" id="ex27home"></textarea></div>
+      <div class="prompt rtl arabic"><h4>أسئلة القراءة في الصف</h4><ol>
+        <li>ماذا نستطيع أن نعرف عن الناس الذين قابلتهم كاتبة المقالة وتكلمت معهم؟</li>
+        <li>ماذا تقول المقالة عن الوظائف التي عمل فيها المهاجرون العرب؟</li>
+        <li>هل جيل الشباب الآن مثل جيل المهاجرين؟ كيف؟ ولماذا؟</li>
+        <li>ابحثوا عن أسماء الموصول في النص (الذي، التي...) واقرأوا الجمل مع بعض.</li>
+      </ol><textarea class="persist" id="ex27class"></textarea></div>
+    </div>
+  </section>
+
+  <section class="card" id="reading">
+    <div class="head">
+      <div>
+        <h2>Reading passage — cleaned text and notes</h2>
+        <p>A cleaned reading version based on the scanned pages, followed by vocabulary support.</p>
+      </div>
+      <div class="badge">Article view</div>
+    </div>
+    <div class="note rtl arabic"><strong>العبارات الجديدة:</strong> <span class="arabic">غيرهم</span> = others; <span class="arabic">وغيرها من الـ (+ جمع)</span> = and other ...</div>
+    <details open>
+      <summary class="arabic rtl">نصّ المقالة (نسخة منظّمة للقراءة)</summary>
+      <div class="rtl arabic">
+        <h3>ديربورن: تجربة فريدة</h3>
+        <p>تُعَدّ ولايةُ ميشيغان الثانيةَ في أميركا من حيث عددُ الأميركيين العرب. بحسب أرقام مؤسسة «زغبي إنترناشونال» يبلغ عددهم فيها نحو 490 ألفًا. يتركّز جزءٌ كبير منهم في مدينة ديربورن ومقاطعة أوكلاند، وينتمي كثير منهم إلى أصول لبنانية ويمنية وسورية ومصرية وعراقية وأردنية، إضافةً إلى مجموعات أخرى.</p>
+        <p>وتصف بعضُ الشخصيات المحلية الجاليةَ العربية في ديربورن بأنها جاليةٌ يزداد عددُها باستمرار؛ فبعض الناس ينتقلون إلى مدنٍ أخرى أو إلى ولايات مجاورة أو بعيدة من أجل الدراسة أو العمل، لكنهم يظلون يعدّون ديربورن منزلَهم الأصلي ويعودون إليها باستمرار.</p>
+        <p>وترى بعض الأصوات أيضًا أن «عرب ديربورن» يختلفون عن أجيالٍ أخرى في ولاياتٍ أخرى؛ فالكثير من الشباب الذين يكملون دراستهم يفضّلون البقاء قريبًا من أهلهم وأقاربهم. وهناك من يرى أن الأجيال العربية الأميركية الجديدة ستنتشر عبر الولايات مثل غيرها من المجموعات الإثنية الأخرى في أميركا.</p>
+        <h3>جنوب كاليفورنيا: أين العرب؟</h3>
+        <p>ومن برد ميشيغان وثلوجها إلى كاليفورنيا «الولاية الذهبية»، حيث طقسُ البحر الأبيض المتوسط وطبيعةُ الحياة المختلفة. فإذا كنتَ تبحث عن الأميركيين العرب في ولاية كاليفورنيا، وخاصةً في جنوبها، فستجدهم موزّعين في مدن كثيرة مثل لوس أنجلوس وضواحيها، وليس في مدينةٍ واحدةٍ مثل ديربورن. وعلى الرغم من هذا التوزّع، تظهر في بعض الأحياء والمحالّ والمطاعم والمؤسسات دلالاتٌ واضحة على الحضور العربي.</p>
+        <p>وتُعَدّ ولاية كاليفورنيا وجهةً مهمّةً للمهاجرين العرب، كما أن أبناء الجيلين الثاني والثالث من الأميركيين العرب يشكّلون نسبةً كبيرة من سكانها مقارنةً ببعض الولايات الأخرى. وينتشر الأميركيون العرب في مجالات التجارة والطاقة والبحث العلمي والهندسة والإعلام وغيرها.</p>
+        <h3>من المحلات إلى التخصصات</h3>
+        <p>تتنوع خلفيات الأميركيين العرب؛ فمنهم مَن هاجر أجداده منذ أكثر من مئة عام، ومنهم من هاجر حديثًا، ومنهم من استقر بعد الدراسة الجامعية أو الدراسات العليا. وتشير المقالة إلى أن الأميركيين العرب، في المتوسط، أفضل تعليمًا من غيرهم، وأن معدل التحاقهم بالجامعات أعلى من المعدل القومي العام.</p>
+        <h3>من هم الشباب الأميركيون العرب؟</h3>
+        <p>تحاول بعض الأصوات في المقالة الإجابة عن هذا السؤال بقولها إن هناك شبابًا أميركيين من أصول عربية يعرّفون أنفسهم بأنهم أميركيون أولًا ثم يضيفون أصلهم العربي، وهناك آخرون يعرفون أنفسهم بأنهم عربٌ أميركيون. ومع ذلك، يبدو أن كثيرًا منهم أكثر قدرةً على التواصل مع المجتمع الأميركي من آبائهم وأجدادهم، وأنهم يعيشون حياتهم كأميركيين ولكن من دون أن ينفصلوا تمامًا عن جذورهم العربية.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Vocabulary box</summary>
+      <div class="chips rtl arabic">
+        <span class="chip">يتوزّعون = are distributed</span>
+        <span class="chip">الجالية = immigrant / ethnic community</span>
+        <span class="chip">وجهة = destination</span>
+        <span class="chip">خلفيات = backgrounds</span>
+        <span class="chip">المعدل القومي = national rate</span>
+        <span class="chip">ينتشرون = spread out</span>
+      </div>
+    </details>
+  </section>
+
+  <section class="card" id="ex28">
+    <div class="head">
+      <div>
+        <h2>Exercise 28 — close reading</h2>
+        <p class="arabic rtl">القراءة الدقيقة</p>
+      </div>
+      <div class="badge">Guided analysis</div>
+    </div>
+    <div class="grid-3">
+      <div class="prompt"><h4>1. Michigan vs. California</h4><p>Find the paragraph that discusses the difference between the Arab communities in Michigan and California. Choose two key words you do not know, look them up, and then write a short Arabic summary.</p><textarea class="persist" id="ex28_1"></textarea></div>
+      <div class="prompt"><h4>2. Occupations</h4><p>Find the section that mentions the various kinds of occupations to which Arab Americans have gravitated. Choose two key words and write a short summary in Arabic.</p><textarea class="persist" id="ex28_2"></textarea></div>
+      <div class="prompt rtl arabic"><h4>3. جملة: من + جملة اسمية</h4><p>في الجملة: <span class="arabic">ومن أمثال هؤلاء الإخوان معلوف الذين يملكون فريق ساكرامنتو كينغز لكرة السلة</span>، حدّد الخبر والمبتدأ، ثم أعد صياغة المعنى بكلماتك.</p><textarea class="persist" id="ex28_3"></textarea></div>
+    </div>
+    <div class="note rtl arabic"><strong>تذكير:</strong> في الجمل التي تبدأ بـ <span class="arabic">من</span> ويأتي بعدها جمع أو اسم، تعني <span class="arabic">among / من بين</span>، وغالبًا يكون الخبر متقدمًا والمبتدأ يأتي بعده.</div>
+  </section>
+
+  <section class="card" id="ex29">
+    <div class="head">
+      <div>
+        <h2>Exercise 29 — reading aloud</h2>
+        <p class="arabic rtl">اقرأوا القطعة بصوت عالٍ للتدرّب على النطق.</p>
+      </div>
+      <div class="badge">Pronunciation practice</div>
+    </div>
+    <div class="tip">Practice in chunks rather than word by word. Pay special attention to sun and moon letters, stress, and intonation.</div>
+    <div class="prompt rtl arabic">
+      <p>ولايةُ ميشيغان هي الثانيةُ في أميركا بعد كاليفورنيا من حيث عددُ الأميركيين العرب، وهم يتركّزون في منطقة «وين» التي توجد فيها مدينة ديربورن. ومعظم العرب الذين يعيشون هناك هم من أصول لبنانية ويمنية وعراقية وكلدانية.</p>
+      <p>وعن الأميركيين العرب في ديربورن تقول بعض الأصوات المحلية إن الجالية العربية في المدينة يزداد عددُها باستمرار، وأن بعض الناس ينتقلون للمدن الأخرى أو للولايات المجاورة أو البعيدة للدراسة أو بحثًا عن فرص العمل، وبعضُهم ينتقل بحثًا عن بيوت أكبر. لكن، عندما يهاجر العرب إلى مدنٍ وولاياتٍ أخرى فإنهم يعودون باستمرار إلى ديربورن التي يشعرون بأنها مدينتهم الأصلية.</p>
+      <p>ومن برد ميشيغان وثلوجها إلى كاليفورنيا «الولاية الذهبية»، حيث طقس البحر الأبيض المتوسط، وحيث طبيعة الحياة أقل تسارعًا من الشرق الأميركي. خصوصية الغرب الأميركي ليست فقط في طبيعة الحياة، ولكن أيضًا في طبيعته الجغرافية.</p>
+    </div>
+    <div class="prompt">
+      <h4>Self-evaluation checklist</h4>
+      <ul class="checklist">
+        <li>Did you pause at meaningful phrases?</li>
+        <li>Did you pronounce the case endings or pauses clearly?</li>
+        <li>Did you handle long vowels and emphatic consonants carefully?</li>
+        <li>Did your intonation sound natural?</li>
+      </ul>
+      <textarea class="persist" id="ex29notes" placeholder="Write what was easy, what was difficult, and what you want to practice again..."></textarea>
+    </div>
+  </section>
+
+  <section class="card" id="ex30">
+    <div class="head">
+      <div>
+        <h2>Exercise 30 — <span class="arabic">من + جملة اسمية</span></h2>
+        <p>Practice recognizing this pattern by identifying the مبتدأ and الخبر of each sentence and paraphrasing the meaning.</p>
+      </div>
+      <div class="badge">Structure analysis</div>
+    </div>
+    <div class="exercise rtl arabic">
+      <div class="q"><strong>١.</strong> من الجاليات التي ازداد عدد أفرادها كثيرًا في السنوات الماضية الجالية العراقية والجالية السودانية.<br><textarea class="persist" id="ex30_1" placeholder="حدّد المبتدأ والخبر، ثم اشرح المعنى..."></textarea></div>
+      <div class="q"><strong>٢.</strong> من الملابس المفضّلة عند الشباب بنطلون «الجينز» و«تي شيرت».<br><textarea class="persist" id="ex30_2"></textarea></div>
+      <div class="q"><strong>٣.</strong> من هذه الكنائس في العالم كله كنيسة سانت مارك في ديربورن.<br><textarea class="persist" id="ex30_3"></textarea></div>
+      <div class="q"><strong>٤.</strong> من أكبر الجاليات العربية في أميركا جاليةٌ منتشرة الآن في مدينة نيويورك.<br><textarea class="persist" id="ex30_4"></textarea></div>
+      <div class="q"><strong>٥.</strong> من الشخصيات المشهورة التي نزلت في هذا الفندق رئيسة الوزراء البريطانية مارغرت تاتشر ووزيرة الخارجية الأميركية هيلاري كلينتون.<br><textarea class="persist" id="ex30_5"></textarea></div>
+    </div>
+  </section>
+
+  <section class="card" id="similes">
+    <div class="head">
+      <div>
+        <h2>Grammar focus — <span class="arabic">مثل، كـ، كما</span></h2>
+        <p>A cleaned guide to the similarity markers from the final grammar pages.</p>
+      </div>
+      <div class="badge">Reference</div>
+    </div>
+    <div class="grid-3">
+      <div class="prompt rtl arabic"><h4>مثل</h4><p><span class="arabic">مثل</span> اسمٌ يأتي غالبًا أولَ إضافة، ويمكن أن يتصل به ضمير: <span class="arabic">مثلي، مثلك، مثلها</span>. وهو الأكثر شيوعًا والأقل رسمية.</p><p><strong>أمثلة:</strong><br><span class="arabic">أنوي أن أسكن في شقة مثل زملائي.</span><br><span class="arabic">تتمنى ابنتها أن تصبح مهندسة مثلها.</span></p></div>
+      <div class="prompt rtl arabic"><h4>كـ</h4><p><span class="arabic">كـ</span> حرف جر يقتصر أكثر على الفصحى، ويجب أن يأتي بعده اسم، ولا يتصل به ضمير.</p><p><strong>أمثلة:</strong><br><span class="arabic">الجالية العربية، كالجاليات الأجنبية الأخرى في أميركا، تشجع أفرادها على أن يتعرفوا أكثر إلى لغتهم وثقافتهم.</span><br><span class="arabic">قال إنه لم يتزوج لأنه لم يجد امرأةً كأمّه.</span></p></div>
+      <div class="prompt rtl arabic"><h4>كما / مثل ما / زيّ ما</h4><p>هذه التعبيرات تُدخل جملة فعلية. في المصرية يكون <span class="arabic">زيّ ما</span> أكثر مرونة.</p><p><strong>أمثلة:</strong><br><span class="arabic">كما تعلمون، الامتحان سيكون غدًا.</span><br><span class="arabic">مثل ما بتعرفوا، الامتحان رح يكون بكرة.</span><br><span class="arabic">زيّ ما انتو عارفين، الامتحان حيكون بكرة.</span></p></div>
+    </div>
+    <details>
+      <summary>Extra note on كما</summary>
+      <div class="rtl arabic">عندما تربط <span class="arabic">كما</span> بين فعلين متماثلين أو متشابهين، فقد تعني أيضًا <strong>just as / also</strong>، مثل: <span class="arabic">اشتريتُ بعض الأشياء للبيت، كما اشتريتُ صحيفةً وبعض المجلات.</span></div>
+    </details>
+  </section>
+
+  <section class="card" id="ex31">
+    <div class="head">
+      <div>
+        <h2>Exercise 31 — writing</h2>
+        <p class="arabic rtl">من الجاليات الأجنبية في مدينتي / ولايتي / بلدي</p>
+      </div>
+      <div class="badge">Essay writing</div>
+    </div>
+    <div class="tip rtl arabic">اكتبوا مقالةً قصيرة (حوالي ٣٠٠ كلمة) عن جالية من الجاليات الأجنبية الموجودة في مدينتكم أو ولايتكم. اذكروا تاريخ هذه الجالية وأصلها وكيف جاءت واستقرت في منطقتكم، وتكلّموا أيضًا عن أفراد الجالية وأعمالهم وثقافتهم ولغتهم، وكيف يشعرون بالنسبة لهويتهم.</div>
+    <div class="note">Useful connectors: <span class="arabic">بالإضافة إلى ذلك</span> | <span class="arabic">وكذلك</span> | <span class="arabic">بعد أن</span> | <span class="arabic">كما</span></div>
+    <textarea class="persist" id="ex31essay" placeholder="Write your essay here..."></textarea>
+    <div class="toolbar"><button class="btn secondary" onclick="downloadText('ex31essay','lesson2_part4_ex31_essay.txt')">Export essay</button></div>
+  </section>
+
+  <footer>
+    Part 4 of the interactive lesson. Audio-based textbook drills remain notebook-style because the source media was not included with the scans.
+  </footer>
+</div>
+
+<script>
+function normalizeArabic(s){
+  return (s||'').toString().trim().toLowerCase()
+    .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g,'')
+    .replace(/[إأآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/ؤ/g,'و').replace(/ئ/g,'ي')
+    .replace(/ـ/g,'').replace(/[“”"'!؟?.,؛:()]/g,'').replace(/\s+/g,' ');
+}
+function persistInit(){
+  document.querySelectorAll('.persist').forEach(el=>{
+    const key='l2part4_'+(el.id||Math.random());
+    el.dataset.persistKey=key;
+    const saved=localStorage.getItem(key);
+    if(saved!==null) el.value=saved;
+    el.addEventListener('input',()=>localStorage.setItem(key,el.value));
+  });
+}
+function gradeExercise(outputId){
+  const out=document.getElementById(outputId);
+  const card=out.closest('.card');
+  const fields=[...card.querySelectorAll('input[data-answers]')];
+  let correct=0;
+  fields.forEach(f=>{
+    const answers=(f.dataset.answers||'').split(',').map(normalizeArabic);
+    const val=normalizeArabic(f.value);
+    const ok=answers.includes(val);
+    f.style.background=ok?'#ecfaf4':'#fff4f4';
+    f.style.borderBottomColor=ok?'#2f7a63':'#9e4444';
+    if(ok) correct++;
+  });
+  out.innerHTML=`<div class="feedback ${correct===fields.length?'ok':'bad'}" style="display:block"><strong>Score:</strong> ${correct} / ${fields.length}</div>`;
+}
+function resetInputs(outputId){
+  const out=document.getElementById(outputId);
+  const card=out.closest('.card');
+  card.querySelectorAll('input[data-answers]').forEach(f=>{
+    f.value='';
+    f.style.background='#f7fbff';
+    f.style.borderBottomColor='#7ca6c2';
+    if(f.dataset.persistKey) localStorage.removeItem(f.dataset.persistKey);
+  });
+  out.innerHTML='';
+}
+function showKey(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+function downloadText(id,filename){
+  const text=document.getElementById(id).value||'';
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+document.addEventListener('DOMContentLoaded', persistInit);
+</script>
+</body>
+</html>
