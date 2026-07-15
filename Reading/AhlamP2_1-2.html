@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="ar" class="scroll-smooth" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأحلام الأولى: الجزء الثاني - منصة قراءة تفاعلية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Tajawal, Cairo & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        arabic: ['Tajawal', 'Cairo', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 transition-colors duration-300">
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="bg-gradient-to-tr from-brand-600 to-emerald-500 text-white p-2.5 rounded-xl shadow-md">
+                        <i class="fa-solid fa-book-open text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-xl tracking-tight text-slate-800 font-arabic">الأحلام الأولى</span>
+                        <span class="hidden sm:inline-block mr-2 px-2 py-0.5 text-xs font-semibold bg-brand-100 text-brand-700 rounded-full font-arabic">الجزء الثاني</span>
+                    </div>
+                </div>
+
+                <!-- Global Action Controls -->
+                <div class="flex items-center gap-3">
+                    <!-- Progress Bar -->
+                    <div class="hidden xl:flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                        <span class="text-xs font-semibold text-slate-600 font-arabic">معدل الإنجاز:</span>
+                        <div class="w-24 bg-slate-200 rounded-full h-2">
+                            <div id="global-progress" class="bg-brand-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                        <span id="global-progress-percent" class="text-xs font-bold text-brand-700">0%</span>
+                    </div>
+
+                    <!-- Show/Hide All Answers Button -->
+                    <button onclick="toggleAllAnswers()" id="toggle-all-btn" class="flex items-center gap-2 px-3.5 py-2 text-xs sm:text-sm font-bold bg-slate-800 text-white hover:bg-slate-900 active:scale-95 transition-all rounded-xl shadow-md font-arabic">
+                        <i class="fa-solid fa-eye-slash" id="toggle-all-icon"></i>
+                        <span id="toggle-all-text">عرض كل الإجابات</span>
+                    </button>
+                    
+                    <!-- Reset Button -->
+                    <button onclick="resetEverything()" title="إعادة تهيئة التمرين" class="p-2 text-slate-500 hover:text-red-500 hover:bg-red-50 rounded-lg border border-slate-200 transition-colors">
+                        <i class="fa-solid fa-arrow-rotate-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6" dir="rtl">
+        
+        <!-- Welcome Hero Section -->
+        <div class="mb-8 p-6 sm:p-8 bg-gradient-to-r from-brand-700 via-brand-800 to-slate-900 text-white rounded-3xl shadow-xl relative overflow-hidden">
+            <div class="absolute -left-10 -bottom-10 opacity-10 text-9xl pointer-events-none">
+                <i class="fa-solid fa-book-journal-whills"></i>
+            </div>
+            <div class="relative z-10 max-w-3xl">
+                <span class="px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-brand-500 text-white rounded-full font-arabic">المستوى فوق المتوسط</span>
+                <h1 class="text-2xl sm:text-4xl font-extrabold mt-3 tracking-wide leading-tight text-white drop-shadow-sm font-arabic">
+                    سلسلة الأحلام الأولى: الجزء الثاني (1 و 2)
+                </h1>
+                <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed font-arabic">
+                    منصة قراءة تفاعلية تهدف إلى تعزيز مهارات الفهم والاستخراج والمحادثة باللغة العربية. اقرأ النص بعناية، واستكشف معاني الكلمات التفاعلية بوضع الفأرة عليها، ثم اختبر معلوماتك بحل التدريبات المرفقة.
+                </p>
+            </div>
+        </div>
+
+        <!-- Layout Grid: Story Left/Right (Dominant width for text) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- RIGHT COLUMN: The Arabic Reading Text (7-col for spacious reading area) -->
+            <section class="lg:col-span-7 space-y-6">
+                
+                <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+                    <!-- Card Header -->
+                    <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-file-invoice text-emerald-500 text-lg"></i>
+                            <h2 class="font-bold text-slate-800 text-base font-arabic">نص القراءة: الأحلام الأولى</h2>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-xs text-slate-500 font-medium font-arabic">جاهز للقراءة التفاعلية</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Body (The Text Content in Arabic ONLY) -->
+                    <div class="p-6 space-y-8 text-justify">
+                        
+                        <!-- Paragraph 1 Container -->
+                        <div class="space-y-4 bg-brand-50/30 p-6 rounded-2xl border border-brand-100/50">
+                            <h3 class="text-xs font-bold text-brand-700 tracking-wider uppercase flex items-center gap-1.5 border-b border-brand-100/50 pb-2 font-arabic">
+                                <i class="fa-solid fa-graduation-cap text-sm"></i>
+                                المرحلة الأولى: البحث عن العمل ومصاعبه
+                            </h3>
+                            
+                            <!-- Arabic Source -->
+                            <p class="font-arabic leading-9 text-slate-900 text-lg sm:text-xl text-right">
+                                مرّت السنين، ثم تخرَّجَ كُلٌ مِنَا وحاولنا البحث عن عمل أكثر من مرة، ولكن لم ننجح جميعًا في الحصول على عمل في نفس المدينة. استطاع <span class="bg-amber-100 px-1.5 py-0.5 rounded font-semibold text-slate-800 border-b-2 border-amber-400">زياد</span> الحصول على عمل في <span class="text-blue-600 font-medium">الإسكندرية</span>، ولكنه لم يسافر بعدما علِمَ بوفاة والدته - الله يرحمها، بالإضافة إلى أنه قرَّرَ أن <span class="bg-emerald-50 hover:bg-emerald-100 cursor-help px-1.5 py-0.5 rounded border-b border-emerald-400 relative group transition-colors inline-block" title="یسكن / یقيم">يعيشَ<span class="absolute hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-slate-900 text-white text-xs rounded p-2 text-center shadow-lg z-30 font-sans leading-normal" dir="ltr">Synonym: Lives/Resides<br><span class="font-arabic font-normal text-slate-300">مرادف: يسكن ويستقر</span></span></span> في القاهرة، لأنه كان يريد أن يعمل في السفارة السورية بالقاهرة. 
+                            </p>
+                            
+                            <p class="font-arabic leading-9 text-slate-900 text-lg sm:text-xl text-right">
+                                أما <span class="bg-amber-100 px-1.5 py-0.5 rounded font-semibold text-slate-800 border-b-2 border-amber-400">رجاء</span>، فحصلت على <span class="text-teal-600 font-medium">مِنحة</span> للدراسات العُليا من المغرب لدراسة 
+                                <!-- Interactive Hover Image Tooltip for Film Directing -->
+                                <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpg18xieEDyOSEsW1Ay0de1w3zt8ZI3XSarZA1PI_fBpbC4yPZzn56EV8&s=10" target="_blank" class="relative group inline-block border-b-2 border-dotted border-teal-500 text-teal-600 font-bold hover:text-teal-800 transition-colors">
+                                    الإخراج السينمائي
+                                    <span class="absolute hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 bg-white p-2 rounded-2xl shadow-2xl border border-slate-200 z-50 transition-all duration-300 transform scale-95 group-hover:scale-100 pointer-events-none">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpg18xieEDyOSEsW1Ay0de1w3zt8ZI3XSarZA1PI_fBpbC4yPZzn56EV8&s=10" class="rounded-xl w-full h-auto object-cover border border-slate-100 shadow-sm" alt="Film Directing" onerror="this.src='https://placehold.co/300x200?text=Image+Load+Error'">
+                                        <span class="block text-[11px] text-slate-500 text-center mt-1.5 font-sans font-bold leading-normal" dir="ltr">Preview: Film Directing<br><span class="font-arabic font-normal">معاينة: الإخراج السينمائي</span></span>
+                                    </span>
+                                </a> 
+                                في المعهد العالي للسينما بالقاهرة. وقد عُيِّنَت <span class="bg-amber-100 px-1.5 py-0.5 rounded font-semibold text-slate-800 border-b-2 border-amber-400">سارة</span> مُعيدة في كُلية الطِّب. وطبعًا <span class="bg-amber-100 px-1.5 py-0.5 rounded font-semibold text-slate-800 border-b-2 border-amber-400">جيسيكا</span> لم تتغيَّب عن دراسة اللغة العربية، حيث التحقت بالدراسات العُليا بكلية دار العلوم بجامعة القاهرة. أمّا <span class="bg-amber-100 px-1.5 py-0.5 rounded font-semibold text-slate-800 border-b-2 border-amber-400">حاتم</span> فقد أخذ طريقًا آخر في التجارة مع والدِه، فأصبح مُديرًا لشركة من شركات أبيه. وطلب مني حاتم أن أعمل مُحاسِبًا معه في فرع الشركة في القاهرة. فانشغلنا كثيرًا ولم نعد <span class="bg-emerald-50 hover:bg-emerald-100 cursor-help px-1.5 py-0.5 rounded border-b border-emerald-400 relative group transition-colors inline-block" title="نتقابل">نلتقي<span class="absolute hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-slate-900 text-white text-xs rounded p-2 text-center shadow-lg z-30 font-sans leading-normal" dir="ltr">Synonym: Meet up<br><span class="font-arabic font-normal text-slate-300">مرادف: نتقابل ونلتئم</span></span></span> إلا قليلًا مقارنةً بالسنوات الماضية.
+                            </p>
+                        </div>
+
+                        <!-- Paragraph 2 Container -->
+                        <div class="space-y-4 bg-teal-50/20 p-6 rounded-2xl border border-teal-100/50">
+                            <h3 class="text-xs font-bold text-teal-800 tracking-wider uppercase flex items-center gap-1.5 border-b border-teal-100/50 pb-2 font-arabic">
+                                <i class="fa-solid fa-clock text-sm"></i>
+                                المرحلة الثانية: ديسمبر 2010 والمقهى التراثي
+                            </h3>
+
+                            <!-- Arabic Source -->
+                            <p class="font-arabic leading-9 text-slate-900 text-lg sm:text-xl text-right">
+                                بعد غياب <span class="bg-emerald-50 hover:bg-emerald-100 cursor-help px-1.5 py-0.5 rounded border-b border-emerald-400 relative group transition-colors inline-block" title="عكس قصير">طويلٍ<span class="absolute hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-slate-900 text-white text-xs rounded p-2 text-center shadow-lg z-30 font-sans leading-normal" dir="ltr">Antonym: Short<br><span class="font-arabic font-normal text-slate-300">عكس: قصير</span></span></span>، أخيرًا اجتمع الأصدقاء في <span class="text-indigo-600 font-semibold border-b border-indigo-200">مقهى الفيشاوي</span> في حي الحسين الذي تعوّدوا أن يتقابلوا فيه، وكان ذلك بسبب <span class="bg-emerald-50 hover:bg-emerald-100 cursor-help px-1.5 py-0.5 rounded border-b border-emerald-400 relative group transition-colors inline-block" title="عودة">رجوع<span class="absolute hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-slate-900 text-white text-xs rounded p-2 text-center shadow-lg z-30 font-sans leading-normal" dir="ltr">Synonym: Return<br><span class="font-arabic font-normal text-slate-300">مرادف: عودة / أوبَة</span></span></span> حاتم إلى مصر بعد زيارة تجارية إلى تونس انتهت بسرعة لأسباب سياسية، جاء حاتم ومعه صديق تونسي اسمه "<span class="bg-rose-100 px-1.5 py-0.5 rounded font-semibold text-slate-800 border-b-2 border-rose-400">علي البوعزيزي</span>".
+                            </p>
+                            <p class="font-arabic leading-9 text-slate-900 text-lg sm:text-xl text-right">
+                                تبادل الأصدقاء التحية وقدَّم حاتم صديقَه: "أحب أعرَّفْكُم بصديقي علي البوعزيزي من تونس." فقالت جيسيكا "فرصة سعيدة يا علي" وقال زياد "تَشَرَّفنا بمعرفتك يا علي"، وأنا قلت له "نَوَّرْتْ مَصر يا علي.. طمِّنا إيه آخر الأخبار في تونس؟ المقالات في المجلات والجرائد كلها بتتكلم عن تونس." 
+                            </p>
+                            <p class="font-arabic leading-9 text-slate-900 text-lg sm:text-xl text-right">
+                                فقال علي "يِعايْشَك! والله الأخبار في تونس خايبة خايبة برشا. مفيش وظائف ولا استقرار هذه الأيام." ثم حكى لنا قصة ابن عمه "<span class="bg-rose-100 px-1.5 py-0.5 rounded font-semibold text-slate-800 border-b-2 border-rose-400">محمد البوعزيزي</span>" وما حدث له. فقال "لم يجد محمد وظيفة مناسبة يعمل فيها فكان يبيع الخضار في الشارع بعدما كان يحلم بأن يلتحق بالجيش وفشل في تحقيق حلمه. ولكن مع الأسف الشُرطة التونسية أخذت كل الأشياء التي كان يبيعها بطريقة غير مناسبة، ثم حدث ما عرفتم من خلال السوشال ميديا والمجلات."
+                            </p>
+                            <p class="font-arabic leading-9 text-slate-900 text-lg sm:text-xl text-right">
+                                قالت رجاء "أظن أنّ الحكومة التونسية أمام 
+                                <!-- Interactive Hover Image Tooltip for Popular Revolution -->
+                                <a href="https://www.noonpost.com/wp-content/uploads/2015/12/unnamed_195-jpg.webp" target="_blank" class="relative group inline-block border-b-2 border-dotted border-brand-500 text-brand-600 font-bold hover:text-brand-800 transition-colors">
+                                    ثورة شعبية
+                                    <span class="absolute hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 bg-white p-2 rounded-2xl shadow-2xl border border-slate-200 z-50 transition-all duration-300 transform scale-95 group-hover:scale-100 pointer-events-none">
+                                        <img src="https://www.noonpost.com/wp-content/uploads/2015/12/unnamed_195-jpg.webp" class="rounded-xl w-full h-auto object-cover border border-slate-100 shadow-sm" alt="Popular Revolution" onerror="this.src='https://placehold.co/300x200?text=Image+Load+Error'">
+                                        <span class="block text-[11px] text-slate-500 text-center mt-1.5 font-sans font-bold leading-normal" dir="ltr">Preview: Popular Revolution<br><span class="font-arabic font-normal">معاينة: ثورة شعبية تونسية</span></span>
+                                    </span>
+                                </a> 
+                                كبيرة تفصل بين الماضي والحاضر والمستقبل" فقال زياد "معكِ حق يا رجاء، وأظن أنّ الشعب التونسي أمامه فرصة كبيرة للتغيير." 
+                            </p>
+                            <p class="font-arabic leading-9 text-slate-900 text-lg sm:text-xl text-right">
+                                قالت جيسيكا، "أتمنى أن يجد التونسيون الحياة التي يرغبون فيها في المستقبل. اليوم وصلني إيميل من السفارة الأمريكية يقول إذا كنتم تفكرون في السفر إلى إحدى الدول العربية، فالحكومة الأمريكية لا تشجع على السفر إلى تونس في هذه الأيام." انتهى اللقاء واتفقنا أن نلتقي ثانيةً الأسبوع القادم في نفس المكان.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 text-xs text-slate-500 flex items-center gap-2 font-arabic justify-start">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        <span>مرر الفأرة فوق الكلمات الملونة بالأخضر أو الروابط المنقطة لعرض التلميحات والصور مباشرة.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LEFT COLUMN: Exercises and Toggles (5-col width) -->
+            <section class="lg:col-span-5 space-y-6">
+                
+                <!-- Quick Navigation Tabs for Exercises -->
+                <div class="bg-white border border-slate-200 p-2.5 rounded-2xl shadow-sm flex flex-wrap gap-1.5 justify-start">
+                    <button onclick="switchTab('all')" id="tab-all" class="tab-btn px-3 py-1.5 text-xs font-bold bg-brand-500 text-white rounded-lg shadow-sm transition-all font-arabic">الكل</button>
+                    <button onclick="switchTab('extraction')" id="tab-extraction" class="tab-btn px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-all font-arabic">1. الاستخراج</button>
+                    <button onclick="switchTab('truefalse')" id="tab-truefalse" class="tab-btn px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-all font-arabic">2. صح / خطأ</button>
+                    <button onclick="switchTab('fill')" id="tab-fill" class="tab-btn px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-all font-arabic">3. املأ الفراغ</button>
+                    <button onclick="switchTab('mcq')" id="tab-mcq" class="tab-btn px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-all font-arabic">4. اختيار من متعدد</button>
+                    <button onclick="switchTab('comprehension')" id="tab-comprehension" class="tab-btn px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-all font-arabic">5. أسئلة الفهم</button>
+                    <button onclick="switchTab('speaking')" id="tab-speaking" class="tab-btn px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-all font-arabic">6. المحادثة والتعيير</button>
+                </div>
+
+                <!-- SECTION 1: Extraction -->
+                <div id="sec-extraction" class="exercise-section bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+                    <div class="bg-brand-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 flex items-center justify-center bg-brand-600 text-white text-xs font-bold rounded-lg shadow-sm">١</span>
+                            <div>
+                                <h3 class="font-extrabold text-slate-800 text-sm font-arabic">استخرج من النص</h3>
+                                <p class="text-xs text-brand-700 font-arabic">ابحث عن الكلمات المطابقة لشروط الجدول</p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSectionAnswers('extraction')" class="px-2.5 py-1 text-xs font-semibold text-brand-700 bg-brand-100/60 hover:bg-brand-200/60 rounded-md transition-colors flex items-center gap-1.5 border border-brand-200/40 font-arabic">
+                            <i class="fa-solid fa-eye" id="eye-extraction"></i>
+                            <span id="text-extraction">عرض الإجابة</span>
+                        </button>
+                    </div>
+
+                    <div class="p-5 space-y-4">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs text-right border-collapse">
+                                <thead class="bg-slate-50 text-slate-600 uppercase border-b border-slate-200">
+                                    <tr>
+                                        <th class="px-3 py-2 border-l border-slate-200 font-arabic text-right">السؤال</th>
+                                        <th class="px-3 py-2 border-l border-slate-200 font-arabic text-right">الكلمة</th>
+                                        <th class="px-3 py-2 font-arabic text-right">جملة مثال</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <!-- Row 1 -->
+                                    <tr class="hover:bg-slate-50/50">
+                                        <td class="px-3 py-3 border-l border-slate-200 font-arabic">
+                                            كلمة بمعنى "الوظيفة"
+                                        </td>
+                                        <td class="px-3 py-3 border-l border-slate-200">
+                                            <input type="text" id="extract-word-1" placeholder="اكتب الكلمة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-w-1" class="hidden mt-1 text-[11px] text-emerald-700 font-bold bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                عمل / وظيفة
+                                            </div>
+                                        </td>
+                                        <td class="px-3 py-3">
+                                            <input type="text" id="extract-sent-1" placeholder="اكتب الجملة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-s-1" class="hidden mt-1 text-[11px] text-emerald-700 bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                "وحاولنا البحث عن عمل..." أو "لم يجد محمد وظيفة مناسِبة..."
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Row 2 -->
+                                    <tr class="hover:bg-slate-50/50">
+                                        <td class="px-3 py-3 border-l border-slate-200 font-arabic">
+                                            كلمة بمعنى "يسكُن"
+                                        </td>
+                                        <td class="px-3 py-3 border-l border-slate-200">
+                                            <input type="text" id="extract-word-2" placeholder="اكتب الكلمة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-w-2" class="hidden mt-1 text-[11px] text-emerald-700 font-bold bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                يعيش
+                                            </div>
+                                        </td>
+                                        <td class="px-3 py-3">
+                                            <input type="text" id="extract-sent-2" placeholder="اكتب الجملة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-s-2" class="hidden mt-1 text-[11px] text-emerald-700 bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                "بالإضافة إلى أنه قرَّرَ أن يعيشَ في القاهرة"
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Row 3 -->
+                                    <tr class="hover:bg-slate-50/50">
+                                        <td class="px-3 py-3 border-l border-slate-200 font-arabic">
+                                            كلمة بمعنى "نتقابل"
+                                        </td>
+                                        <td class="px-3 py-3 border-l border-slate-200">
+                                            <input type="text" id="extract-word-3" placeholder="اكتب الكلمة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-w-3" class="hidden mt-1 text-[11px] text-emerald-700 font-bold bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                نلتقي / يتقابلوا
+                                            </div>
+                                        </td>
+                                        <td class="px-3 py-3">
+                                            <input type="text" id="extract-sent-3" placeholder="اكتب الجملة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-s-3" class="hidden mt-1 text-[11px] text-emerald-700 bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                "ولم نعد نلتقي إلا قليلًا" أو "تعوّدوا أن يتقابلوا فيه"
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Row 4 -->
+                                    <tr class="hover:bg-slate-50/50">
+                                        <td class="px-3 py-3 border-l border-slate-200 font-arabic">
+                                            عكس كلمة "قصير"
+                                        </td>
+                                        <td class="px-3 py-3 border-l border-slate-200">
+                                            <input type="text" id="extract-word-4" placeholder="اكتب الكلمة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-w-4" class="hidden mt-1 text-[11px] text-emerald-700 font-bold bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                طويل
+                                            </div>
+                                        </td>
+                                        <td class="px-3 py-3">
+                                            <input type="text" id="extract-sent-4" placeholder="اكتب الجملة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-s-4" class="hidden mt-1 text-[11px] text-emerald-700 bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                "بعد غياب طويل، أخيرًا اجتمع الأصدقاء"
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Row 5 -->
+                                    <tr class="hover:bg-slate-50/50">
+                                        <td class="px-3 py-3 border-l border-slate-200 font-arabic">
+                                            كلمة بمعنى "عودة"
+                                        </td>
+                                        <td class="px-3 py-3 border-l border-slate-200">
+                                            <input type="text" id="extract-word-5" placeholder="اكتب الكلمة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-w-5" class="hidden mt-1 text-[11px] text-emerald-700 font-bold bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                رجوع
+                                            </div>
+                                        </td>
+                                        <td class="px-3 py-3">
+                                            <input type="text" id="extract-sent-5" placeholder="اكتب الجملة..." class="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                            <div id="ans-ext-s-5" class="hidden mt-1 text-[11px] text-emerald-700 bg-emerald-50 p-1 rounded border border-emerald-100">
+                                                "وكان ذلك بسبب رجوع حاتم إلى مصر"
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex justify-end mt-2">
+                            <button onclick="checkExtractionAnswers()" class="px-4 py-2 bg-slate-800 hover:bg-slate-950 text-white font-bold text-xs rounded-xl active:scale-95 transition-all font-arabic">
+                                <i class="fa-solid fa-square-check ml-1"></i> تحقق من إجابات الاستخراج
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: True / False -->
+                <div id="sec-truefalse" class="exercise-section bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+                    <div class="bg-brand-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 flex items-center justify-center bg-brand-600 text-white text-xs font-bold rounded-lg shadow-sm">٢</span>
+                            <div>
+                                <h3 class="font-extrabold text-slate-800 text-sm font-arabic">صح أم خطأ</h3>
+                                <p class="text-xs text-brand-700 font-arabic">قرر مدى صحة العبارات التالية بناءً على النص</p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSectionAnswers('truefalse')" class="px-2.5 py-1 text-xs font-semibold text-brand-700 bg-brand-100/60 hover:bg-brand-200/60 rounded-md transition-colors flex items-center gap-1.5 border border-brand-200/40 font-arabic">
+                            <i class="fa-solid fa-eye" id="eye-truefalse"></i>
+                            <span id="text-truefalse">عرض التبرير</span>
+                        </button>
+                    </div>
+
+                    <div class="p-5 space-y-5">
+                        
+                        <!-- Question Item 1 -->
+                        <div class="tf-item border-b border-slate-100 pb-4 last:border-0 last:pb-0" data-correct="false">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">١.</span>
+                                    <div>
+                                        <p class="text-slate-800 font-medium text-sm font-arabic">حصل زياد على عمل في القاهرة بعد وفاة والدته.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 shrink-0" id="tf-group-1">
+                                    <button onclick="selectTrueFalse(1, true)" id="tf-1-t" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-emerald-50 hover:text-emerald-600 transition-colors font-arabic">صحيح</button>
+                                    <button onclick="selectTrueFalse(1, false)" id="tf-1-f" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-colors font-arabic">خطأ</button>
+                                </div>
+                            </div>
+                            <div id="ans-tf-1" class="hidden mt-2 text-xs bg-emerald-50/60 text-emerald-800 p-3 rounded-xl border border-emerald-100 space-y-1">
+                                <span class="font-bold font-arabic">الإجابة: خطأ</span>
+                                <p class="text-slate-600 leading-relaxed font-arabic text-[11px]">التبرير: حصل زياد على عمل في الإسكندرية ولكنه لم يسافر وقرر العيش بالقاهرة بعد سماع وفاة والدته.</p>
+                            </div>
+                        </div>
+
+                        <!-- Question Item 2 -->
+                        <div class="tf-item border-b border-slate-100 pb-4 last:border-0 last:pb-0" data-correct="true">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">٢.</span>
+                                    <div>
+                                        <p class="text-slate-800 font-medium text-sm font-arabic">رجاء حصلت على منحة لدراسة الإخراج السينمائي.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 shrink-0" id="tf-group-2">
+                                    <button onclick="selectTrueFalse(2, true)" id="tf-2-t" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-emerald-50 hover:text-emerald-600 transition-colors font-arabic">صحيح</button>
+                                    <button onclick="selectTrueFalse(2, false)" id="tf-2-f" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-colors font-arabic">خطأ</button>
+                                </div>
+                            </div>
+                            <div id="ans-tf-2" class="hidden mt-2 text-xs bg-emerald-50/60 text-emerald-800 p-3 rounded-xl border border-emerald-100 space-y-1">
+                                <span class="font-bold font-arabic">الإجابة: صحيح</span>
+                                <p class="text-slate-600 leading-relaxed font-arabic text-[11px]">التبرير: حصلت على منحة من المغرب لدراسة الإخراج السينمائي بالمعهد العالي للسينما بالقاهرة.</p>
+                            </div>
+                        </div>
+
+                        <!-- Question Item 3 -->
+                        <div class="tf-item border-b border-slate-100 pb-4 last:border-0 last:pb-0" data-correct="false">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">٣.</span>
+                                    <div>
+                                        <p class="text-slate-800 font-medium text-sm font-arabic">سارة سافرت إلى تونس للعمل في كلية الطب.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 shrink-0" id="tf-group-3">
+                                    <button onclick="selectTrueFalse(3, true)" id="tf-3-t" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-emerald-50 hover:text-emerald-600 transition-colors font-arabic">صحيح</button>
+                                    <button onclick="selectTrueFalse(3, false)" id="tf-3-f" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-colors font-arabic">خطأ</button>
+                                </div>
+                            </div>
+                            <div id="ans-tf-3" class="hidden mt-2 text-xs bg-emerald-50/60 text-emerald-800 p-3 rounded-xl border border-emerald-100 space-y-1">
+                                <span class="font-bold font-arabic">الإجابة: خطأ</span>
+                                <p class="text-slate-600 leading-relaxed font-arabic text-[11px]">التبرير: عُينت سارة معيدة في كلية الطب بمصر ولم يذكر النص سفرها إلى تونس.</p>
+                            </div>
+                        </div>
+
+                        <!-- Question Item 4 -->
+                        <div class="tf-item border-b border-slate-100 pb-4 last:border-0 last:pb-0" data-correct="true">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">٤.</span>
+                                    <div>
+                                        <p class="text-slate-800 font-medium text-sm font-arabic">علي البوعزيزي هو صديق حاتم من تونس.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 shrink-0" id="tf-group-4">
+                                    <button onclick="selectTrueFalse(4, true)" id="tf-4-t" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-emerald-50 hover:text-emerald-600 transition-colors font-arabic">صحيح</button>
+                                    <button onclick="selectTrueFalse(4, false)" id="tf-4-f" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-colors font-arabic">خطأ</button>
+                                </div>
+                            </div>
+                            <div id="ans-tf-4" class="hidden mt-2 text-xs bg-emerald-50/60 text-emerald-800 p-3 rounded-xl border border-emerald-100 space-y-1">
+                                <span class="font-bold font-arabic">الإجابة: صحيح</span>
+                                <p class="text-slate-600 leading-relaxed font-arabic text-[11px]">التبرير: قدم حاتم صديقه علي البوعزيزي كصديق تونسي قادم معه بعد زيارته لتونس.</p>
+                            </div>
+                        </div>
+
+                        <!-- Question Item 5 -->
+                        <div class="tf-item border-b border-slate-100 pb-4 last:border-0 last:pb-0" data-correct="false">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">٥.</span>
+                                    <div>
+                                        <p class="text-slate-800 font-medium text-sm font-arabic">الشرطة التونسية ساعدت محمد البوعزيزي على فتح مشروعه.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 shrink-0" id="tf-group-5">
+                                    <button onclick="selectTrueFalse(5, true)" id="tf-5-t" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-emerald-50 hover:text-emerald-600 transition-colors font-arabic">صحيح</button>
+                                    <button onclick="selectTrueFalse(5, false)" id="tf-5-f" class="px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-colors font-arabic">خطأ</button>
+                                </div>
+                            </div>
+                            <div id="ans-tf-5" class="hidden mt-2 text-xs bg-emerald-50/60 text-emerald-800 p-3 rounded-xl border border-emerald-100 space-y-1">
+                                <span class="font-bold font-arabic">الإجابة: خطأ</span>
+                                <p class="text-slate-600 leading-relaxed font-arabic text-[11px]">التبرير: صادر الشرطة التونسية بضاعة محمد (الخضراوات التي يبيعها في الشارع) بطريقة غير لائقة.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SECTION 3: Fill in the Blanks -->
+                <div id="sec-fill" class="exercise-section bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+                    <div class="bg-brand-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 flex items-center justify-center bg-brand-600 text-white text-xs font-bold rounded-lg shadow-sm">٣</span>
+                            <div>
+                                <h3 class="font-extrabold text-slate-800 text-sm font-arabic">املأ الفراغ</h3>
+                                <p class="text-xs text-brand-700 font-arabic">اكتب الكلمات العربية الصحيحة بالفراغات</p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSectionAnswers('fill')" class="px-2.5 py-1 text-xs font-semibold text-brand-700 bg-brand-100/60 hover:bg-brand-200/60 rounded-md transition-colors flex items-center gap-1.5 border border-brand-200/40 font-arabic">
+                            <i class="fa-solid fa-eye" id="eye-fill"></i>
+                            <span id="text-fill">عرض الإجابة</span>
+                        </button>
+                    </div>
+
+                    <div class="p-5 space-y-5">
+                        
+                        <!-- Blank Item 1 -->
+                        <div class="space-y-1.5">
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-2">
+                                <span class="text-slate-400 font-bold text-xs">١.</span>
+                                <span class="text-slate-700 text-sm font-arabic">قرر زياد أن يعيش في مدينة</span>
+                                <input type="text" id="blank-1" data-answer="القاهرة" class="px-2 py-0.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-800 text-center font-bold font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none w-28" placeholder="المدينة...">
+                                <span class="text-slate-700 text-sm font-arabic">لأنه أراد أن يعمل في السفارة السورية هناك.</span>
+                            </div>
+                            <div id="ans-b-1" class="hidden text-xs text-emerald-700 font-bold bg-emerald-50 p-2 rounded border border-emerald-100 font-arabic">
+                                الإجابة النموذجية: القاهرة
+                            </div>
+                        </div>
+
+                        <!-- Blank Item 2 -->
+                        <div class="space-y-1.5">
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-2">
+                                <span class="text-slate-400 font-bold text-xs">٢.</span>
+                                <span class="text-slate-700 text-sm font-arabic">التحقت جيسيكا بالدراسات العليا في كلية</span>
+                                <input type="text" id="blank-2" data-answer="دار العلوم" class="px-2 py-0.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-800 text-center font-bold font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none w-28" placeholder="الكلية...">
+                                <span class="text-slate-700 text-sm font-arabic">بجامعة القاهرة.</span>
+                            </div>
+                            <div id="ans-b-2" class="hidden text-xs text-emerald-700 font-bold bg-emerald-50 p-2 rounded border border-emerald-100 font-arabic">
+                                الإجابة النموذجية: دار العلوم
+                            </div>
+                        </div>
+
+                        <!-- Blank Item 3 -->
+                        <div class="space-y-1.5">
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-2">
+                                <span class="text-slate-400 font-bold text-xs">٣.</span>
+                                <span class="text-slate-700 text-sm font-arabic">أصبح حاتم مديرًا لشركة من شركات</span>
+                                <input type="text" id="blank-3" data-answer="أبيه" class="px-2 py-0.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-800 text-center font-bold font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none w-24" placeholder="المالك...">
+                                <span class="text-slate-700 text-sm font-arabic">.</span>
+                            </div>
+                            <div id="ans-b-3" class="hidden text-xs text-emerald-700 font-bold bg-emerald-50 p-2 rounded border border-emerald-100 font-arabic">
+                                الإجابة النموذجية: أبيه / والده
+                            </div>
+                        </div>
+
+                        <!-- Blank Item 4 -->
+                        <div class="space-y-1.5">
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-2">
+                                <span class="text-slate-400 font-bold text-xs">٤.</span>
+                                <span class="text-slate-700 text-sm font-arabic">التقى الأصدقاء في مقهى</span>
+                                <input type="text" id="blank-4" data-answer="الفيشاوي" class="px-2 py-0.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-800 text-center font-bold font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none w-28" placeholder="اسم المقهى...">
+                                <span class="text-slate-700 text-sm font-arabic">في حي الحسين.</span>
+                            </div>
+                            <div id="ans-b-4" class="hidden text-xs text-emerald-700 font-bold bg-emerald-50 p-2 rounded border border-emerald-100 font-arabic">
+                                الإجابة النموذجية: الفيشاوي
+                            </div>
+                        </div>
+
+                        <!-- Blank Item 5 -->
+                        <div class="space-y-1.5">
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-2">
+                                <span class="text-slate-400 font-bold text-xs">٥.</span>
+                                <span class="text-slate-700 text-sm font-arabic">باع محمد البوعزيزي</span>
+                                <input type="text" id="blank-5" data-answer="الخضار" class="px-2 py-0.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-800 text-center font-bold font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none w-28" placeholder="البضاعة...">
+                                <span class="text-slate-700 text-sm font-arabic">في الشارع بسبب عدم وجود وظيفة.</span>
+                            </div>
+                            <div id="ans-b-5" class="hidden text-xs text-emerald-700 font-bold bg-emerald-50 p-2 rounded border border-emerald-100 font-arabic">
+                                الإجابة النموذجية: الخضار
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-2 border-t border-slate-100">
+                            <button onclick="checkBlankAnswers()" class="px-4 py-2 bg-slate-800 hover:bg-slate-950 text-white font-bold text-xs rounded-xl active:scale-95 transition-all font-arabic">
+                                <i class="fa-solid fa-square-check ml-1"></i> تحقق من الفراغات
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SECTION 4: Multiple Choice (MCQ) -->
+                <div id="sec-mcq" class="exercise-section bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+                    <div class="bg-brand-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 flex items-center justify-center bg-brand-600 text-white text-xs font-bold rounded-lg shadow-sm">٤</span>
+                            <div>
+                                <h3 class="font-extrabold text-slate-800 text-sm font-arabic">أسئلة اختيار من متعدد</h3>
+                                <p class="text-xs text-brand-700 font-arabic">اختر الإجابة الصحيحة بناءً على النص</p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSectionAnswers('mcq')" class="px-2.5 py-1 text-xs font-semibold text-brand-700 bg-brand-100/60 hover:bg-brand-200/60 rounded-md transition-colors flex items-center gap-1.5 border border-brand-200/40 font-arabic">
+                            <i class="fa-solid fa-eye" id="eye-mcq"></i>
+                            <span id="text-mcq">عرض الإجابة</span>
+                        </button>
+                    </div>
+
+                    <div class="p-5 space-y-6">
+                        
+                        <!-- MCQ 1 -->
+                        <div class="mcq-item space-y-2.5" data-correct="C">
+                            <div class="flex flex-col gap-0.5 text-right">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">١.</span>
+                                    <h4 class="text-sm font-semibold text-slate-800 font-arabic">ما السبب الذي منع زياد من السفر إلى الإسكندرية؟</h4>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 gap-1.5 font-arabic text-right" id="mcq-options-1">
+                                <button onclick="selectMCQ(1, 'A')" id="mcq-1-A" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">أ. لم تعجبه المدينة</button>
+                                <button onclick="selectMCQ(1, 'B')" id="mcq-1-B" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ب. مرض والده</button>
+                                <button onclick="selectMCQ(1, 'C')" id="mcq-1-C" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ج. وفاة والدته</button>
+                                <button onclick="selectMCQ(1, 'D')" id="mcq-1-D" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">د. عدم وجود عمل هناك</button>
+                            </div>
+                            <div id="ans-mcq-1" class="hidden text-xs text-emerald-800 font-bold bg-emerald-50 p-2.5 rounded-lg border border-emerald-100 text-right font-arabic">
+                                الخيار الصحيح: ج. وفاة والدته
+                            </div>
+                        </div>
+
+                        <!-- MCQ 2 -->
+                        <div class="mcq-item space-y-2.5" data-correct="B">
+                            <div class="flex flex-col gap-0.5 text-right">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">٢.</span>
+                                    <h4 class="text-sm font-semibold text-slate-800 font-arabic">أين درست رجاء الإخراج السينمائي؟</h4>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 gap-1.5 font-arabic text-right" id="mcq-options-2">
+                                <button onclick="selectMCQ(2, 'A')" id="mcq-2-A" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">أ. جامعة الإسكندرية</button>
+                                <button onclick="selectMCQ(2, 'B')" id="mcq-2-B" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ب. المعهد العالي للسينما</button>
+                                <button onclick="selectMCQ(2, 'C')" id="mcq-2-C" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ج. كلية الفنون الجميلة</button>
+                                <button onclick="selectMCQ(2, 'D')" id="mcq-2-D" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">د. جامعة تونس</button>
+                            </div>
+                            <div id="ans-mcq-2" class="hidden text-xs text-emerald-800 font-bold bg-emerald-50 p-2.5 rounded-lg border border-emerald-100 text-right font-arabic">
+                                الخيار الصحيح: ب. المعهد العالي للسينما
+                            </div>
+                        </div>
+
+                        <!-- MCQ 3 -->
+                        <div class="mcq-item space-y-2.5" data-correct="D">
+                            <div class="flex flex-col gap-0.5 text-right">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">٣.</span>
+                                    <h4 class="text-sm font-semibold text-slate-800 font-arabic">ما وظيفة سارة؟</h4>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 gap-1.5 font-arabic text-right" id="mcq-options-3">
+                                <button onclick="selectMCQ(3, 'A')" id="mcq-3-A" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">أ. مخرجة</button>
+                                <button onclick="selectMCQ(3, 'B')" id="mcq-3-B" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ب. محاسبة</button>
+                                <button onclick="selectMCQ(3, 'C')" id="mcq-3-C" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ج. طبيبة</button>
+                                <button onclick="selectMCQ(3, 'D')" id="mcq-3-D" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">د. مُعيدة</button>
+                            </div>
+                            <div id="ans-mcq-3" class="hidden text-xs text-emerald-800 font-bold bg-emerald-50 p-2.5 rounded-lg border border-emerald-100 text-right font-arabic">
+                                الخيار الصحيح: د. مُعيدة
+                            </div>
+                        </div>
+
+                        <!-- MCQ 4 -->
+                        <div class="mcq-item space-y-2.5" data-correct="C">
+                            <div class="flex flex-col gap-0.5 text-right">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">٤.</span>
+                                    <h4 class="text-sm font-semibold text-slate-800 font-arabic">لماذا انتهت زيارة حاتم إلى تونس بسرعة؟</h4>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 gap-1.5 font-arabic text-right" id="mcq-options-4">
+                                <button onclick="selectMCQ(4, 'A')" id="mcq-4-A" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">أ. لظروف عائلية</button>
+                                <button onclick="selectMCQ(4, 'B')" id="mcq-4-B" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ب. لأسباب صحية</button>
+                                <button onclick="selectMCQ(4, 'C')" id="mcq-4-C" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ج. لأسباب سياسية</button>
+                                <button onclick="selectMCQ(4, 'D')" id="mcq-4-D" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">د. لأنه لم يعجبه الوضع هناك</button>
+                            </div>
+                            <div id="ans-mcq-4" class="hidden text-xs text-emerald-800 font-bold bg-emerald-50 p-2.5 rounded-lg border border-emerald-100 text-right font-arabic">
+                                الخيار الصحيح: ج. لأسباب سياسية
+                            </div>
+                        </div>
+
+                        <!-- MCQ 5 -->
+                        <div class="mcq-item space-y-2.5" data-correct="D">
+                            <div class="flex flex-col gap-0.5 text-right">
+                                <div class="flex gap-2">
+                                    <span class="text-slate-400 font-bold text-xs">٥.</span>
+                                    <h4 class="text-sm font-semibold text-slate-800 font-arabic">ماذا كان حلم محمد البوعزيزي؟</h4>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 gap-1.5 font-arabic text-right" id="mcq-options-5">
+                                <button onclick="selectMCQ(5, 'A')" id="mcq-5-A" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">أ. أن يصبح تاجرًا</button>
+                                <button onclick="selectMCQ(5, 'B')" id="mcq-5-B" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ب. أن يهاجر إلى أوروبا</button>
+                                <button onclick="selectMCQ(5, 'C')" id="mcq-5-C" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">ج. أن يعمل في السفارة</button>
+                                <button onclick="selectMCQ(5, 'D')" id="mcq-5-D" class="option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center">د. أن يلتحق بالجيش</button>
+                            </div>
+                            <div id="ans-mcq-5" class="hidden text-xs text-emerald-800 font-bold bg-emerald-50 p-2.5 rounded-lg border border-emerald-100 text-right font-arabic">
+                                الخيار الصحيح: د. أن يلتحق بالجيش
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SECTION 5: Reading Comprehension Questions -->
+                <div id="sec-comprehension" class="exercise-section bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300 font-arabic">
+                    <div class="bg-brand-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 flex items-center justify-center bg-brand-600 text-white text-xs font-bold rounded-lg shadow-sm">٥</span>
+                            <div>
+                                <h3 class="font-extrabold text-slate-800 text-sm">أسئلة الفهم القرائي</h3>
+                                <p class="text-xs text-brand-700">أجب عن الأسئلة التالية باللغة العربية واختبر فهمك</p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSectionAnswers('comprehension')" class="px-2.5 py-1 text-xs font-semibold text-brand-700 bg-brand-100/60 hover:bg-brand-200/60 rounded-md transition-colors flex items-center gap-1.5 border border-brand-200/40">
+                            <i class="fa-solid fa-eye" id="eye-comprehension"></i>
+                            <span id="text-comprehension">عرض نموذج الحل</span>
+                        </button>
+                    </div>
+
+                    <div class="p-5 space-y-5">
+                        
+                        <!-- Q1 -->
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-800 text-sm block text-right">
+                                ١. من هو الصديق الذي عاد من تونس؟
+                            </label>
+                            <textarea id="comp-input-1" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-right focus:ring-1 focus:ring-brand-500 focus:outline-none" placeholder="اكتب إجابتك هنا..."></textarea>
+                            <div id="ans-comp-1" class="hidden text-xs text-emerald-800 bg-emerald-50 p-3 rounded-xl border border-emerald-200 space-y-1 text-right">
+                                <span class="font-extrabold">الجواب النموذجي:</span>
+                                <p class="text-[11px] text-slate-600">الصديق هو "حاتم"، وعاد ومعه صديق تونسي يُدعى "علي البوعزيزي".</p>
+                            </div>
+                        </div>
+
+                        <!-- Q2 -->
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-800 text-sm block text-right">
+                                ٢. ماذا كانت تبيع الشرطة من أغراض محمد البوعزيزي؟
+                            </label>
+                            <textarea id="comp-input-2" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-right focus:ring-1 focus:ring-brand-500 focus:outline-none" placeholder="اكتب إجابتك هنا..."></textarea>
+                            <div id="ans-comp-2" class="hidden text-xs text-emerald-800 bg-emerald-50 p-3 rounded-xl border border-emerald-200 space-y-1 text-right">
+                                <span class="font-extrabold">الجواب النموذجي (سؤال فخ):</span>
+                                <p class="text-[11px] text-slate-600">الشرطة لم تكن تبيع شيئاً، بل أخذت وصادرت الأغراض (الخضراوات) التي كان يبيعها محمد البوعزيزي في الشارع.</p>
+                            </div>
+                        </div>
+
+                        <!-- Q3 -->
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-800 text-sm block text-right">
+                                ٣. لماذا اجتمع الأصدقاء في حي الحسين؟
+                            </label>
+                            <textarea id="comp-input-3" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-right focus:ring-1 focus:ring-brand-500 focus:outline-none" placeholder="اكتب إجابتك هنا..."></textarea>
+                            <div id="ans-comp-3" class="hidden text-xs text-emerald-800 bg-emerald-50 p-3 rounded-xl border border-emerald-200 space-y-1 text-right">
+                                <span class="font-extrabold">الجواب النموذجي:</span>
+                                <p class="text-[11px] text-slate-600">اجتمع الأصدقاء بسبب رجوع حاتم إلى مصر بعد زيارته لجمهورية تونس التي انتهت بسرعة لأسباب سياسية.</p>
+                            </div>
+                        </div>
+
+                        <!-- Q4 -->
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-800 text-sm block text-right">
+                                ٤. كيف وصف علي الأخبار في تونس؟
+                            </label>
+                            <textarea id="comp-input-4" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-right focus:ring-1 focus:ring-brand-500 focus:outline-none" placeholder="اكتب إجابتك هنا..."></textarea>
+                            <div id="ans-comp-4" class="hidden text-xs text-emerald-800 bg-emerald-50 p-3 rounded-xl border border-emerald-200 space-y-1 text-right">
+                                <span class="font-extrabold">الجواب النموذجي:</span>
+                                <p class="text-[11px] text-slate-600">وصفها بقوله: "والله الأخبار في تونس خايبة خايبة برشا. مفيش وظائف ولا استقرار هذه الأيام." (أي سيئة جداً بالعامية التونسية).</p>
+                            </div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-800 text-sm block text-right">
+                                ٥. متى قرر الأصدقاء أن يلتقوا مرة أخرى؟
+                            </label>
+                            <textarea id="comp-input-5" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-right focus:ring-1 focus:ring-brand-500 focus:outline-none" placeholder="اكتب إجابتك هنا..."></textarea>
+                            <div id="ans-comp-5" class="hidden text-xs text-emerald-800 bg-emerald-50 p-3 rounded-xl border border-emerald-200 space-y-1 text-right">
+                                <span class="font-extrabold">الجواب النموذجي:</span>
+                                <p class="text-[11px] text-slate-600">اتفق الأصدقاء في نهاية اللقاء على الاجتماع مجدداً "الأسبوع القادم" في نفس المكان (مقهى الفيشاوي).</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SECTION 6: Speaking & Discussion Questions (Bilingual Translation) -->
+                <div id="sec-speaking" class="exercise-section bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+                    <div class="bg-brand-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 flex items-center justify-center bg-brand-600 text-white text-xs font-bold rounded-lg shadow-sm">٦</span>
+                            <div>
+                                <h3 class="font-extrabold text-slate-800 text-sm font-arabic">أسئلة المحادثة والتعبير الشفهي</h3>
+                                <p class="text-xs text-brand-700 font-arabic">Speaking & Oral Conversation Questions</p>
+                            </div>
+                        </div>
+                        <button onclick="toggleSectionAnswers('speaking')" class="px-2.5 py-1 text-xs font-semibold text-brand-700 bg-brand-100/60 hover:bg-brand-200/60 rounded-md transition-colors flex items-center gap-1.5 border border-brand-200/40 font-arabic">
+                            <i class="fa-solid fa-eye" id="eye-speaking"></i>
+                            <span id="text-speaking">أفكار للمحادثة / Talk Guides</span>
+                        </button>
+                    </div>
+
+                    <div class="p-5 space-y-5">
+                        <p class="text-xs text-slate-500 font-arabic">دَوِّن رؤوس أقلام باللغة العربية للتحضير للمناقشة الصفية أو للتحدث بمفردك:</p>
+
+                        <!-- Speak Q1 -->
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-800 text-sm block text-right">
+                                <span class="block font-arabic">١. هل تفضل العيش والعمل في مدينتك بجانب عائلتك، أم السفر والعمل في مدينة أخرى؟ ولماذا؟</span>
+                                <span class="block text-xs text-slate-500 font-sans font-medium" dir="ltr">1. Do you prefer to live and work in your city near your family, or travel and work in another city? Why?</span>
+                            </label>
+                            <textarea id="speak-input-1" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none text-right font-arabic" placeholder="اكتب بعض الأفكار هنا للتحضير..."></textarea>
+                            <div id="ans-speaking-1" class="hidden text-xs text-brand-800 bg-sky-50 p-3 rounded-xl border border-sky-200 space-y-1 text-right font-arabic">
+                                <span class="font-bold"><i class="fa-regular fa-lightbulb ml-1"></i> أفكار مقترحة للكلام (Speaking Tips):</span>
+                                <ul class="list-disc pr-4 text-[11px] text-slate-600 space-y-1">
+                                    <li>البقاء بجانب العائلة يوفر الدعم المعنوي والراحة النفسية (Stay near family for emotional support).</li>
+                                    <li>السفر يوفر فرص عمل أفضل وخبرات جديدة في الحياة (Traveling offers better jobs and new life experiences).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Speak Q2 -->
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-800 text-sm block text-right">
+                                <span class="block font-arabic">٢. ما هي وظيفة أحلامك؟ هل تفضل العمل الحكومي/الدراسي أم التجارة والعمل الخاص؟</span>
+                                <span class="block text-xs text-slate-500 font-sans font-medium" dir="ltr">2. What is your dream job? Do you prefer government/academic work or business and private work?</span>
+                            </label>
+                            <textarea id="speak-input-2" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none text-right font-arabic" placeholder="اكتب بعض الأفكار هنا للتحضير..."></textarea>
+                            <div id="ans-speaking-2" class="hidden text-xs text-brand-800 bg-sky-50 p-3 rounded-xl border border-sky-200 space-y-1 text-right font-arabic">
+                                <span class="font-bold"><i class="fa-regular fa-lightbulb ml-1"></i> أفكار مقترحة للكلام (Speaking Tips):</span>
+                                <ul class="list-disc pr-4 text-[11px] text-slate-600 space-y-1">
+                                    <li>العمل الحكومي أكثر استقراراً وأماناً (Government jobs are more stable and secure).</li>
+                                    <li>العمل الخاص والتجارة فيه حرية أكبر وفرصة لربح مال أكثر (Private business offers more freedom and chance for more money).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Speak Q3 -->
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-800 text-sm block text-right">
+                                <span class="block font-arabic">٣. كيف تحافظ على علاقتك بأصدقائك القدامى بعد التخرج والبدء في العمل؟</span>
+                                <span class="block text-xs text-slate-500 font-sans font-medium" dir="ltr">3. How do you keep in touch with your old friends after graduation and starting work?</span>
+                            </label>
+                            <textarea id="speak-input-3" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none text-right font-arabic" placeholder="اكتب بعض الأفكار هنا للتحضير..."></textarea>
+                            <div id="ans-speaking-3" class="hidden text-xs text-brand-800 bg-sky-50 p-3 rounded-xl border border-sky-200 space-y-1 text-right font-arabic">
+                                <span class="font-bold"><i class="fa-regular fa-lightbulb ml-1"></i> أفكار مقترحة للكلام (Speaking Tips):</span>
+                                <ul class="list-disc pr-4 text-[11px] text-slate-600 space-y-1">
+                                    <li>تحديد موعد دوري ثابت للقاء مثل نهاية كل أسبوع في المقهى (Set a regular weekly meeting at a cafe).</li>
+                                    <li>استخدام تطبيقات المحادثة وشبكات التواصل للاطمئنان اليومي (Use chat apps and social media to check on each other).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Speak Q4 -->
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-800 text-sm block text-right">
+                                <span class="block font-arabic">٤. هل من السهل أم الصعب على الشباب الحصول على وظيفة مناسبة هذه الأيام في بلدك؟ ولماذا؟</span>
+                                <span class="block text-xs text-slate-500 font-sans font-medium" dir="ltr">4. Is it easy or difficult for young people to get a suitable job these days in your country? Why?</span>
+                            </label>
+                            <textarea id="speak-input-4" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none text-right font-arabic" placeholder="اكتب بعض الأفكار هنا للتحضير..."></textarea>
+                            <div id="ans-speaking-4" class="hidden text-xs text-brand-800 bg-sky-50 p-3 rounded-xl border border-sky-200 space-y-1 text-right font-arabic">
+                                <span class="font-bold"><i class="fa-regular fa-lightbulb ml-1"></i> أفكار مقترحة للكلام (Speaking Tips):</span>
+                                <ul class="list-disc pr-4 text-[11px] text-slate-600 space-y-1">
+                                    <li>صعب بسبب قلة الوظائف وكثرة عدد الخريجين الجدد (Difficult due to fewer job vacancies and many graduates).</li>
+                                    <li>يمكن تسهيل الأمر بتعلم مهارات الكمبيوتر واللغات عبر الإنترنت (Easier if we learn computer skills and languages online).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Score Notification Toast -->
+    <div id="toast" class="fixed bottom-5 left-5 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 z-50 text-right" dir="rtl">
+        <div class="bg-emerald-500 text-white p-1 rounded-full w-6 h-6 flex items-center justify-center">
+            <i class="fa-solid fa-check text-xs"></i>
+        </div>
+        <div>
+            <p class="font-bold text-xs font-arabic" id="toast-title">تم التقييم!</p>
+            <p class="text-[10px] text-slate-300 font-arabic" id="toast-desc">تأكد من شريط تقدمك في الأعلى.</p>
+        </div>
+    </div>
+
+    <!-- Interactive Logic scripts -->
+    <script>
+        // Track the toggle state for each section's answers
+        const toggleStates = {
+            extraction: false,
+            truefalse: false,
+            fill: false,
+            mcq: false,
+            comprehension: false,
+            speaking: false
+        };
+
+        // User Interactive answers state
+        const userAnswers = {
+            trueFalse: { 1: null, 2: null, 3: null, 4: null, 5: null },
+            mcq: { 1: null, 2: null, 3: null, 4: null, 5: null }
+        };
+
+        // Switch exercise tabs
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-500', 'text-white', 'shadow-sm');
+                btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+            });
+
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            activeTab.classList.remove('text-slate-600', 'hover:bg-slate-100');
+            activeTab.classList.add('bg-brand-500', 'text-white', 'shadow-sm');
+
+            const sections = document.querySelectorAll('.exercise-section');
+            sections.forEach(sec => {
+                if (tabId === 'all') {
+                    sec.classList.remove('hidden');
+                } else {
+                    if (sec.id === `sec-${tabId}`) {
+                        sec.classList.remove('hidden');
+                    } else {
+                        sec.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // Individual section Toggle logic
+        function toggleSectionAnswers(sectionId) {
+            toggleStates[sectionId] = !toggleStates[sectionId];
+            const isVisible = toggleStates[sectionId];
+            
+            const eyeIcon = document.getElementById(`eye-${sectionId}`);
+            const btnText = document.getElementById(`text-${sectionId}`);
+            
+            if (isVisible) {
+                eyeIcon.className = "fa-solid fa-eye-slash";
+                btnText.innerText = sectionId === 'speaking' ? "إخفاء الأفكار" : "إخفاء الإجابة";
+            } else {
+                eyeIcon.className = "fa-solid fa-eye";
+                btnText.innerText = sectionId === 'speaking' ? "أفكار للمحادثة" : "عرض الإجابة";
+            }
+
+            toggleAnswerElements(sectionId, isVisible);
+            updateGlobalProgress();
+        }
+
+        function toggleAnswerElements(sectionId, show) {
+            if (sectionId === 'extraction') {
+                for(let i=1; i<=5; i++) {
+                    const word = document.getElementById(`ans-ext-w-${i}`);
+                    const sent = document.getElementById(`ans-ext-s-${i}`);
+                    if(show) {
+                        word.classList.remove('hidden');
+                        sent.classList.remove('hidden');
+                    } else {
+                        word.classList.add('hidden');
+                        sent.classList.add('hidden');
+                    }
+                }
+            } else if (sectionId === 'truefalse') {
+                for(let i=1; i<=5; i++) {
+                    const ans = document.getElementById(`ans-tf-${i}`);
+                    if(show) ans.classList.remove('hidden');
+                    else ans.classList.add('hidden');
+                }
+            } else if (sectionId === 'fill') {
+                for(let i=1; i<=5; i++) {
+                    const ans = document.getElementById(`ans-b-${i}`);
+                    if(show) ans.classList.remove('hidden');
+                    else ans.classList.add('hidden');
+                }
+            } else if (sectionId === 'mcq') {
+                for(let i=1; i<=5; i++) {
+                    const ans = document.getElementById(`ans-mcq-${i}`);
+                    if(show) ans.classList.remove('hidden');
+                    else ans.classList.add('hidden');
+                }
+            } else if (sectionId === 'comprehension') {
+                for(let i=1; i<=5; i++) {
+                    const ans = document.getElementById(`ans-comp-${i}`);
+                    if(show) ans.classList.remove('hidden');
+                    else ans.classList.add('hidden');
+                }
+            } else if (sectionId === 'speaking') {
+                for(let i=1; i<=4; i++) {
+                    const ans = document.getElementById(`ans-speaking-${i}`);
+                    if(show) ans.classList.remove('hidden');
+                    else ans.classList.add('hidden');
+                }
+            }
+        }
+
+        // Global master toggle
+        let allAnswersVisible = false;
+        function toggleAllAnswers() {
+            allAnswersVisible = !allAnswersVisible;
+            const toggleAllBtnText = document.getElementById('toggle-all-text');
+            const toggleAllIcon = document.getElementById('toggle-all-icon');
+
+            if (allAnswersVisible) {
+                toggleAllBtnText.innerText = "إخفاء كل الإجابات";
+                toggleAllIcon.className = "fa-solid fa-eye text-emerald-400";
+            } else {
+                toggleAllBtnText.innerText = "عرض كل الإجابات";
+                toggleAllIcon.className = "fa-solid fa-eye-slash";
+            }
+
+            Object.keys(toggleStates).forEach(secId => {
+                toggleStates[secId] = allAnswersVisible;
+                const eyeIcon = document.getElementById(`eye-${secId}`);
+                const btnText = document.getElementById(`text-${secId}`);
+                
+                if (allAnswersVisible) {
+                    eyeIcon.className = "fa-solid fa-eye-slash";
+                    btnText.innerText = secId === 'speaking' ? "إخفاء الأفكار" : "إخفاء الإجابة";
+                } else {
+                    eyeIcon.className = "fa-solid fa-eye";
+                    btnText.innerText = secId === 'speaking' ? "أفكار للمحادثة" : "عرض الإجابة";
+                }
+                
+                toggleAnswerElements(secId, allAnswersVisible);
+            });
+
+            updateGlobalProgress();
+            showToast("مزامنة ناجحة", "تم تحديث حالة عرض الإجابات في كافة الأقسام.");
+        }
+
+        // Check Extraction Answers Interactively
+        function checkExtractionAnswers() {
+            let correctCount = 0;
+            const answers = {
+                w1: ["عمل", "وظيفة", "الوظيفة", "العمل"],
+                w2: ["يعيش", "يعيشَ"],
+                w3: ["نلتقي", "يتقابلوا", "يتقابلون", "يتقابل"],
+                w4: ["طويل", "طويلٍ"],
+                w5: ["رجوع", "الرجوع"]
+            };
+
+            for(let i=1; i<=5; i++) {
+                const userWord = document.getElementById(`extract-word-${i}`).value.trim();
+                const inputElement = document.getElementById(`extract-word-${i}`);
+                
+                if (userWord === "") {
+                    inputElement.className = "w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none";
+                    continue;
+                }
+
+                const isCorrect = answers[`w${i}`].includes(userWord);
+                if (isCorrect) {
+                    inputElement.className = "w-full bg-emerald-50 border border-emerald-500 rounded px-2 py-1 text-xs text-right font-arabic text-emerald-800 font-bold focus:ring-1 focus:ring-emerald-500 focus:outline-none";
+                    correctCount++;
+                } else {
+                    inputElement.className = "w-full bg-rose-50 border border-rose-300 rounded px-2 py-1 text-xs text-right font-arabic text-rose-800 focus:ring-1 focus:ring-rose-500 focus:outline-none";
+                }
+            }
+
+            updateGlobalProgress();
+            showToast("تم التحقق!", "تمت مراجعة الكلمات اللغوية المستخرجة بنجاح.");
+        }
+
+        // SELECT True / False options
+        function selectTrueFalse(qNum, value) {
+            userAnswers.trueFalse[qNum] = value;
+            
+            const btnTrue = document.getElementById(`tf-${qNum}-t`);
+            const btnFalse = document.getElementById(`tf-${qNum}-f`);
+            const item = document.querySelector(`.tf-item:nth-child(${qNum})`);
+            const isCorrectAnswer = (item.getAttribute('data-correct') === 'true');
+
+            // Reset borders/colors
+            btnTrue.className = "px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-emerald-50 hover:text-emerald-600 transition-all font-arabic";
+            btnFalse.className = "px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-all font-arabic";
+
+            if (value === true) {
+                if (isCorrectAnswer === true) {
+                    btnTrue.className = "px-2.5 py-1 text-[11px] font-bold bg-emerald-500 text-white border border-emerald-500 rounded-lg transition-all shadow-sm font-arabic";
+                } else {
+                    btnTrue.className = "px-2.5 py-1 text-[11px] font-bold bg-rose-500 text-white border border-rose-500 rounded-lg transition-all shadow-sm font-arabic";
+                }
+            } else {
+                if (isCorrectAnswer === false) {
+                    btnFalse.className = "px-2.5 py-1 text-[11px] font-bold bg-emerald-500 text-white border border-emerald-500 rounded-lg transition-all shadow-sm font-arabic";
+                } else {
+                    btnFalse.className = "px-2.5 py-1 text-[11px] font-bold bg-rose-500 text-white border border-rose-500 rounded-lg transition-all shadow-sm font-arabic";
+                }
+            }
+
+            updateGlobalProgress();
+        }
+
+        // Fill in the blanks Validation logic
+        function checkBlankAnswers() {
+            for(let i = 1; i <= 5; i++) {
+                const input = document.getElementById(`blank-${i}`);
+                const correctVal = input.getAttribute('data-answer');
+                const userVal = input.value.trim();
+
+                if (userVal === "") {
+                    input.className = "px-2 py-0.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-800 text-center font-bold font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none w-28";
+                    continue;
+                }
+
+                let isCorrect = false;
+                if (i === 3) {
+                    isCorrect = (userVal === "أبيه" || userVal === "والده" || userVal === "ابيه" || userVal === "أبوه" || userVal === "والدهِ");
+                } else {
+                    isCorrect = (userVal === correctVal);
+                }
+
+                if (isCorrect) {
+                    input.className = "px-2 py-0.5 bg-emerald-500 border border-emerald-600 text-white rounded text-xs text-center font-bold font-arabic w-28 shadow-sm transition-all";
+                } else {
+                    input.className = "px-2 py-0.5 bg-rose-500 border border-rose-600 text-white rounded text-xs text-center font-bold font-arabic w-28 shadow-sm transition-all";
+                }
+            }
+
+            updateGlobalProgress();
+            showToast("تم التحقق!", "تمت مراجعة الفراغات المكتوبة في الجمل.");
+        }
+
+        // MCQ select interactive logic
+        function selectMCQ(qNum, optionSelected) {
+            userAnswers.mcq[qNum] = optionSelected;
+
+            const optionContainer = document.getElementById(`mcq-options-${qNum}`);
+            const buttons = optionContainer.getElementsByTagName('button');
+            const item = document.querySelector(`.mcq-item:nth-child(${qNum})`);
+            const correctOption = item.getAttribute('data-correct');
+
+            for (let btn of buttons) {
+                btn.className = "option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center";
+            }
+
+            const activeBtn = document.getElementById(`mcq-${qNum}-${optionSelected}`);
+            if (optionSelected === correctOption) {
+                activeBtn.className = "option-btn text-right px-3.5 py-2 text-xs bg-emerald-500 text-white font-semibold border border-emerald-500 rounded-xl shadow-md transition-all w-full flex justify-between items-center font-arabic";
+            } else {
+                activeBtn.className = "option-btn text-right px-3.5 py-2 text-xs bg-rose-500 text-white font-semibold border border-rose-500 rounded-xl shadow-md transition-all w-full flex justify-between items-center font-arabic";
+                const correctBtn = document.getElementById(`mcq-${qNum}-${correctOption}`);
+                correctBtn.className = "option-btn text-right px-3.5 py-2 text-xs border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-semibold rounded-xl transition-all w-full flex justify-between items-center font-arabic";
+            }
+
+            updateGlobalProgress();
+        }
+
+        // Progressive calculation logic (Adjusted for 29 total tasks)
+        function updateGlobalProgress() {
+            let totalSteps = 29; 
+            let completed = 0;
+
+            // Check Extraction progress
+            for(let i=1; i<=5; i++) {
+                if(document.getElementById(`extract-word-${i}`).value.trim() !== "") completed++;
+            }
+
+            // Check TF progress
+            for(let i=1; i<=5; i++) {
+                if(userAnswers.trueFalse[i] !== null) completed++;
+            }
+
+            // Check Blanks progress
+            for(let i=1; i<=5; i++) {
+                if(document.getElementById(`blank-${i}`).value.trim() !== "") completed++;
+            }
+
+            // Check MCQ progress
+            for(let i=1; i<=5; i++) {
+                if(userAnswers.mcq[i] !== null) completed++;
+            }
+
+            // Check Comprehension written progress
+            for(let i=1; i<=5; i++) {
+                if(document.getElementById(`comp-input-${i}`).value.trim() !== "") completed++;
+            }
+
+            // Check Speaking written progress
+            for(let i=1; i<=4; i++) {
+                if(document.getElementById(`speak-input-${i}`).value.trim() !== "") completed++;
+            }
+
+            const percentage = Math.round((completed / totalSteps) * 100);
+            
+            const bar = document.getElementById('global-progress');
+            const percentLabel = document.getElementById('global-progress-percent');
+            if (bar && percentLabel) {
+                bar.style.width = `${percentage}%`;
+                percentLabel.innerText = `${percentage}%`;
+            }
+        }
+
+        // Toast trigger
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-desc').innerText = message;
+            
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+
+        // Reset all fields
+        function resetEverything() {
+            // Reset extraction fields
+            for(let i=1; i<=5; i++) {
+                const w = document.getElementById(`extract-word-${i}`);
+                w.value = "";
+                w.className = "w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs text-right font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none";
+                document.getElementById(`extract-sent-${i}`).value = "";
+            }
+
+            // Reset TF
+            userAnswers.trueFalse = { 1: null, 2: null, 3: null, 4: null, 5: null };
+            for(let i=1; i<=5; i++) {
+                document.getElementById(`tf-${i}-t`).className = "px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-emerald-50 hover:text-emerald-600 transition-all font-arabic";
+                document.getElementById(`tf-${i}-f`).className = "px-2.5 py-1 text-[11px] font-bold border border-slate-200 rounded-lg hover:bg-rose-50 hover:text-rose-600 transition-all font-arabic";
+            }
+
+            // Reset Blanks
+            for(let i=1; i<=5; i++) {
+                const input = document.getElementById(`blank-${i}`);
+                input.value = "";
+                input.className = "px-2 py-0.5 bg-slate-50 border border-slate-300 rounded text-xs text-slate-800 text-center font-bold font-arabic focus:ring-1 focus:ring-brand-500 focus:outline-none w-28";
+            }
+
+            // Reset MCQ
+            userAnswers.mcq = { 1: null, 2: null, 3: null, 4: null, 5: null };
+            for(let i=1; i<=5; i++) {
+                const container = document.getElementById(`mcq-options-${i}`);
+                const buttons = container.getElementsByTagName('button');
+                for (let btn of buttons) {
+                    btn.className = "option-btn text-right px-3.5 py-2 text-xs border border-slate-200 hover:bg-slate-50 rounded-xl transition-all w-full flex justify-between items-center font-arabic";
+                }
+            }
+
+            // Reset written sections
+            for(let i=1; i<=5; i++) {
+                document.getElementById(`comp-input-${i}`).value = "";
+            }
+            for(let i=1; i<=4; i++) {
+                document.getElementById(`speak-input-${i}`).value = "";
+            }
+
+            // Enforce hiding answers on resetting
+            allAnswersVisible = true;
+            toggleAllAnswers(); // will invert to false and hide everything
+
+            updateGlobalProgress();
+            showToast("تم إعادة تهيئة اللوحة", "تم مسح كافة الإدخالات وتصفير معدل تقدمك الدراسي.");
+        }
+
+        // Attach dynamic progress monitoring
+        document.querySelectorAll('input, textarea').forEach(el => {
+            el.addEventListener('input', updateGlobalProgress);
+        });
+    </script>
+</body>
+</html>
