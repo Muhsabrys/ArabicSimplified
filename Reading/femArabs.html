@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ثلاث نساء عربيات غيّرن العالم</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#172033;
+      --muted:#5f6b7a;
+      --primary:#2457a6;
+      --primary-soft:#eaf1ff;
+      --accent:#9b5de5;
+      --success:#18794e;
+      --success-bg:#eaf8f0;
+      --danger:#b42318;
+      --danger-bg:#fff0ee;
+      --border:#dce3ee;
+      --shadow:0 10px 30px rgba(25,45,80,.08);
+    }
+
+    body.dark{
+      --bg:#111827;
+      --card:#1f2937;
+      --text:#f3f4f6;
+      --muted:#c6ccd6;
+      --primary:#8db4ff;
+      --primary-soft:#243958;
+      --accent:#c4a7ff;
+      --success:#74d6a1;
+      --success-bg:#153b2b;
+      --danger:#ff9b91;
+      --danger-bg:#4a211f;
+      --border:#374151;
+      --shadow:0 10px 30px rgba(0,0,0,.22);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#eef3fa 45%,var(--bg));
+      color:var(--text);
+      font-family:Tahoma, Arial, "Noto Sans Arabic", sans-serif;
+      line-height:2;
+      transition:.25s ease;
+    }
+
+    body.dark{
+      background:linear-gradient(180deg,#111827,#0f172a 45%,#111827);
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:color-mix(in srgb, var(--card) 94%, transparent);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .progress-wrap{
+      height:5px;
+      background:var(--border);
+    }
+
+    .progress-bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--primary),var(--accent));
+      transition:width .1s linear;
+    }
+
+    .toolbar{
+      max-width:1100px;
+      margin:auto;
+      padding:10px 18px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+    }
+
+    .toolbar-group{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    button{
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    button:hover{
+      transform:translateY(-1px);
+      border-color:var(--primary);
+    }
+
+    .primary-btn{
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
+    }
+
+    body.dark .primary-btn{
+      color:#111827;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:28px auto 60px;
+      padding:0 18px;
+    }
+
+    .hero{
+      background:
+        radial-gradient(circle at top left, rgba(155,93,229,.18), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(36,87,166,.18), transparent 35%),
+        var(--card);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:34px 28px;
+      box-shadow:var(--shadow);
+      margin-bottom:24px;
+      text-align:center;
+    }
+
+    .hero h1{
+      margin:0 0 10px;
+      font-size:clamp(2rem,4vw,3.2rem);
+      line-height:1.4;
+    }
+
+    .hero p{
+      color:var(--muted);
+      margin:0 auto;
+      max-width:760px;
+      font-size:1.08rem;
+    }
+
+    .chips{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .chip{
+      background:var(--primary-soft);
+      color:var(--primary);
+      padding:6px 12px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:.92rem;
+    }
+
+    .section-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:26px;
+      margin:20px 0;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .number{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-size:1.1rem;
+      font-weight:800;
+      flex:0 0 auto;
+    }
+
+    .section-title h2{
+      margin:0;
+      font-size:1.55rem;
+    }
+
+    .reading-text{
+      font-size:1.12rem;
+    }
+
+    .reading-text p{
+      margin:0 0 14px;
+    }
+
+    .highlight{
+      background:linear-gradient(transparent 55%, rgba(155,93,229,.18) 55%);
+      font-weight:700;
+    }
+
+    .fact-box{
+      margin-top:16px;
+      padding:14px 16px;
+      border-right:5px solid var(--primary);
+      background:var(--primary-soft);
+      border-radius:12px;
+    }
+
+    .fact-box strong{
+      color:var(--primary);
+    }
+
+    details{
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px 14px;
+      margin-top:16px;
+      background:color-mix(in srgb, var(--card) 94%, var(--primary-soft));
+    }
+
+    summary{
+      cursor:pointer;
+      font-weight:800;
+      color:var(--primary);
+    }
+
+    .questions-header{
+      margin-top:36px;
+      text-align:center;
+    }
+
+    .questions-header h2{
+      font-size:2rem;
+      margin-bottom:6px;
+    }
+
+    .questions-header p{
+      color:var(--muted);
+      margin-top:0;
+    }
+
+    .question-group{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:24px;
+      margin:20px 0;
+    }
+
+    .question-group h3{
+      color:var(--primary);
+      margin-top:0;
+      border-bottom:1px solid var(--border);
+      padding-bottom:10px;
+    }
+
+    .question{
+      padding:16px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      margin:14px 0;
+      background:color-mix(in srgb, var(--card) 96%, var(--primary-soft));
+    }
+
+    .question.correct{
+      border-color:var(--success);
+      background:var(--success-bg);
+    }
+
+    .question.incorrect{
+      border-color:var(--danger);
+      background:var(--danger-bg);
+    }
+
+    .question-title{
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .option{
+      display:block;
+      padding:7px 9px;
+      border-radius:9px;
+      margin:4px 0;
+      cursor:pointer;
+    }
+
+    .option:hover{
+      background:var(--primary-soft);
+    }
+
+    input[type="radio"]{
+      margin-left:8px;
+      accent-color:var(--primary);
+    }
+
+    .feedback{
+      margin-top:8px;
+      font-weight:700;
+      min-height:26px;
+    }
+
+    .score-box{
+      display:none;
+      margin-top:18px;
+      padding:18px;
+      border-radius:15px;
+      border:1px solid var(--border);
+      background:var(--primary-soft);
+      text-align:center;
+      font-size:1.15rem;
+      font-weight:800;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin:22px 0 10px;
+    }
+
+    .answer-key{
+      display:none;
+      margin-top:20px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:18px;
+    }
+
+    .answer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .answer-item{
+      background:var(--primary-soft);
+      border-radius:10px;
+      padding:8px;
+      text-align:center;
+      font-weight:800;
+    }
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      margin-top:38px;
+      font-size:.93rem;
+    }
+
+    @media (max-width:700px){
+      .toolbar{justify-content:center}
+      .hero{padding:26px 18px}
+      .section-card,.question-group{padding:18px}
+      .reading-text{font-size:1.03rem}
+    }
+
+    @media print{
+      .topbar,.actions,.feedback,.score-box{display:none !important}
+      body{background:#fff}
+      .section-card,.question-group,.hero{box-shadow:none}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <button onclick="changeFont(1)">تكبير الخط</button>
+        <button onclick="changeFont(-1)">تصغير الخط</button>
+        <button onclick="resetFont()">الحجم الأصلي</button>
+      </div>
+      <div class="toolbar-group">
+        <button onclick="toggleTheme()">الوضع الليلي</button>
+        <button onclick="window.print()">طباعة</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <section class="hero">
+      <h1>ثلاثُ نساءٍ عربيّاتٍ غيَّرنَ العالم</h1>
+      <p>
+        اقرأ عن ثلاث نساء عربيات تركن أثرًا مهمًّا في العمارة والعلوم والأدب،
+        ثم أجب عن أسئلة الفهم.
+      </p>
+      <div class="chips">
+        <span class="chip">زها حديد</span>
+        <span class="chip">سميرة موسى</span>
+        <span class="chip">مي زيادة</span>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <div class="number">م</div>
+        <h2>المقدّمة</h2>
+      </div>
+      <div class="reading-text">
+        <p>
+          سنتعرّف إلى ثلاث نساء عربيات تركن أثرًا مهمًّا في العالم العربي وخارجه.
+          عملت كل واحدة منهن في مجال مختلف. كانت زها حديد مهندسة معمارية،
+          وكانت سميرة موسى عالِمة في الفيزياء، أمّا مي زيادة فكانت كاتبة وصحفية.
+        </p>
+        <p>
+          واجهت كل واحدة منهن صعوبات مختلفة، لكنها استمرت في التعلّم والعمل.
+          وبفضل نجاحهن، فتحت هؤلاء النساء الطريق أمام نساء كثيرات جئن بعدهن.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <div class="number">١</div>
+        <h2>زها حديد</h2>
+      </div>
+      <div class="reading-text">
+        <p>
+          كانت زها حديد مهندسة معمارية عراقية بريطانية. وُلِدت في بغداد سنة 1950.
+          أحبت الرسم والأشكال منذ طفولتها، ودرست الرياضيات في الجامعة.
+          بعد ذلك، انتقلت إلى لندن ودرست الهندسة المعمارية، أي فن تصميم المباني والأماكن.
+        </p>
+
+        <p>
+          كانت أفكار زها مختلفة عن الأفكار المعروفة في ذلك الوقت.
+          صممت مباني فيها خطوط <span class="highlight">مُنحنية</span> وأشكال غير عادية.
+          وكانت بعض مبانيها تبدو كأنها تتحرك.
+        </p>
+
+        <p>
+          في البداية، أعجب الناس برسوماتها، لكنهم لم يبنوا كثيرًا من مشروعاتها.
+          قال بعضهم إن تصاميمها جميلة، ولكن تنفيذها صعب أو مكلف.
+          كان هذا تحدّيًا كبيرًا لها. بالإضافة إلى ذلك، عملت زها في مجال كان عدد النساء فيه قليلًا.
+        </p>
+
+        <p>
+          مع ذلك، لم تتوقف عن العمل. عملت ودرّست وصممت مباني في دول كثيرة.
+          ومن أشهر أعمالها مركز للألعاب المائية في لندن، بالإضافة إلى مراكز فنية وثقافية في مدن مختلفة.
+        </p>
+
+        <p>
+          وفي سنة 2004، أصبحت أول امرأة تفوز بجائزة بريتزكر،
+          وهي جائزة عالمية مهمة في الهندسة المعمارية.
+        </p>
+
+        <p>
+          ما زالت زها حديد مهمة اليوم لأن تصاميمها غيّرت طريقة تفكير كثير من المهندسين.
+          كما أن نجاحها شجّع نساء كثيرات على دراسة العمارة والعمل فيها.
+        </p>
+
+        <div class="fact-box">
+          <strong>الفكرة الأساسية:</strong>
+          غيّرت زها حديد شكل العمارة الحديثة، ونجحت رغم أن كثيرًا من الناس رأوا أن أفكارها صعبة التنفيذ.
+        </div>
+
+        <details>
+          <summary>كلمة تساعدك</summary>
+          <p><strong>مُنحنية:</strong> ليست مستقيمة، بل تتحرك في شكل قوس أو دائرة.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <div class="number">٢</div>
+        <h2>سميرة موسى</h2>
+      </div>
+      <div class="reading-text">
+        <p>
+          أمّا سميرة موسى، فقد كانت عالِمة مصرية في الفيزياء.
+          وُلِدت سنة 1917 في محافظة الغربية في مصر. ثم انتقلت إلى القاهرة مع أسرتها.
+        </p>
+
+        <p>
+          كانت سميرة تحب العلوم منذ صغرها، وكانت من الطالبات المتفوقات.
+          بعد المدرسة، درست في كلية العلوم، ثم أصبحت من أوائل النساء اللاتي عملن في الجامعة في هذا المجال.
+        </p>
+
+        <p>
+          اهتمت سميرة بالطاقة <span class="highlight">الذَّرِّيَّة</span>،
+          وهي الطاقة التي تأتي من الذرة. لكنها لم تكن تريد استخدام هذا العلم في الحرب.
+          كانت تريد استخدامه في السلام، وخاصة في علاج الأمراض.
+        </p>
+
+        <p>
+          كانت تحلم بأن يصبح العلاج باستخدام الطاقة الذرية رخيصًا ومتاحًا لجميع الناس،
+          وليس للأغنياء فقط.
+        </p>
+
+        <p>
+          بالإضافة إلى ذلك، دعت إلى مؤتمر عن استخدام الطاقة الذرية من أجل السلام.
+          وسافرت إلى بريطانيا والولايات المتحدة لتكمل بحثها وتتعرف إلى مختبرات جديدة.
+        </p>
+
+        <p>
+          كان عملها صعبًا لأن عدد النساء في العلوم كان قليلًا.
+          كما كان مجال الطاقة الذرية جديدًا ومعقدًا في ذلك الوقت.
+        </p>
+
+        <p>
+          في سنة 1952، توفيت سميرة في حادث سيارة في الولايات المتحدة،
+          وكانت ما تزال شابة. لكن فكرتها الأساسية بقيت واضحة:
+          يجب أن يساعد العلم الإنسان ويحمي حياته.
+        </p>
+
+        <p>
+          ولهذا ما زالت سميرة موسى مثالًا مهمًّا للعلماء الشباب،
+          وخاصة للنساء العربيات اللاتي يرغبن في دراسة العلوم.
+        </p>
+
+        <div class="fact-box">
+          <strong>الفكرة الأساسية:</strong>
+          أرادت سميرة موسى أن تستخدم الطاقة الذرية في السلام وعلاج المرضى، لا في الحرب.
+        </div>
+
+        <details>
+          <summary>كلمة تساعدك</summary>
+          <p><strong>الطاقة الذرية:</strong> طاقة تأتي من الذرة ويمكن استخدامها في الطب أو في مجالات أخرى.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <div class="number">٣</div>
+        <h2>مي زيادة</h2>
+      </div>
+      <div class="reading-text">
+        <p>
+          كانت مي زيادة كاتبة وصحفية لبنانية فلسطينية.
+          وُلِدت سنة 1886 في مدينة الناصرة.
+          كان والدها لبنانيًّا، وكانت والدتها فلسطينية،
+          ولذلك ارتبطت حياتها بأكثر من بلد عربي.
+        </p>
+
+        <p>
+          درست مي في فلسطين ولبنان، ثم انتقلت مع أسرتها إلى القاهرة.
+          هناك عملت في الكتابة والصحافة.
+          كتبت المقالات والكتب، كما ترجمت نصوصًا من لغات أخرى إلى اللغة العربية.
+        </p>
+
+        <p>
+          كانت مي تحب القراءة واللغات.
+          وكانت تؤمن بأن المرأة تحتاج إلى التعليم والعمل والمشاركة في المجتمع.
+          لذلك كتبت عن حياة النساء ومشكلاتهن،
+          ودافعت عن حق المرأة في التعلّم والتعبير عن رأيها.
+        </p>
+
+        <p>
+          ومن أهم أعمالها أنها أقامت لقاءً أدبيًّا أسبوعيًّا في بيتها.
+          كان الكتّاب والمفكرون يجتمعون في هذا اللقاء
+          ليتحدثوا عن الكتب والثقافة والمجتمع.
+        </p>
+
+        <p>
+          حضر اللقاء عدد من أشهر كتّاب ذلك الزمن،
+          وأصبحت مي شخصية معروفة في الحياة الثقافية في القاهرة.
+        </p>
+
+        <p>
+          لكن حياتها لم تكن سهلة.
+          فقدت عددًا من أفراد أسرتها وأصدقائها،
+          وعانت الوحدة والمرض في آخر حياتها.
+          كما واجهت صعوبة لأنها كانت امرأة تعمل في الكتابة
+          في زمن كان الرجال يسيطرون فيه على المجال الثقافي.
+        </p>
+
+        <p>
+          توفيت مي زيادة سنة 1941، لكن كتبها وأفكارها ما زالت تُقرأ اليوم.
+          وما زالت مثالًا للمرأة المثقفة التي استخدمت الكتابة
+          للدفاع عن التعليم وحرية التعبير.
+        </p>
+
+        <div class="fact-box">
+          <strong>الفكرة الأساسية:</strong>
+          استخدمت مي زيادة الكتابة والعمل الثقافي للدفاع عن تعليم المرأة وحقها في التعبير.
+        </div>
+
+        <details>
+          <summary>كلمة تساعدك</summary>
+          <p><strong>لقاء أدبي:</strong> اجتماع يتحدث فيه الكتّاب والمفكرون عن الكتب والثقافة.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <div class="number">خ</div>
+        <h2>الخاتمة</h2>
+      </div>
+      <div class="reading-text">
+        <p>
+          عملت زها حديد في العمارة، وعملت سميرة موسى في العلم،
+          وعملت مي زيادة في الأدب والصحافة.
+          اختلفت مجالاتهن، لكنهن اشتركن في شيء مهم:
+          واجهن صعوبات ولم يتوقفن عن التعلّم والعمل.
+        </p>
+        <p>
+          قدّمت كل واحدة منهن فكرة جديدة، وغيّرت مجالها،
+          وأصبحت مثالًا للنساء والرجال.
+          وتعلّمنا قصصهن أن النجاح يحتاج إلى المعرفة والشجاعة والصبر.
+        </p>
+      </div>
+    </section>
+
+    <section class="questions-header">
+      <h2>أسئلة الفهم القرائي</h2>
+      <p>اختر إجابة واحدة لكل سؤال، ثم اضغط على زر التصحيح.</p>
+    </section>
+
+    <form id="quizForm">
+
+      <section class="question-group">
+        <h3>أولًا: الفكرة الرئيسة</h3>
+
+        <div class="question" data-answer="b">
+          <div class="question-title">1. ما الموضوع الرئيس للنص؟</div>
+          <label class="option"><input type="radio" name="q1" value="a"> تاريخ ثلاث مدن عربية</label>
+          <label class="option"><input type="radio" name="q1" value="b"> حياة ثلاث نساء عربيات مؤثرات</label>
+          <label class="option"><input type="radio" name="q1" value="c"> تطور الجامعات العربية</label>
+          <label class="option"><input type="radio" name="q1" value="d"> أنواع الفنون الحديثة</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="c">
+          <div class="question-title">2. ما الفكرة الرئيسة في قسم زها حديد؟</div>
+          <label class="option"><input type="radio" name="q2" value="a"> درست زها الصحافة في القاهرة.</label>
+          <label class="option"><input type="radio" name="q2" value="b"> استخدمت زها العلم لعلاج الأمراض.</label>
+          <label class="option"><input type="radio" name="q2" value="c"> غيّرت زها تصميم المباني رغم الصعوبات.</label>
+          <label class="option"><input type="radio" name="q2" value="d"> كتبت زها عن تعليم المرأة.</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="a">
+          <div class="question-title">3. ما الفكرة الرئيسة في قسم سميرة موسى؟</div>
+          <label class="option"><input type="radio" name="q3" value="a"> أرادت استخدام العلم لخدمة الإنسان والسلام.</label>
+          <label class="option"><input type="radio" name="q3" value="b"> أرادت بناء مراكز ثقافية جديدة.</label>
+          <label class="option"><input type="radio" name="q3" value="c"> عملت على ترجمة الكتب إلى العربية.</label>
+          <label class="option"><input type="radio" name="q3" value="d"> أصبحت مشهورة بسبب كتاباتها الأدبية.</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="b">
+          <div class="question-title">4. ما الفكرة الرئيسة في قسم مي زيادة؟</div>
+          <label class="option"><input type="radio" name="q4" value="a"> صممت مي مباني غير عادية.</label>
+          <label class="option"><input type="radio" name="q4" value="b"> ساهمت مي في الحياة الأدبية ودافعت عن تعليم المرأة.</label>
+          <label class="option"><input type="radio" name="q4" value="c"> درست مي الطاقة الذرية في الولايات المتحدة.</label>
+          <label class="option"><input type="radio" name="q4" value="d"> عملت مي في تصميم المراكز الرياضية.</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="c">
+          <div class="question-title">5. ما الصفة المشتركة بين النساء الثلاث؟</div>
+          <label class="option"><input type="radio" name="q5" value="a"> عملن في المجال نفسه.</label>
+          <label class="option"><input type="radio" name="q5" value="b"> عشن في المدينة نفسها.</label>
+          <label class="option"><input type="radio" name="q5" value="c"> واجهن صعوبات واستمررن في العمل.</label>
+          <label class="option"><input type="radio" name="q5" value="d"> درسن في الجامعة نفسها.</label>
+          <div class="feedback"></div>
+        </div>
+      </section>
+
+      <section class="question-group">
+        <h3>ثانيًا: التفاصيل</h3>
+
+        <div class="question" data-answer="b">
+          <div class="question-title">6. أين وُلِدت زها حديد؟</div>
+          <label class="option"><input type="radio" name="q6" value="a"> القاهرة</label>
+          <label class="option"><input type="radio" name="q6" value="b"> بغداد</label>
+          <label class="option"><input type="radio" name="q6" value="c"> لندن</label>
+          <label class="option"><input type="radio" name="q6" value="d"> الناصرة</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="c">
+          <div class="question-title">7. ما الذي ميّز فوز زها حديد بجائزة بريتزكر؟</div>
+          <label class="option"><input type="radio" name="q7" value="a"> كانت أصغر شخص يفوز بها.</label>
+          <label class="option"><input type="radio" name="q7" value="b"> كانت أول عراقية تسافر إلى لندن.</label>
+          <label class="option"><input type="radio" name="q7" value="c"> كانت أول امرأة تفوز بها.</label>
+          <label class="option"><input type="radio" name="q7" value="d"> كانت أول عالمة تفوز بها.</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="a">
+          <div class="question-title">8. ماذا درست سميرة موسى؟</div>
+          <label class="option"><input type="radio" name="q8" value="a"> الفيزياء</label>
+          <label class="option"><input type="radio" name="q8" value="b"> الأدب</label>
+          <label class="option"><input type="radio" name="q8" value="c"> العمارة</label>
+          <label class="option"><input type="radio" name="q8" value="d"> الصحافة</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="b">
+          <div class="question-title">9. ماذا أرادت سميرة أن تفعل بالطاقة الذرية؟</div>
+          <label class="option"><input type="radio" name="q9" value="a"> تستخدمها في بناء المنازل.</label>
+          <label class="option"><input type="radio" name="q9" value="b"> تستخدمها في علاج الأمراض وخدمة السلام.</label>
+          <label class="option"><input type="radio" name="q9" value="c"> تستخدمها في تصميم السيارات.</label>
+          <label class="option"><input type="radio" name="q9" value="d"> تمنع العلماء من دراستها.</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="c">
+          <div class="question-title">10. في أي مدينة أصبحت مي زيادة شخصية ثقافية معروفة؟</div>
+          <label class="option"><input type="radio" name="q10" value="a"> بغداد</label>
+          <label class="option"><input type="radio" name="q10" value="b"> بيروت</label>
+          <label class="option"><input type="radio" name="q10" value="c"> القاهرة</label>
+          <label class="option"><input type="radio" name="q10" value="d"> لندن</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="c">
+          <div class="question-title">11. ماذا كان يحدث في اللقاء الأسبوعي في بيت مي زيادة؟</div>
+          <label class="option"><input type="radio" name="q11" value="a"> كان العلماء يجرون تجارب طبية.</label>
+          <label class="option"><input type="radio" name="q11" value="b"> كان المهندسون يرسمون المباني.</label>
+          <label class="option"><input type="radio" name="q11" value="c"> كان الكتّاب والمفكرون يناقشون الكتب والثقافة.</label>
+          <label class="option"><input type="radio" name="q11" value="d"> كان الطلاب يتعلمون الرياضيات.</label>
+          <div class="feedback"></div>
+        </div>
+      </section>
+
+      <section class="question-group">
+        <h3>ثالثًا: الترتيب والتسلسل</h3>
+
+        <div class="question" data-answer="b">
+          <div class="question-title">12. ماذا فعلت زها حديد قبل أن تدرس الهندسة المعمارية في لندن؟</div>
+          <label class="option"><input type="radio" name="q12" value="a"> فازت بجائزة بريتزكر.</label>
+          <label class="option"><input type="radio" name="q12" value="b"> درست الرياضيات.</label>
+          <label class="option"><input type="radio" name="q12" value="c"> صممت مركز الألعاب المائية.</label>
+          <label class="option"><input type="radio" name="q12" value="d"> عملت في الصحافة.</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="c">
+          <div class="question-title">13. ما الترتيب الصحيح لأحداث حياة زها حديد؟</div>
+          <label class="option"><input type="radio" name="q13" value="a"> فازت بالجائزة ← درست الرياضيات ← انتقلت إلى لندن</label>
+          <label class="option"><input type="radio" name="q13" value="b"> انتقلت إلى لندن ← وُلِدت في بغداد ← فازت بالجائزة</label>
+          <label class="option"><input type="radio" name="q13" value="c"> وُلِدت في بغداد ← درست الرياضيات ← انتقلت إلى لندن</label>
+          <label class="option"><input type="radio" name="q13" value="d"> درست العمارة ← وُلِدت في بغداد ← درست الرياضيات</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="a">
+          <div class="question-title">14. ماذا فعلت سميرة موسى بعد أن درست في كلية العلوم؟</div>
+          <label class="option"><input type="radio" name="q14" value="a"> أصبحت من أوائل النساء العاملات في الجامعة في مجالها.</label>
+          <label class="option"><input type="radio" name="q14" value="b"> بدأت تكتب الروايات.</label>
+          <label class="option"><input type="radio" name="q14" value="c"> درست الهندسة المعمارية.</label>
+          <label class="option"><input type="radio" name="q14" value="d"> أقامت لقاءً أدبيًّا في بيتها.</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="b">
+          <div class="question-title">15. ما الترتيب الصحيح للنساء من الأقدم ميلادًا إلى الأحدث؟</div>
+          <label class="option"><input type="radio" name="q15" value="a"> زها حديد ← سميرة موسى ← مي زيادة</label>
+          <label class="option"><input type="radio" name="q15" value="b"> مي زيادة ← سميرة موسى ← زها حديد</label>
+          <label class="option"><input type="radio" name="q15" value="c"> سميرة موسى ← مي زيادة ← زها حديد</label>
+          <label class="option"><input type="radio" name="q15" value="d"> مي زيادة ← زها حديد ← سميرة موسى</label>
+          <div class="feedback"></div>
+        </div>
+      </section>
+
+      <section class="question-group">
+        <h3>رابعًا: الأسباب والنتائج</h3>
+
+        <div class="question" data-answer="b">
+          <div class="question-title">16. لماذا لم تُبنَ مشروعات كثيرة لزها حديد في بداية عملها؟</div>
+          <label class="option"><input type="radio" name="q16" value="a"> لأنها لم ترغب في بناء مشروعاتها.</label>
+          <label class="option"><input type="radio" name="q16" value="b"> لأن الناس اعتقدوا أن تنفيذ تصاميمها صعب أو مكلف.</label>
+          <label class="option"><input type="radio" name="q16" value="c"> لأنها توقفت عن دراسة العمارة.</label>
+          <label class="option"><input type="radio" name="q16" value="d"> لأن تصاميمها كانت قديمة جدًّا.</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="a">
+          <div class="question-title">17. لماذا اهتمت سميرة موسى بالطاقة الذرية؟</div>
+          <label class="option"><input type="radio" name="q17" value="a"> لأنها أرادت استخدامها لمساعدة المرضى وخدمة السلام.</label>
+          <label class="option"><input type="radio" name="q17" value="b"> لأنها أرادت أن تصبح صحفية.</label>
+          <label class="option"><input type="radio" name="q17" value="c"> لأنها أرادت بناء مركز ثقافي.</label>
+          <label class="option"><input type="radio" name="q17" value="d"> لأنها لم تكن تحب الفيزياء.</label>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="question" data-answer="c">
+          <div class="question-title">18. ما إحدى نتائج اللقاء الأدبي الذي أقامته مي زيادة؟</div>
+          <label class="option"><input type="radio" name="q18" value="a"> أصبحت عالمة معروفة في مجال الفيزياء.</label>
+          <label class="option"><input type="radio" name="q18" value="b"> توقفت عن الكتابة والصحافة.</label>
+          <label class="option"><input type="radio" name="q18" value="c"> أصبحت شخصية مهمة في الحياة الثقافية في القاهرة.</label>
+          <label class="option"><input type="radio" name="q18" value="d"> انتقلت إلى لندن لدراسة العمارة.</label>
+          <div class="feedback"></div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button type="button" class="primary-btn" onclick="gradeQuiz()">تصحيح الإجابات</button>
+        <button type="button" onclick="resetQuiz()">إعادة المحاولة</button>
+        <button type="button" onclick="toggleAnswerKey()">إظهار / إخفاء مفتاح الإجابة</button>
+      </div>
+
+      <div class="score-box" id="scoreBox"></div>
+
+      <div class="answer-key" id="answerKey">
+        <h3>مفتاح الإجابة</h3>
+        <div class="answer-grid">
+          <div class="answer-item">1: ب</div>
+          <div class="answer-item">2: ج</div>
+          <div class="answer-item">3: أ</div>
+          <div class="answer-item">4: ب</div>
+          <div class="answer-item">5: ج</div>
+          <div class="answer-item">6: ب</div>
+          <div class="answer-item">7: ج</div>
+          <div class="answer-item">8: أ</div>
+          <div class="answer-item">9: ب</div>
+          <div class="answer-item">10: ج</div>
+          <div class="answer-item">11: ج</div>
+          <div class="answer-item">12: ب</div>
+          <div class="answer-item">13: ج</div>
+          <div class="answer-item">14: أ</div>
+          <div class="answer-item">15: ب</div>
+          <div class="answer-item">16: ب</div>
+          <div class="answer-item">17: أ</div>
+          <div class="answer-item">18: ج</div>
+        </div>
+      </div>
+
+    </form>
+
+    <footer>
+      صفحة قراءة تفاعلية باللغة العربية
+    </footer>
+
+  </main>
+
+  <script>
+    let currentFontSize = 1;
+
+    function changeFont(step){
+      currentFontSize = Math.min(1.35, Math.max(.85, currentFontSize + step * .05));
+      document.querySelectorAll('.reading-text').forEach(el => {
+        el.style.fontSize = currentFontSize + 'rem';
+      });
+    }
+
+    function resetFont(){
+      currentFontSize = 1.12;
+      document.querySelectorAll('.reading-text').forEach(el => {
+        el.style.fontSize = '';
+      });
+    }
+
+    function toggleTheme(){
+      document.body.classList.toggle('dark');
+    }
+
+    function gradeQuiz(){
+      const questions = document.querySelectorAll('.question');
+      let score = 0;
+      let answered = 0;
+
+      questions.forEach((question, index) => {
+        const correct = question.dataset.answer;
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const feedback = question.querySelector('.feedback');
+
+        question.classList.remove('correct','incorrect');
+
+        if(!selected){
+          feedback.textContent = 'لم تُجب عن هذا السؤال.';
+          feedback.style.color = 'var(--danger)';
+          return;
+        }
+
+        answered++;
+
+        if(selected.value === correct){
+          score++;
+          question.classList.add('correct');
+          feedback.textContent = 'إجابة صحيحة.';
+          feedback.style.color = 'var(--success)';
+        }else{
+          question.classList.add('incorrect');
+          feedback.textContent = 'إجابة غير صحيحة. راجع النص وحاول مرة أخرى.';
+          feedback.style.color = 'var(--danger)';
+        }
+      });
+
+      const scoreBox = document.getElementById('scoreBox');
+      const percent = Math.round((score / questions.length) * 100);
+      scoreBox.style.display = 'block';
+      scoreBox.innerHTML = `أجبت عن ${answered} من ${questions.length} سؤالًا.<br>درجتك: ${score} من ${questions.length} (${percent}٪)`;
+      scoreBox.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+
+    function resetQuiz(){
+      document.getElementById('quizForm').reset();
+      document.querySelectorAll('.question').forEach(q => {
+        q.classList.remove('correct','incorrect');
+        q.querySelector('.feedback').textContent = '';
+      });
+      document.getElementById('scoreBox').style.display = 'none';
+      document.getElementById('answerKey').style.display = 'none';
+    }
+
+    function toggleAnswerKey(){
+      const key = document.getElementById('answerKey');
+      key.style.display = key.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+  </script>
+
+</body>
+</html>
