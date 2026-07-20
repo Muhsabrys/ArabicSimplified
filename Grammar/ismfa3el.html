@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Active Participle (اسم الفاعل): Comprehensive Interactive Slides</title>
+<style>
+    :root{
+      --navy:#17324d;
+      --blue:#245b83;
+      --sky:#eaf4fb;
+      --cream:#fffdf8;
+      --gold:#c8952e;
+      --ink:#17212b;
+      --muted:#62717e;
+      --line:#d8e1e8;
+      --green:#226b57;
+      --red:#9c3f3f;
+      --shadow:0 12px 32px rgba(23,50,77,.14);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:#eef3f7;color:var(--ink)}
+    body{
+      font-family:"Noto Naskh Arabic","Noto Sans Arabic",Tahoma,Arial,sans-serif;
+      overflow:hidden;
+    }
+    button,input{font:inherit}
+    .deck{height:100vh;position:relative}
+    .slide{
+      display:none;
+      width:100%;
+      height:100vh;
+      padding:78px 7vw 92px;
+      overflow-y:auto;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(36,91,131,.08), transparent 28%),
+        linear-gradient(135deg,var(--cream),#f5f9fc);
+    }
+    .slide.active{display:block}
+    .slide.title-slide{display:none}
+    .slide.title-slide.active{display:flex}
+    .slide::after{
+      content:"";
+      position:fixed;
+      inset:18px;
+      pointer-events:none;
+      border:1px solid rgba(36,91,131,.12);
+      border-radius:24px;
+    }
+    .title-slide{
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      background:
+        linear-gradient(145deg,rgba(23,50,77,.98),rgba(36,91,131,.96)),
+        var(--navy);
+      color:white;
+    }
+    .title-slide .hero{max-width:1050px}
+    .kicker{
+      display:inline-block;
+      padding:7px 16px;
+      border:1px solid rgba(255,255,255,.35);
+      border-radius:999px;
+      letter-spacing:.02em;
+      font-size:1.05rem;
+      margin-bottom:20px;
+      background:rgba(255,255,255,.08);
+    }
+    h1{font-size:clamp(3rem,7vw,6.2rem);line-height:1.05;margin:0 0 18px}
+    h2{font-size:clamp(2rem,4vw,3.5rem);color:var(--navy);margin:0 0 24px}
+    h3{font-size:1.45rem;color:var(--blue);margin:0 0 12px}
+    p,li,td,th{font-size:clamp(1.1rem,1.6vw,1.45rem);line-height:1.8}
+    .subtitle{font-size:clamp(1.3rem,2.4vw,2rem);line-height:1.8;color:#e5f2fb}
+    .examples-line{
+      margin:28px auto 0;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .examples-line span{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:14px;
+      padding:10px 16px;
+      font-size:1.35rem;
+    }
+    .slide-head{
+      max-width:1200px;
+      margin:0 auto 22px;
+      padding-bottom:12px;
+      border-bottom:3px solid var(--gold);
+    }
+    .slide-number{
+      color:var(--gold);
+      font-weight:700;
+      font-size:1rem;
+      letter-spacing:.08em;
+    }
+    .content{max-width:1200px;margin:0 auto}
+    .lead{
+      font-size:clamp(1.25rem,2vw,1.7rem);
+      line-height:1.85;
+      background:white;
+      border-right:6px solid var(--blue);
+      box-shadow:var(--shadow);
+      border-radius:18px;
+      padding:18px 22px;
+      margin-bottom:22px;
+    }
+    .grid{display:grid;gap:18px}
+    .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card{
+      background:white;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:20px;
+      box-shadow:0 8px 22px rgba(23,50,77,.08);
+    }
+    .card strong{color:var(--navy)}
+    .formula{
+      display:block;
+      text-align:center;
+      font-size:clamp(1.6rem,3vw,2.5rem);
+      font-weight:700;
+      color:var(--navy);
+      background:var(--sky);
+      border:1px solid #bed7e8;
+      border-radius:18px;
+      padding:18px;
+      margin:18px 0;
+    }
+    .arrow{color:var(--gold);padding:0 .35em}
+    .note,.warning,.success{
+      border-radius:14px;
+      padding:14px 18px;
+      margin:14px 0;
+      font-size:1.15rem;
+      line-height:1.8;
+    }
+    .note{background:#edf6fb;border-right:5px solid var(--blue)}
+    .warning{background:#fff3f0;border-right:5px solid var(--red)}
+    .success{background:#eef8f4;border-right:5px solid var(--green)}
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      background:white;
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow:0 8px 22px rgba(23,50,77,.07);
+    }
+    th{background:var(--navy);color:white;padding:13px;text-align:center}
+    td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:center}
+    tr:last-child td{border-bottom:none}
+    tr:nth-child(even) td{background:#f8fbfd}
+    .arabic-big{font-size:clamp(1.45rem,2.5vw,2rem);font-weight:700;color:var(--navy)}
+    .en{direction:ltr;text-align:left;color:var(--muted);font-family:Arial,sans-serif;font-size:.95em}
+    .tag{
+      display:inline-block;
+      background:#eef3f7;
+      color:var(--navy);
+      padding:4px 10px;
+      border-radius:999px;
+      margin:2px;
+      font-size:.95rem;
+    }
+    .compare{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:14px;
+      align-items:center;
+      margin:15px 0;
+    }
+    .compare .side{
+      background:white;
+      border-radius:16px;
+      padding:18px;
+      border:1px solid var(--line);
+      text-align:center;
+      font-size:1.45rem;
+      box-shadow:0 6px 16px rgba(23,50,77,.07);
+    }
+    .vs{font-weight:800;color:var(--gold);font-size:1.2rem}
+    ul.clean{list-style:none;padding:0;margin:0}
+    ul.clean li{
+      background:white;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 14px;
+      margin:9px 0;
+    }
+    .mini-rule{
+      border-top:4px solid var(--gold);
+      background:white;
+      padding:18px;
+      border-radius:14px;
+      min-height:150px;
+      box-shadow:0 7px 18px rgba(23,50,77,.07);
+    }
+    .exercise{
+      background:white;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:20px;
+      margin:16px 0;
+      box-shadow:var(--shadow);
+    }
+    .exercise ol{margin:8px 0;padding-right:28px}
+    .answer{
+      display:none;
+      background:#eef8f4;
+      border:1px solid #b9d9ce;
+      border-radius:12px;
+      padding:12px 15px;
+      margin-top:10px;
+      color:#174c3e;
+      font-size:1.15rem;
+      line-height:1.8;
+    }
+    .answer.show{display:block}
+    .reveal{
+      border:none;
+      background:var(--green);
+      color:white;
+      padding:9px 16px;
+      border-radius:10px;
+      cursor:pointer;
+      margin-top:8px;
+    }
+    .reveal:hover{filter:brightness(.95)}
+    .toolbar{
+      position:fixed;
+      z-index:50;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:22px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:rgba(23,50,77,.95);
+      color:white;
+      padding:9px 13px;
+      border-radius:999px;
+      box-shadow:0 10px 24px rgba(0,0,0,.22);
+      direction:ltr;
+    }
+    .toolbar button{
+      border:none;
+      background:white;
+      color:var(--navy);
+      width:40px;height:40px;
+      border-radius:50%;
+      cursor:pointer;
+      font-weight:800;
+    }
+    .toolbar button:hover{background:#dfeaf1}
+    .counter{min-width:76px;text-align:center;font-family:Arial,sans-serif}
+    .progress{
+      position:fixed;z-index:60;top:0;left:0;height:6px;
+      background:var(--gold);width:0;transition:width .2s ease;
+    }
+    .menu-btn{
+      position:fixed;z-index:55;top:24px;left:28px;
+      border:none;background:var(--navy);color:white;
+      padding:10px 15px;border-radius:12px;cursor:pointer;
+    }
+    .toc{
+      position:fixed;z-index:70;top:0;left:0;width:min(390px,92vw);height:100vh;
+      background:white;box-shadow:12px 0 34px rgba(0,0,0,.2);
+      transform:translateX(-110%);transition:transform .25s ease;
+      padding:24px;overflow-y:auto;direction:rtl;
+    }
+    .toc.open{transform:translateX(0)}
+    .toc h3{color:var(--navy);font-size:1.7rem}
+    .toc button{
+      width:100%;text-align:right;border:none;background:#f4f7f9;
+      padding:10px 12px;margin:4px 0;border-radius:9px;cursor:pointer;color:var(--ink)
+    }
+    .toc button:hover{background:#e5eef4}
+    .close-toc{background:var(--red)!important;color:white!important;text-align:center!important}
+    .checklist{
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+    }
+    .checklist div{
+      background:white;border:1px solid var(--line);border-radius:12px;padding:12px 15px;
+      font-size:1.15rem;
+    }
+    .stem{
+      display:inline-block;
+      border-bottom:3px solid var(--gold);
+      padding:0 3px;
+    }
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+    .ltr{direction:ltr;text-align:left}
+    kbd{
+      background:#eef1f4;border:1px solid #cdd5dc;border-bottom-width:3px;
+      padding:2px 7px;border-radius:6px;font-family:Arial,sans-serif;font-size:.9rem;
+    }
+    @media (max-width:900px){
+      .slide{padding:72px 5vw 96px}
+      .grid.two,.grid.three,.grid.four,.checklist{grid-template-columns:1fr}
+      .compare{grid-template-columns:1fr}
+      .vs{transform:none;text-align:center}
+      body{overflow:hidden}
+      p,li,td,th{font-size:1.08rem}
+      .slide::after{inset:8px}
+    }
+    @media print{
+      body{overflow:visible;background:white}
+      .toolbar,.menu-btn,.progress,.toc{display:none!important}
+      .slide{
+        display:block!important;
+        height:auto;min-height:100vh;
+        page-break-after:always;
+        overflow:visible;
+        padding:45px;
+      }
+      .slide::after{display:none}
+      .answer{display:block!important}
+    }
+  
+    h1,h2,h3,.kicker,.subtitle,.lead,.note,.warning,.success,
+    .card,.mini-rule,.exercise,.checklist,.toc,.menu-btn,.toolbar,th {
+      direction:ltr;
+    }
+    h2,h3,.lead,.note,.warning,.success,.card,.mini-rule,.exercise,.checklist,.toc {
+      text-align:left;
+    }
+    .arabic-big,.examples-line,.formula,td,
+    [lang="ar"], .ar {
+      direction:rtl;
+      unicode-bidi:isolate;
+    }
+    .toolbar button{
+      width:auto;
+      min-width:118px;
+      height:42px;
+      padding:0 16px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    @media (max-width:600px){
+      .toolbar button{min-width:74px;padding:0 10px;font-size:.88rem}
+    }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<button class="menu-btn" id="menuBtn">Contents</button>
+<aside class="toc" id="toc">
+<h3>Slide Contents</h3>
+<div id="tocItems"></div>
+<button class="close-toc" id="closeTocBtn">Close</button>
+</aside>
+<main class="deck" id="deck">
+<section class="slide title-slide active" data-title="Title">
+<div class="hero">
+<div class="kicker">Morphology and syntax in one lesson</div>
+<h1>اسم الفاعل</h1>
+<div class="subtitle">Formation from triliteral and non-triliteral verbs; sound, hamzated, and weak variations; agreement, meaning, and syntactic behavior.</div>
+<div class="examples-line">
+<span>قالَ ← قائِل</span>
+<span>أَخَذَ ← آخِذ</span>
+<span>فَتَحَ ← فاتِح</span>
+<span>دَرَّسَ ← مُدَرِّس</span>
+<span>اِفْتَتَحَ ← مُفْتَتِح</span>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Learning Objectives">
+<div class="slide-head"><div class="slide-number">01</div><h2>Learning Objectives</h2></div>
+<div class="content">
+<div class="grid two">
+<div class="card">
+<h3>Morphology</h3>
+<ul>
+<li>Identify the active-participle pattern used with triliteral verbs.</li>
+<li>Form the active participle from non-triliteral verbs.</li>
+<li>Handle hamzated, doubled, and weak verbs correctly.</li>
+</ul>
+</div>
+<div class="card">
+<h3>Syntax and Usage</h3>
+<ul>
+<li>Apply gender and number agreement.</li>
+<li>Identify its syntactic position and case.</li>
+<li>Explain when it governs a subject and a direct object like its verb.</li>
+</ul>
+</div>
+</div>
+<div class="success">Final goal: form the active participle accurately and use it in a natural, grammatically precise sentence.</div>
+</div>
+</section>
+<section class="slide" data-title="What Is the Active Participle?">
+<div class="slide-head"><div class="slide-number">02</div><h2>What Is اسم الفاعل?</h2></div>
+<div class="content">
+<div class="lead">
+        The active participle is a derived noun that identifies the person or entity performing an action, experiencing a state, or characteristically associated with an action.
+      </div>
+<div class="grid three">
+<div class="mini-rule">
+<h3>Actual performer</h3>
+<p><span class="arabic-big">كاتب</span> الرسالة</p>
+<p class="muted">The person who wrote or is writing.</p>
+</div>
+<div class="mini-rule">
+<h3>Description or state</h3>
+<p>الطفل <span class="arabic-big">نائم</span>.</p>
+<p class="muted">A state occurring now or in a specified context.</p>
+</div>
+<div class="mini-rule">
+<h3>Profession or role</h3>
+<p>هو <span class="arabic-big">مُدرِّس</span>.</p>
+<p class="muted">The derived form has become a common occupational noun.</p>
+</div>
+</div>
+<div class="note">The active participle is not an independent tense. Its time reference is inferred from context: now, tomorrow, habitually, or through the surrounding construction.</div>
+</div>
+</section>
+<section class="slide" data-title="Core Formation Rules">
+<div class="slide-head"><div class="slide-number">03</div><h2>Core Formation Rules</h2></div>
+<div class="content">
+<div class="grid two">
+<div class="card">
+<h3>Triliteral verb</h3>
+<span class="formula">فَعَلَ <span class="arrow">←</span> فاعِل</span>
+<p class="center arabic-big">كَتَبَ ← كاتِب</p>
+<p class="center arabic-big">فَتَحَ ← فاتِح</p>
+</div>
+<div class="card">
+<h3>Non-triliteral verb</h3>
+<span class="formula">Imperfect stem ← initial مُـ + kasra on the penultimate consonant</span>
+<p class="center arabic-big">يُدَرِّسُ ← مُدَرِّس</p>
+<p class="center arabic-big">يَفْتَتِحُ ← مُفْتَتِح</p>
+</div>
+</div>
+<div class="warning">Do not apply the pattern فاعِل directly to every verb. It is primarily the pattern for the basic triliteral verb.</div>
+</div>
+</section>
+<section class="slide" data-title="Sound Triliteral Verbs">
+<div class="slide-head"><div class="slide-number">04</div><h2>Active Participle from a Sound Triliteral Verb</h2></div>
+<div class="content">
+<span class="formula">Insert an alif after the first root consonant and place a kasra on the second root consonant: فاعِل</span>
+<table>
+<thead><tr><th>Verb</th><th>Root</th><th>اسم الفاعل</th><th>Sentence Example</th></tr></thead>
+<tbody>
+<tr><td>فَتَحَ</td><td>ف ت ح</td><td class="arabic-big">فاتِح</td><td>الطالبُ فاتِحٌ الكتابَ.</td></tr>
+<tr><td>كَتَبَ</td><td>ك ت ب</td><td class="arabic-big">كاتِب</td><td>هذه كاتبةٌ ماهرةٌ.</td></tr>
+<tr><td>جَلَسَ</td><td>ج ل س</td><td class="arabic-big">جالِس</td><td>الرجلُ جالسٌ قربَ الباب.</td></tr>
+<tr><td>حَفِظَ</td><td>ح ف ظ</td><td class="arabic-big">حافِظ</td><td>هو حافظٌ القصيدةَ.</td></tr>
+<tr><td>شَرِبَ</td><td>ش ر ب</td><td class="arabic-big">شارِب</td><td>الطفلُ شاربٌ الحليبَ.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="slide" data-title="Hamzated Verbs">
+<div class="slide-head"><div class="slide-number">05</div><h2>Hamzated Triliteral Verbs</h2></div>
+<div class="content">
+<div class="lead">The pattern remains فاعِل, but the written form of hamza changes according to its position and surrounding vowels.</div>
+<div class="grid three">
+<div class="card center">
+<h3>Initial hamza</h3>
+<p class="arabic-big">أَخَذَ ← آخِذ</p>
+<p class="arabic-big">أَكَلَ ← آكِل</p>
+<p>Two hamzas come together, so they are represented with madda: آ.</p>
+</div>
+<div class="card center">
+<h3>Medial hamza</h3>
+<p class="arabic-big">سَأَلَ ← سائِل</p>
+<p class="arabic-big">رَأَسَ ← رائِس</p>
+<p>The hamza follows the alif and is normally written on a yāʾ seat.</p>
+</div>
+<div class="card center">
+<h3>Final hamza</h3>
+<p class="arabic-big">قَرَأَ ← قارِئ</p>
+<p class="arabic-big">بَدَأَ ← بادِئ</p>
+<p>It is written on a yāʾ seat because the preceding consonant carries a kasra.</p>
+</div>
+</div>
+<div class="note">Key example: <strong>أَخَذَ ← آخِذ</strong>, not أاخذ or أخاذ.</div>
+</div>
+</section>
+<section class="slide" data-title="Hollow Verbs">
+<div class="slide-head"><div class="slide-number">06</div><h2>Hollow Verbs: A Weak Medial Root Consonant</h2></div>
+<div class="content">
+<div class="lead">In many hollow verbs, the medial weak consonant appears as hamza on a yāʾ seat in the active participle.</div>
+<table>
+<thead><tr><th>Verb</th><th>اسم الفاعل</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>قالَ</td><td class="arabic-big">قائِل</td><td>قال قائلٌ: الصدقُ نجاةٌ.</td></tr>
+<tr><td>باعَ</td><td class="arabic-big">بائِع</td><td>البائعُ يعرضُ السلعَ.</td></tr>
+<tr><td>نامَ</td><td class="arabic-big">نائِم</td><td>الطفلُ نائمٌ.</td></tr>
+<tr><td>صامَ</td><td class="arabic-big">صائِم</td><td>الرجلُ صائمٌ اليومَ.</td></tr>
+<tr><td>قادَ</td><td class="arabic-big">قائِد</td><td>القائدُ مسؤولٌ عن فريقه.</td></tr>
+<tr><td>خافَ</td><td class="arabic-big">خائِف</td><td>الطفلُ خائفٌ من الصوت.</td></tr>
+</tbody>
+</table>
+<div class="warning">In standard Arabic, the active participles of قال and باع are قائل and بائع, not قاول and بايع.</div>
+</div>
+</section>
+<section class="slide" data-title="Defective Verbs">
+<div class="slide-head"><div class="slide-number">07</div><h2>Defective Verbs: A Final Weak Root Consonant</h2></div>
+<div class="content">
+<div class="grid two">
+<div class="card">
+<h3>Basic forms</h3>
+<table>
+<tbody>
+<tr><td>دعا</td><td class="arabic-big">داعٍ</td></tr>
+<tr><td>رمى</td><td class="arabic-big">رامٍ</td></tr>
+<tr><td>سعى</td><td class="arabic-big">ساعٍ</td></tr>
+<tr><td>قضى</td><td class="arabic-big">قاضٍ</td></tr>
+<tr><td>هدى</td><td class="arabic-big">هادٍ</td></tr>
+</tbody>
+</table>
+</div>
+<div class="card">
+<h3>Rule for the final yāʾ</h3>
+<ul>
+<li>When indefinite and nominative or genitive, the final yāʾ is omitted and tanwīn kasr is used: <strong>داعٍ، قاضٍ</strong>.</li>
+<li>In the accusative, the yāʾ appears: <strong>رأيتُ داعيًا، قابلتُ قاضيًا</strong>.</li>
+<li>With the definite article, the yāʾ appears: <strong>الداعي، القاضي</strong>.</li>
+<li>In a construct phrase, the yāʾ appears: <strong>داعي الخير، قاضي المحكمة</strong>.</li>
+</ul>
+</div>
+</div>
+<div class="compare">
+<div class="side">هذا <strong>داعٍ</strong> إلى الخير.</div><div class="vs">but</div>
+<div class="side">رأيتُ <strong>داعيًا</strong> إلى الخير.</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Doubled Verbs">
+<div class="slide-head"><div class="slide-number">08</div><h2>Doubled Verbs</h2></div>
+<div class="content">
+<div class="lead">When the second and third root consonants are identical, gemination appears in the active participle.</div>
+<div class="grid four">
+<div class="card center"><p class="arabic-big">مَدَّ ← مادّ</p><p>مادٌّ يدَه.</p></div>
+<div class="card center"><p class="arabic-big">رَدَّ ← رادّ</p><p>رادٌّ الأمانةَ.</p></div>
+<div class="card center"><p class="arabic-big">عَدَّ ← عادّ</p><p>عادٌّ النقودَ.</p></div>
+<div class="card center"><p class="arabic-big">مَرَّ ← مارّ</p><p>مارٌّ بالطريق.</p></div>
+</div>
+<span class="formula">Underlying morphological form: مَدَدَ <span class="arrow">←</span> مادِد <span class="arrow">←</span> مادّ after assimilation</span>
+<div class="note">The shadda represents two identical consonants; neither consonant is absent from the morphological analysis.</div>
+</div>
+</section>
+<section class="slide" data-title="Assimilated and Lafif Verbs">
+<div class="slide-head"><div class="slide-number">09</div><h2>Assimilated and Lafif Verbs: Verbs Containing و or ي</h2></div>
+<div class="content">
+<div class="grid two">
+<div class="card">
+<h3>Assimilated verb: the first root consonant is weak</h3>
+<table>
+<tbody>
+<tr><td>وَعَدَ</td><td class="arabic-big">واعِد</td></tr>
+<tr><td>وَجَدَ</td><td class="arabic-big">واجِد</td></tr>
+<tr><td>وَقَفَ</td><td class="arabic-big">واقِف</td></tr>
+<tr><td>وَصَفَ</td><td class="arabic-big">واصِف</td></tr>
+</tbody>
+</table>
+<p>It normally follows فاعِل without major changes.</p>
+</div>
+<div class="card">
+<h3>Lafif verb: two root consonants are weak</h3>
+<table>
+<tbody>
+<tr><td>وَقَى</td><td class="arabic-big">واقٍ</td></tr>
+<tr><td>وَفَى</td><td class="arabic-big">وافٍ</td></tr>
+<tr><td>رَوَى</td><td class="arabic-big">راوٍ</td></tr>
+<tr><td>طَوَى</td><td class="arabic-big">طاوٍ</td></tr>
+</tbody>
+</table>
+<p>The فاعِل pattern combines with the rule for the defective ending.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Non-Triliteral Verbs">
+<div class="slide-head"><div class="slide-number">10</div><h2>Active Participle from a Non-Triliteral Verb</h2></div>
+<div class="content">
+<div class="lead">Start with the imperfect form, replace its imperfect prefix with مُـ, and place a kasra on the penultimate consonant.</div>
+<div class="grid three">
+<div class="mini-rule center">
+<h3>1. Begin with the imperfect</h3>
+<p class="arabic-big">يُدَرِّسُ</p>
+</div>
+<div class="mini-rule center">
+<h3>2. Replace the imperfect prefix</h3>
+<p class="arabic-big">مُدَرِّسُ</p>
+</div>
+<div class="mini-rule center">
+<h3>3. Add a kasra to the penultimate consonant</h3>
+<p class="arabic-big">مُدَرِّس</p>
+</div>
+</div>
+<span class="formula">دَرَّسَ ← يُدَرِّسُ ← مُدَرِّس</span>
+<span class="formula">اِفْتَتَحَ ← يَفْتَتِحُ ← مُفْتَتِح</span>
+</div>
+</section>
+<section class="slide" data-title="Derived Verb Forms">
+<div class="slide-head"><div class="slide-number">11</div><h2>Common Derived Forms: Forms II–X</h2></div>
+<div class="content">
+<table>
+<thead><tr><th>Verb Form</th><th>Verb</th><th>Imperfect</th><th>اسم الفاعل</th></tr></thead>
+<tbody>
+<tr><td>II فَعَّلَ</td><td>دَرَّسَ</td><td>يُدَرِّسُ</td><td class="arabic-big">مُدَرِّس</td></tr>
+<tr><td>III فاعَلَ</td><td>شارَكَ</td><td>يُشارِكُ</td><td class="arabic-big">مُشارِك</td></tr>
+<tr><td>IV أَفْعَلَ</td><td>أَكْرَمَ</td><td>يُكْرِمُ</td><td class="arabic-big">مُكْرِم</td></tr>
+<tr><td>V تَفَعَّلَ</td><td>تَعَلَّمَ</td><td>يَتَعَلَّمُ</td><td class="arabic-big">مُتَعَلِّم</td></tr>
+<tr><td>VI تَفاعَلَ</td><td>تَعاوَنَ</td><td>يَتَعاوَنُ</td><td class="arabic-big">مُتَعاوِن</td></tr>
+<tr><td>VII اِنْفَعَلَ</td><td>اِنْطَلَقَ</td><td>يَنْطَلِقُ</td><td class="arabic-big">مُنْطَلِق</td></tr>
+<tr><td>VIII اِفْتَعَلَ</td><td>اِفْتَتَحَ</td><td>يَفْتَتِحُ</td><td class="arabic-big">مُفْتَتِح</td></tr>
+<tr><td>IX اِفْعَلَّ</td><td>اِحْمَرَّ</td><td>يَحْمَرُّ</td><td class="arabic-big">مُحْمَرّ</td></tr>
+<tr><td>X اِسْتَفْعَلَ</td><td>اِسْتَخْدَمَ</td><td>يَسْتَخْدِمُ</td><td class="arabic-big">مُسْتَخْدِم</td></tr>
+</tbody>
+</table>
+<div class="note">The rule remains the same across these forms: derive the active participle from the imperfect rather than guessing from the past-tense form.</div>
+</div>
+</section>
+<section class="slide" data-title="Quadriliteral and Longer Verbs">
+<div class="slide-head"><div class="slide-number">12</div><h2>Quadriliteral and Longer Verbs</h2></div>
+<div class="content">
+<div class="grid two">
+<div class="card">
+<h3>Basic quadriliteral</h3>
+<p class="arabic-big">دَحْرَجَ ← يُدَحْرِجُ ← مُدَحْرِج</p>
+<p class="arabic-big">بَعْثَرَ ← يُبَعْثِرُ ← مُبَعْثِر</p>
+<p class="arabic-big">زَلْزَلَ ← يُزَلْزِلُ ← مُزَلْزِل</p>
+</div>
+<div class="card">
+<h3>Longer derived verbs</h3>
+<p class="arabic-big">اِطْمَأَنَّ ← يَطْمَئِنُّ ← مُطْمَئِنّ</p>
+<p class="arabic-big">اِسْتَقْبَلَ ← يَسْتَقْبِلُ ← مُسْتَقْبِل</p>
+<p class="arabic-big">اِسْتَفادَ ← يَسْتَفيدُ ← مُسْتَفيد</p>
+</div>
+</div>
+<div class="success">All of these follow the non-triliteral rule: initial مُـ plus a kasra on the penultimate consonant.</div>
+</div>
+</section>
+<section class="slide" data-title="Active vs. Passive Participle">
+<div class="slide-head"><div class="slide-number">13</div><h2>Do Not Confuse the Active and Passive Participles</h2></div>
+<div class="content">
+<div class="compare">
+<div class="side"><strong>كاتِب</strong><br/><span class="muted">the person who writes or wrote</span></div>
+<div class="vs">versus</div>
+<div class="side"><strong>مَكْتوب</strong><br/><span class="muted">that which was written</span></div>
+</div>
+<table>
+<thead><tr><th>Verb</th><th>اسم الفاعل</th><th>Passive Participle</th><th>Vowel Contrast</th></tr></thead>
+<tbody>
+<tr><td>فَتَحَ</td><td>فاتِح</td><td>مَفْتوح</td><td>Two different patterns</td></tr>
+<tr><td>دَرَّسَ</td><td class="arabic-big">مُدَرِّس</td><td class="arabic-big">مُدَرَّس</td><td>Kasra vs. fatḥa on the penultimate consonant</td></tr>
+<tr><td>أَكْرَمَ</td><td class="arabic-big">مُكْرِم</td><td class="arabic-big">مُكْرَم</td><td>مُفعِل / مُفعَل</td></tr>
+<tr><td>اِفْتَتَحَ</td><td class="arabic-big">مُفْتَتِح</td><td class="arabic-big">مُفْتَتَح</td><td>Kasra marks the active participle; fatḥa marks the passive participle</td></tr>
+<tr><td>اِسْتَخْدَمَ</td><td class="arabic-big">مُسْتَخْدِم</td><td class="arabic-big">مُسْتَخْدَم</td><td>مُستفعِل / مُستفعَل</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="slide" data-title="Gender">
+<div class="slide-head"><div class="slide-number">14</div><h2>Gender: Masculine and Feminine</h2></div>
+<div class="content">
+<div class="lead">The feminine form is normally created with tāʾ marbūṭa, and the participle agrees with the noun it describes.</div>
+<div class="grid four">
+<div class="card center"><p class="arabic-big">كاتِب</p><p>كاتِبة</p></div>
+<div class="card center"><p class="arabic-big">مُدَرِّس</p><p>مُدَرِّسة</p></div>
+<div class="card center"><p class="arabic-big">مُشارِك</p><p>مُشارِكة</p></div>
+<div class="card center"><p class="arabic-big">داعٍ</p><p>داعِية</p></div>
+</div>
+<ul class="clean">
+<li>الطالبُ <strong>قارئٌ</strong> النصَّ.</li>
+<li>الطالبةُ <strong>قارئةٌ</strong> النصَّ.</li>
+<li>الأمُّ <strong>ساعيةٌ</strong> إلى الخير.</li>
+</ul>
+<div class="note">In feminine forms derived from defective verbs, the yāʾ appears before tāʾ marbūṭa: داعية، قاضية، ساعية.</div>
+</div>
+</section>
+<section class="slide" data-title="Number">
+<div class="slide-head"><div class="slide-number">15</div><h2>Singular, Dual, and Plural</h2></div>
+<div class="content">
+<table>
+<thead><tr><th>Number and Gender</th><th>Form of كاتب</th><th>Sentence Example</th></tr></thead>
+<tbody>
+<tr><td>Masculine singular</td><td>كاتِب</td><td>الطالبُ كاتبٌ.</td></tr>
+<tr><td>Feminine singular</td><td>كاتِبة</td><td>الطالبةُ كاتبةٌ.</td></tr>
+<tr><td>Masculine dual</td><td>كاتِبان / كاتِبَيْن</td><td>الطالبان كاتبانِ.</td></tr>
+<tr><td>Feminine dual</td><td>كاتِبتان / كاتِبَتَيْن</td><td>الطالبتان كاتبتانِ.</td></tr>
+<tr><td>Sound masculine plural</td><td>كاتِبون / كاتِبين</td><td>الطلابُ كاتبون.</td></tr>
+<tr><td>Sound feminine plural</td><td>كاتِبات</td><td>الطالباتُ كاتباتٌ.</td></tr>
+</tbody>
+</table>
+<div class="note">Some active participles have common broken plurals, such as كاتب ← كُتّاب، عامل ← عُمّال، and عالم ← علماء. Lexical convention determines the natural plural.</div>
+</div>
+</section>
+<section class="slide" data-title="Agreement">
+<div class="slide-head"><div class="slide-number">16</div><h2>Agreement in the Sentence</h2></div>
+<div class="content">
+<div class="grid two">
+<div class="card">
+<h3>When used attributively</h3>
+<p>رأيتُ طالبًا <strong>حاملًا</strong> حقيبةً.</p>
+<p>مررتُ بطالبتين <strong>حاملتين</strong> كتبًا.</p>
+<p>جاءت الطالباتُ <strong>مستعدّاتٍ</strong>.</p>
+</div>
+<div class="card">
+<h3>When used predicatively</h3>
+<p>الطالبُ <strong>مُشارِكٌ</strong>.</p>
+<p>الطالبتان <strong>مُشارِكتان</strong>.</p>
+<p>الطلابُ <strong>مُشارِكون</strong>.</p>
+</div>
+</div>
+<div class="warning">Correct formation is not sufficient. When the participle is an adjective, it must also agree with the noun in gender, number, definiteness, and case.</div>
+</div>
+</section>
+<section class="slide" data-title="Syntactic Positions">
+<div class="slide-head"><div class="slide-number">17</div><h2>Syntactic Positions of the Active Participle</h2></div>
+<div class="content">
+<table>
+<thead><tr><th>Position</th><th>المثال</th><th>Brief Analysis</th></tr></thead>
+<tbody>
+<tr><td>Predicate</td><td>محمدٌ <strong>مُسافرٌ</strong>.</td><td>Nominative predicate</td></tr>
+<tr><td>Adjective</td><td>قابلتُ طالبًا <strong>مجتهدًا</strong>.</td><td>Accusative adjective</td></tr>
+<tr><td>Circumstantial accusative</td><td>دخل الطفلُ <strong>ضاحكًا</strong>.</td><td>Accusative circumstantial expression</td></tr>
+<tr><td>Subject or nominal head</td><td>حضر <strong>المُشارِكُ</strong>.</td><td>Nominative subject</td></tr>
+<tr><td>Genitive noun</td><td>سلّمتُ على <strong>القادمِ</strong>.</td><td>Genitive after a preposition</td></tr>
+<tr><td>Subject of كان</td><td>كان <strong>المُعلِّمُ</strong> حاضرًا.</td><td>Nominative subject of كان</td></tr>
+<tr><td>Predicate of كان</td><td>كان الطالبُ <strong>غائبًا</strong>.</td><td>Accusative predicate of كان</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="slide" data-title="Time Reference">
+<div class="slide-head"><div class="slide-number">18</div><h2>Time Reference and Context</h2></div>
+<div class="content">
+<div class="grid three">
+<div class="mini-rule">
+<h3>Present situation</h3>
+<p>الطالبُ <strong>قارئٌ</strong> الكتابَ الآن.</p>
+<p class="muted">The event is in progress now.</p>
+</div>
+<div class="mini-rule">
+<h3>Future reference</h3>
+<p>أنا <strong>مسافرٌ</strong> غدًا.</p>
+<p class="muted">The time expression establishes future reference.</p>
+</div>
+<div class="mini-rule">
+<h3>Habit or characteristic</h3>
+<p>هو <strong>كاتبٌ</strong> معروفٌ.</p>
+<p class="muted">A profession or recurring characteristic rather than only a momentary event.</p>
+</div>
+</div>
+<div class="note">The active participle can refer to a completed event in descriptive contexts, especially with أل or in a construct phrase. Its syntactic government, however, depends on definiteness, structural support, and time reference.</div>
+</div>
+</section>
+<section class="slide" data-title="Syntactic Government">
+<div class="slide-head"><div class="slide-number">19</div><h2>When the Active Participle Governs Like Its Verb</h2></div>
+<div class="content">
+<div class="lead">The active participle may function like an imperfect verb: it assigns nominative case to its subject and, when derived from a transitive verb, accusative case to its object.</div>
+<div class="grid two">
+<div class="card">
+<h3>Intransitive verb</h3>
+<p class="arabic-big">أمُسافرٌ أخوك؟</p>
+<p><strong>مسافر:</strong> An active participle functioning as a governor.</p>
+<p><strong>أخوك:</strong> The nominative subject governed by the active participle.</p>
+</div>
+<div class="card">
+<h3>Transitive verb</h3>
+<p class="arabic-big">محمدٌ قارئٌ الكتابَ.</p>
+<p><strong>قارئ:</strong> An active participle functioning as a governor.</p>
+<p><strong>ضمير مستتر:</strong> Its understood subject, interpreted as هو.</p>
+<p><strong>الكتابَ:</strong> An accusative direct object.</p>
+</div>
+</div>
+<span class="formula">يقرأُ محمدٌ الكتابَ <span class="arrow">↔</span> محمدٌ قارئٌ الكتابَ</span>
+</div>
+</section>
+<section class="slide" data-title="With the Definite Article">
+<div class="slide-head"><div class="slide-number">20</div><h2>When the Active Participle Has the Definite Article أل</h2></div>
+<div class="content">
+<div class="lead">When the active participle is introduced by أل, it may govern like its verb without requiring a separate supporting construction.</div>
+<ul class="clean">
+<li>جاء <strong>الكاتِبُ الرسالةَ</strong>. <span class="muted">الكاتب is the sentence subject, and الرسالة is the direct object governed by the active participle.</span></li>
+<li>أكرمتُ <strong>المُعلِّمَ الطلابَ</strong>. <span class="muted">المعلّم is the object of the main verb, while الطلاب is the object governed by the active participle.</span></li>
+<li>هذا هو <strong>المُنظِّمُ المؤتمرَ</strong>. <span class="muted">المؤتمر is the direct object governed by the active participle.</span></li>
+</ul>
+<div class="note">These examples illustrate classical grammatical government. In contemporary usage, a construct phrase or a finite verb may be more natural in some contexts.</div>
+</div>
+</section>
+<section class="slide" data-title="Indefinite Active Participles">
+<div class="slide-head"><div class="slide-number">21</div><h2>When the Active Participle Is Indefinite</h2></div>
+<div class="content">
+<div class="lead">An indefinite active participle normally governs when it refers to the present or future and is structurally supported by an element before it.</div>
+<table>
+<thead><tr><th>Type of Support</th><th>المثال</th></tr></thead>
+<tbody>
+<tr><td>Predicate of a subject</td><td>الطالبُ <strong>قارئٌ الكتابَ</strong> الآن.</td></tr>
+<tr><td>Negation</td><td>ما <strong>تاركٌ المجتهدُ عملَه</strong>.</td></tr>
+<tr><td>Question</td><td>أَ<strong>حافظٌ أخوك القصيدةَ</strong>؟</td></tr>
+<tr><td>Modification of an indefinite noun</td><td>رأيتُ رجلًا <strong>حاملًا حقيبةً</strong>.</td></tr>
+<tr><td>Circumstantial accusative</td><td>دخل خالدٌ <strong>حاملًا الكتابَ</strong>.</td></tr>
+<tr><td>Vocative construction</td><td>يا <strong>طالبًا العلمَ</strong>، اجتهد.</td></tr>
+</tbody>
+</table>
+<div class="warning">For classroom analysis, ask three questions: Is the active participle indefinite? Does it refer to the present or future? What preceding structure supports it?</div>
+</div>
+</section>
+<section class="slide" data-title="Construct-State Use">
+<div class="slide-head"><div class="slide-number">22</div><h2>The Active Participle in a Construct Phrase</h2></div>
+<div class="content">
+<div class="compare">
+<div class="side">محمدٌ <strong>قارئٌ الكتابَ</strong>.<br/><span class="muted">The active participle governs directly, and الكتاب is accusative.</span></div>
+<div class="vs">or</div>
+<div class="side">محمدٌ <strong>قارئُ الكتابِ</strong>.<br/><span class="muted">قارئ is the first term of the construct, and الكتاب is formally genitive.</span></div>
+</div>
+<div class="grid two">
+<div class="card">
+<h3>With direct government</h3>
+<ul>
+<li>Tanwīn remains on the active participle: قارئٌ.</li>
+<li>The direct object is accusative: الكتابَ.</li>
+<li>The construction closely parallels the meaning of an imperfect verb.</li>
+</ul>
+</div>
+<div class="card">
+<h3>In the construct state</h3>
+<ul>
+<li>Tanwīn is removed: قارئُ.</li>
+<li>The following noun is formally genitive: الكتابِ.</li>
+<li>The construction may emphasize a stable relationship or association.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Lexicalized Uses">
+<div class="slide-head"><div class="slide-number">23</div><h2>When the Active Participle Becomes a Lexical Noun</h2></div>
+<div class="content">
+<div class="lead">Some active participles are used so frequently that they become conventional nouns for professions, roles, or established categories.</div>
+<div class="grid four">
+<div class="card center"><p class="arabic-big">طالِب</p><p>Originally one who seeks knowledge; now the conventional noun for a student.</p></div>
+<div class="card center"><p class="arabic-big">سائِق</p><p>A common occupational noun.</p></div>
+<div class="card center"><p class="arabic-big">حاكِم</p><p>A noun denoting a political or administrative role.</p></div>
+<div class="card center"><p class="arabic-big">كاتِب</p><p>It may identify someone writing now or a person whose profession is writing.</p></div>
+</div>
+<div class="note">Context determines whether the form is a governing participle, an adjective, or a partly lexicalized profession noun.</div>
+</div>
+</section>
+<section class="slide" data-title="Formation Checklist">
+<div class="slide-head"><div class="slide-number">24</div><h2>A Quick Formation Checklist</h2></div>
+<div class="content">
+<div class="grid two">
+<div class="card">
+<h3>Question 1: Is the verb triliteral?</h3>
+<p><strong>Yes:</strong> Begin with the pattern فاعِل.</p>
+<p><strong>No:</strong> Begin with the imperfect, replace the prefix with مُـ, and add a kasra to the penultimate consonant.</p>
+</div>
+<div class="card">
+<h3>Question 2: Does the root contain hamza or a weak consonant?</h3>
+<p>Check whether the verb is hamzated, hollow, defective, doubled, assimilated, or lafif.</p>
+<p>Apply the appropriate spelling or phonological adjustment.</p>
+</div>
+<div class="card">
+<h3>Question 3: What gender and number are required?</h3>
+<p>Form the feminine, dual, or plural as required.</p>
+</div>
+<div class="card">
+<h3>Question 4: What is its syntactic position?</h3>
+<p>Assign the correct case, then determine whether it governs like its verb.</p>
+</div>
+</div>
+<div class="formula">Verb → verb type → formation rule → agreement → syntactic position → contextual meaning</div>
+</div>
+</section>
+<section class="slide" data-title="Common Errors">
+<div class="slide-head"><div class="slide-number">25</div><h2>Common Errors and Their Corrections</h2></div>
+<div class="content">
+<table>
+<thead><tr><th>Incorrect Form</th><th>Correct Form</th><th>Reason</th></tr></thead>
+<tbody>
+<tr><td>قال ← قاول</td><td>قال ← <strong>قائل</strong></td><td>The verb is hollow.</td></tr>
+<tr><td>أخذ ← أاخذ</td><td>أخذ ← <strong>آخذ</strong></td><td>The two hamzas are represented by madda.</td></tr>
+<tr><td>درّس ← دارس</td><td>درّس ← <strong>مُدرِّس</strong></td><td>The verb is non-triliteral.</td></tr>
+<tr><td>افتتح ← فاتح</td><td>افتتح ← <strong>مُفتتِح</strong></td><td>Derive the form from the imperfect.</td></tr>
+<tr><td>دعا ← داعيٌ</td><td>دعا ← <strong>داعٍ</strong></td><td>The final yāʾ is omitted when the form is indefinite and nominative or genitive.</td></tr>
+<tr><td>الطالبة كاتب</td><td>الطالبة <strong>كاتبة</strong></td><td>Gender agreement is required.</td></tr>
+<tr><td>مُستخدَم البرنامج</td><td><strong>مُستخدِم</strong> البرنامج</td><td>Kasra marks the active participle; fatḥa marks the passive participle.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="slide" data-title="Practice: Formation">
+<div class="slide-head"><div class="slide-number">26</div><h2>Practice 1: Form the Active Participle</h2></div>
+<div class="content">
+<div class="exercise">
+<ol>
+<li>سَمِعَ → ________</li>
+<li>قالَ → ________</li>
+<li>أَكَلَ → ________</li>
+<li>قَضى → ________</li>
+<li>مَدَّ → ________</li>
+<li>دَرَّسَ → ________</li>
+<li>شارَكَ → ________</li>
+<li>اِنْطَلَقَ → ________</li>
+<li>اِفْتَتَحَ → ________</li>
+<li>اِسْتَخْرَجَ → ________</li>
+</ol>
+<button class="reveal">Show Answers</button>
+<div class="answer">1. سامع  2. قائل  3. آكل  4. قاضٍ  5. مادّ  6. مُدرِّس  7. مُشارِك  8. مُنطلِق  9. مُفتتِح  10. مُستخرِج</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Practice: Active or Passive?">
+<div class="slide-head"><div class="slide-number">27</div><h2>Practice 2: Active or Passive?</h2></div>
+<div class="content">
+<div class="exercise">
+<p>Choose the correct form according to the intended meaning:</p>
+<ol>
+<li>هذا هو الشخصُ (المُستخدِم / المُستخدَم) البرنامجَ.</li>
+<li>البرنامجُ (مُستخدِم / مُستخدَم) في الجامعة.</li>
+<li>المعلّمُ (مُكرِم / مُكرَم) الضيفَ.</li>
+<li>الضيفُ (مُكرِم / مُكرَم) في الحفل.</li>
+<li>هي (مُفتتِحة / مُفتتَحة) المؤتمرَ.</li>
+</ol>
+<button class="reveal">Show Answers</button>
+<div class="answer">1. المُستخدِم  2. مُستخدَم  3. مُكرِم  4. مُكرَم  5. مُفتتِحة</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Practice: Agreement">
+<div class="slide-head"><div class="slide-number">28</div><h2>Practice 3: Agreement</h2></div>
+<div class="content">
+<div class="exercise">
+<p>Complete each sentence with the correct active participle derived from the verb in parentheses:</p>
+<ol>
+<li>الطالبتان ________ في المسابقة. (شارك)</li>
+<li>الطلابُ ________ إلى القاعة. (دخل)</li>
+<li>رأيتُ معلّماتٍ ________ الدرسَ. (شرح)</li>
+<li>هذه المرأةُ ________ إلى الخير. (دعا)</li>
+<li>مررتُ برجلين ________ حقيبتين. (حمل)</li>
+</ol>
+<button class="reveal">Show Answers</button>
+<div class="answer">1. مُشارِكتان  2. داخِلون  3. شارِحاتٍ  4. داعِيةٌ  5. حامِلَيْن</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Practice: Syntactic Government">
+<div class="slide-head"><div class="slide-number">29</div><h2>Practice 4: Syntactic Government</h2></div>
+<div class="content">
+<div class="exercise">
+<p>Identify the active participle, then identify the subject or object that it governs:</p>
+<ol>
+<li>أَحافِظٌ أخوك القصيدةَ؟</li>
+<li>الطالبُ قارئٌ الكتابَ الآن.</li>
+<li>رأيتُ رجلًا حاملًا صندوقًا.</li>
+<li>يا طالبًا العلمَ، اصبر.</li>
+<li>هذا هو المُنظِّمُ الحفلَ.</li>
+</ol>
+<button class="reveal">Show Analysis</button>
+<div class="answer">
+          1. حافظ is the active participle; أخوك is its subject; القصيدة is its direct object.<br/>
+          2. قارئ is the active participle; its subject is understood; الكتاب is its direct object.<br/>
+          3. حاملًا is the active participle; its subject is understood; صندوقًا is its direct object.<br/>
+          4. طالبًا is the active participle; its subject is understood; العلم is its direct object.<br/>
+          5. المنظّم is a definite active participle; الحفل is its direct object.
+        </div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Practice: Error Correction">
+<div class="slide-head"><div class="slide-number">30</div><h2>Practice 5: Correct the Error</h2></div>
+<div class="content">
+<div class="exercise">
+<ol>
+<li>قال قاولٌ كلامًا مهمًّا.</li>
+<li>أخي أاخذٌ الكتابَ من المكتبة.</li>
+<li>هي مدرّسٌ اللغةَ العربيةَ.</li>
+<li>الطالبُ مفتتَحٌ الاجتماعَ.</li>
+<li>هذا داعيٌ إلى السلام.</li>
+<li>المهندساتُ مصمّمون المشروعَ.</li>
+</ol>
+<button class="reveal">Show Corrections</button>
+<div class="answer">
+          1. قال <strong>قائلٌ</strong> كلامًا مهمًّا.<br/>
+          2. أخي <strong>آخذٌ</strong> الكتابَ من المكتبة.<br/>
+          3. هي <strong>مُدرِّسةٌ</strong> اللغةَ العربيةَ.<br/>
+          4. الطالبُ <strong>مُفتتِحٌ</strong> الاجتماعَ.<br/>
+          5. هذا <strong>داعٍ</strong> إلى السلام.<br/>
+          6. المهندساتُ <strong>مُصمِّماتٌ</strong> المشروعَ.
+        </div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Language Production">
+<div class="slide-head"><div class="slide-number">31</div><h2>Practice 6: Language Production</h2></div>
+<div class="content">
+<div class="grid two">
+<div class="card">
+<h3>Writing Task</h3>
+<p>Write a paragraph of 6–8 sentences describing a day at the university. Include:</p>
+<ul>
+<li>an active participle from a sound triliteral verb;</li>
+<li>an active participle from a hollow verb;</li>
+<li>an active participle from a defective verb;</li>
+<li>an active participle from a non-triliteral verb;</li>
+<li>an active participle that governs a direct object.</li>
+</ul>
+</div>
+<div class="card">
+<h3>Speaking Task</h3>
+<p>Describe three people in an image or public place and explain what each person is doing now:</p>
+<ul>
+<li>رجلٌ حاملٌ حقيبةً.</li>
+<li>طالبةٌ قارئةٌ كتابًا.</li>
+<li>معلّمٌ شارحٌ الدرسَ.</li>
+</ul>
+<p>Then change the sentences into the dual and plural.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="Final Review">
+<div class="slide-head"><div class="slide-number">32</div><h2>Final Review</h2></div>
+<div class="content">
+<div class="checklist">
+<div>I know that a basic triliteral active participle normally follows <strong>فاعِل</strong>.</div>
+<div>I can correctly form <strong>قائل، آخذ، فاتح</strong> .</div>
+<div>I derive non-triliteral active participles from the imperfect: <strong>مُدرِّس، مُفتتِح</strong>.</div>
+<div>I distinguish between <strong>مُستخدِم</strong> and<strong>مُستخدَم</strong>.</div>
+<div>I can handle defective endings: <strong>داعٍ / داعيًا / الداعي</strong>.</div>
+<div>I apply gender, number, definiteness, and case agreement.</div>
+<div>I identify its syntactic role: predicate, adjective, circumstantial expression, subject, or another position.</div>
+<div>I know when it governs like a verb and assigns case to a subject or object.</div>
+</div>
+<div class="formula">قالَ قائلٌ، وأخذَ آخذٌ، وفتحَ فاتحٌ، ودرَّسَ مُدرِّسٌ، وافتتحَ مُفتتِحٌ.</div>
+<p class="center muted">Use the Previous and Next buttons or the keyboard arrow keys. Select Contents to jump directly to any section.</p>
+</div>
+</section>
+</main>
+<nav aria-label="Slide navigation" class="toolbar"><button aria-label="Previous slide" id="prevBtn" title="Previous slide" type="button">← Previous</button><span class="counter" id="counter">1 / 33</span><button aria-label="Next slide" id="nextBtn" title="Next slide" type="button">Next →</button></nav>
+<script>
+(() => {
+  "use strict";
+
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const counter = document.getElementById("counter");
+  const progress = document.getElementById("progress");
+  const toc = document.getElementById("toc");
+  const tocItems = document.getElementById("tocItems");
+  const menuBtn = document.getElementById("menuBtn");
+  const closeTocBtn = document.getElementById("closeTocBtn");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  let current = 0;
+
+  function updateInterface() {
+    slides.forEach((slide, index) => {
+      slide.classList.toggle("active", index === current);
+      if (index === current) slide.scrollTop = 0;
+    });
+    counter.textContent = `${current + 1} / ${slides.length}`;
+    progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+    document.title = `${slides[current].dataset.title || "Slide"} | Active Participle`;
+  }
+
+  function showSlide(index) {
+    current = Math.max(0, Math.min(index, slides.length - 1));
+    updateInterface();
+  }
+
+  function nextSlide() {
+    showSlide(current === slides.length - 1 ? 0 : current + 1);
+  }
+
+  function previousSlide() {
+    showSlide(current === 0 ? slides.length - 1 : current - 1);
+  }
+
+  function toggleContents(forceState) {
+    const shouldOpen = typeof forceState === "boolean"
+      ? forceState
+      : !toc.classList.contains("open");
+    toc.classList.toggle("open", shouldOpen);
+    toc.setAttribute("aria-hidden", String(!shouldOpen));
+  }
+
+  slides.forEach((slide, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = `${index + 1}. ${slide.dataset.title || "Slide"}`;
+    button.addEventListener("click", () => {
+      showSlide(index);
+      toggleContents(false);
+    });
+    tocItems.appendChild(button);
+  });
+
+  prevBtn.addEventListener("click", previousSlide);
+  nextBtn.addEventListener("click", nextSlide);
+  menuBtn.addEventListener("click", () => toggleContents());
+  closeTocBtn.addEventListener("click", () => toggleContents(false));
+
+  document.querySelectorAll(".reveal").forEach((button) => {
+    button.addEventListener("click", () => {
+      const answer = button.nextElementSibling;
+      if (!answer || !answer.classList.contains("answer")) return;
+      const isOpen = answer.classList.toggle("show");
+      const original = button.dataset.originalText || button.textContent;
+      button.dataset.originalText = original;
+      if (isOpen) {
+        button.textContent = "Hide Answer";
+      } else {
+        button.textContent = original;
+      }
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const tag = document.activeElement && document.activeElement.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+
+    if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+      event.preventDefault();
+      nextSlide();
+    } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
+      event.preventDefault();
+      previousSlide();
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      showSlide(0);
+    } else if (event.key === "End") {
+      event.preventDefault();
+      showSlide(slides.length - 1);
+    } else if (event.key === "Escape") {
+      toggleContents(false);
+    }
+  });
+
+  let touchStartX = null;
+  document.addEventListener("touchstart", (event) => {
+    touchStartX = event.changedTouches[0].screenX;
+  }, {passive:true});
+
+  document.addEventListener("touchend", (event) => {
+    if (touchStartX === null) return;
+    const delta = event.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(delta) > 55) {
+      delta < 0 ? nextSlide() : previousSlide();
+    }
+    touchStartX = null;
+  }, {passive:true});
+
+  updateInterface();
+})();
+</script>
+</body>
+</html>
