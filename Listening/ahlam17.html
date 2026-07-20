@@ -1,11 +1,12 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="درس استماع تفاعلي باللغة العربية مع تصحيح ذاتي.">
-  <title>درس الاستماع التفاعلي: الخبر المفاجئ في شقّة زياد</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="درس استماع تفاعلي باللغة العربية مع تصحيح ذاتي." name="description"/>
+<title>درس الاستماع التفاعلي: الخبر المفاجئ في شقّة زياد</title>
+<style>
     :root {
       --bg: #f4f6f8;
       --card: #ffffff;
@@ -26,9 +27,7 @@
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       margin: 0;
       background: var(--bg);
@@ -36,10 +35,7 @@
       font-family: Tahoma, Arial, "Noto Sans Arabic", sans-serif;
       line-height: 1.8;
     }
-
-    button, input, select, textarea { font: inherit; }
-
-    a { color: inherit; }
+    button, input, select { font: inherit; }
 
     .skip-link {
       position: absolute;
@@ -52,7 +48,6 @@
       border-radius: 8px;
       text-decoration: none;
     }
-
     .skip-link:focus { top: 1rem; }
 
     .hero {
@@ -60,28 +55,13 @@
       color: #fff;
       padding: 2.2rem 1rem 3.8rem;
     }
-
     .hero-inner, .page {
       width: min(1050px, calc(100% - 2rem));
       margin-inline: auto;
     }
-
-    .hero h1 {
-      margin: 0;
-      font-size: clamp(1.65rem, 4vw, 2.65rem);
-      line-height: 1.35;
-    }
-
-    .hero p {
-      margin: .55rem 0 0;
-      color: rgba(255,255,255,.9);
-      font-size: 1.05rem;
-    }
-
-    .page {
-      margin-top: -2.2rem;
-      padding-bottom: 5rem;
-    }
+    .hero h1 { margin: 0; font-size: clamp(1.65rem, 4vw, 2.65rem); line-height: 1.35; }
+    .hero p { margin: .55rem 0 0; color: rgba(255,255,255,.9); font-size: 1.05rem; }
+    .page { margin-top: -2.2rem; padding-bottom: 5rem; }
 
     .card, .lesson-section {
       background: var(--card);
@@ -89,25 +69,18 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
-
-    .audio-card {
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-    }
-
+    .audio-card { padding: 1.25rem; margin-bottom: 1rem; }
     .audio-card h2 { margin: 0 0 .25rem; font-size: 1.25rem; }
     .audio-card p { margin: 0 0 .9rem; color: var(--muted); }
     audio { width: 100%; display: block; }
 
-    .audio-tools, .top-actions, .section-actions, .nav-links {
+    .audio-tools, .top-actions, .section-actions, .nav-links, .choice-row {
       display: flex;
       flex-wrap: wrap;
       gap: .65rem;
       align-items: center;
     }
-
     .audio-tools { margin-top: .9rem; }
-
     .btn, .nav-link {
       border: 1px solid var(--border);
       background: #fff;
@@ -118,29 +91,14 @@
       text-decoration: none;
       transition: transform .15s ease, border-color .15s ease, background .15s ease;
     }
-
-    .btn:hover, .nav-link:hover {
-      transform: translateY(-1px);
-      border-color: #aebdce;
-      background: #f9fbfd;
-    }
-
-    .btn:focus-visible, .nav-link:focus-visible,
-    input:focus-visible, select:focus-visible, textarea:focus-visible {
+    .btn:hover, .nav-link:hover { transform: translateY(-1px); border-color: #aebdce; background: #f9fbfd; }
+    .btn:focus-visible, .nav-link:focus-visible, input:focus-visible, select:focus-visible {
       outline: 3px solid rgba(36, 87, 167, .25);
       outline-offset: 2px;
     }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-
+    .btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
     .btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
-
     .btn-danger { color: var(--incorrect); }
-
     .speed-label {
       display: inline-flex;
       align-items: center;
@@ -150,86 +108,25 @@
       padding: .3rem .6rem;
       background: #fff;
     }
+    .speed-label select { border: 0; background: transparent; color: var(--text); padding: .25rem; }
 
-    .speed-label select {
-      border: 0;
-      background: transparent;
-      color: var(--text);
-      padding: .25rem;
-    }
-
-    .dashboard {
-      padding: 1rem 1.25rem;
-      margin-bottom: 1rem;
-    }
-
-    .dashboard-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    .progress-track {
-      width: 100%;
-      height: 12px;
-      background: #e8edf3;
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: .45rem;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0;
-      background: var(--primary);
-      transition: width .25s ease;
-    }
-
+    .dashboard { padding: 1rem 1.25rem; margin-bottom: 1rem; }
+    .dashboard-row { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; }
+    .progress-track { width: 100%; height: 12px; background: #e8edf3; border-radius: 999px; overflow: hidden; margin-top: .45rem; }
+    .progress-bar { height: 100%; width: 0; background: var(--primary); transition: width .25s ease; }
     .progress-text { color: var(--muted); font-size: .95rem; }
-
-    .result-box {
-      display: none;
-      margin-top: 1rem;
-      padding: .9rem 1rem;
-      border-radius: 12px;
-      background: var(--soft);
-      border: 1px solid #cbd9eb;
-    }
-
+    .result-box { display: none; margin-top: 1rem; padding: .9rem 1rem; border-radius: 12px; background: var(--soft); border: 1px solid #cbd9eb; }
     .result-box.show { display: block; }
 
-    .nav-card {
-      padding: .9rem 1rem;
-      margin-bottom: 1rem;
-      position: sticky;
-      top: .5rem;
-      z-index: 20;
-    }
-
+    .nav-card { padding: .9rem 1rem; margin-bottom: 1rem; position: sticky; top: .5rem; z-index: 20; }
     .nav-links { justify-content: center; }
     .nav-link { padding: .48rem .72rem; font-size: .94rem; }
 
-    .lesson-section {
-      padding: clamp(1rem, 3vw, 1.6rem);
-      margin-bottom: 1.25rem;
-      scroll-margin-top: 6rem;
-    }
-
-    .section-heading {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: .8rem;
-      margin-bottom: 1rem;
-    }
-
+    .lesson-section { padding: clamp(1rem, 3vw, 1.6rem); margin-bottom: 1.25rem; scroll-margin-top: 6rem; }
+    .section-heading { border-bottom: 1px solid var(--border); padding-bottom: .8rem; margin-bottom: 1rem; }
     .section-heading h2 { margin: 0; font-size: 1.55rem; }
     .section-heading p { margin: .25rem 0 0; color: var(--muted); }
-
-    .subheading {
-      margin: 1.6rem 0 .6rem;
-      font-size: 1.16rem;
-      color: var(--primary-dark);
-    }
+    .subheading { margin: 1.6rem 0 .6rem; font-size: 1.16rem; color: var(--primary-dark); }
 
     .question {
       border: 1px solid var(--border);
@@ -239,63 +136,19 @@
       background: #fff;
       transition: border-color .2s ease, background .2s ease;
     }
-
     fieldset.question { min-width: 0; }
-
-    .question legend {
-      padding: 0 .25rem;
-      font-weight: 700;
-      max-width: 100%;
-    }
-
-    .question.correct {
-      border-color: #82c6a6;
-      background: var(--correct-bg);
-    }
-
-    .question.incorrect {
-      border-color: #e5a2a2;
-      background: var(--incorrect-bg);
-    }
-
-    .question.unanswered {
-      border-color: #e4c477;
-      background: var(--warning-bg);
-    }
-
-    .question-title {
-      display: block;
-      font-weight: 700;
-      margin-bottom: .55rem;
-    }
-
-    .option {
-      display: flex;
-      gap: .6rem;
-      align-items: flex-start;
-      padding: .55rem .65rem;
-      border-radius: 9px;
-      cursor: pointer;
-    }
-
+    .question legend { padding: 0 .25rem; font-weight: 700; max-width: 100%; }
+    .question.correct { border-color: #82c6a6; background: var(--correct-bg); }
+    .question.incorrect { border-color: #e5a2a2; background: var(--incorrect-bg); }
+    .question.unanswered { border-color: #e4c477; background: var(--warning-bg); }
+    .question-title { display: block; font-weight: 700; margin-bottom: .55rem; }
+    .option { display: flex; gap: .55rem; align-items: center; padding: .5rem .7rem; border-radius: 9px; cursor: pointer; }
     .option:hover { background: #f5f8fc; }
-    .option input { margin-top: .45rem; }
+    .option input { margin: 0; }
 
-    .inline-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: .8rem;
-    }
-
-    .matching-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: .8rem;
-    }
-
+    .matching-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
     .compact-question { margin: 0; }
-
-    input[type="text"], select, textarea {
+    input[type="text"], select {
       width: 100%;
       border: 1px solid #bfcad6;
       border-radius: 9px;
@@ -303,94 +156,15 @@
       color: var(--text);
       padding: .68rem .75rem;
     }
-
-    textarea {
-      min-height: 115px;
-      resize: vertical;
-    }
-
-    .blank-line {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(180px, 320px);
-      gap: .8rem;
-      align-items: center;
-    }
-
-    .feedback {
-      display: none;
-      margin-top: .7rem;
-      padding-top: .6rem;
-      border-top: 1px dashed rgba(0,0,0,.14);
-      font-weight: 700;
-    }
-
+    .english-select { text-align: left; }
+    .blank-line { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 320px); gap: .8rem; align-items: center; }
+    .feedback { display: none; margin-top: .7rem; padding-top: .6rem; border-top: 1px dashed rgba(0,0,0,.14); font-weight: 700; }
     .question.checked .feedback { display: block; }
     .feedback.good { color: var(--correct); }
     .feedback.bad { color: var(--incorrect); }
     .feedback.warn { color: var(--warning); }
-
-    .section-actions {
-      justify-content: space-between;
-      margin-top: 1.1rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1rem;
-    }
-
-    .section-score {
-      min-height: 1.5em;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .open-note {
-      padding: .8rem 1rem;
-      border-radius: 10px;
-      background: #f6f8fb;
-      color: var(--muted);
-      border-right: 4px solid #aebed1;
-      margin: .7rem 0;
-    }
-
-    .model-answer {
-      margin-top: .75rem;
-      padding: .9rem 1rem;
-      border: 1px solid #c9d8ea;
-      background: var(--soft);
-      border-radius: 10px;
-    }
-
-    .model-answer[hidden] { display: none; }
-    .model-answer h4 { margin: 0 0 .45rem; }
-    .model-answer p, .model-answer li { margin-top: .25rem; }
-
-    .character-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: .7rem;
-    }
-
-    .character-table th, .character-table td {
-      border: 1px solid var(--border);
-      padding: .75rem;
-      text-align: right;
-      vertical-align: top;
-    }
-
-    .character-table th { background: #f2f6fb; }
-
-    .word-bank {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .5rem;
-      margin: .6rem 0;
-    }
-
-    .word-bank span {
-      background: var(--soft);
-      border: 1px solid #cddbef;
-      border-radius: 999px;
-      padding: .3rem .65rem;
-    }
+    .section-actions { justify-content: space-between; margin-top: 1.1rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+    .section-score { min-height: 1.5em; color: var(--muted); font-weight: 700; }
 
     .footer-actions {
       position: sticky;
@@ -401,844 +175,410 @@
       border-top: 1px solid var(--border);
       padding: .75rem 1rem;
     }
-
-    .footer-actions-inner {
-      width: min(1050px, 100%);
-      margin-inline: auto;
-      display: flex;
-      gap: .65rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .visually-hidden {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
-    }
+    .footer-actions-inner { width: min(1050px, 100%); margin-inline: auto; display: flex; gap: .65rem; flex-wrap: wrap; justify-content: center; }
 
     @media (max-width: 760px) {
-      .inline-grid, .matching-grid { grid-template-columns: 1fr; }
+      .matching-grid { grid-template-columns: 1fr; }
       .blank-line { grid-template-columns: 1fr; }
       .dashboard-row { grid-template-columns: 1fr; }
       .nav-card { position: static; }
-      .character-table { display: block; overflow-x: auto; }
       .footer-actions .btn { flex: 1 1 auto; }
     }
-
     @media print {
       .hero { padding-bottom: 1.5rem; }
       .page { margin-top: 0; }
-      .audio-card, .dashboard, .nav-card, .section-actions, .footer-actions,
-      .audio-tools, .feedback, .model-answer { display: none !important; }
+      .audio-card, .dashboard, .nav-card, .section-actions, .footer-actions, .audio-tools, .feedback { display: none !important; }
       .lesson-section, .question { box-shadow: none; break-inside: avoid; }
       body { background: #fff; }
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">انتقل إلى الأسئلة</a>
-
-  <header class="hero">
-    <div class="hero-inner">
-      <h1>درس الاستماع التفاعلي: الخبر المفاجئ في شقّة زياد</h1>
-      <p>نسخة الطالب — استمع، أجب، ثم تحقّق من إجاباتك.</p>
-    </div>
-  </header>
-
-  <main id="main-content" class="page">
-    <section class="card audio-card" aria-labelledby="audio-title">
-      <h2 id="audio-title">التسجيل الصوتي</h2>
-      <p>استخدم التسجيل بحسب تعليمات كل مرحلة. يجب أن يكون الملف <strong>17.mp3</strong> في المجلد نفسه الذي توجد فيه هذه الصفحة.</p>
-      <audio id="lessonAudio" controls preload="metadata">
-        <source src="17.mp3" type="audio/mpeg">
+<a class="skip-link" href="#main-content">انتقل إلى الأسئلة</a>
+<header class="hero">
+<div class="hero-inner">
+<h1>درس الاستماع التفاعلي: الخبر المفاجئ في شقّة زياد</h1>
+<p>نسخة الطالب — استمع، أجب، ثم تحقّق من إجاباتك.</p>
+</div>
+</header>
+<main class="page" id="main-content">
+<section aria-labelledby="audio-title" class="card audio-card">
+<h2 id="audio-title">التسجيل الصوتي</h2>
+<p>شغّل الملف الصوتي، ثم أجب عن الأسئلة. يجب أن يكون الملف <strong>17.mp3</strong> في المجلد نفسه الذي توجد فيه هذه الصفحة.</p>
+<audio controls="" id="lessonAudio" preload="metadata">
+<source src="17.mp3" type="audio/mpeg"/>
         متصفحك لا يدعم تشغيل الملفات الصوتية.
       </audio>
-      <div class="audio-tools">
-        <button class="btn" type="button" id="back10">إرجاع ١٠ ثوانٍ</button>
-        <button class="btn" type="button" id="forward10">تقديم ١٠ ثوانٍ</button>
-        <button class="btn" type="button" id="restartAudio">إعادة التسجيل من البداية</button>
-        <label class="speed-label" for="playbackRate">
-          سرعة التشغيل
-          <select id="playbackRate" aria-label="سرعة تشغيل التسجيل">
-            <option value="0.75">٠٫٧٥×</option>
-            <option value="1" selected>١×</option>
-            <option value="1.25">١٫٢٥×</option>
-            <option value="1.5">١٫٥×</option>
-          </select>
-        </label>
-      </div>
-    </section>
-
-    <section class="card dashboard" aria-label="متابعة التقدم">
-      <div class="dashboard-row">
-        <div>
-          <strong>تقدّمك في الأسئلة ذات التصحيح الآلي</strong>
-          <div class="progress-track" aria-hidden="true"><div id="progressBar" class="progress-bar"></div></div>
-          <div id="progressText" class="progress-text" aria-live="polite">لم تبدأ الإجابة بعد.</div>
-        </div>
-        <div class="top-actions">
-          <button class="btn btn-primary" type="button" id="checkAllTop">تحقّق من جميع الإجابات</button>
-          <button class="btn" type="button" id="printPage">طباعة الأسئلة</button>
-        </div>
-      </div>
-      <div id="overallResult" class="result-box" aria-live="polite"></div>
-    </section>
-
-    <nav class="card nav-card" aria-label="أقسام الدرس">
-      <div class="nav-links">
-        <a class="nav-link" href="#before-listening">قبل الاستماع</a>
-        <a class="nav-link" href="#first-listening">الاستماع الأول</a>
-        <a class="nav-link" href="#second-listening">الاستماع الثاني</a>
-        <a class="nav-link" href="#third-listening">الاستماع الثالث</a>
-        <a class="nav-link" href="#after-listening">بعد الاستماع</a>
-        <a class="nav-link" href="#language-focus">التركيز اللغوي</a>
-      </div>
-    </nav>
-
-    <form id="lessonForm" autocomplete="off">
-      <section id="before-listening" class="lesson-section">
-        <div class="section-heading">
-          <h2>أولًا: قبل الاستماع</h2>
-          <p>فكّر في موضوع النص، ثم راجع الكلمات الأساسية.</p>
-        </div>
-
-        <h3 class="subheading">أ. التوقّع</h3>
-        <div class="question open-question">
-          <label class="question-title" for="prediction1">١. أين تتوقّع أن تقع أحداث القصة؟ ولماذا؟</label>
-          <textarea id="prediction1" name="prediction1" data-save placeholder="اكتب توقّعك هنا..."></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="prediction2">٢. لماذا قد يجتمع الأصدقاء في شقّة ويشغّلون التلفاز؟</label>
-          <textarea id="prediction2" name="prediction2" data-save placeholder="اكتب توقّعك هنا..."></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="prediction3">٣. هل تتوقّع أن تكون نهاية القصة سعيدة أم حزينة؟ اشرح توقّعك.</label>
-          <textarea id="prediction3" name="prediction3" data-save placeholder="اكتب توقّعك هنا..."></textarea>
-        </div>
-
-        <h3 class="subheading">ب. المفردات الأساسية</h3>
-        <p>اختر المعنى المناسب لكل كلمة.</p>
-        <div class="matching-grid">
-          <div class="question compact-question auto-question" data-type="select" data-answer="هـ" data-correct="تجمّعات عامة للتعبير عن الاحتجاج">
-            <label class="question-title" for="v1">١. مظاهرات</label>
-            <select id="v1" name="v1" data-save>
-              <option value="">اختر المعنى</option>
-              <option value="أ">السلطة وإدارة شؤون الدولة</option>
-              <option value="ب">تصبح الأمور هادئة وثابتة</option>
-              <option value="ج">أشياء يريد الناس تحقيقها</option>
-              <option value="د">مستوى من مستويات البناية</option>
-              <option value="هـ">تجمّعات عامة للتعبير عن الاحتجاج</option>
-              <option value="و">غير ممتلئة</option>
-              <option value="ز">مغادرة شخص أو جهة</option>
-              <option value="ح">شقّة يدفع الشخص مالًا مقابل السكن فيها</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-
-          <div class="question compact-question auto-question" data-type="select" data-answer="ج" data-correct="أشياء يريد الناس تحقيقها">
-            <label class="question-title" for="v2">٢. مطالب</label>
-            <select id="v2" name="v2" data-save>
-              <option value="">اختر المعنى</option>
-              <option value="أ">السلطة وإدارة شؤون الدولة</option>
-              <option value="ب">تصبح الأمور هادئة وثابتة</option>
-              <option value="ج">أشياء يريد الناس تحقيقها</option>
-              <option value="د">مستوى من مستويات البناية</option>
-              <option value="هـ">تجمّعات عامة للتعبير عن الاحتجاج</option>
-              <option value="و">غير ممتلئة</option>
-              <option value="ز">مغادرة شخص أو جهة</option>
-              <option value="ح">شقّة يدفع الشخص مالًا مقابل السكن فيها</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-
-          <div class="question compact-question auto-question" data-type="select" data-answer="ز" data-correct="مغادرة شخص أو جهة">
-            <label class="question-title" for="v3">٣. رحيل</label>
-            <select id="v3" name="v3" data-save>
-              <option value="">اختر المعنى</option>
-              <option value="أ">السلطة وإدارة شؤون الدولة</option>
-              <option value="ب">تصبح الأمور هادئة وثابتة</option>
-              <option value="ج">أشياء يريد الناس تحقيقها</option>
-              <option value="د">مستوى من مستويات البناية</option>
-              <option value="هـ">تجمّعات عامة للتعبير عن الاحتجاج</option>
-              <option value="و">غير ممتلئة</option>
-              <option value="ز">مغادرة شخص أو جهة</option>
-              <option value="ح">شقّة يدفع الشخص مالًا مقابل السكن فيها</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-
-          <div class="question compact-question auto-question" data-type="select" data-answer="ح" data-correct="شقّة يدفع الشخص مالًا مقابل السكن فيها">
-            <label class="question-title" for="v4">٤. شقّة إيجار</label>
-            <select id="v4" name="v4" data-save>
-              <option value="">اختر المعنى</option>
-              <option value="أ">السلطة وإدارة شؤون الدولة</option>
-              <option value="ب">تصبح الأمور هادئة وثابتة</option>
-              <option value="ج">أشياء يريد الناس تحقيقها</option>
-              <option value="د">مستوى من مستويات البناية</option>
-              <option value="هـ">تجمّعات عامة للتعبير عن الاحتجاج</option>
-              <option value="و">غير ممتلئة</option>
-              <option value="ز">مغادرة شخص أو جهة</option>
-              <option value="ح">شقّة يدفع الشخص مالًا مقابل السكن فيها</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-
-          <div class="question compact-question auto-question" data-type="select" data-answer="أ" data-correct="السلطة وإدارة شؤون الدولة">
-            <label class="question-title" for="v5">٥. الحُكم</label>
-            <select id="v5" name="v5" data-save>
-              <option value="">اختر المعنى</option>
-              <option value="أ">السلطة وإدارة شؤون الدولة</option>
-              <option value="ب">تصبح الأمور هادئة وثابتة</option>
-              <option value="ج">أشياء يريد الناس تحقيقها</option>
-              <option value="د">مستوى من مستويات البناية</option>
-              <option value="هـ">تجمّعات عامة للتعبير عن الاحتجاج</option>
-              <option value="و">غير ممتلئة</option>
-              <option value="ز">مغادرة شخص أو جهة</option>
-              <option value="ح">شقّة يدفع الشخص مالًا مقابل السكن فيها</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-
-          <div class="question compact-question auto-question" data-type="select" data-answer="ب" data-correct="تصبح الأمور هادئة وثابتة">
-            <label class="question-title" for="v6">٦. تستقر الأوضاع</label>
-            <select id="v6" name="v6" data-save>
-              <option value="">اختر المعنى</option>
-              <option value="أ">السلطة وإدارة شؤون الدولة</option>
-              <option value="ب">تصبح الأمور هادئة وثابتة</option>
-              <option value="ج">أشياء يريد الناس تحقيقها</option>
-              <option value="د">مستوى من مستويات البناية</option>
-              <option value="هـ">تجمّعات عامة للتعبير عن الاحتجاج</option>
-              <option value="و">غير ممتلئة</option>
-              <option value="ز">مغادرة شخص أو جهة</option>
-              <option value="ح">شقّة يدفع الشخص مالًا مقابل السكن فيها</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-
-          <div class="question compact-question auto-question" data-type="select" data-answer="د" data-correct="مستوى من مستويات البناية">
-            <label class="question-title" for="v7">٧. الطابق</label>
-            <select id="v7" name="v7" data-save>
-              <option value="">اختر المعنى</option>
-              <option value="أ">السلطة وإدارة شؤون الدولة</option>
-              <option value="ب">تصبح الأمور هادئة وثابتة</option>
-              <option value="ج">أشياء يريد الناس تحقيقها</option>
-              <option value="د">مستوى من مستويات البناية</option>
-              <option value="هـ">تجمّعات عامة للتعبير عن الاحتجاج</option>
-              <option value="و">غير ممتلئة</option>
-              <option value="ز">مغادرة شخص أو جهة</option>
-              <option value="ح">شقّة يدفع الشخص مالًا مقابل السكن فيها</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-
-          <div class="question compact-question auto-question" data-type="select" data-answer="و" data-correct="غير ممتلئة">
-            <label class="question-title" for="v8">٨. فاضية</label>
-            <select id="v8" name="v8" data-save>
-              <option value="">اختر المعنى</option>
-              <option value="أ">السلطة وإدارة شؤون الدولة</option>
-              <option value="ب">تصبح الأمور هادئة وثابتة</option>
-              <option value="ج">أشياء يريد الناس تحقيقها</option>
-              <option value="د">مستوى من مستويات البناية</option>
-              <option value="هـ">تجمّعات عامة للتعبير عن الاحتجاج</option>
-              <option value="و">غير ممتلئة</option>
-              <option value="ز">مغادرة شخص أو جهة</option>
-              <option value="ح">شقّة يدفع الشخص مالًا مقابل السكن فيها</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-        </div>
-
-        <div class="section-actions">
-          <button class="btn btn-primary check-section" type="button">تحقّق من هذا القسم</button>
-          <div class="section-score" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="first-listening" class="lesson-section">
-        <div class="section-heading">
-          <h2>ثانيًا: الاستماع الأول — الفكرة العامة</h2>
-          <p>استمع إلى التسجيل كاملًا، ولا تحاول فهم كل كلمة.</p>
-        </div>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="ب" data-correct="اجتمع الأصدقاء في شقّة زياد، وسمعوا خبرًا سياسيًا مهمًا جعلهم يشعرون بالسعادة والأمل.">
-          <legend>١. اختر الجملة التي تلخّص النص بصورة أفضل.</legend>
-          <label class="option"><input type="radio" name="summary" value="أ" data-save> اجتمع الأصدقاء في شقّة زياد للتخطيط لمظاهرة جديدة.</label>
-          <label class="option"><input type="radio" name="summary" value="ب" data-save> اجتمع الأصدقاء في شقّة زياد، وسمعوا خبرًا سياسيًا مهمًا جعلهم يشعرون بالسعادة والأمل.</label>
-          <label class="option"><input type="radio" name="summary" value="ج" data-save> لم يتمكن الأصدقاء من العودة إلى منازلهم بسبب إغلاق محطة المترو.</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="ب" data-correct="توتر ← مفاجأة ← سعادة وأمل">
-          <legend>٢. اختر التسلسل الذي يصف تطوّر المشاعر في النص.</legend>
-          <label class="option"><input type="radio" name="emotion" value="أ" data-save> ملل ← خوف ← غضب</label>
-          <label class="option"><input type="radio" name="emotion" value="ب" data-save> توتر ← مفاجأة ← سعادة وأمل</label>
-          <label class="option"><input type="radio" name="emotion" value="ج" data-save> سعادة ← حيرة ← خيبة أمل</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <div class="question auto-question" data-type="keywords" data-groups="شقه|شقة;;زياد" data-correct="كانوا في شقّة زياد.">
-          <label class="question-title" for="first3">٣. أين كان الأصدقاء عندما سمعوا الخبر؟</label>
-          <input id="first3" name="first3" type="text" data-save placeholder="اكتب إجابة قصيرة">
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="keywords" data-groups="تلفاز|تلفزيون|تليفزيون" data-correct="عرفوا الخبر من التلفاز بعد أن شغّلوه لمتابعة الأخبار.">
-          <label class="question-title" for="first4">٤. كيف عرف الأصدقاء ما حدث؟</label>
-          <input id="first4" name="first4" type="text" data-save placeholder="اكتب إجابة قصيرة">
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="keywords" data-groups="مفاجئ|مفاجاه|مفاجأة" data-correct="كان الخبر مفاجئًا.">
-          <label class="question-title" for="first5">٥. هل كان الخبر عاديًا أم مفاجئًا؟</label>
-          <input id="first5" name="first5" type="text" data-save placeholder="اكتب إجابة قصيرة">
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="keywords" data-groups="سعيد|سعداء|سعاده|سعادة|فرح|فرحين" data-correct="شعروا بالسعادة والفرح والأمل.">
-          <label class="question-title" for="first6">٦. كيف شعر الأصدقاء بعد سماع الخبر؟</label>
-          <input id="first6" name="first6" type="text" data-save placeholder="اكتب إجابة قصيرة">
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="section-actions">
-          <button class="btn btn-primary check-section" type="button">تحقّق من هذا القسم</button>
-          <div class="section-score" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="second-listening" class="lesson-section">
-        <div class="section-heading">
-          <h2>ثالثًا: الاستماع الثاني — فهم التفاصيل</h2>
-          <p>استمع مرة ثانية، ثم أكمل المعلومات وحدّد الصحيح والخطأ.</p>
-        </div>
-
-        <h3 class="subheading">أ. أكمل المعلومات</h3>
-
-        <div class="question auto-question" data-type="text" data-answers="القاهرة|القاهره" data-correct="القاهرة">
-          <label class="blank-line" for="d1"><span>١. استمرت المظاهرات في ________ وعدد من المدن الأخرى.</span><input id="d1" name="d1" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="text" data-answers="العاشرة|العاشره|10|١٠" data-correct="العاشرة">
-          <label class="blank-line" for="d2"><span>٢. مُنع الناس من الخروج بعد الساعة ________ مساءً.</span><input id="d2" name="d2" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="text" data-answers="الكنائس|كنائس" data-correct="الكنائس">
-          <label class="blank-line" for="d3"><span>٣. كان رجال الشرطة يقفون أمام ________.</span><input id="d3" name="d3" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="keywords" data-groups="تعامل;;سيئ|سيء|السيئ|السيء" data-correct="تعامل الحكومة السيئ مع المتظاهرين وعدم اهتمامها بمطالبهم">
-          <label class="blank-line" for="d4"><span>٤. ازدادت الخلافات مع الحكومة بسبب ________.</span><input id="d4" name="d4" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="inline-grid">
-          <div class="question auto-question compact-question" data-type="text" data-answers="الحكومة|الحكومه" data-correct="الحكومة">
-            <label class="question-title" for="d5a">٥. طالب الشباب برحيل ________</label>
-            <input id="d5a" name="d5a" type="text" data-save>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question auto-question compact-question" data-type="keywords" data-groups="رئيس;;جمهوريه|الجمهورية" data-correct="رئيس الجمهورية">
-            <label class="question-title" for="d5b">و________.</label>
-            <input id="d5b" name="d5b" type="text" data-save>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-        </div>
-
-        <div class="question auto-question" data-type="text" data-answers="الجمعة|الجمعه|يوم الجمعة|يوم الجمعه" data-correct="الجمعة">
-          <label class="blank-line" for="d6"><span>٦. اجتمع الأصدقاء يوم ________.</span><input id="d6" name="d6" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="text" data-answers="الثالث|3|٣" data-correct="الثالث">
-          <label class="blank-line" for="d7"><span>٧. كانت شقّة زياد في الطابق ________.</span><input id="d7" name="d7" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="keywords" data-groups="محطه|محطة;;مترو|المترو" data-correct="محطة المترو">
-          <label class="blank-line" for="d8"><span>٨. كانت الشقّة بجانب ________.</span><input id="d8" name="d8" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="keywords" data-groups="عشاء;;خفيف|خفيفا|خفيفاً" data-correct="عشاءً خفيفًا">
-          <label class="blank-line" for="d9"><span>٩. أعدّ زياد للأصدقاء ________.</span><input id="d9" name="d9" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="keywords" data-groups="اصوات|أصوات;;عاليه|عالية" data-correct="أصواتًا عالية">
-          <label class="blank-line" for="d10"><span>١٠. سمع الأصدقاء ________ تحت البيت.</span><input id="d10" name="d10" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="text" data-answers="التلفاز|تلفاز|التلفزيون|تلفزيون|التليفزيون|تليفزيون" data-correct="التلفاز">
-          <label class="blank-line" for="d11"><span>١١. فتح الأصدقاء ________ لمتابعة الأخبار.</span><input id="d11" name="d11" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <div class="question auto-question" data-type="keywords" data-groups="ترك;;حكم|الحكم" data-correct="ترك الحكم">
-          <label class="blank-line" for="d12"><span>١٢. قرر رئيس الجمهورية أخيرًا ________.</span><input id="d12" name="d12" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <h3 class="subheading">ب. صحيح أم خطأ؟</h3>
-        <p>اختر الإجابة الصحيحة لكل جملة.</p>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="خطأ" data-correct="خطأ — حدثت المظاهرات في القاهرة وعدد من المدن الأخرى.">
-          <legend>١. حدثت المظاهرات في القاهرة فقط.</legend>
-          <label class="option"><input type="radio" name="tf1" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf1" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="صحيح" data-correct="صحيح">
-          <legend>٢. كان الخروج من البيت ممنوعًا بعد الساعة العاشرة مساءً.</legend>
-          <label class="option"><input type="radio" name="tf2" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf2" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="خطأ" data-correct="خطأ — ازدادت الخلافات مع الحكومة مع مرور الوقت.">
-          <legend>٣. قلّت الخلافات مع الحكومة مع مرور الوقت.</legend>
-          <label class="option"><input type="radio" name="tf3" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf3" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="خطأ" data-correct="خطأ — لم تهتم الحكومة بمطالب المتظاهرين اهتمامًا كافيًا.">
-          <legend>٤. اهتمت الحكومة بجميع مطالب المتظاهرين.</legend>
-          <label class="option"><input type="radio" name="tf4" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf4" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="صحيح" data-correct="صحيح">
-          <legend>٥. كان رجال الشرطة يقفون أمام بعض الكنائس.</legend>
-          <label class="option"><input type="radio" name="tf5" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf5" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="صحيح" data-correct="صحيح">
-          <legend>٦. كان زياد يعيش في شقّة بسيطة مستأجرة.</legend>
-          <label class="option"><input type="radio" name="tf6" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf6" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="خطأ" data-correct="خطأ — أعدّ زياد عشاءً خفيفًا.">
-          <legend>٧. أعدّ زياد عشاءً كبيرًا وثقيلًا.</legend>
-          <label class="option"><input type="radio" name="tf7" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf7" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="صحيح" data-correct="صحيح">
-          <legend>٨. فتح الأصدقاء التلفاز لأنهم سمعوا أصواتًا عالية تحت البيت.</legend>
-          <label class="option"><input type="radio" name="tf8" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf8" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="خطأ" data-correct="خطأ — تمنت جيسيكا أن تستقر الأوضاع وأن يعود الناس إلى منازلهم.">
-          <legend>٩. أرادت جيسيكا أن يبقى الناس في الشوارع.</legend>
-          <label class="option"><input type="radio" name="tf9" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf9" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="question auto-question" data-type="radio" data-answer="صحيح" data-correct="صحيح">
-          <legend>١٠. تحدثت رجاء عن مستقبل مصر الاقتصادي والاجتماعي والسياسي.</legend>
-          <label class="option"><input type="radio" name="tf10" value="صحيح" data-save> صحيح</label>
-          <label class="option"><input type="radio" name="tf10" value="خطأ" data-save> خطأ</label>
-          <div class="feedback" aria-live="polite"></div>
-        </fieldset>
-
-        <div class="section-actions">
-          <button class="btn btn-primary check-section" type="button">تحقّق من هذا القسم</button>
-          <div class="section-score" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="third-listening" class="lesson-section">
-        <div class="section-heading">
-          <h2>رابعًا: الاستماع الثالث — المتحدثون والاستنتاج</h2>
-          <p>استمع بسرعة طبيعية، وركّز على من قال كل عبارة وعلى دلالات الكلام.</p>
-        </div>
-
-        <h3 class="subheading">أ. من قال ذلك؟</h3>
-        <div class="matching-grid">
-          <div class="question compact-question auto-question" data-type="select" data-answer="رامي" data-correct="رامي">
-            <label class="question-title" for="s1">١. «كان لازم جيل الشباب يفرح.»</label>
-            <select id="s1" name="s1" data-save><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="زياد" data-correct="زياد">
-            <label class="question-title" for="s2">٢. «ألف مبروك يا رامي.»</label>
-            <select id="s2" name="s2" data-save><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="رجاء" data-correct="رجاء">
-            <label class="question-title" for="s3">٣. «أتمنى أن تكون الأيام القادمة أفضل لمصر والمصريين.»</label>
-            <select id="s3" name="s3" data-save><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="جيسيكا" data-correct="جيسيكا">
-            <label class="question-title" for="s4">٤. «أتمنى أن تستقر الأوضاع ويعود الناس إلى منازلهم.»</label>
-            <select id="s4" name="s4" data-save><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="زياد" data-correct="زياد">
-            <label class="question-title" for="s5">٥. «مبسوطين كتير لمصر وأهلها البسطاء.»</label>
-            <select id="s5" name="s5" data-save><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="رامي" data-correct="رامي">
-            <label class="question-title" for="s6">٦. «تعودت على شكل الشوارع وهي مش فاضية.»</label>
-            <select id="s6" name="s6" data-save><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-        </div>
-
-        <h3 class="subheading">ب. أكمل من النص</h3>
-        <div class="question auto-question" data-type="text" data-answers="الخلافات|خلافات" data-correct="الخلافات">
-          <label class="blank-line" for="c1"><span>١. ومع مرور الوقت، ازدادت ________ مع الحكومة.</span><input id="c1" name="c1" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-        <div class="question auto-question" data-type="text" data-answers="مطالبهم|المطالب|مطالب المتظاهرين" data-correct="مطالبهم">
-          <label class="blank-line" for="c2"><span>٢. لم تهتم الحكومة بـ________.</span><input id="c2" name="c2" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-        <div class="question auto-question" data-type="keywords" data-groups="اصوات|أصوات;;عاليه|عالية" data-correct="أصواتًا عالية">
-          <label class="blank-line" for="c3"><span>٣. سمع الأصدقاء ________ تحت البيت.</span><input id="c3" name="c3" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-        <div class="question auto-question" data-type="text" data-answers="التلفاز|التلفزيون|التليفزيون" data-correct="التلفاز">
-          <label class="blank-line" for="c4"><span>٤. فتحوا ________ لمتابعة الأخبار.</span><input id="c4" name="c4" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-        <div class="question auto-question" data-type="text" data-answers="الحكم|الحُكم" data-correct="الحكم">
-          <label class="blank-line" for="c5"><span>٥. قرر الرئيس ترك ________.</span><input id="c5" name="c5" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-        <div class="question auto-question" data-type="text" data-answers="سعداء|سعيدين|فرحين" data-correct="سعداء">
-          <label class="blank-line" for="c6"><span>٦. كان الأصدقاء ________ جدًا.</span><input id="c6" name="c6" type="text" data-save></label>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <h3 class="subheading">ج. الفهم والاستنتاج</h3>
-        <p class="open-note">هذه الأسئلة مفتوحة. اكتب إجاباتك أولًا، ثم استخدم زر عرض الإجابات النموذجية للمقارنة.</p>
-
-        <div class="question open-question">
-          <label class="question-title" for="inf1">١. إلى ماذا تشير العبارة: «كان هذا هو الحل الوحيد بالنسبة لهم»؟</label>
-          <textarea id="inf1" name="inf1" data-save></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="inf2">٢. لماذا فتح الأصدقاء التلفاز مباشرة بعد سماع الأصوات؟</label>
-          <textarea id="inf2" name="inf2" data-save></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="inf3">٣. ماذا يقصد رامي بقوله: «كان لازم جيل الشباب يفرح»؟</label>
-          <textarea id="inf3" name="inf3" data-save></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="inf4">٤. ما الفرق بين أمنية رجاء وأمنية جيسيكا؟</label>
-          <textarea id="inf4" name="inf4" data-save></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="inf5">٥. لماذا ضحك رامي عندما قال إنه تعوّد على الشوارع وهي غير فارغة؟</label>
-          <textarea id="inf5" name="inf5" data-save></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="inf6">٦. هل ركّز زياد على السياسيين أم على الناس العاديين؟ اذكر دليلًا من كلامه.</label>
-          <textarea id="inf6" name="inf6" data-save></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="inf7">٧. كيف تغيّر الجو العام في القصة من بدايتها إلى نهايتها؟</label>
-          <textarea id="inf7" name="inf7" data-save></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="inf8">٨. ما العبارة التي تدل على أن الخبر لم يكن متوقعًا؟</label>
-          <textarea id="inf8" name="inf8" data-save></textarea>
-        </div>
-
-        <button class="btn reveal-model" type="button" data-target="inferenceModel">عرض الإجابات النموذجية للأسئلة المفتوحة</button>
-        <div id="inferenceModel" class="model-answer" hidden>
-          <h4>إجابات نموذجية للمقارنة</h4>
-          <ol>
-            <li>تشير العبارة إلى رحيل الحكومة ورئيس الجمهورية.</li>
-            <li>لأنهم أرادوا معرفة سبب الأصوات وما الذي كان يحدث في الخارج.</li>
-            <li>يقصد أن الشباب شاركوا في المطالبة بالتغيير، ولذلك استحقوا الفرح.</li>
-            <li>ركّزت رجاء على تحسّن اقتصادي واجتماعي وسياسي طويل المدى، بينما ركّزت جيسيكا على الاستقرار وعودة الناس إلى منازلهم.</li>
-            <li>كان يمزح لأنه اعتاد خلال المظاهرات رؤية الشوارع مزدحمة بالناس.</li>
-            <li>ركّز على الناس العاديين؛ والدليل قوله: «مصر وأهلها البسطاء».</li>
-            <li>بدأ الجو بالتوتر والخلافات والمنع، وانتهى بالسعادة والأمل.</li>
-            <li>العبارة هي: «وكانت المفاجأة!»</li>
-          </ol>
-        </div>
-
-        <div class="section-actions">
-          <button class="btn btn-primary check-section" type="button">تحقّق من هذا القسم</button>
-          <div class="section-score" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="after-listening" class="lesson-section">
-        <div class="section-heading">
-          <h2>خامسًا: بعد الاستماع</h2>
-          <p>استخدم ما فهمته لإعادة بناء القصة ومقارنة الشخصيات.</p>
-        </div>
-
-        <h3 class="subheading">أ. إعادة رواية القصة</h3>
-        <div class="word-bank" aria-label="عبارات تساعد على ترتيب الأحداث">
-          <span>في البداية</span><span>مع مرور الوقت</span><span>بعد ذلك</span><span>في يوم الجمعة</span><span>عندما</span><span>فجأة</span><span>أخيرًا</span><span>في نهاية القصة</span>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="retelling">أعد رواية القصة. استخدم خمس عبارات على الأقل من العبارات السابقة، واذكر المظاهرات واجتماع الأصدقاء والخبر وردود أفعالهم.</label>
-          <textarea id="retelling" name="retelling" data-save style="min-height:190px"></textarea>
-        </div>
-        <button class="btn reveal-model" type="button" data-target="retellingModel">عرض نموذج للمقارنة</button>
-        <div id="retellingModel" class="model-answer" hidden>
-          <h4>نموذج ممكن</h4>
-          <p>في البداية استمرت المظاهرات في القاهرة ومدن أخرى، ومنعت الحكومة الناس من الخروج بعد الساعة العاشرة مساءً. ومع مرور الوقت ازدادت الخلافات، وكان الشباب يطالبون برحيل الحكومة ورئيس الجمهورية. وفي يوم الجمعة اجتمع الأصدقاء في شقّة زياد وتناولوا عشاءً خفيفًا. وعندما سمعوا أصواتًا عالية تحت البيت، فتحوا التلفاز. وفجأة عرفوا أن رئيس الجمهورية قرر ترك الحكم. وفي نهاية القصة شعر الجميع بالسعادة والأمل، وتحدثوا عن مستقبل مصر.</p>
-        </div>
-
-        <h3 class="subheading">ب. قارن بين الشخصيات</h3>
-        <div class="matching-grid">
-          <div class="question compact-question auto-question" data-type="select" data-answer="الفرح بانتصار جيل الشباب" data-correct="الفرح بانتصار جيل الشباب">
-            <label class="question-title" for="ch1">رامي</label>
-            <select id="ch1" name="ch1" data-save>
-              <option value="">اختر الفكرة الرئيسة</option>
-              <option>الفرح بانتصار جيل الشباب</option>
-              <option>الاهتمام بمصر وأهلها البسطاء</option>
-              <option>الإصلاح الاقتصادي والاجتماعي والسياسي</option>
-              <option>الاستقرار وعودة الناس إلى منازلهم</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="الاهتمام بمصر وأهلها البسطاء" data-correct="الاهتمام بمصر وأهلها البسطاء">
-            <label class="question-title" for="ch2">زياد</label>
-            <select id="ch2" name="ch2" data-save>
-              <option value="">اختر الفكرة الرئيسة</option>
-              <option>الفرح بانتصار جيل الشباب</option>
-              <option>الاهتمام بمصر وأهلها البسطاء</option>
-              <option>الإصلاح الاقتصادي والاجتماعي والسياسي</option>
-              <option>الاستقرار وعودة الناس إلى منازلهم</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="الإصلاح الاقتصادي والاجتماعي والسياسي" data-correct="الإصلاح الاقتصادي والاجتماعي والسياسي">
-            <label class="question-title" for="ch3">رجاء</label>
-            <select id="ch3" name="ch3" data-save>
-              <option value="">اختر الفكرة الرئيسة</option>
-              <option>الفرح بانتصار جيل الشباب</option>
-              <option>الاهتمام بمصر وأهلها البسطاء</option>
-              <option>الإصلاح الاقتصادي والاجتماعي والسياسي</option>
-              <option>الاستقرار وعودة الناس إلى منازلهم</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="الاستقرار وعودة الناس إلى منازلهم" data-correct="الاستقرار وعودة الناس إلى منازلهم">
-            <label class="question-title" for="ch4">جيسيكا</label>
-            <select id="ch4" name="ch4" data-save>
-              <option value="">اختر الفكرة الرئيسة</option>
-              <option>الفرح بانتصار جيل الشباب</option>
-              <option>الاهتمام بمصر وأهلها البسطاء</option>
-              <option>الإصلاح الاقتصادي والاجتماعي والسياسي</option>
-              <option>الاستقرار وعودة الناس إلى منازلهم</option>
-            </select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-        </div>
-
-        <h3 class="subheading">ج. رتّب الأحداث</h3>
-        <p>اختر رقم ترتيب كل حدث من ١ إلى ٦.</p>
-        <div class="matching-grid">
-          <div class="question compact-question auto-question" data-type="select" data-answer="4" data-correct="٤">
-            <label class="question-title" for="ord1">فتح الأصدقاء التلفاز.</label>
-            <select id="ord1" name="ord1" data-save><option value="">اختر الترتيب</option><option value="1">١</option><option value="2">٢</option><option value="3">٣</option><option value="4">٤</option><option value="5">٥</option><option value="6">٦</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="1" data-correct="١">
-            <label class="question-title" for="ord2">اجتمع الأصدقاء في شقّة زياد.</label>
-            <select id="ord2" name="ord2" data-save><option value="">اختر الترتيب</option><option value="1">١</option><option value="2">٢</option><option value="3">٣</option><option value="4">٤</option><option value="5">٥</option><option value="6">٦</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="3" data-correct="٣">
-            <label class="question-title" for="ord3">سمع الأصدقاء أصواتًا تحت البيت.</label>
-            <select id="ord3" name="ord3" data-save><option value="">اختر الترتيب</option><option value="1">١</option><option value="2">٢</option><option value="3">٣</option><option value="4">٤</option><option value="5">٥</option><option value="6">٦</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="5" data-correct="٥">
-            <label class="question-title" for="ord4">أُعلن قرار ترك الحكم.</label>
-            <select id="ord4" name="ord4" data-save><option value="">اختر الترتيب</option><option value="1">١</option><option value="2">٢</option><option value="3">٣</option><option value="4">٤</option><option value="5">٥</option><option value="6">٦</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="2" data-correct="٢">
-            <label class="question-title" for="ord5">أعدّ زياد عشاءً خفيفًا.</label>
-            <select id="ord5" name="ord5" data-save><option value="">اختر الترتيب</option><option value="1">١</option><option value="2">٢</option><option value="3">٣</option><option value="4">٤</option><option value="5">٥</option><option value="6">٦</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="6" data-correct="٦">
-            <label class="question-title" for="ord6">شعر الأصدقاء بالسعادة.</label>
-            <select id="ord6" name="ord6" data-save><option value="">اختر الترتيب</option><option value="1">١</option><option value="2">٢</option><option value="3">٣</option><option value="4">٤</option><option value="5">٥</option><option value="6">٦</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-        </div>
-
-        <h3 class="subheading">د. بطاقة الخروج</h3>
-        <div class="question open-question">
-          <label class="question-title" for="exit1">١. اكتب كلمة جديدة تعلّمتها من النص.</label>
-          <input id="exit1" name="exit1" type="text" data-save>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="exit2">٢. اكتب حدثًا مهمًا من القصة.</label>
-          <textarea id="exit2" name="exit2" data-save></textarea>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="exit3">٣. أكمل: أتمنى أن...</label>
-          <input id="exit3" name="exit3" type="text" data-save>
-        </div>
-
-        <div class="section-actions">
-          <button class="btn btn-primary check-section" type="button">تحقّق من هذا القسم</button>
-          <div class="section-score" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="language-focus" class="lesson-section">
-        <div class="section-heading">
-          <h2>سادسًا: التركيز اللغوي</h2>
-          <p>تدرّب على التعبير عن السبب والأمل، وعلى التمييز بين الفصحى والعامية.</p>
-        </div>
-
-        <h3 class="subheading">أ. التعبير عن السبب</h3>
-        <div class="question auto-question" data-type="keywords" data-groups="تعامل;;سيئ|سيء" data-correct="ازداد التوتر بسبب تعامل الحكومة السيئ مع المتظاهرين.">
-          <label class="question-title" for="cause1">١. أعد كتابة الجملة مستخدمًا «بسبب»:<br>ازداد التوتر لأن الحكومة تعاملت مع المتظاهرين بطريقة سيئة.</label>
-          <input id="cause1" name="cause1" type="text" data-save>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-        <div class="question auto-question" data-type="keywords" data-groups="سمع|سمعوا;;اصوات|أصوات;;عاليه|عالية" data-correct="فتح الأصدقاء التلفاز لأنهم سمعوا أصواتًا عالية.">
-          <label class="question-title" for="cause2">٢. أعد كتابة الجملة مستخدمًا «لأن»:<br>فتح الأصدقاء التلفاز بسبب سماع أصوات عالية.</label>
-          <input id="cause2" name="cause2" type="text" data-save>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-        <div class="question auto-question" data-type="keywords" data-groups="سماع|سمع;;خبر" data-correct="شعر الأصدقاء بالسعادة بسبب سماع الخبر.">
-          <label class="question-title" for="cause3">٣. أعد كتابة الجملة مستخدمًا «بسبب»:<br>شعر الأصدقاء بالسعادة لأنهم سمعوا الخبر.</label>
-          <input id="cause3" name="cause3" type="text" data-save>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-        <div class="question auto-question" data-type="keywords" data-groups="لم;;تهتم;;مطالب" data-correct="ازدادت الخلافات لأن الحكومة لم تهتم بالمطالب.">
-          <label class="question-title" for="cause4">٤. أعد كتابة الجملة مستخدمًا «لأن»:<br>ازدادت الخلافات بسبب عدم اهتمام الحكومة بالمطالب.</label>
-          <input id="cause4" name="cause4" type="text" data-save>
-          <div class="feedback" aria-live="polite"></div>
-        </div>
-
-        <h3 class="subheading">ب. التعبير عن الأمل</h3>
-        <div class="question open-question">
-          <label class="question-title" for="hope1">١. أكمل: أتمنى أن تتحسن...</label>
-          <input id="hope1" name="hope1" type="text" data-save>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="hope2">٢. أكمل: أتمنى أن يعود...</label>
-          <input id="hope2" name="hope2" type="text" data-save>
-        </div>
-        <div class="question open-question">
-          <label class="question-title" for="hope3">٣. أكمل: أتمنى أن تكون...</label>
-          <input id="hope3" name="hope3" type="text" data-save>
-        </div>
-
-        <h3 class="subheading">ج. الفصحى والعامية</h3>
-        <p>اختر المقابل الفصيح لكل تعبير عامي.</p>
-        <div class="matching-grid">
-          <div class="question compact-question auto-question" data-type="select" data-answer="ألم أقل لكم؟" data-correct="ألم أقل لكم؟">
-            <label class="question-title" for="fa1">١. مش قلتلكم؟</label>
-            <select id="fa1" name="fa1" data-save><option value="">اختر المقابل الفصيح</option><option>ألم أقل لكم؟</option><option>سعداء جدًا</option><option>غير فارغة</option><option>كان ينبغي أن يفرح جيل الشباب</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="سعداء جدًا" data-correct="سعداء جدًا">
-            <label class="question-title" for="fa2">٢. مبسوطين كتير</label>
-            <select id="fa2" name="fa2" data-save><option value="">اختر المقابل الفصيح</option><option>ألم أقل لكم؟</option><option>سعداء جدًا</option><option>غير فارغة</option><option>كان ينبغي أن يفرح جيل الشباب</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="كان ينبغي أن يفرح جيل الشباب" data-correct="كان ينبغي أن يفرح جيل الشباب">
-            <label class="question-title" for="fa3">٣. كان لازم جيل الشباب يفرح</label>
-            <select id="fa3" name="fa3" data-save><option value="">اختر المقابل الفصيح</option><option>ألم أقل لكم؟</option><option>سعداء جدًا</option><option>غير فارغة</option><option>كان ينبغي أن يفرح جيل الشباب</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-          <div class="question compact-question auto-question" data-type="select" data-answer="غير فارغة" data-correct="غير فارغة">
-            <label class="question-title" for="fa4">٤. مش فاضية</label>
-            <select id="fa4" name="fa4" data-save><option value="">اختر المقابل الفصيح</option><option>ألم أقل لكم؟</option><option>سعداء جدًا</option><option>غير فارغة</option><option>كان ينبغي أن يفرح جيل الشباب</option></select>
-            <div class="feedback" aria-live="polite"></div>
-          </div>
-        </div>
-
-        <h3 class="subheading">د. كتابة قصيرة</h3>
-        <div class="question open-question">
-          <label class="question-title" for="homework">اكتب فقرة من ٨٠ إلى ١٢٠ كلمة من وجهة نظر إحدى الشخصيات. ابدأ بعبارة: «الجمعة، ١١ فبراير ٢٠١١... كنت في شقّة زياد عندما...»</label>
-          <textarea id="homework" name="homework" data-save style="min-height:220px"></textarea>
-        </div>
-
-        <div class="section-actions">
-          <button class="btn btn-primary check-section" type="button">تحقّق من هذا القسم</button>
-          <div class="section-score" aria-live="polite"></div>
-        </div>
-      </section>
-    </form>
-  </main>
-
-  <div class="footer-actions">
-    <div class="footer-actions-inner">
-      <button class="btn btn-primary" type="button" id="checkAllBottom">تحقّق من جميع الإجابات</button>
-      <button class="btn" type="button" id="showAllModels">عرض جميع الإجابات النموذجية المفتوحة</button>
-      <button class="btn btn-danger" type="button" id="resetAll">مسح جميع الإجابات</button>
-    </div>
-  </div>
-
-  <script>
+<div class="audio-tools">
+<button class="btn" id="back10" type="button">إرجاع ١٠ ثوانٍ</button>
+<button class="btn" id="forward10" type="button">تقديم ١٠ ثوانٍ</button>
+<button class="btn" id="restartAudio" type="button">إعادة التسجيل من البداية</button>
+<label class="speed-label" for="playbackRate">سرعة التشغيل
+          <select aria-label="سرعة تشغيل التسجيل" id="playbackRate">
+<option value="0.75">٠٫٧٥×</option>
+<option selected="" value="1">١×</option>
+<option value="1.25">١٫٢٥×</option>
+<option value="1.5">١٫٥×</option>
+</select>
+</label>
+</div>
+</section>
+<section aria-label="متابعة التقدم" class="card dashboard">
+<div class="dashboard-row">
+<div>
+<strong>تقدّمك في الأسئلة</strong>
+<div aria-hidden="true" class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+<div aria-live="polite" class="progress-text" id="progressText">لم تبدأ الإجابة بعد.</div>
+</div>
+<div class="top-actions">
+<button class="btn btn-primary" id="checkAllTop" type="button">تحقّق من جميع الإجابات</button>
+<button class="btn" id="printPage" type="button">طباعة الأسئلة</button>
+</div>
+</div>
+<div aria-live="polite" class="result-box" id="overallResult"></div>
+</section>
+<nav aria-label="أقسام الدرس" class="card nav-card">
+<div class="nav-links">
+<a class="nav-link" href="#vocabulary">المفردات الأساسية</a>
+<a class="nav-link" href="#question-one">السؤال الأول</a>
+<a class="nav-link" href="#question-two">السؤال الثاني</a>
+<a class="nav-link" href="#question-three">السؤال الثالث</a>
+</div>
+</nav>
+<form autocomplete="off" id="lessonForm">
+<section class="lesson-section" id="vocabulary">
+<div class="section-heading">
+<h2>ب. المفردات الأساسية</h2>
+<p>اختر الترجمة الإنجليزية الصحيحة لكل كلمة أو تعبير.</p>
+</div>
+<div class="matching-grid">
+<div class="question compact-question auto-question" data-answer="E" data-correct="Public gatherings to express protest" data-type="select">
+<label class="question-title" for="v1">١. مظاهرات</label>
+<select class="english-select" data-save="" dir="ltr" id="v1" lang="en" name="v1">
+<option value="">اختر المعنى بالإنجليزية</option><option value="A">Power and administration of state affairs</option><option value="B">The situation becomes calm and stable</option><option value="C">Things people want to achieve</option><option value="D">A level in a building</option><option value="E">Public gatherings to express protest</option><option value="F">Not full or not crowded</option><option value="G">The departure of a person or group</option><option value="H">An apartment rented in exchange for money</option>
+</select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="C" data-correct="Things people want to achieve" data-type="select">
+<label class="question-title" for="v2">٢. مطالب</label>
+<select class="english-select" data-save="" dir="ltr" id="v2" lang="en" name="v2">
+<option value="">اختر المعنى بالإنجليزية</option><option value="A">Power and administration of state affairs</option><option value="B">The situation becomes calm and stable</option><option value="C">Things people want to achieve</option><option value="D">A level in a building</option><option value="E">Public gatherings to express protest</option><option value="F">Not full or not crowded</option><option value="G">The departure of a person or group</option><option value="H">An apartment rented in exchange for money</option>
+</select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="G" data-correct="The departure of a person or group" data-type="select">
+<label class="question-title" for="v3">٣. رحيل</label>
+<select class="english-select" data-save="" dir="ltr" id="v3" lang="en" name="v3">
+<option value="">اختر المعنى بالإنجليزية</option><option value="A">Power and administration of state affairs</option><option value="B">The situation becomes calm and stable</option><option value="C">Things people want to achieve</option><option value="D">A level in a building</option><option value="E">Public gatherings to express protest</option><option value="F">Not full or not crowded</option><option value="G">The departure of a person or group</option><option value="H">An apartment rented in exchange for money</option>
+</select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="H" data-correct="An apartment rented in exchange for money" data-type="select">
+<label class="question-title" for="v4">٤. شقّة إيجار</label>
+<select class="english-select" data-save="" dir="ltr" id="v4" lang="en" name="v4">
+<option value="">اختر المعنى بالإنجليزية</option><option value="A">Power and administration of state affairs</option><option value="B">The situation becomes calm and stable</option><option value="C">Things people want to achieve</option><option value="D">A level in a building</option><option value="E">Public gatherings to express protest</option><option value="F">Not full or not crowded</option><option value="G">The departure of a person or group</option><option value="H">An apartment rented in exchange for money</option>
+</select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="A" data-correct="Power and administration of state affairs" data-type="select">
+<label class="question-title" for="v5">٥. الحُكم</label>
+<select class="english-select" data-save="" dir="ltr" id="v5" lang="en" name="v5">
+<option value="">اختر المعنى بالإنجليزية</option><option value="A">Power and administration of state affairs</option><option value="B">The situation becomes calm and stable</option><option value="C">Things people want to achieve</option><option value="D">A level in a building</option><option value="E">Public gatherings to express protest</option><option value="F">Not full or not crowded</option><option value="G">The departure of a person or group</option><option value="H">An apartment rented in exchange for money</option>
+</select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="B" data-correct="The situation becomes calm and stable" data-type="select">
+<label class="question-title" for="v6">٦. تستقر الأوضاع</label>
+<select class="english-select" data-save="" dir="ltr" id="v6" lang="en" name="v6">
+<option value="">اختر المعنى بالإنجليزية</option><option value="A">Power and administration of state affairs</option><option value="B">The situation becomes calm and stable</option><option value="C">Things people want to achieve</option><option value="D">A level in a building</option><option value="E">Public gatherings to express protest</option><option value="F">Not full or not crowded</option><option value="G">The departure of a person or group</option><option value="H">An apartment rented in exchange for money</option>
+</select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="D" data-correct="A level in a building" data-type="select">
+<label class="question-title" for="v7">٧. الطابق</label>
+<select class="english-select" data-save="" dir="ltr" id="v7" lang="en" name="v7">
+<option value="">اختر المعنى بالإنجليزية</option><option value="A">Power and administration of state affairs</option><option value="B">The situation becomes calm and stable</option><option value="C">Things people want to achieve</option><option value="D">A level in a building</option><option value="E">Public gatherings to express protest</option><option value="F">Not full or not crowded</option><option value="G">The departure of a person or group</option><option value="H">An apartment rented in exchange for money</option>
+</select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="F" data-correct="Not full or not crowded" data-type="select">
+<label class="question-title" for="v8">٨. فاضية</label>
+<select class="english-select" data-save="" dir="ltr" id="v8" lang="en" name="v8">
+<option value="">اختر المعنى بالإنجليزية</option><option value="A">Power and administration of state affairs</option><option value="B">The situation becomes calm and stable</option><option value="C">Things people want to achieve</option><option value="D">A level in a building</option><option value="E">Public gatherings to express protest</option><option value="F">Not full or not crowded</option><option value="G">The departure of a person or group</option><option value="H">An apartment rented in exchange for money</option>
+</select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+</div>
+<div class="section-actions">
+<button class="btn btn-primary check-section" type="button">تحقّق من المفردات</button>
+<div aria-live="polite" class="section-score"></div>
+</div>
+</section>
+<section class="lesson-section" id="question-one">
+<div class="section-heading">
+<h2>السؤال الأول: صحيح أم خطأ؟</h2>
+<p>استمع إلى التسجيل، ثم اختر الإجابة الصحيحة لكل جملة.</p>
+</div>
+<fieldset class="question auto-question" data-answer="خطأ" data-correct="خطأ — حدثت المظاهرات في القاهرة وعدد من المدن الأخرى." data-type="radio">
+<legend>١. حدثت المظاهرات في القاهرة فقط.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf1" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf1" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<fieldset class="question auto-question" data-answer="صحيح" data-correct="صحيح" data-type="radio">
+<legend>٢. كان الخروج من البيت ممنوعًا بعد الساعة العاشرة مساءً.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf2" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf2" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<fieldset class="question auto-question" data-answer="خطأ" data-correct="خطأ — ازدادت الخلافات مع الحكومة مع مرور الوقت." data-type="radio">
+<legend>٣. قلّت الخلافات مع الحكومة مع مرور الوقت.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf3" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf3" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<fieldset class="question auto-question" data-answer="خطأ" data-correct="خطأ — لم تهتم الحكومة بمطالب المتظاهرين اهتمامًا كافيًا." data-type="radio">
+<legend>٤. اهتمت الحكومة بجميع مطالب المتظاهرين.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf4" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf4" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<fieldset class="question auto-question" data-answer="صحيح" data-correct="صحيح" data-type="radio">
+<legend>٥. كان رجال الشرطة يقفون أمام بعض الكنائس.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf5" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf5" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<fieldset class="question auto-question" data-answer="صحيح" data-correct="صحيح" data-type="radio">
+<legend>٦. كان زياد يعيش في شقّة بسيطة مستأجرة.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf6" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf6" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<fieldset class="question auto-question" data-answer="خطأ" data-correct="خطأ — أعدّ زياد عشاءً خفيفًا." data-type="radio">
+<legend>٧. أعدّ زياد عشاءً كبيرًا وثقيلًا.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf7" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf7" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<fieldset class="question auto-question" data-answer="صحيح" data-correct="صحيح" data-type="radio">
+<legend>٨. فتح الأصدقاء التلفاز لأنهم سمعوا أصواتًا عالية تحت البيت.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf8" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf8" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<fieldset class="question auto-question" data-answer="خطأ" data-correct="خطأ — تمنّت جيسيكا أن تستقر الأوضاع وأن يعود الناس إلى منازلهم." data-type="radio">
+<legend>٩. أرادت جيسيكا أن يبقى الناس في الشوارع.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf9" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf9" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<fieldset class="question auto-question" data-answer="صحيح" data-correct="صحيح" data-type="radio">
+<legend>١٠. تحدثت رجاء عن مستقبل مصر الاقتصادي والاجتماعي والسياسي.</legend>
+<div class="choice-row">
+<label class="option"><input data-save="" name="tf10" type="radio" value="صحيح"/> صحيح</label>
+<label class="option"><input data-save="" name="tf10" type="radio" value="خطأ"/> خطأ</label>
+</div>
+<div aria-live="polite" class="feedback"></div>
+</fieldset>
+<div class="section-actions">
+<button class="btn btn-primary check-section" type="button">تحقّق من السؤال الأول</button>
+<div aria-live="polite" class="section-score"></div>
+</div>
+</section>
+<section class="lesson-section" id="question-two">
+<div class="section-heading">
+<h2>السؤال الثاني: الاستماع الثاني — فهم التفاصيل</h2>
+<p>استمع مرة أخرى، ثم أكمل المعلومات الناقصة.</p>
+</div>
+<div class="question auto-question" data-answers="القاهرة|القاهره" data-correct="القاهرة" data-type="text">
+<label class="blank-line" for="d1"><span>١. استمرت المظاهرات في ________ وعدد من المدن الأخرى.</span><input autocomplete="off" data-save="" id="d1" name="d1" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-answers="العاشرة|العاشره|10|١٠" data-correct="العاشرة" data-type="text">
+<label class="blank-line" for="d2"><span>٢. مُنع الناس من الخروج بعد الساعة ________ مساءً.</span><input autocomplete="off" data-save="" id="d2" name="d2" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-answers="الكنائس|كنائس" data-correct="الكنائس" data-type="text">
+<label class="blank-line" for="d3"><span>٣. كان رجال الشرطة يقفون أمام ________.</span><input autocomplete="off" data-save="" id="d3" name="d3" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-correct="تعامل الحكومة السيئ مع المتظاهرين وعدم اهتمامها بمطالبهم" data-groups="تعامل;;سيئ|سيء|السيئ|السيء" data-type="keywords">
+<label class="blank-line" for="d4"><span>٤. ازدادت الخلافات مع الحكومة بسبب ________.</span><input autocomplete="off" data-save="" id="d4" name="d4" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div aria-label="السؤال الخامس" class="question-group">
+<div class="question auto-question" data-answers="الحكومة|الحكومه" data-correct="الحكومة" data-type="text">
+<label class="blank-line" for="d5a"><span>٥. طالب الشباب برحيل ________.</span><input autocomplete="off" data-save="" id="d5a" name="d5a" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-correct="رئيس الجمهورية" data-groups="رئيس;;جمهوريه|الجمهورية" data-type="keywords">
+<label class="blank-line" for="d5b"><span>وطالبوا أيضًا برحيل ________.</span><input autocomplete="off" data-save="" id="d5b" name="d5b" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+</div>
+<div class="question auto-question" data-answers="الجمعة|الجمعه|يوم الجمعة|يوم الجمعه" data-correct="الجمعة" data-type="text">
+<label class="blank-line" for="d6"><span>٦. اجتمع الأصدقاء يوم ________.</span><input autocomplete="off" data-save="" id="d6" name="d6" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-answers="الثالث|3|٣" data-correct="الثالث" data-type="text">
+<label class="blank-line" for="d7"><span>٧. كانت شقّة زياد في الطابق ________.</span><input autocomplete="off" data-save="" id="d7" name="d7" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-correct="محطة المترو" data-groups="محطه|محطة;;مترو|المترو" data-type="keywords">
+<label class="blank-line" for="d8"><span>٨. كانت الشقّة بجانب ________.</span><input autocomplete="off" data-save="" id="d8" name="d8" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-correct="عشاءً خفيفًا" data-groups="عشاء;;خفيف|خفيفا|خفيفاً|خفيفًا" data-type="keywords">
+<label class="blank-line" for="d9"><span>٩. أعدّ زياد للأصدقاء ________.</span><input autocomplete="off" data-save="" id="d9" name="d9" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-correct="أصواتًا عالية" data-groups="اصوات|أصوات;;عاليه|عالية" data-type="keywords">
+<label class="blank-line" for="d10"><span>١٠. سمع الأصدقاء ________ تحت البيت.</span><input autocomplete="off" data-save="" id="d10" name="d10" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-answers="التلفاز|تلفاز|التلفزيون|تلفزيون|التليفزيون|تليفزيون" data-correct="التلفاز" data-type="text">
+<label class="blank-line" for="d11"><span>١١. فتح الأصدقاء ________ لمتابعة الأخبار.</span><input autocomplete="off" data-save="" id="d11" name="d11" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-correct="ترك الحكم" data-groups="ترك;;حكم|الحكم" data-type="keywords">
+<label class="blank-line" for="d12"><span>١٢. قرر رئيس الجمهورية أخيرًا ________.</span><input autocomplete="off" data-save="" id="d12" name="d12" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="section-actions">
+<button class="btn btn-primary check-section" type="button">تحقّق من السؤال الثاني</button>
+<div aria-live="polite" class="section-score"></div>
+</div>
+</section>
+<section class="lesson-section" id="question-three">
+<div class="section-heading">
+<h2>السؤال الثالث: الاستماع الثالث — المتحدثون وإكمال النص</h2>
+<p>استمع مرة ثالثة، وحدّد المتحدث ثم أكمل الجمل.</p>
+</div>
+<h3 class="subheading">أ. من قال ذلك؟</h3>
+<div class="matching-grid">
+<div class="question compact-question auto-question" data-answer="رامي" data-correct="رامي" data-type="select">
+<label class="question-title" for="s1">١. «كان لازم جيل الشباب يفرح.»</label>
+<select data-save="" id="s1" name="s1"><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="زياد" data-correct="زياد" data-type="select">
+<label class="question-title" for="s2">٢. «ألف مبروك يا رامي.»</label>
+<select data-save="" id="s2" name="s2"><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="رجاء" data-correct="رجاء" data-type="select">
+<label class="question-title" for="s3">٣. «أتمنى أن تكون الأيام القادمة أفضل لمصر والمصريين.»</label>
+<select data-save="" id="s3" name="s3"><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="جيسيكا" data-correct="جيسيكا" data-type="select">
+<label class="question-title" for="s4">٤. «أتمنى أن تستقر الأوضاع ويعود الناس إلى منازلهم.»</label>
+<select data-save="" id="s4" name="s4"><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="زياد" data-correct="زياد" data-type="select">
+<label class="question-title" for="s5">٥. «مبسوطين كتير لمصر وأهلها البسطاء.»</label>
+<select data-save="" id="s5" name="s5"><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question compact-question auto-question" data-answer="رامي" data-correct="رامي" data-type="select">
+<label class="question-title" for="s6">٦. «تعودت على شكل الشوارع وهي مش فاضية.»</label>
+<select data-save="" id="s6" name="s6"><option value="">اختر المتحدث</option><option>رامي</option><option>زياد</option><option>رجاء</option><option>جيسيكا</option></select>
+<div aria-live="polite" class="feedback"></div>
+</div>
+</div>
+<h3 class="subheading">ب. أكمل من النص</h3>
+<div class="question auto-question" data-answers="الخلافات|خلافات" data-correct="الخلافات" data-type="text">
+<label class="blank-line" for="c1"><span>١. ومع مرور الوقت، ازدادت ________ مع الحكومة.</span><input autocomplete="off" data-save="" id="c1" name="c1" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-answers="مطالبهم|المطالب|مطالب المتظاهرين" data-correct="مطالبهم" data-type="text">
+<label class="blank-line" for="c2"><span>٢. لم تهتم الحكومة بـ________.</span><input autocomplete="off" data-save="" id="c2" name="c2" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-correct="أصواتًا عالية" data-groups="اصوات|أصوات;;عاليه|عالية" data-type="keywords">
+<label class="blank-line" for="c3"><span>٣. سمع الأصدقاء ________ تحت البيت.</span><input autocomplete="off" data-save="" id="c3" name="c3" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-answers="التلفاز|التلفزيون|التليفزيون" data-correct="التلفاز" data-type="text">
+<label class="blank-line" for="c4"><span>٤. فتحوا ________ لمتابعة الأخبار.</span><input autocomplete="off" data-save="" id="c4" name="c4" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-answers="الحكم|الحُكم" data-correct="الحكم" data-type="text">
+<label class="blank-line" for="c5"><span>٥. قرر الرئيس ترك ________.</span><input autocomplete="off" data-save="" id="c5" name="c5" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="question auto-question" data-answers="سعداء|سعيدين|فرحين" data-correct="سعداء" data-type="text">
+<label class="blank-line" for="c6"><span>٦. كان الأصدقاء ________ جدًا.</span><input autocomplete="off" data-save="" id="c6" name="c6" type="text"/></label>
+<div aria-live="polite" class="feedback"></div>
+</div>
+<div class="section-actions">
+<button class="btn btn-primary check-section" type="button">تحقّق من السؤال الثالث</button>
+<div aria-live="polite" class="section-score"></div>
+</div>
+</section>
+</form>
+</main>
+<div class="footer-actions">
+<div class="footer-actions-inner">
+<button class="btn btn-primary" id="checkAllBottom" type="button">تحقّق من جميع الإجابات</button>
+<button class="btn btn-danger" id="resetAll" type="button">مسح جميع الإجابات</button>
+</div>
+</div>
+<script>
     (() => {
       'use strict';
 
       const form = document.getElementById('lessonForm');
       const audio = document.getElementById('lessonAudio');
-      const storageKey = 'lesson-17-arabic-student-v1';
+      const storageKey = 'lesson-17-arabic-student-v2';
       const objectiveQuestions = [...document.querySelectorAll('.auto-question')];
       const saveFields = [...document.querySelectorAll('[data-save]')];
       const progressBar = document.getElementById('progressBar');
       const progressText = document.getElementById('progressText');
       const overallResult = document.getElementById('overallResult');
 
-      const toWesternDigits = value => value.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+      const toWesternDigits = value => value.replace(/[٠-٩]/g, digit => '٠١٢٣٤٥٦٧٨٩'.indexOf(digit));
 
       function normalizeArabic(value) {
         return toWesternDigits(String(value || ''))
           .toLowerCase()
-          .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, '')
+          .replace(/[ً-ٰٟۖ-ۭ]/g, '')
           .replace(/ـ/g, '')
           .replace(/[إأآٱ]/g, 'ا')
           .replace(/ى/g, 'ي')
           .replace(/ؤ/g, 'و')
           .replace(/ئ/g, 'ي')
-          .replace(/[،؛؟!.,:;"'()\[\]{}\-_/\\]/g, ' ')
+          .replace(/[،؛؟!.,:;"'()\[\]{}\\\/_-]/g, ' ')
           .replace(/\s+/g, ' ')
           .trim();
       }
 
       function getQuestionValue(question) {
-        const type = question.dataset.type;
-        if (type === 'radio') {
+        if (question.dataset.type === 'radio') {
           const checked = question.querySelector('input[type="radio"]:checked');
           return checked ? checked.value : '';
         }
-        const control = question.querySelector('input[type="text"], select, textarea');
+        const control = question.querySelector('input[type="text"], select');
         return control ? control.value : '';
       }
 
@@ -1246,10 +586,9 @@
         return normalizeArabic(getQuestionValue(question)).length > 0;
       }
 
-      function gradeQuestion(question, revealAnswer = true) {
+      function gradeQuestion(question) {
         const type = question.dataset.type;
-        const rawValue = getQuestionValue(question);
-        const value = normalizeArabic(rawValue);
+        const value = normalizeArabic(getQuestionValue(question));
         const feedback = question.querySelector('.feedback');
         const answered = value.length > 0;
         let correct = false;
@@ -1258,10 +597,7 @@
           if (type === 'radio' || type === 'select') {
             correct = value === normalizeArabic(question.dataset.answer || '');
           } else if (type === 'text') {
-            const accepted = (question.dataset.answers || '')
-              .split('|')
-              .map(normalizeArabic)
-              .filter(Boolean);
+            const accepted = (question.dataset.answers || '').split('|').map(normalizeArabic).filter(Boolean);
             correct = accepted.includes(value);
           } else if (type === 'keywords') {
             const groups = (question.dataset.groups || '')
@@ -1277,34 +613,26 @@
 
         if (!answered) {
           question.classList.add('unanswered');
-          if (feedback) {
-            feedback.className = 'feedback warn';
-            feedback.textContent = 'لم تُجب عن هذا السؤال بعد.';
-          }
+          feedback.className = 'feedback warn';
+          feedback.textContent = 'لم تُجب عن هذا السؤال بعد.';
         } else if (correct) {
           question.classList.add('correct');
-          if (feedback) {
-            feedback.className = 'feedback good';
-            feedback.textContent = '✓ إجابة صحيحة.';
-          }
+          feedback.className = 'feedback good';
+          feedback.textContent = '✓ إجابة صحيحة.';
         } else {
           question.classList.add('incorrect');
-          if (feedback) {
-            feedback.className = 'feedback bad';
-            feedback.textContent = revealAnswer
-              ? `✗ راجع إجابتك. الإجابة الصحيحة: ${question.dataset.correct || question.dataset.answer || ''}`
-              : '✗ راجع إجابتك.';
-          }
+          feedback.className = 'feedback bad';
+          feedback.textContent = `✗ راجع إجابتك. الإجابة الصحيحة: ${question.dataset.correct || question.dataset.answer || ''}`;
         }
 
         return { answered, correct };
       }
 
-      function gradeCollection(questions, revealAnswer = true) {
+      function gradeCollection(questions) {
         let answered = 0;
         let correct = 0;
         questions.forEach(question => {
-          const result = gradeQuestion(question, revealAnswer);
+          const result = gradeQuestion(question);
           if (result.answered) answered += 1;
           if (result.correct) correct += 1;
         });
@@ -1312,7 +640,7 @@
       }
 
       function arabicNumber(value) {
-        return String(value).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[Number(d)]);
+        return String(value).replace(/\d/g, digit => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
       }
 
       function scoreMessage(result) {
@@ -1326,28 +654,23 @@
         const percentage = total ? Math.round((answered / total) * 100) : 0;
         progressBar.style.width = `${percentage}%`;
         progressText.textContent = answered
-          ? `أجبت عن ${arabicNumber(answered)} من ${arabicNumber(total)} سؤالًا ذا تصحيح آلي.`
-          : 'لم تبدأ الإجابة عن الأسئلة ذات التصحيح الآلي بعد.';
+          ? `أجبت عن ${arabicNumber(answered)} من ${arabicNumber(total)} سؤالًا.`
+          : 'لم تبدأ الإجابة بعد.';
       }
 
       function checkSection(button) {
         const section = button.closest('.lesson-section');
         const questions = [...section.querySelectorAll('.auto-question')];
-        const score = section.querySelector('.section-score');
-        if (!questions.length) {
-          score.textContent = 'لا توجد أسئلة ذات تصحيح آلي في هذا القسم.';
-          return;
-        }
-        const result = gradeCollection(questions, true);
-        score.textContent = scoreMessage(result);
-        const firstProblem = questions.find(q => q.classList.contains('incorrect') || q.classList.contains('unanswered'));
+        const result = gradeCollection(questions);
+        section.querySelector('.section-score').textContent = scoreMessage(result);
+        const firstProblem = questions.find(question => question.classList.contains('incorrect') || question.classList.contains('unanswered'));
         if (firstProblem) firstProblem.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
 
       function checkAll() {
-        const result = gradeCollection(objectiveQuestions, true);
+        const result = gradeCollection(objectiveQuestions);
         overallResult.classList.add('show');
-        overallResult.innerHTML = `<strong>نتيجتك:</strong> ${scoreMessage(result)}<br><span>الأسئلة المفتوحة لا تدخل في الدرجة الآلية؛ قارنها بالإجابات النموذجية.</span>`;
+        overallResult.innerHTML = `<strong>نتيجتك:</strong> ${scoreMessage(result)}`;
         updateProgress();
         overallResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
@@ -1369,7 +692,7 @@
         try {
           localStorage.setItem(storageKey, JSON.stringify(collectState()));
         } catch (error) {
-          // تستمر الصفحة في العمل حتى إذا كان التخزين المحلي غير متاح.
+          // تستمر الصفحة في العمل إذا كان التخزين المحلي غير متاح.
         }
       }
 
@@ -1392,26 +715,6 @@
       document.querySelectorAll('.check-section').forEach(button => {
         button.addEventListener('click', () => checkSection(button));
       });
-
-      document.querySelectorAll('.reveal-model').forEach(button => {
-        button.addEventListener('click', () => {
-          const target = document.getElementById(button.dataset.target);
-          const willShow = target.hasAttribute('hidden');
-          target.toggleAttribute('hidden');
-          button.textContent = willShow ? 'إخفاء الإجابة النموذجية' : 'عرض الإجابة النموذجية';
-          if (willShow) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        });
-      });
-
-      document.getElementById('showAllModels').addEventListener('click', event => {
-        const models = [...document.querySelectorAll('.model-answer')];
-        const shouldShow = models.some(model => model.hasAttribute('hidden'));
-        models.forEach(model => model.toggleAttribute('hidden', !shouldShow));
-        event.currentTarget.textContent = shouldShow
-          ? 'إخفاء جميع الإجابات النموذجية المفتوحة'
-          : 'عرض جميع الإجابات النموذجية المفتوحة';
-      });
-
       document.getElementById('checkAllTop').addEventListener('click', checkAll);
       document.getElementById('checkAllBottom').addEventListener('click', checkAll);
       document.getElementById('printPage').addEventListener('click', () => window.print());
@@ -1443,13 +746,7 @@
           feedback.textContent = '';
           feedback.className = 'feedback';
         });
-        document.querySelectorAll('.section-score').forEach(score => score.textContent = '');
-        document.querySelectorAll('.model-answer').forEach(model => model.setAttribute('hidden', ''));
-        document.querySelectorAll('.reveal-model').forEach(button => {
-          button.textContent = button.dataset.target === 'retellingModel'
-            ? 'عرض نموذج للمقارنة'
-            : 'عرض الإجابات النموذجية للأسئلة المفتوحة';
-        });
+        document.querySelectorAll('.section-score').forEach(score => { score.textContent = ''; });
         overallResult.classList.remove('show');
         overallResult.textContent = '';
         updateProgress();
@@ -1461,15 +758,12 @@
         if (question) {
           question.classList.remove('checked', 'correct', 'incorrect', 'unanswered');
           const feedback = question.querySelector('.feedback');
-          if (feedback) {
-            feedback.textContent = '';
-            feedback.className = 'feedback';
-          }
+          feedback.textContent = '';
+          feedback.className = 'feedback';
         }
         saveState();
         updateProgress();
       });
-
       form.addEventListener('change', () => {
         saveState();
         updateProgress();
