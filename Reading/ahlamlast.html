@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأحلام الأولى - الحُلم الأخير</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['"Times New Roman"', 'Times', 'serif'],
+                        amiri: ['"Times New Roman"', 'Times', 'serif'],
+                        sans: ['"Times New Roman"', 'Times', 'serif'],
+                        serif: ['"Times New Roman"', 'Times', 'serif'],
+                    },
+                    colors: {
+                        narrator: '#1e3a8a',
+                        rajaa: '#7e22ce',
+                        sara: '#047857',
+                        rami: '#c2410c',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f8fafc;
+        }
+        .story-text {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.4rem;
+            line-height: 2.3;
+        }
+        /* Speaker Highlight Styles */
+        .spk-narrator {
+            color: #1e3a8a; /* Slate / Dark Blue */
+        }
+        .spk-rajaa {
+            color: #7e22ce; /* Purple */
+            background-color: #f3e8ff;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        .spk-sara {
+            color: #047857; /* Emerald Green */
+            background-color: #d1fae5;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        .spk-rami-speech {
+            color: #c2410c; /* Warm Amber/Orange */
+            background-color: #ffedd5;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        .tab-btn.active {
+            border-bottom: 3px solid #2563eb;
+            color: #2563eb;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white py-8 shadow-md">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <span class="bg-blue-800 text-blue-200 text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider">سلسلة الأحلام الأولى</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold mt-3 mb-2 font-cairo">الفصل الأخير: الحُلم الأخير</h1>
+            <p class="text-blue-200 text-base md:text-lg">نص مُرمَّز بالألوان للمتحدثين + أنشطة تفاعلية واستيعابية متكاملة</p>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-gray-200 mb-8 overflow-x-auto whitespace-nowrap bg-white rounded-t-xl shadow-sm p-2 justify-start md:justify-center gap-2">
+            <button onclick="switchTab('text-tab')" id="btn-text-tab" class="tab-btn active px-5 py-3 font-semibold text-gray-600 hover:text-blue-600 transition flex items-center gap-2">
+                <i class="fa-solid fa-book-open"></i> النص والقراءة
+            </button>
+            <button onclick="switchTab('tf-tab')" id="btn-tf-tab" class="tab-btn px-5 py-3 font-semibold text-gray-600 hover:text-blue-600 transition flex items-center gap-2">
+                <i class="fa-solid fa-check-double"></i> صواب أم خطأ (6)
+            </button>
+            <button onclick="switchTab('mcq-tab')" id="btn-mcq-tab" class="tab-btn px-5 py-3 font-semibold text-gray-600 hover:text-blue-600 transition flex items-center gap-2">
+                <i class="fa-solid fa-list-check"></i> اختيار من متعدد (6)
+            </button>
+            <button onclick="switchTab('wh-tab')" id="btn-wh-tab" class="tab-btn px-5 py-3 font-semibold text-gray-600 hover:text-blue-600 transition flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> الأسئلة المقالية (4)
+            </button>
+            <button onclick="switchTab('speaking-tab')" id="btn-speaking-tab" class="tab-btn px-5 py-3 font-semibold text-gray-600 hover:text-blue-600 transition flex items-center gap-2">
+                <i class="fa-solid fa-microphone"></i> نشاط المحادثة والتحدث
+            </button>
+        </div>
+
+
+
+            <!-- Full Text Card -->
+            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-slate-200">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-extrabold text-slate-800 font-amiri">الحُلم الأخير</h2>
+                    <div class="w-16 h-1 bg-blue-600 mx-auto mt-2 rounded-full"></div>
+                </div>
+
+                <div class="story-text text-slate-800 text-justify space-y-4">
+                    <p class="spk-narrator">
+                        في اليوم التالي، تركَ الناسُ ميدان التحرير وعاد الاستقرارُ إلى شوارع القاهرة. رجعوا إلى بيوتهم وهم يتمنون أن تتحقق أحلامُهم البسيطة وألَّا تعودَ مِصْر إلى الوراء مرَّةً أُخرى.
+                    </p>
+                    <p class="spk-narrator">
+                        عاد حاتم إلى شركتِه في السعودية بعد أن قضى بعض الوقت مع الأصدقاء. وبدأ زياد عملَه الجديد في السفارة السورية بالقاهرة. وعاد الوضع كما كان عليه، وأصبحنا مشغولين إما بالعمل أو بالدراسة، ولا نتجمّع إلا مرة في الشهر إذا سمح الوقت. في نفس الوقت، كانت رجاء مشغولة جِدًا لأنها كانت تعمل على إخراج فيلم قصير. كانت تنوي أن تُخرِج فيلمًا بعنوان "الحُرِّيَة" يتكلم عن الثورة المصرية وعن ميدان التحرير تحديدًا. لذلك كانت تبحث عن مجموعة من الأشخاص الذين شاركوا في الثورة ليظهروا في الفيلم. وفي يوم من الأيَّام، اتصلت بي رجاء وسألتني:
+                    </p>
+                    
+                    <div class="my-4 p-4 border-r-4 border-purple-600 bg-purple-50/50 rounded-l-lg space-y-2">
+                        <p><span class="font-bold text-purple-800">رجاء:</span> <span class="spk-rajaa">"هل تعرف أي طبيب من الذين كانوا في ميدان التحرير أثناء الثورة؟"</span></p>
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"أيوة طبعًا أعرف اثنين، طبيب وطبيبة".</span></p>
+                        <p><span class="font-bold text-purple-800">رجاء:</span> <span class="spk-rajaa">"أنا بالفعل اتفقت مع طبيب. هل ممكن تكلم الطبيبة وتسألها إذا وقتها يسمح بالظهور في الفيلم؟"</span></p>
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"طبعًا!"</span></p>
+                    </div>
+
+                    <p class="spk-narrator">
+                        كانت تريد أطباء ليظهروا في الفيلم ويتحدثوا عن دورهم في معالجة المرضى والمصابين أثناء الثورة. فقلت لها "طبعًا!" كُنتُ سعيدًا جِدًا لأنني وجدتُ سببًا لكي أتواصل مع هذه الطبيبة. هي صديقة لم أقابلها منذ وقت طويل، في الحقيقة هي ليست صديقتي، هي صديقة جيسيكا. ولكن بعد سنوات قليلة، ستصبح أكثر من صديقة، ستصبح زوجتي وأُم ابني آدم! فاتصلتُ بها:
+                    </p>
+
+                    <div class="my-4 p-4 border-r-4 border-emerald-600 bg-emerald-50/50 rounded-l-lg space-y-3">
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"ألو، مساء الخير يا سارة، أنا رامي."</span></p>
+                        <p><span class="font-bold text-emerald-800">سارة:</span> <span class="spk-sara">"أهلًا يا رامي! إزيك؟ أخبارك إيه؟ ومش بنشوفك ليه؟"</span></p>
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"أنا كويس الحمد لله. لكن للأسف دايما مشغول في الشركة. ومفيش عندي وقت للأصدقاء إلا أيام الأجازة الجمعة والسبت."</span></p>
+                        <p><span class="font-bold text-emerald-800">سارة:</span> <span class="spk-sara">"أنا كمان نفس الشيء، دايمًا مشغولة عن أسرتي وأصدقائي بسبب المستشفى".</span></p>
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"ربنا معاكي. أنتي فاكرة رجاء صديقتنا وصديقة جيسيكا؟"</span></p>
+                        <p><span class="font-bold text-emerald-800">سارة:</span> <span class="spk-sara">"أيوة طبعًا فاكرها، المخرجة صح؟"</span></p>
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"صح. هي بتعمل فيلم قصير عن الثورة وكانت عاوزة تستضيف مجموعة من الأشخاص الي كانوا في ميدان التحرير، خصوصًا أطباء. وأنا قلتلها إني هاسألك لأنك كنتي في الميدان. هل عندك مانع؟ هل وقتك يسمح؟"</span></p>
+                    </div>
+
+                    <p class="spk-narrator">
+                        فقالت سارة أنها ليس لديها مانع للظهور في الفيلم. وبعد أسبوع، تقابلت سارة مع رجاء في استوديو صغير تملكه صديقة لرجاء وصوّروا الفيلم. وكانت تجربة جيِّدة جدًا لرجاء ولسارة ولي. لأنني حضرتُ تصوير الفيلم وشاهدتُ المذيعة تسأل سارة. كانت هناك الكثير من المشاعر في كلام سارة، كان هناك فرح عندما كانت تتكلم عن الحُرية وحزن وغضب عندما كانت تتكلم عن كل المشاكل التي حدثت. وفي نفس الوقت، عندما كنت أستمع إلى سارة، كانت هناك مشاعر أُخرى تُولَد، مشاعِر حُب.
+                    </p>
+
+                    <p class="spk-narrator">
+                        بعد نهاية اللقاء، تحدثتُ مع سارة:
+                    </p>
+
+                    <div class="my-4 p-4 border-r-4 border-blue-600 bg-blue-50/50 rounded-l-lg space-y-3">
+                        <p><span class="font-bold text-orange-800">رامي (يبتسم):</span> <span class="spk-rami-speech">"إيه الشطارة دي! المقابلة كانت جميلة جدًا يا سارة."</span></p>
+                        <p><span class="font-bold text-emerald-800">سارة:</span> <span class="spk-sara">"أنا كنت قلقانة جدًا وخايفة لأن دي كانت أول مرة أكون في فيلم!"</span></p>
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"لا لا، أنتي كنتي ممتازة جدًا خصوصًا إن دي أول مشاركة ليكي في مشروع زي ده. المُهِم، إنتي فاضية دلوقتي ولا مشغولة؟"</span></p>
+                        <p><span class="font-bold text-emerald-800">سارة:</span> <span class="spk-sara">"أنا فاضية، عندي أجازة"</span></p>
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"طيب ممكن نتغدى مع بعض؟ عايز أتكلم معاكي شوية."</span></p>
+                        <p><span class="font-bold text-emerald-800">سارة:</span> <span class="spk-sara">"أكيد طبعًا، أنا جعانة جدًا. في مطعم قريب من هنا بيعمل أكل بيتي لذيذ جدًا."</span></p>
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"ممتاز، يلا بينا."</span></p>
+                    </div>
+
+                    <p class="spk-narrator">
+                        ذهبنا إلى مطعم في منطقة وسط البلد وتناولنا الطعام. تحدّثنا قليلًا ثم قلتُ لها:
+                    </p>
+
+                    <div class="my-4 p-4 border-r-4 border-red-500 bg-red-50/50 rounded-l-lg space-y-3">
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"سارة، أنا عارف إن الي هاقوله ممكن يكون غريب شوية، لكني كنت عايز أكلمك من فترة طويلة."</span></p>
+                        <p><span class="font-bold text-emerald-800">سارة:</span> <span class="spk-sara">"خير يا رامي في إيه؟"</span></p>
+                        <p><span class="font-bold text-orange-800">رامي:</span> <span class="spk-rami-speech">"خير إن شاء الله. أنا معجب بيكي."</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: TRUE / FALSE QUESTIONS -->
+        <section id="tf-tab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">أسئلة صواب أم خطأ</h2>
+                        <p class="text-gray-500 text-sm">حدد ما إذا كانت الجمل التالية صحيحة (صواب) أم خاطئة (خطأ)</p>
+                    </div>
+                    <span id="tf-score-badge" class="bg-blue-100 text-blue-800 text-sm font-bold px-4 py-2 rounded-full">النتيجة: - / 6</span>
+                </div>
+
+                <div class="space-y-6" id="tf-container">
+                    <!-- Q1 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200" id="tf-q1">
+                        <p class="font-semibold text-lg text-slate-800 mb-3">1. عاد حاتم إلى عمله الجديد في السفارة السورية بالقاهرة.</p>
+                        <div class="flex gap-4">
+                            <button onclick="checkTF(1, true, false)" class="tf-btn-true px-6 py-2 rounded-lg border border-gray-300 hover:bg-emerald-50 font-semibold transition">صواب</button>
+                            <button onclick="checkTF(1, false, false)" class="tf-btn-false px-6 py-2 rounded-lg border border-gray-300 hover:bg-rose-50 font-semibold transition">خطأ</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200" id="tf-q2">
+                        <p class="font-semibold text-lg text-slate-800 mb-3">2. كان اسم الفيلم القصير الذي تعمل عليه رجاء هو "الحُرِّيَة".</p>
+                        <div class="flex gap-4">
+                            <button onclick="checkTF(2, true, true)" class="tf-btn-true px-6 py-2 rounded-lg border border-gray-300 hover:bg-emerald-50 font-semibold transition">صواب</button>
+                            <button onclick="checkTF(2, false, true)" class="tf-btn-false px-6 py-2 rounded-lg border border-gray-300 hover:bg-rose-50 font-semibold transition">خطأ</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200" id="tf-q3">
+                        <p class="font-semibold text-lg text-slate-800 mb-3">3. اتصلت رجاء برامي لتسأله عن مهندسين شاركوا في الثورة ليظهروا في الفيلم.</p>
+                        <div class="flex gap-4">
+                            <button onclick="checkTF(3, true, false)" class="tf-btn-true px-6 py-2 rounded-lg border border-gray-300 hover:bg-emerald-50 font-semibold transition">صواب</button>
+                            <button onclick="checkTF(3, false, false)" class="tf-btn-false px-6 py-2 rounded-lg border border-gray-300 hover:bg-rose-50 font-semibold transition">خطأ</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200" id="tf-q4">
+                        <p class="font-semibold text-lg text-slate-800 mb-3">4. سارة هي طبيبة وصديقة لجيسيكا وكانت متواجدة في ميدان التحرير خلال الثورة.</p>
+                        <div class="flex gap-4">
+                            <button onclick="checkTF(4, true, true)" class="tf-btn-true px-6 py-2 rounded-lg border border-gray-300 hover:bg-emerald-50 font-semibold transition">صواب</button>
+                            <button onclick="checkTF(4, false, true)" class="tf-btn-false px-6 py-2 rounded-lg border border-gray-300 hover:bg-rose-50 font-semibold transition">خطأ</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200" id="tf-q5">
+                        <p class="font-semibold text-lg text-slate-800 mb-3">5. تم تصوير المقابلة في استوديو ضخم تابع للتلفزيون المصري.</p>
+                        <div class="flex gap-4">
+                            <button onclick="checkTF(5, true, false)" class="tf-btn-true px-6 py-2 rounded-lg border border-gray-300 hover:bg-emerald-50 font-semibold transition">صواب</button>
+                            <button onclick="checkTF(5, false, false)" class="tf-btn-false px-6 py-2 rounded-lg border border-gray-300 hover:bg-rose-50 font-semibold transition">خطأ</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200" id="tf-q6">
+                        <p class="font-semibold text-lg text-slate-800 mb-3">6. أعرب رامي لسارة عن إعجابه بها أثناء تناولهما الطعام في مطعم بمنطقة وسط البلد.</p>
+                        <div class="flex gap-4">
+                            <button onclick="checkTF(6, true, true)" class="tf-btn-true px-6 py-2 rounded-lg border border-gray-300 hover:bg-emerald-50 font-semibold transition">صواب</button>
+                            <button onclick="checkTF(6, false, true)" class="tf-btn-false px-6 py-2 rounded-lg border border-gray-300 hover:bg-rose-50 font-semibold transition">خطأ</button>
+                        </div>
+                        <div class="feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: MCQ QUESTIONS -->
+        <section id="mcq-tab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">أسئلة الاختيار من متعدد</h2>
+                        <p class="text-gray-500 text-sm">اختر الإجابة الصحيحة لكل من الأسئلة التالية</p>
+                    </div>
+                    <span id="mcq-score-badge" class="bg-indigo-100 text-indigo-800 text-sm font-bold px-4 py-2 rounded-full">النتيجة: - / 6</span>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- MCQ 1 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200" id="mcq-card-1">
+                        <p class="font-bold text-lg text-slate-800 mb-4">1. أين بدأ زياد عمله الجديد بعد انتهاء مظاهرات الميدان؟</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <button onclick="checkMCQ(1, 0, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">أ) في شركة بالسعودية</button>
+                            <button onclick="checkMCQ(1, 1, true)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ب) في السفارة السورية بالقاهرة</button>
+                            <button onclick="checkMCQ(1, 2, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ج) في استوديو تصوير سينمائي</button>
+                            <button onclick="checkMCQ(1, 3, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">د) في مستشفى خاص بوسط البلد</button>
+                        </div>
+                        <div class="mcq-feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- MCQ 2 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200" id="mcq-card-2">
+                        <p class="font-bold text-lg text-slate-800 mb-4">2. ما هو المفهوم الرئيسي لفيلم "الحُرِّيَة" الذي أخرجته رجاء؟</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <button onclick="checkMCQ(2, 0, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">أ) معاناة الشباب المصري في الغربة</button>
+                            <button onclick="checkMCQ(2, 1, true)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ب) الثورة المصرية وميدان التحرير وتجارب المشاركين</button>
+                            <button onclick="checkMCQ(2, 2, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ج) الصعوبات المهنية التي تواجه الأطباء حديثي التخرج</button>
+                            <button onclick="checkMCQ(2, 3, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">د) قصص الحب بين أصدقاء الدراسة في الجامعة</button>
+                        </div>
+                        <div class="mcq-feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- MCQ 3 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200" id="mcq-card-3">
+                        <p class="font-bold text-lg text-slate-800 mb-4">3. متى كان رامي يستطيع رؤية أصدقائه والتجمع معهم؟</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <button onclick="checkMCQ(3, 0, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">أ) كل يوم بعد انتهاء ساعات العمل</button>
+                            <button onclick="checkMCQ(3, 1, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ب) خلال الفترة المسائية في منتصف الأسبوع</button>
+                            <button onclick="checkMCQ(3, 2, true)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ج) أيام الإجازة فقط (الجمعة والسبت) أو مرة بالشهر</button>
+                            <button onclick="checkMCQ(3, 3, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">د) أثناء أوقات الاستراحة في المستشفى</button>
+                        </div>
+                        <div class="mcq-feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- MCQ 4 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200" id="mcq-card-4">
+                        <p class="font-bold text-lg text-slate-800 mb-4">4. كيف وصف رامي مشاعر سارة أثناء حديثها مع المذيعة في الفيلم؟</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <button onclick="checkMCQ(4, 0, true)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">أ) مزيج من الفرح بالحرية، والحزن والغضب للمشاكل</button>
+                            <button onclick="checkMCQ(4, 1, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ب) مشاعر غضب شديد ودون أي تفاؤل</button>
+                            <button onclick="checkMCQ(4, 2, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ج) مشاعر غير مبالية وبسطحية شديدة</button>
+                            <button onclick="checkMCQ(4, 3, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">د) التوتر الشديد الذي منعها من الإجابة</button>
+                        </div>
+                        <div class="mcq-feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- MCQ 5 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200" id="mcq-card-5">
+                        <p class="font-bold text-lg text-slate-800 mb-4">5. ماذا ستمثل سارة لرامي في المستقبل بناءً على السرد؟</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <button onclick="checkMCQ(5, 0, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">أ) شركته في إخراج الأفلام الوثائقية</button>
+                            <button onclick="checkMCQ(5, 1, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ب) زميلة جديدة له في شركته الخاصة</button>
+                            <button onclick="checkMCQ(5, 2, true)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ج) ستصبح زوجته وأُم ابنه آدم</button>
+                            <button onclick="checkMCQ(5, 3, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">د) الطبيبة الخاصة بعائلته فقط</button>
+                        </div>
+                        <div class="mcq-feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+
+                    <!-- MCQ 6 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200" id="mcq-card-6">
+                        <p class="font-bold text-lg text-slate-800 mb-4">6. لماذا اقترحت سارة المطعم المذكور في وسط البلد؟</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <button onclick="checkMCQ(6, 0, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">أ) لأنه مطعم عالمي فاخر جداً</button>
+                            <button onclick="checkMCQ(6, 1, true)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ب) لأنه قريب بيعمل أكل بيتي لذيذ وهي كانت جائعة جداً</button>
+                            <button onclick="checkMCQ(6, 2, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">ج) لأنه يمتلكه أحد أطباء ميدان التحرير</button>
+                            <button onclick="checkMCQ(6, 3, false)" class="mcq-opt p-3 text-right rounded-lg border border-gray-200 bg-white hover:bg-blue-50 transition">د) لأن رجاء كانت تتناول الغداء فيه مع طاقم العمل</button>
+                        </div>
+                        <div class="mcq-feedback hidden mt-3 p-3 rounded-lg text-sm font-semibold"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: WH QUESTIONS -->
+        <section id="wh-tab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <div class="mb-6 pb-4 border-b">
+                    <h2 class="text-2xl font-bold text-slate-800">الأسئلة المقالية والاستيعابية (WH Questions)</h2>
+                    <p class="text-gray-500 text-sm">أجب عن الأسئلة التالية بأسلوبك، ثم انقر لعرض الإجابة النموذجية للتأكد</p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- WH 1 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200">
+                        <p class="font-bold text-lg text-slate-800 mb-2">1. لماذا كانت رجاء تبحث عن أطباء شاركوا في ثورة يناير بصفة خاصة؟</p>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3 text-sm" rows="3" placeholder="اكتب إجابتك هنا..."></textarea>
+                        <button onclick="toggleAnswer('wh-ans-1')" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                            <i class="fa-solid fa-eye"></i> إظهار / إخفاء الإجابة النموذجية
+                        </button>
+                        <div id="wh-ans-1" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-sm">
+                            <span class="font-bold">الإجابة النموذجية:</span> كانت رجاء تبحث عن أطباء ليظهروا في فيلمها القصير "الحُرِّيَة" ويتحدثوا عن دورهم وإسهامهم الإنساني والميداني في معالجة المرضى والمصابين أثناء الأحداث في ميدان التحرير.
+                        </div>
+                    </div>
+
+                    <!-- WH 2 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200">
+                        <p class="font-bold text-lg text-slate-800 mb-2">2. كيف أثرت مشاركة سارة في الفيلم على مشاعر رامي تجاهها؟</p>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3 text-sm" rows="3" placeholder="اكتب إجابتك هنا..."></textarea>
+                        <button onclick="toggleAnswer('wh-ans-2')" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                            <i class="fa-solid fa-eye"></i> إظهار / إخفاء الإجابة النموذجية
+                        </button>
+                        <div id="wh-ans-2" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-sm">
+                            <span class="font-bold">الإجابة النموذجية:</span> أثناء حضور رامي لتصوير المقابلة واستماعه إلى سارة وهي تتحدث بصدق ومشاعر متداخلة (من فرح بحرية وحزن وغضب للمشاكل)، ولدت لديه مشاعر حب واقتناع بعاطفته نحوها، مما دفعه لدعوتها للغداء والاعتراف بإعجابه بها.
+                        </div>
+                    </div>
+
+                    <!-- WH 3 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200">
+                        <p class="font-bold text-lg text-slate-800 mb-2">3. كيف فسرت سارة شعرورها بالقلق والتردد قبل تصوير المقابلة؟</p>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3 text-sm" rows="3" placeholder="اكتب إجابتك هنا..."></textarea>
+                        <button onclick="toggleAnswer('wh-ans-3')" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                            <i class="fa-solid fa-eye"></i> إظهار / إخفاء الإجابة النموذجية
+                        </button>
+                        <div id="wh-ans-3" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-sm">
+                            <span class="font-bold">الإجابة النموذجية:</span> قالت سارة إنها كانت قلقة وخائفة لأن تلك كانت المرة الأولى في حياتها التي تقف فيها أمام الكاميرا وتشارك في تصوير فيلم سينمائي وثائقي.
+                        </div>
+                    </div>
+
+                    <!-- WH 4 -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200">
+                        <p class="font-bold text-lg text-slate-800 mb-2">4. كيف تحول طلب رجاء من رامي إلى فرصة لتغيير مجرى حياته الشخصية؟</p>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none mb-3 text-sm" rows="3" placeholder="اكتب إجابتك هنا..."></textarea>
+                        <button onclick="toggleAnswer('wh-ans-4')" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                            <i class="fa-solid fa-eye"></i> إظهار / إخفاء الإجابة النموذجية
+                        </button>
+                        <div id="wh-ans-4" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-sm">
+                            <span class="font-bold">الإجابة النموذجية:</span> استغل رامي طلب رجاء في البحث عن طبيبة ليكون سبباً للاتصال بسارة بعد فترة انقطاع، ثم التقى بها في التصوير ودعاها للغداء واعترف لها بإعجابه، لتصبح سارة فيما بعد زوجته وأم ابنه آدم.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: SPEAKING ACTIVITY -->
+        <section id="speaking-tab" class="tab-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 space-y-8">
+                
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-blue-600"></i> نشاط المحادثة والتحدث الشفهي (Speaking Activity)
+                    </h2>
+                    <p class="text-gray-500 text-sm mt-1">اختر إحدى المهمتين التاليتين وقم بممارستها مع زميلك أو تسجيل صوتك لتقييم أدائك</p>
+                </div>
+
+                <!-- Task Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Task 1: Roleplay -->
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 p-6 rounded-2xl shadow-sm">
+                        <div class="flex items-center gap-2 text-blue-800 font-bold text-lg mb-3">
+                            <i class="fa-solid fa-masks-theater text-xl"></i>
+                            <span>المهمة الأولى: لعب الأدوار (Role-Play)</span>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4">
+                            قم بمحاكاة الحوار الذي دار بين <span class="font-bold text-orange-700">رامي</span> و<span class="font-bold text-emerald-700">سارة</span> أثناء تناولهما الطعام في المطعم.
+                        </p>
+                        <div class="bg-white p-4 rounded-xl border border-blue-100 text-xs text-slate-600 space-y-2">
+                            <p class="font-bold text-slate-800">نقاط مقترحة للحديث:</p>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>تبادل الانطباعات حول تجربة التصوير والفيلم.</li>
+                                <li>الحديث عن صعوبة التوفيق بين العمل والمستشفى والإجازات.</li>
+                                <li>التعبير عن المشاعر والتطرق للبوح بالإعجاب بأسلوب لطيف.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Task 2: Personal Experience -->
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 p-6 rounded-2xl shadow-sm">
+                        <div class="flex items-center gap-2 text-purple-800 font-bold text-lg mb-3">
+                            <i class="fa-solid fa-microphone-lines text-xl"></i>
+                            <span>المهمة الثانية: التعبير والتحدث الفردي</span>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4">
+                            تحدث لمدة <span class="font-bold text-purple-900">دقيقة إلى دقيقتين</span> عن تجربة جديدة قمت بها لأول مرة في حياتك (مثل الوقوف أمام الجمهور، مشاركة في مشروع، أو تقديم عرض).
+                        </p>
+                        <div class="bg-white p-4 rounded-xl border border-purple-100 text-xs text-slate-600 space-y-2">
+                            <p class="font-bold text-slate-800">مفردات ومفاهيم مساعدة:</p>
+                            <div class="flex flex-wrap gap-2 pt-1">
+                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded">كنتُ قلقاً/خائفاً</span>
+                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded">مشاعر متناقضة</span>
+                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded">تجربة ممتازة</span>
+                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded">أول مشاركة لي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Audio Recording Simulation Tool -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-md text-center space-y-4">
+                    <h3 class="text-lg font-bold flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-sliders text-amber-400"></i> مسجل الصوت التفاعلي لممارسة التحدث
+                    </h3>
+                    <p class="text-slate-300 text-xs">اضغط على زر التسجيل وسجل إجابتك أو حوارك للتحقق من زَمَن الإلقاء</p>
+
+                    <!-- Timer Display -->
+                    <div id="timer-display" class="text-4xl font-mono font-bold text-amber-400 my-2">00:00</div>
+
+                    <div class="flex justify-center gap-4">
+                        <button id="start-rec-btn" onclick="startRecordingTimer()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-full text-sm flex items-center gap-2 transition">
+                            <i class="fa-solid fa-circle text-red-400 animate-pulse"></i> بدء التسجيل
+                        </button>
+                        <button id="stop-rec-btn" onclick="stopRecordingTimer()" disabled class="bg-slate-700 text-slate-400 font-bold px-6 py-2.5 rounded-full text-sm flex items-center gap-2 transition cursor-not-allowed">
+                            <i class="fa-solid fa-square"></i> إيقاف التسجيل
+                        </button>
+                    </div>
+
+                    <div id="recording-status" class="text-xs text-slate-400 italic">جاهز للتسجيل...</div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-sm border-t border-slate-800">
+        <p>مادة تعليمية تفاعلية - الأحلام الأولى: الحُلم الأخير &copy; 2026</p>
+    </footer>
+
+    <!-- Interactive JS -->
+    <script>
+        // Tab Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('block'));
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('block');
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        // True / False Check Engine
+        let tfScores = {};
+        function checkTF(qNum, userAns, correctAns) {
+            const card = document.getElementById(`tf-q${qNum}`);
+            const feedback = card.querySelector('.feedback');
+            const trueBtn = card.querySelector('.tf-btn-true');
+            const falseBtn = card.querySelector('.tf-btn-false');
+
+            trueBtn.classList.remove('bg-emerald-600', 'text-white', 'bg-rose-600');
+            falseBtn.classList.remove('bg-emerald-600', 'text-white', 'bg-rose-600');
+
+            if (userAns === correctAns) {
+                tfScores[qNum] = 1;
+                feedback.className = 'feedback mt-3 p-3 rounded-lg text-sm font-semibold bg-emerald-100 text-emerald-800 block';
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> إجابة صحيحة! أحسنت.';
+                if (userAns) {
+                    trueBtn.classList.add('bg-emerald-600', 'text-white');
+                } else {
+                    falseBtn.classList.add('bg-emerald-600', 'text-white');
+                }
+            } else {
+                tfScores[qNum] = 0;
+                feedback.className = 'feedback mt-3 p-3 rounded-lg text-sm font-semibold bg-rose-100 text-rose-800 block';
+                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> إجابة خاطئة. حاول مرة أخرى!';
+                if (userAns) {
+                    trueBtn.classList.add('bg-rose-600', 'text-white');
+                } else {
+                    falseBtn.classList.add('bg-rose-600', 'text-white');
+                }
+            }
+
+            // Update score
+            const totalScore = Object.values(tfScores).reduce((a, b) => a + b, 0);
+            document.getElementById('tf-score-badge').innerText = `النتيجة: ${totalScore} / 6`;
+        }
+
+        // MCQ Check Engine
+        let mcqScores = {};
+        function checkMCQ(qNum, optIndex, isCorrect) {
+            const card = document.getElementById(`mcq-card-${qNum}`);
+            const buttons = card.querySelectorAll('.mcq-opt');
+            const feedback = card.querySelector('.mcq-feedback');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'bg-rose-600', 'text-white', 'border-transparent');
+                btn.classList.add('bg-white', 'border-gray-200');
+            });
+
+            if (isCorrect) {
+                mcqScores[qNum] = 1;
+                buttons[optIndex].classList.remove('bg-white');
+                buttons[optIndex].classList.add('bg-emerald-600', 'text-white', 'border-transparent');
+                feedback.className = 'mcq-feedback mt-3 p-3 rounded-lg text-sm font-semibold bg-emerald-100 text-emerald-800 block';
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> إجابة صحيحة ممتازة!';
+            } else {
+                mcqScores[qNum] = 0;
+                buttons[optIndex].classList.remove('bg-white');
+                buttons[optIndex].classList.add('bg-rose-600', 'text-white', 'border-transparent');
+                feedback.className = 'mcq-feedback mt-3 p-3 rounded-lg text-sm font-semibold bg-rose-100 text-rose-800 block';
+                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> إجابة غير صحيحة، حاول اختيار إجابة أخرى.';
+            }
+
+            const totalScore = Object.values(mcqScores).reduce((a, b) => a + b, 0);
+            document.getElementById('mcq-score-badge').innerText = `النتيجة: ${totalScore} / 6`;
+        }
+
+        // WH Model Answer Toggle
+        function toggleAnswer(ansId) {
+            const element = document.getElementById(ansId);
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+
+        // Audio Timer Simulator
+        let timerInterval = null;
+        let seconds = 0;
+
+        function startRecordingTimer() {
+            seconds = 0;
+            document.getElementById('timer-display').innerText = '00:00';
+            document.getElementById('start-rec-btn').disabled = true;
+            document.getElementById('start-rec-btn').classList.add('opacity-50', 'cursor-not-allowed');
+            
+            const stopBtn = document.getElementById('stop-rec-btn');
+            stopBtn.disabled = false;
+            stopBtn.classList.remove('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
+            stopBtn.classList.add('bg-rose-600', 'hover:bg-rose-500', 'text-white');
+
+            document.getElementById('recording-status').innerText = 'جاري التسجيل... تحدث الآن!';
+            document.getElementById('recording-status').classList.add('text-amber-400');
+
+            timerInterval = setInterval(() => {
+                seconds++;
+                const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+                const secs = String(seconds % 60).padStart(2, '0');
+                document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function stopRecordingTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('start-rec-btn').disabled = false;
+            document.getElementById('start-rec-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+
+            const stopBtn = document.getElementById('stop-rec-btn');
+            stopBtn.disabled = true;
+            stopBtn.className = 'bg-slate-700 text-slate-400 font-bold px-6 py-2.5 rounded-full text-sm flex items-center gap-2 transition cursor-not-allowed';
+
+            document.getElementById('recording-status').innerText = `تم إيقاف التسجيل. إجمالي الوقت: ${document.getElementById('timer-display').innerText}`;
+            document.getElementById('recording-status').classList.remove('text-amber-400');
+            document.getElementById('recording-status').classList.add('text-emerald-400');
+        }
+    </script>
+</body>
+</html>
