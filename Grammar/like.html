@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arabic Comparison Words: مثل، كـ، كما</title>
+  <style>
+    :root{
+      --ink:#25313b;
+      --muted:#66727d;
+      --paper:#fffef9;
+      --line:#d9dee2;
+      --blue:#2f6f9f;
+      --blue-soft:#eaf4fb;
+      --green:#587f4a;
+      --green-soft:#eef6eb;
+      --gold:#a46f1d;
+      --gold-soft:#fbf3e3;
+      --red:#9b3f3f;
+      --red-soft:#fbecec;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:#f1f1ed;
+      font-family:"Times New Roman",Times,serif;
+      line-height:1.65;
+      font-size:18px;
+    }
+
+    .page{
+      width:min(980px,calc(100% - 28px));
+      margin:28px auto;
+      background:var(--paper);
+      border:1px solid #d8d8d2;
+      box-shadow:0 8px 28px rgba(0,0,0,.08);
+      padding:42px 48px 58px;
+    }
+
+    h1,h2,h3{line-height:1.25;margin-top:0}
+    h1{font-size:2.25rem;color:#213746;margin-bottom:8px}
+    h2{
+      font-size:1.55rem;
+      color:var(--blue);
+      border-bottom:2px solid var(--blue);
+      padding-bottom:7px;
+      margin-top:42px;
+      margin-bottom:18px;
+    }
+    h3{font-size:1.22rem;color:#304e62;margin-bottom:8px}
+    p{margin:10px 0}
+
+    .subtitle{color:var(--muted);margin-top:0;font-style:italic}
+    .arabic{
+      direction:rtl;
+      unicode-bidi:isolate;
+      font-family:"Times New Roman",Times,serif;
+      font-size:1.22em;
+      line-height:1.9;
+    }
+    .arabic.block{display:block;text-align:right}
+    .term{
+      color:var(--blue);
+      font-weight:700;
+      font-size:1.24em;
+      font-family:"Times New Roman",Times,serif;
+      direction:rtl;
+      unicode-bidi:isolate;
+    }
+
+    .intro{
+      border-left:5px solid var(--blue);
+      background:var(--blue-soft);
+      padding:18px 20px;
+      margin:24px 0 30px;
+    }
+
+    .quick-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:18px 0 26px;
+      font-size:.97rem;
+    }
+    .quick-table th,.quick-table td{
+      border:1px solid var(--line);
+      padding:12px 13px;
+      vertical-align:top;
+    }
+    .quick-table th{background:#edf2f5;text-align:left}
+    .quick-table td:first-child{width:18%;text-align:center}
+
+    .rule-box{
+      border:1px solid var(--line);
+      border-top:4px solid var(--blue);
+      padding:18px 20px;
+      margin:18px 0;
+      background:#fff;
+    }
+    .rule-box.green{border-top-color:var(--green)}
+    .rule-box.gold{border-top-color:var(--gold)}
+
+    .formula{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+      border:1px dashed #98a8b4;
+      background:#f8fbfd;
+      padding:14px;
+      margin:14px 0 18px;
+      font-weight:700;
+    }
+    .formula .arrow{color:var(--muted);font-family:Arial,sans-serif}
+
+    .examples{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+    .example{
+      border:1px solid var(--line);
+      background:#fff;
+      padding:12px 14px;
+      min-height:116px;
+    }
+    .example .translation{font-size:.91rem;color:var(--muted);margin-top:5px}
+    .example .note{font-size:.84rem;color:#7c5f32;margin-top:4px}
+
+    .note-box,.warning-box{
+      padding:13px 16px;
+      margin:15px 0;
+      border-radius:2px;
+    }
+    .note-box{background:var(--green-soft);border-left:4px solid var(--green)}
+    .warning-box{background:var(--red-soft);border-left:4px solid var(--red)}
+
+    .decision{
+      background:#f7fafb;
+      border:1px solid var(--line);
+      padding:16px 19px;
+      margin-top:20px;
+    }
+    .decision p{margin:7px 0}
+
+    .exercise{
+      border:1px solid var(--line);
+      background:#fff;
+      margin:18px 0;
+      padding:20px;
+    }
+    .exercise h3{margin-bottom:4px}
+    .instructions{color:var(--muted);font-size:.94rem;margin-top:0}
+    .question{
+      padding:14px 0;
+      border-bottom:1px solid #ecefec;
+    }
+    .question:last-child{border-bottom:0}
+    .question-number{font-weight:700;color:#405c70}
+
+    .options{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+    button.option,button.check,button.reset,button.reveal{
+      appearance:none;
+      border:1px solid #9eabb5;
+      background:#fff;
+      color:var(--ink);
+      padding:8px 13px;
+      font:inherit;
+      font-size:.92rem;
+      cursor:pointer;
+      border-radius:4px;
+    }
+    button.option:hover,button.reveal:hover{background:#f0f5f8}
+    button.option.selected{background:#dfeef7;border-color:var(--blue)}
+    button.option.correct{background:#e7f4e3;border-color:#5c8d4b}
+    button.option.wrong{background:#fae2e2;border-color:#a95050}
+    button.check{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700;margin-top:14px}
+    button.reset{background:#fff;margin-left:8px}
+    button.reveal{margin-top:8px;color:#315f7d}
+
+    .feedback{margin-top:10px;padding:9px 12px;display:none;font-size:.92rem}
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-soft);border-left:4px solid var(--green)}
+    .feedback.bad{background:var(--red-soft);border-left:4px solid var(--red)}
+
+    select.blank{
+      font:inherit;
+      min-width:115px;
+      padding:5px 8px;
+      border:1px solid #9eabb5;
+      border-radius:3px;
+      background:white;
+    }
+
+    .answer-key details{
+      border:1px solid var(--line);
+      background:#fafaf7;
+      padding:13px 15px;
+      margin:10px 0;
+    }
+    .answer-key summary{cursor:pointer;font-weight:700;color:#315f7d}
+
+    .speaking-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .speaking-card{border:1px solid var(--line);padding:15px;background:#fff}
+
+    .score{
+      margin-top:14px;
+      padding:12px 14px;
+      background:#edf4f8;
+      border-left:4px solid var(--blue);
+      font-weight:700;
+      display:none;
+    }
+
+    footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;text-align:center}
+
+    @media (max-width:720px){
+      body{font-size:16px}
+      .page{padding:28px 20px;margin:0 auto;width:100%;border-left:0;border-right:0}
+      .examples,.speaking-grid{grid-template-columns:1fr}
+      h1{font-size:1.85rem}
+      .quick-table{font-size:.88rem}
+      .quick-table th,.quick-table td{padding:9px}
+    }
+
+    @media print{
+      body{background:#fff}
+      .page{box-shadow:none;border:0;width:100%;margin:0;padding:22px}
+      button,.score{display:none!important}
+      .exercise{break-inside:avoid}
+    }
+  
+    .case-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+    .case-card{border:1px solid var(--line);background:#fafcfb;padding:12px;text-align:center}
+    .source-list li{margin:10px 0}
+    .source-list a{color:#315f7d}
+    .small{font-size:.9rem;color:var(--muted)}
+    @media(max-width:720px){.case-row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Arabic Comparison Words</h1>
+      <p class="subtitle"><span class="term">مِثْل</span>، <span class="term">كَـ</span>، <span class="term">كَمَا</span>، <span class="term">مِثْلَما</span>، and Egyptian <span class="term">زَيّ ما</span></p>
+    </header>
+
+    <section class="intro">
+      <p>English often uses <em>like</em> or <em>as</em> in several different structures. In Arabic, the correct form depends mainly on what comes next: a <strong>noun</strong>, a <strong>pronoun</strong>, or a <strong>clause</strong>.</p>
+    </section>
+
+    <section>
+      <h2>1. The basic difference</h2>
+      <table class="quick-table">
+        <thead><tr><th>Form</th><th>What normally follows?</th><th>Main use</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="term">مِثْل</span></td>
+            <td>A noun, noun phrase, demonstrative, or attached pronoun</td>
+            <td>like; similar to</td>
+            <td><span class="arabic">هو مِثْلُ أَخيهِ.</span><br>He is like his brother.</td>
+          </tr>
+          <tr>
+            <td><span class="term">كَـ</span></td>
+            <td>A noun attached directly to it</td>
+            <td>like; as; such as</td>
+            <td><span class="arabic">هو كَالأَسَدِ.</span><br>He is like a lion.</td>
+          </tr>
+          <tr>
+            <td><span class="term">كَمَا</span></td>
+            <td>A clause—often verbal, but not necessarily</td>
+            <td>as; just as; and also</td>
+            <td><span class="arabic">اِفْعَلْ كَمَا قُلْتُ لَكَ.</span><br>Do as I told you.</td>
+          </tr>
+          <tr>
+            <td><span class="term">مِثْلَما</span></td>
+            <td>A clause</td>
+            <td>just as; in the same way that</td>
+            <td><span class="arabic">حَدَثَ مِثْلَما تَوَقَّعْنا.</span><br>It happened just as we expected.</td>
+          </tr>
+          <tr>
+            <td><span class="term">مِثْلَ ما</span></td>
+            <td><span class="arabic">ما</span> meaning “what / that which”</td>
+            <td>something like what...</td>
+            <td><span class="arabic">اِشْتَرَيْتُ مِثْلَ ما اِشْتَرَيْتَ.</span><br>I bought something like what you bought.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>2. <span class="term">مِثْل</span>: a noun followed by another noun or a pronoun</h2>
+      <div class="rule-box green">
+        <h3>Main rule</h3>
+        <p><span class="term">مِثْل</span> is a noun. It is commonly the first word of an <span class="arabic">إِضافَة</span>, so the following noun is genitive. A pronoun suffix may also attach to it.</p>
+        <div class="formula"><span class="term">مِثْل</span><span class="arrow">+</span><span>noun / demonstrative / pronoun suffix</span></div>
+        <p><strong>Common forms:</strong> <span class="arabic">مِثْلي، مِثْلُكَ، مِثْلُكِ، مِثْلُهُ، مِثْلُها، مِثْلُنا، مِثْلُكُم، مِثْلُهُم</span></p>
+      </div>
+
+      <div class="note-box">
+        <strong>Important:</strong> the final vowel on <span class="term">مِثْل</span> changes according to its grammatical position. In ordinary unvocalized writing, all three forms are written simply <span class="arabic">مثل</span>.
+      </div>
+      <div class="case-row">
+        <div class="case-card"><div class="arabic">هو مِثْلُ أَخيهِ.</div><div class="small">nominative: predicate</div></div>
+        <div class="case-card"><div class="arabic">أُريدُ فُسْتانًا مِثْلَ فُسْتانِكِ.</div><div class="small">accusative: modifying the object</div></div>
+        <div class="case-card"><div class="arabic">مَرَرْتُ بِرَجُلٍ مِثْلِ أَخيكَ.</div><div class="small">genitive: after a preposition</div></div>
+      </div>
+
+      <div class="examples">
+        <div class="example"><div class="arabic block">أُريدُ أَنْ أَسْكُنَ في شَقَّةٍ مِثْلِ شَقَّةِ زُمَلائي.</div><div class="translation">I want to live in an apartment like my classmates’ apartment.</div></div>
+        <div class="example"><div class="arabic block">تَتَمَنّى أَنْ تُصْبِحَ ابْنَتُها مُهَنْدِسَةً مِثْلَها.</div><div class="translation">She hopes that her daughter will become an engineer like her.</div></div>
+        <div class="example"><div class="arabic block">لَيْسَ هُناكَ مَكانٌ مِثْلُ البَيْتِ.</div><div class="translation">There is no place like home.</div></div>
+        <div class="example"><div class="arabic block">لا أَحَدَ يَفْهَمُني مِثْلَكَ.</div><div class="translation">No one understands me like you do.</div></div>
+        <div class="example"><div class="arabic block">طَعْمُ هٰذا الشَّرابِ مِثْلُ اللَّيْمونِ.</div><div class="translation">This drink tastes like lemon.</div></div>
+        <div class="example"><div class="arabic block">في مِثْلِ هٰذِهِ الظُّروفِ، يَجِبُ أَنْ نَبْقى هادِئينَ.</div><div class="translation">In circumstances like these, we must remain calm.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. <span class="term">كَـ</span>: an attached preposition before a noun</h2>
+      <div class="rule-box">
+        <h3>Main rule</h3>
+        <p><span class="term">كَـ</span> is attached directly to the following noun. In fully inflected Arabic, that noun is genitive.</p>
+        <div class="formula"><span class="term">كَـ</span><span class="arrow">+</span><span class="arabic">الأَسَد</span><span class="arrow">→</span><span class="arabic">كَالأَسَدِ</span></div>
+      </div>
+
+      <div class="examples">
+        <div class="example"><div class="arabic block">الجالِيَةُ العَرَبِيَّةُ، كَغَيْرِها مِنَ الجالِيّاتِ، تَهْتَمُّ بِالثَّقافَةِ وَاللُّغَةِ.</div><div class="translation">The Arab community, like other communities, cares about culture and language.</div></div>
+        <div class="example"><div class="arabic block">كانَ الطِّفْلُ يَجْري كَالرّيحِ.</div><div class="translation">The child was running like the wind.</div></div>
+        <div class="example"><div class="arabic block">العِلْمُ كَالنّورِ.</div><div class="translation">Knowledge is like light.</div></div>
+        <div class="example"><div class="arabic block">كانَ وَجْهُها كَالقَمَرِ.</div><div class="translation">Her face was like the moon.</div></div>
+        <div class="example"><div class="arabic block">تَحْتاجُ مُدُنٌ كَبيرَةٌ، كَالقاهِرَةِ وَشيكاغو، إِلى نِظامِ نَقْلٍ فَعّالٍ.</div><div class="translation">Large cities, such as Cairo and Chicago, need an effective transportation system.</div></div>
+        <div class="example"><div class="arabic block">هذا القُماشُ ناعِمٌ كَالحَريرِ.</div><div class="translation">This fabric is soft like silk.</div></div>
+      </div>
+
+      <div class="warning-box"><strong>For learners:</strong> do not normally use <span class="term">كَـ</span> with an independent pronoun such as <span class="arabic">أنا</span> or <span class="arabic">أنت</span>. Standard prose normally uses <span class="arabic">مِثْلي</span> and <span class="arabic">مِثْلُكَ</span>. Rare poetic or disputed constructions are not useful for everyday production.</div>
+    </section>
+
+    <section>
+      <h2>4. <span class="term">كَمَا</span>: before a clause</h2>
+      <div class="rule-box gold">
+        <h3>Main rule</h3>
+        <p><span class="term">كَمَا</span> introduces a clause and commonly means <em>as</em> or <em>just as</em>. The clause is often verbal, but Arabic also uses patterns such as <span class="arabic">كما هو...</span> and <span class="arabic">كما أنَّ...</span>.</p>
+        <div class="formula"><span class="term">كَمَا</span><span class="arrow">+</span><span>clause</span></div>
+      </div>
+
+      <div class="examples">
+        <div class="example"><div class="arabic block">المَوْضوعُ لَيْسَ بَسيطًا كَمَا تَقولينَ.</div><div class="translation">The issue is not as simple as you say.</div></div>
+        <div class="example"><div class="arabic block">كَمَا تَعْلَمونَ، الاِمْتِحانُ سَيَكونُ غَدًا.</div><div class="translation">As you know, the exam will be tomorrow.</div></div>
+        <div class="example"><div class="arabic block">اِكْتُبِ الجُمْلَةَ كَمَا كَتَبْتُها عَلى السَّبّورَةِ.</div><div class="translation">Write the sentence as I wrote it on the board.</div></div>
+        <div class="example"><div class="arabic block">بَقِيَ الوَضْعُ كَمَا هُوَ.</div><div class="translation">The situation remained as it was.</div></div>
+        <div class="example"><div class="arabic block">القِراءَةُ مُفيدَةٌ، كَمَا أَنَّها مُمتِعَةٌ أَيْضًا.</div><div class="translation">Reading is useful, and it is also enjoyable.</div></div>
+        <div class="example"><div class="arabic block">تُوَسِّعُ القِراءَةُ المُفْرَداتِ، كَمَا تُساعِدُ عَلى تَحْسينِ الكِتابَةِ.</div><div class="translation">Reading expands vocabulary and also helps improve writing.</div><div class="note">Here <span class="arabic">كما</span> has an additive meaning: “and also.”</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. <span class="term">مِثْلَما</span> versus <span class="term">مِثْلَ ما</span></h2>
+      <div class="rule-box green">
+        <h3><span class="term">مِثْلَما</span> — written together</h3>
+        <p>Use it as a connector meaning <em>just as</em> or <em>in the same way that</em>.</p>
+        <div class="examples">
+          <div class="example"><div class="arabic block">حَدَثَ كُلُّ شَيْءٍ مِثْلَما تَوَقَّعْنا.</div><div class="translation">Everything happened just as we expected.</div></div>
+          <div class="example"><div class="arabic block">عامِلِ النّاسَ مِثْلَما تُحِبُّ أَنْ يُعامِلوكَ.</div><div class="translation">Treat people as you would like them to treat you.</div></div>
+        </div>
+      </div>
+      <div class="rule-box">
+        <h3><span class="term">مِثْلَ ما</span> — written separately</h3>
+        <p>Write the words separately when <span class="arabic">ما</span> means <em>what</em> or <em>that which</em>. In that structure, <span class="arabic">مِثْل</span> keeps its normal grammatical role in the sentence.</p>
+        <div class="examples">
+          <div class="example"><div class="arabic block">اِشْتَرَيْتُ مِثْلَ ما اِشْتَرَيْتَ.</div><div class="translation">I bought something like what you bought.</div></div>
+          <div class="example"><div class="arabic block">قالوا مِثْلَ ما قالَ الأَوَّلونَ.</div><div class="translation">They said the same kind of thing that earlier people had said.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>6. Egyptian Arabic: <span class="term">زَيّ</span> and <span class="term">زَيّ ما</span></h2>
+      <div class="decision">
+        <p><strong><span class="arabic">زَيّ</span> + noun/pronoun:</strong> <span class="arabic">الفُسْتان دَه زَيّ فُسْتانِك.</span> / <span class="arabic">هُوَّ زَيَّك.</span></p>
+        <p><strong><span class="arabic">زَيّ ما</span> + clause:</strong> <span class="arabic">اِعْمِل زَيّ ما قُلْت لَك.</span></p>
+        <p><strong>Another example:</strong> <span class="arabic">المَوْضوع مِش بَسيط زَيّ ما بْتِقولي.</span></p>
+      </div>
+      <div class="note-box">Dialect spelling is not completely standardized. This page uses <span class="arabic">زَيّ</span> and <span class="arabic">زَيّ ما</span> consistently.</div>
+    </section>
+
+    <section>
+      <h2>7. Quick decision guide</h2>
+      <div class="decision">
+        <p><strong>A noun or pronoun follows:</strong> use <span class="term">مِثْل</span>.</p>
+        <p><strong>A formal attached comparison before a noun:</strong> use <span class="term">كَـ</span>.</p>
+        <p><strong>A clause follows:</strong> use <span class="term">كَمَا</span> or <span class="term">مِثْلَما</span>.</p>
+        <p><strong><span class="arabic">ما</span> means “what / that which”:</strong> write <span class="term">مِثْلَ ما</span> as two words.</p>
+        <p><strong>Everyday Egyptian:</strong> use <span class="term">زَيّ</span> before nouns/pronouns and <span class="term">زَيّ ما</span> before clauses.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>8. Exercises</h2>
+      <div class="exercise" id="mcq-exercise">
+        <h3>A. Choose the best expression</h3>
+        <p class="instructions">Each item has one best answer in the intended meaning.</p>
+
+        <div class="question" data-answer="مثل"><span class="question-number">1.</span> <span class="arabic">أُريدُ أَنْ أَكونَ _____ أُخْتي الكُبْرى.</span><div class="options"><button class="option" data-value="مثل">مِثْل</button><button class="option" data-value="كما">كَمَا</button><button class="option" data-value="مثلما">مِثْلَما</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="مثلك"><span class="question-number">2.</span> <span class="arabic">أَنا _____ في حُبِّ القِراءَةِ.</span><div class="options"><button class="option" data-value="مثلك">مِثْلُكَ</button><button class="option" data-value="مثل أنت">مِثْلُ أَنْتَ</button><button class="option" data-value="كأنت">كَأَنْتَ</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="كـ"><span class="question-number">3.</span> <span class="arabic">كانَ وَجْهُها _____ القَمَرِ.</span><div class="options"><button class="option" data-value="كـ">كَـ</button><button class="option" data-value="كما">كَمَا</button><button class="option" data-value="مثلما">مِثْلَما</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="كما"><span class="question-number">4.</span> <span class="arabic">اِفْعَلْ _____ شَرَحْتُ لَكَ.</span><div class="options"><button class="option" data-value="كما">كَمَا</button><button class="option" data-value="مثل">مِثْل</button><button class="option" data-value="كـ">كَـ</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="مثلما"><span class="question-number">5.</span> <span class="arabic">حَدَثَ كُلُّ شَيْءٍ _____ تَوَقَّعْنا.</span><div class="options"><button class="option" data-value="مثلما">مِثْلَما</button><button class="option" data-value="مثل">مِثْل</button><button class="option" data-value="كـ">كَـ</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="مثل ما"><span class="question-number">6.</span> <span class="arabic">اِشْتَرَيْتُ كِتابًا _____ اِشْتَرَيْتَ.</span><div class="options"><button class="option" data-value="مثل ما">مِثْلَ ما</button><button class="option" data-value="مثلما">مِثْلَما</button><button class="option" data-value="كما">كَمَا</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="كما"><span class="question-number">7.</span> <span class="arabic">_____ تَعْلَمونَ، الاِمْتِحانُ غَدًا.</span><div class="options"><button class="option" data-value="كما">كَمَا</button><button class="option" data-value="مثل">مِثْل</button><button class="option" data-value="كـ">كَـ</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="كـ"><span class="question-number">8.</span> <span class="arabic">تَحْتاجُ مُدُنٌ كَبيرَةٌ _____ القاهِرَةِ إِلى نِظامِ نَقْلٍ فَعّالٍ.</span><div class="options"><button class="option" data-value="كـ">كَـ</button><button class="option" data-value="كما">كَمَا</button><button class="option" data-value="مثلما">مِثْلَما</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="مثل"><span class="question-number">9.</span> <span class="arabic">في مَدينَةٍ _____ هٰذِهِ، السَّيّارَةُ لَيْسَتْ ضَرورِيَّةً.</span><div class="options"><button class="option" data-value="مثل">مِثْل</button><button class="option" data-value="كما">كَمَا</button><button class="option" data-value="مثلما">مِثْلَما</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="كما"><span class="question-number">10.</span> <span class="arabic">تُوَسِّعُ القِراءَةُ المُفْرَداتِ، _____ تُساعِدُ عَلى تَحْسينِ الكِتابَةِ.</span><div class="options"><button class="option" data-value="كما">كَمَا</button><button class="option" data-value="مثل">مِثْل</button><button class="option" data-value="كـ">كَـ</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="زيّ"><span class="question-number">11.</span> <span class="arabic">الفُسْتان دَه _____ فُسْتانِك.</span><div class="options"><button class="option" data-value="زيّ">زَيّ</button><button class="option" data-value="زيّ ما">زَيّ ما</button><button class="option" data-value="كما">كَمَا</button></div><div class="feedback"></div></div>
+
+        <div class="question" data-answer="زيّ ما"><span class="question-number">12.</span> <span class="arabic">اِعْمِل _____ قُلْت لَك.</span><div class="options"><button class="option" data-value="زيّ ما">زَيّ ما</button><button class="option" data-value="زيّ">زَيّ</button><button class="option" data-value="مثل">مِثْل</button></div><div class="feedback"></div></div>
+
+        <button class="check" onclick="checkMCQ()">Check answers</button><button class="reset" onclick="resetMCQ()">Reset</button><div class="score" id="mcq-score"></div>
+      </div>
+
+      <div class="exercise">
+        <h3>B. Identify what follows</h3>
+        <p class="instructions">Classify the underlined part as a noun/noun phrase, pronoun suffix, or clause.</p>
+        <ol>
+          <li><span class="arabic">مِثْلُ <u>أَخيهِ</u></span></li>
+          <li><span class="arabic">مِثْلَ<u>كَ</u></span></li>
+          <li><span class="arabic">كَـ<u>الحَريرِ</u></span></li>
+          <li><span class="arabic">كَمَا <u>قُلْتَ</u></span></li>
+          <li><span class="arabic">مِثْلَما <u>تَوَقَّعْنا</u></span></li>
+          <li><span class="arabic">مِثْلَ <u>ما اِشْتَرَيْتَ</u></span></li>
+          <li><span class="arabic">زَيَّ<u>ها</u></span></li>
+          <li><span class="arabic">زَيّ ما <u>قُلْت</u></span></li>
+        </ol>
+        <button class="reveal" onclick="toggleAnswer('class-answer')">Show / hide answers</button>
+        <div class="feedback good" id="class-answer">1. noun phrase; 2. pronoun suffix; 3. noun; 4. clause; 5. clause; 6. relative phrase (“what you bought”); 7. pronoun suffix; 8. clause.</div>
+      </div>
+
+      <div class="exercise">
+        <h3>C. Correct the error</h3>
+        <p class="instructions">Rewrite each sentence using the intended comparison structure.</p>
+        <ol class="arabic" style="text-align:right">
+          <li>أَنا كَأَنْتَ في حُبِّ القِراءَةِ.</li>
+          <li>اِكْتُبْ مِثْلُ شَرَحَ المُعَلِّمُ.</li>
+          <li>المَشْروعُ نَجَحَ كَ تَوَقَّعْنا.</li>
+          <li>لا أَحَدَ يَفْهَمُني مِثْلُ أَنْتَ.</li>
+          <li>اِشْتَرَيْتُ مِثْلَما اِشْتَرَيْتَ. <span style="font-size:.8em">(intended: something like what you bought)</span></li>
+          <li>كَمَا الأَسَدِ، كانَ الجُنْدِيُّ شُجاعًا.</li>
+          <li>المَوْضوع مِش بَسيط زَيّ بْتِقولي.</li>
+          <li>هُوَ كَمَا أَخيهِ في الطّولِ.</li>
+        </ol>
+        <button class="reveal" onclick="toggleAnswer('correction-answer')">Show / hide suggested answers</button>
+        <div class="feedback good arabic" id="correction-answer" style="text-align:right">
+          ١. أَنا مِثْلُكَ في حُبِّ القِراءَةِ.<br>
+          ٢. اِكْتُبْ كَمَا شَرَحَ المُعَلِّمُ.<br>
+          ٣. نَجَحَ المَشْروعُ كَمَا تَوَقَّعْنا.<br>
+          ٤. لا أَحَدَ يَفْهَمُني مِثْلَكَ.<br>
+          ٥. اِشْتَرَيْتُ مِثْلَ ما اِشْتَرَيْتَ.<br>
+          ٦. كانَ الجُنْدِيُّ شُجاعًا كَالأَسَدِ.<br>
+          ٧. المَوْضوع مِش بَسيط زَيّ ما بْتِقولي.<br>
+          ٨. هُوَ مِثْلُ أَخيهِ في الطّولِ.
+        </div>
+      </div>
+
+      <div class="exercise" id="dialogue-exercise">
+        <h3>D. Complete the clothing dialogue</h3>
+        <p class="instructions">Choose the most natural expression.</p>
+        <div class="arabic block" style="text-align:right">
+          سَلْمى: أُريدُ فُسْتانًا <select class="blank" data-answer="مثل"><option value="">—</option><option>مثل</option><option>كما</option><option>كـ</option></select> فُسْتانِكِ.<br><br>
+          مَرْيَم: هٰذا القُماشُ ناعِمٌ <select class="blank" data-answer="كـ"><option value="">—</option><option>مثل</option><option>كما</option><option>كـ</option></select> الحَريرِ.<br><br>
+          سَلْمى: هَلْ أَلْبَسُهُ <select class="blank" data-answer="كما"><option value="">—</option><option>مثل</option><option>كما</option><option>كـ</option></select> لَبِسْتِ فُسْتانَكِ في الحَفْلَةِ؟<br><br>
+          مَرْيَم: نَعَم، وَاختاري حِذاءً <select class="blank" data-answer="مثل"><option value="">—</option><option>مثل</option><option>كما</option><option>كـ</option></select> هٰذا.<br><br>
+          سَلْمى: سَأَفْعَلُ <select class="blank" data-answer="كما"><option value="">—</option><option>مثل</option><option>كما</option><option>كـ</option></select> نَصَحْتِني.
+        </div>
+        <button class="check" onclick="checkDialogue()">Check dialogue</button><button class="reset" onclick="resetDialogue()">Reset</button><div class="score" id="dialogue-score"></div>
+      </div>
+
+      <div class="exercise">
+        <h3>E. Produce your own sentences</h3>
+        <ol>
+          <li>Write one sentence with <span class="arabic">مِثْل</span> + a noun.</li>
+          <li>Write one sentence with a pronoun form such as <span class="arabic">مِثْلي</span> or <span class="arabic">مِثْلُهُ</span>.</li>
+          <li>Write one formal simile with <span class="arabic">كَـ</span>.</li>
+          <li>Write one sentence with <span class="arabic">كَمَا</span> meaning “as.”</li>
+          <li>Write one sentence with <span class="arabic">كَمَا</span> meaning “and also.”</li>
+          <li>Write one Egyptian sentence with <span class="arabic">زَيّ ما</span>.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <h2>9. Speaking practice</h2>
+      <div class="speaking-grid">
+        <div class="speaking-card"><h3>Compare two people</h3><p>Describe two family members or classmates. Use <span class="arabic">مِثْل</span> twice, including one attached pronoun.</p></div>
+        <div class="speaking-card"><h3>Give instructions</h3><p>Explain a process. Use <span class="arabic">كَمَا</span> in at least three instructions.</p></div>
+        <div class="speaking-card"><h3>Create vivid comparisons</h3><p>Describe a person, city, or weather scene using three comparisons with <span class="arabic">كَـ</span>.</p></div>
+        <div class="speaking-card"><h3>Role-play: choosing clothes</h3><p>One student is a customer and the other is a friend or salesperson. Compare colors, patterns, prices, and styles using <span class="arabic">مِثْل</span>, <span class="arabic">كَـ</span>, and <span class="arabic">كَمَا</span>.</p></div>
+      </div>
+    </section>
+
+    <section class="answer-key">
+      <h2>10. Sources consulted</h2>
+      <p class="small">The explanations were checked against grammar references, dictionary evidence, attested examples, and an Egyptian Arabic reference.</p>
+      <ul class="source-list">
+        <li><a href="https://learning.aljazeera.net/ar/node/995" target="_blank" rel="noopener">Al Jazeera Learning: the first term of an iḍāfa changes case by position; the second term is genitive.</a></li>
+        <li><a href="https://arabiclexicon.hawramani.com/%D9%85%D8%AB%D9%84/" target="_blank" rel="noopener">The Arabic Lexicon: dictionary evidence for <span class="arabic">مِثْل</span> as “similar/equal” and with attached pronouns.</a></li>
+        <li><a href="https://corpus.quran.com/qurandictionary.jsp?q=qwm" target="_blank" rel="noopener">Quranic Arabic Corpus: an attested <span class="arabic">كَمَا + فعل</span> structure in <span class="arabic">فاستقم كما أُمرت</span>.</a></li>
+        <li><a href="https://shamela.ws/book/37487/497" target="_blank" rel="noopener">Classical grammar discussion: standard usage normally avoids attaching the comparison <span class="arabic">كـ</span> to pronouns.</a></li>
+        <li><a href="https://alababmisr.com/%D9%85%D8%AB%D9%84-%D9%85%D8%A7-%D9%88-%D9%85%D8%AB%D9%84%D9%85%D8%A7-%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85%D9%8B%D8%A7-%D9%88%D8%A5%D8%B9%D8%B1%D8%A7%D8%A8%D9%8B%D8%A7-%D8%AF/" target="_blank" rel="noopener">Usage distinction between <span class="arabic">مِثْلَما</span> and <span class="arabic">مِثْلَ ما</span>.</a></li>
+        <li><a href="https://www.lisaanmasry.org/online/word.php?id=5794&ui=" target="_blank" rel="noopener">Lisaan Masry: Egyptian <span class="arabic">زَيّ</span> and <span class="arabic">زَيّ ما</span>.</a></li>
+      </ul>
+    </section>
+
+    <footer>Arabic comparison lesson: <span class="arabic">مِثْل، كَـ، كَمَا، مِثْلَما، مِثْلَ ما، زَيّ، زَيّ ما</span></footer>
+  </main>
+
+  <script>
+    document.querySelectorAll('.option').forEach(function(button){
+      button.addEventListener('click',function(){
+        const question=button.closest('.question');
+        question.querySelectorAll('.option').forEach(b=>b.classList.remove('selected'));
+        button.classList.add('selected');
+        question.dataset.selected=button.dataset.value;
+      });
+    });
+
+    function checkMCQ(){
+      const questions=[...document.querySelectorAll('#mcq-exercise .question')];
+      let score=0;
+      questions.forEach(function(q){
+        const selected=q.dataset.selected || '';
+        const answer=q.dataset.answer;
+        const feedback=q.querySelector('.feedback');
+        q.querySelectorAll('.option').forEach(function(btn){
+          btn.classList.remove('correct','wrong');
+          if(btn.dataset.value===answer) btn.classList.add('correct');
+          if(btn.classList.contains('selected') && btn.dataset.value!==answer) btn.classList.add('wrong');
+        });
+        if(selected===answer){score++;feedback.textContent='Correct.';feedback.className='feedback show good';}
+        else{feedback.textContent=selected ? 'Not quite. Check what follows the blank and the intended meaning.' : 'Choose an answer first.';feedback.className='feedback show bad';}
+      });
+      const scoreBox=document.getElementById('mcq-score');scoreBox.style.display='block';scoreBox.textContent='Score: '+score+' / '+questions.length;
+    }
+
+    function resetMCQ(){
+      document.querySelectorAll('#mcq-exercise .question').forEach(function(q){
+        delete q.dataset.selected;
+        q.querySelectorAll('.option').forEach(b=>b.classList.remove('selected','correct','wrong'));
+        q.querySelector('.feedback').className='feedback';
+      });
+      document.getElementById('mcq-score').style.display='none';
+    }
+
+    function toggleAnswer(id){document.getElementById(id).classList.toggle('show');}
+
+    function checkDialogue(){
+      const blanks=[...document.querySelectorAll('#dialogue-exercise .blank')];let score=0;
+      blanks.forEach(function(blank){const correct=blank.value===blank.dataset.answer;if(correct){score++;blank.style.background='#e7f4e3';blank.style.borderColor='#5c8d4b';}else{blank.style.background='#fae2e2';blank.style.borderColor='#a95050';}});
+      const scoreBox=document.getElementById('dialogue-score');scoreBox.style.display='block';scoreBox.textContent='Score: '+score+' / '+blanks.length+'. Correct sequence: مثل، كـ، كما، مثل، كما.';
+    }
+
+    function resetDialogue(){
+      document.querySelectorAll('#dialogue-exercise .blank').forEach(function(blank){blank.value='';blank.style.background='white';blank.style.borderColor='#9eabb5';});
+      document.getElementById('dialogue-score').style.display='none';
+    }
+  </script>
+</body>
+</html>
