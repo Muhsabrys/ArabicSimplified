@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نشاط المحادثة: الملابس والتسوّق</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f1ea;
+      color: #2b2b2b;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 21px;
+      line-height: 1.8;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px 50px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #23395b, #406e8e);
+      color: #fff;
+      border-radius: 18px;
+      padding: 34px 28px;
+      text-align: center;
+      box-shadow: 0 8px 22px rgba(0,0,0,.12);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 42px;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 23px;
+    }
+
+    .instructions {
+      background: #fff;
+      border-right: 7px solid #d97b29;
+      padding: 18px 22px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.07);
+    }
+
+    .instructions strong {
+      color: #9a4b0b;
+    }
+
+    h2 {
+      color: #23395b;
+      font-size: 31px;
+      margin: 8px 0 16px;
+    }
+
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+
+    .vocab-card {
+      background: #fff;
+      border: 1px solid #ddd5c8;
+      border-radius: 14px;
+      padding: 16px 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,.06);
+    }
+
+    .vocab-card .pic {
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+      font-size: 54px;
+      line-height: 1.2;
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .vocab-card .word {
+      font-size: 24px;
+      font-weight: bold;
+      color: #23395b;
+    }
+
+    .vocab-card .english {
+      display: block;
+      direction: ltr;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.3;
+    }
+
+    .section {
+      background: #fff;
+      border-radius: 16px;
+      padding: 23px;
+      margin-bottom: 22px;
+      box-shadow: 0 5px 14px rgba(0,0,0,.07);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px;
+      color: #23395b;
+      font-size: 29px;
+      border-bottom: 2px solid #e8e0d4;
+      padding-bottom: 10px;
+    }
+
+    .section-title .icon {
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+      font-size: 31px;
+    }
+
+    ol {
+      margin: 0;
+      padding-right: 32px;
+    }
+
+    li {
+      padding: 9px 6px;
+      margin-bottom: 5px;
+    }
+
+    li::marker {
+      color: #d36f20;
+      font-weight: bold;
+    }
+
+    .challenge {
+      background: #fff7dd;
+      border: 2px dashed #d29b1c;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-top: 28px;
+    }
+
+    .challenge h2 {
+      margin-top: 0;
+      color: #7a5800;
+    }
+
+    .useful-language {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .phrase {
+      background: #fff;
+      padding: 11px 14px;
+      border-radius: 9px;
+      border: 1px solid #ead99d;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        font-size: 19px;
+      }
+
+      .hero h1 {
+        font-size: 33px;
+      }
+
+      .hero p {
+        font-size: 20px;
+      }
+
+      .section-title {
+        font-size: 25px;
+      }
+
+      .vocab-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <header class="hero">
+      <h1>نشاط المحادثة: الملابس والتسوّق</h1>
+      <p>تحدّث مع زميلك عن الملابس التي تفضّلها وعاداتك عند التسوّق.</p>
+    </header>
+
+    <section class="instructions">
+      <strong>التعليمات:</strong>
+      اعمل مع زميل. اختارا سؤالًا بالتناوب، وأجيبا بجمل كاملة. اسأل سؤالًا إضافيًا واحدًا على الأقل بعد كل إجابة، مثل:
+      <strong>لماذا؟ متى؟ مع مَن؟ من أين؟</strong>
+    </section>
+
+    <h2>بنك مفردات الملابس</h2>
+
+    <section class="vocab-grid" aria-label="مفردات الملابس">
+      <div class="vocab-card"><span class="pic">👕</span><span class="word">قميص</span><span class="english">shirt / T-shirt</span></div>
+      <div class="vocab-card"><span class="pic">👚</span><span class="word">بلوزة</span><span class="english">blouse</span></div>
+      <div class="vocab-card"><span class="pic">👖</span><span class="word">بنطلون</span><span class="english">pants</span></div>
+      <div class="vocab-card"><span class="pic">👗</span><span class="word">فستان</span><span class="english">dress</span></div>
+      <div class="vocab-card"><span class="pic">🧥</span><span class="word">معطف</span><span class="english">coat</span></div>
+      <div class="vocab-card"><span class="pic">🦺</span><span class="word">سترة</span><span class="english">vest / jacket</span></div>
+      <div class="vocab-card"><span class="pic">👔</span><span class="word">ربطة عنق</span><span class="english">tie</span></div>
+      <div class="vocab-card"><span class="pic">🥻</span><span class="word">ملابس رسمية</span><span class="english">formal clothes</span></div>
+      <div class="vocab-card"><span class="pic">🩳</span><span class="word">شورت</span><span class="english">shorts</span></div>
+      <div class="vocab-card"><span class="pic">👟</span><span class="word">حذاء رياضي</span><span class="english">sneakers</span></div>
+      <div class="vocab-card"><span class="pic">👞</span><span class="word">حذاء رسمي</span><span class="english">dress shoes</span></div>
+      <div class="vocab-card"><span class="pic">👠</span><span class="word">حذاء بكعب</span><span class="english">high heels</span></div>
+      <div class="vocab-card"><span class="pic">🧢</span><span class="word">قبعة</span><span class="english">cap</span></div>
+      <div class="vocab-card"><span class="pic">🧣</span><span class="word">وشاح</span><span class="english">scarf</span></div>
+      <div class="vocab-card"><span class="pic">🧤</span><span class="word">قفازات</span><span class="english">gloves</span></div>
+      <div class="vocab-card"><span class="pic">🧦</span><span class="word">جوارب</span><span class="english">socks</span></div>
+      <div class="vocab-card"><span class="pic">👜</span><span class="word">حقيبة</span><span class="english">bag</span></div>
+      <div class="vocab-card"><span class="pic">🕶️</span><span class="word">نظّارة شمسية</span><span class="english">sunglasses</span></div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="icon">👕</span>ملابسك اليومية</h2>
+      <ol>
+        <li>ماذا تفضّل أن ترتدي بشكل عام؟ ولماذا؟</li>
+        <li>ماذا ترتدي عادةً عندما تذهب إلى الجامعة أو العمل؟</li>
+        <li>ماذا ترتدي عندما تخرج مع أصدقائك؟</li>
+        <li>ماذا ترتدي في البيت عادةً؟</li>
+        <li>ما قطعة الملابس المفضلة لديك؟ صِفها وقل متى ترتديها.</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="icon">🎉</span>المناسبات والفصول</h2>
+      <ol start="6">
+        <li>ماذا تفضّل أن ترتدي في المناسبات الرسمية، مثل حفلة زفاف أو مقابلة عمل؟</li>
+        <li>كيف تختلف ملابسك في الصيف عن ملابسك في الشتاء؟</li>
+        <li>ما الألوان التي تحب أن ترتديها؟ وما الألوان التي لا تحبها؟</li>
+        <li>هل تفضّل الملابس الواسعة أم الضيقة؟ الرسمية أم غير الرسمية؟</li>
+        <li>هل تهتم بأن تكون ملابسك على الموضة؟ لماذا؟</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="icon">🛍️</span>اختيار الملابس وشراؤها</h2>
+      <ol start="11">
+        <li>من يختار ملابسك عادةً؟ هل تختارها بنفسك أم يساعدك شخص آخر؟</li>
+        <li>هل تطلب رأي أحد أفراد عائلتك أو أصدقائك قبل شراء الملابس؟</li>
+        <li>من أي محل تشتري ملابسك عادةً؟</li>
+        <li>هل تفضّل شراء الملابس من المحلات أم عبر الإنترنت؟ لماذا؟</li>
+        <li>كم مرة تشتري ملابس جديدة؟</li>
+        <li>ما أهم شيء تفكر فيه عند شراء الملابس: السعر، اللون، المقاس، الجودة، أم الماركة؟</li>
+        <li>هل تجرّب الملابس قبل شرائها دائمًا؟</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="icon">🤔</span>مواقف ومشكلات</h2>
+      <ol start="18">
+        <li>ماذا تفعل إذا أعجبك قميص، لكن مقاسك غير موجود؟</li>
+        <li>ماذا تفعل إذا اشتريت قطعة ملابس ثم اكتشفت أنها غير مناسبة؟</li>
+        <li>هل اشتريت يومًا قطعة ملابس ثم لم ترتدها؟ ماذا كانت؟ ولماذا؟</li>
+      </ol>
+    </section>
+
+    <section class="challenge">
+      <h2>تحدّي المحادثة</h2>
+      <p>
+        اختر ثلاث قطع من بنك المفردات، ثم صِف الزيّ الذي ستلبسه في إحدى المناسبات الآتية:
+        الجامعة، مقابلة عمل، حفلة زفاف، رحلة، يوم شتوي، أو يوم صيفي.
+      </p>
+
+      <div class="useful-language">
+        <div class="phrase">أفضّل أن أرتدي ... لأن ...</div>
+        <div class="phrase">عادةً أشتري ملابسي من ...</div>
+        <div class="phrase">هذا اللون يناسبني أكثر.</div>
+        <div class="phrase">هذا المقاس واسع / ضيّق عليّ.</div>
+        <div class="phrase">في رأيي، هذه القطعة أنيقة.</div>
+        <div class="phrase">لو لم أجد مقاسي، فسوف ...</div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
