@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نشاط استماع: حنّا وخالد</title>
+  <style>
+    :root {
+      --navy: #17324d;
+      --blue: #2878a8;
+      --pale: #eef7fb;
+      --gold: #d99b28;
+      --green: #287a57;
+      --red: #b54747;
+      --ink: #202b35;
+      --muted: #64717d;
+      --line: #d7e2e8;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #f4f7f9;
+      font-family: "Times New Roman", Times, serif;
+      line-height: 1.8;
+    }
+    .hero {
+      padding: 42px 20px 36px;
+      color: var(--white);
+      text-align: center;
+      background: linear-gradient(135deg, #102b43 0%, #246e97 100%);
+      border-bottom: 5px solid var(--gold);
+    }
+    .hero .eyebrow {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 4px 14px;
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 30px;
+      font-size: 1rem;
+    }
+    h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.2rem); }
+    .hero p { max-width: 720px; margin: 10px auto 0; font-size: 1.15rem; }
+    main { width: min(100% - 28px, 980px); margin: 28px auto 60px; }
+    .card {
+      margin-bottom: 24px;
+      padding: clamp(20px, 4vw, 34px);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(23,50,77,.07);
+    }
+    h2 {
+      margin: 0 0 18px;
+      color: var(--navy);
+      font-size: 1.65rem;
+      border-right: 5px solid var(--gold);
+      padding-right: 12px;
+    }
+    .instructions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+    .instructions li {
+      padding: 14px;
+      background: var(--pale);
+      border-radius: 10px;
+      counter-increment: steps;
+    }
+    .instructions li::before {
+      content: counter(steps);
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      margin-left: 8px;
+      color: white;
+      background: var(--blue);
+      border-radius: 50%;
+      font-weight: bold;
+    }
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #000;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .question {
+      margin: 0 0 18px;
+      padding: 17px 18px;
+      background: #fbfcfd;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .question:last-child { margin-bottom: 0; }
+    .question p { margin: 0 0 10px; font-size: 1.12rem; font-weight: bold; }
+    label.option {
+      display: block;
+      margin: 6px 0;
+      padding: 7px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+    label.option:hover { background: var(--pale); }
+    input[type="radio"] { margin-left: 8px; accent-color: var(--blue); }
+    input[type="text"] {
+      width: min(100%, 390px);
+      padding: 10px 12px;
+      color: var(--ink);
+      background: white;
+      border: 2px solid #b9c9d3;
+      border-radius: 8px;
+      font: 1.05rem "Times New Roman", Times, serif;
+    }
+    input[type="text"]:focus { outline: 3px solid #cce8f5; border-color: var(--blue); }
+    .word-bank {
+      margin-bottom: 20px;
+      padding: 13px 16px;
+      text-align: center;
+      background: #fff8e7;
+      border: 1px dashed var(--gold);
+      border-radius: 10px;
+      font-size: 1.1rem;
+    }
+    .feedback { min-height: 1.4em; margin-top: 7px; font-weight: bold; }
+    .correct { border-color: #8dc9ad; background: #f0faf5; }
+    .incorrect { border-color: #e2aaaa; background: #fff5f5; }
+    .feedback.good { color: var(--green); }
+    .feedback.bad { color: var(--red); }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 28px;
+    }
+    button {
+      padding: 11px 25px;
+      border: 0;
+      border-radius: 9px;
+      font: bold 1.05rem "Times New Roman", Times, serif;
+      cursor: pointer;
+    }
+    .primary { color: white; background: var(--blue); }
+    .secondary { color: var(--navy); background: #e7eef2; }
+    button:hover { filter: brightness(.94); }
+    #score {
+      display: none;
+      margin-top: 20px;
+      padding: 14px;
+      text-align: center;
+      background: var(--navy);
+      color: white;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .speaking-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .prompt {
+      min-height: 185px;
+      padding: 18px;
+      color: var(--navy);
+      background: var(--pale);
+      border-top: 4px solid var(--blue);
+      border-radius: 10px;
+    }
+    .prompt .number { color: var(--gold); font-size: 2rem; font-weight: bold; line-height: 1; }
+    .prompt h3 { margin: 8px 0; font-size: 1.2rem; }
+    .prompt p { margin: 0; color: var(--ink); }
+    .note { color: var(--muted); font-size: .98rem; }
+    footer { padding: 18px; text-align: center; color: var(--muted); }
+    @media (max-width: 700px) {
+      .instructions, .speaking-grid { grid-template-columns: 1fr; }
+      .prompt { min-height: auto; }
+      .hero { padding-top: 30px; }
+    }
+    @media print {
+      .hero { color: black; background: white; border-bottom: 2px solid black; }
+      .video-wrap, .actions, #score { display: none !important; }
+      .card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <span class="eyebrow">مهارة الاستماع</span>
+    <h1>حنّا وخالد: صداقة وخطط للمستقبل</h1>
+    <p>استمع إلى حنّا وهو يتحدث عن صديقه خالد، ودراسته، وعمله، وما يخطط له في المستقبل.</p>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="listen-heading">
+      <h2 id="listen-heading">قبل أن تبدأ</h2>
+      <ul class="instructions">
+        <li>شاهد الفيديو مرةً للفكرة العامة.</li>
+        <li>شاهد الفيديو مرةً ثانيةً وسجّل التفاصيل.</li>
+        <li>أجب عن الأسئلة ثم تحقّق من إجاباتك.</li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="video-heading">
+      <h2 id="video-heading">الفيديو</h2>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube-nocookie.com/embed/J-pEo3hPM68"
+          title="فيديو الاستماع: حنّا وخالد"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <form id="quiz" novalidate>
+      <section class="card quiz-section" aria-labelledby="tf-heading">
+        <h2 id="tf-heading">أولًا: صح أم خطأ؟</h2>
+
+        <div class="question" data-answer="true">
+          <p>١. حنّا جار خالد وزميله وصديق طفولته.</p>
+          <label class="option"><input type="radio" name="tf1" value="true"> صح</label>
+          <label class="option"><input type="radio" name="tf1" value="false"> خطأ</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="false">
+          <p>٢. درس حنّا وخالد في مدرستين مختلفتين في المرحلة الإعدادية.</p>
+          <label class="option"><input type="radio" name="tf2" value="true"> صح</label>
+          <label class="option"><input type="radio" name="tf2" value="false"> خطأ</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="true">
+          <p>٣. اختار خالد القسم الأدبي، بينما اختار حنّا القسم العلمي.</p>
+          <label class="option"><input type="radio" name="tf3" value="true"> صح</label>
+          <label class="option"><input type="radio" name="tf3" value="false"> خطأ</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="false">
+          <p>٤. يعمل حنّا الآن في صيدلية والده.</p>
+          <label class="option"><input type="radio" name="tf4" value="true"> صح</label>
+          <label class="option"><input type="radio" name="tf4" value="false"> خطأ</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="true">
+          <p>٥. يوم الأحد هو يوم الإجازة الأسبوعية للصيدلية.</p>
+          <label class="option"><input type="radio" name="tf5" value="true"> صح</label>
+          <label class="option"><input type="radio" name="tf5" value="false"> خطأ</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="false">
+          <p>٦. يريد حنّا أن يسافر للعمل في الخارج مثل طارق.</p>
+          <label class="option"><input type="radio" name="tf6" value="true"> صح</label>
+          <label class="option"><input type="radio" name="tf6" value="false"> خطأ</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="card quiz-section" aria-labelledby="mcq-heading">
+        <h2 id="mcq-heading">ثانيًا: اختر الإجابة الصحيحة</h2>
+
+        <div class="question" data-answer="b">
+          <p>١. في أي مدرسة كان حنّا وخالد في المرحلة الإعدادية؟</p>
+          <label class="option"><input type="radio" name="mc1" value="a"> مدرسة التوفيقية</label>
+          <label class="option"><input type="radio" name="mc1" value="b"> مدرسة شبرا</label>
+          <label class="option"><input type="radio" name="mc1" value="c"> مدرسة الصيدلة</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="c">
+          <p>٢. متى افترق الصديقان في الفصل؟</p>
+          <label class="option"><input type="radio" name="mc2" value="a"> في الصف الأول الإعدادي</label>
+          <label class="option"><input type="radio" name="mc2" value="b"> في الصف الأول الثانوي</label>
+          <label class="option"><input type="radio" name="mc2" value="c"> في الصف الثاني الثانوي</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="a">
+          <p>٣. من أي كلية تخرّج حنّا؟</p>
+          <label class="option"><input type="radio" name="mc3" value="a"> كلية الصيدلة</label>
+          <label class="option"><input type="radio" name="mc3" value="b"> كلية الآداب</label>
+          <label class="option"><input type="radio" name="mc3" value="c"> كلية العلوم</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="b">
+          <p>٤. متى يبدأ حنّا عمله في الصيدلية؟</p>
+          <label class="option"><input type="radio" name="mc4" value="a"> الرابعة صباحًا</label>
+          <label class="option"><input type="radio" name="mc4" value="b"> الرابعة مساءً</label>
+          <label class="option"><input type="radio" name="mc4" value="c"> الثانية بعد الظهر</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="c">
+          <p>٥. ماذا يفضّل حنّا عندما يخرج مع أصدقائه؟</p>
+          <label class="option"><input type="radio" name="mc5" value="a"> لعب الشطرنج</label>
+          <label class="option"><input type="radio" name="mc5" value="b"> الاستماع إلى تجارب سامي العاطفية</label>
+          <label class="option"><input type="radio" name="mc5" value="c"> مشاهدة الأفلام الأجنبية</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question" data-answer="a">
+          <p>٦. لماذا لا يريد حنّا العيش في الخارج؟</p>
+          <label class="option"><input type="radio" name="mc6" value="a"> لأنه لا يستطيع العيش بعيدًا عن شبرا</label>
+          <label class="option"><input type="radio" name="mc6" value="b"> لأنه لا يحب العمل في الصيدلة</label>
+          <label class="option"><input type="radio" name="mc6" value="c"> لأنه يريد دراسة الأدب</label>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="card quiz-section" aria-labelledby="fill-heading">
+        <h2 id="fill-heading">ثالثًا: أكمل الفراغ</h2>
+        <div class="word-bank"><strong>بنك الكلمات:</strong> العلمي — الصيدلية — الأعياد — المقهى — شبرا — الخبرة</div>
+
+        <div class="question fill" data-answer="العلمي">
+          <p>١. قرّر حنّا الالتحاق بالقسم __________.</p>
+          <input type="text" aria-label="إجابة السؤال الأول" autocomplete="off">
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question fill" data-answer="الصيدلية">
+          <p>٢. يوم الأحد هو موعد الإجازة الأسبوعية لـ __________.</p>
+          <input type="text" aria-label="إجابة السؤال الثاني" autocomplete="off">
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question fill" data-answer="الأعياد|الاعياد">
+          <p>٣. يلتقي حنّا بخالد في الإجازات أو __________.</p>
+          <input type="text" aria-label="إجابة السؤال الثالث" autocomplete="off">
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question fill" data-answer="المقهى|المقهي">
+          <p>٤. يذهب الأصدقاء إلى النادي أو __________.</p>
+          <input type="text" aria-label="إجابة السؤال الرابع" autocomplete="off">
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question fill" data-answer="شبرا">
+          <p>٥. يريد حنّا أن يفتح صيدلية في __________.</p>
+          <input type="text" aria-label="إجابة السؤال الخامس" autocomplete="off">
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="question fill" data-answer="الخبرة|خبرة">
+          <p>٦. سيفتح حنّا صيدليته بعد أن يحصل على __________ الكافية.</p>
+          <input type="text" aria-label="إجابة السؤال السادس" autocomplete="off">
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="button" id="check">تحقّق من الإجابات</button>
+          <button class="secondary" type="reset" id="reset">ابدأ من جديد</button>
+        </div>
+        <div id="score" aria-live="polite"></div>
+      </section>
+    </form>
+
+    <section class="card" aria-labelledby="speaking-heading">
+      <h2 id="speaking-heading">بعد الاستماع: تحدّث مع زميلك</h2>
+      <p class="note">اختر سؤالًا، وتحدّث لمدة دقيقة أو دقيقتين. اسأل زميلك سؤال متابعة واحدًا على الأقل.</p>
+      <div class="speaking-grid">
+        <article class="prompt">
+          <div class="number">١</div>
+          <h3>صداقة قديمة</h3>
+          <p>تحدّث عن صديق تعرفه منذ الطفولة. أين التقيتما؟ وكيف حافظتما على صداقتكما؟</p>
+        </article>
+        <article class="prompt">
+          <div class="number">٢</div>
+          <h3>العمل في الخارج</h3>
+          <p>هل تفضّل العمل في بلدك أم في الخارج؟ اشرح رأيك، واذكر ميزتين وتحدّيًا واحدًا.</p>
+        </article>
+        <article class="prompt">
+          <div class="number">٣</div>
+          <h3>خطط المستقبل</h3>
+          <p>ما المشروع أو العمل الذي تريد القيام به في المستقبل؟ ما الخبرة التي تحتاج إليها أولًا؟</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>نشاط استماع تفاعلي — الدرس الخامس عشر</footer>
+
+  <script>
+    (function () {
+      const form = document.getElementById("quiz");
+      const scoreBox = document.getElementById("score");
+
+      function normalizeArabic(text) {
+        return text
+          .trim()
+          .replace(/[\u064B-\u065F\u0670]/g, "")
+          .replace(/[إأآٱ]/g, "ا")
+          .replace(/ى/g, "ي")
+          .replace(/ة/g, "ه")
+          .replace(/\s+/g, " ");
+      }
+
+      document.getElementById("check").addEventListener("click", function () {
+        const questions = form.querySelectorAll(".question");
+        let correct = 0;
+
+        questions.forEach(function (question) {
+          const feedback = question.querySelector(".feedback");
+          let isCorrect = false;
+          let answered = false;
+
+          if (question.classList.contains("fill")) {
+            const input = question.querySelector("input[type='text']");
+            const response = normalizeArabic(input.value);
+            const answers = question.dataset.answer.split("|").map(normalizeArabic);
+            answered = response.length > 0;
+            isCorrect = answered && answers.includes(response);
+          } else {
+            const selected = question.querySelector("input[type='radio']:checked");
+            answered = Boolean(selected);
+            isCorrect = answered && selected.value === question.dataset.answer;
+          }
+
+          question.classList.remove("correct", "incorrect");
+          feedback.classList.remove("good", "bad");
+
+          if (isCorrect) {
+            correct++;
+            question.classList.add("correct");
+            feedback.classList.add("good");
+            feedback.textContent = "إجابة صحيحة.";
+          } else {
+            question.classList.add("incorrect");
+            feedback.classList.add("bad");
+            feedback.textContent = answered ? "حاول مرة أخرى." : "اختر أو اكتب إجابة أولًا.";
+          }
+        });
+
+        scoreBox.style.display = "block";
+        scoreBox.textContent = "نتيجتك: " + correct + " من " + questions.length;
+        scoreBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+
+      form.addEventListener("reset", function () {
+        setTimeout(function () {
+          form.querySelectorAll(".question").forEach(function (question) {
+            question.classList.remove("correct", "incorrect");
+            const feedback = question.querySelector(".feedback");
+            feedback.textContent = "";
+            feedback.classList.remove("good", "bad");
+          });
+          scoreBox.style.display = "none";
+          scoreBox.textContent = "";
+        }, 0);
+      });
+    })();
+  </script>
+</body>
+</html>
