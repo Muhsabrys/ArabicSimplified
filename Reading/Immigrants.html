@@ -3,26 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dearborn and California: Reading and Grammar Search</title>
+  <title>Dearborn and California: Reading and Grammar Worksheet</title>
 
   <style>
     :root {
-      --page-bg: #f3f4f6;
-      --card-bg: #ffffff;
+      --page-bg: #f4f5f7;
+      --paper: #ffffff;
       --text: #202124;
-      --muted: #62676d;
-      --border: #d8dce1;
+      --muted: #666b72;
+      --border: #d7dbe0;
       --accent: #7f3f2f;
-      --accent-light: #f7eee9;
-      --answer-bg: #fbf4f0;
+      --accent-soft: #f7eee9;
+      --header-soft: #f2f3f5;
+      --success: #2f6b3c;
     }
 
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -34,14 +31,13 @@
     }
 
     .page {
-      width: min(1100px, calc(100% - 28px));
+      width: min(1120px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 28px 0 48px;
+      padding: 28px 0 50px;
     }
 
-    .hero,
-    .section {
-      background: var(--card-bg);
+    .panel {
+      background: var(--paper);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 28px;
@@ -52,17 +48,14 @@
       border-top: 7px solid var(--accent);
     }
 
-    h1,
-    h2,
-    h3,
-    p {
+    h1, h2, h3, p {
       margin-top: 0;
     }
 
     h1 {
       margin-bottom: 10px;
       color: var(--accent);
-      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      font-size: clamp(1.9rem, 4vw, 2.7rem);
       line-height: 1.25;
     }
 
@@ -72,6 +65,12 @@
       font-size: 1.7rem;
       border-left: 5px solid var(--accent);
       padding-left: 12px;
+    }
+
+    h3 {
+      margin-top: 28px;
+      color: var(--accent);
+      font-size: 1.35rem;
     }
 
     .intro {
@@ -94,70 +93,115 @@
 
     .reading-text {
       margin-bottom: 18px;
-      font-size: 1.28rem;
+      font-size: 1.27rem;
       line-height: 2;
       text-align: justify;
     }
 
-    .question-list {
-      display: grid;
-      gap: 14px;
-    }
-
-    details {
+    .question-card {
       border: 1px solid var(--border);
       border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 14px;
       background: #fafafa;
-      overflow: hidden;
     }
 
-    summary {
-      cursor: pointer;
-      padding: 17px 18px;
-      color: #4f2c23;
-      font-size: 1.05rem;
-      font-weight: 700;
-      line-height: 1.5;
-    }
-
-    summary:hover {
-      background: #f5f5f5;
-    }
-
-    summary:focus-visible {
-      outline: 3px solid rgba(127, 63, 47, 0.25);
-      outline-offset: -3px;
-    }
-
-    .answer {
-      padding: 16px 18px;
-      border-top: 1px solid var(--border);
-      background: var(--answer-bg);
-      font-size: 1.04rem;
-      line-height: 1.8;
-    }
-
-    .answer .arabic {
-      font-size: 1.2rem;
-      line-height: 1.9;
-    }
-
-    .label {
-      color: var(--accent);
+    .question-card label {
+      display: block;
+      margin-bottom: 10px;
       font-weight: 700;
     }
 
-    .controls {
+    input[type="text"],
+    textarea {
+      width: 100%;
+      border: 1px solid #bfc4ca;
+      border-radius: 8px;
+      padding: 11px 12px;
+      background: #ffffff;
+      color: var(--text);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    .arabic-input {
+      direction: rtl;
+      text-align: right;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.16rem;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 850px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      padding: 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th:last-child,
+    td:last-child {
+      border-left: 0;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    th {
+      background: var(--header-soft);
+      color: #3d4146;
+      font-size: 0.96rem;
+    }
+
+    td .arabic {
+      font-size: 1.18rem;
+    }
+
+    .small-input {
+      min-width: 145px;
+    }
+
+    .finish-box {
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 20px;
+      background: var(--accent-soft);
+      margin-top: 24px;
+    }
+
+    .check-row {
       display: flex;
-      flex-wrap: wrap;
+      align-items: flex-start;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
+    }
+
+    .check-row input {
+      margin-top: 5px;
     }
 
     button {
       border: 1px solid var(--accent);
       border-radius: 8px;
-      padding: 10px 14px;
+      padding: 11px 16px;
       background: var(--accent);
       color: #ffffff;
       font: inherit;
@@ -165,18 +209,62 @@
       cursor: pointer;
     }
 
-    button.secondary {
-      background: #ffffff;
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .status {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    #answerKey {
+      display: none;
+    }
+
+    #answerKey.visible {
+      display: block;
+    }
+
+    .answer-section {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .answer-item {
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border-right: 4px solid var(--accent);
+      background: #fbf7f4;
+    }
+
+    .answer-item strong {
       color: var(--accent);
     }
 
-    button:hover {
-      opacity: 0.92;
+    .answer-item .arabic {
+      font-size: 1.17rem;
+      line-height: 1.9;
+      margin-top: 6px;
+    }
+
+    .answer-table {
+      min-width: 900px;
+    }
+
+    .top-link {
+      display: inline-block;
+      margin-top: 16px;
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
     }
 
     @media (max-width: 700px) {
-      .hero,
-      .section {
+      .panel {
         padding: 20px;
         border-radius: 10px;
       }
@@ -186,26 +274,44 @@
         line-height: 1.9;
         text-align: right;
       }
+    }
 
-      summary {
-        font-size: 1rem;
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      .panel {
+        border: 0;
+        break-inside: avoid;
+      }
+
+      button,
+      .status,
+      .top-link {
+        display: none;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="page">
+  <main class="page" id="top">
 
-    <header class="hero">
-      <h1>Dearborn and California: Reading and Grammar Search</h1>
+    <header class="panel hero">
+      <h1>Dearborn and California: Reading and Grammar Worksheet</h1>
       <p class="intro">
-        Read the Arabic passage carefully. For each item, find the requested grammatical structure
-        in the passage and write your answer before opening the hidden answer.
+        Read the Arabic passage and complete all sections. The answer key remains unavailable until
+        you confirm that you have finished the worksheet.
       </p>
     </header>
 
-    <section class="section">
+    <section class="panel">
       <h2>Reading Passage</h2>
 
       <div class="arabic" lang="ar">
@@ -293,186 +399,439 @@
       </div>
     </section>
 
-    <section class="section">
-      <h2>Find These Structures in the Passage</h2>
+    <section class="panel">
+      <h2>Part I: Grammar Search</h2>
+      <p>Find examples in the passage and enter them in Arabic.</p>
 
-      <p>
-        Locate the requested structure in the Arabic text. Write down your answer, then click the
-        question to reveal the suggested answer.
-      </p>
-
-      <div class="controls">
-        <button type="button" id="showAll">Show all answers</button>
-        <button type="button" class="secondary" id="hideAll">Hide all answers</button>
+      <div class="question-card">
+        <label for="q1">1. Find two idāfa constructions in which the second noun is a proper noun.</label>
+        <textarea id="q1" class="arabic-input required-answer" placeholder="اكتب مثالين هنا"></textarea>
       </div>
 
-      <div class="question-list">
+      <div class="question-card">
+        <label for="q2">2. Find two idāfa constructions in which the second noun is indefinite.</label>
+        <textarea id="q2" class="arabic-input required-answer" placeholder="اكتب مثالين هنا"></textarea>
+      </div>
 
-        <details>
-          <summary>1. Find two idāfa constructions in which the second noun is a proper noun.</summary>
-          <div class="answer">
-            <span class="label">Suggested answer:</span>
-            <div class="arabic" lang="ar">
-              ولاية ميشيغان — مدينة ديربورن
-            </div>
-            <p>
-              Other acceptable examples include
-              <span class="arabic" lang="ar">مقاطعة واين</span>,
-              <span class="arabic" lang="ar">مؤسسة زغبي إنترناشيونال</span>, and
-              <span class="arabic" lang="ar">مدينة كليفلاند</span>.
-            </p>
-          </div>
-        </details>
+      <div class="question-card">
+        <label for="q3">3. Find two idāfa constructions in which the second element is an attached pronoun.</label>
+        <textarea id="q3" class="arabic-input required-answer" placeholder="اكتب مثالين هنا"></textarea>
+      </div>
 
-        <details>
-          <summary>2. Find two idāfa constructions in which the second noun is indefinite.</summary>
-          <div class="answer">
-            <span class="label">Suggested answer:</span>
-            <div class="arabic" lang="ar">
-              ألف عربي — شركات إلكترونيات
-            </div>
-          </div>
-        </details>
+      <div class="question-card">
+        <label for="q4">4. Find two definite idāfa constructions whose second noun begins with ال.</label>
+        <textarea id="q4" class="arabic-input required-answer" placeholder="اكتب مثالين هنا"></textarea>
+      </div>
 
-        <details>
-          <summary>3. Find two idāfa constructions in which the second element is an attached pronoun.</summary>
-          <div class="answer">
-            <span class="label">Possible answers:</span>
-            <div class="arabic" lang="ar">
-              عددهم — منزلهم — جدها — دراسته — خدمته — قدرتهم — مجتمعهم
-            </div>
-          </div>
-        </details>
+      <div class="question-card">
+        <label for="q5">5. Find two examples of a fronted predicate with هناك. Identify the delayed subject.</label>
+        <textarea id="q5" class="arabic-input required-answer" placeholder="اكتب الجملتين وحدد المبتدأ المؤخر"></textarea>
+      </div>
 
-        <details>
-          <summary>4. Find two definite idāfa constructions whose second noun begins with ال.</summary>
-          <div class="answer">
-            <span class="label">Possible answers:</span>
-            <div class="arabic" lang="ar">
-              فرص العمل — طبيعة الحياة — عاصمة الأفلام — رجال الأعمال — معدل العرب
-            </div>
-          </div>
-        </details>
+      <div class="question-card">
+        <label for="q6">6. Find two nouns of place.</label>
+        <textarea id="q6" class="arabic-input required-answer" placeholder="اكتب مثالين هنا"></textarea>
+      </div>
 
-        <details>
-          <summary>5. Find two examples of a fronted predicate with هناك. Identify the delayed subject.</summary>
-          <div class="answer">
-            <span class="label">Suggested answer:</span>
-            <div class="arabic" lang="ar">
-              فهناك عضوُ الكونغرس الأمريكي داريل عيسى<br>
-              فهناك المغنيةُ بولا عبدول
-            </div>
-            <p>
-              In both examples, <span class="arabic" lang="ar">هناك</span> functions as the fronted
-              predicate, while the following noun phrase is the delayed subject.
-            </p>
-          </div>
-        </details>
+      <div class="question-card">
+        <label for="q7">7. Find two adjective clauses introduced by a relative pronoun.</label>
+        <textarea id="q7" class="arabic-input required-answer" placeholder="اكتب مثالين هنا"></textarea>
+      </div>
 
-        <details>
-          <summary>6. Find two nouns of place in the passage.</summary>
-          <div class="answer">
-            <span class="label">Possible answers:</span>
-            <div class="arabic" lang="ar">
-              مَوْطِن — مَنْزِل — مَقْصِد — مَجْلِس
-            </div>
-          </div>
-        </details>
+      <div class="question-card">
+        <label for="q8">8. Find two examples of kāna and its sisters. Identify the noun and predicate.</label>
+        <textarea id="q8" class="arabic-input required-answer" placeholder="اكتب المثالين وحدد الاسم والخبر"></textarea>
+      </div>
 
-        <details>
-          <summary>7. Find two adjective clauses introduced by a relative pronoun.</summary>
-          <div class="answer">
-            <span class="label">Suggested answer:</span>
-            <div class="arabic" lang="ar">
-              مقاطعة واين التي تقع فيها مدينة ديربورن<br>
-              الشباب الذين يكملون دراستهم
-            </div>
-            <p>
-              Other examples include
-              <span class="arabic" lang="ar">مجلة أراب أمريكان بيزنس التي تصدر في كاليفورنيا</span>
-              and
-              <span class="arabic" lang="ar">البرنامج العالمي الشهير أمريكان أيدول الذي تُعرف نسخته العربية...</span>.
-            </p>
-          </div>
-        </details>
+      <div class="question-card">
+        <label for="q9">9. Find two present-tense verbs in the subjunctive and identify the governing particle.</label>
+        <textarea id="q9" class="arabic-input required-answer" placeholder="اكتب الفعل وأداة النصب"></textarea>
+      </div>
 
-        <details>
-          <summary>8. Find two examples of kāna and its sisters. Identify the noun and predicate.</summary>
-          <div class="answer">
-            <span class="label">Suggested answer:</span>
-            <div class="arabic" lang="ar">
-              وإذا كانت طبيعةُ المدن الأمريكية هي تقاربَ المدن<br>
-              ديربورن العربية لن تكون بعد ٢٠ عامًا من الآن
-            </div>
-          </div>
-        </details>
+      <div class="question-card">
+        <label for="q10">10. Find two active participles.</label>
+        <textarea id="q10" class="arabic-input required-answer" placeholder="اكتب مثالين هنا"></textarea>
+      </div>
 
-        <details>
-          <summary>9. Find two present-tense verbs in the subjunctive and identify the governing particle.</summary>
-          <div class="answer">
-            <span class="label">Suggested answer:</span>
-            <div class="arabic" lang="ar">
-              أن تكونَ — governed by أن<br>
-              لن تجدَ — governed by لن
-            </div>
-            <p>
-              Another acceptable example is
-              <span class="arabic" lang="ar">لن تكونَ</span>.
-            </p>
-          </div>
-        </details>
+      <div class="question-card">
+        <label for="q11">11. Find three noun–adjective phrases.</label>
+        <textarea id="q11" class="arabic-input required-answer" placeholder="اكتب ثلاثة أمثلة هنا"></textarea>
+      </div>
 
-        <details>
-          <summary>10. Find two active participles.</summary>
-          <div class="answer">
-            <span class="label">Possible answers:</span>
-            <div class="arabic" lang="ar">
-              المجاورة — باقون — منتشرون — المتحدرين
-            </div>
-          </div>
-        </details>
-
-        <details>
-          <summary>11. Find three noun–adjective phrases.</summary>
-          <div class="answer">
-            <span class="label">Possible answers:</span>
-            <div class="arabic" lang="ar">
-              الولاية الذهبية — الكثافة السكانية العالية — دراسته الجامعية — الدراسات العليا —
-              المعدل القومي الأمريكي — أصول عربية — المحلات العربية
-            </div>
-          </div>
-        </details>
-
-        <details>
-          <summary>12. Find one sound feminine plural, one sound masculine plural, and one broken plural.</summary>
-          <div class="answer">
-            <span class="label">Possible answers:</span>
-            <div class="arabic" lang="ar">
-              جمع مؤنث سالم: الولايات، الجامعات، الدراسات<br>
-              جمع مذكر سالم: متوزعون، منتشرون، المتحدرين<br>
-              جمع تكسير: العرب، المدن، المنازل، الأجيال، الأعمال
-            </div>
-          </div>
-        </details>
-
+      <div class="question-card">
+        <label for="q12">12. Find one sound feminine plural, one sound masculine plural, and one broken plural.</label>
+        <textarea id="q12" class="arabic-input required-answer" placeholder="اكتب مثالًا لكل نوع"></textarea>
       </div>
     </section>
+
+    <section class="panel">
+      <h2>Part II: Verb Forms and Morphological Patterns</h2>
+      <p>
+        Complete the table. For each word, identify the root, the verb form or morphological pattern,
+        and its meaning in the passage.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Word from the passage</th>
+              <th>Root</th>
+              <th>Verb form / pattern</th>
+              <th>Meaning in context</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="arabic" lang="ar">يتركّزون</td>
+              <td><input class="small-input arabic-input required-answer" type="text" aria-label="Root of يتركزون"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Form of يتركزون"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Meaning of يتركزون"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">يواجهون</td>
+              <td><input class="small-input arabic-input required-answer" type="text" aria-label="Root of يواجهون"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Form of يواجهون"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Meaning of يواجهون"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">ينتقل</td>
+              <td><input class="small-input arabic-input required-answer" type="text" aria-label="Root of ينتقل"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Form of ينتقل"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Meaning of ينتقل"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">يفضّل</td>
+              <td><input class="small-input arabic-input required-answer" type="text" aria-label="Root of يفضل"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Form of يفضل"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Meaning of يفضل"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">يلتحقون</td>
+              <td><input class="small-input arabic-input required-answer" type="text" aria-label="Root of يلتحقون"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Form of يلتحقون"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Meaning of يلتحقون"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">منتشرون</td>
+              <td><input class="small-input arabic-input required-answer" type="text" aria-label="Root of منتشرون"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Pattern of منتشرون"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Meaning of منتشرون"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">المتحدّرين</td>
+              <td><input class="small-input arabic-input required-answer" type="text" aria-label="Root of المتحدرين"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Pattern of المتحدرين"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Meaning of المتحدرين"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">المجاورة</td>
+              <td><input class="small-input arabic-input required-answer" type="text" aria-label="Root of المجاورة"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Pattern of المجاورة"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Meaning of المجاورة"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Pattern Identification</h3>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Expression</th>
+              <th>Category</th>
+              <th>Pattern or structure</th>
+              <th>Your explanation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="arabic" lang="ar">باقون</td>
+              <td>Active participle</td>
+              <td><input class="small-input required-answer" type="text" aria-label="Pattern of باقون"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Explanation of باقون"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">مقصدك</td>
+              <td>Noun of place</td>
+              <td><input class="small-input required-answer" type="text" aria-label="Pattern of مقصدك"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Explanation of مقصدك"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">الولاية الذهبية</td>
+              <td>Noun–adjective phrase</td>
+              <td><input class="small-input required-answer" type="text" aria-label="Agreement pattern of الولاية الذهبية"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Explanation of الولاية الذهبية"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">ألف عربي</td>
+              <td>Numerical idāfa</td>
+              <td><input class="small-input required-answer" type="text" aria-label="Structure of ألف عربي"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Explanation of ألف عربي"></td>
+            </tr>
+            <tr>
+              <td class="arabic" lang="ar">شركات إلكترونيات</td>
+              <td>Indefinite idāfa</td>
+              <td><input class="small-input required-answer" type="text" aria-label="Structure of شركات إلكترونيات"></td>
+              <td><input class="small-input required-answer" type="text" aria-label="Explanation of شركات إلكترونيات"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="finish-box">
+        <div class="check-row">
+          <input type="checkbox" id="finishedCheck">
+          <label for="finishedCheck">
+            I confirm that I have completed the worksheet and am ready to check my answers.
+          </label>
+        </div>
+
+        <button type="button" id="revealAnswers" disabled>Finish and View Answer Key</button>
+
+        <p class="status" id="completionStatus" aria-live="polite">
+          Complete all fields and select the confirmation box to unlock the answer key.
+        </p>
+      </div>
+    </section>
+
+    <section class="panel" id="answerKey">
+      <h2>Answer Key</h2>
+      <p>
+        These are suggested answers. In several questions, other examples from the passage may also be correct.
+      </p>
+
+      <div class="answer-section">
+        <h3>Part I: Grammar Search</h3>
+
+        <div class="answer-item">
+          <strong>1. Idāfa with a proper noun</strong>
+          <div class="arabic" lang="ar">ولاية ميشيغان — مدينة ديربورن</div>
+        </div>
+
+        <div class="answer-item">
+          <strong>2. Idāfa with an indefinite second noun</strong>
+          <div class="arabic" lang="ar">ألف عربي — شركات إلكترونيات</div>
+        </div>
+
+        <div class="answer-item">
+          <strong>3. Idāfa with an attached pronoun</strong>
+          <div class="arabic" lang="ar">عددهم — منزلهم — جدها — دراسته — خدمته — قدرتهم — مجتمعهم</div>
+        </div>
+
+        <div class="answer-item">
+          <strong>4. Definite idāfa with ال on the second noun</strong>
+          <div class="arabic" lang="ar">فرص العمل — طبيعة الحياة — عاصمة الأفلام — رجال الأعمال — معدل العرب</div>
+        </div>
+
+        <div class="answer-item">
+          <strong>5. Fronted predicate with هناك</strong>
+          <div class="arabic" lang="ar">
+            فهناك عضوُ الكونغرس الأمريكي داريل عيسى<br>
+            فهناك المغنيةُ بولا عبدول
+          </div>
+        </div>
+
+        <div class="answer-item">
+          <strong>6. Nouns of place</strong>
+          <div class="arabic" lang="ar">مَوْطِن — مَنْزِل — مَقْصِد — مَجْلِس</div>
+        </div>
+
+        <div class="answer-item">
+          <strong>7. Adjective clauses</strong>
+          <div class="arabic" lang="ar">
+            مقاطعة واين التي تقع فيها مدينة ديربورن<br>
+            الشباب الذين يكملون دراستهم
+          </div>
+        </div>
+
+        <div class="answer-item">
+          <strong>8. Kāna and its sisters</strong>
+          <div class="arabic" lang="ar">
+            وإذا كانت طبيعةُ المدن الأمريكية هي تقاربَ المدن<br>
+            ديربورن العربية لن تكون بعد ٢٠ عامًا من الآن
+          </div>
+        </div>
+
+        <div class="answer-item">
+          <strong>9. Subjunctive present-tense verbs</strong>
+          <div class="arabic" lang="ar">أن تكونَ — لن تجدَ — لن تكونَ</div>
+        </div>
+
+        <div class="answer-item">
+          <strong>10. Active participles</strong>
+          <div class="arabic" lang="ar">المجاورة — باقون — منتشرون — المتحدرين</div>
+        </div>
+
+        <div class="answer-item">
+          <strong>11. Noun–adjective phrases</strong>
+          <div class="arabic" lang="ar">
+            الولاية الذهبية — الكثافة السكانية العالية — دراسته الجامعية — الدراسات العليا —
+            المعدل القومي الأمريكي — أصول عربية
+          </div>
+        </div>
+
+        <div class="answer-item">
+          <strong>12. Plural types</strong>
+          <div class="arabic" lang="ar">
+            جمع مؤنث سالم: الولايات، الجامعات، الدراسات<br>
+            جمع مذكر سالم: متوزعون، منتشرون، المتحدرين<br>
+            جمع تكسير: العرب، المدن، المنازل، الأجيال، الأعمال
+          </div>
+        </div>
+      </div>
+
+      <div class="answer-section">
+        <h3>Part II: Verb Forms and Morphological Patterns</h3>
+
+        <div class="table-wrap">
+          <table class="answer-table">
+            <thead>
+              <tr>
+                <th>Word</th>
+                <th>Root</th>
+                <th>Form / pattern</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="arabic" lang="ar">يتركّزون</td>
+                <td class="arabic" lang="ar">ر ك ز</td>
+                <td>Form V: تفعّل</td>
+                <td>They are concentrated</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">يواجهون</td>
+                <td class="arabic" lang="ar">و ج ه</td>
+                <td>Form III: فاعل</td>
+                <td>They face</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">ينتقل</td>
+                <td class="arabic" lang="ar">ن ق ل</td>
+                <td>Form VIII: افتعل</td>
+                <td>He moves or relocates</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">يفضّل</td>
+                <td class="arabic" lang="ar">ف ض ل</td>
+                <td>Form II: فعّل</td>
+                <td>He prefers</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">يلتحقون</td>
+                <td class="arabic" lang="ar">ل ح ق</td>
+                <td>Form VIII: افتعل</td>
+                <td>They enroll or join</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">منتشرون</td>
+                <td class="arabic" lang="ar">ن ش ر</td>
+                <td>Active participle of Form VIII: مُفْتَعِل</td>
+                <td>Spread out or distributed</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">المتحدّرين</td>
+                <td class="arabic" lang="ar">ح د ر</td>
+                <td>Active participle of Form V: مُتَفَعِّل</td>
+                <td>Descended from</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">المجاورة</td>
+                <td class="arabic" lang="ar">ج و ر</td>
+                <td>Active participle of Form III: مُفاعِل</td>
+                <td>Neighboring or adjacent</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap">
+          <table class="answer-table">
+            <thead>
+              <tr>
+                <th>Expression</th>
+                <th>Pattern or structure</th>
+                <th>Explanation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="arabic" lang="ar">باقون</td>
+                <td class="arabic" lang="ar">فاعل</td>
+                <td>Active participle from بقي; plural masculine form.</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">مقصدك</td>
+                <td class="arabic" lang="ar">مَفْعِل</td>
+                <td>A noun of place meaning “your destination.”</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">الولاية الذهبية</td>
+                <td>Noun + agreeing adjective</td>
+                <td>Both words are feminine, singular, definite, and nominative in context.</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">ألف عربي</td>
+                <td>Numerical idāfa</td>
+                <td>The counted noun is singular and genitive after ألف.</td>
+              </tr>
+              <tr>
+                <td class="arabic" lang="ar">شركات إلكترونيات</td>
+                <td>Indefinite idāfa</td>
+                <td>The second noun specifies the type of companies, while the whole phrase remains indefinite.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <a class="top-link" href="#top">Return to the top</a>
+    </section>
+
   </main>
 
   <script>
-    const allQuestions = document.querySelectorAll("details");
+    const requiredAnswers = Array.from(document.querySelectorAll(".required-answer"));
+    const finishedCheck = document.getElementById("finishedCheck");
+    const revealButton = document.getElementById("revealAnswers");
+    const status = document.getElementById("completionStatus");
+    const answerKey = document.getElementById("answerKey");
 
-    document.getElementById("showAll").addEventListener("click", () => {
-      allQuestions.forEach((item) => {
-        item.open = true;
-      });
+    function updateCompletionState() {
+      const completed = requiredAnswers.filter((field) => field.value.trim() !== "").length;
+      const total = requiredAnswers.length;
+      const allCompleted = completed === total;
+      const confirmed = finishedCheck.checked;
+
+      revealButton.disabled = !(allCompleted && confirmed);
+
+      if (allCompleted && confirmed) {
+        status.textContent = "The answer key is ready.";
+        status.style.color = "var(--success)";
+      } else {
+        status.textContent =
+          "Completed fields: " + completed + " of " + total +
+          ". Complete all fields and select the confirmation box.";
+        status.style.color = "var(--muted)";
+      }
+    }
+
+    requiredAnswers.forEach((field) => {
+      field.addEventListener("input", updateCompletionState);
     });
 
-    document.getElementById("hideAll").addEventListener("click", () => {
-      allQuestions.forEach((item) => {
-        item.open = false;
-      });
+    finishedCheck.addEventListener("change", updateCompletionState);
+
+    revealButton.addEventListener("click", () => {
+      answerKey.classList.add("visible");
+      answerKey.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+
+    updateCompletionState();
   </script>
 </body>
 </html>
