@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dearborn and California: Reading and Grammar Search</title>
+
+  <style>
+    :root {
+      --page-bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --text: #202124;
+      --muted: #62676d;
+      --border: #d8dce1;
+      --accent: #7f3f2f;
+      --accent-light: #f7eee9;
+      --answer-bg: #fbf4f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    .page {
+      width: min(1100px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .hero,
+    .section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .hero {
+      border-top: 7px solid var(--accent);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      line-height: 1.25;
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-size: 1.7rem;
+      border-left: 5px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .intro {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .arabic {
+      direction: rtl;
+      text-align: right;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    .reading-title {
+      margin: 26px 0 12px;
+      color: var(--accent);
+      font-size: 1.65rem;
+    }
+
+    .reading-text {
+      margin-bottom: 18px;
+      font-size: 1.28rem;
+      line-height: 2;
+      text-align: justify;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fafafa;
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 17px 18px;
+      color: #4f2c23;
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    summary:hover {
+      background: #f5f5f5;
+    }
+
+    summary:focus-visible {
+      outline: 3px solid rgba(127, 63, 47, 0.25);
+      outline-offset: -3px;
+    }
+
+    .answer {
+      padding: 16px 18px;
+      border-top: 1px solid var(--border);
+      background: var(--answer-bg);
+      font-size: 1.04rem;
+      line-height: 1.8;
+    }
+
+    .answer .arabic {
+      font-size: 1.2rem;
+      line-height: 1.9;
+    }
+
+    .label {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 10px 14px;
+      background: var(--accent);
+      color: #ffffff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #ffffff;
+      color: var(--accent);
+    }
+
+    button:hover {
+      opacity: 0.92;
+    }
+
+    @media (max-width: 700px) {
+      .hero,
+      .section {
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .reading-text {
+        font-size: 1.14rem;
+        line-height: 1.9;
+        text-align: right;
+      }
+
+      summary {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <header class="hero">
+      <h1>Dearborn and California: Reading and Grammar Search</h1>
+      <p class="intro">
+        Read the Arabic passage carefully. For each item, find the requested grammatical structure
+        in the passage and write your answer before opening the hidden answer.
+      </p>
+    </header>
+
+    <section class="section">
+      <h2>Reading Passage</h2>
+
+      <div class="arabic" lang="ar">
+        <h3 class="reading-title">ديربورن: تجربة فريدة</h3>
+
+        <p class="reading-text">
+          وتعتبر ولاية ميشيغان الثانية في أمريكا من حيث عدد الأمريكيين العرب، إذ يبلغ عددهم فيها ٤٩٠ ألفًا حسب أرقام
+          مؤسسة «زغبي إنترناشيونال»، وتجد أن ٦٥٪ منهم، أي ٣٢٠ ألفًا، يتركزون في مقاطعة «واين» التي تقع فيها مدينة
+          ديربورن ومقاطعة أوكلاند المجاورة لها. ويمثل العرب من أصول لبنانية ويمنية وسورية ومصرية وعراقية وأردنية
+          وكلدانية أكبر المجموعات، ويمثل الباقي خليطًا من بقية الدول العربية الأخرى.
+        </p>
+
+        <p class="reading-text">
+          وعن تطوّر الأمريكيين العرب في ديربورن والمصاعب التي يواجهونها تقول سوزان سيريني، عضو مجلس مدينة ديربورن،
+          وهي أمريكية عربية من أصول لبنانية: «الجالية العربية في المدينة يزداد عددها باستمرار. البعض ينتقل للمدن
+          الأخرى أو للولايات المجاورة أو البعيدة للدراسة أو بحثًا عن فرص العمل، والبعض ينتقل للمناطق المجاورة بحثًا
+          عن منازل أكبر. كثافة المدينة تزداد، وقد وصلت قيمة بعض المنازل في المدينة إلى أكثر من مليون ونصف المليون
+          دولار. مهما هاجر العرب إلى المدن والولايات الأخرى، فإنهم يعودون باستمرار إلى اعتبار ديربورن منزلهم الأصلي».
+        </p>
+
+        <p class="reading-text">
+          وتقول سهيلة أمين، المُدرِّسة في هيئة المدارس العمومية في ديربورن: «عرب ديربورن باقون فيها، ونسبة الهجرة إلى
+          المدن أو الولايات الأخرى بين الشباب الذين يكملون دراستهم محدودة، فالجميع يفضل البقاء قرب العائلة والأقارب».
+          وأمين هي من الجيل العربي الرابع في ديربورن، فجدها ولد في أمريكا مع بداية القرن الماضي، حيث هاجر والده من لبنان.
+        </p>
+
+        <p class="reading-text">
+          أما نضال إبراهيم، رئيس تحرير مجلة «أراب أمريكان بيزنس» التي تصدر في كاليفورنيا، فيقول: «ديربورن العربية كما
+          نعرفها اليوم لن تكون بعد ٢٠ عامًا من الآن، فالأجيال العربية الأمريكية الجديدة ستنتشر عبر الولايات مثل غيرها
+          من أجيال الأعراق الأمريكية الأخرى».
+        </p>
+
+        <h3 class="reading-title">جنوب كاليفورنيا: أين العرب؟</h3>
+
+        <p class="reading-text">
+          ومن برد ميشيغان وثلوجها إلى كاليفورنيا، الولاية الذهبية، حيث طقس البحر الأبيض المتوسط، وحيث طبيعة الحياة أقل
+          تسارعًا من الشرق الأمريكي. وإذا كنت تبحث عن الأمريكيين العرب، فولاية كاليفورنيا، وخصوصًا جنوبها، يجب أن تكون
+          مقصدك، فهي موطن ٧١٥ ألف عربي، حسب أرقام مؤسسة «زغبي إنترناشيونال». خصوصية الغرب الأمريكي ليست فقط في طبيعة
+          الحياة، وإنما أيضًا في طبيعته الجغرافية.
+        </p>
+
+        <p class="reading-text">
+          وإذا كانت طبيعة المدن الأمريكية في الشرق والوسط الأمريكي هي تقارب المدن والكثافة السكانية العالية في مدن مثل
+          نيويورك وديترويت وشيكاغو، فإن مدن الغرب، وعلى رأسها مدينة لوس أنجلوس، تجمع عددًا من المدن مثل غلينديل
+          وريفرسايد وأنهايم وهوليوود وسانتا مونيكا. ولهذا لن تجد في كاليفورنيا، شمالها أو جنوبها، مدينة مثل ديربورن.
+          الأمريكيون العرب متوزعون على هذه المدن ومنتشرون داخل أحيائها أيضًا، وما عدا شارع في منطقة أنهايم يحمل بعض
+          اليافطات العربية أو جادة في غلينديل تجمع بعض المحلات العربية، فلن تجد الكثير من الدلالات الإثنية البارزة
+          للأمريكيين العرب.
+        </p>
+
+        <p class="reading-text">
+          وتعتبر ولاية كاليفورنيا الوجهة الثانية، وفي بعض الأحيان الثالثة، للمهاجرين العرب بعد ميشيغان ونيويورك.
+          ويشكل أبناء الجيل الثاني والثالث من الأمريكيين العرب كثافة سكانية أكبر مقارنة مع غيرها من الولايات.
+        </p>
+
+        <p class="reading-text">
+          وينتشر الأمريكيون العرب في كل المجالات في الولاية؛ فهناك عضو الكونغرس الأمريكي داريل عيسى، عضو لجنة التجارة
+          والطاقة، الذي ولد في مدينة كليفلاند بولاية أوهايو، حيث استقر جده عند وصوله إلى أمريكا. وأسس عيسى شركات
+          إلكترونيات في جنوب كاليفورنيا عقب انتهاء خدمته في الجيش الأمريكي.
+        </p>
+
+        <p class="reading-text">
+          كما يزداد عدد الأمريكيين العرب في هوليوود، عاصمة الأفلام والفن في العالم؛ فهناك المغنية بولا عبدول، عضوة فريق
+          التحكيم في البرنامج العالمي الشهير «أمريكان أيدول» الذي تُعرف نسخته العربية باسم «سوبر ستار». وكاليفورنيا،
+          شمالها وجنوبها، موطن الكثير من رجال الأعمال والعلماء والمهندسين في مختلف المجالات من الأمريكيين المتحدرين من
+          أصول عربية.
+        </p>
+
+        <h3 class="reading-title">من المحلات إلى التخصصات</h3>
+
+        <p class="reading-text">
+          تتنوع خلفيات الأمريكيين العرب؛ فمنهم من هاجر أجداده منذ أكثر من ١٠٠ عام، ومنهم من هاجر حديثًا، ومنهم من استقر
+          بعد الانتهاء من دراسته الجامعية أو الدراسات العليا. وفي هذا المجال نجد أن الأمريكيين العرب يُعدّون في المتوسط
+          أفضل تعليمًا من غيرهم، فمعدل العرب الذين يلتحقون بالجامعات أعلى من المعدل القومي الأمريكي العام.
+        </p>
+
+        <h3 class="reading-title">من هم الشباب الأمريكيون العرب؟</h3>
+
+        <p class="reading-text">
+          يحاول نضال إبراهيم الإجابة عن السؤال فيقول: «هناك شباب أمريكيون من أصول عربية يعرّفون أنفسهم بأنهم أمريكيون
+          فقط، ولا يفضلون التمسك بالأصل العرقي، ومن أمثال هؤلاء الإخوان معلوف الذين يملكون فريق سكرامنتو كينغز لكرة
+          السلة. وهناك من يعرّفون أنفسهم بأنهم أمريكيون عرب، وآخرون بأنهم عرب أمريكيون». ويضيف قائلًا: «إنهم أفضل من
+          آبائهم وأجدادهم في قدرتهم على التواصل مع مجتمعهم الأمريكي، وهم يعيشون حياتهم كأمريكيين وليس كوافدين».
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Find These Structures in the Passage</h2>
+
+      <p>
+        Locate the requested structure in the Arabic text. Write down your answer, then click the
+        question to reveal the suggested answer.
+      </p>
+
+      <div class="controls">
+        <button type="button" id="showAll">Show all answers</button>
+        <button type="button" class="secondary" id="hideAll">Hide all answers</button>
+      </div>
+
+      <div class="question-list">
+
+        <details>
+          <summary>1. Find two idāfa constructions in which the second noun is a proper noun.</summary>
+          <div class="answer">
+            <span class="label">Suggested answer:</span>
+            <div class="arabic" lang="ar">
+              ولاية ميشيغان — مدينة ديربورن
+            </div>
+            <p>
+              Other acceptable examples include
+              <span class="arabic" lang="ar">مقاطعة واين</span>,
+              <span class="arabic" lang="ar">مؤسسة زغبي إنترناشيونال</span>, and
+              <span class="arabic" lang="ar">مدينة كليفلاند</span>.
+            </p>
+          </div>
+        </details>
+
+        <details>
+          <summary>2. Find two idāfa constructions in which the second noun is indefinite.</summary>
+          <div class="answer">
+            <span class="label">Suggested answer:</span>
+            <div class="arabic" lang="ar">
+              ألف عربي — شركات إلكترونيات
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>3. Find two idāfa constructions in which the second element is an attached pronoun.</summary>
+          <div class="answer">
+            <span class="label">Possible answers:</span>
+            <div class="arabic" lang="ar">
+              عددهم — منزلهم — جدها — دراسته — خدمته — قدرتهم — مجتمعهم
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>4. Find two definite idāfa constructions whose second noun begins with ال.</summary>
+          <div class="answer">
+            <span class="label">Possible answers:</span>
+            <div class="arabic" lang="ar">
+              فرص العمل — طبيعة الحياة — عاصمة الأفلام — رجال الأعمال — معدل العرب
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>5. Find two examples of a fronted predicate with هناك. Identify the delayed subject.</summary>
+          <div class="answer">
+            <span class="label">Suggested answer:</span>
+            <div class="arabic" lang="ar">
+              فهناك عضوُ الكونغرس الأمريكي داريل عيسى<br>
+              فهناك المغنيةُ بولا عبدول
+            </div>
+            <p>
+              In both examples, <span class="arabic" lang="ar">هناك</span> functions as the fronted
+              predicate, while the following noun phrase is the delayed subject.
+            </p>
+          </div>
+        </details>
+
+        <details>
+          <summary>6. Find two nouns of place in the passage.</summary>
+          <div class="answer">
+            <span class="label">Possible answers:</span>
+            <div class="arabic" lang="ar">
+              مَوْطِن — مَنْزِل — مَقْصِد — مَجْلِس
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>7. Find two adjective clauses introduced by a relative pronoun.</summary>
+          <div class="answer">
+            <span class="label">Suggested answer:</span>
+            <div class="arabic" lang="ar">
+              مقاطعة واين التي تقع فيها مدينة ديربورن<br>
+              الشباب الذين يكملون دراستهم
+            </div>
+            <p>
+              Other examples include
+              <span class="arabic" lang="ar">مجلة أراب أمريكان بيزنس التي تصدر في كاليفورنيا</span>
+              and
+              <span class="arabic" lang="ar">البرنامج العالمي الشهير أمريكان أيدول الذي تُعرف نسخته العربية...</span>.
+            </p>
+          </div>
+        </details>
+
+        <details>
+          <summary>8. Find two examples of kāna and its sisters. Identify the noun and predicate.</summary>
+          <div class="answer">
+            <span class="label">Suggested answer:</span>
+            <div class="arabic" lang="ar">
+              وإذا كانت طبيعةُ المدن الأمريكية هي تقاربَ المدن<br>
+              ديربورن العربية لن تكون بعد ٢٠ عامًا من الآن
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>9. Find two present-tense verbs in the subjunctive and identify the governing particle.</summary>
+          <div class="answer">
+            <span class="label">Suggested answer:</span>
+            <div class="arabic" lang="ar">
+              أن تكونَ — governed by أن<br>
+              لن تجدَ — governed by لن
+            </div>
+            <p>
+              Another acceptable example is
+              <span class="arabic" lang="ar">لن تكونَ</span>.
+            </p>
+          </div>
+        </details>
+
+        <details>
+          <summary>10. Find two active participles.</summary>
+          <div class="answer">
+            <span class="label">Possible answers:</span>
+            <div class="arabic" lang="ar">
+              المجاورة — باقون — منتشرون — المتحدرين
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>11. Find three noun–adjective phrases.</summary>
+          <div class="answer">
+            <span class="label">Possible answers:</span>
+            <div class="arabic" lang="ar">
+              الولاية الذهبية — الكثافة السكانية العالية — دراسته الجامعية — الدراسات العليا —
+              المعدل القومي الأمريكي — أصول عربية — المحلات العربية
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>12. Find one sound feminine plural, one sound masculine plural, and one broken plural.</summary>
+          <div class="answer">
+            <span class="label">Possible answers:</span>
+            <div class="arabic" lang="ar">
+              جمع مؤنث سالم: الولايات، الجامعات، الدراسات<br>
+              جمع مذكر سالم: متوزعون، منتشرون، المتحدرين<br>
+              جمع تكسير: العرب، المدن، المنازل، الأجيال، الأعمال
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const allQuestions = document.querySelectorAll("details");
+
+    document.getElementById("showAll").addEventListener("click", () => {
+      allQuestions.forEach((item) => {
+        item.open = true;
+      });
+    });
+
+    document.getElementById("hideAll").addEventListener("click", () => {
+      allQuestions.forEach((item) => {
+        item.open = false;
+      });
+    });
+  </script>
+</body>
+</html>
