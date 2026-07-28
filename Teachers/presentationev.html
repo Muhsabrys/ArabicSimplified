@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arabic Final Presentation Evaluator — ACTFL Intermediate Mid</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #5f6b76;
+      --border: #d9e0e6;
+      --accent: #1f5f78;
+      --accent-dark: #16485b;
+      --excellent: #d9f2e6;
+      --good: #e5f0fa;
+      --satisfactory: #fff1c9;
+      --needs: #f9dddd;
+      --shadow: 0 8px 24px rgba(31, 41, 51, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    .arabic {
+      font-family: "Times New Roman", Times, serif;
+      direction: rtl;
+      unicode-bidi: isolate;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+      color: white;
+      padding: 2rem 1rem;
+    }
+
+    .header-inner,
+    main {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 .5rem;
+      font-size: clamp(1.55rem, 4vw, 2.35rem);
+    }
+
+    header p {
+      margin: 0;
+      max-width: 850px;
+      color: #eaf4f7;
+    }
+
+    main {
+      padding: 1.25rem 0 3rem;
+    }
+
+    .notice,
+    .panel,
+    .rubric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .notice {
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+      border-left: 5px solid var(--accent);
+    }
+
+    .notice strong { color: var(--accent-dark); }
+
+    .panel {
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .85rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: .35rem;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: .72rem .78rem;
+      border: 1px solid #bcc7d0;
+      border-radius: 9px;
+      background: white;
+      color: var(--text);
+      font: inherit;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      outline: 3px solid rgba(31, 95, 120, .18);
+      border-color: var(--accent);
+    }
+
+    .rubric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .rubric-card {
+      overflow: hidden;
+    }
+
+    .rubric-header {
+      padding: .85rem 1rem;
+      background: #edf4f7;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rubric-header h2 {
+      margin: 0;
+      font-size: 1.08rem;
+      color: var(--accent-dark);
+    }
+
+    .rubric-body {
+      padding: .9rem 1rem 1rem;
+    }
+
+    .criterion {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 190px;
+      gap: .75rem;
+      align-items: center;
+      padding: .7rem 0;
+      border-bottom: 1px solid #edf0f2;
+    }
+
+    .criterion:last-child { border-bottom: none; }
+
+    .criterion-name {
+      font-weight: 700;
+    }
+
+    .criterion-note {
+      display: block;
+      color: var(--muted);
+      font-size: .84rem;
+      font-weight: 400;
+      margin-top: .15rem;
+    }
+
+    .grade-excellent { background: var(--excellent); }
+    .grade-good { background: var(--good); }
+    .grade-satisfactory { background: var(--satisfactory); }
+    .grade-needs { background: var(--needs); }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem;
+      margin: 1rem 0;
+    }
+
+    button {
+      border: none;
+      border-radius: 9px;
+      padding: .78rem 1rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--accent);
+      color: white;
+    }
+
+    button:hover { background: var(--accent-dark); }
+
+    button.secondary {
+      background: #e8edf1;
+      color: var(--text);
+    }
+
+    button.secondary:hover { background: #dce4e9; }
+
+    .score-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .75rem;
+      margin-top: 1rem;
+    }
+
+    .score-item {
+      padding: .8rem;
+      border-radius: 10px;
+      background: #edf4f7;
+      text-align: center;
+    }
+
+    .score-item strong {
+      display: block;
+      font-size: 1.25rem;
+      color: var(--accent-dark);
+    }
+
+    #report {
+      min-height: 520px;
+      resize: vertical;
+      white-space: pre-wrap;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: .86rem;
+      margin-top: .65rem;
+    }
+
+    .status {
+      min-height: 1.4rem;
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+
+
+    .sound-section {
+      margin-top: 1rem;
+    }
+
+    .sound-help {
+      color: var(--muted);
+      margin: .15rem 0 1rem;
+      font-size: .9rem;
+    }
+
+    .sound-group {
+      margin-bottom: 1rem;
+    }
+
+    .sound-group h3 {
+      margin: 0 0 .55rem;
+      color: var(--accent-dark);
+      font-size: 1rem;
+    }
+
+    .sound-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: .55rem;
+    }
+
+    .sound-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .55rem;
+      background: #fafcfd;
+    }
+
+    .sound-label {
+      display: block;
+      text-align: center;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: .4rem;
+      direction: rtl;
+    }
+
+    .sound-item select {
+      padding: .5rem;
+      font-size: .88rem;
+    }
+
+    @media (max-width: 820px) {
+      .student-grid,
+      .rubric-grid,
+      .score-box {
+        grid-template-columns: 1fr;
+      }
+
+      .criterion {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      header, .notice, .rubric-grid, .actions, .footer-note, .status {
+        display: none !important;
+      }
+      body { background: white; }
+      .panel { box-shadow: none; border: none; }
+      #report { border: none; min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <h1>Arabic Final Presentation Evaluator</h1>
+    <p>ACTFL-aligned rubric and feedback generator for Intermediate Mid presentational speaking.</p>
+  </div>
+</header>
+
+<main>
+  <section class="notice">
+    <strong>Intermediate Mid lens:</strong>
+    Evaluate whether the student can present on familiar or studied topics using connected sentences,
+    remain generally understandable to a sympathetic listener, organize basic information, and use
+    communication strategies when vocabulary or grammatical control is limited. Do not expect sustained
+    paragraph-level discourse or advanced analysis.
+  </section>
+
+  <section class="panel">
+    <div class="student-grid">
+      <div>
+        <label for="studentName">Student name</label>
+        <input id="studentName" type="text" placeholder="Enter student name">
+      </div>
+      <div>
+        <label for="presentationTitle">Presentation topic</label>
+        <input id="presentationTitle" type="text" placeholder="Enter topic or title">
+      </div>
+      <div>
+        <label for="presentationDate">Date</label>
+        <input id="presentationDate" type="date">
+      </div>
+    </div>
+  </section>
+
+  <div id="rubricContainer" class="rubric-grid"></div>
+
+
+  <section class="panel sound-section">
+    <h2>Arabic Sound Assessment</h2>
+    <p class="sound-help">
+      Mark each sound as <strong>Good</strong>, <strong>Needs Practice</strong>, or leave it unmarked.
+      Selected items will be added automatically to the written report.
+    </p>
+    <div id="soundAssessmentContainer"></div>
+  </section>
+
+  <section class="panel">
+    <label for="instructorComments">Optional instructor comments</label>
+    <textarea id="instructorComments" rows="4" placeholder="Add specific examples, corrections, or next steps."></textarea>
+
+    <div class="score-box">
+      <div class="score-item">
+        <span>Points</span>
+        <strong id="pointsDisplay">0 / 68</strong>
+      </div>
+      <div class="score-item">
+        <span>Percentage</span>
+        <strong id="percentDisplay">0%</strong>
+      </div>
+      <div class="score-item">
+        <span>Overall level</span>
+        <strong id="levelDisplay">Incomplete</strong>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="generateBtn" type="button">Generate feedback report</button>
+      <button id="copyBtn" type="button" class="secondary">Copy report</button>
+      <button id="downloadBtn" type="button" class="secondary">Download .txt</button>
+      <button id="printBtn" type="button" class="secondary">Print</button>
+      <button id="resetBtn" type="button" class="secondary">Reset</button>
+    </div>
+    <div id="status" class="status" aria-live="polite"></div>
+  </section>
+
+  <section class="panel">
+    <label for="report">Generated feedback report</label>
+    <textarea id="report" aria-label="Generated feedback report"></textarea>
+    <p class="footer-note">
+      This classroom rubric supports ACTFL-informed evaluation but does not produce an official ACTFL proficiency rating.
+    </p>
+  </section>
+</main>
+
+<script>
+const levels = {
+  excellent: { label: "Excellent", points: 4 },
+  good: { label: "Good", points: 3 },
+  satisfactory: { label: "Satisfactory", points: 2 },
+  needs: { label: "Needs Improvement", points: 1 }
+};
+
+const rubric = [
+  {
+    category: "Content Quality",
+    criteria: [
+      {
+        id: "clarity",
+        name: "Clarity of ideas",
+        note: "Communicates the main message through understandable sentences.",
+        feedback: {
+          excellent: "Your main ideas were consistently clear, and listeners could easily follow what you wanted to communicate.",
+          good: "Your main ideas were clear overall, with only occasional moments that required extra listener effort.",
+          satisfactory: "Your central message was understandable, although some ideas needed simpler wording or clearer explanation.",
+          needs: "Your main message was difficult to follow in several places. Focus on expressing one clear idea at a time with complete, familiar sentences."
+        }
+      },
+      {
+        id: "depth",
+        name: "Development of content",
+        note: "Adds relevant details and examples appropriate to Intermediate Mid.",
+        feedback: {
+          excellent: "You developed the topic with several relevant details and examples while remaining within familiar language.",
+          good: "You supported most ideas with relevant details, though a few points could have been developed further.",
+          satisfactory: "You provided basic information about the topic, but more familiar examples and supporting details would strengthen the presentation.",
+          needs: "The presentation relied mostly on isolated facts or brief statements. Add simple examples, descriptions, and reasons to develop each main point."
+        }
+      },
+      {
+        id: "organization",
+        name: "Organization and flow",
+        note: "Uses a recognizable beginning, sequence, and conclusion.",
+        feedback: {
+          excellent: "The presentation had a clear beginning, logical sequence, and effective conclusion, with useful transitions between sections.",
+          good: "The presentation was generally well organized, and most transitions helped the audience follow the sequence.",
+          satisfactory: "The overall sequence was recognizable, but some ideas felt disconnected or transitions were limited.",
+          needs: "The order of ideas was difficult to follow. Use a simple introduction, two or three clearly ordered points, and a brief conclusion."
+        }
+      }
+    ]
+  },
+  {
+    category: "Delivery Skills",
+    criteria: [
+      {
+        id: "confidence",
+        name: "Confidence",
+        note: "Maintains the presentation despite pauses or language limitations.",
+        feedback: {
+          excellent: "You presented with confidence and continued communicating effectively even when you needed time to formulate language.",
+          good: "You appeared comfortable for most of the presentation and recovered successfully from occasional hesitation.",
+          satisfactory: "You completed the presentation, though frequent hesitation sometimes reduced the strength of your delivery.",
+          needs: "Hesitation and dependence on notes frequently interrupted communication. Rehearse short sections and practice recovering with familiar expressions."
+        }
+      },
+      {
+        id: "eyeContact",
+        name: "Eye contact",
+        note: "Looks at the audience rather than reading continuously.",
+        feedback: {
+          excellent: "You maintained consistent eye contact and used notes only as support.",
+          good: "You made regular eye contact, although you occasionally relied on notes or slides.",
+          satisfactory: "You made some eye contact, but reading from notes or slides limited audience connection.",
+          needs: "You read for most of the presentation. Practice speaking from keywords rather than complete written sentences."
+        }
+      },
+      {
+        id: "bodyLanguage",
+        name: "Body language",
+        note: "Uses posture and gestures that support comprehensibility.",
+        feedback: {
+          excellent: "Your posture, facial expression, and gestures naturally supported the meaning of your presentation.",
+          good: "Your body language was appropriate and generally supported communication.",
+          satisfactory: "Your body language was neutral or somewhat restricted, but it did not seriously interfere with communication.",
+          needs: "Your posture or movement distracted from the message. Use a stable posture and a few purposeful gestures to reinforce meaning."
+        }
+      },
+      {
+        id: "pace",
+        name: "Pace and fluency",
+        note: "Produces understandable sentence-level speech with manageable pauses.",
+        feedback: {
+          excellent: "Your pace was natural and easy to follow, with pauses that did not disrupt meaning.",
+          good: "Your pace was generally appropriate, although a few sections were slightly rushed or hesitant.",
+          satisfactory: "Your speech was understandable, but frequent pauses or uneven pacing sometimes interrupted the flow.",
+          needs: "The pace made comprehension difficult because speech was often too fast, too slow, or heavily interrupted. Rehearse in short sentence groups."
+        }
+      }
+    ]
+  },
+  {
+    category: "Use of Visuals",
+    criteria: [
+      {
+        id: "slideDesign",
+        name: "Slide design",
+        note: "Uses readable, uncluttered slides appropriate to the message.",
+        feedback: {
+          excellent: "Your slides were clear, readable, and visually balanced, with only the information needed to support the presentation.",
+          good: "Your slides were readable and organized, though a few could be simplified.",
+          satisfactory: "The slides communicated basic information, but some text, formatting, or layout choices reduced readability.",
+          needs: "The slides were difficult to read or contained too much text. Use larger text, fewer words, and a consistent visual structure."
+        }
+      },
+      {
+        id: "visualRelevance",
+        name: "Relevance of visuals",
+        note: "Selects images, charts, or examples that clarify familiar content.",
+        feedback: {
+          excellent: "The visuals were consistently relevant and helped the audience understand the topic.",
+          good: "Most visuals supported the content, although one or two could have been more closely connected to the message.",
+          satisfactory: "Some visuals were useful, while others appeared decorative or needed clearer explanation.",
+          needs: "The visuals did not clearly support the main ideas. Select images or examples that directly illustrate what you are saying."
+        }
+      },
+      {
+        id: "visualIntegration",
+        name: "Integration with speech",
+        note: "Refers to visuals orally instead of displaying them without explanation.",
+        feedback: {
+          excellent: "You integrated the visuals smoothly by referring to them and explaining their significance in Arabic.",
+          good: "You usually connected the visuals to your spoken explanation.",
+          satisfactory: "You referred to some visuals, but several were not fully explained or connected to the spoken message.",
+          needs: "The visuals and spoken presentation remained largely separate. Explicitly identify and explain each important visual."
+        }
+      }
+    ]
+  },
+  {
+    category: "Language and Pronunciation",
+    criteria: [
+      {
+        id: "sentenceControl",
+        name: "Sentence-level language",
+        note: "Uses strings of sentences on familiar or studied topics.",
+        feedback: {
+          excellent: "You consistently communicated in connected sentences and used familiar vocabulary and structures effectively.",
+          good: "You communicated mainly in sentences, with occasional fragments or breakdowns that did not prevent understanding.",
+          satisfactory: "You produced some complete sentences, but frequent fragments, memorized chunks, or English affected the flow.",
+          needs: "The presentation relied heavily on isolated words, fragments, or English. Build the presentation from short, complete Arabic sentences."
+        }
+      },
+      {
+        id: "pronunciation",
+        name: "Overall pronunciation",
+        note: "Speech is generally understandable to a sympathetic listener.",
+        feedback: {
+          excellent: "Your pronunciation was clear and consistent, especially with Arabic sounds, and your speech was readily understandable.",
+          good: "Your pronunciation was understandable, though some Arabic sounds could be sharper and more consistent.",
+          satisfactory: "Your pronunciation was generally understandable to a listener accustomed to Arabic learners, but recurring sound errors required extra effort.",
+          needs: "Pronunciation frequently interfered with understanding. Work on producing Arabic sounds more accurately and practice complete phrases rather than isolated words."
+        }
+      },
+      {
+        id: "phonemes",
+        name: "Difficult Arabic phonemes",
+        note: "Produces sounds such as ع، غ، ق، ح، خ with increasing control.",
+        feedback: {
+          excellent: "You articulated difficult Arabic phonemes such as ع، غ، ق، ح، and خ clearly and consistently.",
+          good: "You produced most difficult Arabic phonemes successfully, with occasional inconsistency.",
+          satisfactory: "Sounds such as ع، غ، ق، ح، or خ were sometimes approximated, but the intended words were usually understandable.",
+          needs: "Work on producing Arabic sounds such as ع، غ، ق، ح، and خ more accurately. Practice minimal contrasts and short phrases containing the target sounds."
+        }
+      },
+      {
+        id: "comprehensibility",
+        name: "Comprehensibility",
+        note: "Meaning remains recoverable despite grammar or pronunciation errors.",
+        feedback: {
+          excellent: "Your message remained consistently understandable, even when minor grammatical or pronunciation errors occurred.",
+          good: "Your message was understandable most of the time, with only occasional need for listener interpretation.",
+          satisfactory: "The main message was understandable, but several sections required support from context, visuals, or repetition.",
+          needs: "Frequent language breakdowns made the message difficult to recover. Simplify sentence structure and prioritize high-frequency vocabulary."
+        }
+      }
+    ]
+  },
+  {
+    category: "Audience Engagement",
+    criteria: [
+      {
+        id: "interaction",
+        name: "Audience interaction",
+        note: "Acknowledges listeners and uses simple strategies to maintain attention.",
+        feedback: {
+          excellent: "You actively involved the audience through questions, examples, or direct references and maintained their attention.",
+          good: "You acknowledged the audience and used some effective engagement strategies.",
+          satisfactory: "You showed some awareness of the audience, but interaction was limited.",
+          needs: "The presentation was delivered with little audience awareness. Add one or two simple questions, examples, or direct audience references."
+        }
+      },
+      {
+        id: "questions",
+        name: "Responses to questions",
+        note: "Answers predictable questions using sentences and clarification strategies.",
+        feedback: {
+          excellent: "You responded clearly to questions using complete sentences and appropriate clarification strategies.",
+          good: "You answered most questions understandably, with minor hesitation or requests for repetition.",
+          satisfactory: "You communicated basic answers, although responses were brief, fragmented, or dependent on assistance.",
+          needs: "You had difficulty responding to predictable questions. Practice likely questions and useful expressions for repetition, clarification, and thinking time."
+        }
+      }
+    ]
+  },
+  {
+    category: "Time Management",
+    criteria: [
+      {
+        id: "time",
+        name: "Use of allotted time",
+        note: "Completes the communicative task without rushing or excessive extension.",
+        feedback: {
+          excellent: "You used the allotted time effectively and gave appropriate attention to each section.",
+          good: "You remained close to the allotted time, with only minor imbalance between sections.",
+          satisfactory: "You completed the presentation, but some sections were rushed, overextended, or underdeveloped.",
+          needs: "The presentation was substantially too short or too long. Rehearse with a timer and assign a specific amount of time to each section."
+        }
+      }
+    ]
+  }
+];
+
+
+const soundGroups = [
+  {
+    title: "Emphatic and difficult consonants",
+    items: [
+      { id: "sound_ain", label: "ع", name: "ع (ʿayn)" },
+      { id: "sound_ghayn", label: "غ", name: "غ (ghayn)" },
+      { id: "sound_qaf", label: "ق", name: "ق (qāf)" },
+      { id: "sound_haa", label: "ح", name: "ح (ḥāʾ)" },
+      { id: "sound_khaa", label: "خ", name: "خ (khāʾ)" },
+      { id: "sound_sad", label: "ص", name: "ص (ṣād)" },
+      { id: "sound_dad", label: "ض", name: "ض (ḍād)" },
+      { id: "sound_taa", label: "ط", name: "ط (ṭāʾ)" },
+      { id: "sound_zaa", label: "ظ", name: "ظ (ẓāʾ)" }
+    ]
+  },
+  {
+    title: "Other consonants and common contrasts",
+    items: [
+      { id: "sound_thaa", label: "ث", name: "ث (thāʾ)" },
+      { id: "sound_dhal", label: "ذ", name: "ذ (dhāl)" },
+      { id: "sound_shin", label: "ش", name: "ش (shīn)" },
+      { id: "sound_jim", label: "ج", name: "ج (jīm)" },
+      { id: "sound_raa", label: "ر", name: "ر (rāʾ)" },
+      { id: "sound_lam", label: "ل", name: "ل (lām)" },
+      { id: "sound_hamza", label: "ء", name: "ء (hamza)" },
+      { id: "sound_tamarbuta", label: "ة", name: "ة (tāʾ marbūṭa)" }
+    ]
+  },
+  {
+    title: "Short vowels",
+    items: [
+      { id: "sound_fatha", label: "ـَ / a", name: "Short fatḥa /a/" },
+      { id: "sound_kasra", label: "ـِ / i", name: "Short kasra /i/" },
+      { id: "sound_damma", label: "ـُ / u", name: "Short ḍamma /u/" },
+      { id: "sound_sukun", label: "ـْ", name: "Sukūn / consonant closure" }
+    ]
+  },
+  {
+    title: "Long vowels and vowel length",
+    items: [
+      { id: "sound_long_a", label: "ا / ā", name: "Long /ā/" },
+      { id: "sound_long_i", label: "ي / ī", name: "Long /ī/" },
+      { id: "sound_long_u", label: "و / ū", name: "Long /ū/" },
+      { id: "sound_length", label: "قصير ↔ طويل", name: "Short–long vowel contrast" }
+    ]
+  },
+  {
+    title: "Additional pronunciation features",
+    items: [
+      { id: "sound_shadda", label: "ـّ", name: "Shadda / consonant length" },
+      { id: "sound_article", label: "الـ", name: "Definite article and sun-letter assimilation" },
+      { id: "sound_endings", label: "النهايات", name: "Word endings" },
+      { id: "sound_stress", label: "النبر", name: "Word stress" }
+    ]
+  }
+];
+
+function buildSoundAssessment() {
+  const soundContainer = document.getElementById("soundAssessmentContainer");
+
+  soundGroups.forEach(group => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "sound-group";
+
+    const heading = document.createElement("h3");
+    heading.textContent = group.title;
+    wrapper.appendChild(heading);
+
+    const grid = document.createElement("div");
+    grid.className = "sound-grid";
+
+    group.items.forEach(item => {
+      const box = document.createElement("div");
+      box.className = "sound-item";
+
+      const label = document.createElement("span");
+      label.className = "sound-label";
+      label.textContent = item.label;
+
+      const select = document.createElement("select");
+      select.id = item.id;
+      select.dataset.soundName = item.name;
+      select.setAttribute("aria-label", item.name);
+      select.innerHTML = `
+        <option value="">Not marked</option>
+        <option value="good">Good</option>
+        <option value="practice">Needs Practice</option>
+      `;
+
+      select.addEventListener("change", () => {
+        select.classList.remove("grade-excellent", "grade-needs");
+        if (select.value === "good") select.classList.add("grade-excellent");
+        if (select.value === "practice") select.classList.add("grade-needs");
+      });
+
+      box.appendChild(label);
+      box.appendChild(select);
+      grid.appendChild(box);
+    });
+
+    wrapper.appendChild(grid);
+    soundContainer.appendChild(wrapper);
+  });
+}
+
+function getSoundSelections() {
+  const good = [];
+  const practice = [];
+
+  soundGroups.forEach(group => {
+    group.items.forEach(item => {
+      const value = document.getElementById(item.id).value;
+      if (value === "good") good.push(item.name);
+      if (value === "practice") practice.push(item.name);
+    });
+  });
+
+  return { good, practice };
+}
+
+function soundFeedbackSentence(selections) {
+  const lines = [];
+
+  if (selections.good.length) {
+    lines.push(
+      `Sounds produced well: ${selections.good.join(", ")}. These sounds were generally clear and supported comprehensibility.`
+    );
+  }
+
+  if (selections.practice.length) {
+    lines.push(
+      `Sounds to continue practicing: ${selections.practice.join(", ")}. Practice these sounds first in isolated words, then in short phrases and complete sentences.`
+    );
+  }
+
+  if (!selections.good.length && !selections.practice.length) {
+    lines.push("No individual sounds were marked for this presentation.");
+  }
+
+  return lines;
+}
+
+
+const container = document.getElementById("rubricContainer");
+
+function buildRubric() {
+  rubric.forEach(group => {
+    const card = document.createElement("section");
+    card.className = "rubric-card";
+
+    const header = document.createElement("div");
+    header.className = "rubric-header";
+    header.innerHTML = `<h2>${group.category}</h2>`;
+    card.appendChild(header);
+
+    const body = document.createElement("div");
+    body.className = "rubric-body";
+
+    group.criteria.forEach(item => {
+      const row = document.createElement("div");
+      row.className = "criterion";
+
+      const description = document.createElement("div");
+      description.innerHTML = `<span class="criterion-name">${item.name}</span>
+        <span class="criterion-note">${item.note}</span>`;
+
+      const select = document.createElement("select");
+      select.id = item.id;
+      select.dataset.category = group.category;
+      select.dataset.criterion = item.name;
+      select.setAttribute("aria-label", `${group.category}: ${item.name}`);
+      select.innerHTML = `
+        <option value="">Select rating</option>
+        <option value="excellent">Excellent — 4</option>
+        <option value="good">Good — 3</option>
+        <option value="satisfactory">Satisfactory — 2</option>
+        <option value="needs">Needs Improvement — 1</option>
+      `;
+      select.addEventListener("change", () => {
+        updateSelectColor(select);
+        updateScore();
+      });
+
+      row.appendChild(description);
+      row.appendChild(select);
+      body.appendChild(row);
+    });
+
+    card.appendChild(body);
+    container.appendChild(card);
+  });
+}
+
+function updateSelectColor(select) {
+  select.classList.remove("grade-excellent", "grade-good", "grade-satisfactory", "grade-needs");
+  if (select.value) select.classList.add(`grade-${select.value}`);
+}
+
+function getAllCriteria() {
+  return rubric.flatMap(group =>
+    group.criteria.map(item => ({ ...item, category: group.category }))
+  );
+}
+
+function calculateScore() {
+  const criteria = getAllCriteria();
+  let earned = 0;
+  let completed = 0;
+
+  criteria.forEach(item => {
+    const value = document.getElementById(item.id).value;
+    if (value) {
+      completed++;
+      earned += levels[value].points;
+    }
+  });
+
+  const max = criteria.length * 4;
+  const percentage = max ? Math.round((earned / max) * 100) : 0;
+  return { earned, max, percentage, completed, total: criteria.length };
+}
+
+function performanceLabel(percentage, complete) {
+  if (!complete) return "Incomplete";
+  if (percentage >= 90) return "Strong Intermediate Mid";
+  if (percentage >= 78) return "Meets Intermediate Mid";
+  if (percentage >= 65) return "Approaching Intermediate Mid";
+  return "Developing toward Intermediate Mid";
+}
+
+function updateScore() {
+  const score = calculateScore();
+  document.getElementById("pointsDisplay").textContent = `${score.earned} / ${score.max}`;
+  document.getElementById("percentDisplay").textContent = `${score.percentage}%`;
+  document.getElementById("levelDisplay").textContent =
+    performanceLabel(score.percentage, score.completed === score.total);
+}
+
+function formatDate(dateValue) {
+  if (!dateValue) return new Date().toLocaleDateString();
+  const [year, month, day] = dateValue.split("-");
+  return new Date(Number(year), Number(month) - 1, Number(day)).toLocaleDateString();
+}
+
+function summaryText(percentage) {
+  if (percentage >= 90) {
+    return "Overall, this was a strong Intermediate Mid presentation. You communicated a clear message in connected sentences, remained readily understandable, and used presentation strategies effectively. Your next step is to extend your ideas more consistently and begin sustaining longer, more connected discourse.";
+  }
+  if (percentage >= 78) {
+    return "Overall, the presentation met the expectations for Intermediate Mid performance. You communicated familiar content mainly through sentences and were generally understandable to a sympathetic listener. Continue developing smoother connections between ideas, greater consistency in pronunciation, and less reliance on notes.";
+  }
+  if (percentage >= 65) {
+    return "Overall, the presentation showed several features of Intermediate Mid performance, but control was inconsistent. The main message was often understandable, especially with contextual or visual support. Focus next on producing complete sentences, adding familiar supporting details, and rehearsing pronunciation and pacing.";
+  }
+  return "Overall, the presentation is still developing toward Intermediate Mid performance. Communication was possible in parts, but frequent fragments, pronunciation difficulties, or delivery breakdowns limited comprehensibility. Prioritize short complete sentences, familiar vocabulary, careful rehearsal, and a simple organizational structure.";
+}
+
+function generateReport() {
+  const name = document.getElementById("studentName").value.trim() || "Student";
+  const topic = document.getElementById("presentationTitle").value.trim() || "Final presentation";
+  const date = formatDate(document.getElementById("presentationDate").value);
+  const comments = document.getElementById("instructorComments").value.trim();
+  const score = calculateScore();
+  const missing = [];
+
+  const lines = [
+    "ARABIC FINAL PRESENTATION FEEDBACK",
+    "ACTFL Intermediate Mid — Presentational Speaking",
+    "",
+    `Student: ${name}`,
+    `Presentation: ${topic}`,
+    `Date: ${date}`,
+    ""
+  ];
+
+  rubric.forEach(group => {
+    lines.push(group.category.toUpperCase());
+    group.criteria.forEach(item => {
+      const value = document.getElementById(item.id).value;
+      if (!value) {
+        missing.push(`${group.category}: ${item.name}`);
+        lines.push(`• ${item.name}: Not rated.`);
+      } else {
+        lines.push(`• ${item.name} — ${levels[value].label} (${levels[value].points}/4)`);
+        lines.push(`  ${item.feedback[value]}`);
+      }
+    });
+    lines.push("");
+  });
+
+  const soundSelections = getSoundSelections();
+  lines.push("ARABIC SOUND ASSESSMENT");
+  soundFeedbackSentence(soundSelections).forEach(line => lines.push(line));
+  lines.push("");
+
+  lines.push("OVERALL RESULT");
+  lines.push(`Score: ${score.earned}/${score.max} (${score.percentage}%)`);
+  lines.push(`Performance description: ${performanceLabel(score.percentage, score.completed === score.total)}`);
+  lines.push("");
+  lines.push("FINAL SUMMARY");
+  lines.push(summaryText(score.percentage));
+
+  if (comments) {
+    lines.push("");
+    lines.push("ADDITIONAL INSTRUCTOR COMMENTS");
+    lines.push(comments);
+  }
+
+  lines.push("");
+  lines.push("Note: This classroom evaluation is informed by ACTFL Intermediate Mid descriptors. It is not an official ACTFL proficiency rating.");
+
+  document.getElementById("report").value = lines.join("\n");
+  const status = document.getElementById("status");
+
+  if (missing.length) {
+    status.textContent = `Report generated. ${missing.length} criterion/criteria remain unrated.`;
+  } else {
+    status.textContent = "Complete report generated.";
+  }
+}
+
+async function copyReport() {
+  const report = document.getElementById("report");
+  if (!report.value.trim()) generateReport();
+
+  try {
+    await navigator.clipboard.writeText(report.value);
+    document.getElementById("status").textContent = "Report copied to clipboard.";
+  } catch (error) {
+    report.select();
+    document.execCommand("copy");
+    document.getElementById("status").textContent = "Report copied to clipboard.";
+  }
+}
+
+function downloadReport() {
+  const report = document.getElementById("report");
+  if (!report.value.trim()) generateReport();
+
+  const student = document.getElementById("studentName").value.trim()
+    .replace(/[^a-zA-Z0-9\u0600-\u06FF_-]+/g, "_") || "student";
+  const blob = new Blob([report.value], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${student}_presentation_feedback.txt`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  document.getElementById("status").textContent = "Text report downloaded.";
+}
+
+function resetForm() {
+  if (!confirm("Clear all ratings and report text?")) return;
+  document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+  document.querySelectorAll("select").forEach(el => {
+    el.value = "";
+    updateSelectColor(el);
+  });
+  document.getElementById("presentationDate").valueAsDate = new Date();
+  document.getElementById("status").textContent = "Form reset.";
+  updateScore();
+}
+
+buildRubric();
+buildSoundAssessment();
+document.getElementById("presentationDate").valueAsDate = new Date();
+document.getElementById("generateBtn").addEventListener("click", generateReport);
+document.getElementById("copyBtn").addEventListener("click", copyReport);
+document.getElementById("downloadBtn").addEventListener("click", downloadReport);
+document.getElementById("printBtn").addEventListener("click", () => {
+  if (!document.getElementById("report").value.trim()) generateReport();
+  window.print();
+});
+document.getElementById("resetBtn").addEventListener("click", resetForm);
+updateScore();
+</script>
+</body>
+</html>
