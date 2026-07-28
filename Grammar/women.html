@@ -143,6 +143,45 @@
   .note{font-family:'Cairo',sans-serif;font-size:.85rem;color:var(--faint);line-height:1.75;
     max-width:780px;margin:24px auto 0;padding:0 18px;}
   section.dark .note{color:#8a8272;}
+  /* barcode */
+  .barcode{max-width:900px;margin:0 auto;padding:0 18px;}
+  .bc-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .bc-col h4{font-family:'Cairo',sans-serif;font-weight:900;font-size:1rem;text-align:center;margin:0 0 3px;}
+  .bc-col .bc-cap{font-family:'Cairo',sans-serif;font-size:.72rem;color:var(--faint);text-align:center;margin:0 0 8px;}
+  .bc-stack{display:flex;flex-direction:column;gap:1px;}
+  .bc-w{height:4px;border-radius:2px;cursor:pointer;transition:opacity .2s,transform .15s;transform-origin:center;}
+  .bc-w:hover{transform:scaleY(2.4);} .bc-w.dim{opacity:.12;} .bc-w.hi{opacity:1;transform:scaleY(2.6);}
+  .bc-tip{position:fixed;pointer-events:none;background:#111114;color:#fff;font-family:'Cairo',sans-serif;
+    font-size:.9rem;padding:7px 12px;border-radius:8px;z-index:99;opacity:0;transition:opacity .12s;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.4);}
+  .bc-search{display:flex;gap:10px;justify-content:center;margin:0 0 18px;flex-wrap:wrap;}
+  .bc-search input{font-family:'Cairo',sans-serif;font-size:1.05rem;padding:9px 18px;border-radius:999px;
+    border:2px solid var(--line);background:#fff;color:#222;width:min(320px,80vw);text-align:center;}
+  .bc-search input:focus{outline:none;border-color:var(--pink);}
+  .themekey{display:flex;flex-wrap:wrap;gap:7px 14px;justify-content:center;margin:16px auto 0;max-width:820px;
+    font-family:'Cairo',sans-serif;font-size:.84rem;color:var(--soft);}
+  .themekey span{display:inline-flex;align-items:center;gap:6px;cursor:pointer;} .themekey i{width:12px;height:12px;border-radius:3px;}
+  .themekey span.off{opacity:.32;}
+  /* stream */
+  .streamwrap{max-width:900px;margin:0 auto;padding:0 12px;position:relative;}
+  #stream{width:100%;height:340px;display:block;overflow:visible;}
+  .stream-tip{position:fixed;pointer-events:none;background:#fff;color:#241f18;font-family:'Cairo',sans-serif;
+    font-size:.9rem;padding:9px 13px;border-radius:10px;z-index:99;opacity:0;transition:opacity .12s;max-width:280px;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);border-inline-start:4px solid var(--pink);line-height:1.55;}
+  .stream-tip .sd{font-size:.72rem;color:var(--faint);display:block;margin-top:3px;}
+  .stream-tip .sh{font-family:'Amiri',serif;font-size:1.05rem;}
+  /* dumbbell */
+  .dumb{max-width:820px;margin:0 auto;padding:0 18px;}
+  .dbtoggle{display:flex;gap:8px;justify-content:center;margin:0 0 20px;}
+  .dbtoggle button{font-family:'Cairo',sans-serif;font-weight:800;font-size:.82rem;padding:8px 16px;border-radius:8px;
+    border:2px solid var(--line);background:transparent;color:var(--soft);cursor:pointer;}
+  .dbtoggle button.on{background:var(--pink);border-color:var(--pink);color:#fff;}
+  .dbrow{display:grid;grid-template-columns:92px 1fr 54px;align-items:center;gap:10px;margin:9px 0;font-family:'Cairo',sans-serif;}
+  .dbrow .dl{font-weight:700;font-size:.95rem;text-align:start;}
+  .dbtrack{position:relative;height:26px;}
+  .dbline{position:absolute;top:50%;height:3px;background:#c9bfa8;transform:translateY(-50%);transition:all .8s ease;}
+  .dbdot{position:absolute;top:50%;width:17px;height:17px;border-radius:50%;transform:translate(50%,-50%);transition:all .8s ease;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+  .dbdot.f{background:var(--pink);} .dbdot.m{background:var(--blue);}
+  .dbrow .dv{font-size:.82rem;color:var(--soft);font-variant-numeric:tabular-nums;font-weight:700;}
   footer{background:var(--ink);color:#cbc4b6;font-family:'Cairo',sans-serif;font-size:.92rem;line-height:1.9;padding:52px 0;}
   footer .col{max-width:780px;} footer a{color:var(--pink);} footer b{color:#f2ede3;}
   @media(max-width:640px){ .barrow .who{flex:0 0 44px;font-size:.8rem;} p.body{font-size:1.24rem;} .frow .fl{flex:0 0 120px;} }
@@ -163,7 +202,7 @@
 
 <div class="scope">
   <div class="col">
-    عيّنة قوامها <b id="s-N"></b> عنوانًا من مدوّنة OPINAR، صنّفها نموذج <code>gpt-oss-120b</code> آليًا (من أصل ٢٧١ ألفًا). يغلب عليها الصحافة <b>المصرية</b> (٩٩٪) بين عامَي <b>٢٠٢٠ و٢٠٢٥</b>. راجع النموذج نفسه ثقته: متوسّط ثقة <b id="s-conf"></b>، ونسبة ما رُشِّح لمراجعة بشرية <b id="s-nr"></b>٪. الأرقام إشاراتٌ مبكرة لا خلاصات؛ وقد نُطبِّع تسميات النموذج الحرّة بعد التصنيف. حين نقيس «كيف تظهر» النساء والرجال، نفصل <b>كاتبات الأعمدة</b> (البايلاين) عمّن يُكتَب عنهم، ونذكر ذلك في كل رسم.
+    قرأنا <b id="s-N"></b> عنوانًا من صفحات الرأي العربية — من يظهر فيها، وكيف. ما يلي ما وجدناه.
   </div>
 </div>
 
@@ -244,6 +283,24 @@
   <div class="col"><div class="sowhat rv">النساء يتركّزن في <b>الغناء والتمثيل والكتابة والأمومة</b>؛ والرجال يمتدّون من <b>الرئاسة والوزارة والملك ورجال الدين</b> إلى الرياضة والفن. حضورٌ أضيق في عددٍ أقلّ من الأدوار.</div></div>
 </section>
 
+<section>
+  <div class="col rv">
+    <div class="kicker">الكلمات نفسها</div>
+    <h2 class="sec">كلماتٌ للنساء، وكلماتٌ للرجال</h2>
+    <p class="body">حين نرصف أكثر الكلمات تكرارًا في العناوين — كلٌّ ملوّنةٌ بموضوعها — ينكشف عالمان. كلمات <span class="f">النساء</span>: نساء، زوجات، الأمّ، بنات، السيّدة، سينما، ثقافة. وكلمات <span class="m">الرجال</span>: وطن، سياسة، أزمة، تنمية، قمّة، الشرق الأوسط. <b>مرّر فوق أيّ شريط</b> أو ابحث عن كلمة.</p>
+  </div>
+  <div class="barcode rv" style="margin-top:22px">
+    <div class="bc-search"><input id="bcSearch" placeholder="ابحث عن كلمة…"></div>
+    <div class="bc-cols">
+      <div class="bc-col"><h4 style="color:#5f584c">كل العناوين</h4><div class="bc-cap">الأكثر تكرارًا ↓</div><div class="bc-stack" id="bcAll"></div></div>
+      <div class="bc-col"><h4 style="color:#c11e56">عن النساء</h4><div class="bc-cap">الأكثر تكرارًا ↓</div><div class="bc-stack" id="bcWomen"></div></div>
+      <div class="bc-col"><h4 style="color:#2f5488">عن الرجال</h4><div class="bc-cap">الأكثر تكرارًا ↓</div><div class="bc-stack" id="bcMen"></div></div>
+    </div>
+    <div class="themekey" id="themekey"></div>
+  </div>
+  <p class="note">كل شريط كلمة؛ لونه موضوعها الغالب. الترتيب من الأعلى (الأكثر تكرارًا) إلى الأسفل. انقر موضوعًا في المفتاح لعزله.</p>
+</section>
+
 <!-- PART III -->
 <div class="partband"><div class="pn">الجزء الثالث</div><h2>ماذا يُسمح لهم أن يفعلوا؟</h2><p>مَن يصنع الفعل، ومن يقع عليه؟</p></div>
 
@@ -289,6 +346,20 @@
     <div class="s"><div class="n" id="b-sensN"></div><div class="l">إثارة عالية · بلا أشخاص</div></div>
   </div>
   <p class="note" style="color:#8a8272">لا فرق يُذكر في الإثارة بين الجنسين — النتيجة «صفرية» ونذكرها كما هي.</p>
+</section>
+
+<section>
+  <div class="col rv">
+    <div class="kicker">النبرة حسب الباب</div>
+    <h2 class="sec">أين تُقابَل المرأة بدفء، وأين تختفي؟</h2>
+    <p class="body">في كل بابٍ صحفي، ما نسبة النبرة الإيجابية نحو النساء مقابل الرجال؟ الفجوة تتّسع في <span class="f">الترفيه والقضايا النسوية والأسرة</span> — حيث تُقابَل المرأة باحتفاء — وتضيق أو تنعكس في <span class="m">السياسة والتاريخ</span>. النقطة الوردية للنساء، الزرقاء للرجال.</p>
+  </div>
+  <div class="dumb rv" style="margin-top:18px">
+    <div class="dbtoggle"><button id="dbAbs" class="on">النسبة المطلقة</button><button id="dbDiff">الفارق بين الجنسين</button></div>
+    <div id="dumbrows"></div>
+    <div class="legend"><span class="dot" style="background:#e8336d"></span>النساء<span class="dot" style="background:#3f6fae"></span>الرجال</div>
+  </div>
+  <p class="note">نسبة المراجع التي وصفها النموذج بنبرةٍ إيجابية، داخل كل باب. أبوابٌ ذات عيّنة كافية فقط (ن≥٦٠ لكل جنس).</p>
 </section>
 
 <!-- PART V -->
@@ -346,18 +417,28 @@
   </div>
 </section>
 
+<section class="dark">
+  <div class="col rv">
+    <div class="kicker">موجات الموضوعات</div>
+    <h2 class="sec">وماذا يُكتَب عنهنّ، وقد تغيّر؟</h2>
+    <p class="body">هذه هي أبواب العناوين التي تخصّ النساء، تتموّج عبر السنين. يتّسع تيّار <b style="color:#8a5fb0">التمكين والقضايا النسوية</b> و<b style="color:#3e8f86">الثقافة</b>، بينما يبقى <b style="color:#e0703a">العنف</b> حاضرًا. <b>مرّر فوق أيّ موجة</b> لترى عنوانًا حقيقيًا منها.</p>
+  </div>
+  <div class="streamwrap rv" style="margin-top:18px"><svg id="stream" viewBox="0 0 900 340" preserveAspectRatio="none"></svg></div>
+  <div class="themekey" id="streamkey" style="color:#cfc7b8"></div>
+</section>
+
 <footer>
   <div class="col">
     <p style="font-weight:900;color:#f2ede3;font-size:1.15rem;margin:0 0 12px">الخلاصة</p>
     <p>السؤال لم يكن «كم مرّة تظهر النساء؟» بل «حين تُحوِّل الصحافةُ العربية الناسَ إلى عناوين، مَن يصير فردًا، ومَن يصير فئة؟ مَن يُمنح السلطة، ومَن يُعرَّف باستثنائه أو بضعفه؟». على هذه العيّنة، نمطُ الرجل الغالب هو الحضور المستقلّ؛ ونمطُ المرأة يتوزّع على الاستثناء والهشاشة. المرأة حاضرة — بحضورٍ من نوعٍ مختلف.</p>
-    <p style="margin-top:16px;font-weight:800;color:#f2ede3">حدود القراءة وما أُجِّل</p>
-    <p>عيّنة <b id="f-N"></b> عنوانًا من أصل ٢٧١ ألفًا، تكاد تكون كلّها مصرية (٢٠٢٠–٢٠٢٥)، بتصنيفٍ آليٍّ لم يُراجَع بشريًا بعد. طُبِّعت تسميات النموذج الحرّة بعد التصنيف. لم نتمكّن بعد من ثلاثة فصولٍ لغياب البيانات أو ضعفها: <b>الأُطُر</b> (frames) — لم يملأها النموذج؛ و<b>الصوت المباشر/الاقتباس</b> — الحقل نحويٌّ لا تناوليّ؛ و<b>مقارنة الدول</b> — العيّنة أحاديّة البلد فعليًا. هذه هي المرحلة التالية حين تكتمل العيّنة وتتنوّع مصادرها، مع عيّنةٍ ذهبية مصنّفة يدويًا لقياس الدقّة.</p>
-    <p style="margin-top:16px;color:#8a8272">راصِد · محمد عبده · <a href="https://mabdo.org/rasid">mabdo.org/rasid</a> · البيانات والشيفرة: <code>analyze_annotations_visibility.py</code></p>
+    <p style="margin-top:14px;color:#8a8272">عن المنهجية: <b id="f-N" style="color:#cbc4b6"></b> عنوانًا من مقالات الرأي، قرأها نموذجٌ لغوي وصنّف كل شخصٍ فيها. عيّنةٌ أولية ما زالت تكبر؛ التفاصيل الكاملة والشيفرة على <a href="https://mabdo.org/rasid">mabdo.org/rasid</a>.</p>
+    <p style="margin-top:10px;color:#8a8272">راصِد · محمد عبده</p>
   </div>
 </footer>
 
 <script>
-const D = {"N": 20920, "presence": {"none_pct": 45.4, "none_n": 9506, "anyF": [9.1, 8.7, 9.5], "anyF_n": 1903, "anyM": [27.5, 26.9, 28.1], "anyM_n": 5757, "hum": 11414, "hum_pct": 54.6, "femAmongHum": [16.7, 16.0, 17.4], "centralF": [4.0, 3.7, 4.3], "centralF_n": 834, "genderCentralF": [2.7, 2.5, 2.9], "genderCentral_n": 569}, "incl": {"female": {"n": 2044, "named": 659, "generic": 288, "title": 91, "relational": 37, "author": 764, "agent": 1263, "patient": 291, "ev_name": 1330, "ev_generic": 162, "ev_gram": 118, "ev_lex": 434, "kin": 90, "relto": 65, "first": 293, "occ": 1016, "other": 695}, "male": {"n": 6303, "named": 2958, "generic": 171, "title": 229, "relational": 63, "author": 2483, "agent": 4185, "patient": 574, "ev_name": 5127, "ev_generic": 93, "ev_gram": 96, "ev_lex": 987, "kin": 162, "relto": 123, "first": 117, "occ": 4032, "other": 1943}}, "subj": {"female": {"n": 1194, "named": 576, "generic": 288, "title": 90, "relational": 37, "author": 0, "agent": 554, "patient": 290, "ev_name": 525, "ev_generic": 162, "ev_gram": 86, "ev_lex": 421, "kin": 90, "relto": 65, "first": 275, "occ": 386, "other": 553}, "male": {"n": 3467, "named": 2620, "generic": 170, "title": 223, "relational": 63, "author": 0, "agent": 2091, "patient": 562, "ev_name": 2372, "ev_generic": 92, "ev_gram": 57, "ev_lex": 946, "kin": 161, "relto": 122, "first": 99, "occ": 1728, "other": 1205}}, "occ_worlds": {"female": {"culture": 24.4, "other": 33.2, "everyday": 11.4, "authority": 18.4, "expert": 10.4, "religion": 1.8, "activism": 0.3, "sport": 0.3}, "male": {"other": 31.0, "authority": 33.6, "expert": 10.9, "religion": 8.5, "culture": 9.3, "everyday": 2.9, "sport": 3.8, "activism": 0.1}, "female_n": 386, "male_n": 1728, "uniq_female": 169, "uniq_male": 363}, "occ_top": {"female": [["singer", 49], ["doctor", 32], ["actress", 20], ["queen", 20], ["mother", 14], ["politician", 13], ["minister of culture", 8], ["artist", 7], ["princess", 7], ["student", 6], ["teacher", 5], ["women", 5]], "male": [["politician", 231], ["president", 203], ["doctor", 143], ["prophet", 63], ["actor", 57], ["footballer", 49], ["king", 39], ["prime minister", 37], ["sheikh", 36], ["poet", 30], ["religious leader", 23], ["former president", 21]]}, "authority": {"female": [[20.2, 16.5, 24.5], 386], "male": [[42.1, 39.8, 44.5], 1728]}, "names": {"female": {"total": 909, "unique": 409, "top10_share": 31.1, "top": [["إلهام أبو الفتح", 47], ["نجاة عبد الرحمن", 46], ["كريمة أبو العينين", 40], ["هند عصام", 40], ["منال الشرقاوي", 26], ["آيات الحداد", 22], ["نهال علام", 17], ["أم كلثوم", 17], ["منى أحمد", 14], ["نهى زكريا", 14]]}, "male": {"total": 3927, "unique": 1439, "top10_share": 22.9, "top": [["حماد عبدالله", 363], ["أحمد ياسر", 108], ["نتنياهو", 87], ["ترامب", 76], ["أيمن رفعت المحجوب", 63], ["بايدن", 53], ["عادل حمودة", 45], ["صالح إبراهيم", 35], ["كريم خالد عبد العزيز", 34], ["منير أديب", 34]]}}, "focus": {"issue": 4.1, "question": 5.6, "other": 54.2, "statement": 9.8, "institution": 1.3, "person": 4.8, "author_commentary": 16.8, "group": 1.1, "event": 2.2}, "focus_n": {"issue": 864, "question": 1165, "other": 11338, "statement": 2054, "institution": 280, "person": 1003, "author_commentary": 3525, "group": 239, "event": 452}, "tone": {"female": {"neutral": 57.5, "positive": 27.3, "negative": 15.2}, "male": {"neutral": 67.4, "positive": 18.0, "negative": 14.6}}, "tone_n": {"female": 1194, "male": 3467}, "tone_cross": {"female": {"pos_in_neg": 3.2}, "male": {"pos_in_neg": 1.0}}, "exceptional": {"female_pct": 14.3, "female_n": 293, "male_pct": 1.9, "male_n": 117}, "sens": {"low": 83.4, "medium": 14.7, "high": 1.9}, "sens_gender": {"female_only": [[1.5, 1.0, 2.3], 1495], "male_only": [[1.7, 1.4, 2.1], 4874], "none": [[1.6, 1.4, 1.9], 9506]}, "years": [{"y": 2020, "n": 372, "f": [7.8, 5.5, 11.0], "m": [22.3, 18.4, 26.8]}, {"y": 2021, "n": 646, "f": [6.5, 4.8, 8.7], "m": [19.3, 16.5, 22.6]}, {"y": 2022, "n": 3369, "f": [7.2, 6.3, 8.1], "m": [16.7, 15.5, 18.0]}, {"y": 2023, "n": 6478, "f": [9.8, 9.1, 10.5], "m": [24.0, 22.9, 25.0]}, {"y": 2024, "n": 7890, "f": [10.0, 9.4, 10.7], "m": [32.5, 31.5, 33.5]}, {"y": 2025, "n": 2125, "f": [7.6, 6.6, 8.8], "m": [40.4, 38.3, 42.5]}], "countries": [["Egypt", 20632], ["Lebanon", 288]], "funnel": {"total": 20920, "none": 9506, "human": 11414, "named": 4637, "generic_only": 6777}, "visibility": {"female": {"symbolic": 4.4, "autonomous": 21.0, "other": 6.7, "vulnerable": 24.4, "exceptional": 37.5, "relational": 5.9}, "male": {"vulnerable": 16.4, "other": 8.4, "relational": 4.4, "autonomous": 55.4, "exceptional": 13.5, "symbolic": 2.0}}, "visibility_n": {"female": 1194, "male": 3467}, "auto_score": {"female": {"mean": 1.83, "n": 1194, "dist": {"2": 256, "4": 189, "3": 269, "1": 217, "-1": 62, "0": 182, "-2": 17, "-3": 2}}, "male": {"mean": 2.69, "n": 3467, "dist": {"0": 177, "1": 349, "3": 874, "-1": 38, "4": 1181, "2": 841, "-2": 7}}}, "author_effect": {"female_refs_incl": 2044, "female_refs_subj": 1194, "female_author_share": 41.6, "male_refs_incl": 6303, "male_refs_subj": 3467, "male_author_share": 45.0}, "quality": {"needs_review_pct": 1.4, "mean_confidence": 0.932}};
+const D = {"N": 55030, "presence": {"none_pct": 52.6, "none_n": 28919, "anyF": [7.8, 7.5, 8.0], "anyF_n": 4266, "anyM": [22.2, 21.9, 22.6], "anyM_n": 12230, "hum": 26111, "hum_pct": 47.4, "femAmongHum": [16.3, 15.9, 16.8], "centralF": [4.2, 4.0, 4.3], "centralF_n": 2285, "genderCentralF": [3.0, 2.8, 3.1], "genderCentral_n": 1635}, "incl": {"female": {"n": 4609, "named": 2039, "generic": 824, "title": 275, "relational": 107, "author": 856, "agent": 2719, "patient": 669, "ev_name": 2646, "ev_generic": 444, "ev_gram": 270, "ev_lex": 1249, "kin": 351, "relto": 245, "first": 1001, "occ": 2008, "other": 1729}, "male": {"n": 13529, "named": 8568, "generic": 413, "title": 607, "relational": 132, "author": 2983, "agent": 8987, "patient": 1293, "ev_name": 10776, "ev_generic": 224, "ev_gram": 144, "ev_lex": 2385, "kin": 359, "relto": 259, "first": 407, "occ": 8163, "other": 4075}}, "subj": {"female": {"n": 3496, "named": 1787, "generic": 824, "title": 274, "relational": 107, "author": 0, "agent": 1817, "patient": 665, "ev_name": 1584, "ev_generic": 444, "ev_gram": 236, "ev_lex": 1232, "kin": 351, "relto": 245, "first": 927, "occ": 1128, "other": 1518}, "male": {"n": 9322, "named": 7386, "generic": 412, "title": 591, "relational": 132, "author": 0, "agent": 5861, "patient": 1269, "ev_name": 6695, "ev_generic": 223, "ev_gram": 103, "ev_lex": 2301, "kin": 353, "relto": 257, "first": 340, "occ": 4593, "other": 2993}}, "occ_worlds": {"female": {"culture": 23.0, "other": 30.8, "everyday": 10.8, "authority": 20.0, "expert": 10.6, "religion": 2.0, "sport": 2.1, "activism": 0.6}, "male": {"other": 33.5, "authority": 31.3, "expert": 11.5, "religion": 6.1, "culture": 9.7, "everyday": 2.4, "sport": 5.5, "activism": 0.2}, "female_n": 1128, "male_n": 4593, "uniq_female": 357, "uniq_male": 690}, "occ_top": {"female": [["singer", 134], ["doctor", 100], ["queen", 57], ["actress", 51], ["mother", 46], ["minister", 36], ["politician", 35], ["teacher", 18], ["princess", 17], ["artist", 15], ["minister of culture", 15], ["wives", 13]], "male": [["politician", 645], ["president", 491], ["doctor", 374], ["footballer", 195], ["actor", 137], ["prime minister", 112], ["prophet", 111], ["king", 78], ["sheikh", 70], ["religious leader", 67], ["former president", 66], ["journalist", 66]]}, "authority": {"female": [[22.1, 19.8, 24.6], 1128], "male": [[37.3, 36.0, 38.7], 4593]}, "names": {"female": {"total": 2097, "unique": 1085, "top10_share": 15.8, "top": [["أم كلثوم", 56], ["إلهام أبو الفتح", 47], ["نجاة عبد الرحمن", 46], ["كريمة أبو العينين", 40], ["هند عصام", 40], ["منال الشرقاوي", 26], ["آيات الحداد", 22], ["شيرين", 20], ["فيروز", 18], ["نهال علام", 17]]}, "male": {"total": 8920, "unique": 3438, "top10_share": 18.7, "top": [["أكرم القصاص", 376], ["حماد عبدالله", 363], ["نتنياهو", 215], ["ترامب", 192], ["بايدن", 112], ["أحمد ياسر", 108], ["محمد صلاح", 98], ["السيسى", 76], ["أيمن رفعت المحجوب", 63], ["صلاح", 62]]}}, "focus": {"issue": 5.6, "question": 5.2, "other": 58.9, "statement": 10.9, "institution": 1.4, "person": 5.5, "author_commentary": 9.0, "group": 1.2, "event": 2.2}, "focus_n": {"issue": 3101, "question": 2864, "other": 32429, "statement": 6006, "institution": 771, "person": 3032, "author_commentary": 4958, "group": 638, "event": 1231}, "tone": {"female": {"neutral": 61.4, "positive": 27.5, "negative": 11.1}, "male": {"neutral": 70.3, "positive": 17.5, "negative": 12.3}}, "tone_n": {"female": 3496, "male": 9322}, "tone_cross": {"female": {"pos_in_neg": 4.5}, "male": {"pos_in_neg": 2.2}}, "exceptional": {"female_pct": 21.7, "female_n": 1001, "male_pct": 3.0, "male_n": 407}, "sens": {"low": 85.9, "medium": 12.5, "high": 1.6}, "sens_gender": {"female_only": [[1.7, 1.3, 2.2], 3303], "male_only": [[1.6, 1.4, 1.8], 10171], "none": [[1.2, 1.1, 1.4], 28919]}, "years": [{"y": 2018, "n": 5182, "f": [4.5, 3.9, 5.1], "m": [13.8, 12.9, 14.8]}, {"y": 2020, "n": 489, "f": [7.8, 5.7, 10.5], "m": [21.7, 18.3, 25.5]}, {"y": 2021, "n": 6847, "f": [7.8, 7.2, 8.5], "m": [20.9, 19.9, 21.8]}, {"y": 2022, "n": 9949, "f": [7.8, 7.3, 8.3], "m": [19.2, 18.5, 20.0]}, {"y": 2023, "n": 13008, "f": [8.2, 7.8, 8.7], "m": [21.3, 20.6, 22.0]}, {"y": 2024, "n": 15404, "f": [8.7, 8.3, 9.2], "m": [26.5, 25.8, 27.2]}, {"y": 2025, "n": 4094, "f": [6.5, 5.8, 7.3], "m": [29.3, 27.9, 30.7]}], "countries": [["Egypt", 54742], ["Lebanon", 288]], "funnel": {"total": 55030, "none": 28919, "human": 26111, "named": 10595, "generic_only": 15516}, "visibility": {"female": {"symbolic": 4.0, "autonomous": 21.3, "other": 5.0, "vulnerable": 19.2, "exceptional": 41.6, "relational": 8.9}, "male": {"vulnerable": 13.7, "other": 8.1, "relational": 3.8, "autonomous": 59.2, "exceptional": 13.1, "symbolic": 2.0}}, "visibility_n": {"female": 3496, "male": 9322}, "auto_score": {"female": {"mean": 1.92, "n": 3496, "dist": {"2": 775, "4": 620, "3": 788, "1": 633, "-1": 165, "0": 451, "-2": 53, "-3": 10, "-4": 1}}, "male": {"mean": 2.76, "n": 9322, "dist": {"0": 437, "1": 871, "3": 2343, "-1": 93, "4": 3406, "2": 2150, "-2": 19, "-3": 3}}}, "author_effect": {"female_refs_incl": 4609, "female_refs_subj": 3496, "female_author_share": 24.1, "male_refs_incl": 13529, "male_refs_subj": 9322, "male_author_share": 31.1}, "quality": {"needs_review_pct": 2.5, "mean_confidence": 0.924}};
+const F = {"theme_meta": {"politics": ["سياسة", "#3f6fae"], "violence": ["عنف", "#e0703a"], "empower": ["تمكين", "#8a5fb0"], "culture": ["ثقافة", "#3e8f86"], "family": ["أسرة وصحة", "#c99a3b"], "economy": ["اقتصاد", "#4a9d5b"], "religion": ["دين", "#9c6b3f"], "sport": ["رياضة", "#e8336d"], "knowledge": ["معرفة", "#5f7fa8"], "other": ["أخرى", "#9a9284"]}, "barcode": {"all": [["جديدة", 924, "politics"], ["حوار", 565, "politics"], ["حكومة", 513, "politics"], ["تاريخ", 501, "knowledge"], ["تعليم", 499, "knowledge"], ["قمة", 476, "politics"], ["ازمة", 471, "politics"], ["وطني", 466, "politics"], ["مستقبل", 427, "other"], ["كورونا", 412, "family"], ["انسان", 392, "other"], ["تنمية", 386, "other"], ["ثقافة", 385, "culture"], ["انتخابات", 364, "politics"], ["طريق", 346, "other"], ["وطن", 337, "other"], ["سياسة", 331, "politics"], ["امن", 323, "other"], ["رسالة", 305, "other"], ["اقتصاد", 305, "economy"], ["كرة", 297, "sport"], ["قضية", 296, "politics"], ["مصريين", 292, "politics"], ["وعي", 291, "other"], ["مواجهة", 288, "other"], ["قانون", 287, "other"], ["دراما", 279, "culture"], ["كتاب", 270, "culture"], ["سوريا", 268, "politics"], ["صراع", 261, "politics"], ["ثورة", 255, "politics"], ["وطنية", 254, "politics"], ["رسايل", 250, "politics"], ["مواطن", 250, "politics"], ["مجتمع", 250, "empower"], ["صناعة", 249, "other"], ["ذكري", 248, "knowledge"], ["دولية", 245, "other"], ["جمهورية", 241, "politics"], ["شباب", 240, "other"], ["تحديات", 238, "other"], ["ارض", 237, "other"], ["ليس", 229, "other"], ["ارهاب", 225, "other"], ["امريكي", 224, "politics"], ["عمل", 221, "other"], ["بناء", 215, "other"], ["قوة", 215, "politics"], ["سياسي", 213, "politics"], ["انسانية", 206, "other"], ["عالمية", 202, "other"], ["حلم", 199, "other"], ["قدم", 199, "sport"], ["حكاية", 195, "other"], ["سينما", 194, "culture"], ["اوسط", 187, "politics"], ["اخر", 186, "other"], ["سياسية", 186, "politics"], ["حقيقة", 186, "other"], ["ذكاء", 185, "knowledge"], ["اسعار", 184, "economy"], ["مشروع", 183, "other"], ["قراءة", 181, "culture"], ["دور", 181, "politics"], ["ناس", 180, "empower"], ["حكايات", 180, "culture"], ["شخبطة", 177, "other"], ["اقتصادية", 175, "economy"], ["قصة", 175, "other"], ["زيارة", 173, "politics"], ["مناخ", 172, "other"], ["اخري", 170, "other"], ["قلب", 168, "other"], ["دعم", 168, "politics"], ["استثمار", 167, "economy"], ["اصطناعي", 165, "knowledge"], ["نجاح", 165, "other"], ["لبنان", 164, "politics"], ["موتمر", 164, "other"], ["ليست", 163, "other"], ["سنة", 162, "other"], ["الحب", 160, "other"], ["علاقات", 159, "other"], ["غرب", 158, "politics"], ["موت", 157, "other"], ["نهاية", 154, "other"], ["اقتصادي", 154, "economy"], ["اطفال", 154, "other"], ["استراتيجية", 153, "other"], ["الا", 153, "other"], ["قومي", 153, "other"], ["ديمقراطية", 152, "politics"], ["حقوق", 151, "other"], ["هوية", 150, "other"], ["الحل", 149, "politics"], ["ازمات", 149, "politics"], ["معركة", 148, "politics"], ["واقع", 148, "other"], ["تغيير", 147, "politics"], ["رياسية", 143, "politics"], ["نظام", 143, "politics"], ["خارج", 143, "other"], ["اصلاح", 143, "politics"], ["وما", 141, "other"], ["عدالة", 140, "other"], ["رياضة", 140, "sport"], ["وفد", 140, "politics"], ["جميع", 139, "other"], ["عامة", 138, "knowledge"], ["ثانوية", 138, "knowledge"], ["دبلوماسية", 138, "other"], ["جريمة", 137, "violence"], ["روسية", 136, "violence"], ["مهرجان", 135, "culture"], ["بحث", 134, "other"], ["صحافة", 133, "culture"], ["فساد", 133, "politics"], ["مصريون", 132, "other"], ["لغة", 131, "other"], ["خطر", 131, "other"]], "women": [["نساء", 88, "empower"], ["زوجات", 49, "knowledge"], ["امراة", 48, "empower"], ["جديدة", 46, "politics"], ["الام", 45, "family"], ["الست", 37, "culture"], ["بنات", 37, "empower"], ["تاريخ", 32, "culture"], ["كتاب", 28, "culture"], ["رسالة", 27, "politics"], ["ثقافة", 25, "culture"], ["انتخابات", 24, "politics"], ["مستقبل", 23, "other"], ["قمة", 22, "other"], ["سينما", 22, "other"], ["قصة", 22, "other"], ["حكاية", 22, "culture"], ["وداعا", 22, "other"], ["صاحبة", 22, "other"], ["اطفال", 22, "family"], ["ارض", 21, "other"], ["ابنة", 21, "knowledge"], ["مجتمع", 21, "empower"], ["حكومة", 21, "politics"], ["انسان", 20, "other"], ["موت", 20, "other"], ["حلم", 20, "culture"], ["تمكين", 20, "empower"], ["كرة", 20, "sport"], ["قراءة", 20, "culture"], ["خفي", 19, "other"], ["قضية", 19, "politics"], ["وطن", 19, "other"], ["ازمة", 19, "other"], ["دراما", 19, "other"], ["ذكاء", 19, "knowledge"], ["دور", 19, "other"], ["قانون", 19, "other"], ["ذكري", 18, "other"], ["زوجة", 18, "other"], ["انسانية", 18, "other"], ["حقوق", 17, "other"], ["سياسة", 17, "politics"], ["حكايات", 17, "culture"], ["تحت", 17, "other"], ["طبيبة", 17, "family"], ["الحب", 16, "other"], ["عنف", 16, "other"], ["ليست", 16, "culture"], ["اصطناعي", 16, "knowledge"], ["سفيرة", 16, "other"], ["رياضة", 16, "sport"], ["حوار", 15, "politics"], ["عدالة", 15, "other"], ["الفن", 15, "culture"], ["طرف", 15, "other"], ["فتاة", 15, "other"], ["امهات", 15, "other"], ["ثورة", 15, "politics"], ["نجاح", 14, "other"], ["دولية", 14, "other"], ["وطني", 14, "politics"], ["عمل", 14, "empower"], ["رواية", 14, "culture"], ["قدم", 14, "sport"], ["صوت", 14, "culture"], ["صراع", 13, "other"], ["استثمار", 13, "other"], ["قتل", 13, "violence"], ["ابداع", 13, "culture"], ["اقتصادية", 13, "economy"], ["مصريين", 13, "other"], ["جريمة", 13, "violence"], ["نجمة", 13, "culture"], ["صحة", 13, "politics"], ["يكم", 13, "other"], ["جلالة", 13, "other"], ["اجتماعية", 12, "other"], ["لغة", 12, "other"], ["تعليم", 12, "knowledge"], ["اسطورة", 12, "culture"], ["ادب", 12, "culture"], ["اخر", 12, "other"], ["كورونا", 12, "family"], ["فنانة", 12, "culture"], ["اخري", 12, "culture"], ["اغتيال", 12, "politics"], ["اسكندرية", 12, "other"], ["سبت", 12, "culture"], ["سوداء", 12, "knowledge"], ["اتحدث", 12, "other"], ["فكر", 12, "culture"], ["شكرا", 11, "other"], ["فوق", 11, "other"], ["امريكي", 11, "politics"], ["تحديات", 11, "other"], ["اقتصاد", 11, "economy"], ["زيارة", 11, "politics"], ["حماية", 11, "other"], ["حرية", 11, "empower"], ["الا", 11, "other"], ["قلب", 11, "culture"], ["نهاية", 11, "politics"], ["راشدين", 11, "knowledge"], ["خلفاء", 11, "knowledge"], ["امن", 11, "politics"], ["لبنان", 11, "culture"], ["تنمية", 11, "other"], ["صناعة", 11, "other"], ["مدينة", 10, "culture"], ["روسية", 10, "politics"], ["رياسية", 10, "politics"], ["سياسية", 10, "politics"], ["شرطة", 10, "other"], ["شاعر", 10, "culture"], ["سيرة", 10, "culture"], ["وانا", 10, "other"], ["ايام", 10, "other"], ["طريق", 10, "other"], ["وام", 10, "culture"]], "men": [["جديدة", 119, "politics"], ["مستقبل", 109, "politics"], ["تاريخ", 104, "knowledge"], ["رسايل", 103, "politics"], ["ذكري", 101, "culture"], ["حوار", 100, "politics"], ["تعليم", 93, "knowledge"], ["قمة", 87, "politics"], ["ازمة", 86, "politics"], ["تنمية", 84, "other"], ["وطن", 80, "politics"], ["اوسط", 79, "politics"], ["رسالة", 78, "politics"], ["وداعا", 77, "other"], ["انسان", 74, "other"], ["انتخابات", 72, "politics"], ["سياسة", 71, "politics"], ["زيارة", 70, "politics"], ["وطني", 69, "politics"], ["صراع", 68, "politics"], ["حكومة", 68, "politics"], ["طريق", 67, "politics"], ["مواجهة", 64, "politics"], ["اقتصاد", 62, "economy"], ["امريكي", 60, "politics"], ["قضية", 56, "politics"], ["تحديات", 56, "other"], ["قانون", 55, "other"], ["مصريين", 55, "politics"], ["انسانية", 55, "other"], ["ليس", 54, "politics"], ["قلب", 54, "other"], ["سوريا", 52, "politics"], ["بناء", 52, "politics"], ["رحلة", 52, "other"], ["عمل", 51, "other"], ["سينما", 51, "culture"], ["كرة", 51, "sport"], ["ذكاء", 50, "knowledge"], ["كتاب", 50, "culture"], ["وطنية", 50, "politics"], ["كورونا", 48, "family"], ["حكايات", 47, "culture"], ["سياسي", 47, "politics"], ["اصطناعي", 46, "knowledge"], ["عالمية", 45, "other"], ["ارض", 45, "other"], ["حلم", 45, "other"], ["صناعة", 44, "other"], ["دراما", 44, "culture"], ["قصة", 44, "other"], ["مجتمع", 44, "empower"], ["ثقافة", 43, "culture"], ["اقتصادية", 43, "economy"], ["وعي", 43, "other"], ["بطل", 43, "other"], ["دول", 42, "politics"], ["امن", 41, "other"], ["سياسية", 41, "politics"], ["حقيقة", 41, "other"], ["مشروع", 41, "politics"], ["ارهاب", 41, "politics"], ["قوة", 41, "politics"], ["اخر", 40, "other"], ["اخلاق", 40, "religion"], ["غرب", 40, "politics"], ["تعاون", 39, "politics"], ["علاقات", 38, "other"], ["حكاية", 38, "culture"], ["ديمقراطية", 38, "politics"], ["اغتيال", 38, "politics"], ["دولية", 38, "politics"], ["اعمال", 37, "other"], ["قراءة", 37, "other"], ["صاحب", 37, "culture"], ["لبنان", 37, "politics"], ["نهاية", 37, "politics"], ["مناخ", 37, "other"], ["شباب", 36, "other"], ["نار", 36, "other"], ["وما", 35, "culture"], ["عدالة", 35, "politics"], ["نجاح", 34, "other"], ["جميع", 34, "other"], ["وترامب", 34, "politics"], ["ثورة", 34, "knowledge"], ["حروب", 33, "politics"], ["عاما", 33, "other"], ["اقتصادي", 33, "economy"], ["جمهورية", 33, "politics"], ["سفير", 33, "politics"], ["نظام", 33, "politics"], ["استثمار", 32, "economy"], ["فرص", 32, "other"], ["الحب", 32, "culture"], ["فنان", 32, "culture"], ["تحولات", 32, "politics"], ["سنة", 31, "other"], ["خارج", 31, "politics"], ["محبة", 31, "culture"], ["شاعر", 31, "culture"], ["سنوات", 31, "politics"], ["سبت", 31, "culture"], ["ادب", 30, "culture"], ["تغيير", 30, "politics"], ["معركة", 30, "politics"], ["يجب", 30, "politics"], ["اخري", 30, "politics"], ["مصريون", 30, "other"], ["قدم", 30, "sport"], ["اتحدث", 30, "other"], ["شهيد", 29, "politics"], ["جامعات", 29, "knowledge"], ["اكثر", 29, "other"], ["بحث", 29, "other"], ["حديث", 29, "culture"], ["موت", 29, "other"], ["الا", 29, "politics"], ["فلسطيني", 29, "politics"], ["وجه", 29, "politics"]]}, "stream": {"quarters": ["2018Q1", "2018Q2", "2018Q3", "2018Q4", "2019Q2", "2019Q4", "2020Q1", "2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2022Q1", "2022Q2", "2022Q3", "2022Q4", "2023Q1", "2023Q2", "2023Q3", "2023Q4", "2024Q1", "2024Q2", "2024Q3", "2024Q4", "2025Q1", "2025Q2"], "series": {"politics": [19, 5, 10, 11, 0, 0, 4, 4, 0, 4, 18, 11, 12, 9, 16, 32, 28, 16, 14, 35, 26, 45, 35, 57, 60, 57, 42, 0], "violence": [3, 1, 4, 3, 0, 0, 1, 1, 0, 1, 2, 1, 1, 0, 3, 6, 9, 1, 3, 4, 4, 13, 9, 2, 11, 7, 4, 0], "empower": [10, 4, 9, 3, 0, 0, 7, 2, 1, 1, 22, 12, 12, 14, 23, 19, 20, 17, 30, 30, 24, 21, 33, 18, 30, 28, 21, 2], "culture": [10, 12, 13, 17, 3, 0, 4, 6, 1, 2, 40, 18, 30, 39, 30, 44, 45, 39, 45, 68, 71, 78, 95, 81, 74, 77, 62, 1], "family": [3, 2, 7, 9, 1, 0, 1, 2, 0, 3, 16, 8, 6, 10, 14, 2, 12, 13, 22, 17, 12, 8, 17, 6, 4, 16, 11, 0], "economy": [0, 2, 2, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 2, 2, 4, 3, 3, 3, 1, 3, 5, 7, 4, 12, 3, 0], "religion": [1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 4, 7, 1, 1, 0, 6, 11, 4, 3, 4, 4, 3, 4, 3, 4, 5, 4, 0], "sport": [1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 17, 3, 15, 6, 5, 12, 14, 9, 7, 10, 7, 10, 5, 8, 6, 4, 2, 0], "knowledge": [3, 4, 1, 2, 0, 0, 1, 3, 0, 1, 1, 4, 12, 9, 12, 11, 17, 11, 9, 26, 18, 20, 17, 26, 20, 16, 19, 0], "other": [15, 9, 21, 15, 1, 2, 18, 11, 0, 14, 60, 24, 35, 55, 54, 56, 85, 65, 70, 97, 108, 92, 115, 114, 146, 109, 93, 2]}, "examples": {"politics": [{"d": "2023-05", "t": "إلهام أبو الفتح تكتب: في انتظار نتائج القمة العربية"}, {"d": "2023-05", "t": "هالة أمين تكتب: هل يؤثر الإخوان على محاكمة حفيد البنا في سويسرا؟"}, {"d": "2023-07", "t": "منى أحمد تكتب: هل تتغير معادلة الحرب الروسية الأوكرانية؟"}, {"d": "2023-12", "t": "نهال علام تكتب: الانتخابات الرئاسية"}, {"d": "2023-12", "t": "كريمة أبو العينين تكتب: القسام يضرب .. ودويرى يحلل"}, {"d": "2024-03", "t": "إلهام أبو الفتح تكتب: مع السيسي نكمل المشوار"}, {"d": "2024-04", "t": "نادية صبرة تكتب: نتنياهو يبحث عن الفوضى"}, {"d": "2024-05", "t": "ماريان جرجس تكتب: بين العيد والحدود"}], "violence": [{"d": "2023-12", "t": "منى أحمد تكتب: غزة وشبح فيتنام"}, {"d": "2023-07", "t": "اختطاف إسرائيلية فى العراق.. قصة واحدة وروايات متعددة"}, {"d": "2024-03", "t": "ما جريمة هذه الفتاة؟"}, {"d": "2024-07", "t": "مَن الجانى فى واقعة شهد وجنة؟"}, {"d": "2022-05", "t": "شيرين أبو عاقلة.. الشهادة في أرض المعركة.. ليست مجرد رقم!"}, {"d": "2024-03", "t": "نيرة.. القتلة والقصاص المطلوب!"}, {"d": "2024-03", "t": "نيرة ضحية استضعاف الفقراء"}, {"d": "2024-07", "t": "كيف اغتالوا هنية؟!"}], "empower": [{"d": "2023-03", "t": "المرأة الند !"}, {"d": "2024-01", "t": "هند عصام تكتب: انتقام امرأة عاشقة"}, {"d": "2021-01", "t": "المرأة بين مطرقة الأمومة وسندان العمل"}, {"d": "2024-12", "t": "علاء الدماصي يكتب: الأسلحة الفاسدة للمرأة!"}, {"d": "2025-03", "t": "علاء الدماصي يكتب: شيطان المرأة...وملاك حواء"}, {"d": "2023-03", "t": "اليوم العالمى للمرأة و«كسر التحيز»"}, {"d": "2023-10", "t": "جبروت امرأة"}, {"d": "2023-09", "t": "المرأة القوية تصنعها الأزمات"}], "culture": [{"d": "2023-03", "t": "إلهام أبو الفتح تكتب.. رمضان كريم"}, {"d": "2023-05", "t": "منى أحمد تكتب: الساحر يوسف إدريس"}, {"d": "2023-05", "t": "نسرين حجاج تكتب: نادية مصطفى.. يسلملي ذوقهم"}, {"d": "2023-11", "t": "نجاة عبد الرحمن تكتب: مزاعم إسرائيل .. أكاذيب وادعاءات"}, {"d": "2023-11", "t": "منى أحمد تكتب: من باريس إلى الرياض.. مصر تتحدث عن نفسها"}, {"d": "2023-10", "t": "إلهام أبو الفتح تكتب: المذبحة"}, {"d": "2023-10", "t": "إلهام أبو الفتح تكتب: لأجلك يا مدينة الصلاة.. أصلي"}, {"d": "2023-10", "t": "منال خيرت تكتب: مصر ركيزة الاستقرار الكُبرى في المنطقة"}], "family": [{"d": "2020-05", "t": "د. رحاب غزالة تكتب: كورونا تريد"}, {"d": "2020-10", "t": "الداخلية والعاشقات وتربية العيال في البيت!"}, {"d": "2024-03", "t": "الأم المصرية .. الأعظم في العالم"}, {"d": "2023-05", "t": "ماذا أغضب ابنة نجيب محفوظ؟"}, {"d": "2022-09", "t": "قبلة على قدم أمى!"}, {"d": "2022-12", "t": "المرأة.. والأسرة المصرية"}, {"d": "2023-10", "t": "الدكتور جودة.."}, {"d": "2023-09", "t": "تعلمت من أمي كيف تكون الحياة"}], "economy": [{"d": "2023-06", "t": "نهال علام تكتب: قمة الميثاق التمويلي"}, {"d": "2024-04", "t": "إلهام أبو الفتح تكتب: حلم السيطرة على جنون الأسعار"}, {"d": "2024-10", "t": "ماريان جرجس تكتب: بين عرش الدولار والـ 100 بريكس"}, {"d": "2024-12", "t": "نهى زكريا تكتب: الاستثمار آخر حروف الأمان"}, {"d": "2023-12", "t": "د منال خيري تكتب الرئيس السيسي والملفات الاقتصادية الراهنة"}, {"d": "2023-12", "t": "منال خيري تكتب: طوفان الأقصى وتوقعات تباطؤ نمو اقتصاد إسرائيل"}, {"d": "2022-11", "t": "مليونيرة النصف ساعة.. حدث في الإسكندرية!"}, {"d": "2021-02", "t": "سهر الدماطى تكتب: الاستثمار أساس النمو"}], "religion": [{"d": "2023-03", "t": "هالة أمين تكتب: نصيحة كاثوليكية للمسلمين في رمضان"}, {"d": "2024-02", "t": "نسرين حجاج تكتب: ظهرَ المسيح الدجال"}, {"d": "2024-06", "t": "إلهام أبو الفتح تكتب: يارب"}, {"d": "2024-12", "t": "نهال علام تكتب: زوجات النبي (1)"}, {"d": "2022-08", "t": "محمد عبد الجليل يكتب: أي امرأة أنت يا أم إبراهيم.. سيدة من عصر النبوة!"}, {"d": "2022-04", "t": "ما لا يعرفه آدم عن حواء"}, {"d": "2022-07", "t": "تجليات فقه «القفة» لذبح نساء الأمة"}, {"d": "2022-09", "t": "شجرة مريم"}], "sport": [{"d": "2024-12", "t": "الريس حبشى ومنتخب سيدات اليد"}, {"d": "2024-05", "t": "عفوًا ياسمين صبري وريهام حجاج البطولات لا تليق بكما!"}, {"d": "2022-06", "t": "لو كانت صالحة لأنتجت ألف محمد صلاح!"}, {"d": "2021-02", "t": "صلاح ومانى فى الأهلى"}, {"d": "2022-04", "t": "عودة حميدة للدوري المصري تنسينا مرارة إخفاق المونديال"}, {"d": "2021-03", "t": "حنان الزينى ومستقبل الكرة والقانون"}, {"d": "2021-03", "t": "ابنة الإسكندرية وبطولة أوروبا"}, {"d": "2021-02", "t": "على حميدة.. نجاح استثنائي وهزيمة قاتلة"}], "knowledge": [{"d": "2023-10", "t": "كواعب البراهمي تكتب: الذكرى الخمسون لنصر أكتوبر العظيم"}, {"d": "2023-07", "t": "نهال علام تكتب: العالم علمين"}, {"d": "2024-05", "t": "عفاف زهران تكتب: مصر والمنتدى العالمي للتعليم"}, {"d": "2024-11", "t": "هند عصام تكتب: الملك نختنبو الثاني"}, {"d": "2024-06", "t": "إلهام أبوالفتح تكتب: وزير التعليم الجديد.. و«بعبع» الثانوية العامة"}, {"d": "2022-11", "t": "رشا ربيع الجزار تكتب: علاقة الطب بالجغرافيا"}, {"d": "2022-06", "t": "رسالة جامعة المنصورة لـنيرة أشرف: «وأنا مالي يا لمبي»!"}, {"d": "2024-09", "t": "عودة «مازن وفرحة».. من الشارع إلى المدرسة"}], "other": [{"d": "2023-03", "t": "كوني قوية.. حققي ذاتك"}, {"d": "2023-04", "t": "إلهام أبو الفتح تكتب : حوار لمستقبل مصر"}, {"d": "2023-04", "t": "نجاة عبد الرحمن تكتب: شكرا السودان"}, {"d": "2023-04", "t": "إلهام أبو الفتح تكتب.. سلامتك يابيبو"}, {"d": "2023-04", "t": "علا العلمي تكتب.. عوداً حميداً لنفسى !!"}, {"d": "2023-04", "t": "منى أحمد تكتب: السر في التفاصيل"}, {"d": "2023-04", "t": "إلهام أبو الفتح تكتب .. والله لسه بدري"}, {"d": "2023-04", "t": "نجاة عبد الرحمن تكتب: الصراع الأمريكاني على كرسي الرئاسة"}]}}, "dumbbell": [{"t": "entertainment", "f": 45.7, "m": 23.4, "fn": 92, "mn": 197, "diff": 22.3}, {"t": "gender", "f": 37.6, "m": 7.7, "fn": 327, "mn": 78, "diff": 29.9}, {"t": "family", "f": 35.1, "m": 16.2, "fn": 148, "mn": 173, "diff": 18.9}, {"t": "sport", "f": 31.9, "m": 26.8, "fn": 160, "mn": 627, "diff": 5.1}, {"t": "religion", "f": 29.5, "m": 24.4, "fn": 78, "mn": 606, "diff": 5.1}, {"t": "culture", "f": 28.7, "m": 24.2, "fn": 746, "mn": 1422, "diff": 4.5}, {"t": "social", "f": 24.2, "m": 8.3, "fn": 62, "mn": 60, "diff": 15.9}, {"t": "education", "f": 20.9, "m": 11.4, "fn": 86, "mn": 298, "diff": 9.5}, {"t": "media", "f": 17.3, "m": 15.2, "fn": 139, "mn": 297, "diff": 2.1}, {"t": "literature", "f": 17.0, "m": 17.5, "fn": 106, "mn": 383, "diff": -0.5}, {"t": "economy", "f": 14.8, "m": 6.2, "fn": 61, "mn": 288, "diff": 8.6}, {"t": "politics", "f": 14.2, "m": 8.1, "fn": 592, "mn": 4212, "diff": 6.1}, {"t": "health", "f": 13.7, "m": 9.4, "fn": 95, "mn": 224, "diff": 4.3}, {"t": "society", "f": 10.3, "m": 15.5, "fn": 68, "mn": 84, "diff": -5.2}, {"t": "other", "f": 8.1, "m": 4.2, "fn": 297, "mn": 1061, "diff": 3.9}, {"t": "history", "f": 7.5, "m": 10.2, "fn": 173, "mn": 530, "diff": -2.7}, {"t": "opinion", "f": 1.3, "m": 0.9, "fn": 76, "mn": 227, "diff": 0.4}], "topic_ar": {"politics": "سياسة", "culture": "ثقافة", "economy": "اقتصاد", "religion": "دين", "conflict": "صراع", "media": "إعلام", "history": "تاريخ", "education": "تعليم", "sport": "رياضة", "society": "مجتمع", "health": "صحة", "technology": "تقنية", "literature": "أدب", "other": "أخرى", "war": "حرب", "crime_violence": "عنف", "entertainment": "ترفيه", "gender": "قضايا نسوية", "opinion": "رأي", "science": "علوم", "economics": "اقتصاد", "sports": "رياضة", "family": "أسرة", "family_marriage": "أسرة وزواج", "business": "أعمال", "law": "قانون", "environment": "بيئة", "international": "شؤون دولية", "human_rights": "حقوق", "social": "اجتماع"}};
 const ar = n => Number(n).toLocaleString('ar-EG');
 const OCCAR={singer:'مطربة',doctor:'طبيبة',actress:'ممثلة',queen:'ملكة',mother:'أمّ',politician:'سياسية',
   'minister of culture':'وزيرة ثقافة',artist:'فنانة',writer:'كاتبة',author:'كاتبة',president:'رئيس',
@@ -366,6 +447,7 @@ const OCCAR={singer:'مطربة',doctor:'طبيبة',actress:'ممثلة',queen:
   'د.':'د.','المستشار':'مستشار','دكتور':'دكتور','كاتب':'كاتب','كاتبة':'كاتبة'};
 const MODES=[['vulnerable','هشاشة','#c11e56'],['exceptional','استثناء','#e8336d'],['relational','قرابة','#c99a3b'],
   ['symbolic','رمزي','#8a5fb0'],['autonomous','استقلال','#3e8f86'],['other','أخرى','#6b6357']];
+const TM=F.theme_meta;
 const set=(id,v)=>{const e=document.getElementById(id); if(e) e.textContent=v;};
 const ciTxt=w=>`(٪${w[1]}–${w[2]})`;
 
@@ -391,6 +473,7 @@ set('t-authF',D.author_effect.female_author_share); set('t-authM',D.author_effec
 
 // --- reveal + draw ---
 let built={};
+let dbMode='abs';
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in'); draw(e.target);}}),{threshold:.15});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 function animate(c){c.querySelectorAll('[data-w]').forEach(f=>requestAnimationFrame(()=>{f.style.width=f.dataset.w+'%';}));
@@ -417,6 +500,9 @@ function draw(t){
   if(q('#stackF')&&!built.md){built.md=1;buildModes();}
   if(q('#scbar-f')&&!built.sc){built.sc=1;buildScore();}
   if(q('#yearbars')&&!built.yr){built.yr=1;buildYears();}
+  if(q('#bcAll')&&!built.bc){built.bc=1;buildBarcode();}
+  if(q('#dumbrows')&&!built.db){built.db=1;buildDumbbell();}
+  if(q('#stream')&&!built.st){built.st=1;buildStream();}
 }
 function buildFunnel(){
   const c=document.getElementById('funnel'); const F=D.funnel;
@@ -496,6 +582,119 @@ function buildYears(){
     c.appendChild(pairBar(yl,`ن=${ar(y.n)}`,y.f[0],y.m[0],max));
   });
   animate(c);
+}
+// ---------- barcode ----------
+let bcHiddenThemes={};
+function buildBarcode(){
+  const key=document.getElementById('themekey');
+  Object.keys(TM).forEach(t=>{const [lab,col]=TM[t];
+    const s=document.createElement('span'); s.dataset.t=t;
+    s.innerHTML=`<i style="background:${col}"></i>${lab}`;
+    s.onclick=()=>{bcHiddenThemes[t]=!bcHiddenThemes[t]; s.classList.toggle('off'); applyBarcodeFilter();};
+    key.appendChild(s);});
+  const tip=document.createElement('div'); tip.className='bc-tip'; document.body.appendChild(tip);
+  const cols={all:'bcAll',women:'bcWomen',men:'bcMen'};
+  const maxByCol={}; Object.keys(cols).forEach(c=>maxByCol[c]=F.barcode[c][0][1]);
+  Object.keys(cols).forEach(c=>{
+    const host=document.getElementById(cols[c]);
+    F.barcode[c].forEach(([w,cnt,th])=>{
+      const b=document.createElement('div'); b.className='bc-w'; b.dataset.w=w; b.dataset.t=th;
+      b.style.background=(TM[th]||TM.other)[1];
+      b.onmouseenter=e=>{tip.style.opacity=1; tip.textContent=`${w} · ${ar(cnt)} · ${(TM[th]||TM.other)[0]}`;
+        document.querySelectorAll('.bc-w[data-w="'+CSS.escape(w)+'"]').forEach(x=>x.classList.add('hi'));};
+      b.onmousemove=e=>{tip.style.left=(e.clientX+12)+'px'; tip.style.top=(e.clientY-10)+'px';};
+      b.onmouseleave=()=>{tip.style.opacity=0; document.querySelectorAll('.bc-w.hi').forEach(x=>x.classList.remove('hi'));};
+      host.appendChild(b);
+    });
+  });
+  const inp=document.getElementById('bcSearch');
+  inp.oninput=applyBarcodeFilter;
+}
+function applyBarcodeFilter(){
+  const q=document.getElementById('bcSearch').value.trim();
+  document.querySelectorAll('.bc-w').forEach(b=>{
+    const themeOff=bcHiddenThemes[b.dataset.t];
+    const noMatch=q && !b.dataset.w.includes(q);
+    b.classList.toggle('dim', themeOff||noMatch);
+  });
+}
+// ---------- dumbbell ----------
+function buildDumbbell(){
+  document.getElementById('dbAbs').onclick=()=>{dbMode='abs';toggleDb();drawDumbbell();};
+  document.getElementById('dbDiff').onclick=()=>{dbMode='diff';toggleDb();drawDumbbell();};
+  drawDumbbell();
+}
+function toggleDb(){document.getElementById('dbAbs').classList.toggle('on',dbMode==='abs');
+  document.getElementById('dbDiff').classList.toggle('on',dbMode==='diff');}
+function drawDumbbell(){
+  const host=document.getElementById('dumbrows'); host.innerHTML='';
+  const TA=F.topic_ar;
+  let rows=F.dumbbell.slice();
+  if(dbMode==='diff') rows.sort((a,b)=>b.diff-a.diff); else rows.sort((a,b)=>b.f-a.f);
+  const maxAbs=Math.max(...rows.map(r=>Math.max(r.f,r.m)));
+  const maxDiff=Math.max(...rows.map(r=>Math.abs(r.diff)));
+  rows.forEach(r=>{
+    const row=document.createElement('div'); row.className='dbrow';
+    const track=document.createElement('div'); track.className='dbtrack';
+    if(dbMode==='abs'){
+      const fp=100*r.f/maxAbs, mp=100*r.m/maxAbs, lo=Math.min(fp,mp), hi=Math.max(fp,mp);
+      track.innerHTML=`<div class="dbline" style="right:${lo}%;width:${hi-lo}%"></div>
+        <div class="dbdot m" style="right:${mp}%"></div><div class="dbdot f" style="right:${fp}%"></div>`;
+      row.innerHTML=`<div class="dl">${TA[r.t]||r.t}</div>`; row.appendChild(track);
+      const v=document.createElement('div'); v.className='dv'; v.innerHTML=`<span style="color:#c11e56">${r.f}٪</span>`; row.appendChild(v);
+    } else {
+      const w=100*Math.abs(r.diff)/maxDiff; const pos=r.diff>=0;
+      track.innerHTML=`<div class="dbline" style="right:0;width:${w}%;background:${pos?'#e8336d':'#3f6fae'}"></div>
+        <div class="dbdot ${pos?'f':'m'}" style="right:${w}%"></div>`;
+      row.innerHTML=`<div class="dl">${TA[r.t]||r.t}</div>`; row.appendChild(track);
+      const v=document.createElement('div'); v.className='dv'; v.textContent=(pos?'+':'')+r.diff+'٪'; row.appendChild(v);
+    }
+    host.appendChild(row);
+  });
+}
+// ---------- streamgraph ----------
+function buildStream(){
+  const svg=document.getElementById('stream'); const W=900,H=340,PAD=8;
+  const S=F.stream; const qs=S.quarters; const order=['violence','politics','economy','knowledge','religion','sport','family','culture','empower'];
+  const themes=order.filter(t=>S.series[t]&&S.series[t].some(v=>v>0));
+  const n=qs.length;
+  const totals=qs.map((_,i)=>themes.reduce((s,t)=>s+(S.series[t][i]||0),0));
+  const maxTot=Math.max(...totals,1);
+  const x=i=> PAD + i*(W-2*PAD)/(n-1);
+  const yScale=(H-2*PAD)/maxTot;
+  // stacked with centering (streamgraph wiggle-lite: center baseline)
+  const base=qs.map((_,i)=> (H/2) + (totals[i]*yScale)/2 );
+  const key=document.getElementById('streamkey');
+  const tip=document.createElement('div'); tip.className='stream-tip'; document.body.appendChild(tip);
+  let acc=qs.map(()=>0);
+  const NS='http://www.w3.org/2000/svg';
+  themes.forEach(t=>{
+    const top=qs.map((_,i)=> base[i] - (acc[i]+ (S.series[t][i]||0))*yScale );
+    const bot=qs.map((_,i)=> base[i] - acc[i]*yScale );
+    let dTop=top.map((y,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y.toFixed(1)}`).join(' ');
+    let dBot=bot.map((y,i)=>`L${x(i).toFixed(1)},${y.toFixed(1)}`).reverse().join(' ');
+    const path=document.createElementNS(NS,'path');
+    path.setAttribute('d', dTop+' '+dBot+' Z');
+    path.setAttribute('fill',(TM[t]||TM.other)[1]); path.setAttribute('opacity','.9');
+    path.style.transition='opacity .2s'; path.style.cursor='pointer';
+    const exs=(S.examples[t]||[]);
+    path.onmouseenter=()=>{path.setAttribute('opacity','1'); themes.forEach(()=>{});
+      document.querySelectorAll('#stream path').forEach(p=>{if(p!==path)p.setAttribute('opacity','.35');});};
+    path.onmousemove=e=>{tip.style.opacity=1; tip.style.left=(e.clientX+14)+'px'; tip.style.top=(e.clientY-10)+'px';
+      const ex=exs.length?exs[Math.floor((e.clientX)/40)%exs.length]:null;
+      tip.style.borderInlineStartColor=(TM[t]||TM.other)[1];
+      tip.innerHTML=`<b style="color:${(TM[t]||TM.other)[1]}">${(TM[t]||TM.other)[0]}</b>`+(ex?`<span class="sh"><br>«${ex.t}»</span><span class="sd">${ex.d}</span>`:'');};
+    path.onmouseleave=()=>{tip.style.opacity=0; document.querySelectorAll('#stream path').forEach(p=>p.setAttribute('opacity','.9'));};
+    svg.appendChild(path);
+    acc=qs.map((_,i)=> acc[i] + (S.series[t][i]||0));
+  });
+  // year ticks
+  const seen={};
+  qs.forEach((q,i)=>{const y=q.slice(0,4); if(seen[y])return; seen[y]=1;
+    const tx=document.createElementNS(NS,'text'); tx.setAttribute('x',x(i)); tx.setAttribute('y',H-2);
+    tx.setAttribute('fill','#8a8272'); tx.setAttribute('font-size','11'); tx.setAttribute('font-family','Cairo,sans-serif');
+    tx.setAttribute('text-anchor','middle'); tx.textContent=y.replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]); svg.appendChild(tx);});
+  themes.forEach(t=>{const s=document.createElement('span'); s.innerHTML=`<i style="background:${(TM[t]||TM.other)[1]}"></i>${(TM[t]||TM.other)[0]}`; key.appendChild(s);});
 }
 // hero particles
 (function(){const cv=document.getElementById('heroCanvas'); if(!cv)return; const ctx=cv.getContext('2d');
