@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 13 Interactive Revision Worksheet</title>
+<style>
+  :root{
+    --navy:#23395d;
+    --blue:#486a9b;
+    --light:#f4f7fb;
+    --card:#ffffff;
+    --border:#d8e0ea;
+    --green:#2f6f4e;
+    --red:#a23b3b;
+    --gold:#b17a16;
+    --text:#1f2937;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--light);
+    color:var(--text);
+    font-family:Arial, Helvetica, sans-serif;
+    line-height:1.6;
+  }
+  .page{
+    max-width:1100px;
+    margin:0 auto;
+    padding:24px;
+  }
+  .hero{
+    background:linear-gradient(135deg,var(--navy),var(--blue));
+    color:white;
+    padding:34px 28px;
+    border-radius:20px;
+    box-shadow:0 10px 26px rgba(35,57,93,.18);
+  }
+  .hero h1{margin:0;font-size:34px}
+  .hero .ar{
+    font-family:"Times New Roman", Times, serif;
+    font-size:28px;
+    margin-top:8px;
+  }
+  .meta{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+  }
+  .meta input{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid rgba(255,255,255,.55);
+    border-radius:10px;
+    background:rgba(255,255,255,.12);
+    color:white;
+    font-size:15px;
+  }
+  .meta input::placeholder{color:#eef3fa}
+  .notice{
+    margin-top:20px;
+    background:#fff8e8;
+    border-left:6px solid var(--gold);
+    padding:16px 18px;
+    border-radius:12px;
+  }
+  .section{
+    margin-top:24px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 4px 16px rgba(31,41,55,.06);
+  }
+  .section-title{
+    background:#eaf0f8;
+    color:var(--navy);
+    padding:18px 22px;
+    font-size:24px;
+    font-weight:700;
+  }
+  .section-body{padding:22px}
+  .activity{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:18px;
+    background:#fcfdff;
+  }
+  .activity h3{
+    margin:0 0 8px;
+    color:#314f7b;
+    font-size:20px;
+  }
+  .instructions{
+    margin:0 0 14px;
+    color:#4b5563;
+  }
+  .q{
+    padding:14px 0;
+    border-bottom:1px solid #edf1f5;
+  }
+  .q:last-child{border-bottom:none}
+  .q p{margin:0 0 10px}
+  .ar{
+    direction:rtl;
+    text-align:right;
+    font-family:"Times New Roman", Times, serif;
+    font-size:21px;
+    line-height:1.9;
+  }
+  .options{
+    display:grid;
+    gap:8px;
+  }
+  label.option{
+    display:block;
+    padding:9px 11px;
+    border:1px solid #dce3ec;
+    border-radius:10px;
+    cursor:pointer;
+    background:white;
+  }
+  label.option:hover{background:#f3f6fa}
+  .wordbank{
+    direction:rtl;
+    text-align:center;
+    font-family:"Times New Roman", Times, serif;
+    font-size:21px;
+    line-height:2.1;
+    background:#f8fafc;
+    border:1px dashed #aebdce;
+    border-radius:12px;
+    padding:12px;
+    margin:12px 0 16px;
+  }
+  select, input[type="text"], textarea{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    font-size:16px;
+    background:white;
+  }
+  select.ar, input.ar, textarea.ar{font-size:20px}
+  textarea{min-height:90px;resize:vertical}
+  .inline-select{
+    width:auto;
+    min-width:160px;
+    display:inline-block;
+    margin:0 5px;
+    vertical-align:middle;
+  }
+  .passage{
+    background:#fbfcfe;
+    border-left:5px solid #6d86aa;
+    padding:16px;
+    border-radius:12px;
+    margin-top:12px;
+  }
+  .feedback{
+    margin-top:8px;
+    font-size:14px;
+    min-height:20px;
+    font-weight:700;
+  }
+  .correct{color:var(--green)}
+  .incorrect{color:var(--red)}
+  .toolbar{
+    position:sticky;
+    bottom:0;
+    z-index:10;
+    margin-top:24px;
+    background:rgba(255,255,255,.96);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:14px;
+    box-shadow:0 -6px 20px rgba(31,41,55,.08);
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .btns{display:flex;flex-wrap:wrap;gap:10px}
+  button{
+    border:none;
+    border-radius:10px;
+    padding:11px 16px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:700;
+  }
+  .primary{background:var(--navy);color:white}
+  .secondary{background:#e8edf4;color:var(--navy)}
+  .danger{background:#f7e5e5;color:#8a2f2f}
+  .score{
+    font-size:16px;
+    font-weight:700;
+    color:var(--navy);
+  }
+  .hidden{display:none}
+  .answer-key{
+    margin-top:16px;
+    background:#eef8f2;
+    border:1px solid #bdd9c8;
+    border-radius:12px;
+    padding:15px;
+  }
+  .small{font-size:13px;color:#6b7280}
+  @media(max-width:720px){
+    .meta{grid-template-columns:1fr}
+    .hero h1{font-size:28px}
+    .page{padding:12px}
+    .inline-select{width:100%;margin:6px 0}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hero">
+    <h1>Unit 13 Interactive Revision Worksheet</h1>
+    <div class="ar">مراجعة تفاعلية للدرس الثالث عشر</div>
+    <div class="meta">
+      <input id="studentName" type="text" placeholder="Student name">
+      <input id="dateField" type="text" placeholder="Date">
+    </div>
+  </header>
+
+  <div class="notice">
+    Complete the full worksheet before pressing <strong>Check Objective Answers</strong>. Open-ended answers are not automatically graded.
+  </div>
+
+  <section class="section">
+    <div class="section-title">Part One: Vocabulary in Context</div>
+    <div class="section-body">
+
+      <div class="activity" id="mcqSection">
+        <h3>Activity 1: Vocabulary Multiple Choice</h3>
+        <p class="instructions">Choose the word or expression that best fits the context.</p>
+
+        <div class="q" data-answer="أخيراً">
+          <p class="ar">1. ظللت أبحث عن مفاتيحي أكثر من ساعة، ووجدتها __________ تحت المقعد في سيارتي.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q1" value="أمام"> أمام</label>
+            <label class="option"><input type="radio" name="q1" value="أخيراً"> أخيراً</label>
+            <label class="option"><input type="radio" name="q1" value="كذلك"> كذلك</label>
+            <label class="option"><input type="radio" name="q1" value="ما زال"> ما زال</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="q" data-answer="أمام">
+          <p class="ar">2. وقف الطلاب __________ مكتب الأستاذ ينتظرون بداية الاجتماع.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q2" value="أمام"> أمام</label>
+            <label class="option"><input type="radio" name="q2" value="أخيراً"> أخيراً</label>
+            <label class="option"><input type="radio" name="q2" value="كذلك"> كذلك</label>
+            <label class="option"><input type="radio" name="q2" value="الغربة"> الغربة</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="q" data-answer="حلم">
+          <p class="ar">3. منذ طفولتها، كان __________ سارة أن تصبح طبيبة تساعد الأطفال.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q3" value="مسرح"> مسرح</label>
+            <label class="option"><input type="radio" name="q3" value="حلم"> حلم</label>
+            <label class="option"><input type="radio" name="q3" value="فصل"> فصل</label>
+            <label class="option"><input type="radio" name="q3" value="مقالة"> مقالة</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="q" data-answer="رجع">
+          <p class="ar">4. بعد انتهاء العطلة، __________ الطالب إلى الجامعة وبدأ فصلاً دراسياً جديداً.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q4" value="وجد"> وجد</label>
+            <label class="option"><input type="radio" name="q4" value="رجع"> رجع</label>
+            <label class="option"><input type="radio" name="q4" value="فشل"> فشل</label>
+            <label class="option"><input type="radio" name="q4" value="استقرّ"> استقرّ</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="q" data-answer="المسرح">
+          <p class="ar">5. كان خالد يحب التمثيل، ولذلك اشترك في نشاط __________ في الجامعة.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q5" value="المسرح"> المسرح</label>
+            <label class="option"><input type="radio" name="q5" value="المجلّة"> المجلّة</label>
+            <label class="option"><input type="radio" name="q5" value="الوظيفة"> الوظيفة</label>
+            <label class="option"><input type="radio" name="q5" value="الفرصة"> الفرصة</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="q" data-answer="شجّعه">
+          <p class="ar">6. عندما شعر الطالب بالإحباط، __________ أستاذه على الاستمرار وعدم الاستسلام.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q6" value="فصله"> فصله</label>
+            <label class="option"><input type="radio" name="q6" value="شجّعه"> شجّعه</label>
+            <label class="option"><input type="radio" name="q6" value="وجده"> وجده</label>
+            <label class="option"><input type="radio" name="q6" value="أنهاه"> أنهاه</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="q" data-answer="الغربة">
+          <p class="ar">7. يعيش سامر بعيداً عن عائلته منذ خمس سنوات، ولذلك يشعر أحياناً بـ__________.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q7" value="الفرصة"> الفرصة</label>
+            <label class="option"><input type="radio" name="q7" value="الغربة"> الغربة</label>
+            <label class="option"><input type="radio" name="q7" value="المقالة"> المقالة</label>
+            <label class="option"><input type="radio" name="q7" value="الوظيفة"> الوظيفة</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="q" data-answer="فرصة">
+          <p class="ar">8. توجد دورة مجانية هذا الصيف، وهي __________ جيدة لممارسة اللغة العربية.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q8" value="مقالة"> مقالة</label>
+            <label class="option"><input type="radio" name="q8" value="وظيفة"> وظيفة</label>
+            <label class="option"><input type="radio" name="q8" value="فرصة"> فرصة</label>
+            <label class="option"><input type="radio" name="q8" value="مجلّة"> مجلّة</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="q" data-answer="فشل">
+          <p class="ar">9. كان الامتحان صعباً جداً، ولذلك __________ بعض الطلاب في اجتيازه.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q9" value="استقرّ"> استقرّ</label>
+            <label class="option"><input type="radio" name="q9" value="فشل"> فشل</label>
+            <label class="option"><input type="radio" name="q9" value="رجع"> رجع</label>
+            <label class="option"><input type="radio" name="q9" value="رغب"> رغب</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="q" data-answer="يستقرّ">
+          <p class="ar">10. بعد أن عاش في مدن كثيرة، قرر أن __________ في مدينة قريبة من عائلته.</p>
+          <div class="options ar">
+            <label class="option"><input type="radio" name="q10" value="ينتهي"> ينتهي</label>
+            <label class="option"><input type="radio" name="q10" value="يستقرّ"> يستقرّ</label>
+            <label class="option"><input type="radio" name="q10" value="يفصل"> يفصل</label>
+            <label class="option"><input type="radio" name="q10" value="يشجّع"> يشجّع</label>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+
+      <div class="activity" id="passageVocab">
+        <h3>Activity 2: Passage Completion</h3>
+        <p class="instructions">Use each word once. Select the best answer from the dropdown.</p>
+        <div class="wordbank">مجلّة — رغب — ما زال — ظنّ أنَّ — يعني — فرصة سعيدة — فُصِل — فكّر — مقالة — مناسب لـ</div>
+
+        <div class="passage ar">
+          كان عمر يدرس الإعلام في الجامعة، وكان
+          <select class="inline-select ar blank" data-answer="يرغب">
+            <option value="">اختر</option>
+            <option>يرغب</option><option>فكّر</option><option>مناسب لـ</option><option>ما زال</option>
+          </select>
+          في العمل صحفياً بعد التخرج. في سنته الأخيرة، قرأ
+          <select class="inline-select ar blank" data-answer="مقالة">
+            <option value="">اختر</option>
+            <option>مجلّة</option><option>مقالة</option><option>وظيفة</option><option>فرصة</option>
+          </select>
+          عن فرص العمل في الصحافة الرقمية. كانت المقالة منشورة في
+          <select class="inline-select ar blank" data-answer="مجلّة">
+            <option value="">اختر</option>
+            <option>مقالة</option><option>مجلّة</option><option>مسرح</option><option>وظيفة</option>
+          </select>
+          علمية تهتم بالإعلام الحديث.
+          <br><br>
+          بعد التخرج،
+          <select class="inline-select ar blank" data-answer="فكّر">
+            <option value="">اختر</option>
+            <option>فكّر</option><option>فُصِل</option><option>ما زال</option><option>يعني</option>
+          </select>
+          عمر في التقديم إلى مؤسسة إعلامية كبيرة. وقد
+          <select class="inline-select ar blank" data-answer="ظنّ أنَّ">
+            <option value="">اختر</option>
+            <option>ظنّ أنَّ</option><option>قال إنّ</option><option>رغب</option><option>يعني</option>
+          </select>
+          العمل في تلك المؤسسة
+          <select class="inline-select ar blank" data-answer="مناسباً له">
+            <option value="">اختر</option>
+            <option>مناسباً له</option><option>أمامَه</option><option>مقالةً له</option><option>غربةً له</option>
+          </select>
+          لأن الوظيفة كانت تحتاج إلى خبرة لم تكن لديه بعد.
+          <br><br>
+          مع ذلك، قدم طلباً وأجرى مقابلة. سأله المدير: «ماذا
+          <select class="inline-select ar blank" data-answer="يعني">
+            <option value="">اختر</option>
+            <option>يعني</option><option>ينتهي</option><option>يجد</option><option>يفشل</option>
+          </select>
+          النجاح بالنسبة إليك؟»
+          <br><br>
+          وعرف بعد ذلك أن الموظف السابق قد
+          <select class="inline-select ar blank" data-answer="فُصِل">
+            <option value="">اختر</option>
+            <option>فُصِل</option><option>استقرّ</option><option>رجع</option><option>شجّع</option>
+          </select>
+          من عمله بسبب عدم الالتزام. ومع أن عمر لم يُقبل، فإنه
+          <select class="inline-select ar blank" data-answer="ما زال">
+            <option value="">اختر</option>
+            <option>ما زال</option><option>أخيراً</option><option>كذلك</option><option>أمام</option>
+          </select>
+          يبحث عن فرصة أخرى.
+          <br><br>
+          في نهاية المقابلة، صافح المدير وقال له:
+          «<select class="inline-select ar blank" data-answer="فرصة سعيدة">
+            <option value="">اختر</option>
+            <option>فرصة سعيدة</option><option>ما زال</option><option>أخيراً</option><option>مناسب لك</option>
+          </select>».
+        </div>
+      </div>
+
+      <div class="activity">
+        <h3>Activity 3: Remaining Vocabulary in Context</h3>
+        <p class="instructions">Complete the passage using the remaining vocabulary. Use each item once.</p>
+        <div class="wordbank">ألّا — كذلك — انتهى — وجد — لم أجد — وظيفة</div>
+        <div class="passage ar">
+          بعد أن
+          <select class="inline-select ar blank" data-answer="انتهى">
+            <option value="">اختر</option><option>انتهى</option><option>وجد</option><option>رجع</option>
+          </select>
+          سامر من دراسته، بدأ يبحث عن
+          <select class="inline-select ar blank" data-answer="وظيفة">
+            <option value="">اختر</option><option>وظيفة</option><option>مجلّة</option><option>مسرح</option>
+          </select>
+          مناسبة. بحث في مواقع كثيرة، لكنه قال:
+          «<select class="inline-select ar blank" data-answer="لم أجد">
+            <option value="">اختر</option><option>لم أجد</option><option>ما زلت</option><option>وجدت</option>
+          </select>
+          شيئاً يناسب خبرتي حتى الآن».
+          نصحه صديقه
+          <select class="inline-select ar blank" data-answer="كذلك">
+            <option value="">اختر</option><option>كذلك</option><option>أمام</option><option>أخيراً</option>
+          </select>
+          أن يرسل طلبات إلى المدارس. وبعد أسبوعين،
+          <select class="inline-select ar blank" data-answer="وجد">
+            <option value="">اختر</option><option>وجد</option><option>فشل</option><option>فصل</option>
+          </select>
+          فرصة جيدة، وقرر
+          <select class="inline-select ar blank" data-answer="ألّا">
+            <option value="">اختر</option><option>ألّا</option><option>أنَّ</option><option>إنّ</option>
+          </select>
+          يتوقف عن المحاولة.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Part Two: Verb Conjugation in a Passage</div>
+    <div class="section-body">
+      <div class="activity">
+        <h3>Activity 4: Conjugate the Verbs</h3>
+        <p class="instructions">Type the correct form of each verb according to the subject and context.</p>
+        <div class="passage ar">
+          بعد أن <input class="inline-select ar text-answer" data-answer="أنهى" type="text"> سامي دراسته الجامعية، بدأ يفكر في مستقبله.
+          كان <input class="inline-select ar text-answer" data-answer="يرغب" type="text"> أن يعمل في مجال التعليم، لكنه لم
+          <input class="inline-select ar text-answer" data-answer="يجد" type="text"> وظيفة مناسبة بسرعة.
+          <br><br>
+          قال له أستاذه: «لا <input class="inline-select ar text-answer" data-answer="تتوقف" type="text"> عن البحث، وحاول أن
+          <input class="inline-select ar text-answer" data-answer="تكتسب" type="text"> خبرة جديدة».
+          لذلك قرر سامي أن <input class="inline-select ar text-answer" data-answer="يبقى" type="text"> في المدينة عدة أشهر أخرى.
+          <br><br>
+          كل صباح، كان <input class="inline-select ar text-answer" data-answer="يقرأ" type="text"> إعلانات الوظائف، ثم
+          <input class="inline-select ar text-answer" data-answer="يرسل" type="text"> طلبات إلى المدارس والجامعات.
+          بعد شهرين، <input class="inline-select ar text-answer" data-answer="تلقّى" type="text"> رسالة من إحدى الجامعات.
+          قال سامي لنفسه: «لن <input class="inline-select ar text-answer" data-answer="أضيّع" type="text"> هذه الفرصة».
+          وفي يوم المقابلة، <input class="inline-select ar text-answer" data-answer="وصل" type="text"> مبكراً و
+          <input class="inline-select ar text-answer" data-answer="وقف" type="text"> أمام مكتب المدير.
+        </div>
+        <div class="feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Part Three: أنْ، أنَّ، وقال إنّ</div>
+    <div class="section-body">
+
+      <div class="activity">
+        <h3>Activity 5: Choose the Correct Particle</h3>
+        <p class="instructions">Use إنّ only after قال in this worksheet.</p>
+        <div class="q ar">1. أرغب <select class="inline-select ar blank" data-answer="أنْ"><option value="">اختر</option><option>أنْ</option><option>أنَّ</option><option>إنّ</option></select> أعملَ في مجال الصحافة.</div>
+        <div class="q ar">2. ظنّ الطالب <select class="inline-select ar blank" data-answer="أنَّ"><option value="">اختر</option><option>أنْ</option><option>أنَّ</option><option>إنّ</option></select> المقابلةَ ستكون قصيرة.</div>
+        <div class="q ar">3. قال المدير <select class="inline-select ar blank" data-answer="إنّ"><option value="">اختر</option><option>أنْ</option><option>أنَّ</option><option>إنّ</option></select> الوظيفةَ تحتاج إلى خبرة.</div>
+        <div class="q ar">4. قررت مريم <select class="inline-select ar blank" data-answer="أنْ"><option value="">اختر</option><option>أنْ</option><option>أنَّ</option><option>إنّ</option></select> تعودَ إلى بلدها بعد التخرج.</div>
+        <div class="q ar">5. عرف سامي <select class="inline-select ar blank" data-answer="أنَّ"><option value="">اختر</option><option>أنْ</option><option>أنَّ</option><option>إنّ</option></select> الغربةَ ليست سهلة.</div>
+        <div class="q ar">6. قال أبي <select class="inline-select ar blank" data-answer="إنّ"><option value="">اختر</option><option>أنْ</option><option>أنَّ</option><option>إنّ</option></select> الاستقرارَ يحتاج إلى وقت.</div>
+        <div class="q ar">7. أريد <select class="inline-select ar blank" data-answer="أنْ"><option value="">اختر</option><option>أنْ</option><option>أنَّ</option><option>إنّ</option></select> أقدّمَ طلباً إلى الجامعة.</div>
+        <div class="q ar">8. اعتقدت <select class="inline-select ar blank" data-answer="أنَّ"><option value="">اختر</option><option>أنْ</option><option>أنَّ</option><option>إنّ</option></select> هذه المجلةَ تنشر مقالات علمية.</div>
+        <div class="q ar">9. قال صديقي <select class="inline-select ar blank" data-answer="إنّ"><option value="">اختر</option><option>أنْ</option><option>أنَّ</option><option>إنّ</option></select>ه ما زال يبحث عن وظيفة.</div>
+        <div class="q ar">10. قررت <select class="inline-select ar blank" data-answer="ألّا"><option value="">اختر</option><option>ألّا</option><option>أنَّ</option><option>إنّ</option></select> أتركَ دراستي.</div>
+      </div>
+
+      <div class="activity">
+        <h3>Activity 6: Rewrite and Combine</h3>
+        <p class="instructions">These answers are saved but not automatically graded.</p>
+        <div class="q">
+          <p class="ar">1. أريد شيئاً. أعمل في مجلّة علمية. استخدم: أنْ</p>
+          <textarea class="ar"></textarea>
+        </div>
+        <div class="q">
+          <p class="ar">2. ظنّ أحمد شيئاً. الوظيفة مناسبة له. استخدم: أنَّ</p>
+          <textarea class="ar"></textarea>
+        </div>
+        <div class="q">
+          <p class="ar">3. قال المدير شيئاً. المقابلة ستبدأ في العاشرة. استخدم: إنّ</p>
+          <textarea class="ar"></textarea>
+        </div>
+        <div class="q">
+          <p class="ar">4. قررت مريم شيئاً. لا تترك الجامعة. استخدم: ألّا</p>
+          <textarea class="ar"></textarea>
+        </div>
+        <div class="q">
+          <p class="ar">5. عرف الطالب شيئاً. الحصول على وظيفة يحتاج إلى صبر. استخدم: أنَّ</p>
+          <textarea class="ar"></textarea>
+        </div>
+      </div>
+
+      <div class="activity">
+        <h3>Activity 7: Error Correction</h3>
+        <p class="instructions">Rewrite each sentence correctly.</p>
+        <div class="q"><p class="ar">1. أريد أنَّ أجدُ وظيفة مناسبة.</p><textarea class="ar"></textarea></div>
+        <div class="q"><p class="ar">2. ظننت أنْ المقابلة ستكون سهلة.</p><textarea class="ar"></textarea></div>
+        <div class="q"><p class="ar">3. قال الأستاذ أنَّ الامتحان غداً.</p><textarea class="ar"></textarea></div>
+        <div class="q"><p class="ar">4. قررت أن لا أرجعُ هذا الأسبوع.</p><textarea class="ar"></textarea></div>
+        <div class="q"><p class="ar">5. عرف سامي إنّ الغربة صعبة.</p><textarea class="ar"></textarea></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Part Four: Present-Tense Moods</div>
+    <div class="section-body">
+
+      <div class="activity">
+        <h3>Activity 8: Complete the Grammar Passage</h3>
+        <p class="instructions">Choose the correct verb form in context.</p>
+        <div class="passage ar">
+          بعد التخرج، سامر
+          <select class="inline-select ar blank" data-answer="يبحثُ"><option value="">اختر</option><option>يبحثُ</option><option>يبحثَ</option><option>يبحثْ</option></select>
+          عن وظيفة كل يوم. يريد أن
+          <select class="inline-select ar blank" data-answer="يعملَ"><option value="">اختر</option><option>يعملُ</option><option>يعملَ</option><option>يعملْ</option></select>
+          في مجال التعليم، لكنه لم
+          <select class="inline-select ar blank" data-answer="يجدْ"><option value="">اختر</option><option>يجدُ</option><option>يجدَ</option><option>يجدْ</option></select>
+          وظيفة مناسبة حتى الآن.
+          <br><br>
+          قال له أخوه: «لا
+          <select class="inline-select ar blank" data-answer="تفقدْ"><option value="">اختر</option><option>تفقدُ</option><option>تفقدَ</option><option>تفقدْ</option></select>
+          الأمل». وأضاف: «يمكنك أن
+          <select class="inline-select ar blank" data-answer="تتقدّمَ"><option value="">اختر</option><option>تتقدّمُ</option><option>تتقدّمَ</option><option>تتقدّمْ</option></select>
+          إلى وظائف أخرى».
+          <br><br>
+          سامر لن
+          <select class="inline-select ar blank" data-answer="يتوقفَ"><option value="">اختر</option><option>يتوقفُ</option><option>يتوقفَ</option><option>يتوقفْ</option></select>
+          عن البحث. هو
+          <select class="inline-select ar blank" data-answer="يعتقدُ"><option value="">اختر</option><option>يعتقدُ</option><option>يعتقدَ</option><option>يعتقدْ</option></select>
+          أنَّ الفرصة المناسبة ستأتي. وهو يدرس مهارات جديدة لكي
+          <select class="inline-select ar blank" data-answer="يحسّنَ"><option value="">اختر</option><option>يحسّنُ</option><option>يحسّنَ</option><option>يحسّنْ</option></select>
+          فرصه.
+          <br><br>
+          لم
+          <select class="inline-select ar blank" data-answer="ينجحْ"><option value="">اختر</option><option>ينجحُ</option><option>ينجحَ</option><option>ينجحْ</option></select>
+          سامر في أول مقابلة، لكنه الآن
+          <select class="inline-select ar blank" data-answer="يتحدثُ"><option value="">اختر</option><option>يتحدثُ</option><option>يتحدثَ</option><option>يتحدثْ</option></select>
+          بثقة أكبر.
+        </div>
+      </div>
+
+      <div class="activity">
+        <h3>Activity 9: Identify the Mood</h3>
+        <p class="instructions">Choose مرفوع، منصوب، or مجزوم.</p>
+        <div class="q ar">1. ما زال سامي <strong>يبحثُ</strong> عن وظيفة.
+          <select class="inline-select ar blank" data-answer="مرفوع"><option value="">اختر</option><option>مرفوع</option><option>منصوب</option><option>مجزوم</option></select>
+        </div>
+        <div class="q ar">2. أرغب أن <strong>أعملَ</strong> في مجلة.
+          <select class="inline-select ar blank" data-answer="منصوب"><option value="">اختر</option><option>مرفوع</option><option>منصوب</option><option>مجزوم</option></select>
+        </div>
+        <div class="q ar">3. لن <strong>أتركَ</strong> هذه الفرصة.
+          <select class="inline-select ar blank" data-answer="منصوب"><option value="">اختر</option><option>مرفوع</option><option>منصوب</option><option>مجزوم</option></select>
+        </div>
+        <div class="q ar">4. لم <strong>أجدْ</strong> المقالة.
+          <select class="inline-select ar blank" data-answer="مجزوم"><option value="">اختر</option><option>مرفوع</option><option>منصوب</option><option>مجزوم</option></select>
+        </div>
+        <div class="q ar">5. لا <strong>تفشلْ</strong> في المحاولة.
+          <select class="inline-select ar blank" data-answer="مجزوم"><option value="">اختر</option><option>مرفوع</option><option>منصوب</option><option>مجزوم</option></select>
+        </div>
+      </div>
+
+      <div class="activity">
+        <h3>Activity 10: Sentence Transformation</h3>
+        <p class="instructions">Rewrite each sentence using the required particle.</p>
+        <div class="q"><p class="ar">1. أجدُ وظيفة مناسبة. استخدم: أريد أنْ</p><textarea class="ar"></textarea></div>
+        <div class="q"><p class="ar">2. يرجعُ أحمد إلى بلده. استخدم: لن</p><textarea class="ar"></textarea></div>
+        <div class="q"><p class="ar">3. ينتهي الاجتماع. استخدم: لم</p><textarea class="ar"></textarea></div>
+        <div class="q"><p class="ar">4. تفكرُ في ترك الجامعة. حوّلها إلى نهي.</p><textarea class="ar"></textarea></div>
+        <div class="q"><p class="ar">5. أقرأُ المقالات. استخدم: لكي</p><textarea class="ar"></textarea></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Part Five: Limited Translation and Final Writing</div>
+    <div class="section-body">
+
+      <div class="activity">
+        <h3>Activity 11: Limited Translation</h3>
+        <p class="instructions">Translate naturally. Do not translate word for word.</p>
+        <div class="q"><p>1. I finally found a job that is suitable for me.</p><textarea class="ar"></textarea></div>
+        <div class="q"><p>2. My professor encouraged me not to give up.</p><textarea class="ar"></textarea></div>
+        <div class="q"><p>3. The manager said that the position requires experience.</p><textarea class="ar"></textarea></div>
+        <div class="q"><p>4. I have not found the article yet.</p><textarea class="ar"></textarea></div>
+      </div>
+
+      <div class="activity">
+        <h3>Activity 12: Final Contextual Writing</h3>
+        <p class="instructions">Complete the paragraph using Unit 13 vocabulary and grammar.</p>
+        <div class="passage ar">
+          بعد أن __________________ دراستي، بدأت أفكر في مستقبلي. كنت أرغب أنْ __________________ في مجال يناسب تخصصي.
+          في البداية، ظننت أنَّ ____________________________________________، لكنني __________________ وظيفة بسرعة.
+          قال أستاذي إنّ ______________________________________________، وشجّعني على أنْ ____________________________________________.
+          لذلك قررت ألّا ______________________________________________.
+          كنت أقرأ كل يوم __________________ و__________________ عن فرص العمل.
+          وبعد عدة أسابيع، __________________ فرصة مناسبة.
+        </div>
+        <textarea class="ar" style="min-height:240px" placeholder="اكتب الفقرة كاملة هنا..."></textarea>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="btns">
+      <button class="primary" onclick="checkAnswers()">Check Objective Answers</button>
+      <button class="secondary" onclick="saveWork()">Save Progress</button>
+      <button class="secondary" onclick="window.print()">Print</button>
+      <button class="danger" onclick="resetWorksheet()">Reset</button>
+    </div>
+    <div class="score" id="scoreBox">Score: not checked</div>
+  </div>
+
+  <div id="keyBox" class="answer-key hidden">
+    <strong>Teacher note:</strong> Only objective questions are automatically graded. Open-ended writing should be reviewed manually.
+  </div>
+
+</div>
+
+<script>
+function normalizeArabic(s){
+  return (s || "")
+    .trim()
+    .replace(/[ًٌٍَُِّْـ]/g,"")
+    .replace(/[إأآ]/g,"ا")
+    .replace(/ى/g,"ي")
+    .replace(/ة/g,"ه")
+    .replace(/\s+/g," ");
+}
+
+function checkAnswers(){
+  let correct = 0;
+  let total = 0;
+
+  document.querySelectorAll('.q[data-answer]').forEach(q=>{
+    total++;
+    const chosen = q.querySelector('input[type="radio"]:checked');
+    const feedback = q.querySelector('.feedback');
+    if(chosen && normalizeArabic(chosen.value) === normalizeArabic(q.dataset.answer)){
+      correct++;
+      feedback.textContent = "Correct";
+      feedback.className = "feedback correct";
+    } else {
+      feedback.textContent = chosen ? "Review this item" : "No answer selected";
+      feedback.className = "feedback incorrect";
+    }
+  });
+
+  document.querySelectorAll('select.blank').forEach(sel=>{
+    total++;
+    if(normalizeArabic(sel.value) === normalizeArabic(sel.dataset.answer)){
+      correct++;
+      sel.style.borderColor = "#2f6f4e";
+      sel.style.background = "#eef8f2";
+    } else {
+      sel.style.borderColor = "#a23b3b";
+      sel.style.background = "#fff2f2";
+    }
+  });
+
+  document.querySelectorAll('input.text-answer').forEach(inp=>{
+    total++;
+    if(normalizeArabic(inp.value) === normalizeArabic(inp.dataset.answer)){
+      correct++;
+      inp.style.borderColor = "#2f6f4e";
+      inp.style.background = "#eef8f2";
+    } else {
+      inp.style.borderColor = "#a23b3b";
+      inp.style.background = "#fff2f2";
+    }
+  });
+
+  document.getElementById('scoreBox').textContent = `Score: ${correct} / ${total}`;
+  document.getElementById('keyBox').classList.remove('hidden');
+  window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"});
+}
+
+function saveWork(){
+  const data = {
+    name: document.getElementById('studentName').value,
+    date: document.getElementById('dateField').value,
+    radios: {},
+    selects: [],
+    inputs: [],
+    textareas: []
+  };
+  document.querySelectorAll('input[type="radio"]:checked').forEach(r=>data.radios[r.name]=r.value);
+  document.querySelectorAll('select').forEach(s=>data.selects.push(s.value));
+  document.querySelectorAll('input[type="text"]').forEach(i=>data.inputs.push(i.value));
+  document.querySelectorAll('textarea').forEach(t=>data.textareas.push(t.value));
+  localStorage.setItem('unit13Worksheet', JSON.stringify(data));
+  alert('Progress saved on this device.');
+}
+
+function loadWork(){
+  const raw = localStorage.getItem('unit13Worksheet');
+  if(!raw) return;
+  try{
+    const data = JSON.parse(raw);
+    document.getElementById('studentName').value = data.name || "";
+    document.getElementById('dateField').value = data.date || "";
+    Object.entries(data.radios || {}).forEach(([name,val])=>{
+      const r = document.querySelector(`input[name="${name}"][value="${val}"]`);
+      if(r) r.checked = true;
+    });
+    document.querySelectorAll('select').forEach((s,i)=>{ if(data.selects && data.selects[i]!==undefined) s.value=data.selects[i]; });
+    document.querySelectorAll('input[type="text"]').forEach((inp,i)=>{ if(data.inputs && data.inputs[i]!==undefined) inp.value=data.inputs[i]; });
+    document.querySelectorAll('textarea').forEach((t,i)=>{ if(data.textareas && data.textareas[i]!==undefined) t.value=data.textareas[i]; });
+  }catch(e){}
+}
+
+function resetWorksheet(){
+  if(!confirm('Reset all answers and saved progress?')) return;
+  localStorage.removeItem('unit13Worksheet');
+  location.reload();
+}
+
+window.addEventListener('load', loadWork);
+</script>
+</body>
+</html>
