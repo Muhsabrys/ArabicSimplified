@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيقات القواعد والمفردات - Arabic Language Interactive Drills</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Tajawal & Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emeraldCustom: '#059669',
+                        indigoCustom: '#4f46e5',
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            background-color: #f8fafc;
+        }
+        .tab-active {
+            border-bottom: 3px solid #059669;
+            color: #059669;
+            font-weight: 700;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-2xl font-bold shadow-md">
+                        <i class="fa-solid fa-book-quran"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-bold font-cairo">تمارين اللغة العربية التفاعلية</h1>
+                        <p class="text-xs text-slate-400">القواعد الإحترافية • المفردات والتراكيب</p>
+                    </div>
+                </div>
+
+                <!-- Overall Progress Indicator -->
+                <div class="hidden md:flex items-center space-x-6 space-x-reverse bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-700">
+                    <div class="text-center">
+                        <span class="text-xs text-slate-400 block">الإجابات الصحيحة</span>
+                        <span id="score-counter" class="text-xl font-bold text-emerald-400">0</span>
+                    </div>
+                    <div class="h-8 w-px bg-slate-700"></div>
+                    <div class="text-center">
+                        <span class="text-xs text-slate-400 block">نسبة الإنجاز</span>
+                        <span id="progress-percentage" class="text-xl font-bold text-indigo-400">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Navigation Tabs -->
+            <div class="flex space-x-8 space-x-reverse border-t border-slate-800 text-sm font-semibold overflow-x-auto">
+                <button onclick="switchCategory('grammar')" id="tab-grammar" class="py-3 px-2 flex items-center gap-2 tab-active transition-all whitespace-nowrap">
+                    <i class="fa-solid fa-square-root-variable text-emerald-500"></i>
+                    <span>قسم القواعد (Grammar Focus)</span>
+                    <span id="grammar-badge" class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded-full font-bold">9 موضوعات (54 سؤالاً)</span>
+                </button>
+                <button onclick="switchCategory('vocab')" id="tab-vocab" class="py-3 px-2 flex items-center gap-2 text-slate-400 hover:text-slate-200 transition-all whitespace-nowrap">
+                    <i class="fa-solid fa-spell-check text-indigo-500"></i>
+                    <span>قسم المفردات (Vocab Check)</span>
+                    <span id="vocab-badge" class="bg-indigo-100 text-indigo-800 text-xs px-2 py-0.5 rounded-full font-bold">5 تمارين</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <div class="mb-8 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="w-full">
+                <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
+                    <span>تقدمك في التمارين</span>
+                    <span id="progress-text">0 من 0 مكتمل</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+                    <div id="main-progress-bar" class="bg-gradient-to-l from-emerald-500 to-indigo-600 h-full w-0 transition-all duration-500"></div>
+                </div>
+            </div>
+            <button onclick="resetAllExercises()" class="px-4 py-2 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 rounded-lg border border-slate-200 transition-all whitespace-nowrap flex items-center gap-2">
+                <i class="fa-solid fa-rotate-right"></i>
+                إعادة جميع التمارين
+            </button>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- GRAMMAR SECTION -->
+        <!-- ========================================================================= -->
+        <div id="section-grammar" class="space-y-8">
+
+            <div class="bg-gradient-to-r from-emerald-900 to-teal-800 text-white p-6 rounded-2xl shadow-md flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-extrabold font-cairo mb-1">قسم القواعد النحوية الشاملة</h2>
+                    <p class="text-emerald-200 text-sm">9 موضوعات نحو متقدمة • 6 أسئلة تفاعلية لكل موضوع</p>
+                </div>
+                <div class="hidden sm:block text-5xl text-emerald-400 opacity-30">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+            </div>
+
+            <!-- GRAMMAR 1: Inna, Anna, An, Alla -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-700 font-bold rounded-lg flex items-center justify-center">1</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: الأدوات (إنَّ، أنَّ، أنْ، ألاَّ)</h3>
+                    </div>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">6 أسئلة</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-6">اختر الأداة المناسبة لسياق الجملة النحوي:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="inna-quiz-container"></div>
+            </div>
+
+            <!-- GRAMMAR 2: Indicative, Subjunctive, Jussive Moods -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-700 font-bold rounded-lg flex items-center justify-center">2</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: حالات الفعل المضارع (المرفوع، المنصوب، المجزوم)</h3>
+                    </div>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">6 أسئلة</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-6">حدد الحالة الإعرابية الصحيحة للفعل المضارع في الجمل التالية:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="moods-quiz-container"></div>
+            </div>
+
+            <!-- GRAMMAR 3: Active Participle & Noun of Place -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-700 font-bold rounded-lg flex items-center justify-center">3</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: اسم الفاعل واسم المكان</h3>
+                    </div>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">6 أسئلة</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-6">ميّز بين اسم الفاعل واسم المكان أو اختر الصيغة المشتقة المناسبة:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="fael-makan-quiz-container"></div>
+            </div>
+
+            <!-- GRAMMAR 4: Verb Patterns -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-700 font-bold rounded-lg flex items-center justify-center">4</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: أوزان الأفعال (Verb Patterns / Awzaan)</h3>
+                    </div>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">6 أسئلة</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-6">حدد رقم/وزن الفعل بالصيغة القياسية الصحيحة:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="verb-patterns-container"></div>
+            </div>
+
+            <!-- GRAMMAR 5: Definite and Indefinite Idafa -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-700 font-bold rounded-lg flex items-center justify-center">5</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: الإضافة النكرة والإضافة المعرفة</h3>
+                    </div>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">6 أسئلة</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-6">صنّف التركيب التالي ببيان نوع الإضافة (نكرة أم معرفة):</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="idafa-quiz-container"></div>
+            </div>
+
+            <!-- GRAMMAR 6: Fronted Predicate -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-700 font-bold rounded-lg flex items-center justify-center">6</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: الخبر المقدّم والمبتدأ المؤخّر</h3>
+                    </div>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">6 أسئلة</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-6">اختر المبتدأ المؤخر أو الخبر المقدم المكتوب بالضبط الصحيح:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="fronted-pred-container"></div>
+            </div>
+
+            <!-- GRAMMAR 7: Laysa and Conjugations -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-700 font-bold rounded-lg flex items-center justify-center">7</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: ليس وتصريفاتها (Laysa Conjugations)</h3>
+                    </div>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">6 أسئلة</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-6">اختر التصريف الصحيح للفعل "ليس" بحسب الضمير المناسب:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="laysa-quiz-container"></div>
+            </div>
+
+            <!-- GRAMMAR 8: Relative Pronouns, Man, and Ma -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-700 font-bold rounded-lg flex items-center justify-center">8</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: الأسماء الموصولة (الذي، التي، الذين) و (مَنْ، مَا)</h3>
+                    </div>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">6 أسئلة</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-6">اختر الاسم الموصول المناسب حسب السياق (للعاقل، لغير العاقل، المذكر، المؤنث):</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="relative-quiz-container"></div>
+            </div>
+
+            <!-- GRAMMAR 9: Mithla, Kama, Ka- -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-emerald-100 text-emerald-700 font-bold rounded-lg flex items-center justify-center">9</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: أدوات التشبيه والمحاكاة (مِثْلَ، كَمَا، كَـ)</h3>
+                    </div>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">6 أسئلة</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-6">اختر الأداة الصحيحة للربط والتشبيه (قبل الاسم المجرور أو قبل الجمل الفعلية):</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="similes-quiz-container"></div>
+            </div>
+
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- VOCABULARY SECTION -->
+        <!-- ========================================================================= -->
+        <div id="section-vocab" class="space-y-8 hidden">
+
+            <div class="bg-gradient-to-r from-indigo-900 to-purple-800 text-white p-6 rounded-2xl shadow-md flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-extrabold font-cairo mb-1">قسم المفردات والتراكيب</h2>
+                    <p class="text-indigo-200 text-sm">مفردات سكن واستقرار، الأضداد، الإكمال، وأسماء المكان، والترجمة</p>
+                </div>
+                <div class="hidden sm:block text-5xl text-indigo-400 opacity-30">
+                    <i class="fa-solid fa-language"></i>
+                </div>
+            </div>
+
+            <!-- VOCAB 1: Matching -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-indigo-100 text-indigo-700 font-bold rounded-lg flex items-center justify-center">1</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: توصيل المفردات والتراكيب</h3>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="vocab-matching-container"></div>
+            </div>
+
+            <!-- VOCAB 2: Antonyms -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-indigo-100 text-indigo-700 font-bold rounded-lg flex items-center justify-center">2</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: الأضداد والمعاكسات</h3>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="antonyms-container"></div>
+            </div>
+
+            <!-- VOCAB 3: Fill-in Blanks -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-indigo-100 text-indigo-700 font-bold rounded-lg flex items-center justify-center">3</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: تفعيل مفردات الدرس الأول</h3>
+                    </div>
+                </div>
+                <div class="space-y-4" id="vocab-context-container"></div>
+            </div>
+
+            <!-- VOCAB 4: Nouns of Place Table -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-indigo-100 text-indigo-700 font-bold rounded-lg flex items-center justify-center">4</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: جدول أسماء المكان</h3>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-right border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                                <th class="p-3">الفعل ومعناه</th>
+                                <th class="p-3">اسم المكان المناسب</th>
+                                <th class="p-3">المعنى (English)</th>
+                                <th class="p-3 text-center">التحقق</th>
+                            </tr>
+                        </thead>
+                        <tbody id="nouns-place-tbody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VOCAB 5: Translation -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-indigo-100 text-indigo-700 font-bold rounded-lg flex items-center justify-center">5</span>
+                        <h3 class="text-lg font-bold text-slate-800">تمرين: الترجمة للغة العربية</h3>
+                    </div>
+                </div>
+                <div class="space-y-6" id="translation-container"></div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-center text-xs mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>برنامج التمارين العربية التفاعلي الشامل • جميع الحقوق محفوظة © 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        let userAnswers = {};
+        let totalItemsCount = 0;
+
+        function switchCategory(cat) {
+            const sectionGrammar = document.getElementById('section-grammar');
+            const sectionVocab = document.getElementById('section-vocab');
+            const tabGrammar = document.getElementById('tab-grammar');
+            const tabVocab = document.getElementById('tab-vocab');
+
+            if (cat === 'grammar') {
+                sectionGrammar.classList.remove('hidden');
+                sectionVocab.classList.add('hidden');
+                tabGrammar.className = "py-3 px-2 flex items-center gap-2 tab-active transition-all whitespace-nowrap";
+                tabVocab.className = "py-3 px-2 flex items-center gap-2 text-slate-400 hover:text-slate-200 transition-all whitespace-nowrap";
+            } else {
+                sectionGrammar.classList.add('hidden');
+                sectionVocab.classList.remove('hidden');
+                tabVocab.className = "py-3 px-2 flex items-center gap-2 tab-active transition-all whitespace-nowrap";
+                tabGrammar.className = "py-3 px-2 flex items-center gap-2 text-slate-400 hover:text-slate-200 transition-all whitespace-nowrap";
+            }
+        }
+
+        // 1. Inna, Anna, An, Alla (6 questions)
+        const innaData = [
+            { id: 'inna_1', sentence: 'قال المدرسُ: ...... الامتحانَ قريبٌ.', options: ['إنَّ', 'أنَّ', 'أنْ', 'ألاَّ'], correct: 'إنَّ', hint: 'تأتي (إنَّ) بالكسر بعد فعل القول (قال)' },
+            { id: 'inna_2', sentence: 'عرفتُ ...... الطقسَ جميلٌ اليوم.', options: ['إنَّ', 'أنَّ', 'أنْ', 'ألاَّ'], correct: 'أنَّ', hint: 'تأتي (أنَّ) بالفتح بعد أفعال المعرفة والعلم' },
+            { id: 'inna_3', sentence: 'أريدُ ...... أسافرَ إلى العاصمة.', options: ['إنَّ', 'أنَّ', 'أنْ', 'ألاَّ'], correct: 'أنْ', hint: '(أنْ) المصدرية الناصبة تدخل على الفعل المضارع' },
+            { id: 'inna_4', sentence: 'ينبغي للمريض ...... يتأخّرَ عن موعد الدواء.', options: ['إنَّ', 'أنَّ', 'أنْ', 'ألاَّ'], correct: 'ألاَّ', hint: '(ألاَّ) تعني (أنْ + لا) لنهي أو حث المضارع' },
+            { id: 'inna_5', sentence: 'أظنُّ ...... الطالبَ مجتهدٌ.', options: ['إنَّ', 'أنَّ', 'أنْ', 'ألاَّ'], correct: 'أنَّ', hint: 'تأتي (أنَّ) المفتوحة بعد أفعال الظن والرجاء' },
+            { id: 'inna_6', sentence: 'نصحني أخي ...... أستسلمَ للمعوقات.', options: ['إنَّ', 'أنَّ', 'أنْ', 'ألاَّ'], correct: 'ألاَّ', hint: '(ألاَّ) تستخدم للنهي أو التحذير مع المضارع' }
+        ];
+
+        // 2. Indicative, Subjunctive, Jussive Moods (6 questions)
+        const moodsData = [
+            { id: 'mood_1', sentence: 'الطالبُ المجتهدُ يكتبُ درسه بعناية.', options: ['مرفوع (Indicative)', 'منصوب (Subjunctive)', 'مجزوم (Jussive)'], correct: 'مرفوع (Indicative)', hint: 'لم يسبق الفعل ناصب ولا جازم فهو مرفوع بالضمة' },
+            { id: 'mood_2', sentence: 'لنْ نسافرَ إلى خارج البلاد هذا الصيف.', options: ['مرفوع (Indicative)', 'منصوب (Subjunctive)', 'مجزوم (Jussive)'], correct: 'منصوب (Subjunctive)', hint: 'سبق الفعل بأداة النصب (لنْ)' },
+            { id: 'mood_3', sentence: 'لمْ يدرسْ عليٌّ للامتحان البارحة.', options: ['مرفوع (Indicative)', 'منصوب (Subjunctive)', 'مجزوم (Jussive)'], correct: 'مجزوم (Jussive)', hint: 'سبق الفعل بأداة الجزم (لمْ) وعلامته السكون' },
+            { id: 'mood_4', sentence: 'المهندسون يعملونَ بنشاط في المشروع.', options: ['مرفوع (Indicative)', 'منصوب (Subjunctive)', 'مجزوم (Jussive)'], correct: 'مرفوع (Indicative)', hint: 'مرفوع بثبوت النون لأنه من الأفعال الخمسة' },
+            { id: 'mood_5', sentence: 'يجب أنْ يتدربوا جيداً قبل المباراة.', options: ['مرفوع (Indicative)', 'منصوب (Subjunctive)', 'مجزوم (Jussive)'], correct: 'منصوب (Subjunctive)', hint: 'منصوب بحذف النون بعد (أنْ)' },
+            { id: 'mood_6', sentence: 'لا تتأخرْ عن موعد المحاضرة.', options: ['مرفوع (Indicative)', 'منصوب (Subjunctive)', 'مجزوم (Jussive)'], correct: 'مجزوم (Jussive)', hint: 'مجزوم بعد (لا) الناهية الجازمة' }
+        ];
+
+        // 3. Active Participle & Noun of Place (6 questions)
+        const faelMakanData = [
+            { id: 'fm_1', sentence: 'الرجل الذي يكتب المقال يُسمى ......', options: ['مَكْتَب (اسم مكان)', 'كَاتِب (اسم فاعل)', 'مَكْتَبَة (اسم مكان)'], correct: 'كَاتِب (اسم فاعل)', hint: 'فاعل الفعل (كَتَبَ) على وزن فاعِل هو كَاتِب' },
+            { id: 'fm_2', sentence: 'المكان الذي نكتب فيه ونعمل يُسمى ......', options: ['مَكْتَب (اسم مكان)', 'كَاتِب (اسم فاعل)', 'مَكْتُوب (اسم مفعول)'], correct: 'مَكْتَب (اسم مكان)', hint: 'اسم المكان من (كَتَبَ) هو مَكْتَب على وزن مَفْعَل' },
+            { id: 'fm_3', sentence: 'الشخص الذي يدرس في الجامعة هو ......', options: ['مَدْرَسَة (اسم مكان)', 'طَالِب / دَارِس (اسم فاعل)', 'دَرَسَ (فعل)'], correct: 'طَالِب / دَارِس (اسم فاعل)', hint: 'اسم الفاعل يدل على من قام بالفعل' },
+            { id: 'fm_4', sentence: 'المكان الذي نطبخ فيه الطعام هو ......', options: ['طَابِخ (اسم فاعل)', 'مَطْبَخ (اسم مكان)', 'مَطْبُوع (اسم مفعول)'], correct: 'مَطْبَخ (اسم مكان)', hint: 'مَطْبَخ هو اسم مكان على وزن مَفْعَل' },
+            { id: 'fm_5', sentence: 'الذي يعلم الطلاب في الصف هو ......', options: ['مُعَلِّم (اسم فاعل)', 'مَعْلَم (اسم مكان)', 'عِلْم (مصدر)'], correct: 'مُعَلِّم (اسم فاعل)', hint: 'اسم الفاعل من غير الثلاثي (عَلَّمَ) بضم الميم وكسر ما قبل الآخر' },
+            { id: 'fm_6', sentence: 'المكان الذي تعيش وتستقر فيه الأسرة يسمى ......', options: ['سَاكِن (اسم فاعل)', 'مَسْكَن (اسم مكان)', 'مَسْكُون (اسم مفعول)'], correct: 'مَسْكَن (اسم مكان)', hint: 'مَسْكَن اسم مكان يدل على موضع السكن' }
+        ];
+
+        // 4. Verb Patterns (6 questions)
+        const verbPatternsData = [
+            { id: 'vp_1', sentence: 'الفعل (دَرَّسَ) هو من الوزن ......', options: ['Form I (فَعَلَ)', 'Form II (فَعَّلَ)', 'Form V (تَفَعَّلَ)'], correct: 'Form II (فَعَّلَ)', hint: 'التضعيف على العين يدل على الوزن الثاني (فَعَّلَ)' },
+            { id: 'vp_2', sentence: 'الفعل (تَكَلَّمَ) هو من الوزن ......', options: ['Form II (فَعَّلَ)', 'Form V (تَفَعَّلَ)', 'Form VI (تَفَاعَلَ)'], correct: 'Form V (تَفَعَّلَ)', hint: 'الزيادة بالتاء والتضعيف تدل على الوزن الخامس (تَفَعَّلَ)' },
+            { id: 'vp_3', sentence: 'الفعل (اِسْتَخْدَمَ) هو من الوزن ......', options: ['Form VII (اِنْفَعَلَ)', 'Form VIII (اِفْتَعَلَ)', 'Form X (اِسْتَفْعَلَ)'], correct: 'Form X (اِسْتَفْعَلَ)', hint: 'الزيادة بالألف والسين والتاء تدل على الوزن العاشر' },
+            { id: 'vp_4', sentence: 'الفعل (سَاعَدَ) هو من الوزن ......', options: ['Form I (فَعَلَ)', 'Form III (فَاعَلَ)', 'Form IV (أَفْعَلَ)'], correct: 'Form III (فَاعَلَ)', hint: 'الألف بعد الفاء تدل على الوزن الثالث (فَاعَلَ)' },
+            { id: 'vp_5', sentence: 'الفعل (اِنْقَطَعَ) هو من الوزن ......', options: ['Form VII (اِنْفَعَلَ)', 'Form VIII (اِفْتَعَلَ)', 'Form X (اِسْتَفْعَلَ)'], correct: 'Form VII (اِنْفَعَلَ)', hint: 'النون والألف في البداية تدل على المطاوعة والوزن السابع' },
+            { id: 'vp_6', sentence: 'الفعل (اِجْتَمَعَ) هو من الوزن ......', options: ['Form VII (اِنْفَعَلَ)', 'Form VIII (اِفْتَعَلَ)', 'Form VI (تَفَاعَلَ)'], correct: 'Form VIII (اِفْتَعَلَ)', hint: 'التاء الخماسية بعد الفاء تدل على الوزن الثامن (اِفْتَعَلَ)' }
+        ];
+
+        // 5. Definite and Indefinite Idafa (6 questions)
+        const idafaData = [
+            { id: 'idf_1', phrase: 'عندي غُرْفَةُ نَوْمٍ واسعة', options: ['إضافة نكرة', 'إضافة معرفة'], correct: 'إضافة نكرة', hint: 'المضاف إليه (نومٍ) غير معرف بالـ' },
+            { id: 'idf_2', phrase: 'غُرْفَةُ النَّوْمِ في بيتي كبيرة', options: ['إضافة نكرة', 'إضافة معرفة'], correct: 'إضافة معرفة', hint: 'المضاف إليه (النومِ) معرف بالـ' },
+            { id: 'idf_3', phrase: 'في الشارع سَيَّارَةُ إِسْعَافٍ مسرعة', options: ['إضافة نكرة', 'إضافة معرفة'], correct: 'إضافة نكرة', hint: 'المضاف إليه نكرة مجرورة' },
+            { id: 'idf_4', phrase: 'زرتُ مُدِيرَ الشَّرِكَةِ في مكتبه', options: ['إضافة نكرة', 'إضافة معرفة'], correct: 'إضافة معرفة', hint: 'المضاف إليه (الشركةِ) معرف بالـ' },
+            { id: 'idf_5', phrase: 'شربتُ كُوبَ شَايٍ حارّ', options: ['إضافة نكرة', 'إضافة معرفة'], correct: 'إضافة نكرة', hint: 'كوب شاي تركيب إضافي نكرة' },
+            { id: 'idf_6', phrase: 'قرأتُ كِتَابَ الطَّالِبِ الممتاز', options: ['إضافة نكرة', 'إضافة معرفة'], correct: 'إضافة معرفة', hint: 'المضاف اكتسب التعريف من (الطالبِ)' }
+        ];
+
+        // 6. Fronted Predicate (6 questions)
+        const frontedPredData = [
+            { id: 'fp_1', sentence: 'في البيتِ ...... (مبتدأ مؤخر)', options: ['رَجُلٌ', 'رَجُلاً', 'رَجُلٍ'], correct: 'رَجُلٌ', hint: 'المبتدأ المؤخر مرفوع بالضمة (رَجُلٌ)' },
+            { id: 'fp_2', sentence: 'عندي ...... جديدةٌ في المرآب.', options: ['سَيَّارَةٌ', 'سَيَّارَةً', 'سَيَّارَةٍ'], correct: 'سَيَّارَةٌ', hint: 'المبتدأ المؤخر بعد الظرف يكون مرفوعاً' },
+            { id: 'fp_3', sentence: 'للجامعةِ ...... كثيرةٌ حول العالم.', options: ['فُرُوعٌ', 'فُرُوعاً', 'فُرُوعٍ'], correct: 'فُرُوعٌ', hint: 'الخبر المقدم شبه جملة (للجامعة) والمبتدأ مرفوع' },
+            { id: 'fp_4', sentence: 'تَحتَ الطاولةِ ...... صَغِيرٌ.', options: ['كَلْبٌ', 'كَلْباً', 'كَلْبٍ'], correct: 'كَلْبٌ', hint: 'المبتدأ المؤخر مرفوع وعلامة رفعه الضمة' },
+            { id: 'fp_5', sentence: 'أمامَ المدرّسِ ...... مجتهدون.', options: ['طُلاَّبٌ', 'طُلاَّباً', 'طُلاَّبٍ'], correct: 'طُلاَّبٌ', hint: 'المبتدأ المؤخر مرفوع (طُلاَّبٌ)' },
+            { id: 'fp_6', sentence: 'في الشارعِ ...... شديدٌ اليوم.', options: ['اِزْدِحَامٌ', 'اِزْدِحَاماً', 'اِزْدِحَامٍ'], correct: 'اِزْدِحَامٌ', hint: 'اسم المبتدأ المؤخر المرفوع (اِزْدِحَامٌ)' }
+        ];
+
+        // 7. Laysa Conjugations (6 questions)
+        const laysaData = [
+            { id: 'lys_1', sentence: 'أنا ...... مستعدةً للامتحان اليوم.', options: ['لَسْتُ', 'لَيْسَ', 'لَيْسَتْ'], correct: 'لَسْتُ', hint: 'ضمير المتكلم أنا ينفي بـ (لَسْتُ)' },
+            { id: 'lys_2', sentence: 'الرجالُ ...... حاضرين في القاعة.', options: ['لَيْسُوا', 'لَسْنَا', 'لَسْتُمْ'], correct: 'لَيْسُوا', hint: 'جمع المذكر الغائب ينفي بـ (لَيْسُوا)' },
+            { id: 'lys_3', sentence: 'هي ...... أستاذةً في هذه الجامعة.', options: ['لَيْسَتْ', 'لَسْتِ', 'لَيْسَ'], correct: 'لَيْسَتْ', hint: 'المفرد المؤنث الغائب ينفي بـ (لَيْسَتْ)' },
+            { id: 'lys_4', sentence: 'نحنُ ...... غاضبين من القرار.', options: ['لَسْنَا', 'لَسْتُمْ', 'لَيْسُوا'], correct: 'لَسْنَا', hint: 'ضمير المتكلمين نحن ينفي بـ (لَسْنَا)' },
+            { id: 'lys_5', sentence: 'أنتم ...... مسؤولين عن هذا الخطأ.', options: ['لَسْتُمْ', 'لَيْسُوا', 'لَسْنَا'], correct: 'لَسْتُمْ', hint: 'جمع المخاطب المذكر ينفي بـ (لَسْتُمْ)' },
+            { id: 'lys_6', sentence: 'الطعامُ ...... جاهزاً حتى الآن.', options: ['لَيْسَ', 'لَسْتُ', 'لَيْسَتْ'], correct: 'لَيْسَ', hint: 'المفرد المذكر الغائب ينفي بـ (لَيْسَ)' }
+        ];
+
+        // 8. Relative Pronouns, Man, and Ma (6 questions)
+        const relativeData = [
+            { id: 'rel_1', sentence: 'الطالبُ ...... يدرسُ بجدّ ينجحُ.', options: ['الَّذِي', 'الَّتِي', 'الَّذِينَ'], correct: 'الَّذِي', hint: 'اسم موصول للمفرد المذكر (الَّذِي)' },
+            { id: 'rel_2', sentence: 'الشقةُ ...... استأجرتُها واسعةٌ.', options: ['الَّذِي', 'الَّتِي', 'الَّذِينَ'], correct: 'الَّتِي', hint: 'اسم موصول للمفرد المؤنث (الَّتِي)' },
+            { id: 'rel_3', sentence: 'المهندسون ...... بنوا الجسر ماهرون.', options: ['الَّذِينَ', 'الَّذِي', 'الَّتِي'], correct: 'الَّذِينَ', hint: 'اسم موصول لجمع المذكر العاقل (الَّذِينَ)' },
+            { id: 'rel_4', sentence: 'لا أعرفُ ...... يتكلمُ الآن على المنصة.', options: ['مَنْ (العاقل)', 'مَا (غير العاقل)', 'الَّتِي'], correct: 'مَنْ (العاقل)', hint: '(مَنْ) اسم موصول معناه "الذي" ويستخدم للعاقل' },
+            { id: 'rel_5', sentence: 'اشتريتُ ...... أردتُهُ من السوق.', options: ['مَا (غير العاقل)', 'مَنْ (العاقل)', 'الَّذِينَ'], correct: 'مَا (غير العاقل)', hint: '(مَا) اسم موصول يستخدم لغير العاقل' },
+            { id: 'rel_6', sentence: 'القصةُ ...... قرأتُها كانت ممتعة.', options: ['الَّتِي', 'الَّذِي', 'مَنْ'], correct: 'الَّتِي', hint: 'القصة مؤنث مفرد يناسبها (الَّتِي)' }
+        ];
+
+        // 9. Mithla, Kama, Ka- (6 questions)
+        const similesData = [
+            { id: 'sm_1', sentence: 'الولدُ سريعٌ ...... الفهدِ.', options: ['كَـ / مِثْلِ', 'كَمَا', 'أنَّ'], correct: 'كَـ / مِثْلِ', hint: 'تستخدم (كـ) أو (مثل) قبل الأسماء المجرورة' },
+            { id: 'sm_2', sentence: 'أنا أعملُ ...... تعملُ أنتَ تماماً.', options: ['كَمَا', 'كَـ', 'مِثْلِ'], correct: 'كَمَا', hint: 'تستخدم (كَمَا) قبل الجمل الفعلية' },
+            { id: 'sm_3', sentence: 'هي جميلةٌ ...... أمِّها.', options: ['مِثْلَ', 'كَمَا', 'أنْ'], correct: 'مِثْلَ', hint: 'تستخدم (مِثْلَ) للمشابهة قبل الاسم' },
+            { id: 'sm_4', sentence: 'تصرَّفَ الرجلُ ...... يتصرَّفُ الحكماءُ.', options: ['كَمَا', 'كَـ', 'مِثْلِ'], correct: 'كَمَا', hint: '(كَمَا) تدخل على الفعل (يتصرف)' },
+            { id: 'sm_5', sentence: 'الجندي شجاعٌ ...... الأسدِ.', options: ['كَـ', 'كَمَا', 'أنَّ'], correct: 'كَـ', hint: 'حرف الجر الكاف (كـ) يفيد التشبيه ويدخل على الاسم' },
+            { id: 'sm_6', sentence: 'سافرنا إلى مصر ...... فَعَلْتُمْ العامَ الماضي.', options: ['كَمَا', 'كَـ', 'مِثْلِ'], correct: 'كَمَا', hint: '(كَمَا) تدخل على الجمل الفعلية (فعلتم)' }
+        ];
+
+        // Vocab Data
+        const vocabMatchingData = [
+            { id: 'vm_1', colA: '(1) جِيل', correct: 'التسعينات', options: ['التسعينات', 'الخامس', 'بعد زواج صعب', 'للإيجار', 'كاثوليكية'] },
+            { id: 'vm_2', colA: '(2) الطَّابَق', correct: 'الخامس', options: ['بيتي صغير جداً', 'الخامس', 'عامة في المدينة', 'السفرة', 'الحصول على شغل'] },
+            { id: 'vm_3', colA: '(3) الطَّلاَق', correct: 'بعد زواج صعب', options: ['بعد زواج صعب', 'التسعينات', 'للإيجار', 'الأكل في المكتبة', 'كاثوليكية'] },
+            { id: 'vm_4', colA: '(4) مَمْنُوع', correct: 'الأكل في المكتبة', options: ['الأكل في المكتبة', 'عامة في المدينة', 'للإيجار', 'الخامس', 'بعد زواج'] },
+            { id: 'vm_5', colA: '(5) حَدَائِق', correct: 'عامة في المدينة', options: ['عامة في المدينة', 'السفرة', 'كاثوليكية', 'التسعينات', 'للإيجار'] },
+            { id: 'vm_6', colA: '(6) شَقَّة', correct: 'للإيجار', options: ['للإيجار', 'بيتي صغير جداً', 'كاثوليكية', 'الأكل في المكتبة', 'الخامس'] },
+            { id: 'vm_7', colA: '(7) غُرْفَة', correct: 'السفرة', options: ['السفرة', 'التسعينات', 'بعد زواج', 'عامة في المدينة', 'للإيجار'] },
+            { id: 'vm_8', colA: '(8) كَنِيسَة', correct: 'كاثوليكية', options: ['كاثوليكية', 'الخامس', 'الأكل في المكتبة', 'السفرة', 'التسعينات'] },
+            { id: 'vm_9', colA: '(9) أَتَمَنَّى', correct: 'الحصول على شغل جيد', options: ['الحصول على شغل جيد', 'بعد زواج صعب', 'للإيجار', 'عامة في المدينة', 'الخامس'] }
+        ];
+
+        const antonymsData = [
+            { id: 'ant_1', item: '1) فَوقَ الطاولة أشياء كثيرة.', underlined: 'فوق', options: ['وراء', 'أمام', 'تحت'], correct: 'تحت' },
+            { id: 'ant_2', item: '2) الأسبوع المَاضِي طويل.', underlined: 'الماضي', options: ['الحالي', 'القادم', 'الفائت'], correct: 'القادم' },
+            { id: 'ant_3', item: '3) كانت بِدَايَةُ الفيلم مملة.', underlined: 'بداية', options: ['وسط', 'بدايات', 'نهاية'], correct: 'نهاية' },
+            { id: 'ant_4', item: '4) مَمْنُوعُ استخدام التليفون.', underlined: 'ممنوع', options: ['غير مسموح', 'أبداً', 'مسموح'], correct: 'مسموح' },
+            { id: 'ant_5', item: '5) عملي دَائِمٌ.', underlined: 'دائم', options: ['أحياناً', 'مؤقت', 'وقت'], correct: 'مؤقت' },
+            { id: 'ant_6', item: '6) موقف السيارات وَرَاءَ المطعم.', underlined: 'وراء', options: ['أمام', 'خلف', 'بجانب'], correct: 'أمام' }
+        ];
+
+        const vocabContextData = [
+            { id: 'vc_1', sentence: '1. الشقق في مدينة سان فرانسيسكو غالية جداً ......', options: ['للإيجار', 'مطبخ', 'طلاق', 'جيل'], correct: 'للإيجار' },
+            { id: 'vc_2', sentence: '2. قواعد هذا الدرس مش صعبة، هي سهلة جداً و......', options: ['مفيدة وعملية', 'ممنوعة', 'مؤقتة', 'قادمة'], correct: 'مفيدة وعملية' },
+            { id: 'vc_3', sentence: '3. أسكن في بناية كبيرة في ...... الثالث، وأختي تسكن في الثاني.', options: ['الطابق', 'الحديقة', 'المطبخ', 'الطلاق'], correct: 'الطابق' },
+            { id: 'vc_4', sentence: '4. ...... الدراسة في الجامعة في السنة الثانية وعملت في التجارة.', options: ['تركتُ', 'تخرجتُ', 'أكلتُ', 'سكنتُ'], correct: 'تركتُ' },
+            { id: 'vc_5', sentence: '5. جدتي من ...... الستينات، وهي تحب موسيقى البيتلز.', options: ['جيل', 'طابق', 'شقة', 'حل'], correct: 'جيل' },
+            { id: 'vc_6', sentence: '6. ...... بيتي صغيرة وفيها شجرة كبيرة وشجرة صغيرة.', options: ['حديقة', 'غرفة', 'كنيسة', 'فرصة'], correct: 'حديقة' },
+            { id: 'vc_7', sentence: '7. يوم الأحد القادم سنذهب جميعاً إلى الحديقة لنلعب كرة ......', options: ['القدم', 'السفرة', 'الطلاق', 'الشغل'], correct: 'القدم' },
+            { id: 'vc_8', sentence: '8. ما هو أحسن ...... لهذه المشكلة؟', options: ['حلٍّ', 'طابق', 'إيجار', 'جيل'], correct: 'حلٍّ' },
+            { id: 'vc_9', sentence: '9. البيت الجديد فيه ...... كبير وواحد صغير.', options: ['مطبخ', 'طلاق', 'جيل', 'استقلال'], correct: 'مطبخ' },
+            { id: 'vc_10', sentence: '10. غرفة ...... فيها طاولة كبيرة و 6 كراسي.', options: ['السفرة', 'القدم', 'الإيجار', 'الطلاق'], correct: 'السفرة' }
+        ];
+
+        const nounsPlaceData = [
+            { verb: 'صَنَعَ (make)', place: 'مَصْنَع', meaning: 'Factory' },
+            { verb: 'غَسَلَ (wash)', place: 'مَغْسَلَة / مَغْسِل', meaning: 'Laundry / Washroom' },
+            { verb: 'طَبَعَ (print)', place: 'مَطْبَعَة', meaning: 'Printing Press' },
+            { verb: 'نَظَرَ (look)', place: 'مَنْظَر', meaning: 'View / Sight' },
+            { verb: 'عَبَدَ (worship)', place: 'مَعْبَد', meaning: 'Temple / Place of Worship' },
+            { verb: 'مَشَى (walk)', place: 'مَمْشَى', meaning: 'Walkway / Promenade' }
+        ];
+
+        const translationData = [
+            { id: 'tr_1', eng: '1). We visited a historical church in Rome.', answer: 'زرنا كنيسة تاريخية في روما', hint: 'زُرْنَا كَنِيسَةً تَرِيخِيَّةً فِي رُومَا' },
+            { id: 'tr_2', eng: '2). I don\'t know who lives in the apartment next to me.', answer: 'لا اعرف من يعيش في الشقة المجاورة لي', hint: 'لا أَعْرِفُ مَنْ يَعِيشُ فِي الشَّقَّةِ المُجَاوِرَةِ لِي' },
+            { id: 'tr_3', eng: '3). Life was simpler in my parents\' generation.', answer: 'كانت الحياة ابسط في جيل والدي', hint: 'كَانَتِ الحَيَاةُ أَبْسَطَ فِي جِيلِ وَالِدَيَّ' }
+        ];
+
+        function renderGenericQuiz(containerId, dataset, titlePrefix) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = dataset.map((item, idx) => `
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs text-emerald-700 font-bold mb-1">${titlePrefix} ${idx + 1}</div>
+                        <div class="text-base font-bold text-slate-800 mb-3 font-cairo">${item.sentence || item.phrase}</div>
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            ${item.options.map(opt => `
+                                <button onclick="checkAnswer('${item.id}', '${opt}', '${dataset.find(x => x.id === item.id).correct}', '${dataset.find(x => x.id === item.id).hint.replace(/'/g, "\\'")}')" id="btn-${item.id}-${opt}" class="px-3 py-1.5 text-xs sm:text-sm bg-white border border-slate-300 hover:border-emerald-500 rounded-lg font-bold transition-all">
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div id="feedback-${item.id}" class="text-xs font-bold mt-2 hidden"></div>
+                </div>
+            `).join('');
+        }
+
+        function checkAnswer(id, selected, correct, hint) {
+            const feedbackEl = document.getElementById(`feedback-${id}`);
+            const buttons = document.querySelectorAll(`[id^="btn-${id}-"]`);
+
+            buttons.forEach(b => {
+                b.classList.add('opacity-50');
+            });
+
+            const activeBtn = document.getElementById(`btn-${id}-${selected}`);
+            if (activeBtn) activeBtn.classList.remove('opacity-50');
+
+            if (selected === correct) {
+                if (activeBtn) activeBtn.className = "px-3 py-1.5 text-xs sm:text-sm bg-emerald-600 text-white rounded-lg font-bold shadow-sm";
+                feedbackEl.className = "text-xs font-bold mt-2 text-emerald-600 flex items-center gap-1";
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> إجابة صحيحة! ${hint}`;
+                userAnswers[id] = true;
+            } else {
+                if (activeBtn) activeBtn.className = "px-3 py-1.5 text-xs sm:text-sm bg-rose-600 text-white rounded-lg font-bold shadow-sm";
+                feedbackEl.className = "text-xs font-bold mt-2 text-rose-600 flex items-center gap-1";
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> إجابة خاطئة. ${hint}`;
+                userAnswers[id] = false;
+            }
+            feedbackEl.classList.remove('hidden');
+            updateOverallProgress();
+        }
+
+        function renderVocabMatching() {
+            const container = document.getElementById('vocab-matching-container');
+            container.innerHTML = vocabMatchingData.map((item, idx) => `
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-indigo-900 font-cairo">${item.colA}</span>
+                        <span class="text-xs text-slate-400">اختر المكمل</span>
+                    </div>
+                    <select id="select-vm-${idx}" onchange="checkVocabMatchingAnswer(${idx}, this.value)" class="w-full text-xs font-bold bg-white border border-slate-300 rounded-lg p-2">
+                        <option value="">اختر التكملة المناسبة...</option>
+                        ${item.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                    </select>
+                    <div id="feedback-vm-${idx}" class="text-xs font-bold mt-2 hidden"></div>
+                </div>
+            `).join('');
+        }
+
+        function checkVocabMatchingAnswer(idx, val) {
+            const item = vocabMatchingData[idx];
+            const feedbackEl = document.getElementById(`feedback-vm-${idx}`);
+            const selectEl = document.getElementById(`select-vm-${idx}`);
+            const key = `vm_${idx}`;
+
+            if (!val) {
+                feedbackEl.classList.add('hidden');
+                delete userAnswers[key];
+                updateOverallProgress();
+                return;
+            }
+
+            if (val === item.correct) {
+                selectEl.className = "w-full text-xs font-bold bg-emerald-50 border border-emerald-500 text-emerald-800 rounded-lg p-2";
+                feedbackEl.className = "text-xs font-bold text-emerald-600";
+                feedbackEl.innerHTML = `توصيل صحيح!`;
+                userAnswers[key] = true;
+            } else {
+                selectEl.className = "w-full text-xs font-bold bg-rose-50 border border-rose-500 text-rose-800 rounded-lg p-2";
+                feedbackEl.className = "text-xs font-bold text-rose-600";
+                feedbackEl.innerHTML = `الصحيح: ${item.correct}`;
+                userAnswers[key] = false;
+            }
+            feedbackEl.classList.remove('hidden');
+            updateOverallProgress();
+        }
+
+        function renderAntonymsQuiz() {
+            const container = document.getElementById('antonyms-container');
+            container.innerHTML = antonymsData.map((item) => `
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <p class="text-sm font-bold text-slate-800 mb-2 font-cairo">
+                        عكس الكلمة: <span class="text-indigo-600 underline">${item.underlined}</span> في (${item.item})
+                    </p>
+                    <div class="flex gap-2 mb-2">
+                        ${item.options.map(opt => `
+                            <button onclick="checkAnswer('${item.id}', '${opt}', '${item.correct}', 'الضد الصحيح هو ${item.correct}')" id="btn-${item.id}-${opt}" class="px-3 py-1.5 text-xs bg-white border border-slate-300 hover:border-indigo-500 rounded-md font-bold transition-all">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="feedback-${item.id}" class="text-xs font-bold hidden"></div>
+                </div>
+            `).join('');
+        }
+
+        function renderVocabContext() {
+            const container = document.getElementById('vocab-context-container');
+            container.innerHTML = vocabContextData.map((item) => `
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div class="flex-grow">
+                        <p class="text-sm font-bold text-slate-800 font-cairo">${item.sentence}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        ${item.options.map(opt => `
+                            <button onclick="checkAnswer('${item.id}', '${opt}', '${item.correct}', 'الكلمة المناسبة هي ${item.correct}')" id="btn-${item.id}-${opt}" class="px-3 py-1 text-xs bg-white border border-slate-300 hover:border-indigo-500 rounded-lg font-bold transition-all">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="feedback-${item.id}" class="text-xs font-bold hidden"></div>
+                </div>
+            `).join('');
+        }
+
+        function renderNounsPlace() {
+            const tbody = document.getElementById('nouns-place-tbody');
+            tbody.innerHTML = nounsPlaceData.map((item, idx) => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-3 font-bold text-slate-800">${item.verb}</td>
+                    <td class="p-3 font-extrabold text-indigo-700 font-cairo">${item.place}</td>
+                    <td class="p-3 text-slate-600 text-xs font-semibold">${item.meaning}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="togglePlaceRow(${idx})" class="px-3 py-1 text-xs bg-indigo-50 text-indigo-700 rounded-md font-bold hover:bg-indigo-100 transition-all">
+                            تأكيد المعرفة <i class="fa-solid fa-check text-xs"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function togglePlaceRow(idx) {
+            const key = `place_row_${idx}`;
+            userAnswers[key] = true;
+            updateOverallProgress();
+        }
+
+        function renderTranslation() {
+            const container = document.getElementById('translation-container');
+            container.innerHTML = translationData.map((item) => `
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <p class="text-sm font-bold text-slate-800 mb-2" dir="ltr">${item.eng}</p>
+                    <div class="flex flex-col sm:flex-row gap-2 mb-2">
+                        <input type="text" id="input-tr-${item.id}" placeholder="اكتب الترجمة بالعربية هنا..." class="flex-grow text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 font-cairo">
+                        <button onclick="checkTranslationAnswer('${item.id}')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg transition-all">
+                            تحقق
+                        </button>
+                    </div>
+                    <div id="hint-${item.id}" class="text-xs text-slate-500 font-bold mt-1 hidden">
+                        💡 نموذج الإجابة: <span class="text-slate-800 font-cairo">${item.hint}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function checkTranslationAnswer(id) {
+            const item = translationData.find(x => x.id === id);
+            const inputVal = document.getElementById(`input-tr-${id}`).value.trim();
+            const hintEl = document.getElementById(`hint-${id}`);
+
+            if (inputVal.length > 0) {
+                userAnswers[id] = true;
+                hintEl.classList.remove('hidden');
+            }
+            updateOverallProgress();
+        }
+
+        // Progress Calculations
+        function calculateTotalItems() {
+            totalItemsCount =
+                innaData.length +
+                moodsData.length +
+                faelMakanData.length +
+                verbPatternsData.length +
+                idafaData.length +
+                frontedPredData.length +
+                laysaData.length +
+                relativeData.length +
+                similesData.length +
+                vocabMatchingData.length +
+                antonymsData.length +
+                vocabContextData.length +
+                nounsPlaceData.length +
+                translationData.length;
+        }
+
+        function updateOverallProgress() {
+            const correctKeys = Object.keys(userAnswers).filter(k => userAnswers[k] === true);
+            const count = correctKeys.length;
+            const percentage = totalItemsCount > 0 ? Math.round((count / totalItemsCount) * 100) : 0;
+
+            document.getElementById('score-counter').innerText = count;
+            document.getElementById('progress-percentage').innerText = `${percentage}%`;
+            document.getElementById('progress-text').innerText = `${count} من ${totalItemsCount} مكتمل`;
+            document.getElementById('main-progress-bar').style.width = `${percentage}%`;
+        }
+
+        function resetAllExercises() {
+            userAnswers = {};
+            initAll();
+        }
+
+        function initAll() {
+            calculateTotalItems();
+            renderGenericQuiz('inna-quiz-container', innaData, 'سؤال الأدوات');
+            renderGenericQuiz('moods-quiz-container', moodsData, 'سؤال المضارع');
+            renderGenericQuiz('fael-makan-quiz-container', faelMakanData, 'سؤال الاشتقاق');
+            renderGenericQuiz('verb-patterns-container', verbPatternsData, 'سؤال الوزن');
+            renderGenericQuiz('idafa-quiz-container', idafaData, 'سؤال الإضافة');
+            renderGenericQuiz('fronted-pred-container', frontedPredData, 'سؤال التقديم والتأخير');
+            renderGenericQuiz('laysa-quiz-container', laysaData, 'سؤال تصريف ليس');
+            renderGenericQuiz('relative-quiz-container', relativeData, 'سؤال الموصول');
+            renderGenericQuiz('similes-quiz-container', similesData, 'سؤال التشبيه');
+
+            renderVocabMatching();
+            renderAntonymsQuiz();
+            renderVocabContext();
+            renderNounsPlace();
+            renderTranslation();
+            updateOverallProgress();
+        }
+
+        window.onload = function() {
+            initAll();
+        };
+    </script>
+</body>
+</html>
