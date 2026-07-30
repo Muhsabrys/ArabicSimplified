@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Bank Reading Activity</title>
+  <style>
+    :root{
+      --navy:#17324d;
+      --teal:#2f7f8f;
+      --pale:#f4f9fb;
+      --line:#d8e5ea;
+      --text:#1f2937;
+      --gold:#b7791f;
+      --key:#fff8e8;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:#edf3f6;
+      color:var(--text);
+      font-family:Arial,Helvetica,sans-serif;
+    }
+
+    .page{
+      max-width:1100px;
+      margin:28px auto;
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 12px 35px rgba(23,50,77,.12);
+    }
+
+    header{
+      padding:30px 24px;
+      text-align:center;
+      color:#fff;
+      background:linear-gradient(135deg,var(--navy),var(--teal));
+    }
+
+    header h1{
+      margin:0 0 8px;
+      font-size:2rem;
+    }
+
+    header p{
+      margin:0;
+      opacity:.94;
+    }
+
+    main{
+      padding:26px;
+    }
+
+    .instructions{
+      margin-bottom:22px;
+      padding:14px 16px;
+      border-left:5px solid var(--teal);
+      border-radius:10px;
+      background:var(--pale);
+      font-size:.95rem;
+      line-height:1.55;
+    }
+
+    .instructions strong{
+      color:var(--navy);
+    }
+
+    .bank-title{
+      margin:24px 0 10px;
+      color:var(--navy);
+      font-size:1.15rem;
+    }
+
+    .word-bank{
+      direction:rtl;
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+      padding:16px;
+      border:2px solid var(--teal);
+      border-radius:14px;
+      background:#fbfeff;
+      font-family:"Times New Roman",serif;
+      font-size:1.1rem;
+      line-height:1.5;
+    }
+
+    .word{
+      padding:6px 10px;
+      border:1px solid #b9d5dc;
+      border-radius:999px;
+      background:#eef8fa;
+      white-space:nowrap;
+    }
+
+    .arabic-title{
+      direction:rtl;
+      text-align:center;
+      margin:32px 0 22px;
+      color:var(--navy);
+      font-family:"Times New Roman",serif;
+      font-size:2rem;
+    }
+
+    .passage{
+      direction:rtl;
+      text-align:right;
+      font-family:"Times New Roman",serif;
+      font-size:1.35rem;
+      line-height:2.15;
+    }
+
+    .paragraph{
+      margin-bottom:20px;
+      padding:18px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fff;
+    }
+
+    .blank-wrap{
+      display:inline-flex;
+      flex-direction:column;
+      align-items:center;
+      vertical-align:middle;
+      margin:0 5px;
+      transform:translateY(5px);
+    }
+
+    .blank{
+      width:155px;
+      min-height:36px;
+      padding:4px 8px;
+      border:0;
+      border-bottom:2px solid var(--teal);
+      border-radius:5px 5px 0 0;
+      background:#f6fbfc;
+      font-family:"Times New Roman",serif;
+      font-size:1.08rem;
+      text-align:center;
+      direction:rtl;
+    }
+
+    .blank.wide{width:215px}
+    .blank.xwide{width:255px}
+
+    .blank:focus{
+      outline:2px solid rgba(47,127,143,.2);
+      background:#fff;
+    }
+
+    .micro{
+      margin-top:1px;
+      direction:ltr;
+      color:#6b7280;
+      font-family:Arial,Helvetica,sans-serif;
+      font-size:.56rem;
+      line-height:1;
+      white-space:nowrap;
+      letter-spacing:.01em;
+    }
+
+    .actions{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin:30px 0 8px;
+    }
+
+    button{
+      border:0;
+      border-radius:9px;
+      padding:11px 18px;
+      background:var(--navy);
+      color:#fff;
+      font-size:.95rem;
+      cursor:pointer;
+    }
+
+    button.secondary{background:#64748b}
+    button:hover{filter:brightness(1.08)}
+
+    details{
+      margin-top:32px;
+      border:2px solid #e0bb61;
+      border-radius:12px;
+      overflow:hidden;
+      background:var(--key);
+    }
+
+    summary{
+      padding:15px 18px;
+      cursor:pointer;
+      font-weight:700;
+      color:#72530a;
+    }
+
+    .key{
+      padding:0 18px 18px;
+    }
+
+    .key-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:7px 20px;
+      margin:0;
+      padding-left:24px;
+    }
+
+    .key-grid li{
+      break-inside:avoid;
+      font-family:"Times New Roman",serif;
+      font-size:1.05rem;
+    }
+
+    footer{
+      padding:18px;
+      border-top:1px solid var(--line);
+      background:#fafcfd;
+      color:#64748b;
+      text-align:center;
+      font-size:.84rem;
+    }
+
+    @media(max-width:760px){
+      main{padding:15px}
+      .passage{font-size:1.14rem}
+      .blank{width:120px}
+      .blank.wide{width:165px}
+      .blank.xwide{width:190px}
+      .key-grid{grid-template-columns:1fr}
+      header h1{font-size:1.55rem}
+    }
+
+    @media print{
+      body{background:#fff}
+      .page{max-width:none;margin:0;box-shadow:none}
+      .actions,details{display:none}
+      .paragraph{break-inside:avoid}
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Complete the Reading Passage</h1>
+    <p>Use each item from the word bank once.</p>
+  </header>
+
+  <main>
+    <div class="instructions">
+      <strong>Instructions:</strong> Choose the correct Arabic word or expression from the word bank.
+      Type one answer in each blank. The tiny English note under each blank tells you the required grammar type.
+    </div>
+
+    <h2 class="bank-title">Word Bank</h2>
+    <div class="word-bank" aria-label="Arabic word bank">
+      <span class="word">في الحيّ</span>
+      <span class="word">أنَّ الجيرانَ متعاونون</span>
+      <span class="word">الذين</span>
+      <span class="word">لا تنسي</span>
+      <span class="word">أخبرَ</span>
+      <span class="word">أرخص</span>
+      <span class="word">اللذان</span>
+      <span class="word">غرفةَ طالبٍ</span>
+      <span class="word">أن تستأجرَ</span>
+      <span class="word">مَنْ</span>
+      <span class="word">استقرّت</span>
+      <span class="word">أمامَ الجامعةِ</span>
+      <span class="word">أغلى</span>
+      <span class="word">بابُ الشقّةِ</span>
+      <span class="word">التي</span>
+      <span class="word">لن يتركَ</span>
+      <span class="word">حديقةُ المنزلِ</span>
+      <span class="word">بأن تختارَ</span>
+      <span class="word">اللواتي</span>
+      <span class="word">طبيبةً</span>
+      <span class="word">كخليّةِ النحلِ</span>
+      <span class="word">تنظّمْ</span>
+      <span class="word">أنَّ السعرَ مناسبٌ</span>
+      <span class="word">مهندسًا</span>
+      <span class="word">اللّتان</span>
+      <span class="word">في الطابقِ الأوّلِ</span>
+      <span class="word">ما</span>
+      <span class="word">تنجحْ</span>
+      <span class="word">اللّاتي</span>
+      <span class="word">مثلَ</span>
+      <span class="word">يكتسبَ</span>
+      <span class="word">شَقّةً</span>
+      <span class="word">بجانبِ المنزلِ</span>
+      <span class="word">نظّمتْ</span>
+      <span class="word">لم تشترِ</span>
+      <span class="word">تغيّرتْ</span>
+      <span class="word">ليسَ</span>
+    </div>
+
+    <h2 class="arabic-title">حياةٌ جديدةٌ في حيّ الجامعة</h2>
+
+    <section class="passage" lang="ar">
+      <div class="paragraph">
+        في بداية العام الدراسي، انتقلت أسرة مريم إلى مدينة جديدة، لأنّ والدها حصل على وظيفة قريبة من الجامعة.
+        كان والدها
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 1"><small class="micro">profession noun</small></span>
+        يعمل في شركة كبيرة، وكانت أمّها
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 2"><small class="micro">profession noun</small></span>
+        تعمل في مستشفى عام.
+      </div>
+
+      <div class="paragraph">
+        في البداية، بحثت الأسرة عن منزل مناسب، لكنها لم تجد مكانًا هادئًا بسهولة. بعد أسبوع، وجد الأب
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 3"><small class="micro">housing noun</small></span>
+        جديدة في عمارة قريبة من الجامعة. كانت الشقّة
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 4"><small class="micro">location phrase</small></span>
+        وكانت واسعة ومضيئة.
+      </div>
+
+      <div class="paragraph">
+        كان موقع المنزل مناسبًا جدًّا:
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 5"><small class="micro">fronted predicate</small></span>
+        مكتبةٌ عامّةٌ،
+        و<span class="blank-wrap"><input class="blank wide" aria-label="Blank 6"><small class="micro">fronted predicate</small></span>
+        مسجدٌ صغيرٌ،
+        و<span class="blank-wrap"><input class="blank" aria-label="Blank 7"><small class="micro">fronted predicate</small></span>
+        ملعبٌ ومسبحٌ وموقفٌ للحافلات.
+      </div>
+
+      <div class="paragraph">
+        دخلت مريم الشقّة، فأعجبها
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 8"><small class="micro">definite iḍāfa</small></span>
+        الكبير، كما أعجبتها
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 9"><small class="micro">definite iḍāfa</small></span>
+        خلف العمارة. أمّا سامر فاختار
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 10"><small class="micro">indefinite iḍāfa</small></span>
+        بسيطة قرب المكتب.
+      </div>
+
+      <div class="paragraph">
+        تعرّفت مريم إلى الطالبة
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 11"><small class="micro">fem. singular relative</small></span>
+        تسكن في الطابق الثاني، وإلى الطالبين
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 12"><small class="micro">masc. dual relative</small></span>
+        يدرسان مع أخيها. كما تعرّفت إلى الجارتين
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 13"><small class="micro">fem. dual relative</small></span>
+        تعملان في المدرسة، وإلى الجيران
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 14"><small class="micro">masc. plural relative</small></span>
+        ساعدوا الأسرة في نقل الأثاث.
+      </div>
+
+      <div class="paragraph">
+        في الجامعة، التقت مريم بالطالبات
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 15"><small class="micro">fem. plural relative</small></span>
+        يدرسن اللغة العربية، وبالنساء
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 16"><small class="micro">fem. plural relative</small></span>
+        يعملن في المركز الثقافي. قالت إنّها وجدت
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 17"><small class="micro">relative: people</small></span>
+        يساعدها، وإنها اشترت
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 18"><small class="micro">relative: things</small></span>
+        تحتاج إليه من المحل القريب.
+      </div>
+
+      <div class="paragraph">
+        بعد ذلك، قرّرت الأسرة
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 19"><small class="micro">أَنْ + subjunctive</small></span>
+        الشقّة لمدة سنة، وسمح الأب لمريم
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 20"><small class="micro">بِأَنْ + subjunctive</small></span>
+        بعض الأثاث لغرفتها. قبل أن يدفع الإيجار، عرف
+        <span class="blank-wrap"><input class="blank xwide" aria-label="Blank 21"><small class="micro">أَنَّ + nominal clause</small></span>
+        واكتشفت الأم
+        <span class="blank-wrap"><input class="blank xwide" aria-label="Blank 22"><small class="micro">أَنَّ + nominal clause</small></span>.
+      </div>
+
+      <div class="paragraph">
+        في أحد الأيام، ذهبت مريم مع أمها إلى محلّ ملابس. كان الفستان
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 23"><small class="micro">comparative</small></span>
+        من القميص، أمّا الحذاء فكان
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 24"><small class="micro">comparative</small></span>
+        من البنطلون. اختارت قميصًا أزرق، وكان لونه
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 25"><small class="micro">comparison word</small></span>
+        لون البحر.
+      </div>
+
+      <div class="paragraph">
+        كان الشارع في النهار يتحرّك
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 26"><small class="micro">كَـ comparison</small></span>.
+        قالت الأم لمريم:
+        «<span class="blank-wrap"><input class="blank" aria-label="Blank 27"><small class="micro">negative command</small></span>
+        المقاس قبل الشراء». اشترت مريم القميص، لكنها
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 28"><small class="micro">لَمْ + jussive</small></span>
+        الفستان بسبب سعره.
+      </div>
+
+      <div class="paragraph">
+        أمّا سامر فكان يعمل مساءً كي
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 29"><small class="micro">كَيْ + subjunctive</small></span>
+        خبرةً، لكنه
+        <span class="blank-wrap"><input class="blank wide" aria-label="Blank 30"><small class="micro">لَنْ + subjunctive</small></span>
+        دراسته. قال له والده:
+        «إنْ
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 31"><small class="micro">conditional jussive</small></span>
+        وقتك جيدًا،
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 32"><small class="micro">result jussive</small></span>
+        في دراستك وعملك».
+      </div>
+
+      <div class="paragraph">
+        مع مرور الوقت،
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 33"><small class="micro">Form V past verb</small></span>
+        حياة الأسرة.
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 34"><small class="micro">Form II past verb</small></span>
+        الجامعة نشاطًا للطلاب الجدد، و
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 35"><small class="micro">Form IV past verb</small></span>
+        الأستاذ الطلاب بموعده.
+      </div>
+
+      <div class="paragraph">
+        في النهاية،
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 36"><small class="micro">Form X past verb</small></span>
+        الأسرة في الحي، وعرف أفرادها أنّ الانتقال إلى بلد جديد
+        <span class="blank-wrap"><input class="blank" aria-label="Blank 37"><small class="micro">nominal negation</small></span>
+        سهلًا، لكنه قد يكون بدايةً لمستقبل أفضل.
+      </div>
+    </section>
+
+    <div class="actions">
+      <button onclick="window.print()">Print Activity</button>
+      <button class="secondary" onclick="clearAnswers()">Clear Answers</button>
+    </div>
+
+    <details>
+      <summary>Instructor Answer Key</summary>
+      <div class="key">
+        <ol class="key-grid">
+          <li>مهندسًا</li>
+          <li>طبيبةً</li>
+          <li>شَقّةً</li>
+          <li>في الطابقِ الأوّلِ</li>
+          <li>أمامَ الجامعةِ</li>
+          <li>بجانبِ المنزلِ</li>
+          <li>في الحيّ</li>
+          <li>بابُ الشقّةِ</li>
+          <li>حديقةُ المنزلِ</li>
+          <li>غرفةَ طالبٍ</li>
+          <li>التي</li>
+          <li>اللذان</li>
+          <li>اللّتان</li>
+          <li>الذين</li>
+          <li>اللّاتي</li>
+          <li>اللواتي</li>
+          <li>مَنْ</li>
+          <li>ما</li>
+          <li>أن تستأجرَ</li>
+          <li>بأن تختارَ</li>
+          <li>أنَّ السعرَ مناسبٌ</li>
+          <li>أنَّ الجيرانَ متعاونون</li>
+          <li>أغلى</li>
+          <li>أرخص</li>
+          <li>مثلَ</li>
+          <li>كخليّةِ النحلِ</li>
+          <li>لا تنسي</li>
+          <li>لم تشترِ</li>
+          <li>يكتسبَ</li>
+          <li>لن يتركَ</li>
+          <li>تنظّمْ</li>
+          <li>تنجحْ</li>
+          <li>تغيّرتْ</li>
+          <li>نظّمتْ</li>
+          <li>أخبرَ</li>
+          <li>استقرّت</li>
+          <li>ليسَ</li>
+        </ol>
+      </div>
+    </details>
+  </main>
+
+  <footer>ACTFL Intermediate Mid — Arabic Reading and Grammar Practice</footer>
+</div>
+
+<script>
+  function clearAnswers(){
+    document.querySelectorAll(".blank").forEach(function(input){
+      input.value="";
+    });
+  }
+</script>
+</body>
+</html>
