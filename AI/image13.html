@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>السياسات اللغوية الأمريكية: التحديات وأوجه التعزيز</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    :root{
+      --page-width: 1580px;
+      --row-height: 128px;
+      --row-gap: 22px;
+
+      --blue:#2459d8;
+      --blue-dark:#1f469e;
+      --blue-bg:#eef4ff;
+
+      --red:#d34a4d;
+      --red-dark:#a7262a;
+      --red-bg:#fff3f3;
+
+      --green:#2eaa65;
+      --green-dark:#14713d;
+      --green-bg:#effaf3;
+
+      --purple:#8056df;
+      --purple-dark:#5526b3;
+      --purple-bg:#f6f1ff;
+
+      --ink:#172033;
+      --muted:#667085;
+      --line:#dbe3ec;
+      --shadow:0 5px 18px rgba(15,23,42,.055);
+    }
+
+    *{box-sizing:border-box;}
+
+    body{
+      margin:0;
+      background:#eef2f6;
+      color:var(--ink);
+      font-family:Arial, "Arial Unicode MS", sans-serif;
+    }
+
+    [contenteditable="true"]{
+      border-radius:5px;
+      transition:.15s ease;
+    }
+
+    body:not(.capturing) [contenteditable="true"]:hover{
+      outline:1px dashed #94a3b8;
+      background:rgba(255,255,255,.72);
+      cursor:text;
+    }
+
+    body:not(.capturing) [contenteditable="true"]:focus{
+      outline:2px solid #2563eb;
+      background:#fff;
+    }
+
+    .toolbar{
+      position:fixed;
+      inset-inline:0;
+      top:0;
+      z-index:100;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px 22px;
+      background:#fff;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      direction:ltr;
+    }
+
+    .toolbar-title{
+      font-size:18px;
+      font-weight:700;
+      color:#1f2937;
+    }
+
+    .toolbar-note{
+      display:inline-block;
+      margin-left:10px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:#f3f4f6;
+      color:#6b7280;
+      font-size:13px;
+    }
+
+    .download-btn{
+      border:0;
+      border-radius:9px;
+      padding:11px 18px;
+      background:#2563eb;
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .workspace{
+      margin-top:86px;
+      padding:20px;
+      display:flex;
+      justify-content:center;
+      overflow:auto;
+    }
+
+    .canvas{
+      width:var(--page-width);
+      min-width:var(--page-width);
+      padding:42px 44px 38px;
+      background:#fff;
+      box-shadow:0 4px 24px rgba(0,0,0,.06);
+    }
+
+    .header{
+      text-align:center;
+      margin-bottom:18px;
+    }
+
+    .header h1{
+      margin:0 0 8px;
+      font-size:44px;
+      line-height:1.3;
+      font-weight:700;
+      color:var(--ink);
+    }
+
+    .header p{
+      margin:0;
+      font-size:22px;
+      line-height:1.55;
+      color:var(--muted);
+    }
+
+    .legend{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:28px;
+      flex-wrap:wrap;
+      margin:18px 0 26px;
+    }
+
+    .legend-item{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      font-size:19px;
+      font-weight:700;
+      color:#475569;
+      white-space:nowrap;
+    }
+
+    .legend-dot{
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      flex:0 0 auto;
+    }
+
+    /* Stable seven-column system:
+       model | relation | solution | relation | challenge | relation | policy hub */
+    .graph{
+      direction:ltr;
+      display:grid;
+      grid-template-columns:
+        260px 150px
+        285px 150px
+        285px 150px
+        230px;
+      grid-template-rows:
+        72px
+        repeat(5, var(--row-height));
+      column-gap:0;
+      row-gap:var(--row-gap);
+      align-items:stretch;
+      width:1490px;
+      margin:0 auto;
+      position:relative;
+    }
+
+    .column-heading{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 16px;
+      border-radius:16px;
+      border:2px solid;
+      box-shadow:var(--shadow);
+      font-size:27px;
+      line-height:1.3;
+      font-weight:700;
+      text-align:center;
+      direction:rtl;
+    }
+
+    .heading-model{
+      grid-column:1;
+      background:var(--purple-bg);
+      border-color:var(--purple);
+      color:var(--purple-dark);
+    }
+
+    .heading-solution{
+      grid-column:3;
+      background:var(--green-bg);
+      border-color:var(--green);
+      color:var(--green-dark);
+    }
+
+    .heading-challenge{
+      grid-column:5;
+      background:var(--red-bg);
+      border-color:var(--red);
+      color:var(--red-dark);
+    }
+
+    .heading-hub{
+      grid-column:7;
+      background:var(--blue-bg);
+      border-color:var(--blue);
+      color:var(--blue-dark);
+    }
+
+    .node{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-width:0;
+      padding:18px 20px;
+      border:2px solid;
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      text-align:center;
+      direction:rtl;
+      font-size:23px;
+      line-height:1.5;
+      font-weight:700;
+      overflow-wrap:anywhere;
+    }
+
+    .node-model{
+      grid-column:1;
+      background:var(--purple-bg);
+      border-color:var(--purple);
+      color:var(--purple-dark);
+    }
+
+    .node-solution{
+      grid-column:3;
+      background:var(--green-bg);
+      border-color:var(--green);
+      color:var(--green-dark);
+    }
+
+    .node-challenge{
+      grid-column:5;
+      background:var(--red-bg);
+      border-color:var(--red);
+      color:var(--red-dark);
+    }
+
+    .r1{grid-row:2;}
+    .r2{grid-row:3;}
+    .r3{grid-row:4;}
+    .r4{grid-row:5;}
+    .r5{grid-row:6;}
+
+    .hub-panel{
+      grid-column:7;
+      grid-row:2 / span 5;
+      position:relative;
+      display:grid;
+      grid-template-rows:repeat(5, var(--row-height));
+      row-gap:var(--row-gap);
+      border:2px solid var(--blue);
+      border-radius:22px;
+      background:linear-gradient(180deg,#f4f7ff 0%,#eaf1ff 100%);
+      box-shadow:var(--shadow);
+      overflow:visible;
+    }
+
+    .hub-title{
+      position:absolute;
+      inset:50% 22px auto;
+      transform:translateY(-50%);
+      z-index:2;
+      padding:22px 16px;
+      border-radius:18px;
+      border:2px solid var(--blue);
+      background:#fff;
+      color:var(--blue-dark);
+      text-align:center;
+      direction:rtl;
+      font-size:25px;
+      line-height:1.5;
+      font-weight:700;
+      box-shadow:0 6px 20px rgba(36,89,216,.10);
+    }
+
+    .hub-port{
+      position:relative;
+    }
+
+    .hub-port::before{
+      content:"";
+      position:absolute;
+      left:-8px;
+      top:50%;
+      width:16px;
+      height:16px;
+      transform:translateY(-50%);
+      border-radius:50%;
+      background:var(--blue);
+      box-shadow:0 0 0 5px #fff;
+      z-index:4;
+    }
+
+    .connector{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-width:0;
+      overflow:visible;
+    }
+
+    .connector svg{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      overflow:visible;
+    }
+
+    .connector-line{
+      fill:none;
+      stroke-width:3.2;
+      stroke-linecap:round;
+    }
+
+    .connector-arrow{
+      stroke:none;
+    }
+
+    .connector-red .connector-line{stroke:var(--red);}
+    .connector-red .connector-arrow{fill:var(--red);}
+
+    .connector-green .connector-line{stroke:var(--green);}
+    .connector-green .connector-arrow{fill:var(--green);}
+
+    .connector-purple .connector-line{stroke:var(--purple);}
+    .connector-purple .connector-arrow{fill:var(--purple);}
+
+    .relation-label{
+      position:relative;
+      z-index:3;
+      max-width:132px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1.5px solid currentColor;
+      box-shadow:0 2px 7px rgba(15,23,42,.05);
+      text-align:center;
+      direction:rtl;
+      font-size:16px;
+      line-height:1.25;
+      font-weight:700;
+      white-space:normal;
+    }
+
+    .connector-red .relation-label{color:var(--red);}
+    .connector-green .relation-label{color:var(--green);}
+    .connector-purple .relation-label{color:var(--purple);}
+
+    .hub-to-challenge{grid-column:6;}
+    .challenge-to-solution{grid-column:4;}
+    .solution-to-model{grid-column:2;}
+
+    .footer{
+      margin-top:24px;
+      padding-top:17px;
+      border-top:1px solid var(--line);
+      text-align:center;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.6;
+    }
+
+    @media(max-width:1620px){
+      .workspace{justify-content:flex-start;}
+    }
+
+    @media print{
+      body{background:#fff;}
+      .toolbar{display:none;}
+      .workspace{margin:0;padding:0;}
+      .canvas{box-shadow:none;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <div>
+      <span class="toolbar-title">Editable layered knowledge graph</span>
+      <span class="toolbar-note">Click the title, cards, or relation labels to edit</span>
+    </div>
+    <button id="downloadBtn" class="download-btn" onclick="downloadFigure()">Download PNG</button>
+  </div>
+
+  <div class="workspace">
+    <main id="captureArea" class="canvas">
+
+      <header class="header">
+        <h1 contenteditable="true">السياسات اللغوية الأمريكية: التحديات وأوجه التعزيز</h1>
+        <p contenteditable="true">من محور السياسة إلى التحديات، ثم الحلول والنماذج التطبيقية</p>
+      </header>
+
+      <section class="legend">
+        <div class="legend-item">
+          <span class="legend-dot" style="background:var(--blue)"></span>
+          <span contenteditable="true">محور السياسة</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:var(--red)"></span>
+          <span contenteditable="true">تحدٍّ قائم</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:var(--green)"></span>
+          <span contenteditable="true">وجه تعزيز / حل</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:var(--purple)"></span>
+          <span contenteditable="true">نموذج تطبيقي</span>
+        </div>
+      </section>
+
+      <section class="graph">
+
+        <div class="column-heading heading-model" contenteditable="true">النماذج التطبيقية</div>
+        <div class="column-heading heading-solution" contenteditable="true">أوجه التعزيز / الحلول</div>
+        <div class="column-heading heading-challenge" contenteditable="true">التحديات القائمة</div>
+        <div class="column-heading heading-hub" contenteditable="true">محور السياسة اللغوية</div>
+
+        <!-- Row 1 -->
+        <div class="node node-model r1" contenteditable="true">نموذج هاواي</div>
+
+        <div class="connector connector-purple solution-to-model r1">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">يتجسّد في</span>
+        </div>
+
+        <div class="node node-solution r1" contenteditable="true">ثنائية الحوار</div>
+
+        <div class="connector connector-green challenge-to-solution r1">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">يُخفَّف عبر</span>
+        </div>
+
+        <div class="node node-challenge r1" contenteditable="true">الاستقطاب السياسي</div>
+
+        <div class="connector connector-red hub-to-challenge r1">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">تتأثر بـ</span>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="node node-model r2" contenteditable="true">الأمر التنفيذي 13166 (2000)</div>
+
+        <div class="connector connector-purple solution-to-model r2">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">يتجسّد في</span>
+        </div>
+
+        <div class="node node-solution r2" contenteditable="true">إطار فيدرالي مرجعي</div>
+
+        <div class="connector connector-green challenge-to-solution r2">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">يُعالَج عبر</span>
+        </div>
+
+        <div class="node node-challenge r2" contenteditable="true">التشظّي المؤسسي</div>
+
+        <div class="connector connector-red hub-to-challenge r2">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">تتعقّد بفعل</span>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="node node-model r3" contenteditable="true">قانون مترجمي المحاكم</div>
+
+        <div class="connector connector-purple solution-to-model r3">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">يُطبَّق في</span>
+        </div>
+
+        <div class="node node-solution r3" contenteditable="true">منظومة جودة الترجمة</div>
+
+        <div class="connector connector-green challenge-to-solution r3">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">تُسدّ عبر</span>
+        </div>
+
+        <div class="node node-challenge r3" contenteditable="true">فجوة النص والتطبيق</div>
+
+        <div class="connector connector-red hub-to-challenge r3">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">تكشف عن</span>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="node node-model r4" contenteditable="true">قانون كاليفورنيا لعام 1968</div>
+
+        <div class="connector connector-purple solution-to-model r4">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">يتجسّد في</span>
+        </div>
+
+        <div class="node node-solution r4" contenteditable="true">معايير اعتماد وطنية</div>
+
+        <div class="connector connector-green challenge-to-solution r4">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">يُحسَّن عبر</span>
+        </div>
+
+        <div class="node node-challenge r4" contenteditable="true">ضعف التصميم ثنائي اللغة</div>
+
+        <div class="connector connector-red hub-to-challenge r4">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">تعاني من</span>
+        </div>
+
+        <!-- Row 5 -->
+        <div class="node node-model r5" contenteditable="true">أها بونانا ليو</div>
+
+        <div class="connector connector-purple solution-to-model r5">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">يمثّله</span>
+        </div>
+
+        <div class="node node-solution r5" contenteditable="true">إنعاش اللغة الرقمية</div>
+
+        <div class="connector connector-green challenge-to-solution r5">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">يُواجَه عبر</span>
+        </div>
+
+        <div class="node node-challenge r5" contenteditable="true">تراجع لغات الأصليين</div>
+
+        <div class="connector connector-red hub-to-challenge r5">
+          <svg viewBox="0 0 150 128" preserveAspectRatio="none" aria-hidden="true">
+            <line class="connector-line" x1="148" y1="64" x2="10" y2="64"></line>
+            <polygon class="connector-arrow" points="8,64 20,56 20,72"></polygon>
+          </svg>
+          <span class="relation-label" contenteditable="true">تواجه تحدّي</span>
+        </div>
+
+        <!-- Stable policy hub spanning all five rows -->
+        <div class="hub-panel">
+          <div class="hub-port"></div>
+          <div class="hub-port"></div>
+          <div class="hub-port"></div>
+          <div class="hub-port"></div>
+          <div class="hub-port"></div>
+
+          <div class="hub-title" contenteditable="true">
+            السياسات اللغوية الأمريكية
+          </div>
+        </div>
+
+      </section>
+
+      <div class="footer" contenteditable="true">
+        جميع الموصلات صلبة وموجّهة من اليمين إلى اليسار؛ ويعبّر اللون عن نوع الانتقال بين طبقات المخطط.
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    function downloadFigure(){
+      const btn = document.getElementById('downloadBtn');
+      const area = document.getElementById('captureArea');
+
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+      document.body.classList.add('capturing');
+
+      setTimeout(() => {
+        html2canvas(area, {
+          scale: 2.5,
+          backgroundColor: '#ffffff',
+          useCORS: true,
+          logging: false,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: area.scrollWidth,
+          windowHeight: area.scrollHeight
+        }).then(canvas => {
+          const link = document.createElement('a');
+          link.download = 'us-language-policy-layered-knowledge-graph-clean.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        }).finally(() => {
+          document.body.classList.remove('capturing');
+          btn.disabled = false;
+          btn.textContent = 'Download PNG';
+        });
+      }, 250);
+    }
+  </script>
+</body>
+</html>
