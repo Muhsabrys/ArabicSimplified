@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مسار منهجية تحليل قرارات السياسة اللغوية الأمريكية</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    :root {
+      --p1:#2f9e75; --p1bg:#eaf7f2;
+      --p2:#dd6338; --p2bg:#fceee8;
+      --p3:#5a4fc1; --p3bg:#f0effb;
+      --p4:#1f66a8; --p4bg:#eaf3fa;
+      --p5:#bb384a; --p5bg:#faecef;
+      --ink:#182235;
+      --muted:#667085;
+      --line:#dbe3ec;
+      --panel:#f8fafc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #eef2f6;
+      font-family: 'Tajawal', sans-serif;
+      color: var(--ink);
+    }
+
+    [contenteditable="true"] {
+      border-radius: 5px;
+      transition: .15s ease;
+    }
+
+    body:not(.capturing) [contenteditable="true"]:hover {
+      outline: 1px dashed #94a3b8;
+      background: rgba(255,255,255,.55);
+      cursor: text;
+    }
+
+    body:not(.capturing) [contenteditable="true"]:focus {
+      outline: 2px solid #2563eb;
+      background: #fff;
+    }
+
+    .toolbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+      padding: 14px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      direction: ltr;
+    }
+
+    .toolbar-title {
+      font-weight: 800;
+      color: #1f2937;
+      font-size: 18px;
+    }
+
+    .toolbar-note {
+      font-size: 13px;
+      color: #6b7280;
+      background: #f3f4f6;
+      padding: 7px 10px;
+      border-radius: 999px;
+      margin-left: 10px;
+    }
+
+    .download-btn {
+      border: 0;
+      background: #2563eb;
+      color: #fff;
+      padding: 11px 18px;
+      border-radius: 9px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .workspace {
+      margin-top: 86px;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+    }
+
+    /* Full-page, Word-friendly page fill */
+    .canvas {
+      width: 1500px;
+      min-width: 1500px;
+      background: #fff;
+      padding: 56px 72px 54px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.06);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 42px;
+    }
+
+    .header h1 {
+      font-size: 46px;
+      line-height: 1.32;
+      font-weight: 800;
+      margin: 0 0 12px;
+      color: var(--ink);
+    }
+
+    .header h2 {
+      font-size: 26px;
+      line-height: 1.55;
+      font-weight: 500;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .flow {
+      position: relative;
+      width: 100%;
+    }
+
+    .phase {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 26px;
+      align-items: stretch;
+      position: relative;
+    }
+
+    .phase-number-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .number {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      border: 4px solid var(--phase);
+      background: #fff;
+      color: var(--phase);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      font-weight: 800;
+      flex: 0 0 auto;
+      z-index: 4;
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    }
+
+    .vertical-line {
+      width: 5px;
+      flex: 1 1 auto;
+      min-height: 52px;
+      background: linear-gradient(to bottom, var(--phase), #d8dee8);
+      margin-top: 10px;
+      border-radius: 999px;
+    }
+
+    .phase:last-of-type .vertical-line {
+      display: none;
+    }
+
+    .card {
+      border: 1px solid #e5e7eb;
+      border-right: 10px solid var(--phase);
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px 34px 24px;
+      box-shadow: 0 8px 26px rgba(0,0,0,.05);
+      margin-bottom: 24px;
+      position: relative;
+      width: 100%;
+    }
+
+    .phase-meta {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .phase-title {
+      font-size: 33px;
+      line-height: 1.3;
+      font-weight: 800;
+      color: var(--phase);
+      margin-bottom: 16px;
+    }
+
+    .phase-list {
+      margin: 0 0 18px;
+      padding: 0;
+      list-style: none;
+      font-size: 24px;
+      line-height: 1.78;
+      color: #334155;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 44px;
+      row-gap: 4px;
+    }
+
+    .phase-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--phase);
+      flex: 0 0 auto;
+      margin-top: 16px;
+    }
+
+    .footer-chip {
+      display: inline-block;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--phase);
+      background: var(--phase-bg);
+      padding: 9px 18px;
+      border-radius: 8px;
+    }
+
+    .nahir-badge {
+      position: absolute;
+      top: 18px;
+      left: 26px;
+      background: var(--p4);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 800;
+      padding: 8px 14px;
+      border-radius: 8px;
+    }
+
+    .methodology {
+      margin-top: 18px;
+      border: 1px solid #dfe5ec;
+      border-right: 10px solid #435168;
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 30px 34px;
+    }
+
+    .methodology h3 {
+      font-size: 33px;
+      font-weight: 800;
+      color: #435168;
+      margin: 0 0 18px;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 34px;
+    }
+
+    .method-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 23px;
+      line-height: 1.75;
+      color: #334155;
+    }
+
+    .check {
+      color: #435168;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .caption {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #374151;
+      margin-top: 24px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1540px) {
+      .workspace { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <div>
+      <span class="toolbar-title">Full-page methodology figure</span>
+      <span class="toolbar-note">Click any text to edit</span>
+    </div>
+    <button id="downloadBtn" class="download-btn" onclick="downloadFigure()">Download PNG</button>
+  </div>
+
+  <div class="workspace">
+    <main id="captureArea" class="canvas">
+      <header class="header">
+        <h1 contenteditable="true">مسار منهجية تحليل قرارات السياسة اللغوية الأمريكية</h1>
+        <h2 contenteditable="true">هيكلة المراحل التحليلية وتصنيف البيانات التشريعية وتفسيرها</h2>
+      </header>
+
+      <section class="flow">
+        <article class="phase" style="--phase:var(--p1);--phase-bg:var(--p1bg);">
+          <div class="phase-number-wrap">
+            <div class="number">١</div>
+            <div class="vertical-line"></div>
+          </div>
+          <div class="card">
+            <div class="phase-meta" contenteditable="true">المرحلة الأولى</div>
+            <div class="phase-title" contenteditable="true">جمع البيانات الخام</div>
+            <ul class="phase-list">
+              <li><span class="dot"></span><span contenteditable="true">قوانين فيدرالية وولائية</span></li>
+              <li><span class="dot"></span><span contenteditable="true">لوائح تنفيذية وأوامر رئاسية</span></li>
+              <li><span class="dot"></span><span contenteditable="true">أحكام قضائية</span></li>
+              <li><span class="dot"></span><span contenteditable="true">أنظمة تعليمية وإدارية</span></li>
+              <li><span class="dot"></span><span contenteditable="true">استفتاءات ومبادرات شعبية</span></li>
+            </ul>
+            <div class="footer-chip" contenteditable="true">الفترة: ١٩١٢–٢٠٢٥</div>
+          </div>
+        </article>
+
+        <article class="phase" style="--phase:var(--p2);--phase-bg:var(--p2bg);">
+          <div class="phase-number-wrap">
+            <div class="number">٢</div>
+            <div class="vertical-line"></div>
+          </div>
+          <div class="card">
+            <div class="phase-meta" contenteditable="true">المرحلة الثانية</div>
+            <div class="phase-title" contenteditable="true">التصفية المتعددة وبناء العينة</div>
+            <ul class="phase-list">
+              <li><span class="dot"></span><span contenteditable="true">استبعاد المواد غير ذات الصلة</span></li>
+              <li><span class="dot"></span><span contenteditable="true">التحقق من المصادر الأولية</span></li>
+              <li><span class="dot"></span><span contenteditable="true">إزالة التكرار التشريعي</span></li>
+              <li><span class="dot"></span><span contenteditable="true">تمييز القرار المستقل من العرضي</span></li>
+            </ul>
+            <div class="footer-chip" contenteditable="true">١١٢ قرارًا نهائيًا</div>
+          </div>
+        </article>
+
+        <article class="phase" style="--phase:var(--p3);--phase-bg:var(--p3bg);">
+          <div class="phase-number-wrap">
+            <div class="number">٣</div>
+            <div class="vertical-line"></div>
+          </div>
+          <div class="card">
+            <div class="phase-meta" contenteditable="true">المرحلة الثالثة</div>
+            <div class="phase-title" contenteditable="true">التصنيف الأولي</div>
+            <ul class="phase-list">
+              <li><span class="dot"></span><span contenteditable="true">الاستقلال والعرضية</span></li>
+              <li><span class="dot"></span><span contenteditable="true">جهة الإصدار والمستوى الحكومي</span></li>
+              <li><span class="dot"></span><span contenteditable="true">سنة الإصدار والحقبة</span></li>
+              <li><span class="dot"></span><span contenteditable="true">مجالات السياسة اللغوية</span></li>
+            </ul>
+            <div class="footer-chip" contenteditable="true">٤ محاور تصنيفية</div>
+          </div>
+        </article>
+
+        <article class="phase" style="--phase:var(--p4);--phase-bg:var(--p4bg);">
+          <div class="phase-number-wrap">
+            <div class="number">٤</div>
+            <div class="vertical-line"></div>
+          </div>
+          <div class="card">
+            <div class="nahir-badge" contenteditable="true">إطار ناهير (٢٠٠٣)</div>
+            <div class="phase-meta" contenteditable="true">المرحلة الرابعة</div>
+            <div class="phase-title" contenteditable="true">أنواع التخطيط اللغوي</div>
+            <ul class="phase-list">
+              <li><span class="dot"></span><span contenteditable="true">تخطيط الوضع/المكانة</span></li>
+              <li><span class="dot"></span><span contenteditable="true">تخطيط الاكتساب</span></li>
+              <li><span class="dot"></span><span contenteditable="true">تخطيط المتن</span></li>
+              <li><span class="dot"></span><span contenteditable="true">الربط بالأهداف المؤسسية</span></li>
+            </ul>
+            <div class="footer-chip" contenteditable="true">التأطير النظري</div>
+          </div>
+        </article>
+
+        <article class="phase" style="--phase:var(--p5);--phase-bg:var(--p5bg);">
+          <div class="phase-number-wrap">
+            <div class="number">٥</div>
+            <div class="vertical-line"></div>
+          </div>
+          <div class="card">
+            <div class="phase-meta" contenteditable="true">المرحلة الخامسة</div>
+            <div class="phase-title" contenteditable="true">أهداف التخطيط اللغوي والتفسير</div>
+            <ul class="phase-list">
+              <li><span class="dot"></span><span contenteditable="true">التقييس اللغوي</span></li>
+              <li><span class="dot"></span><span contenteditable="true">التواصل عبر اللغات</span></li>
+              <li><span class="dot"></span><span contenteditable="true">نشر اللغة أو تقييدها</span></li>
+              <li><span class="dot"></span><span contenteditable="true">التفسير التاريخي والسياسي</span></li>
+            </ul>
+            <div class="footer-chip" contenteditable="true">المخرجات التحليلية النهائية</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="methodology">
+        <h3 contenteditable="true">التصميم الوصفي التفسيري والمبادئ التحليلية</h3>
+        <div class="method-grid">
+          <div class="method-item"><span class="check">✓</span><span contenteditable="true"><b>التحليل الكمي:</b> وصف العينة وتصنيفها وحساب التوزيعات والنسب.</span></div>
+          <div class="method-item"><span class="check">✓</span><span contenteditable="true"><b>التحليل الكيفي:</b> السرد التاريخي والتفسير السياقي.</span></div>
+          <div class="method-item"><span class="check">✓</span><span contenteditable="true">الأعداد مؤشرات وصفية لاتجاهات العينة، لا حصرًا شاملًا للظاهرة.</span></div>
+          <div class="method-item"><span class="check">✓</span><span contenteditable="true">ربط القرارات بسياقاتها السياسية والاجتماعية والاقتصادية.</span></div>
+        </div>
+      </section>
+
+      <div class="caption" contenteditable="true">
+        الشكل (٦): المراحل الإجرائية لبناء عينة قرارات السياسة اللغوية الأمريكية وترميزها وتحليلها
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function downloadFigure() {
+      const btn = document.getElementById('downloadBtn');
+      const area = document.getElementById('captureArea');
+
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+      document.body.classList.add('capturing');
+
+      setTimeout(() => {
+        html2canvas(area, {
+          scale: 2.5,
+          backgroundColor: '#ffffff',
+          useCORS: true,
+          logging: false
+        }).then(canvas => {
+          const link = document.createElement('a');
+          link.download = 'language-policy-methodology-full-page.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        }).finally(() => {
+          document.body.classList.remove('capturing');
+          btn.disabled = false;
+          btn.textContent = 'Download PNG';
+        });
+      }, 250);
+    }
+  </script>
+</body>
+</html>
