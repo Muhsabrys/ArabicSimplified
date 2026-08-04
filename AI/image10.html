@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>مجالات السياسة اللغوية</title>
+<style>
+  :root{
+    --ink:#24313a;
+    --muted:#66737c;
+    --paper:#ffffff;
+    --line:#d6dde2;
+    --shadow:0 18px 50px rgba(25,42,55,.10);
+
+    --law:#155f75;
+    --admin:#1f7a45;
+    --edu:#e8772f;
+    --work:#1b4456;
+    --economy:#9a3f16;
+    --culture:#2495bd;
+    --health:#4d9e34;
+    --travel:#6d7e45;
+    --media:#a6487f;
+    --diplomacy:#4e6658;
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    background:#eef2f4;
+    font-family:Arial, Tahoma, sans-serif;
+    color:var(--ink);
+  }
+
+  .toolbar{
+    width:min(1700px, calc(100% - 32px));
+    margin:18px auto 0;
+    display:flex;
+    gap:10px;
+    justify-content:flex-start;
+    direction:rtl;
+  }
+
+  button{
+    border:1px solid #bcc8cf;
+    background:#fff;
+    color:#26343d;
+    border-radius:10px;
+    padding:11px 17px;
+    font:700 15px Arial, Tahoma, sans-serif;
+    cursor:pointer;
+  }
+
+  button.primary{
+    background:#155f75;
+    border-color:#155f75;
+    color:#fff;
+  }
+
+  #figure{
+    width:1700px;
+    min-height:1040px;
+    margin:14px auto 30px;
+    background:var(--paper);
+    border:1px solid #cfd7dc;
+    box-shadow:var(--shadow);
+    padding:52px 62px 42px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  #figure::before{
+    content:"";
+    position:absolute;
+    inset:0 0 auto 0;
+    height:12px;
+    background:linear-gradient(90deg,#124e61,#237f91,#78aab3);
+  }
+
+  .header{
+    display:grid;
+    grid-template-columns:1fr 460px;
+    gap:34px;
+    align-items:start;
+    margin-bottom:26px;
+  }
+
+  h1{
+    margin:0 0 16px;
+    font-family:Arial, Tahoma, sans-serif;
+    font-size:60px;
+    font-weight:700;
+    line-height:1.18;
+    letter-spacing:0;
+    color:#223039;
+  }
+
+  .subtitle{
+    margin:0;
+    font-size:29px;
+    line-height:1.8;
+    color:var(--muted);
+    max-width:1040px;
+  }
+
+  .summary{
+    border:1px solid #d7e0e5;
+    background:linear-gradient(180deg,#fbfdfe,#f4f8fa);
+    border-radius:18px;
+    padding:24px 26px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  .summary .metric{
+    text-align:center;
+    padding:12px 8px;
+  }
+
+  .summary strong{
+    display:block;
+    color:#155f75;
+    font-size:48px;
+    margin-bottom:10px;
+    line-height:1.1;
+    font-weight:700;
+  }
+
+  .summary span{
+    font-size:22px;
+    line-height:1.55;
+    color:#5e6b74;
+    font-weight:700;
+  }
+
+  .mosaic{
+    display:grid;
+    grid-template-columns:1.45fr 1fr 1fr;
+    grid-template-rows:300px 240px 185px 150px;
+    grid-template-areas:
+      "law admin admin"
+      "law edu edu"
+      "work economy culture"
+      "health travel smalls";
+    gap:16px;
+    direction:ltr;
+  }
+
+  .panel{
+    border-radius:24px;
+    position:relative;
+    overflow:hidden;
+    padding:28px 30px;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-width:0;
+  }
+
+  .panel::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(255,255,255,.18), transparent 34%),
+      linear-gradient(140deg, rgba(255,255,255,.05), rgba(255,255,255,0));
+    pointer-events:none;
+  }
+
+  .panel > *{
+    position:relative;
+    z-index:1;
+  }
+
+  .panel h2{
+    margin:0;
+    font-size:35px;
+    line-height:1.2;
+  }
+
+  .value{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:18px;
+    direction:rtl;
+  }
+
+  .count-wrap{
+    display:flex;
+    align-items:flex-end;
+    gap:9px;
+  }
+
+  .count{
+    font-size:64px;
+    font-weight:800;
+    line-height:1;
+  }
+
+  .unit{
+    font-size:20px;
+    font-weight:700;
+    padding-bottom:8px;
+  }
+
+  .pct{
+    font-size:31px;
+    font-weight:800;
+    line-height:1;
+    background:rgba(255,255,255,.17);
+    border:1px solid rgba(255,255,255,.22);
+    padding:10px 14px;
+    border-radius:14px;
+    white-space:nowrap;
+  }
+
+  .law{grid-area:law;background:var(--law)}
+  .admin{grid-area:admin;background:var(--admin)}
+  .edu{grid-area:edu;background:var(--edu)}
+  .work{grid-area:work;background:var(--work)}
+  .economy{grid-area:economy;background:var(--economy)}
+  .culture{grid-area:culture;background:var(--culture)}
+  .health{grid-area:health;background:var(--health)}
+  .travel{grid-area:travel;background:var(--travel)}
+
+  .small-stack{
+    grid-area:smalls;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    direction:ltr;
+  }
+
+  .small{
+    border-radius:22px;
+    color:#fff;
+    padding:20px 20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    overflow:hidden;
+    position:relative;
+  }
+
+  .small::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 15% 15%, rgba(255,255,255,.18), transparent 35%);
+  }
+
+  .small > *{position:relative;z-index:1}
+
+  .small h3{
+    margin:0;
+    font-size:25px;
+    line-height:1.15;
+  }
+
+  .small .small-value{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:10px;
+  }
+
+  .small .small-count{
+    font-size:38px;
+    font-weight:800;
+    line-height:1;
+  }
+
+  .small .small-pct{
+    font-size:21px;
+    font-weight:800;
+    background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.20);
+    border-radius:11px;
+    padding:7px 9px;
+  }
+
+  .media{background:var(--media)}
+  .diplomacy{background:var(--diplomacy)}
+
+  .compact h2{font-size:30px}
+  .compact .count{font-size:49px}
+  .compact .pct{font-size:25px}
+  .compact .unit{font-size:17px;padding-bottom:6px}
+
+  [contenteditable="true"]:focus{
+    outline:2px dashed #95aeb8;
+    outline-offset:4px;
+    border-radius:5px;
+  }
+
+  @media print{
+    body{background:#fff}
+    .toolbar{display:none}
+    #figure{
+      width:100%;
+      margin:0;
+      border:none;
+      box-shadow:none;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div class="toolbar">
+  <button class="primary" onclick="exportPNG()">تصدير PNG عالي الدقة</button>
+  <button onclick="window.print()">طباعة / حفظ PDF</button>
+</div>
+
+<main id="figure">
+  <section class="header">
+    <div>
+      <h1 contenteditable="true">مجالات السياسة اللغوية</h1>
+      <p class="subtitle" contenteditable="true">
+        توزيع بصري تقريبي لـ ١٩٦ إسنادًا مجاليًا موزعة على ١١٢ قرارًا. يعبّر حجم كل لوحة عن الوزن النسبي للمجال، بينما تعرض القيم داخلها العدد والنسبة الدقيقة.
+      </p>
+    </div>
+
+    <div class="summary">
+      <div class="metric">
+        <strong>١٩٦</strong>
+        <span contenteditable="true">إجمالي الإسنادات<br>المجالية</span>
+      </div>
+      <div class="metric">
+        <strong>١١٢</strong>
+        <span contenteditable="true">عدد القرارات<br>الفريدة</span>
+      </div>
+      <div class="metric">
+        <strong>١٠</strong>
+        <span contenteditable="true">مجالات<br>تحليلية</span>
+      </div>
+      <div class="metric">
+        <strong>متعدد</strong>
+        <span contenteditable="true">ترميز المجال<br>متعدد الوسوم</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="mosaic">
+    <article class="panel law">
+      <h2 contenteditable="true">القانون</h2>
+      <div class="value">
+        <div class="count-wrap">
+          <span class="count">٧٥</span>
+          <span class="unit" contenteditable="true">إسنادًا</span>
+        </div>
+        <span class="pct">٣٨٫٢٧٪</span>
+      </div>
+    </article>
+
+    <article class="panel admin">
+      <h2 contenteditable="true">الإدارة</h2>
+      <div class="value">
+        <div class="count-wrap">
+          <span class="count">٣٧</span>
+          <span class="unit" contenteditable="true">إسنادًا</span>
+        </div>
+        <span class="pct">١٨٫٨٨٪</span>
+      </div>
+    </article>
+
+    <article class="panel edu">
+      <h2 contenteditable="true">التعليم</h2>
+      <div class="value">
+        <div class="count-wrap">
+          <span class="count">٣٣</span>
+          <span class="unit" contenteditable="true">إسنادًا</span>
+        </div>
+        <span class="pct">١٦٫٨٤٪</span>
+      </div>
+    </article>
+
+    <article class="panel work compact">
+      <h2 contenteditable="true">العمل</h2>
+      <div class="value">
+        <div class="count-wrap">
+          <span class="count">١٤</span>
+          <span class="unit" contenteditable="true">إسنادًا</span>
+        </div>
+        <span class="pct">٧٫١٤٪</span>
+      </div>
+    </article>
+
+    <article class="panel economy compact">
+      <h2 contenteditable="true">الاقتصاد</h2>
+      <div class="value">
+        <div class="count-wrap">
+          <span class="count">١٢</span>
+          <span class="unit" contenteditable="true">إسنادًا</span>
+        </div>
+        <span class="pct">٦٫١٢٪</span>
+      </div>
+    </article>
+
+    <article class="panel culture compact">
+      <h2 contenteditable="true">الثقافة</h2>
+      <div class="value">
+        <div class="count-wrap">
+          <span class="count">١٠</span>
+          <span class="unit" contenteditable="true">إسنادات</span>
+        </div>
+        <span class="pct">٥٫١٠٪</span>
+      </div>
+    </article>
+
+    <article class="panel health compact">
+      <h2 contenteditable="true">الصحة</h2>
+      <div class="value">
+        <div class="count-wrap">
+          <span class="count">١٠</span>
+          <span class="unit" contenteditable="true">إسنادات</span>
+        </div>
+        <span class="pct">٥٫١٠٪</span>
+      </div>
+    </article>
+
+    <article class="panel travel compact">
+      <h2 contenteditable="true">السفر والسياحة</h2>
+      <div class="value">
+        <div class="count-wrap">
+          <span class="count">٣</span>
+          <span class="unit" contenteditable="true">إسنادات</span>
+        </div>
+        <span class="pct">١٫٥٣٪</span>
+      </div>
+    </article>
+
+    <div class="small-stack">
+      <article class="small media">
+        <h3 contenteditable="true">الإعلام</h3>
+        <div class="small-value">
+          <span class="small-count">١</span>
+          <span class="small-pct">٠٫٥١٪</span>
+        </div>
+      </article>
+
+      <article class="small diplomacy">
+        <h3 contenteditable="true">الدبلوماسي</h3>
+        <div class="small-value">
+          <span class="small-count">١</span>
+          <span class="small-pct">٠٫٥١٪</span>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<script>
+async function exportPNG(){
+  const target = document.getElementById("figure");
+
+  if (!window.html2canvas){
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
+    document.head.appendChild(script);
+
+    await new Promise((resolve, reject)=>{
+      script.onload = resolve;
+      script.onerror = reject;
+    });
+  }
+
+  const canvas = await html2canvas(target,{
+    scale:2.5,
+    backgroundColor:"#ffffff",
+    useCORS:true,
+    logging:false
+  });
+
+  const link = document.createElement("a");
+  link.download = "مجالات_السياسة_اللغوية_منقح.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
+</script>
+</body>
+</html>
