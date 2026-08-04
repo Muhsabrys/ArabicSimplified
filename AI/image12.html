@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>أهداف التخطيط اللغوي</title>
+
+<style>
+    :root {
+        --page-bg: #eef2f4;
+        --paper: #ffffff;
+        --ink: #24313a;
+        --muted: #6b7881;
+        --grid: #dfe6ea;
+        --axis: #9ca8b0;
+
+        --standardization: #155f75;
+        --communication: #1f7a4b;
+        --spread: #2f7f8f;
+        --simplification: #df792f;
+        --maintenance: #778e46;
+        --terminology: #a45f8e;
+        --symbols: #6b5b8c;
+        --revival: #5d929f;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background: var(--page-bg);
+        color: var(--ink);
+        font-family: Arial, Tahoma, sans-serif;
+    }
+
+    .toolbar {
+        width: min(1500px, calc(100% - 32px));
+        margin: 18px auto 0;
+        display: flex;
+        gap: 10px;
+    }
+
+    button {
+        padding: 11px 18px;
+        border: 1px solid #bac6cd;
+        border-radius: 9px;
+        background: #ffffff;
+        color: #26343d;
+        font: 700 15px Arial, Tahoma, sans-serif;
+        cursor: pointer;
+    }
+
+    button.primary {
+        border-color: #155f75;
+        background: #155f75;
+        color: #ffffff;
+    }
+
+    #figure {
+        width: 1500px;
+        margin: 14px auto 30px;
+        padding: 48px 52px 36px;
+        background: var(--paper);
+        border: 1px solid #cfd8dd;
+        border-radius: 24px;
+        box-shadow: 0 18px 50px rgba(24, 42, 54, 0.10);
+        position: relative;
+        overflow: hidden;
+    }
+
+    #figure::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 10px;
+        background: linear-gradient(
+            90deg,
+            #124e61,
+            #2c8191,
+            #79aab3
+        );
+    }
+
+    .header {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .header h1 {
+        margin: 0 0 10px;
+        color: #22313a;
+        font-size: 52px;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .header p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 22px;
+        line-height: 1.7;
+    }
+
+    .chart-card {
+        padding: 28px 28px 22px;
+        border: 1px solid #d7e0e5;
+        border-radius: 22px;
+        background: #fcfdfd;
+    }
+
+    .chart-heading {
+        margin-bottom: 18px;
+        color: #68757e;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .chart {
+        display: grid;
+        grid-template-columns: 330px 1fr 100px;
+        column-gap: 20px;
+        align-items: center;
+    }
+
+    .row {
+        display: contents;
+    }
+
+    .label {
+        padding: 13px 5px 13px 0;
+        text-align: right;
+    }
+
+    .label .main {
+        color: #26343d;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.35;
+    }
+
+    .label .sub {
+        margin-top: 4px;
+        color: #74818a;
+        font-size: 15px;
+        line-height: 1.45;
+    }
+
+    .track {
+        --value: 0;
+        --color: #155f75;
+
+        position: relative;
+        height: 78px;
+    }
+
+    .track::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 0;
+        left: 0;
+        height: 2px;
+        background: var(--grid);
+        transform: translateY(-50%);
+    }
+
+    .stem {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        width: calc(var(--value) * 2.5%);
+        height: 7px;
+        border-radius: 999px;
+        background: var(--color);
+        transform: translateY(-50%);
+    }
+
+    .dot {
+        position: absolute;
+        top: 50%;
+        right: calc(var(--value) * 2.5%);
+        width: 68px;
+        height: 68px;
+        border: 5px solid #ffffff;
+        border-radius: 50%;
+        background: var(--color);
+        box-shadow:
+            0 0 0 2px rgba(42, 65, 77, 0.13),
+            0 5px 14px rgba(31, 48, 58, 0.14);
+        color: #ffffff;
+        display: grid;
+        place-items: center;
+        font-size: 17px;
+        font-weight: 700;
+        transform: translate(50%, -50%);
+        white-space: nowrap;
+    }
+
+    .count {
+        padding: 10px 6px;
+        border: 1px solid #dfe6ea;
+        border-radius: 13px;
+        background: #f5f8fa;
+        color: #34424b;
+        font-size: 24px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .axis {
+        display: grid;
+        grid-template-columns: 330px 1fr 100px;
+        column-gap: 20px;
+        margin-top: 8px;
+    }
+
+    .axis-line {
+        position: relative;
+        height: 45px;
+        border-top: 2px solid var(--axis);
+    }
+
+    .ticks {
+        position: absolute;
+        top: 9px;
+        right: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        color: #6e7b84;
+        direction: rtl;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .ticks span:first-child {
+        transform: translateX(50%);
+    }
+
+    .ticks span:last-child {
+        transform: translateX(-50%);
+    }
+
+    .axis-title {
+        margin-top: 5px;
+        color: #6c7982;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .count-title {
+        margin-top: 19px;
+        color: #6c7982;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    [contenteditable="true"]:focus {
+        outline: 2px dashed #8baab4;
+        outline-offset: 4px;
+        border-radius: 4px;
+    }
+
+    @media print {
+        body {
+            background: #ffffff;
+        }
+
+        .toolbar {
+            display: none;
+        }
+
+        #figure {
+            width: 100%;
+            margin: 0;
+            border: none;
+            box-shadow: none;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="toolbar">
+    <button class="primary" onclick="exportPNG()">
+        تصدير PNG عالي الدقة
+    </button>
+
+    <button onclick="window.print()">
+        طباعة / حفظ PDF
+    </button>
+</div>
+
+<main id="figure">
+
+    <header class="header">
+        <h1 contenteditable="true">
+            أهداف التخطيط اللغوي
+        </h1>
+
+        <p contenteditable="true">
+            توزيع ١١٢ قرارًا بحسب الهدف الرئيس لكل قرار
+        </p>
+    </header>
+
+    <section class="chart-card">
+
+        <div class="chart-heading" contenteditable="true">
+            النسبة من مجموع القرارات
+        </div>
+
+        <div class="chart">
+
+            <!-- التقييس اللغوي -->
+
+            <div class="row">
+
+                <div class="label">
+                    <div class="main" contenteditable="true">
+                        التقييس اللغوي
+                    </div>
+
+                    <div class="sub" contenteditable="true">
+                        توحيد اللغة في الوثائق والسجلات والأعمال الرسمية
+                    </div>
+                </div>
+
+                <div
+                    class="track"
+                    style="
+                        --value: 36.6;
+                        --color: var(--standardization);
+                    "
+                >
+                    <div class="stem"></div>
+
+                    <div class="dot">
+                        ٣٦٫٦٪
+                    </div>
+                </div>
+
+                <div class="count">
+                    ٤١
+                </div>
+
+            </div>
+
+            <!-- الاتصال بين اللغات -->
+
+            <div class="row">
+
+                <div class="label">
+                    <div class="main" contenteditable="true">
+                        الاتصال بين اللغات
+                    </div>
+
+                    <div class="sub" contenteditable="true">
+                        الترجمة والمساعدة اللغوية والوصول إلى الخدمات
+                    </div>
+                </div>
+
+                <div
+                    class="track"
+                    style="
+                        --value: 32.1;
+                        --color: var(--communication);
+                    "
+                >
+                    <div class="stem"></div>
+
+                    <div class="dot">
+                        ٣٢٫١٪
+                    </div>
+                </div>
+
+                <div class="count">
+                    ٣٦
+                </div>
+
+            </div>
+
+            <!-- نشر اللغة -->
+
+            <div class="row">
+
+                <div class="label">
+                    <div class="main" contenteditable="true">
+                        نشر اللغة
+                    </div>
+
+                    <div class="sub" contenteditable="true">
+                        توسيع تعليم لغة بعينها أو استخدامها
+                    </div>
+                </div>
+
+                <div
+                    class="track"
+                    style="
+                        --value: 15.2;
+                        --color: var(--spread);
+                    "
+                >
+                    <div class="stem"></div>
+
+                    <div class="dot">
+                        ١٥٫٢٪
+                    </div>
+                </div>
+
+                <div class="count">
+                    ١٧
+                </div>
+
+            </div>
+
+            <!-- التبسيط الأسلوبي -->
+
+            <div class="row">
+
+                <div class="label">
+                    <div class="main" contenteditable="true">
+                        التبسيط الأسلوبي
+                    </div>
+
+                    <div class="sub" contenteditable="true">
+                        تحسين وضوح النصوص وسهولة فهمها
+                    </div>
+                </div>
+
+                <div
+                    class="track"
+                    style="
+                        --value: 6.3;
+                        --color: var(--simplification);
+                    "
+                >
+                    <div class="stem"></div>
+
+                    <div class="dot">
+                        ٦٫٣٪
+                    </div>
+                </div>
+
+                <div class="count">
+                    ٧
+                </div>
+
+            </div>
+
+            <!-- صيانة اللغة -->
+
+            <div class="row">
+
+                <div class="label">
+                    <div class="main" contenteditable="true">
+                        صيانة اللغة
+                    </div>
+
+                    <div class="sub" contenteditable="true">
+                        الحفاظ على استمرار استعمال لغة قائمة
+                    </div>
+                </div>
+
+                <div
+                    class="track"
+                    style="
+                        --value: 5.4;
+                        --color: var(--maintenance);
+                    "
+                >
+                    <div class="stem"></div>
+
+                    <div class="dot">
+                        ٥٫٤٪
+                    </div>
+                </div>
+
+                <div class="count">
+                    ٦
+                </div>
+
+            </div>
+
+            <!-- توحيد المصطلحات -->
+
+            <div class="row">
+
+                <div class="label">
+                    <div class="main" contenteditable="true">
+                        توحيد المصطلحات
+                    </div>
+
+                    <div class="sub" contenteditable="true">
+                        تثبيت مصطلحات وتعريفات معيارية مشتركة
+                    </div>
+                </div>
+
+                <div
+                    class="track"
+                    style="
+                        --value: 1.8;
+                        --color: var(--terminology);
+                    "
+                >
+                    <div class="stem"></div>
+
+                    <div class="dot">
+                        ١٫٨٪
+                    </div>
+                </div>
+
+                <div class="count">
+                    ٢
+                </div>
+
+            </div>
+
+            <!-- تقييس الرموز -->
+
+            <div class="row">
+
+                <div class="label">
+                    <div class="main" contenteditable="true">
+                        تقييس الرموز
+                    </div>
+
+                    <div class="sub" contenteditable="true">
+                        ضبط الرموز والعلامات والوسائل المساعدة
+                    </div>
+                </div>
+
+                <div
+                    class="track"
+                    style="
+                        --value: 1.8;
+                        --color: var(--symbols);
+                    "
+                >
+                    <div class="stem"></div>
+
+                    <div class="dot">
+                        ١٫٨٪
+                    </div>
+                </div>
+
+                <div class="count">
+                    ٢
+                </div>
+
+            </div>
+
+            <!-- الإحياء اللغوي -->
+
+            <div class="row">
+
+                <div class="label">
+                    <div class="main" contenteditable="true">
+                        الإحياء اللغوي
+                    </div>
+
+                    <div class="sub" contenteditable="true">
+                        إعادة توسيع استعمال لغة تعرضت لتراجع حاد
+                    </div>
+                </div>
+
+                <div
+                    class="track"
+                    style="
+                        --value: 0.9;
+                        --color: var(--revival);
+                    "
+                >
+                    <div class="stem"></div>
+
+                    <div class="dot">
+                        ٠٫٩٪
+                    </div>
+                </div>
+
+                <div class="count">
+                    ١
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="axis">
+
+            <div></div>
+
+            <div>
+                <div class="axis-line">
+                    <div class="ticks">
+                        <span>٠٪</span>
+                        <span>١٠٪</span>
+                        <span>٢٠٪</span>
+                        <span>٣٠٪</span>
+                        <span>٤٠٪</span>
+                    </div>
+                </div>
+
+                <div class="axis-title" contenteditable="true">
+                    النسبة المئوية
+                </div>
+            </div>
+
+            <div class="count-title" contenteditable="true">
+                عدد القرارات
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+async function exportPNG() {
+    const target = document.getElementById("figure");
+
+    const editableElements =
+        target.querySelectorAll('[contenteditable="true"]');
+
+    editableElements.forEach(element => {
+        element.dataset.previousEditable =
+            element.getAttribute("contenteditable");
+
+        element.setAttribute("contenteditable", "false");
+    });
+
+    try {
+        if (!window.html2canvas) {
+            const script = document.createElement("script");
+
+            script.src =
+                "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
+
+            document.head.appendChild(script);
+
+            await new Promise((resolve, reject) => {
+                script.onload = resolve;
+                script.onerror = reject;
+            });
+        }
+
+        const canvas = await html2canvas(target, {
+            scale: 2.5,
+            backgroundColor: "#ffffff",
+            useCORS: true,
+            logging: false
+        });
+
+        const downloadLink = document.createElement("a");
+
+        downloadLink.download =
+            "اهداف_التخطيط_اللغوي_مخطط_نقطي.png";
+
+        downloadLink.href =
+            canvas.toDataURL("image/png");
+
+        downloadLink.click();
+
+    } finally {
+        editableElements.forEach(element => {
+            element.setAttribute(
+                "contenteditable",
+                element.dataset.previousEditable || "true"
+            );
+        });
+    }
+}
+</script>
+
+</body>
+</html>
