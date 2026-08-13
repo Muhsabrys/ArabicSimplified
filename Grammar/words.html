@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقارنة العلامات المائية للذكاء الاصطناعي: KGW مقابل Tournament Sampling</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans Arabic"', 'sans-serif'],
+                    },
+                    colors: {
+                        kgw: {
+                            light: '#dcfce7', // green-100
+                            main: '#10b981',  // emerald-500
+                            dark: '#047857',  // emerald-700
+                            red: '#fca5a5',   // red-300
+                            redMain: '#ef4444' // red-500
+                        },
+                        tour: {
+                            light: '#e0e7ff', // indigo-100
+                            main: '#6366f1',  // indigo-500
+                            dark: '#4338ca',  // indigo-700
+                            accent: '#8b5cf6' // violet-500
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8fafc; /* slate-50 */
+            color: #1e293b; /* slate-800 */
+        }
+        
+        .anim-element {
+            opacity: 0.3;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: grayscale(80%);
+        }
+        
+        .anim-active {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .anim-highlight {
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0% { border-color: rgba(99, 102, 241, 0.5); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            70% { border-color: rgba(99, 102, 241, 1); box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+            100% { border-color: rgba(99, 102, 241, 0.5); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+
+        .bar-fill {
+            transition: width 1s ease-in-out, background-color 0.5s ease;
+        }
+
+        /* Tournament Bracket Styles */
+        .bracket-connector {
+            position: relative;
+        }
+        .bracket-connector::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            width: 20px;
+            height: 2px;
+            background-color: #cbd5e1;
+            z-index: -1;
+        }
+        
+        .bracket-line-vertical {
+            position: absolute;
+            right: -20px;
+            width: 2px;
+            background-color: #cbd5e1;
+            z-index: -1;
+        }
+
+        .loser {
+            opacity: 0.4;
+            transform: scale(0.95);
+        }
+        
+        .winner {
+            font-weight: bold;
+            color: #4338ca;
+            border-color: #6366f1;
+            background-color: #e0e7ff;
+        }
+
+        /* SVG Arrow */
+        .svg-arrow {
+            width: 24px;
+            height: 24px;
+            margin: 10px auto;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen pb-20">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-right">
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-800">كيف تُزرَع العلامة المائية في النصوص؟</h1>
+                <p class="text-slate-500 mt-1">مقارنة بصرية بين طريقتين: KGW و Tournament Sampling</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="playKGW()" class="px-4 py-2 bg-kgw-light text-kgw-dark border border-kgw-main rounded-lg hover:bg-kgw-main hover:text-white transition-colors font-semibold text-sm shadow-sm flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    شغّل KGW
+                </button>
+                <button onclick="playTournament()" class="px-4 py-2 bg-tour-light text-tour-dark border border-tour-main rounded-lg hover:bg-tour-main hover:text-white transition-colors font-semibold text-sm shadow-sm flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    شغّل Tournament
+                </button>
+                <button onclick="playAll()" class="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors font-semibold text-sm shadow-sm">
+                    المقارنة كاملة
+                </button>
+                <button onclick="resetDiagram()" class="px-3 py-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-colors text-sm">
+                    إعادة
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 mt-8 space-y-12">
+
+        <section id="section-a" class="flex flex-col items-center text-center">
+            <h2 class="text-xl font-semibold text-slate-700 mb-6 border-b-2 border-slate-200 pb-2 inline-block">نقطة البداية المشتركة</h2>
+            
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+                <!-- Context -->
+                <div id="step-context" class="anim-element bg-white border border-slate-200 p-6 rounded-2xl shadow-sm w-64">
+                    <div class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-2">السياق الحالي</div>
+                    <div class="text-xl font-bold text-slate-800 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        "كان الفيلم <span id="final-word-placeholder" class="text-transparent border-b-2 border-dashed border-slate-400 inline-block w-16"></span>"
+                    </div>
+                </div>
+
+                <svg class="w-8 h-8 text-slate-300 md:rotate-90 md:-translate-y-4 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                <svg class="w-6 h-6 text-slate-300 md:hidden my-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+
+                <!-- LLM -->
+                <div id="step-llm" class="anim-element bg-slate-800 text-white p-6 rounded-2xl shadow-lg w-64 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-white opacity-10 rounded-full blur-xl"></div>
+                    <div class="text-lg font-bold mb-1 flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        النموذج اللغوي
+                    </div>
+                    <div class="text-xs text-slate-300">يحسب احتمالات الكلمة التالية</div>
+                </div>
+
+                <svg class="w-8 h-8 text-slate-300 md:rotate-90 md:-translate-y-4 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                <svg class="w-6 h-6 text-slate-300 md:hidden my-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+
+                <!-- Original Distribution -->
+                <div id="step-dist" class="anim-element bg-white border border-slate-200 p-5 rounded-2xl shadow-sm w-72">
+                    <div class="text-sm font-bold text-slate-700 mb-3 text-center">التوزيع الاحتمالي الأصلي ($P_{LM}$)</div>
+                    <div class="space-y-2 text-sm">
+                        <!-- Bars -->
+                        <div class="flex items-center gap-2"><span class="w-12 text-left">ممتازًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div class="bg-slate-400 h-full rounded-full w-[28%]"></div></div><span class="w-8 text-xs text-slate-500">28%</span></div>
+                        <div class="flex items-center gap-2"><span class="w-12 text-left">رائعًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div class="bg-slate-400 h-full rounded-full w-[22%]"></div></div><span class="w-8 text-xs text-slate-500">22%</span></div>
+                        <div class="flex items-center gap-2"><span class="w-12 text-left">جيدًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div class="bg-slate-400 h-full rounded-full w-[18%]"></div></div><span class="w-8 text-xs text-slate-500">18%</span></div>
+                        <div class="flex items-center gap-2"><span class="w-12 text-left">ممتعًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div class="bg-slate-400 h-full rounded-full w-[12%]"></div></div><span class="w-8 text-xs text-slate-500">12%</span></div>
+                        <div class="flex items-center gap-2"><span class="w-12 text-left">سيئًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div class="bg-slate-400 h-full rounded-full w-[8%]"></div></div><span class="w-8 text-xs text-slate-500">8%</span></div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-3 text-center">النموذج لا يختار كلمة واحدة مسبقًا، بل يوزّع الاحتمالات.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="flex justify-center my-4 opacity-50">
+            <svg width="200" height="60" viewBox="0 0 200 60" fill="none" class="hidden md:block">
+                <path d="M100 0 L100 20 L20 20 L20 50" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M20 50 L15 40 M20 50 L25 40" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" />
+                <path d="M100 0 L100 20 L180 20 L180 50" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M180 50 L175 40 M180 50 L185 40" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" />
+            </svg>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4 relative">
+            
+            <!-- SECTION B: KGW Branch (Right Side in RTL) -->
+            <section id="branch-kgw" class="bg-white border-2 border-transparent p-6 rounded-3xl shadow-sm transition-colors duration-500">
+                <div class="text-center mb-6">
+                    <h3 class="text-lg font-bold text-kgw-dark bg-kgw-light inline-block px-4 py-1 rounded-full mb-2">الطريقة الأولى: KGW</h3>
+                    <p class="text-sm text-slate-500">إعادة ترجيح احتمالات الـ tokens</p>
+                </div>
+
+                <div class="flex flex-col items-center gap-4">
+                    <!-- Key + Hash -->
+                    <div id="kgw-step-key" class="anim-element flex items-center gap-2 bg-slate-50 border border-slate-200 p-3 rounded-lg text-sm w-full max-w-[280px] justify-center">
+                        <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                        السياق + مفتاح سري
+                        <svg class="w-4 h-4 text-slate-400 mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        <span class="font-mono text-xs bg-slate-200 px-1 rounded">Hash</span>
+                    </div>
+
+                    <svg class="svg-arrow block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+
+                    <!-- Green/Red Split -->
+                    <div id="kgw-step-split" class="anim-element w-full max-w-[320px]">
+                        <div class="text-xs text-center text-slate-500 mb-2">تقسيم الـ tokens إلى مجموعتين</div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-kgw-light border border-kgw-main rounded-lg p-3 text-center">
+                                <div class="text-xs font-bold text-kgw-dark mb-2">القائمة الخضراء (تُفضّل)</div>
+                                <div class="flex flex-wrap justify-center gap-1 text-xs">
+                                    <span class="bg-white px-2 py-1 rounded shadow-sm">رائعًا</span>
+                                    <span class="bg-white px-2 py-1 rounded shadow-sm">جيدًا</span>
+                                    <span class="bg-white px-2 py-1 rounded shadow-sm">ممتعًا</span>
+                                </div>
+                            </div>
+                            <div class="bg-red-50 border border-kgw-red rounded-lg p-3 text-center">
+                                <div class="text-xs font-bold text-red-700 mb-2">القائمة الحمراء (تُقمع)</div>
+                                <div class="flex flex-wrap justify-center gap-1 text-xs">
+                                    <span class="bg-white px-2 py-1 rounded shadow-sm">ممتازًا</span>
+                                    <span class="bg-white px-2 py-1 rounded shadow-sm">سيئًا</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <svg class="svg-arrow block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+
+                    <!-- Reweighted Distribution -->
+                    <div id="kgw-step-reweight" class="anim-element bg-white border border-slate-200 p-5 rounded-2xl shadow-sm w-full max-w-[320px]">
+                        <div class="text-sm font-bold text-slate-700 mb-3 text-center flex items-center justify-center gap-2">
+                            الاحتمالات بعد التعديل
+                            <span class="text-[10px] font-normal bg-kgw-light text-kgw-dark px-2 rounded-full">علامة مائية</span>
+                        </div>
+                        <div class="space-y-2 text-sm relative">
+                            <!-- Bars (Dynamically adjusted in JS) -->
+                            <div class="flex items-center gap-2"><span class="w-12 text-left text-red-600">ممتازًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div id="kgw-bar-1" class="bg-slate-400 bar-fill h-full rounded-full w-[28%]"></div></div><span id="kgw-val-1" class="w-8 text-xs text-slate-500">28%</span></div>
+                            <div class="flex items-center gap-2"><span class="w-12 text-left text-kgw-dark font-bold">رائعًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div id="kgw-bar-2" class="bg-slate-400 bar-fill h-full rounded-full w-[22%]"></div></div><span id="kgw-val-2" class="w-8 text-xs text-slate-500">22%</span></div>
+                            <div class="flex items-center gap-2"><span class="w-12 text-left text-kgw-dark">جيدًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div id="kgw-bar-3" class="bg-slate-400 bar-fill h-full rounded-full w-[18%]"></div></div><span id="kgw-val-3" class="w-8 text-xs text-slate-500">18%</span></div>
+                            <div class="flex items-center gap-2"><span class="w-12 text-left text-kgw-dark">ممتعًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div id="kgw-bar-4" class="bg-slate-400 bar-fill h-full rounded-full w-[12%]"></div></div><span id="kgw-val-4" class="w-8 text-xs text-slate-500">12%</span></div>
+                            <div class="flex items-center gap-2"><span class="w-12 text-left text-red-600">سيئًا</span><div class="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden"><div id="kgw-bar-5" class="bg-slate-400 bar-fill h-full rounded-full w-[8%]"></div></div><span id="kgw-val-5" class="w-8 text-xs text-slate-500">8%</span></div>
+                        </div>
+                    </div>
+
+                    <svg class="svg-arrow block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+
+                    <!-- Final Token -->
+                    <div id="kgw-step-final" class="anim-element">
+                        <div class="text-xs text-slate-500 mb-1 text-center">الكلمة المختارة</div>
+                        <div class="bg-kgw-main text-white font-bold text-xl px-6 py-2 rounded-xl shadow-md transform transition-transform">
+                            رائعًا
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-600 text-center">
+                    <strong class="text-kgw-dark">الخلاصة:</strong> في KGW، يتم تعديل احتمالات الكلمات قبل الاختيار لزيادة فرصة ظهور كلمات "القائمة الخضراء".
+                </div>
+            </section>
+
+            <section id="branch-tour" class="bg-white border-2 border-transparent p-6 rounded-3xl shadow-sm transition-colors duration-500">
+                <div class="text-center mb-6">
+                    <h3 class="text-lg font-bold text-tour-dark bg-tour-light inline-block px-4 py-1 rounded-full mb-2">الطريقة الثانية: Tournament</h3>
+                    <p class="text-sm text-slate-500">اختيار الفائز عبر بطولة (SynthID)</p>
+                </div>
+
+                <div class="flex flex-col items-center gap-4">
+                    
+                    <!-- Sample Candidates -->
+                    <div id="tour-step-sample" class="anim-element w-full max-w-[340px]">
+                        <div class="text-xs text-center text-slate-500 mb-2">سحب 8 مرشحين من التوزيع الأصلي</div>
+                        <div class="flex justify-center gap-1 flex-wrap">
+                            <div class="bg-slate-100 border border-slate-300 px-2 py-1 rounded text-xs">رائعًا</div>
+                            <div class="bg-slate-100 border border-slate-300 px-2 py-1 rounded text-xs">ممتازًا</div>
+                            <div class="bg-slate-100 border border-slate-300 px-2 py-1 rounded text-xs">جيدًا</div>
+                            <div class="bg-slate-100 border border-slate-300 px-2 py-1 rounded text-xs">رائعًا</div>
+                            <div class="bg-slate-100 border border-slate-300 px-2 py-1 rounded text-xs">ممتعًا</div>
+                            <div class="bg-slate-100 border border-slate-300 px-2 py-1 rounded text-xs">ممتازًا</div>
+                            <div class="bg-slate-100 border border-slate-300 px-2 py-1 rounded text-xs">جيدًا</div>
+                            <div class="bg-slate-100 border border-slate-300 px-2 py-1 rounded text-xs">سيئًا</div>
+                        </div>
+                        <p class="text-[10px] text-center text-slate-400 mt-1">يمكن أن تتكرر الكلمات لأن السحب احتمالي.</p>
+                    </div>
+
+                    <svg class="svg-arrow block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+
+                    <!-- Key + Seed -> Functions -->
+                    <div id="tour-step-seed" class="anim-element flex flex-col items-center gap-2">
+                        <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 p-2 rounded-lg text-xs w-fit">
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                            السياق + مفتاح <svg class="w-3 h-3 text-slate-400 mx-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg> بذور ($r_t$)
+                        </div>
+                        <div class="flex gap-4 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-tour-light border border-tour-main flex items-center justify-center text-xs font-bold text-tour-dark">g₁</div>
+                            <div class="w-8 h-8 rounded-full bg-tour-light border border-tour-main flex items-center justify-center text-xs font-bold text-tour-dark">g₂</div>
+                            <div class="w-8 h-8 rounded-full bg-tour-light border border-tour-main flex items-center justify-center text-xs font-bold text-tour-dark">g₃</div>
+                        </div>
+                        <div class="text-[10px] text-slate-500">دوال التقييم العشوائية</div>
+                    </div>
+
+                    <svg class="svg-arrow block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+
+                    <!-- Bracket System -->
+                    <div id="tour-step-bracket" class="anim-element w-full max-w-[360px] bg-slate-50 p-4 rounded-xl border border-slate-200 overflow-hidden text-sm">
+                        <div class="text-xs text-center font-bold text-slate-500 mb-4">بطولة التصفية</div>
+                        
+                        <!-- Simple visual bracket using Flexbox -->
+                        <div class="flex justify-between items-center h-48 relative">
+                            <!-- Round 1 (8 tokens) -->
+                            <div class="flex flex-col justify-between h-full z-10 w-16">
+                                <div id="t-r1-1" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm transition-all">رائعًا</div>
+                                <div id="t-r1-2" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm transition-all mt-1">ممتازًا</div>
+                                
+                                <div id="t-r1-3" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm transition-all mt-3">جيدًا</div>
+                                <div id="t-r1-4" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm transition-all mt-1">رائعًا</div>
+                                
+                                <div id="t-r1-5" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm transition-all mt-3">ممتعًا</div>
+                                <div id="t-r1-6" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm transition-all mt-1">ممتازًا</div>
+                                
+                                <div id="t-r1-7" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm transition-all mt-3">جيدًا</div>
+                                <div id="t-r1-8" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm transition-all mt-1">سيئًا</div>
+                            </div>
+
+                            <!-- Lines R1 to R2 -->
+                            <div class="flex flex-col justify-around h-full absolute w-full pointer-events-none opacity-20 pr-16 pl-16">
+                                <svg width="100%" height="100%" preserveAspectRatio="none">
+                                    <!-- Using CSS borders visually is cleaner for RTL responsive, simplified here -->
+                                </svg>
+                            </div>
+
+                            <!-- Round 2 (4 tokens, evaluated by g1) -->
+                            <div class="flex flex-col justify-around h-full z-10 w-16">
+                                <div id="t-r2-1" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm opacity-0 transition-all translate-x-2">رائعًا</div>
+                                <div id="t-r2-2" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm opacity-0 transition-all translate-x-2">جيدًا</div>
+                                <div id="t-r2-3" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm opacity-0 transition-all translate-x-2">ممتعًا</div>
+                                <div id="t-r2-4" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm opacity-0 transition-all translate-x-2">جيدًا</div>
+                            </div>
+
+                            <!-- Round 3 (2 tokens, evaluated by g2) -->
+                            <div class="flex flex-col justify-around h-32 my-auto z-10 w-16">
+                                <div id="t-r3-1" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm opacity-0 transition-all translate-x-2">رائعًا</div>
+                                <div id="t-r3-2" class="bg-white border border-slate-300 text-[10px] p-1 rounded text-center shadow-sm opacity-0 transition-all translate-x-2">ممتعًا</div>
+                            </div>
+
+                            <!-- Final (1 token, evaluated by g3) -->
+                            <div class="flex flex-col justify-center h-full z-10 w-16">
+                                <div id="t-final" class="bg-tour-main text-white border-tour-dark font-bold text-xs p-2 rounded text-center shadow-md opacity-0 transition-all translate-x-2 scale-110">رائعًا</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tour-step-final" class="anim-element mt-2 hidden">
+                        <!-- Used logic-wise, visual is in bracket -->
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-600 text-center">
+                    <strong class="text-tour-dark">الخلاصة:</strong> في Tournament، لا تتغير احتمالات النموذج، بل يُسحب عدة مرشحين ويتم اختيار الفائز عبر جولات تنافسية تعتمد على المفتاح السري.
+                </div>
+            </section>
+        </div>
+
+        <section id="section-comparison" class="bg-slate-800 text-white p-8 rounded-3xl shadow-lg my-12">
+            <h2 class="text-2xl font-bold text-center mb-8">ما الفرق الأساسي بين الطريقتين؟</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="border-l-0 md:border-l border-slate-600 pl-0 md:pl-8">
+                    <h3 class="text-kgw-light font-bold text-xl mb-4 flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-kgw-main inline-block"></span> KGW
+                    </h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-kgw-main shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> يبدأ من احتمالات النموذج.</li>
+                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-kgw-main shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> يقسم الـ tokens إلى "مفضلة" و"غير مفضلة".</li>
+                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-kgw-main shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <strong class="text-white">يعيد ترجيح الاحتمالات</strong> (يغير التوزيع).</li>
+                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-kgw-main shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> يسحب الكلمة التالية لمرة واحدة.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-tour-light font-bold text-xl mb-4 flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-tour-main inline-block"></span> Tournament Sampling
+                    </h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-tour-main shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> يبدأ من احتمالات النموذج.</li>
+                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-tour-main shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <strong class="text-white">يسحب عدة مرشحين</strong> من التوزيع الأصلي.</li>
+                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-tour-main shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> لا يغير التوزيع، بل يقيم المرشحين بدوال عشوائية.</li>
+                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-tour-main shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> يختار الفائز النهائي عبر الجولات.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 text-center bg-slate-700/50 p-4 rounded-xl max-w-2xl mx-auto border border-slate-600">
+                <span class="text-amber-400 font-bold">نقطة جوهرية:</span> في الحالتين، العلامة المائية ليست كلمة سرية تُدس في النص، بل هي <span class="underline decoration-amber-400 underline-offset-4">أثر إحصائي</span> في طريقة اختيار الكلمات.
+            </div>
+        </section>
+
+        <section id="section-detection" class="mb-12">
+            <h2 class="text-xl font-semibold text-slate-700 mb-8 text-center">كيف يجري الكشف لاحقًا (Detection)؟</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- KGW Detection -->
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+                    <h4 class="text-center font-bold text-kgw-dark mb-4">اكتشاف KGW</h4>
+                    <div class="flex flex-col items-center text-sm gap-2 text-center">
+                        <div class="bg-slate-100 p-2 rounded w-full">النص المشتبه به</div>
+                        <svg class="w-4 h-4 text-slate-400 block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        <div class="bg-slate-50 border border-slate-200 p-2 rounded w-full">استخدام المفتاح لإعادة بناء "القوائم الخضراء" لكل موقع</div>
+                        <svg class="w-4 h-4 text-slate-400 block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        <div class="bg-slate-50 border border-slate-200 p-2 rounded w-full">عد الكلمات التي وقعت في القائمة الخضراء</div>
+                        
+                        <div class="mt-2 w-full p-3 bg-kgw-light/50 rounded border border-kgw-main/20 flex justify-between items-center">
+                            <span class="text-slate-500 text-xs">المتوقع طبيعيًا: ~50%</span>
+                            <span class="text-kgw-dark font-bold text-lg dir-ltr">65% <span class="text-xs font-normal">مكتشف</span></span>
+                        </div>
+                        
+                        <div class="bg-kgw-main text-white px-4 py-2 rounded-full mt-2 font-bold shadow-md">إشارة مائية مؤكدة (Z-Score عالٍ)</div>
+                    </div>
+                </div>
+
+                <!-- Tournament Detection -->
+                <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+                    <h4 class="text-center font-bold text-tour-dark mb-4">اكتشاف Tournament</h4>
+                    <div class="flex flex-col items-center text-sm gap-2 text-center">
+                        <div class="bg-slate-100 p-2 rounded w-full">النص المشتبه به</div>
+                        <svg class="w-4 h-4 text-slate-400 block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        <div class="bg-slate-50 border border-slate-200 p-2 rounded w-full">استخدام المفتاح لإعادة حساب قيم دوال $g$ للكلمات الموجودة</div>
+                        <svg class="w-4 h-4 text-slate-400 block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        <div class="bg-slate-50 border border-slate-200 p-2 rounded w-full">تجميع متوسط درجات $g$ عبر كامل النص</div>
+                        
+                        <div class="mt-2 w-full p-3 bg-tour-light/50 rounded border border-tour-main/20 flex justify-between items-center">
+                            <span class="text-slate-500 text-xs">المتوسط الطبيعي: منخفض</span>
+                            <span class="text-tour-dark font-bold text-lg">أعلى من المتوقع</span>
+                        </div>
+                        
+                        <div class="bg-tour-main text-white px-4 py-2 rounded-full mt-2 font-bold shadow-md">إشارة SynthID مؤكدة</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="text-center py-6 border-t border-slate-200">
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">الفكرة في سطر واحد</h3>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 text-lg">
+                <div class="bg-white px-6 py-3 rounded-xl shadow-sm border border-slate-100"><span class="font-bold text-kgw-main">KGW:</span> نعدل الاحتمالات قليلًا لترجيح كفة معينة.</div>
+                <div class="text-slate-400 hidden md:block">|</div>
+                <div class="bg-white px-6 py-3 rounded-xl shadow-sm border border-slate-100"><span class="font-bold text-tour-main">Tournament:</span> نجري بطولة بين مرشحين طبيعيين لنختار الفائز.</div>
+            </div>
+            <p class="mt-6 font-semibold text-slate-700 bg-slate-200 inline-block px-6 py-2 rounded-full">النتيجة: بصمة إحصائية خفية لا تؤثر على جودة النص، لكن الحاسوب يمكنه رصدها.</p>
+        </section>
+
+    </main>
+
+    <script>
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+        // State trackers
+        let isAnimating = false;
+
+        async function activateElement(id, duration = 800) {
+            const el = document.getElementById(id);
+            if(el) {
+                el.classList.add('anim-active');
+                await sleep(duration);
+            }
+        }
+
+        async function deactivateElement(id) {
+            const el = document.getElementById(id);
+            if(el) {
+                el.classList.remove('anim-active');
+            }
+        }
+
+        function resetDiagram() {
+            if(isAnimating) return;
+            
+            // Reset common
+            document.querySelectorAll('.anim-element').forEach(el => {
+                el.classList.remove('anim-active', 'anim-highlight');
+            });
+            document.getElementById('final-word-placeholder').textContent = '';
+            document.getElementById('final-word-placeholder').classList.remove('text-kgw-main', 'text-tour-main', 'border-transparent');
+            document.getElementById('final-word-placeholder').classList.add('border-slate-400');
+
+            // Reset KGW styles
+            document.getElementById('branch-kgw').classList.remove('border-kgw-main', 'shadow-kgw-light');
+            document.getElementById('branch-kgw').classList.add('border-transparent');
+            
+            // Reset KGW Bars
+            document.getElementById('kgw-bar-1').style.width = '28%';
+            document.getElementById('kgw-bar-2').style.width = '22%';
+            document.getElementById('kgw-bar-3').style.width = '18%';
+            document.getElementById('kgw-bar-4').style.width = '12%';
+            document.getElementById('kgw-bar-5').style.width = '8%';
+            
+            document.getElementById('kgw-bar-1').classList.remove('bg-kgw-red');
+            document.getElementById('kgw-bar-2').classList.remove('bg-kgw-main');
+            document.getElementById('kgw-bar-3').classList.remove('bg-kgw-main');
+            document.getElementById('kgw-bar-4').classList.remove('bg-kgw-main');
+            document.getElementById('kgw-bar-5').classList.remove('bg-kgw-red');
+            
+            document.getElementById('kgw-val-1').textContent = '28%';
+            document.getElementById('kgw-val-2').textContent = '22%';
+            document.getElementById('kgw-val-3').textContent = '18%';
+            document.getElementById('kgw-val-4').textContent = '12%';
+            document.getElementById('kgw-val-5').textContent = '8%';
+
+            // Reset Tournament styles
+            document.getElementById('branch-tour').classList.remove('border-tour-main', 'shadow-tour-light');
+            document.getElementById('branch-tour').classList.add('border-transparent');
+            
+            // Reset Bracket
+            for(let i=1; i<=8; i++) document.getElementById(`t-r1-${i}`)?.classList.remove('loser', 'winner');
+            for(let i=1; i<=4; i++) {
+                const el = document.getElementById(`t-r2-${i}`);
+                if(el) { el.classList.remove('opacity-100', 'translate-x-0', 'loser', 'winner'); el.classList.add('opacity-0', 'translate-x-2'); }
+            }
+            for(let i=1; i<=2; i++) {
+                const el = document.getElementById(`t-r3-${i}`);
+                if(el) { el.classList.remove('opacity-100', 'translate-x-0', 'loser', 'winner'); el.classList.add('opacity-0', 'translate-x-2'); }
+            }
+            const tfinal = document.getElementById('t-final');
+            tfinal.classList.remove('opacity-100', 'translate-x-0');
+            tfinal.classList.add('opacity-0', 'translate-x-2');
+        }
+
+        async function playSharedStart() {
+            await activateElement('step-context', 600);
+            await activateElement('step-llm', 800);
+            await activateElement('step-dist', 800);
+        }
+
+        async function playKGW() {
+            if (isAnimating) return;
+            isAnimating = true;
+            resetDiagram();
+            
+            await playSharedStart();
+
+            // Highlight Branch
+            const branch = document.getElementById('branch-kgw');
+            branch.classList.add('border-kgw-main');
+            branch.classList.remove('border-transparent');
+
+            // Flow
+            await activateElement('kgw-step-key', 1000);
+            await activateElement('kgw-step-split', 1500);
+            
+            await activateElement('kgw-step-reweight', 500);
+            
+            // Animate Bars
+            document.getElementById('kgw-bar-1').classList.add('bg-kgw-red');
+            document.getElementById('kgw-bar-2').classList.add('bg-kgw-main');
+            document.getElementById('kgw-bar-3').classList.add('bg-kgw-main');
+            document.getElementById('kgw-bar-4').classList.add('bg-kgw-main');
+            document.getElementById('kgw-bar-5').classList.add('bg-kgw-red');
+
+            document.getElementById('kgw-bar-1').style.width = '18%'; document.getElementById('kgw-val-1').textContent = '18%'; // 28 -> 18 (red)
+            document.getElementById('kgw-bar-2').style.width = '30%'; document.getElementById('kgw-val-2').textContent = '30%'; // 22 -> 30 (green)
+            document.getElementById('kgw-bar-3').style.width = '24%'; document.getElementById('kgw-val-3').textContent = '24%'; // 18 -> 24 (green)
+            document.getElementById('kgw-bar-4').style.width = '17%'; document.getElementById('kgw-val-4').textContent = '17%'; // 12 -> 17 (green)
+            document.getElementById('kgw-bar-5').style.width = '4%';  document.getElementById('kgw-val-5').textContent = '4%';  // 8 -> 4 (red)
+            
+            await sleep(1500);
+            
+            await activateElement('kgw-step-final', 1000);
+
+            // Update final sentence
+            const placeholder = document.getElementById('final-word-placeholder');
+            placeholder.textContent = 'رائعًا';
+            placeholder.classList.remove('border-slate-400');
+            placeholder.classList.add('text-kgw-main', 'border-transparent');
+            
+            isAnimating = false;
+        }
+
+        async function playTournament() {
+            if (isAnimating) return;
+            isAnimating = true;
+            resetDiagram();
+
+            await playSharedStart();
+
+            // Highlight Branch
+            const branch = document.getElementById('branch-tour');
+            branch.classList.add('border-tour-main');
+            branch.classList.remove('border-transparent');
+
+            // Flow
+            await activateElement('tour-step-sample', 1200);
+            await activateElement('tour-step-seed', 1200);
+            
+            await activateElement('tour-step-bracket', 500);
+
+            // Bracket Animation Logic
+            // R1 to R2
+            await sleep(800);
+            document.getElementById('t-r1-1').classList.add('winner'); document.getElementById('t-r1-2').classList.add('loser');
+            document.getElementById('t-r1-3').classList.add('winner'); document.getElementById('t-r1-4').classList.add('loser');
+            document.getElementById('t-r1-5').classList.add('winner'); document.getElementById('t-r1-6').classList.add('loser');
+            document.getElementById('t-r1-7').classList.add('winner'); document.getElementById('t-r1-8').classList.add('loser');
+            
+            await sleep(500);
+            for(let i=1; i<=4; i++) {
+                const el = document.getElementById(`t-r2-${i}`);
+                el.classList.remove('opacity-0', 'translate-x-2');
+                el.classList.add('opacity-100', 'translate-x-0');
+            }
+
+            // R2 to R3
+            await sleep(1000);
+            document.getElementById('t-r2-1').classList.add('winner'); document.getElementById('t-r2-2').classList.add('loser');
+            document.getElementById('t-r2-3').classList.add('winner'); document.getElementById('t-r2-4').classList.add('loser');
+            
+            await sleep(500);
+            for(let i=1; i<=2; i++) {
+                const el = document.getElementById(`t-r3-${i}`);
+                el.classList.remove('opacity-0', 'translate-x-2');
+                el.classList.add('opacity-100', 'translate-x-0');
+            }
+
+            // R3 to Final
+            await sleep(1000);
+            document.getElementById('t-r3-1').classList.add('winner'); document.getElementById('t-r3-2').classList.add('loser');
+            
+            await sleep(500);
+            const tfinal = document.getElementById('t-final');
+            tfinal.classList.remove('opacity-0', 'translate-x-2');
+            tfinal.classList.add('opacity-100', 'translate-x-0');
+            tfinal.classList.add('anim-highlight');
+
+            await sleep(1000);
+
+            // Update final sentence
+            const placeholder = document.getElementById('final-word-placeholder');
+            placeholder.textContent = 'رائعًا';
+            placeholder.classList.remove('border-slate-400');
+            placeholder.classList.add('text-tour-main', 'border-transparent');
+
+            isAnimating = false;
+        }
+
+        async function playAll() {
+            if(isAnimating) return;
+            // Simplified simultaneous run
+            isAnimating = true;
+            resetDiagram();
+            await playSharedStart();
+            isAnimating = false; // allow individual functions to run
+            
+            // Run them concurrently but without resetting between
+            Promise.all([
+                (async () => {
+                    const branch = document.getElementById('branch-kgw');
+                    branch.classList.add('border-kgw-main');
+                    await activateElement('kgw-step-key', 800);
+                    await activateElement('kgw-step-split', 800);
+                    await activateElement('kgw-step-reweight', 200);
+                    // Fast animate bars
+                    document.getElementById('kgw-bar-1').classList.add('bg-kgw-red');
+                    document.getElementById('kgw-bar-2').classList.add('bg-kgw-main');
+                    document.getElementById('kgw-bar-3').classList.add('bg-kgw-main');
+                    document.getElementById('kgw-bar-4').classList.add('bg-kgw-main');
+                    document.getElementById('kgw-bar-5').classList.add('bg-kgw-red');
+                    document.getElementById('kgw-bar-1').style.width = '18%'; document.getElementById('kgw-val-1').textContent = '18%';
+                    document.getElementById('kgw-bar-2').style.width = '30%'; document.getElementById('kgw-val-2').textContent = '30%';
+                    document.getElementById('kgw-bar-3').style.width = '24%'; document.getElementById('kgw-val-3').textContent = '24%';
+                    document.getElementById('kgw-bar-4').style.width = '17%'; document.getElementById('kgw-val-4').textContent = '17%';
+                    document.getElementById('kgw-bar-5').style.width = '4%';  document.getElementById('kgw-val-5').textContent = '4%';
+                    await sleep(1000);
+                    await activateElement('kgw-step-final', 500);
+                })(),
+                
+                (async () => {
+                    const branch = document.getElementById('branch-tour');
+                    branch.classList.add('border-tour-main');
+                    await activateElement('tour-step-sample', 800);
+                    await activateElement('tour-step-seed', 800);
+                    await activateElement('tour-step-bracket', 200);
+                    // Fast Bracket
+                    await sleep(400);
+                    document.getElementById('t-r1-1').classList.add('winner'); document.getElementById('t-r1-2').classList.add('loser');
+                    document.getElementById('t-r1-3').classList.add('winner'); document.getElementById('t-r1-4').classList.add('loser');
+                    document.getElementById('t-r1-5').classList.add('winner'); document.getElementById('t-r1-6').classList.add('loser');
+                    document.getElementById('t-r1-7').classList.add('winner'); document.getElementById('t-r1-8').classList.add('loser');
+                    for(let i=1; i<=4; i++) {
+                        const el = document.getElementById(`t-r2-${i}`);
+                        el.classList.remove('opacity-0', 'translate-x-2'); el.classList.add('opacity-100', 'translate-x-0');
+                    }
+                    await sleep(600);
+                    document.getElementById('t-r2-1').classList.add('winner'); document.getElementById('t-r2-2').classList.add('loser');
+                    document.getElementById('t-r2-3').classList.add('winner'); document.getElementById('t-r2-4').classList.add('loser');
+                    for(let i=1; i<=2; i++) {
+                        const el = document.getElementById(`t-r3-${i}`);
+                        el.classList.remove('opacity-0', 'translate-x-2'); el.classList.add('opacity-100', 'translate-x-0');
+                    }
+                    await sleep(600);
+                    document.getElementById('t-r3-1').classList.add('winner'); document.getElementById('t-r3-2').classList.add('loser');
+                    const tfinal = document.getElementById('t-final');
+                    tfinal.classList.remove('opacity-0', 'translate-x-2'); tfinal.classList.add('opacity-100', 'translate-x-0');
+                })()
+            ]).then(() => {
+                const placeholder = document.getElementById('final-word-placeholder');
+                placeholder.textContent = 'رائعًا';
+                placeholder.classList.remove('border-slate-400');
+                // Use a neutral purple/green mix or just dark slate for combined result
+                placeholder.classList.add('text-slate-800', 'border-transparent');
+                isAnimating = false;
+            });
+        }
+        
+        // Initialize visible state on load
+        window.onload = () => {
+            document.querySelectorAll('.anim-element').forEach(el => el.classList.add('anim-active'));
+        };
+    </script>
+</body>
+</html>
