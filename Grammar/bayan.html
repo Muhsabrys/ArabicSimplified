@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بياناتنا | منصة صحافة البيانات في العالم العربي</title>
+    
+    <!-- Importing Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Loading Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7', // Primary UI Blue
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e', // Deep Navy for backgrounds
+                        },
+                        accent: {
+                            400: '#fbbf24',
+                            500: '#f59e0b', // Amber/Orange
+                            600: '#d97706',
+                        },
+                        ink: {
+                            DEFAULT: '#0f172a', // Slate 900
+                            muted: '#475569',   // Slate 600
+                            lighter: '#94a3b8'  // Slate 400
+                        },
+                        paper: '#f8fafc' // Slate 50
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'draw-line': 'drawLine 2s ease-out forwards',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        drawLine: {
+                            '0%': { strokeDasharray: '0, 1000' },
+                            '100%': { strokeDasharray: '1000, 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Hero Pattern Background */
+        .bg-hero-pattern {
+            background-color: #0c4a6e;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(2, 132, 199, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.3) 0px, transparent 50%);
+        }
+        
+        /* Dot Pattern */
+        .bg-dot-pattern {
+            background-image: radial-gradient(rgba(148, 163, 184, 0.2) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
+        /* Glassmorphism utilities */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Scroll Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Stagger delays */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+    </style>
+</head>
+<body class="font-sans text-ink bg-paper antialiased selection:bg-brand-500 selection:text-white overflow-x-hidden">
+
+    <header class="fixed top-0 w-full z-50 glass border-b border-gray-200/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg p-1">
+                    <div class="w-10 h-10 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-2xl group-hover:bg-brand-700 group-hover:shadow-lg group-hover:shadow-brand-500/30 transition-all duration-300 transform group-hover:-translate-y-0.5">
+                        ب
+                    </div>
+                    <span class="font-bold text-2xl tracking-tight text-ink">بياناتنا<span class="text-brand-600">.</span></span>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-reverse space-x-8">
+                    <a href="#featured" class="text-ink-muted hover:text-brand-600 font-semibold transition-colors relative group">
+                        القصص
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-brand-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#about" class="text-ink-muted hover:text-brand-600 font-semibold transition-colors relative group">
+                        عن المنصة
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-brand-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#topics" class="text-ink-muted hover:text-brand-600 font-semibold transition-colors relative group">
+                        مجالات التغطية
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-brand-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#publish" class="text-ink-muted hover:text-brand-600 font-semibold transition-colors relative group">
+                        دليل النشر
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-brand-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#resources" class="text-ink-muted hover:text-brand-600 font-semibold transition-colors relative group">
+                        المصادر والأدوات
+                        <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-brand-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
+                
+                <!-- Desktop CTA -->
+                <div class="hidden md:flex">
+                    <button onclick="openModal()" class="bg-ink hover:bg-brand-600 text-white px-6 py-2.5 rounded-xl font-bold transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-brand-500/25 flex items-center gap-2">
+                        انشر معنا
+                        <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-ink hover:text-brand-600 focus:outline-none p-2 rounded-lg bg-gray-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-t border-gray-200/50 absolute w-full shadow-2xl origin-top transition-transform duration-300">
+            <div class="px-4 pt-4 pb-6 space-y-3 bg-white/95 backdrop-blur-xl">
+                <a href="#featured" onclick="closeMobileMenu()" class="block px-4 py-3 text-base font-bold text-ink hover:text-brand-600 hover:bg-brand-50 rounded-xl transition-colors">أحدث القصص</a>
+                <a href="#about" onclick="closeMobileMenu()" class="block px-4 py-3 text-base font-bold text-ink hover:text-brand-600 hover:bg-brand-50 rounded-xl transition-colors">عن المنصة</a>
+                <a href="#topics" onclick="closeMobileMenu()" class="block px-4 py-3 text-base font-bold text-ink hover:text-brand-600 hover:bg-brand-50 rounded-xl transition-colors">مجالات التغطية</a>
+                <a href="#publish" onclick="closeMobileMenu()" class="block px-4 py-3 text-base font-bold text-ink hover:text-brand-600 hover:bg-brand-50 rounded-xl transition-colors">دليل النشر</a>
+                <a href="#resources" onclick="closeMobileMenu()" class="block px-4 py-3 text-base font-bold text-ink hover:text-brand-600 hover:bg-brand-50 rounded-xl transition-colors">المصادر والأدوات</a>
+                <div class="pt-2">
+                    <button onclick="openModal(); closeMobileMenu()" class="w-full bg-brand-600 text-white px-4 py-4 rounded-xl font-bold text-center shadow-md flex items-center justify-center gap-2">
+                        انشر معنا
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <section class="bg-hero-pattern min-h-[90vh] flex items-center relative overflow-hidden text-white">
+            <!-- Animated Background Blobs -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+            <div class="absolute bottom-0 left-20 w-96 h-96 bg-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+                
+                <!-- Hero Text -->
+                <div class="lg:w-1/2 space-y-8 text-center lg:text-right animate-fade-in-up">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-semibold text-brand-100 border border-brand-400/30">
+                        <span class="w-2.5 h-2.5 rounded-full bg-accent-400 animate-pulse"></span>
+                        نحو صحافة مبنية على الأدلة والبيانات
+                    </div>
+                    
+                    <h1 class="text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.15] tracking-tight">
+                        القصة وراء <br> 
+                        <span class="text-transparent bg-clip-text bg-gradient-to-l from-accent-400 to-brand-300">
+                            الأرقام العربية
+                        </span>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-brand-100/90 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                        منصة تعاونية لسرد القصص المدفوعة بالبيانات. نُمكّن الصحفيين والباحثين من سد الفجوة المعرفية وصناعة محتوى يرتكز على الشفافية والدقة في العالم العربي.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                        <button onclick="openModal()" class="bg-accent-500 hover:bg-accent-400 text-ink px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-accent-500/25 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 group">
+                            انشر قصتك معنا
+                            <svg class="w-5 h-5 rotate-180 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                        <a href="#about" class="glass hover:bg-white/10 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all text-center">
+                            استكشف الرؤية
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Visual - SVG Data Visualization -->
+                <div class="lg:w-1/2 w-full animate-fade-in-up" style="animation-delay: 200ms;">
+                    <div class="glass p-1 rounded-2xl shadow-2xl border border-white/20 transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                        <div class="bg-ink/90 rounded-xl p-6 backdrop-blur-md overflow-hidden relative">
+                            <!-- UI Header -->
+                            <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+                                <div class="flex space-x-reverse space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-accent-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                                </div>
+                                <div class="text-xs font-mono text-brand-300 glass px-3 py-1.5 rounded-md">LIVE DATA FEED</div>
+                            </div>
+                            
+                            <!-- Animated SVG Line Chart -->
+                            <div class="relative h-48 mb-6">
+                                <svg class="w-full h-full overflow-visible" viewBox="0 0 100 50" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="gradientLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#38bdf8" />
+                                            <stop offset="100%" stop-color="#fbbf24" />
+                                        </linearGradient>
+                                        <linearGradient id="gradientFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2" />
+                                            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0" />
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- Grid lines -->
+                                    <path d="M0 12.5 H100 M0 25 H100 M0 37.5 H100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                                    <!-- Data Fill -->
+                                    <path d="M0 40 Q 15 20, 30 35 T 60 15 T 100 5 L 100 50 L 0 50 Z" fill="url(#gradientFill)" class="animate-fade-in-up" />
+                                    <!-- Data Line -->
+                                    <path d="M0 40 Q 15 20, 30 35 T 60 15 T 100 5" fill="none" stroke="url(#gradientLine)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="animate-draw-line" />
+                                    <!-- Data Points -->
+                                    <circle cx="30" cy="35" r="1.5" fill="#fff" class="animate-pulse" />
+                                    <circle cx="60" cy="15" r="1.5" fill="#fff" class="animate-pulse" />
+                                    <circle cx="100" cy="5" r="1.5" fill="#fff" class="animate-pulse" />
+                                </svg>
+                                
+                                <!-- Floating Tooltip -->
+                                <div class="absolute top-0 right-[35%] bg-white text-ink text-xs font-bold px-2 py-1 rounded shadow-lg animate-bounce">
+                                    +124% نمو
+                                </div>
+                            </div>
+                            
+                            <!-- Mock Stats -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="glass p-4 rounded-xl border border-white/5">
+                                    <div class="text-brand-200 text-xs font-medium mb-1">البيانات المفتوحة</div>
+                                    <div class="text-2xl font-black font-mono text-white">2,450<span class="text-brand-400">+</span></div>
+                                </div>
+                                <div class="glass p-4 rounded-xl border border-white/5">
+                                    <div class="text-brand-200 text-xs font-medium mb-1">القصص المنشورة</div>
+                                    <div class="text-2xl font-black font-mono text-white">124</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="featured" class="py-24 bg-white relative z-10 border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-end mb-12 reveal">
+                    <div>
+                        <h2 class="text-sm font-bold text-brand-600 tracking-wider uppercase mb-2">أحدث المنشورات</h2>
+                        <h3 class="text-3xl md:text-4xl font-black text-ink">قصص مدفوعة بالبيانات</h3>
+                    </div>
+                    <a href="#" class="hidden md:flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 transition-colors">
+                        عرض كل القصص
+                        <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Story 1 -->
+                    <a href="#" class="group block glass-card rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 reveal shadow-sm hover:shadow-xl">
+                        <div class="h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
+                            <img src="https://placehold.co/600x400/0c4a6e/ffffff?text=Water+Data" alt="استهلاك المياه" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 right-4 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">البيئة</div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold text-ink mb-3 group-hover:text-brand-600 transition-colors line-clamp-2 leading-snug">تحليل: كيف تغيرت أنماط استهلاك المياه في العواصم العربية خلال العقد الماضي</h4>
+                            <p class="text-ink-muted text-sm mb-6 line-clamp-3 font-medium leading-relaxed">دراسة مبنية على بيانات مفتوحة تكشف التحولات في معدلات استهلاك المياه وارتباطها بالنمو السكاني.</p>
+                            <div class="flex justify-between items-center text-xs text-gray-500 font-bold border-t border-gray-100 pt-4">
+                                <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> د. سارة الأحمد</span>
+                                <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> 15 أكتوبر 2026</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Story 2 -->
+                    <a href="#" class="group block glass-card rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 reveal delay-100 shadow-sm hover:shadow-xl">
+                        <div class="h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
+                            <img src="https://placehold.co/600x400/fbbf24/0f172a?text=Health+Map" alt="الخدمات الصحية" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 right-4 bg-accent-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">الصحة العامة</div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold text-ink mb-3 group-hover:text-brand-600 transition-colors line-clamp-2 leading-snug">خريطة تفاعلية: توزع الخدمات الصحية مقارنة بالكثافة السكانية</h4>
+                            <p class="text-ink-muted text-sm mb-6 line-clamp-3 font-medium leading-relaxed">استكشف لوحة تحكم تفاعلية توضح مدى تغطية المستشفيات والمراكز الصحية للأحياء السكنية المكتظة.</p>
+                            <div class="flex justify-between items-center text-xs text-gray-500 font-bold border-t border-gray-100 pt-4">
+                                <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> فريق بياناتنا</span>
+                                <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> 2 نوفمبر 2026</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Story 3 -->
+                    <a href="#" class="group block glass-card rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 reveal delay-200 shadow-sm hover:shadow-xl">
+                        <div class="h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
+                            <img src="https://placehold.co/600x400/0284c7/ffffff?text=Economy+Stats" alt="مؤشرات الاقتصاد" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 right-4 bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">الاقتصاد</div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold text-ink mb-3 group-hover:text-brand-600 transition-colors line-clamp-2 leading-snug">مؤشرات التعليم وسوق العمل: أين تتركز الفرص للشباب؟</h4>
+                            <p class="text-ink-muted text-sm mb-6 line-clamp-3 font-medium leading-relaxed">تحليل لبيانات مخرجات التعليم الجامعي ومقارنتها مع متطلبات سوق العمل في القطاعات التقنية الناشئة.</p>
+                            <div class="flex justify-between items-center text-xs text-gray-500 font-bold border-t border-gray-100 pt-4">
+                                <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> عمر محمود</span>
+                                <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> 10 نوفمبر 2026</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="mt-8 text-center md:hidden">
+                    <a href="#" class="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 transition-colors">
+                        عرض كل القصص
+                        <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 bg-paper bg-dot-pattern relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <h2 class="text-sm font-bold text-brand-600 tracking-wider uppercase mb-2">رؤيتنا</h2>
+                    <h3 class="text-3xl md:text-4xl font-black text-ink mb-6 relative inline-block">
+                        لماذا صحافة البيانات؟
+                    </h3>
+                    <p class="text-ink-muted text-lg md:text-xl font-medium leading-relaxed">
+                        في سياق إقليمي يتسم بندرة المعلومات أحياناً وتدفق هائل للمعلومات المضللة أحياناً أخرى، تصبح صحافة البيانات أداة حيوية لتعزيز الشفافية والمساءلة.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Feature Card 1 -->
+                    <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group reveal">
+                        <div class="w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300 shadow-sm">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-black text-ink mb-4">كشف الحقائق</h4>
+                        <p class="text-ink-muted leading-relaxed font-medium">
+                            الغوص في قواعد البيانات المعقدة لاستخراج القصص المخفية وتحويل الأرقام المجردة إلى سرد صحفي يمس حياة الناس ويفسر الواقع بعمق.
+                        </p>
+                    </div>
+
+                    <!-- Feature Card 2 -->
+                    <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group reveal delay-100">
+                        <div class="w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300 shadow-sm">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-black text-ink mb-4">سد فجوة البيانات</h4>
+                        <p class="text-ink-muted leading-relaxed font-medium">
+                            المساهمة في بناء ثقافة البيانات المفتوحة في العالم العربي من خلال جمع وتنظيف ومشاركة مجموعات البيانات لتكون متاحة للباحثين والجمهور.
+                        </p>
+                    </div>
+
+                    <!-- Feature Card 3 -->
+                    <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group reveal delay-200">
+                        <div class="w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300 shadow-sm">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-black text-ink mb-4">بناء مجتمع تفاعلي</h4>
+                        <p class="text-ink-muted leading-relaxed font-medium">
+                            خلق مساحة تعاونية تجمع بين الصحفيين، المبرمجين، مصممي البيانات، والأكاديميين لإنتاج تحقيقات معمقة ومشاريع استقصائية عابرة للحدود.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="topics" class="py-24 bg-white border-y border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row gap-16 items-center">
+                    
+                    <div class="lg:w-1/2 space-y-10 reveal">
+                        <div>
+                            <h2 class="text-sm font-bold text-brand-600 tracking-wider uppercase mb-2">أنواع المحتوى</h2>
+                            <h3 class="text-3xl md:text-4xl font-black text-ink mb-4">ماذا ننشر؟</h3>
+                            <p class="text-ink-muted text-lg font-medium leading-relaxed">
+                                نستقبل المشاريع التي تستخدم البيانات كعنصر أساسي في السرد. نتطلع إلى أشكال صحفية مبتكرة تجعل المعلومات المعقدة سهلة الفهم وقابلة للتفاعل.
+                            </p>
+                        </div>
+                        
+                        <ul class="space-y-6">
+                            <li class="flex items-start gap-4 p-4 rounded-xl hover:bg-paper transition-colors border border-transparent hover:border-gray-100">
+                                <div class="mt-1 bg-white p-2.5 rounded-xl shadow-sm text-brand-600 border border-gray-100 flex-shrink-0">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-ink text-xl">تقارير استقصائية</h4>
+                                    <p class="text-ink-muted font-medium mt-2 leading-relaxed">تحقيقات معمقة تدرس القضايا المجتمعية وتقيّم أثر السياسات العامة بالاستناد إلى تحليل قواعد بيانات ضخمة ومعقدة.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4 p-4 rounded-xl hover:bg-paper transition-colors border border-transparent hover:border-gray-100">
+                                <div class="mt-1 bg-white p-2.5 rounded-xl shadow-sm text-accent-500 border border-gray-100 flex-shrink-0">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-ink text-xl">قصص بصرية وتفاعلية</h4>
+                                    <p class="text-ink-muted font-medium mt-2 leading-relaxed">رسوم بيانية، خرائط تفاعلية، ولوحات تحكم (Dashboards) تشرك القارئ في استكشاف البيانات بنفسه للحصول على استنتاجاته.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Tags Cloud / Topics -->
+                    <div class="lg:w-1/2 w-full reveal delay-200">
+                        <div class="bg-paper p-8 md:p-10 rounded-3xl border border-gray-200 relative overflow-hidden shadow-inner">
+                            <h4 class="text-2xl font-black mb-8 text-center text-ink">مجالات التغطية ذات الأولوية</h4>
+                            
+                            <div class="flex flex-wrap gap-3 justify-center">
+                                <span class="px-5 py-2.5 bg-white text-blue-700 rounded-xl font-bold text-sm border border-blue-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">الصحة العامة والخدمات</span>
+                                <span class="px-5 py-2.5 bg-white text-green-700 rounded-xl font-bold text-sm border border-green-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">البيئة وتغير المناخ</span>
+                                <span class="px-5 py-2.5 bg-white text-purple-700 rounded-xl font-bold text-sm border border-purple-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">الاقتصاد الكلي والجزئي</span>
+                                <span class="px-5 py-2.5 bg-white text-orange-700 rounded-xl font-bold text-sm border border-orange-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">التعليم وسوق العمل</span>
+                                <span class="px-5 py-2.5 bg-white text-pink-700 rounded-xl font-bold text-sm border border-pink-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">قضايا الجندر والعدالة</span>
+                                <span class="px-5 py-2.5 bg-white text-teal-700 rounded-xl font-bold text-sm border border-teal-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">الهجرة واللجوء</span>
+                                <span class="px-5 py-2.5 bg-white text-ink-muted rounded-xl font-bold text-sm border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">الحقوق الرقمية والخصوصية</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="publish" class="py-24 bg-paper bg-dot-pattern">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-sm font-bold text-brand-600 tracking-wider uppercase mb-2">رحلة النشر</h2>
+                    <h3 class="text-3xl md:text-4xl font-black text-ink mb-4">كيف تنشر معنا؟</h3>
+                    <p class="text-ink-muted text-lg font-medium">عملية شفافة وداعمة تبدأ من الفكرة وحتى النشر.</p>
+                </div>
+
+                <!-- Desktop / Mobile Timeline -->
+                <div class="relative reveal delay-100">
+                    <!-- Connecting Line -->
+                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-l from-brand-600 to-brand-100 -translate-y-1/2 rounded-full z-0"></div>
+                    <!-- Mobile Line -->
+                    <div class="md:hidden absolute top-0 right-7 w-1 h-full bg-gradient-to-b from-brand-600 to-brand-100 rounded-full z-0"></div>
+                    
+                    <div class="grid md:grid-cols-4 gap-12 md:gap-6 relative z-10">
+                        <!-- Step 1 -->
+                        <div class="flex md:flex-col items-center md:text-center gap-6 md:gap-4 relative group">
+                            <div class="w-14 h-14 shrink-0 rounded-2xl bg-white border-2 border-brand-500 text-brand-600 font-black text-xl flex items-center justify-center shadow-lg group-hover:bg-brand-500 group-hover:text-white transition-colors">1</div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 md:mt-4 w-full">
+                                <h4 class="text-lg font-bold text-ink mb-2">تقديم المقترح</h4>
+                                <p class="text-ink-muted text-sm font-medium">أرسل ملخصاً للفكرة، الفرضية، ومصادر البيانات الأولية.</p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="flex md:flex-col items-center md:text-center gap-6 md:gap-4 relative group md:-mt-8">
+                            <div class="w-14 h-14 shrink-0 rounded-2xl bg-white border-2 border-brand-500 text-brand-600 font-black text-xl flex items-center justify-center shadow-lg group-hover:bg-brand-500 group-hover:text-white transition-colors">2</div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 md:mt-4 w-full">
+                                <h4 class="text-lg font-bold text-ink mb-2">التقييم والدعم</h4>
+                                <p class="text-ink-muted text-sm font-medium">نراجع المقترح ونوفر التوجيه وربطك بمحللي بيانات.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="flex md:flex-col items-center md:text-center gap-6 md:gap-4 relative group">
+                            <div class="w-14 h-14 shrink-0 rounded-2xl bg-white border-2 border-brand-500 text-brand-600 font-black text-xl flex items-center justify-center shadow-lg group-hover:bg-brand-500 group-hover:text-white transition-colors">3</div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 md:mt-4 w-full">
+                                <h4 class="text-lg font-bold text-ink mb-2">التنفيذ والتصميم</h4>
+                                <p class="text-ink-muted text-sm font-medium">تنظيف البيانات، التحليل، وبناء الرسوميات التفاعلية.</p>
+                            </div>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="flex md:flex-col items-center md:text-center gap-6 md:gap-4 relative group md:-mt-8">
+                            <div class="w-14 h-14 shrink-0 rounded-2xl bg-brand-500 border-2 border-brand-500 text-white font-black text-xl flex items-center justify-center shadow-lg group-hover:bg-brand-600 transition-colors">4</div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 md:mt-4 w-full border-b-4 border-b-brand-500">
+                                <h4 class="text-lg font-bold text-ink mb-2">التدقيق والنشر</h4>
+                                <p class="text-ink-muted text-sm font-medium">التدقيق النهائي للحقائق (Fact-checking)، والنشر.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guidelines Accordion -->
+                <div class="mt-20 bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden reveal delay-200">
+                    <button id="guidelines-toggle" class="w-full px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors focus:outline-none">
+                        <span class="font-bold text-lg text-ink">المعايير التحريرية والأخلاقية للتغطية</span>
+                        <div class="bg-brand-50 p-2 rounded-lg text-brand-600">
+                            <svg id="guidelines-icon" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </button>
+                    
+                    <div id="guidelines-content" class="hidden px-6 pb-6 pt-2 bg-white">
+                        <div class="text-ink-muted font-medium border-t border-gray-100 pt-4">
+                            <p class="mb-4">نلتزم في <strong>بياناتنا</strong> بأعلى معايير الصحافة الموثوقة. قبل تقديم مقترحك، يرجى مراعاة ما يلي:</p>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-paper p-4 rounded-xl border border-gray-100">
+                                    <strong class="text-ink block mb-1">شفافية المصادر</strong>
+                                    يجب أن تكون قواعد البيانات قابلة للوصول والتحقق. نفضل دائماً البيانات المفتوحة.
+                                </div>
+                                <div class="bg-paper p-4 rounded-xl border border-gray-100">
+                                    <strong class="text-ink block mb-1">السياق والدقة</strong>
+                                    يجب وضع البيانات في سياقها الصحيح دون انتقائية (Cherry-picking).
+                                </div>
+                                <div class="bg-paper p-4 rounded-xl border border-gray-100">
+                                    <strong class="text-ink block mb-1">حماية الخصوصية</strong>
+                                    الالتزام بإخفاء الهوية في البيانات التي تتضمن معلومات شخصية حساسة.
+                                </div>
+                                <div class="bg-paper p-4 rounded-xl border border-gray-100">
+                                    <strong class="text-ink block mb-1">الملكية الفكرية</strong>
+                                    الإشارة الواضحة لمصادر البيانات والأدوات البرمجية المستخدمة في التحليل.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="py-24 bg-ink text-white relative overflow-hidden">
+            <!-- Technical Grid Background -->
+            <div class="absolute inset-0" style="background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 30px 30px;"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    
+                    <div class="reveal">
+                        <h2 class="text-sm font-bold text-brand-400 tracking-wider uppercase mb-2">مجتمع ومصادر</h2>
+                        <h3 class="text-3xl md:text-4xl font-black mb-6 text-white">مجتمع ينمو بالتعاون</h3>
+                        <p class="text-gray-400 font-medium text-lg mb-10 leading-relaxed">
+                            نؤمن بأن أفضل التحقيقات هي نتاج عمل جماعي. نحن لسنا مجرد منصة نشر، بل مساحة تقاطع للخبرات. ندعو الصحفيين، الأكاديميين، ومطوري الواجهات لتوحيد جهودهم.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4 p-5 rounded-2xl glass border border-white/10 hover:border-brand-500/50 transition-colors">
+                                <div class="bg-brand-500/20 text-brand-400 p-3 rounded-xl border border-brand-500/30">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">مشاريع عابرة للحدود</h4>
+                                    <p class="text-sm text-gray-400 font-medium leading-relaxed">تسهيل التواصل بين غرف الأخبار في دول عربية مختلفة للعمل على قضايا وتحديات مشتركة.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-5 rounded-2xl glass border border-white/10 hover:border-accent-500/50 transition-colors">
+                                <div class="bg-accent-500/20 text-accent-400 p-3 rounded-xl border border-accent-500/30">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0-6l-9 5m9-5l9 5"></path></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">مختبر الطلاب والأكاديميين</h4>
+                                    <p class="text-sm text-gray-400 font-medium leading-relaxed">مساحة مخصصة لطلاب كليات الإعلام وعلوم الحاسوب للتدريب العملي ونشر مشاريع التخرج المميزة.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resources Widget -->
+                    <div class="bg-gray-900/80 p-8 rounded-3xl border border-white/10 backdrop-blur-xl shadow-2xl reveal delay-200">
+                        <div class="flex items-center gap-3 mb-8 pb-6 border-b border-white/10">
+                            <div class="bg-brand-500 p-2 rounded-lg text-white shadow-lg shadow-brand-500/30">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-bold">صندوق الأدوات</h3>
+                        </div>
+                        
+                        <p class="text-gray-400 font-medium text-sm mb-6">مجموعة مختارة من المصادر والأدوات مفتوحة المصدر لمساعدتك في رحلة البحث:</p>
+                        
+                        <div class="space-y-3">
+                            <a href="#" class="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-xl border border-white/5 transition-all group">
+                                <div>
+                                    <div class="font-bold text-brand-300 group-hover:text-brand-200 transition-colors">بوابات البيانات المفتوحة العربية</div>
+                                    <div class="text-xs text-gray-500 mt-1 font-medium">دليل محدث للمنصات الحكومية.</div>
+                                </div>
+                                <svg class="w-5 h-5 text-gray-500 group-hover:text-brand-300 transform rotate-180 group-hover:-translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </a>
+                            <a href="#" class="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-xl border border-white/5 transition-all group">
+                                <div>
+                                    <div class="font-bold text-brand-300 group-hover:text-brand-200 transition-colors">أدوات التنظيف والتحليل</div>
+                                    <div class="text-xs text-gray-500 mt-1 font-medium">شروحات لأدوات مثل OpenRefine.</div>
+                                </div>
+                                <svg class="w-5 h-5 text-gray-500 group-hover:text-brand-300 transform rotate-180 group-hover:-translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </a>
+                            <a href="#" class="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-xl border border-white/5 transition-all group">
+                                <div>
+                                    <div class="font-bold text-brand-300 group-hover:text-brand-200 transition-colors">دليل السرد البصري</div>
+                                    <div class="text-xs text-gray-500 mt-1 font-medium">اختيار الرسم البياني الأنسب للقصة.</div>
+                                </div>
+                                <svg class="w-5 h-5 text-gray-500 group-hover:text-brand-300 transform rotate-180 group-hover:-translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-brand-600 text-white relative overflow-hidden">
+            <!-- Decorative circles -->
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white opacity-10"></div>
+            <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-brand-900 opacity-20"></div>
+
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+                <h2 class="text-3xl md:text-5xl font-black mb-6">هل لديك قصة مدفوعة بالبيانات؟</h2>
+                <p class="text-brand-100 text-lg md:text-xl mb-10 font-medium max-w-2xl mx-auto">
+                    نحن نبحث عن الزوايا غير المطروقة والتحليلات العميقة. انضم إلى شبكة متنامية من صناع التغيير وصحفيي البيانات في العالم العربي.
+                </p>
+                
+                <button onclick="openModal()" class="bg-ink hover:bg-gray-900 text-white px-10 py-5 rounded-2xl font-bold text-lg shadow-2xl transition-all transform hover:-translate-y-1">
+                    ابدأ بتجهيز مقترحك الآن
+                </button>
+                
+                <div class="mt-20 pt-12 border-t border-brand-500/50 max-w-xl mx-auto bg-brand-700/30 p-8 rounded-3xl backdrop-blur-sm border border-brand-500/30">
+                    <div class="flex justify-center mb-4 text-accent-400">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">النشرة البريدية</h3>
+                    <p class="text-brand-100 text-sm mb-6 font-medium">احصل على أحدث القصص، مجموعات البيانات، والفرص التدريبية.</p>
+                    <form class="flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); alert('شكرًا لاهتمامك! هذه واجهة تجريبية.');">
+                        <input type="email" placeholder="أدخل بريدك الإلكتروني" class="w-full px-5 py-3.5 rounded-xl text-ink font-medium focus:outline-none focus:ring-2 focus:ring-accent-500" required>
+                        <button type="submit" class="bg-accent-500 text-ink px-8 py-3.5 rounded-xl font-bold hover:bg-accent-400 transition-colors whitespace-nowrap shadow-md">
+                            اشتراك
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 py-16 border-t border-gray-800 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-12 gap-8 lg:gap-12 mb-12">
+                <div class="col-span-12 md:col-span-5">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-gray-800 text-white rounded-lg flex items-center justify-center font-bold text-xl border border-gray-700">ب</div>
+                        <span class="font-bold text-2xl text-white tracking-tight">بياناتنا</span>
+                    </div>
+                    <p class="text-gray-500 leading-relaxed font-medium max-w-sm">
+                        منصة مفهومية صُممت لتعزيز صحافة البيانات الموثوقة والشفافة في العالم العربي من خلال توفير الأدوات والمساحة التعاونية للصحفيين والباحثين.
+                    </p>
+                </div>
+                
+                <div class="col-span-6 md:col-span-3 md:col-start-7">
+                    <h4 class="text-white font-bold text-base mb-6">روابط المنصة</h4>
+                    <ul class="space-y-3 font-medium">
+                        <li><a href="#about" class="hover:text-brand-400 transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-700"></span>عن المنصة</a></li>
+                        <li><a href="#topics" class="hover:text-brand-400 transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-700"></span>مجالات التغطية</a></li>
+                        <li><a href="#publish" class="hover:text-brand-400 transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-700"></span>دليل النشر</a></li>
+                        <li><a href="#resources" class="hover:text-brand-400 transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-700"></span>المصادر والأدوات</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-span-6 md:col-span-3">
+                    <h4 class="text-white font-bold text-base mb-6">تواصل معنا</h4>
+                    <ul class="space-y-3 font-medium">
+                        <li><a href="#" class="hover:text-brand-400 transition-colors flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> info@bayanatna.concept</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors flex items-center gap-2">تويتر (X)</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition-colors flex items-center gap-2">لينكد إن</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800 text-gray-600 font-medium">
+                <p>&copy; 2026 تصميم تجريبي لموقع صحافة بيانات.</p>
+                <p class="mt-2 md:mt-0">لا يتم تخزين أو معالجة أي بيانات حقيقية.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="publish-modal" class="fixed inset-0 z-[100] hidden opacity-0 transition-opacity duration-300" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-ink/60 backdrop-blur-sm" aria-hidden="true" onclick="closeModal()"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <!-- Modal panel -->
+                <div class="relative transform overflow-hidden rounded-3xl bg-white text-right shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl border border-gray-100 scale-95 opacity-0" id="modal-panel" style="transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                    
+                    <!-- Header -->
+                    <div class="bg-paper px-6 py-5 border-b border-gray-100 flex justify-between items-center">
+                        <h3 class="text-xl font-black text-ink" id="modal-title">نموذج تقديم مقترح (Pitch)</h3>
+                        <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 bg-white p-2 rounded-xl shadow-sm border border-gray-100 focus:outline-none transition-all">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="px-6 py-6 sm:p-8">
+                        <div class="flex items-start gap-3 mb-8 bg-brand-50 text-brand-800 p-4 rounded-xl border border-brand-100">
+                            <svg class="w-6 h-6 shrink-0 text-brand-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <p class="text-sm font-medium leading-relaxed">
+                                <strong>ملاحظة:</strong> هذه الواجهة تجريبية. لن يتم تخزين أو إرسال أي بيانات فعلية. يرجى تعبئة الحقول للاطلاع على تجربة المستخدم.
+                            </p>
+                        </div>
+                        
+                        <form class="space-y-6" onsubmit="event.preventDefault(); alert('تم استلام مقترحك بنجاح في هذه البيئة التجريبية!'); closeModal();">
+                            <div>
+                                <label class="block text-sm font-bold text-ink mb-2">عنوان القصة المقترح <span class="text-red-500">*</span></label>
+                                <input type="text" class="w-full bg-paper border border-gray-200 rounded-xl px-4 py-3 text-ink font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all" placeholder="مثال: تحليل تباين جودة الهواء في العواصم العربية" required>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-ink mb-2">الاسم الكامل <span class="text-red-500">*</span></label>
+                                    <input type="text" class="w-full bg-paper border border-gray-200 rounded-xl px-4 py-3 text-ink font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-ink mb-2">البريد الإلكتروني <span class="text-red-500">*</span></label>
+                                    <input type="email" class="w-full bg-paper border border-gray-200 rounded-xl px-4 py-3 text-ink font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all" dir="ltr" required>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-bold text-ink mb-2">ملخص الفكرة (الفرضية) <span class="text-red-500">*</span></label>
+                                <textarea rows="4" class="w-full bg-paper border border-gray-200 rounded-xl px-4 py-3 text-ink font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all resize-none" placeholder="ما هي القصة التي تريد روايتها؟ وما هو السؤال الرئيسي الذي تحاول الإجابة عليه من خلال البيانات؟" required></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-ink mb-2">مصادر البيانات المتوقعة</label>
+                                <input type="text" class="w-full bg-paper border border-gray-200 rounded-xl px-4 py-3 text-ink font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all" placeholder="روابط للبيانات المفتوحة، تقارير، ملفات، إلخ...">
+                            </div>
+
+                            <div class="pt-6 border-t border-gray-100 flex justify-end gap-3">
+                                <button type="button" onclick="closeModal()" class="px-6 py-3 bg-white border border-gray-200 text-ink rounded-xl hover:bg-gray-50 font-bold transition-colors">إلغاء</button>
+                                <button type="submit" class="px-8 py-3 bg-brand-600 text-white rounded-xl hover:bg-brand-700 font-bold shadow-lg shadow-brand-500/25 transition-all transform hover:-translate-y-0.5">إرسال المقترح</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Mobile Menu Toggle Logic ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconPath = document.getElementById('menu-icon-path');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                // Change to 'X' icon
+                menuIconPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            } else {
+                mobileMenu.classList.add('hidden');
+                // Change back to hamburger icon
+                menuIconPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            }
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+            menuIconPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+        }
+
+        // --- Navbar Scroll Effect ---
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.replace('border-gray-200/50', 'border-gray-200');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.replace('border-gray-200', 'border-gray-200/50');
+            }
+        });
+
+        // --- Guidelines Accordion Toggle ---
+        const guidelinesToggle = document.getElementById('guidelines-toggle');
+        const guidelinesContent = document.getElementById('guidelines-content');
+        const guidelinesIcon = document.getElementById('guidelines-icon');
+
+        guidelinesToggle.addEventListener('click', () => {
+            const isHidden = guidelinesContent.classList.contains('hidden');
+            if(isHidden){
+                guidelinesContent.classList.remove('hidden');
+                guidelinesIcon.classList.add('rotate-180');
+                guidelinesToggle.classList.add('bg-gray-50');
+            } else {
+                guidelinesContent.classList.add('hidden');
+                guidelinesIcon.classList.remove('rotate-180');
+                guidelinesToggle.classList.remove('bg-gray-50');
+            }
+        });
+
+        // --- Modal Logic with Animations ---
+        const modal = document.getElementById('publish-modal');
+        const modalPanel = document.getElementById('modal-panel');
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before animating opacity/transform
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalPanel.classList.remove('scale-95', 'opacity-0');
+                modalPanel.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalPanel.classList.remove('scale-100', 'opacity-100');
+            modalPanel.classList.add('scale-95', 'opacity-0');
+            
+            // Wait for transition to finish before hiding
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // --- Intersection Observer for Scroll Animations ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Trigger when 15% of the element is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Optional: Stop observing once animated in
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
